@@ -1,0 +1,202 @@
+{
+  "source": {
+    "file": "docs/design.md",
+    "sha256": "5ed48a412dcc52f9078a71706539faee561117ea82aea806921a55ab8e243784"
+  },
+  "frames": [
+    [
+      390,
+      844
+    ],
+    [
+      1440,
+      900
+    ]
+  ],
+  "colors": [
+    "#141414",
+    "#262626",
+    "#707070",
+    "#adadad",
+    "#ffffff",
+    "#f3f3f3",
+    "#f0f0f0",
+    "#e0e0e0",
+    "#0066ff",
+    "#e6f0ff",
+    "#137a3f",
+    "#e7f5ec",
+    "#0b6a73",
+    "#e3f4f5",
+    "#a64c06",
+    "#fdf1e3",
+    "#b8232a",
+    "#fce9ea",
+    "#1b2a6b",
+    "#2e3fa3",
+    "#4b4fc8",
+    "#6c5fd6",
+    "#8e6ad8",
+    "#b06cc9",
+    "#cb78b4",
+    "#dc93a6",
+    "#e8b4b0",
+    "#f0457a",
+    "#d0202b",
+    "#1d4fb8",
+    "#5b5bd6",
+    "#e6e6fa",
+    "#0e9f6e",
+    "#d6f2e6",
+    "#b58400",
+    "#fbefc7"
+  ],
+  "radius": [
+    0
+  ],
+  "radius_exceptions": [],
+  "palette_exempt": [
+    "univ-logo"
+  ],
+  "font_family": [
+    "Pretendard",
+    "IBM Plex Sans KR",
+    "Noto Sans KR"
+  ],
+  "font_weight": [
+    300,
+    400,
+    500,
+    600,
+    700
+  ],
+  "letter_spacing": [
+    0
+  ],
+  "shadow_allowed_on": [
+    "modal",
+    "bottom-sheet",
+    "dropdown",
+    "toast"
+  ],
+  "forbidden_words": [
+    "합격 가능",
+    "합격 확률",
+    "합격 보장"
+  ],
+  "forbidden_word_exceptions": [
+    "될각"
+  ],
+  "components": [
+    "button-primary",
+    "button-outline",
+    "button-pill-soft",
+    "button-danger-text",
+    "text-input",
+    "text-input-focused",
+    "text-input-error",
+    "grade-input-table",
+    "subject-card",
+    "subject-type-chip",
+    "segmented-control",
+    "segmented-control-active",
+    "grade-chip",
+    "stat-tile",
+    "range-bar-5to9",
+    "cut-compare-bar",
+    "judge-badge",
+    "judge-lane",
+    "univ-card",
+    "univ-monogram",
+    "univ-logo",
+    "data-status-badge",
+    "data-table",
+    "trace-accordion",
+    "disclaimer-note",
+    "susi-slot",
+    "warning-callout",
+    "scenario-tabs",
+    "mask-preview",
+    "competency-card",
+    "evidence-quote",
+    "ai-label",
+    "mode-switch",
+    "lock-screen",
+    "student-row-card",
+    "counsel-timeline",
+    "share-sheet",
+    "bottom-sheet",
+    "modal",
+    "toast",
+    "empty-state",
+    "tab-bar-pill",
+    "sidebar",
+    "nav-pill",
+    "footer",
+    "print-summary",
+    "interest-heart",
+    "filter-chip",
+    "sidebar-item",
+    "app-bar",
+    "grade-trend-chart",
+    "competency-highlight",
+    "competency-bar",
+    "sidebar-group",
+    "sub-nav",
+    "cut-dot-plot",
+    "placement-board"
+  ],
+  "screens": {
+    "홈": "home",
+    "전형계획 목록": "admissions-list",
+    "대학 상세": "univ-detail",
+    "전형 상세": "program-detail",
+    "성적 입력": "grade-input",
+    "5 to 9": "five-to-nine",
+    "대학별 환산": "univ-score",
+    "될각": "doelgak",
+    "수시로": "susiro",
+    "생기부 AI": "saenggibu-ai",
+    "모의고사": "mock-score",
+    "교사 학급 대시보드": "teacher-dashboard",
+    "학생 상담": "counsel",
+    "카드 수합": "card-collect",
+    "결과 집계": "result-summary",
+    "관리자 규칙 편집기·검수": "admin-rules",
+    "학생 기록 상세": "student-record",
+    "성적 불러오기": "score-import",
+    "수능 최저 판정": "minimum-board",
+    "누가기록": "homeroom-logs",
+    "내 성적 추이": "score-trend",
+    "수시 입결": "admission-results",
+    "로그인": "login",
+    "회원가입": "signup"
+  },
+  "requires_trace_accordion": [
+    "five-to-nine",
+    "univ-score",
+    "doelgak"
+  ],
+  "requires_disclaimer_note": [
+    "home",
+    "five-to-nine",
+    "univ-score",
+    "doelgak",
+    "susiro",
+    "mock-score",
+    "counsel",
+    "student-record",
+    "minimum-board",
+    "score-trend",
+    "teacher-dashboard",
+    "admission-results"
+  ],
+  "gates": {
+    "G1": {
+      "min_links": 5,
+      "min_points": 3,
+      "min_links_per_point": 1
+    },
+    "J_same_violation_max_retries": 3
+  }
+}

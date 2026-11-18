@@ -1,0 +1,203 @@
+/* App Shell — 모바일·태블릿(<1024): 앱바 + sub-nav + 하단 탭바 / PC(≥1024): 사이드바 + 상단 바 */
+.shell {
+  min-height: 100vh;
+}
+
+.shell__content {
+  padding: var(--spacing-md);
+  /* 떠 있는 하단 탭바(64 + 아래 16)에 내용이 가리지 않게 */
+  padding-bottom: calc(var(--shell-tabbar-height) + var(--spacing-md) * 2 + env(safe-area-inset-bottom));
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+}
+.more-link {
+  color: var(--color-accent);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ── 모바일 ── */
+.sidebar,
+.topbar {
+  display: none;
+}
+
+.appbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xxs);
+  height: var(--shell-appbar-height);
+  padding: 0 var(--spacing-md);
+  background: var(--color-canvas);
+}
+.appbar__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: calc(var(--spacing-md) * -1 + var(--spacing-xxs));
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.sub-nav {
+  position: sticky;
+  top: var(--shell-appbar-height);
+  z-index: 2;
+  display: flex;
+  height: var(--shell-subnav-height);
+  padding: 0 0 0 var(--spacing-card); /* 오른쪽 여백 0: 잘린 탭이 보여야 넘친다는 걸 안다 */
+  overflow-x: auto;
+  background: var(--color-canvas);
+  border-bottom: 1px solid var(--color-hairline);
+  scrollbar-width: none;
+}
+.sub-nav__tab {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  padding: 0 var(--spacing-sm);
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+  font-size: var(--font-link-size);
+  font-weight: var(--font-link-weight);
+  white-space: nowrap;
+}
+.sub-nav__tab[aria-current='page'] {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-accent);
+}
+
+.tab-bar-pill {
+  position: fixed;
+  left: var(--spacing-md);
+  right: var(--spacing-md);
+  bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom));
+  z-index: 3;
+  display: flex;
+  height: var(--shell-tabbar-height);
+  background: var(--color-canvas-soft);
+}
+.tab-bar-pill__tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 44px;
+  color: var(--color-text-muted);
+  font-size: var(--font-label-size);
+  font-weight: var(--font-body-weight);
+  line-height: var(--font-label-line);
+}
+.tab-bar-pill__tab[aria-current='page'] {
+  color: var(--color-ink);
+  font-weight: var(--font-label-weight);
+}
+.tab-bar-pill__tab[aria-current='page'] .icon {
+  color: var(--color-accent);
+}
+
+@media (min-width: 600px) {
+  .shell__content {
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
+  }
+}
+
+/* ── PC ── */
+@media (min-width: 1024px) {
+  .shell {
+    display: grid;
+    grid-template-columns: var(--shell-sidebar-width) 1fr;
+  }
+  .appbar,
+  .sub-nav,
+  .tab-bar-pill {
+    display: none;
+  }
+
+  .sidebar {
+    display: block;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--color-canvas-soft);
+  }
+  .sidebar__wordmark {
+    display: block;
+    padding: var(--spacing-card) var(--spacing-md);
+  }
+
+  .sidebar-group,
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+    height: 44px;
+    font-size: var(--font-link-size);
+    font-weight: var(--font-link-weight);
+    line-height: var(--font-link-line);
+    text-align: left;
+  }
+  .sidebar-group {
+    padding: 0 var(--spacing-md);
+    border: 0;
+    background: transparent;
+    color: var(--color-ink-soft);
+    cursor: pointer;
+  }
+  .sidebar-group--current {
+    color: var(--color-ink);
+    cursor: default;
+  }
+  .sidebar-group__label {
+    flex: 1;
+  }
+  .sidebar-group__chevron {
+    color: var(--color-text-muted);
+  }
+
+  /* 선택 = accent-soft 채움 + 왼쪽 3px accent 막대. 막대 자리를 늘 비워 둬 글자가 밀리지 않게 */
+  .sidebar-item {
+    padding: 0 var(--spacing-md) 0 calc(var(--spacing-xl) - 3px);
+    border-left: 3px solid transparent;
+    color: var(--color-ink-soft);
+  }
+  .sidebar-item--top {
+    padding-left: calc(var(--spacing-md) - 3px);
+  }
+  .sidebar-item[aria-current='page'] {
+    background: var(--color-accent-soft);
+    border-left-color: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    height: var(--shell-topbar-height);
+    padding: 0 var(--spacing-xl);
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  .shell__content {
+    padding: var(--spacing-xl);
+  }
+}

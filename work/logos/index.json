@@ -1,0 +1,85 @@
+{
+  "경희대학교": {
+    "file": "경희대학교.png",
+    "kind": "emblem",
+    "source_page": "https://www.khu.ac.kr/kor/user/contents/view.do?menuNo=200029",
+    "url": "https://www.khu.ac.kr/resources/user/download/University_Seal_01_PNG_2021.zip",
+    "bytes": 215857
+  },
+  "성균관대학교": {
+    "file": "성균관대학교.svg",
+    "kind": "emblem",
+    "source_page": "https://namu.wiki/w/%EC%84%B1%EA%B7%A0%EA%B4%80%EB%8C%80%ED%95%99%EA%B5%90",
+    "url": "https://i.namu.wiki/i/GuZEndG3yyMYb5U1mRZxbHLgYIRpsSJmywuGu8WSm6CDW4rIn32G6GlMOCe6BXkHSLkPNPN5Yj_MwbQtPzqTGfcfTOIr6fciEPi-G1gDoN1crASJ4Z6-y37JNZ87zFvwTyj-iuBJpXJPVSm8SIkj9Q.svg",
+    "bytes": 16447
+  },
+  "한양대학교": {
+    "file": "한양대학교.svg",
+    "kind": "emblem",
+    "source_page": "https://namu.wiki/w/%ED%95%9C%EC%96%91%EB%8C%80%ED%95%99%EA%B5%90",
+    "url": "https://i.namu.wiki/i/ssY6LuHPqu4875uyG7Yon4wTn65yL1r6l5Ubk9DLsHByBB5qPf1pCAzLq0ZmMVYs81Iy9QO-GOEhBIoRVOadg6TsBE5SUdwyQSqzxfntQt0kg_04iR4-MC977JsYN70L26rGg76o3SgQakWne2px7Q.svg",
+    "bytes": 49920
+  },
+  "강원대학교": {
+    "file": "강원대학교.svg",
+    "kind": "emblem",
+    "source_page": "https://namu.wiki/w/%EA%B0%95%EC%9B%90%EB%8C%80%ED%95%99%EA%B5%90",
+    "url": "https://i.namu.wiki/i/Nvv0t1SY3f63OGSlf7Ei_0mtojIG0lfa4FARB9K6p8Lx5aeBK__mkhsQHdCmtQgdRpaYbAWOJD7tAlloiVOsq4-_1rcuoihKVVj262M1Lymmyu8EKD1_bJZiRIhemos-BB1u8IYYF2opkw4vy_h9aw.svg",
+    "bytes": 8412
+  },
+  "고려대학교": {
+    "file": "고려대학교.svg",
+    "kind": "emblem",
+    "source_page": "https://namu.wiki/w/%EA%B3%A0%EB%A0%A4%EB%8C%80%ED%95%99%EA%B5%90",
+    "url": "https://i.namu.wiki/i/Th1FEmT2UHhE_Mz_p5d-SqtZw9WXOzYpUiPvr5v5_eIunfnb0EDX2X0XyDyZ9ayt9RvNCwvXlf06CwhzMC7ASQ.svg",
+    "bytes": 24335
+  },
+  "한림대학교": {
+    "file": "한림대학교.svg",
+    "kind": "emblem",
+    "source_page": "https://namu.wiki/w/%ED%95%9C%EB%A6%BC%EB%8C%80%ED%95%99%EA%B5%90",
+    "url": "https://i.namu.wiki/i/QcJd7qCVpaGOHlk12Kpg3DZuFMDuWirUZiaAOMNBVYrwlTsEvx5cp-6ZCRBLm84RC7Av58XAUGgPlSerTchwiA.svg",
+    "bytes": 7075
+  },
+  "중앙대학교": {
+    "file": "중앙대학교.svg",
+    "kind": "emblem",
+    "source_page": "https://namu.wiki/w/%EC%A4%91%EC%95%99%EB%8C%80%ED%95%99%EA%B5%90",
+    "url": "https://i.namu.wiki/i/KKJpd0UNel-8A0ctsE8MsoyorCzOrkWxDAhSx5FUG-3MBswDoZS2Qm18ywsOFDR_QJvcXTdoiVdqCPKZh387Hj5RCvmohbyUbDSggwxRHZVl2U6CL62cy5blnleOOFRuEUJxLKDTKpMeCOgq9VgKHg.svg",
+    "bytes": 25848
+  },
+  "연세대학교": {
+    "file": "연세대학교.svg",
+    "kind": "emblem",
+    "source_page": "https://namu.wiki/w/%EC%97%B0%EC%84%B8%EB%8C%80%ED%95%99%EA%B5%90",
+    "url": "https://i.namu.wiki/i/me_FxabFDwpYc_poLje8hnPcvH2FAps5QaAPJzR6azUdTLAwBSYjhJc7N-aG7fJt4GoHOmvWAgO3wWniUQYTLb-QZ6m7UEoCpQZ1aI0eubMB9UEtjv6eM2UnjBZ1g9os3HznfajJWHMxoY5Z7_sPiw.svg",
+    "bytes": 17883
+  },
+  "광주과학기술원": {
+    "file": "광주과학기술원.svg",
+    "kind": "emblem",
+    "source_page": "https://namu.wiki/w/%EA%B4%91%EC%A3%BC%EA%B3%BC%ED%95%99%EA%B8%B0%EC%88%A0%EC%9B%90",
+    "url": "https://i.namu.wiki/i/UrAxwuOvvp5NaQjG0VDwJtwMk16oUV_gZmpYI8Qm2r8s1_hmvd2Oj3fgGiUUAQVE7-R3hjAVHNuZpWnvb9HyVg.svg",
+    "bytes": 18109
+  },
+  "wordmark": {
+    "성균관대학교": {
+      "file": "wordmark/성균관대학교.svg",
+      "commons": "File:Sungkyunkwan University - logotype (ko+en).svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/44/Sungkyunkwan_University_-_logotype_%28ko%2Ben%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "bytes": 16315
+    },
+    "한양대학교": {
+      "file": "wordmark/한양대학교.svg",
+      "commons": "File:Hanyang University KORENG logo.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/51/Hanyang_University_KORENG_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "bytes": 77334
+    },
+    "경희대학교": {
+      "file": "wordmark/경희대학교.svg",
+      "commons": "File:Kyung Hee University Logo.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Kyung_Hee_University_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "bytes": 8805
+    }
+  }
+}

@@ -1,0 +1,73 @@
+.icon {
+  display: inline-flex;
+  flex: none;
+}
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* button-primary: ink 채움 + on-primary 글자, 높이 모바일 52 · PC 44 */
+.button-primary,
+.button-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  height: 52px;
+  padding: 0 var(--spacing-md);
+  font-size: var(--font-link-size);
+  font-weight: var(--font-link-weight);
+  line-height: var(--font-link-line);
+  cursor: pointer;
+}
+.button-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border: 0;
+}
+.button-outline {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  border: 1px solid var(--color-hairline);
+}
+.button-primary:disabled,
+.button-outline:disabled {
+  color: var(--color-text-faint);
+  background: var(--color-canvas-soft);
+  border-color: var(--color-canvas-soft);
+  cursor: not-allowed;
+}
+@media (min-width: 1024px) {
+  .button-primary,
+  .button-outline {
+    height: 44px;
+  }
+}
+
+/* segmented-control: canvas-soft 트랙, 선택 = accent-soft 채움 + 아래 2px accent + ink 글자 */
+.segmented-control {
+  display: inline-flex;
+  background: var(--color-canvas-soft);
+}
+.segmented-control__option {
+  min-height: 44px;
+  padding: 0 var(--spacing-md);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: var(--font-link-size);
+  font-weight: var(--font-link-weight);
+  cursor: pointer;
+}
+.segmented-control__option[aria-pressed='true'] {
+  background: var(--color-accent-soft);
+  border-bottom-color: var(--color-accent);
+  color: var(--color-ink);
+}
+@media (min-width: 1024px) {
+  .segmented-control__option {
+    min-height: 40px;
+  }
+}
