@@ -1,0 +1,12 @@
+{
+  "id": "knue-plan",
+  "url": "https://www.knue.ac.kr/ipsi/downloadBbsFile.do?atchmnflNo=86178",
+  "checked_at": "2026-11-20T03:57:21.913844+00:00",
+  "final_url": "https://www.knue.ac.kr/ipsi/downloadBbsFile.do?atchmnflNo=86178",
+  "status": 200,
+  "bytes": 627853,
+  "sha256": "78ab507ec0b7a0b50bd382c0aade5b0533a655b3050ab8c9d418cd07163f7703",
+  "kind": "pdf",
+  "pages": 24,
+  "has_2028": true
+}

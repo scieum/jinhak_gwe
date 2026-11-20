@@ -1,0 +1,23 @@
+{
+  "id": "document-0000221",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253219&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.493677+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253219&fileSn=1",
+  "status": 200,
+  "bytes": 738552,
+  "sha256": "c969fa7312034193e1b380714f880dfe400a1673a35b25764b537218489fc77c",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "2028학년도 신입생 재외국민과 외국인 특별전형 모집계획(안).pdf",
+      "zip_name": "2028학년도 신입생 재외국민과 외국인 특별전형 모집계획(안).pdf",
+      "bytes": 468301
+    },
+    {
+      "name": "2028학년도 목포가톨릭대학교 대학입학전형 기본계획(안).pdf",
+      "zip_name": "2028학년도 목포가톨릭대학교 대학입학전형 기본계획(안).pdf",
+      "bytes": 352827
+    }
+  ],
+  "has_2028": true
+}

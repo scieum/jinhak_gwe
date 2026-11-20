@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Icon } from '../components/Icon';
+import { BrandLogo } from '../components/BrandLogo';
 import { ModeSwitch } from './ModeSwitch';
-import { MORE_PATH, NAV, locate, type NavGroup } from './nav';
+import { MODE_HOME, MORE_PATH, NAV, locate, modeOf, type NavGroup } from './nav';
+import { workspaceOf } from './workspace';
+import { TeacherLockButton, TeacherLockGate } from '../components/TeacherLock';
 import './shell.css';
 
 // 소분류가 없는 대분류(학생 "홈")는 그룹 행 없이 바로 선택하는 메뉴 하나로 그린다
@@ -12,11 +15,15 @@ export function AppShell() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const loc = locate(pathname);
-  const { mode, group, item, detail } = loc;
+  const { group, item, detail } = loc;
+  const mode = workspaceOf(pathname);
   const isMore = pathname === MORE_PATH[mode];
+  // 교사 셸은 학생 메뉴 전체 + 교사 메뉴(teacher-dashboard 02-spec P1)
+  const sections: [string | null, NavGroup[]][] = mode === 'teacher' ? [['학생', NAV.student], ['교사', NAV.teacher]] : [[null, NAV[mode]]];
   const title = item?.label ?? detail?.label ?? (isMore ? '더보기' : '진학 내비');
   const breadcrumb = group && !isSingle(group) ? `${group.label} › ${title}` : null;
   const groups = NAV[mode];
+  const isHome = mode !== 'admin' && pathname === groups[0].items[0].path;
 
   // 지금 대분류는 항상 펼침, 나머지는 눌러서 펼친다
   const [opened, setOpened] = useState<Set<string>>(new Set());
@@ -37,11 +44,11 @@ export function AppShell() {
   return (
     <div className="shell">
       <aside className="sidebar">
-        <Link to={groups[0].items[0].path} className="sidebar__wordmark t-heading-4">
-          진학 내비
+        <Link to={MODE_HOME[mode]} className="sidebar__wordmark" aria-label="진학내비 홈">
+          <BrandLogo />
         </Link>
         <nav aria-label="주 메뉴">
-          {groups.map((g) => {
+          {sections.map(([caption, list]) => <div key={caption ?? 'main'}>{caption && <p className="sidebar__caption t-caption text-muted">{caption}</p>}{list.map((g) => {
             if (isSingle(g)) {
               const i = g.items[0];
               return (
@@ -74,7 +81,7 @@ export function AppShell() {
                   ))}
               </div>
             );
-          })}
+          })}</div>)}
         </nav>
       </aside>
 
@@ -84,7 +91,7 @@ export function AppShell() {
             {breadcrumb && <p className="t-caption text-muted">{breadcrumb}</p>}
             <h1 className="t-heading-3">{title}</h1>
           </div>
-          {mode !== 'admin' && <ModeSwitch mode={mode} />}
+          <div className="topbar__actions">{mode !== 'admin' && <ModeSwitch mode={mode} />}{modeOf(pathname) === 'teacher' && <TeacherLockButton />}</div>
         </header>
 
         <header className="appbar">
@@ -93,7 +100,9 @@ export function AppShell() {
               <Icon name="chevron-left" />
             </button>
           )}
-          <h1 className="t-heading-4">{title}</h1>
+          <h1 className="t-heading-4">{isHome ? <BrandLogo /> : title}</h1>
+          {/* 화면별 앱바 보조 동작 1개(design.md app-bar). 화면이 createPortal로 채워요. */}
+          <div id="appbar-actions" className="appbar__actions" />
         </header>
 
         {group && !detail && !isSingle(group) && (
@@ -109,6 +118,7 @@ export function AppShell() {
         <main className="shell__content">
           <Outlet />
         </main>
+        {modeOf(pathname) === 'teacher' && <TeacherLockGate />}
       </div>
 
       <nav className="tab-bar-pill" aria-label="하단 탭">

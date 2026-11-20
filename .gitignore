@@ -6,3 +6,21 @@ dist/
 *.log
 .vite/
 coverage/
+.npm-cache/
+
+# Local tools, downloaded originals, and reproducible intermediate files
+.claude/settings.local.json
+__pycache__/
+supabase/.temp/
+outputs/
+work/_data/admission-results/**
+!work/_data/admission-results/**/
+!work/_data/admission-results/**/*.py
+!work/_data/admission-results/**/*.ps1
+!work/_data/admission-results/**/*.md
+!work/_data/admission-results/_all.csv.gz
+work/_data/admission-results/**/_decrypt/
+work/_data/admission-plans/sources/*
+!work/_data/admission-plans/sources/*.meta.json
+work/_data/admission-plans/collection/*.zip
+work/_data/admission-plans/review-images/

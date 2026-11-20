@@ -1,0 +1,11 @@
+{
+  "id": "gyeonggi-index",
+  "url": "https://www.goeas.kr/ansan-h/na/ntt/selectNttInfo.do?bbsId=851&mi=2612&nttSn=1509684",
+  "checked_at": "2026-11-20T03:53:58.294610+00:00",
+  "final_url": "https://www.goeas.kr/ansan-h/na/ntt/selectNttInfo.do?bbsId=851&mi=2612&nttSn=1509684",
+  "status": 200,
+  "bytes": 60548,
+  "sha256": "c296db2f175e1cf2bdf7502aec1ab46e49d8e985e91d9c21c6dc251f577bc7a5",
+  "kind": "html",
+  "has_2028": true
+}

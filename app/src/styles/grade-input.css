@@ -1,0 +1,48 @@
+/* 성적 입력 v3 (work/grade-input/02-spec.md v3-2 간격 규칙). 섹션 사이는 선 없이 빈 공간만. */
+.grade-input { gap: 0; }
+.grade-input > * + * { margin-top: var(--spacing-lg); }
+.grade-input__head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--spacing-xs); }
+.grade-input__head .button-outline, .grade-input__head .button-primary { display: inline-flex; align-items: center; gap: var(--spacing-xxs); }
+.grade-input > .grade-input__save { margin-top: var(--spacing-xs); display: flex; align-items: center; gap: var(--spacing-xxs); flex-wrap: wrap; }
+.grade-input__save .text-button { min-height: 0; padding: 0 var(--spacing-xxs); color: var(--color-accent); }
+.grade-input__pick { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-section); flex-wrap: wrap; }
+.grade-input__view { display: flex; align-items: center; gap: var(--spacing-xs); }
+.grade-input__view .segmented-control__option { font-size: var(--font-label-size); min-height: 40px; }
+.grade-input__filter { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); flex-wrap: wrap; }
+.grade-input__filter + * , .grade-input__filter ~ .grade-desktop { margin-top: var(--spacing-xs); }
+.grade-input .filter-chip { min-height: 32px; padding: 0 var(--spacing-sm); border: 1px solid var(--color-hairline); background: var(--color-canvas-soft); font: inherit; font-size: var(--font-body-sm-size); cursor: pointer; }
+.grade-input .filter-chip[aria-pressed='true'] { background: var(--color-accent-soft); border-color: var(--color-accent); }
+.grade-input .filter-chip:disabled { color: var(--color-text-faint); cursor: default; }
+.grade-input__summary td { font-weight: 600; border-top: 1px solid var(--color-hairline); }
+.grade-input > .grade-input__attendance { margin-top: var(--spacing-section); }
+.grade-input .empty-state--plain { background: none; padding: var(--spacing-section-lg) 0; display: grid; justify-items: center; gap: var(--spacing-xs); text-align: center; }
+.grade-input .empty-state--plain .button-primary { margin-top: var(--spacing-md); }
+.menu-rows { display: grid; }
+.menu-row { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); min-height: 64px; padding: var(--spacing-sm) 0; border: 0; border-bottom: 1px solid var(--color-hairline); background: none; font: inherit; text-align: left; cursor: pointer; }
+.menu-row:first-child { border-top: 1px solid var(--color-hairline); }
+.menu-row:hover, .menu-row:focus-visible { background: var(--color-canvas-soft); }
+.menu-row > span { display: grid; gap: var(--spacing-xxs); }
+.grade-mobile-only { display: none; }
+@media (max-width: 767px) {
+  .grade-input > * + * { margin-top: var(--spacing-md); }
+  .grade-input > .grade-input__attendance { margin-top: var(--spacing-xl); }
+  .grade-input__pick > .segmented-control { width: 100%; overflow-x: auto; }
+  .grade-input .filter-chip { min-height: 44px; }
+  .grade-mobile-only { display: block; }
+  .grade-desktop-only { display: none; }
+}
+.menu-row[aria-pressed='true'] { background: var(--color-accent-soft); box-shadow: inset 3px 0 0 var(--color-accent); padding-left: var(--spacing-sm); }
+.grade-input__attendance { display: grid; gap: var(--spacing-md); }
+.attendance-days { display: flex !important; align-items: center; gap: var(--spacing-xs); }
+.attendance-days input { width: 96px; }
+.attendance-grid { display: grid; grid-template-columns: 96px repeat(3, 136px); gap: var(--spacing-xs); align-items: center; max-width: 720px; }
+.attendance-cell { display: flex; align-items: center; gap: var(--spacing-xxs); }
+.attendance-cell input { width: 100%; min-height: 36px; font-variant-numeric: tabular-nums; }
+.attendance-grid input[aria-invalid='true'] { outline: 2px solid var(--color-judge-risk); outline-offset: -2px; }
+.grade-input__add { width: 100%; min-height: 52px; }
+@media (max-width: 767px) {
+  .grade-input__head .button-pill-soft { min-height: 44px; }
+  .attendance-grid { grid-template-columns: 56px repeat(3, minmax(0, 1fr)); }
+  .attendance-cell input { min-height: 44px; }
+}
+.reply-text { white-space: pre-wrap; }

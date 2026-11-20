@@ -1,0 +1,11 @@
+{
+  "id": "knue-revised",
+  "url": "https://www.knue.ac.kr/ipsi/selectBbsNttView.do?bbsNo=276&key=1845&nttNo=82605",
+  "checked_at": "2026-11-20T03:53:58.781247+00:00",
+  "final_url": "https://www.knue.ac.kr/ipsi/selectBbsNttView.do?bbsNo=276&key=1845&nttNo=82605",
+  "status": 200,
+  "bytes": 67422,
+  "sha256": "f1ca551b50f001c884eb4689466ea1823d150c6314a8c65895e0ef8cddb559d4",
+  "kind": "html",
+  "has_2028": true
+}

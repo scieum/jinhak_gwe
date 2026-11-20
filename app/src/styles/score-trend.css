@@ -1,0 +1,17 @@
+.score-trend-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-lg); }
+.score-trend-card { display: flex; flex-direction: column; gap: var(--spacing-lg); min-width: 0; padding: var(--spacing-lg); border: 1px solid var(--color-hairline-soft); }
+.score-trend-card header p { margin-top: var(--spacing-xs); }
+.score-trend-summary { display: grid; gap: var(--spacing-xs); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-hairline-soft); }
+.score-trend-summary strong { font-size: var(--font-numeric-size); font-variant-numeric: tabular-nums; }
+.score-trend-empty { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: var(--spacing-md); min-height: 320px; padding: var(--spacing-lg); }
+.score-trend-card .trend-chart { min-height: 200px; }
+.score-minimum-panel { display: grid; gap: var(--spacing-lg); }
+.score-minimum-close { display: grid; place-items: center; width: 44px; height: 44px; background: transparent; border: 0; cursor: pointer; }
+.dialog-backdrop:has(.score-minimum-panel) { justify-content: flex-end; padding: 0; }
+.dialog:has(.score-minimum-panel) { align-self: stretch; width: 440px; height: 100dvh; max-height: 100dvh; align-content: start; }
+@media (max-width: 767px) {
+  .score-trend-grid { grid-template-columns: 1fr; }
+  .score-trend-card { padding: var(--spacing-md); }
+  .score-trend-empty { min-height: 220px; padding-inline: 0; }
+  .dialog:has(.score-minimum-panel) { align-self: flex-end; width: 100%; height: auto; max-height: 90dvh; }
+}

@@ -1,0 +1,744 @@
+{
+  "date": "2026-11-19",
+  "file_key": "AqkVdYZ4hvPYuAlewoBs4W",
+  "page_id": "98:1904",
+  "status": "Figma transfer complete; formal G3 not run",
+  "counts": {
+    "affected_frames": 87,
+    "new_native_frames": 71,
+    "imported_reference_frames": 1,
+    "updated_existing_frames": 15
+  },
+  "validation": {
+    "section_overlaps": [],
+    "frame_overlaps": [],
+    "wrong_input_placeholders": 0,
+    "scrim_issues": [],
+    "typography": {
+      "IBM Plex Sans KR": 5800,
+      "mixed": 3
+    },
+    "scrollable_frames": 35,
+    "chart_point_wrapper_offsets": "0px on all six checked chart frames",
+    "formal_G3": "Not run: FIGMA_TOKEN absent. No approval recorded."
+  },
+  "sections": [
+    {
+      "id": "98:1909",
+      "name": "5 to 9 · five-to-nine",
+      "frames": [
+        {
+          "id": "92:23627",
+          "name": "five-to-nine/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=92-23627"
+        },
+        {
+          "id": "92:45294",
+          "name": "five-to-nine/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=92-45294"
+        },
+        {
+          "id": "92:57020",
+          "name": "five-to-nine/390-placement-table",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=92-57020"
+        },
+        {
+          "id": "92:67114",
+          "name": "five-to-nine/1440-placement-table",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=92-67114"
+        },
+        {
+          "id": "119:76574",
+          "name": "five-to-nine/1440-placement-board",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=119-76574"
+        },
+        {
+          "id": "119:77564",
+          "name": "five-to-nine/390-placement-board",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=119-77564"
+        },
+        {
+          "id": "135:89134",
+          "name": "five-to-nine/390-placement-dots",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=135-89134"
+        },
+        {
+          "id": "135:91111",
+          "name": "five-to-nine/1440-placement-dots",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=135-91111"
+        }
+      ]
+    },
+    {
+      "id": "98:1907",
+      "name": "성적 입력 · grade-input",
+      "frames": [
+        {
+          "id": "72:2276",
+          "name": "grade-input/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=72-2276"
+        },
+        {
+          "id": "72:7965",
+          "name": "grade-input/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=72-7965"
+        },
+        {
+          "id": "103:238399",
+          "name": "grade-input/1440-pdf-drop",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=103-238399"
+        },
+        {
+          "id": "103:238509",
+          "name": "grade-input/1440-pdf-reading",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=103-238509"
+        },
+        {
+          "id": "103:238613",
+          "name": "grade-input/1440-pdf-fail",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=103-238613"
+        },
+        {
+          "id": "125:79173",
+          "name": "grade-input/390-pdf-drop",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=125-79173"
+        },
+        {
+          "id": "125:79284",
+          "name": "grade-input/390-pdf-reading",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=125-79284"
+        },
+        {
+          "id": "125:79408",
+          "name": "grade-input/390-pdf-review",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=125-79408"
+        },
+        {
+          "id": "125:79502",
+          "name": "grade-input/1440-pdf-review",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=125-79502"
+        },
+        {
+          "id": "125:79697",
+          "name": "grade-input/390-pdf-overwrite",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=125-79697"
+        },
+        {
+          "id": "125:79830",
+          "name": "grade-input/1440-pdf-overwrite",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=125-79830"
+        },
+        {
+          "id": "125:79891",
+          "name": "grade-input/390-pdf-fail",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=125-79891"
+        },
+        {
+          "id": "125:80004",
+          "name": "grade-input/390-view-year",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=125-80004"
+        },
+        {
+          "id": "125:80240",
+          "name": "grade-input/1440-view-year",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=125-80240"
+        },
+        {
+          "id": "125:80567",
+          "name": "grade-input/390-pdf-done",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=125-80567"
+        }
+      ]
+    },
+    {
+      "id": "103:129734",
+      "name": "수시 입결 · admission-results",
+      "frames": [
+        {
+          "id": "103:247898",
+          "name": "admission-results/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=103-247898"
+        },
+        {
+          "id": "126:82848",
+          "name": "admission-results/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=126-82848"
+        },
+        {
+          "id": "127:83593",
+          "name": "admission-results/390-table",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=127-83593"
+        },
+        {
+          "id": "127:84017",
+          "name": "admission-results/1440-table",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=127-84017"
+        },
+        {
+          "id": "127:84532",
+          "name": "admission-results/390-compare-empty",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=127-84532"
+        },
+        {
+          "id": "127:84581",
+          "name": "admission-results/1440-compare",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=127-84581"
+        },
+        {
+          "id": "127:84738",
+          "name": "admission-results/390-dot-tooltip",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=127-84738"
+        }
+      ]
+    },
+    {
+      "id": "103:140083",
+      "name": "결과 집계 · result-summary",
+      "frames": [
+        {
+          "id": "103:140084",
+          "name": "result-summary/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=103-140084"
+        },
+        {
+          "id": "103:163212",
+          "name": "result-summary/1440-empty",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=103-163212"
+        },
+        {
+          "id": "103:167369",
+          "name": "result-summary/1440-no-results",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=103-167369"
+        },
+        {
+          "id": "103:171509",
+          "name": "result-summary/1440-toast",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=103-171509"
+        },
+        {
+          "id": "103:242451",
+          "name": "result-summary/1440-dropdown",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=103-242451"
+        },
+        {
+          "id": "128:84941",
+          "name": "result-summary/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=128-84941"
+        },
+        {
+          "id": "128:85032",
+          "name": "result-summary/1440-mock-score",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=128-85032"
+        }
+      ]
+    },
+    {
+      "id": "103:190763",
+      "name": "회원가입 · signup",
+      "frames": [
+        {
+          "id": "123:78951",
+          "name": "signup/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=123-78951"
+        },
+        {
+          "id": "123:79042",
+          "name": "signup/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=123-79042"
+        },
+        {
+          "id": "123:79263",
+          "name": "signup/1440-sent",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=123-79263"
+        },
+        {
+          "id": "123:79346",
+          "name": "signup/390-terms",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=123-79346"
+        },
+        {
+          "id": "123:79400",
+          "name": "signup/1440-error",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=123-79400"
+        }
+      ]
+    },
+    {
+      "id": "129:85563",
+      "name": "입시 일정 · calendar",
+      "frames": [
+        {
+          "id": "129:85564",
+          "name": "calendar/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=129-85564"
+        },
+        {
+          "id": "129:85931",
+          "name": "calendar/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=129-85931"
+        },
+        {
+          "id": "136:90408",
+          "name": "calendar/390-agenda-conflict",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=136-90408"
+        },
+        {
+          "id": "136:90493",
+          "name": "calendar/1440-agenda-conflict",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=136-90493"
+        },
+        {
+          "id": "136:90669",
+          "name": "calendar/1440-teacher",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=136-90669"
+        },
+        {
+          "id": "137:93577",
+          "name": "calendar/390-detail",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93577"
+        },
+        {
+          "id": "137:93669",
+          "name": "calendar/390-export",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93669"
+        },
+        {
+          "id": "146:95981",
+          "name": "calendar/390-teacher",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=146-95981"
+        }
+      ]
+    },
+    {
+      "id": "129:86389",
+      "name": "최저로 찾기 · minimum-search",
+      "frames": [
+        {
+          "id": "129:86390",
+          "name": "minimum-search/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=129-86390"
+        },
+        {
+          "id": "129:86483",
+          "name": "minimum-search/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=129-86483"
+        },
+        {
+          "id": "136:89731",
+          "name": "minimum-search/390-what-if",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=136-89731"
+        },
+        {
+          "id": "136:89933",
+          "name": "minimum-search/1440-what-if",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=136-89933"
+        }
+      ]
+    },
+    {
+      "id": "129:86666",
+      "name": "전형 비교 · compare",
+      "frames": [
+        {
+          "id": "129:86667",
+          "name": "compare/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=129-86667"
+        },
+        {
+          "id": "129:86966",
+          "name": "compare/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=129-86966"
+        },
+        {
+          "id": "136:89812",
+          "name": "compare/390-empty",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=136-89812"
+        },
+        {
+          "id": "136:90105",
+          "name": "compare/1440-empty",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=136-90105"
+        }
+      ]
+    },
+    {
+      "id": "129:87355",
+      "name": "면접 준비 · interview-prep",
+      "frames": [
+        {
+          "id": "129:87356",
+          "name": "interview-prep/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=129-87356"
+        },
+        {
+          "id": "129:87430",
+          "name": "interview-prep/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=129-87430"
+        },
+        {
+          "id": "136:89864",
+          "name": "interview-prep/390-practice",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=136-89864"
+        },
+        {
+          "id": "136:90248",
+          "name": "interview-prep/1440-practice",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=136-90248"
+        }
+      ]
+    },
+    {
+      "id": "129:87595",
+      "name": "바로가기 · public-links",
+      "frames": [
+        {
+          "id": "129:87596",
+          "name": "public-links/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=129-87596"
+        },
+        {
+          "id": "129:87683",
+          "name": "public-links/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=129-87683"
+        },
+        {
+          "id": "137:93147",
+          "name": "public-links/390-external-confirm",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93147"
+        },
+        {
+          "id": "137:93360",
+          "name": "public-links/1440-external-confirm",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93360"
+        }
+      ]
+    },
+    {
+      "id": "132:87995",
+      "name": "원서·서류 체크리스트 · application-checklist",
+      "frames": [
+        {
+          "id": "132:87996",
+          "name": "application-checklist/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=132-87996"
+        },
+        {
+          "id": "132:88081",
+          "name": "application-checklist/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=132-88081"
+        },
+        {
+          "id": "137:93180",
+          "name": "application-checklist/390-edit",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93180"
+        },
+        {
+          "id": "137:93394",
+          "name": "application-checklist/1440-edit",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93394"
+        }
+      ]
+    },
+    {
+      "id": "132:88257",
+      "name": "지원 자격 확인표 · eligibility-check",
+      "frames": [
+        {
+          "id": "132:88258",
+          "name": "eligibility-check/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=132-88258"
+        },
+        {
+          "id": "132:88338",
+          "name": "eligibility-check/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=132-88338"
+        },
+        {
+          "id": "137:93241",
+          "name": "eligibility-check/390-evidence",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93241"
+        },
+        {
+          "id": "137:93456",
+          "name": "eligibility-check/1440-evidence",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93456"
+        }
+      ]
+    },
+    {
+      "id": "132:88509",
+      "name": "상담 질문·할 일 · counsel-tasks",
+      "frames": [
+        {
+          "id": "132:88510",
+          "name": "counsel-tasks/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=132-88510"
+        },
+        {
+          "id": "132:88585",
+          "name": "counsel-tasks/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=132-88585"
+        },
+        {
+          "id": "137:93300",
+          "name": "counsel-tasks/390-edit",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93300"
+        },
+        {
+          "id": "137:93516",
+          "name": "counsel-tasks/1440-edit",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93516"
+        }
+      ]
+    },
+    {
+      "id": "133:88489",
+      "name": "전형 성향 탐색 · admission-style",
+      "frames": [
+        {
+          "id": "133:88490",
+          "name": "admission-style/390",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=133-88490"
+        },
+        {
+          "id": "133:88552",
+          "name": "admission-style/390-question",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=133-88552"
+        },
+        {
+          "id": "133:88627",
+          "name": "admission-style/390-result",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=133-88627"
+        },
+        {
+          "id": "133:88691",
+          "name": "admission-style/1440",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=133-88691"
+        },
+        {
+          "id": "133:88842",
+          "name": "admission-style/1440-question",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=133-88842"
+        },
+        {
+          "id": "133:89008",
+          "name": "admission-style/1440-result",
+          "width": 1440,
+          "height": 900,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=133-89008"
+        },
+        {
+          "id": "137:93758",
+          "name": "admission-style/390-mixed",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93758"
+        },
+        {
+          "id": "137:93804",
+          "name": "admission-style/390-insufficient",
+          "width": 390,
+          "height": 844,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=137-93804"
+        },
+        {
+          "id": "130:87995",
+          "name": "admission-style/reference-capture-958",
+          "width": 958,
+          "height": 1074,
+          "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=130-87995"
+        }
+      ]
+    }
+  ],
+  "components": {
+    "placement_board_tag": "119:76557",
+    "summary_row": "124:79173",
+    "admission_style_card": "133:89163",
+    "student_sidebar": "138:92814",
+    "teacher_sidebar": "138:92964",
+    "extended_subnav": "140:93186",
+    "parts_section": "147:96028"
+  },
+  "palette": {
+    "collection": "VariableCollectionId:133:88483",
+    "peach": "VariableID:133:88484",
+    "lilac": "VariableID:133:88485",
+    "mint": "VariableID:133:88486",
+    "yellow": "VariableID:133:88487",
+    "sky": "VariableID:133:88488"
+  },
+  "notes": [
+    "The 958px native web capture is preserved inside admission-style, node 130:87995; source font Pretendard retained only there.",
+    "Main transferred UI uses IBM Plex Sans KR; three text nodes contain mixed ranges.",
+    "Design values, universities and dates are labeled as examples; unpublished and unreviewed data is shown as pending.",
+    "Formal S2/G2 records for new screens and existing 03-draft indexes were not rewritten; use this transfer manifest for current Figma IDs.",
+    "No 04-approval.md or protected docs/rules/scripts files changed."
+  ]
+}

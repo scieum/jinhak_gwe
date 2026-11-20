@@ -1,0 +1,12 @@
+{
+  "id": "postech-plan",
+  "url": "https://adm-u.postech.ac.kr/wp-content/uploads/2026/03/2028학년도_POSTECH_대학입학전형_시행계획_통합.pdf",
+  "checked_at": "2026-11-20T03:57:22.126414+00:00",
+  "final_url": "https://adm-u.postech.ac.kr/wp-content/uploads/2026/03/2028%ED%95%99%EB%85%84%EB%8F%84_POSTECH_%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95_%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D_%ED%86%B5%ED%95%A9.pdf",
+  "status": 200,
+  "bytes": 148334,
+  "sha256": "0f63baca87187cf5a7493b28e656fcdc64d8c2f40a8f0096e9816d040fbe0323",
+  "kind": "pdf",
+  "pages": 11,
+  "has_2028": true
+}

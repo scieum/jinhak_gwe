@@ -1,0 +1,63 @@
+.student-screen { display: grid; gap: var(--spacing-lg); min-width: 0; }
+.screen-heading, .section-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--spacing-md); }
+.screen-heading p { margin-top: var(--spacing-xs); }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-xs); }
+.student-screen input, .student-screen select, .dialog input, .dialog select { font: inherit; color: var(--color-ink); background: var(--color-field); border: 1px solid var(--color-hairline); padding: var(--spacing-xs) var(--spacing-sm); min-height: 44px; min-width: 0; max-width: 100%; }
+.student-screen label, .dialog label { display: grid; gap: var(--spacing-xxs); font-size: var(--font-body-sm-size); }
+.student-screen .toolbar > label, .student-screen .section-row > label { display: flex; align-items: center; gap: var(--spacing-xs); white-space: nowrap; }
+.notice, .empty-state { padding: var(--spacing-lg); background: var(--color-canvas-soft); }
+.empty-state p { margin-top: var(--spacing-xs); color: var(--color-text-muted); }
+.stats { display: flex; flex-wrap: wrap; gap: var(--spacing-lg); padding: var(--spacing-lg) 0; border-block: 1px solid var(--color-hairline); }
+.stats > div { display: grid; gap: var(--spacing-xs); min-width: 120px; }
+.stats strong { font-size: var(--font-numeric-size); font-variant-numeric: tabular-nums; }
+.table-scroll { width: 100%; overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--font-table-size); }
+.data-table caption { text-align: left; }
+.data-table th, .data-table td { padding: var(--spacing-sm); text-align: left; border-bottom: 1px solid var(--color-hairline); font-variant-numeric: tabular-nums; }
+.data-table thead { background: var(--color-canvas-soft); }
+.grade-input-table { min-width: 1000px; }
+.grade-input-table input { width: 76px; padding-inline: var(--spacing-xxs); }
+.grade-mobile { display: none; }
+.subject-card { border-bottom: 1px solid var(--color-hairline); padding-block: var(--spacing-md); display: grid; gap: var(--spacing-xs); }
+.dialog textarea { width: 100%; font: inherit; background: var(--color-field); border: 1px solid var(--color-hairline); padding: var(--spacing-sm); }
+.grade-input-table th[scope="row"] { position: sticky; left: 0; background: var(--color-canvas); }
+.error-note { color: var(--color-judge-risk); background: var(--color-judge-risk-bg); padding: var(--spacing-sm); }
+.dialog-backdrop { position: fixed; inset: 0; z-index: 100; background: var(--color-scrim); display: flex; align-items: center; justify-content: center; padding: var(--spacing-md); }
+.dialog { display: grid; gap: var(--spacing-md); width: 520px; max-width: 100%; max-height: 90dvh; overflow-y: auto; padding: var(--spacing-lg); background: var(--color-canvas); box-shadow: var(--shadow-overlay); }
+.dialog-wide { width: 840px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-md); }
+.dialog fieldset { border: 1px solid var(--color-hairline); padding: var(--spacing-md); min-width: 0; }
+.distribution-fields { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--spacing-xs); }
+.checkbox-label { display: flex !important; align-items: center; gap: var(--spacing-xs); }
+.dialog input[type="checkbox"] { width: 20px; height: 20px; }
+.dialog .data-table input { width: 100%; padding-inline: var(--spacing-xxs); }
+.text-button { border: 0; background: none; text-decoration: underline; cursor: pointer; min-height: 44px; padding: var(--spacing-xs); }
+.trace-accordion { border-block: 1px solid var(--color-hairline); padding-block: var(--spacing-md); }
+.trace-accordion summary { cursor: pointer; font-weight: 600; min-height: 44px; display: list-item; }
+.trace-accordion ol { padding-left: var(--spacing-lg); display: grid; gap: var(--spacing-sm); }
+.disclaimer-note { margin-top: var(--spacing-sm); }
+.univ-card { display: grid; gap: var(--spacing-sm); padding: var(--spacing-lg); border: 1px solid var(--color-hairline); }
+.position-summary { display: grid; gap: var(--spacing-xs); padding: var(--spacing-lg); background: var(--color-accent-soft); }
+.position-summary strong { color: var(--color-accent); }
+.range-ruler { position: relative; display: flex; justify-content: space-between; margin: var(--spacing-md) var(--spacing-lg); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--color-hairline); }
+.range-ruler__position { position: absolute; bottom: 0; height: 6px; background: var(--color-accent); }
+.judge-badge { display: inline-block; justify-self: start; padding: var(--spacing-xs) var(--spacing-sm); font-weight: 600; }
+.judge-safe { color: var(--color-judge-safe); background: var(--color-judge-safe-bg); }
+.judge-fit { color: var(--color-judge-fit); background: var(--color-judge-fit-bg); }
+.judge-reach { color: var(--color-judge-reach); background: var(--color-judge-reach-bg); }
+.judge-risk { color: var(--color-judge-risk); background: var(--color-judge-risk-bg); }
+.judge-none { color: var(--color-judge-none); background: var(--color-judge-none-bg); }
+.quick-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-md); }
+.trend-chart { width: 100%; max-height: 320px; font: inherit; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@media (max-width: 767px) {
+  .grade-desktop { display: none; }
+  .grade-mobile { display: grid; gap: var(--spacing-xs); }
+  .dialog-backdrop { padding: 0; align-items: flex-end; }
+  .dialog { width: 100%; max-height: 90dvh; padding: var(--spacing-md); }
+  .toolbar > .segmented-control { max-width: 100%; overflow-x: auto; }
+  .stats { gap: var(--spacing-md); }
+  .stats > div { min-width: 100px; }
+  .quick-links { grid-template-columns: 1fr; }
+}
+.data-status-badge { display: inline-block; justify-self: start; padding: var(--spacing-xs) var(--spacing-sm); color: var(--color-text-muted); background: var(--color-canvas-soft); font-size: var(--font-label-size); font-weight: var(--font-label-weight); }

@@ -1,0 +1,28 @@
+{
+  "id": "document-0000004",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252619&fileSn=1",
+  "checked_at": "2026-11-20T04:00:40.836429+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252619&fileSn=1",
+  "status": 200,
+  "bytes": 1782469,
+  "sha256": "9a95ed9f0cb1482509438408debc5fbc50030e8d61bf987c5838fa65b9f520af",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "[삼척] 2028학년도 외국인 학부 입학전형 시행계획_최종.hwp",
+      "zip_name": "[삼척] 2028학년도 외국인 학부 입학전형 시행계획_최종.hwp",
+      "bytes": 577024
+    },
+    {
+      "name": "[삼척] 2028학년도 대학입학전형 모집단위별 모집인원_최종.xlsx",
+      "zip_name": "[삼척] 2028학년도 대학입학전형 모집단위별 모집인원_최종.xlsx",
+      "bytes": 109221
+    },
+    {
+      "name": "[삼척] 2028학년도 대학입학전형시행계획_최종.hwp",
+      "zip_name": "[삼척] 2028학년도 대학입학전형시행계획_최종.hwp",
+      "bytes": 1539072
+    }
+  ],
+  "has_2028": true
+}

@@ -3,6 +3,18 @@
   min-height: 100vh;
 }
 
+.brand-logo {
+  display: block;
+  width: 192px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.appbar .brand-logo {
+  width: 150px;
+  height: 50px;
+}
+
 .shell__content {
   padding: var(--spacing-md);
   /* 떠 있는 하단 탭바(64 + 아래 16)에 내용이 가리지 않게 */
@@ -39,6 +51,8 @@
   padding: 0 var(--spacing-md);
   background: var(--color-canvas);
 }
+.appbar__actions { margin-left: auto; display: flex; }
+.appbar__actions button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer; }
 .appbar__back {
   display: inline-flex;
   align-items: center;
@@ -138,8 +152,9 @@
     background: var(--color-canvas-soft);
   }
   .sidebar__wordmark {
-    display: block;
-    padding: var(--spacing-card) var(--spacing-md);
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
   }
 
   .sidebar-group,
@@ -177,14 +192,17 @@
     padding: 0 var(--spacing-md) 0 calc(var(--spacing-xl) - 3px);
     border-left: 3px solid transparent;
     color: var(--color-ink-soft);
+    font-weight: var(--font-body-weight);
   }
   .sidebar-item--top {
     padding-left: calc(var(--spacing-md) - 3px);
+    font-weight: var(--font-link-weight);
   }
   .sidebar-item[aria-current='page'] {
     background: var(--color-accent-soft);
     border-left-color: var(--color-accent);
     color: var(--color-ink);
+    font-weight: var(--font-link-weight);
   }
 
   .topbar {
@@ -201,3 +219,13 @@
     padding: var(--spacing-xl);
   }
 }
+.sidebar__caption { padding: var(--spacing-md) var(--spacing-md) var(--spacing-xxs); }
+.more-features { display: grid; gap: var(--spacing-md); }
+.more-features ul { list-style: none; padding: 0; display: grid; }
+.more-features a { display: block; min-height: 44px; padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--color-hairline); }
+.topbar__actions { display: flex; align-items: center; gap: var(--spacing-xs); }
+.teacher-lock__button { display: inline-flex; align-items: center; gap: var(--spacing-xxs); min-height: 44px; }
+.teacher-lock { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: var(--spacing-md); background: var(--color-canvas); }
+.teacher-lock__box { width: 100%; max-width: 360px; display: grid; gap: var(--spacing-md); justify-items: start; }
+.teacher-lock__box label { display: grid; gap: var(--spacing-xxs); width: 100%; }
+.teacher-lock__box input { min-height: 48px; width: 100%; font: inherit; background: var(--color-field); border: 0; padding: 0 var(--spacing-md); }

@@ -1,0 +1,11 @@
+{
+  "id": "notice-2b78f8a6ba33",
+  "url": "https://admission.inha.ac.kr/cms/FR_BBS_CON/BoardView.do?pageNo=1&pagePerCnt=15&MENU_ID=240&CONTENTS_NO=&SITE_NO=2&BOARD_SEQ=1&BBS_SEQ=1300&P_BBS_SEQ=&PWD=&SEARCH_SEQ=&SEARCH_FLD=&SEARCH=2028",
+  "checked_at": "2026-11-20T03:55:40.453961+00:00",
+  "final_url": "https://admission.inha.ac.kr/cms/FR_BBS_CON/BoardView.do?pageNo=1&pagePerCnt=15&MENU_ID=240&CONTENTS_NO=&SITE_NO=2&BOARD_SEQ=1&BBS_SEQ=1300&P_BBS_SEQ=&PWD=&SEARCH_SEQ=&SEARCH_FLD=&SEARCH=2028",
+  "status": 200,
+  "bytes": 50072,
+  "sha256": "2db21455d52ee4102b2d7fca25e5142cf933a0b1455cdeb4ca2c12b98cb8f1ae",
+  "kind": "html",
+  "has_2028": true
+}

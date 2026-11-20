@@ -1,0 +1,11 @@
+{
+  "id": "notice-7af8e111c332",
+  "url": "https://iphak.jj.ac.kr/iphak/assistant/notice.do?mode=view&articleNo=522050&article.offset=0&articleLimit=10",
+  "checked_at": "2026-11-20T03:55:40.699050+00:00",
+  "final_url": "https://iphak.jj.ac.kr/iphak/assistant/notice.do?mode=view&articleNo=522050&article.offset=0&articleLimit=10",
+  "status": 200,
+  "bytes": 123926,
+  "sha256": "5e1e2cf3056b2c7c20da313c965eb3a783d45d0779d9f2b6c1a5f816d7b265bf",
+  "kind": "html",
+  "has_2028": true
+}

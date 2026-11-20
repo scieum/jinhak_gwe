@@ -1,0 +1,11 @@
+{
+  "id": "notice-a5ff0aa7cc4c",
+  "url": "https://adm-u.unist.ac.kr/admission/community/etc.do?mode=view&articleNo=280136&article.offset=0&articleLimit=100",
+  "checked_at": "2026-11-20T03:55:41.922574+00:00",
+  "final_url": "https://adm-u.unist.ac.kr/admission/community/etc.do?mode=view&articleNo=280136&article.offset=0&articleLimit=100",
+  "status": 200,
+  "bytes": 40360,
+  "sha256": "c8df034d36e1158fc87d333eff9004f96cd5e5230fe7b691f281ad44c22f9153",
+  "kind": "html",
+  "has_2028": true
+}

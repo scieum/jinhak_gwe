@@ -1,0 +1,23 @@
+{
+  "id": "document-0000021",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253632&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.115489+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253632&fileSn=1",
+  "status": 200,
+  "bytes": 780303,
+  "sha256": "db20097059c37575586df53d10ecb48620b7d6e2e3e2318634eb9911175db58c",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "국립경국대학교1,378명_2028학년도 대학입학전형시행계획_최종.hwp",
+      "zip_name": "국립경국대학교1,378명_2028학년도 대학입학전형시행계획_최종.hwp",
+      "bytes": 898048
+    },
+    {
+      "name": "★ 2028학년도 외국인 특별전형 기본계획(안) 1부.hwp",
+      "zip_name": "★ 2028학년도 외국인 특별전형 기본계획(안) 1부.hwp",
+      "bytes": 165376
+    }
+  ],
+  "has_2028": true
+}

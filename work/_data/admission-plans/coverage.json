@@ -1,0 +1,104 @@
+{
+  "entries": 218,
+  "university_names": 194,
+  "program_summaries": 8,
+  "archive_only": [
+    {
+      "university": "진주교육대학교",
+      "campus": "본교",
+      "file": "진주교육대학교[경남][본교]_2028_시행계획(1차수).pdf",
+      "member_sha256": "9d8466af536c5130d83433b98bc752f73341dc2ccfb2f341a8b7ef6959479ffd"
+    },
+    {
+      "university": "춘천교육대학교",
+      "campus": "본교",
+      "file": "춘천교육대학교[강원][본교]_2028_시행계획(1차수).hwp",
+      "member_sha256": "f9435dbb5719eec27d2ce71b50ba9a90e4ee4cef9b71d6a1494fe24268ac4645"
+    },
+    {
+      "university": "포항공과대학교",
+      "campus": "본교",
+      "file": "포항공과대학교[경북][본교]_2028_시행계획(1차수).pdf",
+      "member_sha256": "0f63baca87187cf5a7493b28e656fcdc64d8c2f40a8f0096e9816d040fbe0323"
+    },
+    {
+      "university": "한일장신대학교",
+      "campus": "본교",
+      "file": "한일장신대학교[전북][본교]_2028_시행계획(1차수).pdf",
+      "member_sha256": "85b48ba8f715c3fc8df61a25a797be06e8c914c15494106f7dbc44f1aa0dc62d"
+    },
+    {
+      "university": "배재대학교",
+      "campus": "본교",
+      "file": "배재대학교[대전][본교]_2028_시행계획(1차수).pdf",
+      "member_sha256": "08481c964cea4c4e31ccfead5abd7f5b782d558adc2e9b034613996aea3aaa5b"
+    },
+    {
+      "university": "영남신학대학교",
+      "campus": "본교",
+      "file": "영남신학대학교[경북][본교]_2028_시행계획(1차수).pdf",
+      "member_sha256": "25364c2e3733e507d5db9747df43a54f7f3c23f38265e7d7e7ff43fa48dfee78"
+    },
+    {
+      "university": "영산대학교",
+      "campus": "제2캠퍼스",
+      "file": "영산대학교[경남][제2캠퍼스]_2028_시행계획(1차수).pdf",
+      "member_sha256": "a0571ac175a994864ff572772c751433948a43389fe640424f6084cdd2a9f7ce"
+    },
+    {
+      "university": "영산대학교",
+      "campus": "본교",
+      "file": "영산대학교[부산][본교]_2028_시행계획(1차수).pdf",
+      "member_sha256": "a0571ac175a994864ff572772c751433948a43389fe640424f6084cdd2a9f7ce"
+    },
+    {
+      "university": "예원예술대학교",
+      "campus": "제2캠퍼스",
+      "file": "예원예술대학교[경기][제2캠퍼스]_2028_시행계획(1차수).pdf",
+      "member_sha256": "a8fe21e8a28433664f86406f31838d8980770f717a7ce0e004ebcd4e41cf8b31"
+    },
+    {
+      "university": "예원예술대학교",
+      "campus": "본교",
+      "file": "예원예술대학교[전북][본교]_2028_시행계획(1차수).pdf",
+      "member_sha256": "a8fe21e8a28433664f86406f31838d8980770f717a7ce0e004ebcd4e41cf8b31"
+    },
+    {
+      "university": "을지대학교",
+      "campus": "제2캠퍼스",
+      "file": "을지대학교[경기][제2캠퍼스]_2028_시행계획(1차수).pdf",
+      "member_sha256": "6dd2fc42e581bd1438e13e8442e8c0512d156836ee868cfc102308dda12e1906"
+    },
+    {
+      "university": "을지대학교",
+      "campus": "제3캠퍼스",
+      "file": "을지대학교[경기][제3캠퍼스]_2028_시행계획(1차수).pdf",
+      "member_sha256": "2e914ba50d58072613ae3df5110d50414ddf31a2842c579599ab945806cae577"
+    },
+    {
+      "university": "국립창원대학교",
+      "campus": "제2캠퍼스",
+      "file": "국립창원대학교[경남][제2캠퍼스]_2028_시행계획(1차수).pdf",
+      "member_sha256": "926b826071154622f1915c8352aee9fe4aa965432c94b006684d127a0ccbab38"
+    },
+    {
+      "university": "국립창원대학교",
+      "campus": "제3캠퍼스",
+      "file": "국립창원대학교[경남][제3캠퍼스]_2028_시행계획(1차수).pdf",
+      "member_sha256": "e595b610568d697d008250b1bf38aa1b500140b52766db32cdc36a49c2169adc"
+    },
+    {
+      "university": "가톨릭대학교",
+      "campus": "제2캠퍼스",
+      "file": "가톨릭대학교[서울][제2캠퍼스]_2028_시행계획(1차수).pdf",
+      "member_sha256": "2686839eb071d1a2deff67cb67b45e684065abab0c712c965c788f05af5578ea"
+    },
+    {
+      "university": "광신대학교",
+      "campus": "본교",
+      "file": "광신대학교[광주][본교]_2028_시행계획(1차수)-복사_압축.pdf",
+      "member_sha256": "dbbf4ff01c4950b7b88c5be5a3506cd1dbe00d00cebd41ad5e5438498e628369"
+    }
+  ],
+  "source_only": 214
+}

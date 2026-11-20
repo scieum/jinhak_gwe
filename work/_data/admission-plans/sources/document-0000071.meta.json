@@ -1,0 +1,28 @@
+{
+  "id": "document-0000071",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254900&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.111549+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254900&fileSn=1",
+  "status": 200,
+  "bytes": 881576,
+  "sha256": "6bd63fb8d309e71340f634bf623e322719e16c709330eb5bc8dda39457fbb79d",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "2028학년도 고신대학교 대학입학전형시행계획.pdf",
+      "zip_name": "2028학년도 고신대학교 대학입학전형시행계획.pdf",
+      "bytes": 286976
+    },
+    {
+      "name": "2028학년도 고신대학교 재외국민및외국인(2% 이내) 시행계획.pdf",
+      "zip_name": "2028학년도 고신대학교 재외국민및외국인(2% 이내) 시행계획.pdf",
+      "bytes": 339712
+    },
+    {
+      "name": "2028학년도 고신대학교 전형기간자율화 시행계획.pdf",
+      "zip_name": "2028학년도 고신대학교 전형기간자율화 시행계획.pdf",
+      "bytes": 343868
+    }
+  ],
+  "has_2028": true
+}

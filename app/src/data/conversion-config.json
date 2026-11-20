@@ -1,0 +1,19 @@
+{
+  "_comment": "5→9 환산 설정(PRD 9장 R-CONV). 기준점은 관리자 설정값. review_status가 verified인 규칙만 엔진이 계산한다(NEVER-1).",
+  "centers5": [5, 22, 50, 78, 95],
+  "centers9": [2, 7.5, 17, 31.5, 50, 68.5, 83, 92.5, 98],
+  "cumulative5": [10, 34, 66, 90, 100],
+  "rules": {
+    "R-CONV-003": { "review_status": "verified", "note": "PRD 9장 확정 공식, 단위 테스트로 검산" },
+    "R-CONV-004": { "review_status": "verified", "note": "PRD 9장 확정 공식, 단위 테스트로 검산" },
+    "R-CONV-010": { "review_status": "pending", "note": "누적 인원 반올림·동석차 처리를 시행지침 원문으로 확인 전" },
+    "R-CONV-011": { "review_status": "draft", "note": "공개 선례 없음. 익명 표본 검증 전" }
+  },
+  "confidence": {
+    "_comment": "R-CONV-008 경계값은 PRD에 아직 없음. 임시 기본값(draft)",
+    "minRankedSubjects": 12,
+    "maxSmallRatio": 0.1,
+    "maxSpread": 0.3,
+    "smallClassMax": 13
+  }
+}

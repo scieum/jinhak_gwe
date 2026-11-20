@@ -1,0 +1,23 @@
+{
+  "id": "document-0000107",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254443&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.398021+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254443&fileSn=1",
+  "status": 200,
+  "bytes": 1033056,
+  "sha256": "b30de49ae85d3f72cf5f7a67070cb99356249fa49ce055adddb30eea989be5f6",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "2028학년도 부모 모두가 외국인인 외국인 시행계획(동의대)_공고용.pdf",
+      "zip_name": "2028학년도 부모 모두가 외국인인 외국인 시행계획(동의대)_공고용.pdf",
+      "bytes": 211792
+    },
+    {
+      "name": "2028학년도 대학입학전형 시행계획(동의대)_공고용.pdf",
+      "zip_name": "2028학년도 대학입학전형 시행계획(동의대)_공고용.pdf",
+      "bytes": 993929
+    }
+  ],
+  "has_2028": true
+}

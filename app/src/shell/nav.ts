@@ -49,15 +49,17 @@ export const NAV: Record<Mode, NavGroup[]> = {
       label: '대학 찾기',
       icon: 'search',
       items: [
+        student('전형 성향 탐색', 'admission-style', 'sparkles'),
         student('전형계획', 'admissions-list', 'file-text'),
-        student('수시 입결', 'admission-results', 'book-open'),
+        student('수시 입결', 'admission-results', 'chart-column'),
         student('될각', 'doelgak', 'target'),
+        student('지원 자격 확인표', 'eligibility-check', 'check'),
       ],
     },
     {
       label: '수시 전략',
       icon: 'layout-grid',
-      items: [student('수시로', 'susiro', 'layout-grid'), student('생기부 AI', 'saenggibu-ai', 'sparkles')],
+      items: [student('수시로', 'susiro', 'layout-grid'), student('원서·서류 체크리스트', 'application-checklist', 'check'), student('상담 질문·할 일', 'counsel-tasks', 'message-square'), student('생기부 AI', 'saenggibu-ai', 'sparkles')],
     },
   ],
   teacher: [

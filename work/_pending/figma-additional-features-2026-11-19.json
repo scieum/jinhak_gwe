@@ -1,0 +1,316 @@
+{
+  "date": "2026-11-19",
+  "fileKey": "AqkVdYZ4hvPYuAlewoBs4W",
+  "url": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=158-100219",
+  "pageId": "158:100219",
+  "sections": [
+    {
+      "id": "159:2",
+      "name": "01 · 성향 검사 — 전형 성향 탐색",
+      "x": 80,
+      "y": 600,
+      "width": 2070,
+      "height": 7060,
+      "frames": [
+        {
+          "id": "159:3",
+          "name": "admission-style/390",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:42",
+          "name": "admission-style/390-question",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:72",
+          "name": "admission-style/390-result",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:102",
+          "name": "admission-style/1440",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:131",
+          "name": "admission-style/1440-question",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:153",
+          "name": "admission-style/1440-result",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:175",
+          "name": "admission-style/390-mixed",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:206",
+          "name": "admission-style/390-insufficient",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:240",
+          "name": "admission-style/reference-capture-958",
+          "width": 958,
+          "height": 1074
+        },
+        {
+          "id": "159:374",
+          "name": "admission-style/1440-mixed",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:397",
+          "name": "admission-style/1440-insufficient",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:423",
+          "name": "admission-style/390-open",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:457",
+          "name": "admission-style/1440-open",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:483",
+          "name": "admission-style/390-question-unanswered",
+          "width": 390,
+          "height": 844
+        }
+      ]
+    },
+    {
+      "id": "159:513",
+      "name": "02 · 원서·서류 체크리스트",
+      "x": 2350,
+      "y": 600,
+      "width": 2070,
+      "height": 5060,
+      "frames": [
+        {
+          "id": "159:514",
+          "name": "application-checklist/390",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:549",
+          "name": "application-checklist/1440",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:580",
+          "name": "application-checklist/390-edit",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:637",
+          "name": "application-checklist/1440-edit",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:690",
+          "name": "application-checklist/390-add-application",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:750",
+          "name": "application-checklist/390-delete-application",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:797",
+          "name": "application-checklist/1440-add-application",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:853",
+          "name": "application-checklist/1440-delete-application",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:896",
+          "name": "application-checklist/390-empty",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:912",
+          "name": "application-checklist/1440-empty",
+          "width": 1440,
+          "height": 900
+        }
+      ]
+    },
+    {
+      "id": "159:921",
+      "name": "03 · 지원 자격 확인표",
+      "x": 80,
+      "y": 7900,
+      "width": 2070,
+      "height": 3060,
+      "frames": [
+        {
+          "id": "159:922",
+          "name": "eligibility-check/390",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:957",
+          "name": "eligibility-check/1440",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:986",
+          "name": "eligibility-check/390-evidence",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:1044",
+          "name": "eligibility-check/1440-evidence",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:1096",
+          "name": "eligibility-check/390-empty",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:1113",
+          "name": "eligibility-check/1440-empty",
+          "width": 1440,
+          "height": 900
+        }
+      ]
+    },
+    {
+      "id": "159:1122",
+      "name": "04 · 상담 질문·할 일",
+      "x": 2350,
+      "y": 7900,
+      "width": 2070,
+      "height": 4060,
+      "frames": [
+        {
+          "id": "159:1123",
+          "name": "counsel-tasks/390",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:1148",
+          "name": "counsel-tasks/1440",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:1168",
+          "name": "counsel-tasks/390-edit",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:1218",
+          "name": "counsel-tasks/1440-edit",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:1263",
+          "name": "counsel-tasks/390-empty",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:1279",
+          "name": "counsel-tasks/1440-empty",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "id": "159:1288",
+          "name": "counsel-tasks/390-completed",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:1311",
+          "name": "counsel-tasks/1440-completed",
+          "width": 1440,
+          "height": 900
+        }
+      ]
+    },
+    {
+      "id": "159:1328",
+      "name": "05 · 입결 비교 조건",
+      "x": 80,
+      "y": 12200,
+      "width": 2070,
+      "height": 1060,
+      "frames": [
+        {
+          "id": "159:1329",
+          "name": "admission-results/390-comparison-basis",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "id": "159:1396",
+          "name": "admission-results/1440-comparison-basis",
+          "width": 1440,
+          "height": 900
+        }
+      ]
+    }
+  ],
+  "totalFrames": 40,
+  "newOriginalFrames": 19,
+  "verification": {
+    "visualReview": true,
+    "layoutAudit": {
+      "frames": 40,
+      "issues": []
+    },
+    "formalG3": "Not run: FIGMA_TOKEN unavailable."
+  },
+  "scope": [
+    "성향 검사 소개·문항·결과 유형 및 응답 근거",
+    "원서·서류 체크리스트와 원서 추가·삭제·빈 상태",
+    "지원 자격 확인 및 근거 편집",
+    "상담 질문·할 일과 완료 상태",
+    "입결 비교 조건 및 공식 자료 준비 상태"
+  ],
+  "note": "Original sections in 전체 시안 were updated and copied into the dedicated page. Count includes one imported app reference."
+}

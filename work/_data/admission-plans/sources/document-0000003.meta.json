@@ -1,0 +1,28 @@
+{
+  "id": "document-0000003",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252746&fileSn=1",
+  "checked_at": "2026-11-20T04:00:40.835420+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252746&fileSn=1",
+  "status": 200,
+  "bytes": 1759476,
+  "sha256": "457b23182f98de0cb56afa004e2bf59a9cbc44f5841649e2dbef1a2475565cb8",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "(춘천캠퍼스) 2028학년도 대학입학전형 모집단위별 모집인원.xlsx",
+      "zip_name": "(춘천캠퍼스) 2028학년도 대학입학전형 모집단위별 모집인원.xlsx",
+      "bytes": 132806
+    },
+    {
+      "name": "(춘천캠퍼스) 2028학년도 대학입학전형시행계획.hwp",
+      "zip_name": "(춘천캠퍼스) 2028학년도 대학입학전형시행계획.hwp",
+      "bytes": 1560064
+    },
+    {
+      "name": "2028학년도 외국인 학부 입학전형 시행계획(수정).hwp",
+      "zip_name": "2028학년도 외국인 학부 입학전형 시행계획(수정).hwp",
+      "bytes": 485888
+    }
+  ],
+  "has_2028": true
+}

@@ -1,0 +1,23 @@
+{
+  "id": "document-0000040",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253084&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.529675+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253084&fileSn=1",
+  "status": 200,
+  "bytes": 1042563,
+  "sha256": "be985ab27e6d20375c501bcf7d19e11e6bfee39011d212b51b28bcfd400cfa26",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "2028학년도 서울시립대학교 입학전형 시행계획.pdf",
+      "zip_name": "2028학년도 서울시립대학교 입학전형 시행계획.pdf",
+      "bytes": 1836635
+    },
+    {
+      "name": "2028학년도 학부 외국인특별전형 시행계획.pdf",
+      "zip_name": "2028학년도 학부 외국인특별전형 시행계획.pdf",
+      "bytes": 127447
+    }
+  ],
+  "has_2028": true
+}

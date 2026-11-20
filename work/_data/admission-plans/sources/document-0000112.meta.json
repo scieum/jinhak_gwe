@@ -1,0 +1,23 @@
+{
+  "id": "document-0000112",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252437&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.476678+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252437&fileSn=1",
+  "status": 200,
+  "bytes": 610181,
+  "sha256": "d1bc9554636030509b191a9f503f19a46b62a13f055d153aa7ef41b3c3d4f8bf",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "2028학년도 대학입학전형 시행계획(최종).pdf",
+      "zip_name": "2028╟╨│Γ╡╡ ┤δ╟╨└╘╟╨└ⁿ╟ⁿ ╜├╟α░Φ╚╣(├╓┴╛).pdf",
+      "bytes": 574933
+    },
+    {
+      "name": "2028학년도 외국인 특별전형(전형기간자율모집) 대학입학전형 시행계획(최종).pdf",
+      "zip_name": "2028╟╨│Γ╡╡ ┐▄▒╣└╬ ╞»║░└ⁿ╟ⁿ(└ⁿ╟ⁿ▒Γ░ú└┌└▓╕≡┴²) ┤δ╟╨└╘╟╨└ⁿ╟ⁿ ╜├╟α░Φ╚╣(├╓┴╛).pdf",
+      "bytes": 113087
+    }
+  ],
+  "has_2028": true
+}

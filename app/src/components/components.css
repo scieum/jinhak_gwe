@@ -71,3 +71,16 @@
     min-height: 40px;
   }
 }
+
+/* QR 주고받기 (share-sheet · card-collect ST2). 흑백, 모서리 0. */
+.qr-share { display: grid; justify-items: center; gap: var(--spacing-sm); text-align: center; }
+.qr-share__code { width: min(280px, 100%); aspect-ratio: 1; background: #fff; }
+.qr-share__code svg { width: 100%; height: 100%; display: block; }
+.qr-scanner { display: grid; gap: var(--spacing-sm); }
+.qr-scanner__view { position: relative; width: 100%; aspect-ratio: 16 / 9; background: var(--color-ink); overflow: hidden; }
+.qr-scanner__view video { width: 100%; height: 100%; object-fit: cover; }
+.qr-scanner__guide { position: absolute; left: 50%; top: 50%; width: 45%; aspect-ratio: 1; transform: translate(-50%, -50%); border: 1px solid #fff; }
+.qr-scanner__fail { display: grid; gap: var(--spacing-sm); padding: var(--spacing-md); background: var(--color-judge-risk-bg); }
+.progress-bar { height: 4px; background: var(--color-canvas-soft); }
+.progress-bar i { display: block; height: 100%; background: var(--color-accent); }
+.judge-risk-mark { color: var(--color-judge-risk); }

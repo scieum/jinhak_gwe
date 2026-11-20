@@ -1,0 +1,706 @@
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+
+<script>
+(function () {
+    try {
+        var mode = localStorage.getItem('theme') || 'light';
+        var validThemes = ['system', 'light', 'dark', 'pencil', 'sage',
+            'lavender', 'ocean', 'sunset', 'classroom', 'blossom', 'neon', 'halloween'];
+        if (validThemes.indexOf(mode) === -1) {
+            mode = 'system';
+            localStorage.setItem('theme', mode);
+        }
+        /* í ë¡ì ê¸°ê°(2026-10-29~11-04 KST): ì§ì  ê³ ë¥´ì§ ììì¼ë©´ í ë¡ì ì°ì , ì ì¥ê°ì ê·¸ëë¡ ëë¤ */
+        var now = Date.now();
+        if (now >= Date.UTC(2026, 9, 28, 15) && now < Date.UTC(2026, 10, 4, 15)
+            && !localStorage.getItem('theme-halloween-2026-picked')) {
+            mode = 'halloween';
+        }
+        var hour = new Date().getHours();
+        var isDark = mode === 'dark' || mode === 'neon' || mode === 'halloween'
+            || (mode === 'system' && (hour >= 18 || hour < 7));
+        var root = document.documentElement;
+        root.setAttribute('data-theme', mode);
+        if (isDark) root.classList.add('dark');
+        if (validThemes.indexOf(mode) > 2) root.classList.add('custom-theme');
+    } catch (e) {}
+})();
+</script>
+<style>
+html.dark {
+    color-scheme: dark;
+    background-color: #0b1220;
+    --bg: #0b1220;
+    --white: #111827;
+    --text: #e5edf8;
+    --text-sub: #a6b4c8;
+    --line: rgba(148, 163, 184, .22);
+    --line-strong: rgba(96, 165, 250, .38);
+    --ink: #e5edf8;
+    --paper: #111827;
+    --sub: #a6b4c8;
+    --muted: #7d8da6;
+}
+html.dark body { background: #0b1220; color: #e5edf8; }
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>등급 변환 계산기 - 중앙고</title>
+<link rel="apple-touch-icon" href="/logo.png">
+<link rel="icon" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<script src="/portal-theme.js?v=20261029-2"></script>
+<style>
+:root {
+    --blue: #2563eb; --blue-dark: #1d4ed8; --blue-soft: #eff6ff;
+    --text: #172132; --text-sub: #5b687c; --bg: #f5f7fa; --white: #fff;
+    --line: #dfe5ee; --line-strong: #b7cbea; --container: 1200px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body.grade-calculator { margin: 0; color: var(--text); background: var(--bg); font-family: 'Pretendard', system-ui, sans-serif; -webkit-font-smoothing: antialiased; --grade-accent: var(--blue-dark); }
+html.dark body.grade-calculator { --grade-accent: var(--blue); }
+button, input, select { font: inherit; }
+button, summary { cursor: pointer; }
+button, input, select, summary { -webkit-tap-highlight-color: transparent; }
+.grade-calculator :is(button, input, select, summary):focus-visible { outline: 2px solid var(--grade-accent); outline-offset: 3px; }
+.grade-calculator .portal-standard-header .header-inner { max-width: var(--container) !important; }
+.main { max-width: var(--container); margin: 0 auto; padding: 24px 24px 40px; }
+.tool-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.input-stack, .side-stack { min-width: 0; }
+.side-stack { display: grid; gap: 16px; }
+html body.grade-calculator .main :is(.calculator-panel, .result-panel, .map-panel, .guide-panel) { margin: 0; padding: 24px; border: 1px solid var(--line) !important; border-radius: 14px; background: var(--white) !important; box-shadow: none !important; }
+.panel-title { margin: 0 0 8px; color: var(--text); font-size: 18px; font-weight: 700; letter-spacing: -.025em; }
+.panel-desc { margin: 0 0 22px; color: var(--text-sub); font-size: 14px; line-height: 1.65; word-break: keep-all; }
+.model-picker { margin-bottom: 20px; }
+.model-picker label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 650; }
+.model-picker select { width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--white); color: var(--text); font-size: 14px; font-weight: 550; }
+.model-picker p { margin: 10px 0 0; color: var(--text-sub); font-size: 13px; line-height: 1.6; word-break: keep-all; }
+html body.grade-calculator .main .convert-row { padding: 18px 0; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: transparent !important; box-shadow: none !important; }
+.convert-row:last-child { padding-bottom: 0; }
+.convert-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.convert-name { color: var(--text); font-size: 16px; font-weight: 650; }
+.convert-name span { display: block; margin-top: 4px; color: var(--text-sub); font-size: 12px; font-weight: 400; }
+html body.grade-calculator .main .number-wrap { display: flex; align-items: baseline; gap: 6px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--white) !important; box-shadow: none !important; }
+html body.grade-calculator .main .is-source .number-wrap { border-color: var(--grade-accent) !important; }
+.number-wrap:focus-within { outline: 2px solid var(--grade-accent); outline-offset: 2px; }
+body.grade-calculator .number-wrap input { width: 100px; min-width: 0; border: 0; outline: none !important; background: transparent !important; color: var(--text); text-align: right; font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.number-unit { color: var(--text-sub); font-size: 12px; }
+.range-wrap { padding: 8px 0 0; }
+body.grade-calculator input[type=range] { width: 100%; height: 30px; margin: 0; appearance: none; -webkit-appearance: none; background: transparent !important; cursor: pointer; }
+input[type=range]::-webkit-slider-runnable-track { height: 5px; border-radius: 10px; background: var(--line-strong); }
+input[type=range]::-moz-range-track { height: 5px; border-radius: 10px; background: var(--line-strong); }
+input[type=range]::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 20px; height: 20px; margin-top: -7.5px; border: 3px solid var(--white); border-radius: 50%; background: var(--grade-accent); box-shadow: 0 0 0 1px var(--grade-accent); }
+input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border: 3px solid var(--white); border-radius: 50%; background: var(--grade-accent); box-shadow: 0 0 0 1px var(--grade-accent); }
+.range-labels { display: flex; justify-content: space-between; color: var(--text-sub); font-size: 11px; padding: 0 2px; }
+.quick-values { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+html body.grade-calculator .main .quick-values button { min-width: 34px; min-height: 34px; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--white) !important; box-shadow: none !important; color: var(--text) !important; font-size: 12px; font-weight: 500; }
+html body.grade-calculator .main .quick-values button:hover { background: var(--blue-soft) !important; border-color: var(--grade-accent) !important; }
+html body.grade-calculator .main .result-panel { border-top: 3px solid var(--grade-accent) !important; padding-top: 22px; }
+.result-kicker { margin-bottom: 22px; color: var(--text-sub); font-size: 13px; font-weight: 500; line-height: 1.5; }
+.result-pair { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); align-items: center; gap: 16px; margin-bottom: 22px; }
+html body.grade-calculator .main .result-cell { min-width: 0; padding: 0; border: 0; border-radius: 0; background: transparent !important; box-shadow: none !important; text-align: center; }
+.result-cell-label { margin-bottom: 10px; color: var(--text); font-size: 14px; font-weight: 600; }
+.result-cell strong { display: block; color: var(--grade-accent); font-size: clamp(36px,4vw,48px); line-height: 1.15; letter-spacing: -.04em; font-weight: 700; font-variant-numeric: tabular-nums; }
+.result-cell span { display: block; margin-top: 5px; font-size: 12px; color: var(--text-sub); }
+.result-arrow { color: var(--text-sub); font-size: 22px; }
+.result-summary { padding: 14px 16px; border-radius: 8px; background: var(--blue-soft); color: var(--text); font-size: 14px; line-height: 1.7; word-break: keep-all; }
+.result-meta { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px 20px; margin-top: 20px; }
+html body.grade-calculator .main .metric { padding: 0; border: 0; background: transparent !important; box-shadow: none !important; }
+.metric-label { margin-bottom: 5px; color: var(--text-sub); font-size: 12px; }
+.metric-value { color: var(--text); font-size: 14px; line-height: 1.5; font-weight: 600; word-break: keep-all; }
+.scale-map { display: grid; gap: 18px; margin-top: 18px; }
+.scale-row-head { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 8px; color: var(--text-sub); font-size: 13px; }
+.scale-track { position: relative; display: flex; height: 34px; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; }
+html body.grade-calculator .main .scale-band { display: flex; align-items: center; justify-content: center; min-width: 0; height: 100%; border-right: 1px solid var(--white); background: var(--blue-soft) !important; color: var(--text) !important; font-size: 11px; white-space: nowrap; }
+html body.grade-calculator .main .scale-band:nth-child(even) { background: color-mix(in srgb, var(--blue-soft) 65%, var(--white)) !important; }
+.scale-band:last-child { border-right: 0; }
+.percent-marker { position: absolute; top: 0; bottom: 0; width: 3px; background: var(--grade-accent); transform: translateX(-1.5px); }
+body.grade-calculator .percent-marker::before { content: ''; position: absolute; top: 0; left: -3px; border-top: 6px solid var(--grade-accent) !important; border-left: 4.5px solid transparent !important; border-right: 4.5px solid transparent !important; }
+html body.grade-calculator .main .guide-panel { padding: 0; overflow: hidden; }
+.guide-panel summary { padding: 17px 20px; color: var(--text); font-size: 14px; font-weight: 600; }
+.guide-panel summary::marker { color: var(--text-sub); font-size: 11px; }
+.guide-content { padding: 0 20px 20px; }
+.guide-list { display: grid; gap: 14px; }
+html body.grade-calculator .main .guide-item { display: grid; grid-template-columns: 68px minmax(0,1fr); gap: 12px; background: transparent !important; box-shadow: none !important; }
+.guide-key { color: var(--text); font-size: 13px; font-weight: 600; line-height: 1.7; }
+.guide-value { color: var(--text-sub); font-size: 13px; line-height: 1.7; word-break: keep-all; }
+.source-link { color: var(--grade-accent); text-underline-offset: 3px; }
+html body.grade-calculator .main .notice { background: transparent !important; box-shadow: none !important; border-color: var(--line) !important; margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); color: var(--text-sub); font-size: 12px; line-height: 1.7; word-break: keep-all; }
+.result-note { margin: 16px 0 0; color: var(--text-sub); font-size: 12px; line-height: 1.6; }
+.reference-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.reference-table th, .reference-table td { padding: 10px 6px; border-bottom: 1px solid var(--line); text-align: left; color: var(--text); }
+.reference-table th { background: var(--bg); font-weight: 600; }
+.reference-table tr:last-child td { border: 0; }
+.reference-pair { margin: 0 0 16px; display: grid; gap: 10px; }
+.reference-item { color: var(--text-sub); font-size: 12px; line-height: 1.7; }
+.reference-item strong { display: block; color: var(--text); font-weight: 500; }
+@media (max-width: 800px) {
+    .main { padding: 18px 16px 32px; }
+    .tool-layout { grid-template-columns: 1fr; gap: 16px; }
+    .input-stack, .side-stack { display: contents; }
+    html body.grade-calculator .main :is(.calculator-panel, .result-panel, .map-panel) { padding: 20px; }
+    .result-pair { gap: 12px; }
+    .result-cell strong { font-size: 40px; }
+    .quick-values { gap: 5px; }
+    html body.grade-calculator .main .quick-values button { min-width: 40px; min-height: 40px; }
+}
+@media (max-width: 380px) {
+    .main { padding-left: 12px; padding-right: 12px; }
+    html body.grade-calculator .main :is(.calculator-panel, .result-panel, .map-panel) { padding: 16px; }
+    body.grade-calculator .number-wrap input { width: 80px; font-size: 24px; }
+    .convert-name { font-size: 15px; }
+    .result-meta { gap: 16px 12px; }
+    .metric-value { font-size: 13px; }
+    .guide-item { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+<link rel="stylesheet" href="/portal-theme.css?v=20261029-1">
+</head>
+<body class="grade-calculator">
+
+<header class="header portal-standard-header">
+    <div class="header-inner">
+        <div class="header-title">
+            <div class="eyebrow">Seosan Jungang High School</div>
+            <h1>등급 변환 계산기</h1>
+        </div>
+    </div>
+</header>
+
+<main class="main">
+    <section class="tool-layout" aria-label="등급 계산기">
+        <div class="input-stack">
+            <section class="calculator-panel">
+                <h2 class="panel-title">성적 입력</h2>
+                <p class="panel-desc">등급이나 석차 백분율을 입력하면 나머지 값이 자동으로 계산됩니다.</p>
+
+                <div class="model-picker">
+                    <label for="modelSelect">환산 기준</label>
+                    <select id="modelSelect">
+                        <option value="busan">부산교육청 5학기 예상 보정 (2025)</option>
+                        <option value="gyeonggi">경기진협 실측 분포 (2025)</option>
+                        <option value="theory">이론적 등급 구간 중앙값</option>
+                    </select>
+                    <p id="modelDescription">부산 81개교 실측 자료에 3학년 1학기까지의 예상치를 적용한 참고값입니다. 5등급제 1.00은 9등급제 1.38로 봅니다.</p>
+                </div>
+
+                <div class="convert-row is-source" data-axis="five">
+                    <div class="convert-head">
+                        <div class="convert-name">5등급제 <span>평균 등급</span></div>
+                        <label class="number-wrap" for="fiveInput">
+                            <input id="fiveInput" aria-label="5등급제 평균 등급" type="number" min="1" max="5" step="0.01" value="3.00" inputmode="decimal">
+                            <span class="number-unit">등급</span>
+                        </label>
+                    </div>
+                    <div class="range-wrap">
+                        <input id="fiveSlider" type="range" min="1" max="5" step="0.01" value="3.00" aria-label="5등급제 평균 등급">
+                        <div class="range-labels" aria-hidden="true">
+                            <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                        </div>
+                    </div>
+                    <div class="quick-values" aria-label="5등급 빠른 선택">
+                        <button type="button" data-five-value="1">1</button>
+                        <button type="button" data-five-value="2">2</button>
+                        <button type="button" data-five-value="3">3</button>
+                        <button type="button" data-five-value="4">4</button>
+                        <button type="button" data-five-value="5">5</button>
+                    </div>
+                </div>
+
+                <div class="convert-row" data-axis="nine">
+                    <div class="convert-head">
+                        <div class="convert-name">9등급제 <span>평균 등급</span></div>
+                        <label class="number-wrap" for="nineInput">
+                            <input id="nineInput" aria-label="9등급제 평균 등급" type="number" min="1" max="9" step="0.01" value="5.00" inputmode="decimal">
+                            <span class="number-unit">등급</span>
+                        </label>
+                    </div>
+                    <div class="range-wrap">
+                        <input id="nineSlider" type="range" min="1" max="9" step="0.01" value="5.00" aria-label="9등급제 평균 등급">
+                        <div class="range-labels" aria-hidden="true">
+                            <span>1</span><span>3</span><span>5</span><span>7</span><span>9</span>
+                        </div>
+                    </div>
+                    <div class="quick-values" aria-label="9등급 빠른 선택">
+                        <button type="button" data-nine-value="1">1</button>
+                        <button type="button" data-nine-value="2">2</button>
+                        <button type="button" data-nine-value="3">3</button>
+                        <button type="button" data-nine-value="4">4</button>
+                        <button type="button" data-nine-value="5">5</button>
+                        <button type="button" data-nine-value="6">6</button>
+                        <button type="button" data-nine-value="7">7</button>
+                        <button type="button" data-nine-value="8">8</button>
+                        <button type="button" data-nine-value="9">9</button>
+                    </div>
+                </div>
+
+                <div class="convert-row" data-axis="percent">
+                    <div class="convert-head">
+                        <div class="convert-name">석차 백분율 <span>상위 %</span></div>
+                        <label class="number-wrap" for="percentInput">
+                            <input id="percentInput" aria-label="석차 백분율" type="number" min="0.1" max="100" step="0.1" value="50.0" inputmode="decimal">
+                            <span class="number-unit">%</span>
+                        </label>
+                    </div>
+                    <div class="range-wrap">
+                        <input id="percentSlider" type="range" min="0.1" max="100" step="0.1" value="50.0" aria-label="석차 백분율">
+                        <div class="range-labels" aria-hidden="true">
+                            <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+                        </div>
+                    </div>
+                    <div class="quick-values" aria-label="석차 백분율 빠른 선택">
+                        <button type="button" data-percent-value="4">상위 4%</button>
+                        <button type="button" data-percent-value="11">상위 11%</button>
+                        <button type="button" data-percent-value="23">상위 23%</button>
+                        <button type="button" data-percent-value="40">상위 40%</button>
+                        <button type="button" data-percent-value="60">상위 60%</button>
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+
+        <div class="side-stack">
+            <section class="result-panel" aria-live="polite">
+                <h2 class="panel-title">환산 결과</h2>
+                <div class="result-kicker" id="resultKicker">부산교육청 5학기 예상 보정 · 변환 결과</div>
+                <div class="result-pair">
+                    <div class="result-cell five">
+                        <div class="result-cell-label">5등급제</div>
+                        <strong id="resultFive">3.00</strong>
+                        <span>등급</span>
+                    </div>
+                    <div class="result-arrow" aria-hidden="true">&hArr;</div>
+                    <div class="result-cell nine">
+                        <div class="result-cell-label">9등급제</div>
+                        <strong id="resultNine">5.00</strong>
+                        <span>등급</span>
+                    </div>
+                </div>
+                <div class="result-summary" id="resultSummary">5등급제 3.00등급은 9등급제 약 5.00등급(상위 50.0%)에 해당합니다.</div>
+                <div class="result-meta">
+                    <div class="metric">
+                        <div class="metric-label">석차 위치</div>
+                        <div class="metric-value" id="percentValue">상위 50.0%</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">겹치는 범위</div>
+                        <div class="metric-value" id="rangeHint">9등급제 4~6등급 범위</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">5등급 구간</div>
+                        <div class="metric-value" id="fiveRange">3등급 · 상위 34~66%</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-label">9등급 구간</div>
+                        <div class="metric-value" id="nineRange">5등급 · 상위 40~60%</div>
+                    </div>
+                </div>
+                <p class="result-note">분포를 비교한 참고값이며, 대학별 공식 환산점수와는 다릅니다.</p>
+            </section>
+
+            <section class="map-panel" aria-label="등급 구간 지도">
+                <h2 class="panel-title">구간 위치</h2>
+                <div class="scale-map">
+                    <div class="scale-row">
+                        <div class="scale-row-head">
+                            <span>5등급제</span>
+                            <span id="fiveBandText">3등급 구간</span>
+                        </div>
+                        <div class="scale-track five" id="fiveScale"></div>
+                    </div>
+                    <div class="scale-row">
+                        <div class="scale-row-head">
+                            <span>9등급제</span>
+                            <span id="nineBandText">5등급 구간</span>
+                        </div>
+                        <div class="scale-track nine" id="nineScale"></div>
+                    </div>
+                </div>
+            </section>
+
+            <details class="guide-panel">
+                <summary>비교 기준</summary>
+                <div class="guide-content">
+                <div class="guide-list">
+                    <div class="guide-item">
+                        <div class="guide-key">선택 기준</div>
+                        <div class="guide-value" id="methodText">부산교육청 자료의 3학년 1학기 예상 누적비를 반영해 5등급제 1.00을 상위 1.00%, 9등급제 1.38로 연결합니다.</div>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-key">자료 출처</div>
+                        <div class="guide-value"><a class="source-link" id="sourceLink" href="https://www.goeyp.kr/cheongun-h/na/ntt/selectNttInfo.do?bbsId=201&amp;mi=320&amp;nttSn=1048385" target="_blank" rel="noopener noreferrer">분석 자료 원문 보기</a></div>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-key">입시 활용</div>
+                        <div class="guide-value">대학별 반영 교과, 학년별 비율, 진로선택과목 반영 방식에 따라 실제 환산점수는 달라질 수 있습니다.</div>
+                    </div>
+                </div>
+                <div class="notice">교육청·진학협의회 자료는 실제 표본의 누적 분포를 비교한 분석이며 대학 공통 공식 환산식이 아닙니다. 대학별 모집요강의 반영 교과·성취도·환산점수를 반드시 확인하세요.</div>
+                </div>
+            </details>
+
+            <details class="guide-panel">
+                <summary>누적 비율표</summary>
+                <div class="guide-content">
+                            <div class="reference-pair">
+                <div class="reference-item"><span>5등급제</span><strong>10 · 24 · 32 · 24 · 10%</strong></div>
+                <div class="reference-item"><span>9등급제</span><strong>4 · 7 · 12 · 17 · 20 · 17 · 12 · 7 · 4%</strong></div>
+            </div>
+
+                <table class="reference-table" aria-label="5등급제와 9등급제 누적 비율표">
+                    <thead>
+                        <tr>
+                            <th>구분</th>
+                            <th>5등급제</th>
+                            <th>9등급제</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1등급</td><td>상위 0~10%</td><td>상위 0~4%</td></tr>
+                        <tr><td>2등급</td><td>상위 10~34%</td><td>상위 4~11%</td></tr>
+                        <tr><td>3등급</td><td>상위 34~66%</td><td>상위 11~23%</td></tr>
+                        <tr><td>4등급</td><td>상위 66~90%</td><td>상위 23~40%</td></tr>
+                        <tr><td>5등급</td><td>상위 90~100%</td><td>상위 40~60%</td></tr>
+                        <tr><td>6등급</td><td>-</td><td>상위 60~77%</td></tr>
+                        <tr><td>7등급</td><td>-</td><td>상위 77~89%</td></tr>
+                        <tr><td>8등급</td><td>-</td><td>상위 89~96%</td></tr>
+                        <tr><td>9등급</td><td>-</td><td>상위 96~100%</td></tr>
+                    </tbody>
+                </table>
+                </div>
+            </details>
+        </div>
+    </section>
+</main>
+
+<script>
+var fiveBands = [
+    { grade: 1, start: 0, end: 10, share: 10 },
+    { grade: 2, start: 10, end: 34, share: 24 },
+    { grade: 3, start: 34, end: 66, share: 32 },
+    { grade: 4, start: 66, end: 90, share: 24 },
+    { grade: 5, start: 90, end: 100, share: 10 }
+];
+
+var nineBands = [
+    { grade: 1, start: 0, end: 4, share: 4 },
+    { grade: 2, start: 4, end: 11, share: 7 },
+    { grade: 3, start: 11, end: 23, share: 12 },
+    { grade: 4, start: 23, end: 40, share: 17 },
+    { grade: 5, start: 40, end: 60, share: 20 },
+    { grade: 6, start: 60, end: 77, share: 17 },
+    { grade: 7, start: 77, end: 89, share: 12 },
+    { grade: 8, start: 89, end: 96, share: 7 },
+    { grade: 9, start: 96, end: 100, share: 4 }
+];
+
+var fiveCenters = [5, 22, 50, 78, 95];
+var nineCenters = [2, 7.5, 17, 31.5, 50, 68.5, 83, 92.5, 98];
+
+var models = {
+    busan: {
+        label: "부산교육청 5학기 예상 보정",
+        description: "부산 81개교 실측 자료에 3학년 1학기까지의 예상치를 적용한 참고값입니다. 5등급제 1.00은 9등급제 1.38로 봅니다.",
+        method: "부산교육청 자료의 3학년 1학기 예상 누적비를 반영해 5등급제 1.00을 상위 1.00%, 9등급제 1.38로 연결합니다.",
+        source: "https://www.goeyp.kr/cheongun-h/na/ntt/selectNttInfo.do?bbsId=201&mi=320&nttSn=1048385",
+        nineFloorPercent: 0.1,
+        five: [1, 1.16, 1.33, 1.5, 1.66, 1.83, 2, 2.16, 2.33, 2.5, 2.66, 2.83, 3, 3.16, 3.33, 3.5, 3.66, 3.83, 4, 4.16, 4.33, 4.5, 4.66, 4.83, 5],
+        percent: [1, 2.85, 5.03, 7.3, 9.97, 13.56, 18.59, 21.06, 26.45, 31.87, 36.92, 43.7, 51.18, 55.22, 62.16, 68.5, 73.48, 79.42, 85.22, 87.27, 91.06, 93.51, 95.14, 96.95, 100],
+        nine: [1.38, 1.81, 2.18, 2.48, 2.76, 3.07, 3.44, 3.61, 3.94, 4.22, 4.47, 4.76, 5.08, 5.25, 5.55, 5.83, 6.05, 6.35, 6.69, 6.84, 7.14, 7.4, 7.63, 7.97, 9]
+    },
+    gyeonggi: {
+        label: "경기진협 실측 분포",
+        description: "경기진협 협력교 57개교의 고1 15,566건과 이전 9등급제 17,702건의 누적 분포를 비교한 참고값입니다.",
+        method: "경기진협 협력교 학생의 실제 평균등급 누적 분포를 과거 9등급제 추정 누적 분포와 연결합니다.",
+        source: "https://cheongun-h.goeyp.kr/upload/cheongun-h/ba/2025/08/92D2D731-4956-9400-2648-5D5C4BE9DB62.pdf",
+        nineFloorPercent: 0.1,
+        five: [1, 1.167, 1.333, 1.5, 1.667, 1.833, 2, 2.167, 2.333, 2.5, 2.667, 2.833, 3, 3.167, 3.333, 3.5, 3.667, 3.833, 4, 4.167, 4.333, 4.5, 4.667, 4.833, 5],
+        percent: [1.74, 3.58, 6.05, 8.84, 12.01, 15.5, 20.05, 24.89, 29.91, 35.37, 41, 46.71, 52.85, 59.24, 65.01, 70.2, 75.66, 81.05, 85.46, 89.09, 91.9, 94, 95.92, 97.27, 100],
+        nine: [1.55, 1.84, 2.14, 2.42, 2.7, 2.95, 3.24, 3.51, 3.76, 4.01, 4.28, 4.52, 4.78, 5.05, 5.29, 5.51, 5.76, 6.04, 6.31, 6.54, 6.77, 7.01, 7.26, 7.51, 8.89]
+    },
+    theory: {
+        label: "이론적 구간 중앙값",
+        description: "5등급제와 9등급제의 공식 등급 비율에서 각 구간 중앙값을 잡아 선형 보간한 이론값입니다.",
+        method: "각 등급의 공식 누적 비율 구간 중앙값을 같은 석차 백분율 축으로 연결합니다.",
+        source: "https://www.moe.go.kr/boardCnts/viewRenew.do?boardID=294&boardSeq=96578&lev=0"
+    }
+};
+
+var state = { percent: 1, source: "five", model: "busan" };
+
+var els = {
+    rows: document.querySelectorAll(".convert-row"),
+    modelSelect: document.getElementById("modelSelect"),
+    modelDescription: document.getElementById("modelDescription"),
+    methodText: document.getElementById("methodText"),
+    sourceLink: document.getElementById("sourceLink"),
+    resultKicker: document.getElementById("resultKicker"),
+    fiveSlider: document.getElementById("fiveSlider"),
+    fiveInput: document.getElementById("fiveInput"),
+    nineSlider: document.getElementById("nineSlider"),
+    nineInput: document.getElementById("nineInput"),
+    percentSlider: document.getElementById("percentSlider"),
+    percentInput: document.getElementById("percentInput"),
+    resultFive: document.getElementById("resultFive"),
+    resultNine: document.getElementById("resultNine"),
+    resultSummary: document.getElementById("resultSummary"),
+    percentValue: document.getElementById("percentValue"),
+    nineRange: document.getElementById("nineRange"),
+    fiveRange: document.getElementById("fiveRange"),
+    rangeHint: document.getElementById("rangeHint"),
+    fiveBandText: document.getElementById("fiveBandText"),
+    nineBandText: document.getElementById("nineBandText"),
+    fiveScale: document.getElementById("fiveScale"),
+    nineScale: document.getElementById("nineScale")
+};
+
+function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+}
+
+function numberOr(value, fallback) {
+    var parsed = parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function format(value, digits) {
+    return value.toFixed(digits);
+}
+
+function interpolate(value, inputs, outputs) {
+    var v = clamp(value, inputs[0], inputs[inputs.length - 1]);
+    if (v <= inputs[0]) return outputs[0];
+    for (var i = 0; i < inputs.length - 1; i++) {
+        if (v <= inputs[i + 1]) {
+            var ratio = (v - inputs[i]) / (inputs[i + 1] - inputs[i]);
+            return outputs[i] + (outputs[i + 1] - outputs[i]) * ratio;
+        }
+    }
+    return outputs[outputs.length - 1];
+}
+
+function percentFromFive(value) {
+    var model = models[state.model];
+    if (state.model === "theory") return percentFromGradeAverage(value, fiveCenters, 5);
+    return interpolate(clamp(value, 1, 5), model.five, model.percent);
+}
+
+function percentFromNine(value) {
+    var model = models[state.model];
+    if (state.model === "theory") return percentFromGradeAverage(value, nineCenters, 9);
+    var grade = clamp(value, 1, 9);
+    if (grade < model.nine[0]) {
+        return interpolate(grade, [1, model.nine[0]], [model.nineFloorPercent, model.percent[0]]);
+    }
+    return interpolate(grade, model.nine, model.percent);
+}
+
+function fiveFromPercent(percent) {
+    var model = models[state.model];
+    if (state.model === "theory") return gradeFromPercent(percent, fiveCenters);
+    return interpolate(percent, model.percent, model.five);
+}
+
+function nineFromPercent(percent) {
+    var model = models[state.model];
+    if (state.model === "theory") return gradeFromPercent(percent, nineCenters);
+    if (percent < model.percent[0]) {
+        return interpolate(percent, [model.nineFloorPercent, model.percent[0]], [1, model.nine[0]]);
+    }
+    return interpolate(percent, model.percent, model.nine);
+}
+
+function percentFromGradeAverage(value, centers, maxGrade) {
+    var gradeValue = clamp(value, 1, maxGrade);
+    var lower = Math.floor(gradeValue);
+    var upper = Math.ceil(gradeValue);
+    if (lower === upper) return centers[lower - 1];
+
+    var lowerCenter = centers[lower - 1];
+    var upperCenter = centers[upper - 1];
+    var ratio = gradeValue - lower;
+    return lowerCenter + (upperCenter - lowerCenter) * ratio;
+}
+
+function gradeFromPercent(percent, centers) {
+    var p = clamp(percent, 0, 100);
+    if (p <= centers[0]) return 1;
+    if (p >= centers[centers.length - 1]) return centers.length;
+
+    for (var i = 0; i < centers.length - 1; i++) {
+        var left = centers[i];
+        var right = centers[i + 1];
+        if (p >= left && p <= right) {
+            var ratio = (p - left) / (right - left);
+            return (i + 1) + ratio;
+        }
+    }
+    return centers.length;
+}
+
+function bandForPercent(bands, percent) {
+    var p = clamp(percent, 0, 100);
+    for (var i = 0; i < bands.length; i++) {
+        if (p <= bands[i].end) return bands[i];
+    }
+    return bands[bands.length - 1];
+}
+
+function bandLabel(band) {
+    return band.grade + "등급 · 상위 " + band.start + "~" + band.end + "%";
+}
+
+function overlapNineRangeForFiveBand(fiveBand) {
+    var matched = nineBands.filter(function(nineBand) {
+        return nineBand.end > fiveBand.start && nineBand.start < fiveBand.end;
+    });
+    if (matched.length === 0) return "대표값 기준";
+
+    var first = matched[0].grade;
+    var last = matched[matched.length - 1].grade;
+    if (first === last) return "9등급제 " + first + "등급 범위";
+    return "9등급제 " + first + "~" + last + "등급 범위";
+}
+
+function renderScale(container, bands, type) {
+    container.innerHTML = "";
+    bands.forEach(function(band) {
+        var item = document.createElement("div");
+        item.className = "scale-band g" + band.grade;
+        item.style.flexBasis = band.share + "%";
+        item.title = bandLabel(band);
+        item.setAttribute("aria-label", bandLabel(band));
+        item.innerHTML = "<span>" + (type === "nine" ? band.grade : band.grade + "등급") + "</span>";
+        container.appendChild(item);
+    });
+
+    var marker = document.createElement("div");
+    marker.className = "percent-marker";
+    marker.setAttribute("aria-hidden", "true");
+    container.appendChild(marker);
+}
+
+function setMarkers(percent) {
+    var markers = document.querySelectorAll(".percent-marker");
+    markers.forEach(function(marker) {
+        marker.style.left = clamp(percent, 0, 100) + "%";
+    });
+}
+
+// Only write a control if the user isn't actively editing it,
+// so live recalculation never fights the field being typed in.
+function writeControl(el, value) {
+    if (el !== document.activeElement) el.value = value;
+}
+
+function summaryText(five, nine, percent) {
+    if (state.source === "nine") {
+        return "9등급제 " + format(nine, 2) + "등급은 5등급제 약 " + format(five, 2) + "등급(상위 " + format(percent, 1) + "%)에 해당합니다.";
+    }
+    if (state.source === "percent") {
+        return "상위 " + format(percent, 1) + "%는 5등급제 약 " + format(five, 2) + "등급, 9등급제 약 " + format(nine, 2) + "등급에 해당합니다.";
+    }
+    return "5등급제 " + format(five, 2) + "등급은 9등급제 약 " + format(nine, 2) + "등급(상위 " + format(percent, 1) + "%)에 해당합니다.";
+}
+
+// Every change funnels through a shared 석차 백분율 axis, so the
+// 5등급 · 9등급 · 백분율 controls stay linked in both directions.
+function render() {
+    var percent = clamp(state.percent, 0.1, 100);
+    var five = clamp(fiveFromPercent(percent), 1, 5);
+    var nine = clamp(nineFromPercent(percent), 1, 9);
+    var fiveBand = bandForPercent(fiveBands, percent);
+    var nineBand = bandForPercent(nineBands, percent);
+
+    writeControl(els.fiveInput, format(five, 2));
+    writeControl(els.fiveSlider, format(five, 2));
+    writeControl(els.nineInput, format(nine, 2));
+    writeControl(els.nineSlider, format(nine, 2));
+    writeControl(els.percentInput, format(percent, 1));
+    writeControl(els.percentSlider, format(percent, 1));
+
+    els.resultFive.textContent = format(five, 2);
+    els.resultNine.textContent = format(nine, 2);
+    els.resultSummary.textContent = summaryText(five, nine, percent);
+    els.percentValue.textContent = "상위 " + format(percent, 1) + "%";
+    els.fiveRange.textContent = bandLabel(fiveBand);
+    els.nineRange.textContent = bandLabel(nineBand);
+    els.rangeHint.textContent = overlapNineRangeForFiveBand(fiveBand);
+    els.fiveBandText.textContent = fiveBand.grade + "등급 구간";
+    els.nineBandText.textContent = nineBand.grade + "등급 구간";
+    var model = models[state.model];
+    els.resultKicker.textContent = model.label + " · 변환 결과";
+    els.modelDescription.textContent = model.description;
+    els.methodText.textContent = model.method;
+    els.sourceLink.href = model.source;
+    setMarkers(percent);
+
+    els.rows.forEach(function(row) {
+        row.classList.toggle("is-source", row.getAttribute("data-axis") === state.source);
+    });
+}
+
+function fromFive(value) {
+    state.source = "five";
+    state.percent = percentFromFive(numberOr(value, 3));
+    render();
+}
+
+function fromNine(value) {
+    state.source = "nine";
+    state.percent = percentFromNine(numberOr(value, 5));
+    render();
+}
+
+function fromPercent(value) {
+    state.source = "percent";
+    state.percent = clamp(numberOr(value, 50), 0.1, 100);
+    render();
+}
+
+renderScale(els.fiveScale, fiveBands, "five");
+renderScale(els.nineScale, nineBands, "nine");
+
+els.fiveSlider.addEventListener("input", function() { fromFive(els.fiveSlider.value); });
+els.fiveInput.addEventListener("input", function() { fromFive(els.fiveInput.value); });
+els.nineSlider.addEventListener("input", function() { fromNine(els.nineSlider.value); });
+els.nineInput.addEventListener("input", function() { fromNine(els.nineInput.value); });
+els.percentSlider.addEventListener("input", function() { fromPercent(els.percentSlider.value); });
+els.percentInput.addEventListener("input", function() { fromPercent(els.percentInput.value); });
+els.modelSelect.addEventListener("change", function() {
+    state.model = els.modelSelect.value;
+    if (state.source === "nine") {
+        fromNine(els.nineInput.value);
+    } else if (state.source === "percent") {
+        fromPercent(els.percentInput.value);
+    } else {
+        fromFive(els.fiveInput.value);
+    }
+});
+
+document.querySelectorAll("[data-five-value]").forEach(function(button) {
+    button.addEventListener("click", function() { fromFive(button.getAttribute("data-five-value")); });
+});
+document.querySelectorAll("[data-nine-value]").forEach(function(button) {
+    button.addEventListener("click", function() { fromNine(button.getAttribute("data-nine-value")); });
+});
+document.querySelectorAll("[data-percent-value]").forEach(function(button) {
+    button.addEventListener("click", function() { fromPercent(button.getAttribute("data-percent-value")); });
+});
+
+render();
+</script>
+</body>
+</html>

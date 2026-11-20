@@ -1,0 +1,23 @@
+{
+  "id": "document-0000031",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252460&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.649199+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252460&fileSn=1",
+  "status": 200,
+  "bytes": 810112,
+  "sha256": "12af91fd6b30a86f432c4c65db737f7e6f869c70b9711a27428e0c1bdc444ae6",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "(한국교원대학교) 2028학년도 대학입학 외국인 특별전형 시행계획.pdf",
+      "zip_name": "(한국교원대학교) 2028학년도 대학입학 외국인 특별전형 시행계획.pdf",
+      "bytes": 330841
+    },
+    {
+      "name": "(한국교원대학교) 2028학년도 대학입학전형 시행계획_변경.pdf",
+      "zip_name": "(한국교원대학교) 2028학년도 대학입학전형 시행계획_변경.pdf",
+      "bytes": 627914
+    }
+  ],
+  "has_2028": true
+}

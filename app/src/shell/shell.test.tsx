@@ -65,3 +65,16 @@ test('rules screens의 모든 slug에 화면 자리가 있다', () => {
     unmount();
   }
 });
+
+test('교사 모드는 학생 기능도 함께 보이고, 학생 화면을 열어도 교사 셸을 유지한다', () => {
+  const { unmount } = renderAt('/teacher/teacher-dashboard');
+  const sidebar = screen.getByRole('navigation', { name: '주 메뉴' });
+  for (const label of ['학생', '교사', '홈', '성적', '대학 찾기', '수시 전략', '우리 반']) expect(within(sidebar).getAllByText(label).length).toBeGreaterThan(0);
+  unmount();
+  renderAt('/grade-input');
+  const again = screen.getByRole('navigation', { name: '주 메뉴' });
+  expect(within(again).getByText('우리 반')).toBeTruthy();
+  expect(within(again).getByText('성적 입력').closest('a')?.getAttribute('aria-current')).toBe('page');
+  expect(within(screen.getByRole('navigation', { name: '하단 탭' })).getAllByRole('link').map(a => a.textContent?.trim())).toEqual(['우리 반', '성적 관리', '수합·집계', '더보기']);
+  sessionStorage.clear();
+});

@@ -1,0 +1,28 @@
+{
+  "id": "document-0000164",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254624&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.544678+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254624&fileSn=1",
+  "status": 200,
+  "bytes": 644997,
+  "sha256": "22e4eef6d7209cdb437a0ff65744d2abe5d389ef2bde5e1db5efcf981f057a4c",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "2028학년도 재외국민 특별전형_기본계획_인제대학교_(2026.04.30).pdf",
+      "zip_name": "2028학년도 재외국민 특별전형_기본계획_인제대학교_(2026.04.30).pdf",
+      "bytes": 177413
+    },
+    {
+      "name": "2028학년도 정원외 외국인 특별전형 입학전형시행계획.pdf",
+      "zip_name": "2028학년도 정원외 외국인 특별전형 입학전형시행계획.pdf",
+      "bytes": 215982
+    },
+    {
+      "name": "2028학년도 대학입학전형 시행계획_20260430!!.pdf",
+      "zip_name": "2028학년도 대학입학전형 시행계획_20260430!!.pdf",
+      "bytes": 374282
+    }
+  ],
+  "has_2028": true
+}

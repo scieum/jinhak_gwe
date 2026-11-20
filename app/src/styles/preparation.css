@@ -1,0 +1,11 @@
+.prep-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-md); }
+.prep-grid .univ-card { align-content: start; overflow-wrap: anywhere; min-width: 0; }
+.prep-note { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.7; }
+.prep-status { padding: var(--spacing-xs) var(--spacing-sm); background: var(--color-canvas-soft); font-size: var(--font-body-sm-size); font-weight: 600; }
+.prep-form { display: grid; gap: var(--spacing-md); }
+.prep-form input, .prep-form select, .prep-form textarea { width: 100%; }
+.preparation > label { max-width: 100%; }
+.basis-grid { display: grid; grid-template-columns: minmax(100px, .8fr) repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--color-hairline); }
+.basis-grid > * { padding: var(--spacing-sm); border-bottom: 1px solid var(--color-hairline); overflow-wrap: anywhere; min-width: 0; }
+.basis-grid > dt { background: var(--color-canvas-soft); }
+@media (max-width: 767px) { .prep-grid { grid-template-columns: 1fr; } .prep-form .form-grid { grid-template-columns: 1fr; } .basis-grid { grid-template-columns: 80px repeat(2, minmax(0, 1fr)); font-size: 12px; } }

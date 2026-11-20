@@ -1,0 +1,1820 @@
+[
+  {
+    "code": "0002748",
+    "name": "가야대학교[본교]",
+    "region": "경남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0002748",
+    "checked_at": "2026-11-20T03:58:40.323903+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252807&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000063",
+    "name": "가천대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000063",
+    "checked_at": "2026-11-20T03:58:40.323903+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253105&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000072",
+    "name": "가톨릭관동대학교[본교]",
+    "region": "강원",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000072",
+    "checked_at": "2026-11-20T03:58:40.324897+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253403&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000215",
+    "name": "가톨릭꽃동네대학교[본교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000215",
+    "checked_at": "2026-11-20T03:58:40.324897+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254382&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000046",
+    "name": "가톨릭대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000046",
+    "checked_at": "2026-11-20T03:58:40.533651+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253101&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000049",
+    "name": "가톨릭대학교[제3캠퍼스]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000049",
+    "checked_at": "2026-11-20T03:58:40.553736+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253138&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000050",
+    "name": "감리교신학대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000050",
+    "checked_at": "2026-11-20T03:58:40.577249+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252949&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000051",
+    "name": "강남대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000051",
+    "checked_at": "2026-11-20T03:58:40.613821+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252870&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000079",
+    "name": "강서대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000079",
+    "checked_at": "2026-11-20T03:58:40.800890+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252796&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000003",
+    "name": "강원대학교[본교]",
+    "region": "강원",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000003",
+    "checked_at": "2026-11-20T03:58:40.849472+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252746&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000004",
+    "name": "강원대학교[제2캠퍼스]",
+    "region": "강원",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000004",
+    "checked_at": "2026-11-20T03:58:40.850473+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252619&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0003363",
+    "name": "강원대학교[제3캠퍼스]",
+    "region": "강원",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0003363",
+    "checked_at": "2026-11-20T03:58:40.876471+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253328&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0003364",
+    "name": "강원대학교[제4캠퍼스]",
+    "region": "강원",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0003364",
+    "checked_at": "2026-11-20T03:58:41.070141+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253332&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000052",
+    "name": "건국대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000052",
+    "checked_at": "2026-11-20T03:58:41.089730+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252912&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000053",
+    "name": "건국대학교(글로컬)[분교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000053",
+    "checked_at": "2026-11-20T03:58:41.114247+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252701&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000054",
+    "name": "건양대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000054",
+    "checked_at": "2026-11-20T03:58:41.137758+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253607&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000055",
+    "name": "건양대학교[제2캠퍼스]",
+    "region": "대전",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000055",
+    "checked_at": "2026-11-20T03:58:41.320972+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253603&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000056",
+    "name": "경기대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000056",
+    "checked_at": "2026-11-20T03:58:41.357967+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252273&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000058",
+    "name": "경기대학교[제2캠퍼스]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000058",
+    "checked_at": "2026-11-20T03:58:41.380039+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252277&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000059",
+    "name": "경남대학교[본교]",
+    "region": "경남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000059",
+    "checked_at": "2026-11-20T03:58:41.406123+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252456&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000060",
+    "name": "경동대학교[본교]",
+    "region": "강원",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000060",
+    "checked_at": "2026-11-20T03:58:41.600982+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254586&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0002574",
+    "name": "경동대학교[제3캠퍼스]",
+    "region": "강원",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0002574",
+    "checked_at": "2026-11-20T03:58:41.632040+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254590&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0002744",
+    "name": "경동대학교[제4캠퍼스]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0002744",
+    "checked_at": "2026-11-20T03:58:41.743121+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254594&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000005",
+    "name": "경북대학교[본교]",
+    "region": "대구",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000005",
+    "checked_at": "2026-11-20T03:58:41.761183+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252366&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000007",
+    "name": "경상국립대학교[본교]",
+    "region": "경남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000007",
+    "checked_at": "2026-11-20T03:58:41.951870+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253544&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000062",
+    "name": "경성대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000062",
+    "checked_at": "2026-11-20T03:58:41.971876+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252826&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000244",
+    "name": "경운대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000244",
+    "checked_at": "2026-11-20T03:58:41.994415+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252975&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000256",
+    "name": "경인교육대학교[본교]",
+    "region": "인천",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000256",
+    "checked_at": "2026-11-20T03:58:42.016899+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253149&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000064",
+    "name": "경일대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000064",
+    "checked_at": "2026-11-20T03:58:42.234238+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253223&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000066",
+    "name": "경희대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000066",
+    "checked_at": "2026-11-20T03:58:42.292332+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252503&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000068",
+    "name": "계명대학교[본교]",
+    "region": "대구",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000068",
+    "checked_at": "2026-11-20T03:58:42.300843+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254707&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000069",
+    "name": "고려대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000069",
+    "checked_at": "2026-11-20T03:58:42.305842+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252343&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000070",
+    "name": "고려대학교(세종)[분교]",
+    "region": "세종",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000070",
+    "checked_at": "2026-11-20T03:58:42.565061+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254681&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000071",
+    "name": "고신대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000071",
+    "checked_at": "2026-11-20T03:58:42.573057+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254900&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000251",
+    "name": "공주교육대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000251",
+    "checked_at": "2026-11-20T03:58:42.610112+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000255047&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000074",
+    "name": "광운대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000074",
+    "checked_at": "2026-11-20T03:58:42.621179+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253438&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000075",
+    "name": "광주가톨릭대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000075",
+    "checked_at": "2026-11-20T03:58:42.890473+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252818&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000252",
+    "name": "광주교육대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000252",
+    "checked_at": "2026-11-20T03:58:42.911979+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253622&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000231",
+    "name": "광주대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000231",
+    "checked_at": "2026-11-20T03:58:42.932982+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253786&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000076",
+    "name": "광주여자대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000076",
+    "checked_at": "2026-11-20T03:58:42.958497+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252311&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000021",
+    "name": "국립경국대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000021",
+    "checked_at": "2026-11-20T03:58:43.143908+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253632&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000008",
+    "name": "국립공주대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000008",
+    "checked_at": "2026-11-20T03:58:43.167918+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253296&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000009",
+    "name": "국립군산대학교[본교]",
+    "region": "전북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000009",
+    "checked_at": "2026-11-20T03:58:43.207518+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254119&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000010",
+    "name": "국립금오공과대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000010",
+    "checked_at": "2026-11-20T03:58:43.214520+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253214&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000011",
+    "name": "국립목포대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000011",
+    "checked_at": "2026-11-20T03:58:43.426372+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254182&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000012",
+    "name": "국립목포해양대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000012",
+    "checked_at": "2026-11-20T03:58:43.450425+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252433&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000013",
+    "name": "국립부경대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000013",
+    "checked_at": "2026-11-20T03:58:43.474259+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253019&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000020",
+    "name": "국립순천대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000020",
+    "checked_at": "2026-11-20T03:58:43.713825+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000255043&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000028",
+    "name": "국립창원대학교[본교]",
+    "region": "경남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000028",
+    "checked_at": "2026-11-20T03:58:43.741543+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254139&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000034",
+    "name": "국립한국교통대학교[본교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000034",
+    "checked_at": "2026-11-20T03:58:43.782161+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253748&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000033",
+    "name": "국립한국해양대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000033",
+    "checked_at": "2026-11-20T03:58:43.793161+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252649&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000039",
+    "name": "국립한밭대학교[본교]",
+    "region": "대전",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000039",
+    "checked_at": "2026-11-20T03:58:44.165581+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253158&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000078",
+    "name": "국민대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000078",
+    "checked_at": "2026-11-20T03:58:44.197602+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253670&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000080",
+    "name": "극동대학교[본교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000080",
+    "checked_at": "2026-11-20T03:58:44.254033+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252281&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000224",
+    "name": "금강대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000224",
+    "checked_at": "2026-11-20T03:58:44.266543+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000255063&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000241",
+    "name": "김천대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000241",
+    "checked_at": "2026-11-20T03:58:44.468270+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000255023&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000081",
+    "name": "나사렛대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000081",
+    "checked_at": "2026-11-20T03:58:44.511614+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253246&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000216",
+    "name": "남부대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000216",
+    "checked_at": "2026-11-20T03:58:44.521619+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254712&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000245",
+    "name": "남서울대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000245",
+    "checked_at": "2026-11-20T03:58:44.549748+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253474&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000082",
+    "name": "단국대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000082",
+    "checked_at": "2026-11-20T03:58:44.745597+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252480&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0002726",
+    "name": "단국대학교[제2캠퍼스]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0002726",
+    "checked_at": "2026-11-20T03:58:44.778108+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252484&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000088",
+    "name": "대구가톨릭대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000088",
+    "checked_at": "2026-11-20T03:58:44.807704+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254820&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000253",
+    "name": "대구교육대학교[본교]",
+    "region": "대구",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000253",
+    "checked_at": "2026-11-20T03:58:44.835779+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000255019&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000084",
+    "name": "대구대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000084",
+    "checked_at": "2026-11-20T03:58:45.029634+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254307&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000087",
+    "name": "대구예술대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000087",
+    "checked_at": "2026-11-20T03:58:45.053644+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253128&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000061",
+    "name": "대구한의대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000061",
+    "checked_at": "2026-11-20T03:58:45.132288+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000255035&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000093",
+    "name": "대신대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000093",
+    "checked_at": "2026-11-20T03:58:45.153799+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000255059&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000094",
+    "name": "대전가톨릭대학교[본교]",
+    "region": "세종",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000094",
+    "checked_at": "2026-11-20T03:58:45.347679+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252953&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000095",
+    "name": "대전대학교[본교]",
+    "region": "대전",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000095",
+    "checked_at": "2026-11-20T03:58:45.375188+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253324&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000238",
+    "name": "대전신학대학교[본교]",
+    "region": "대전",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000238",
+    "checked_at": "2026-11-20T03:58:45.400704+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252945&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000097",
+    "name": "대진대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000097",
+    "checked_at": "2026-11-20T03:58:45.423709+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254620&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000099",
+    "name": "덕성여자대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000099",
+    "checked_at": "2026-11-20T03:58:45.615263+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254374&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000100",
+    "name": "동국대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000100",
+    "checked_at": "2026-11-20T03:58:45.663986+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252380&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000101",
+    "name": "동국대학교(WISE)[분교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000101",
+    "checked_at": "2026-11-20T03:58:45.686997+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253210&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000102",
+    "name": "동덕여자대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000102",
+    "checked_at": "2026-11-20T03:58:45.689997+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252289&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000235",
+    "name": "동명대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000235",
+    "checked_at": "2026-11-20T03:58:45.919561+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252523&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000103",
+    "name": "동서대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000103",
+    "checked_at": "2026-11-20T03:58:46.034025+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254287&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000104",
+    "name": "동신대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000104",
+    "checked_at": "2026-11-20T03:58:46.044521+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252929&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000105",
+    "name": "동아대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000105",
+    "checked_at": "2026-11-20T03:58:46.052520+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252429&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000106",
+    "name": "동양대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000106",
+    "checked_at": "2026-11-20T03:58:46.275915+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254352&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000107",
+    "name": "동의대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000107",
+    "checked_at": "2026-11-20T03:58:46.326432+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254443&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000108",
+    "name": "루터대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000108",
+    "checked_at": "2026-11-20T03:58:46.339433+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252472&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000109",
+    "name": "명지대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000109",
+    "checked_at": "2026-11-20T03:58:46.348759+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254370&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000111",
+    "name": "명지대학교[제2캠퍼스]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000111",
+    "checked_at": "2026-11-20T03:58:46.567134+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254378&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000112",
+    "name": "목원대학교[본교]",
+    "region": "대전",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000112",
+    "checked_at": "2026-11-20T03:58:46.624190+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252437&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000221",
+    "name": "목포가톨릭대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000221",
+    "checked_at": "2026-11-20T03:58:46.629189+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253219&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000178",
+    "name": "백석대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000178",
+    "checked_at": "2026-11-20T03:58:46.630695+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252830&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000114",
+    "name": "부산가톨릭대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000114",
+    "checked_at": "2026-11-20T03:58:46.835860+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252742&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000254",
+    "name": "부산교육대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000254",
+    "checked_at": "2026-11-20T03:58:46.858868+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252597&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000014",
+    "name": "부산대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000014",
+    "checked_at": "2026-11-20T03:58:46.882376+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252727&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000115",
+    "name": "부산외국어대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000115",
+    "checked_at": "2026-11-20T03:58:46.899630+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253184&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000222",
+    "name": "부산장신대학교[본교]",
+    "region": "경남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000222",
+    "checked_at": "2026-11-20T03:58:47.107697+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253301&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000116",
+    "name": "삼육대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000116",
+    "checked_at": "2026-11-20T03:58:47.170586+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000255027&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000117",
+    "name": "상명대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000117",
+    "checked_at": "2026-11-20T03:58:47.188594+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253115&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0002959",
+    "name": "상명대학교[제2캠퍼스]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0002959",
+    "checked_at": "2026-11-20T03:58:47.208553+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252257&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000119",
+    "name": "상지대학교[본교]",
+    "region": "강원",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000119",
+    "checked_at": "2026-11-20T03:58:47.408785+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252937&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000120",
+    "name": "서강대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000120",
+    "checked_at": "2026-11-20T03:58:47.466202+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254435&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000121",
+    "name": "서경대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000121",
+    "checked_at": "2026-11-20T03:58:47.477713+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252464&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000036",
+    "name": "서울과학기술대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000036",
+    "checked_at": "2026-11-20T03:58:47.486718+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254362&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000255",
+    "name": "서울교육대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000255",
+    "checked_at": "2026-11-20T03:58:47.732118+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252300&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000098",
+    "name": "서울기독대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000098",
+    "checked_at": "2026-11-20T03:58:47.737121+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253262&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000019",
+    "name": "서울대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000019",
+    "checked_at": "2026-11-20T03:58:47.780634+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253250&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000040",
+    "name": "서울시립대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000040",
+    "checked_at": "2026-11-20T03:58:47.783637+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253084&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000125",
+    "name": "서울신학대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000125",
+    "checked_at": "2026-11-20T03:58:47.992793+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252476&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000126",
+    "name": "서울여자대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000126",
+    "checked_at": "2026-11-20T03:58:48.024377+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254064&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000127",
+    "name": "서울장신대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000127",
+    "checked_at": "2026-11-20T03:58:48.147215+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253097&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000205",
+    "name": "서울한영대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000205",
+    "checked_at": "2026-11-20T03:58:48.157297+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253258&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000128",
+    "name": "서원대학교[본교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000128",
+    "checked_at": "2026-11-20T03:58:48.371079+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252173&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000129",
+    "name": "선문대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000129",
+    "checked_at": "2026-11-20T03:58:48.384589+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252966&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000131",
+    "name": "성결대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000131",
+    "checked_at": "2026-11-20T03:58:48.415817+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253570&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000132",
+    "name": "성공회대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000132",
+    "checked_at": "2026-11-20T03:58:48.430824+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253873&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000133",
+    "name": "성균관대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000133",
+    "checked_at": "2026-11-20T03:58:48.664122+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254993&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000136",
+    "name": "성신여자대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000136",
+    "checked_at": "2026-11-20T03:58:48.679631+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253580&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000137",
+    "name": "세명대학교[본교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000137",
+    "checked_at": "2026-11-20T03:58:48.706067+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252847&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000138",
+    "name": "세종대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000138",
+    "checked_at": "2026-11-20T03:58:48.728582+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254082&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000092",
+    "name": "세한대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000092",
+    "checked_at": "2026-11-20T03:58:48.941322+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252231&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000243",
+    "name": "송원대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000243",
+    "checked_at": "2026-11-20T03:58:48.961832+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254906&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000139",
+    "name": "수원가톨릭대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000139",
+    "checked_at": "2026-11-20T03:58:48.996210+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252668&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000140",
+    "name": "수원대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000140",
+    "checked_at": "2026-11-20T03:58:48.997211+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253540&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000141",
+    "name": "숙명여자대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000141",
+    "checked_at": "2026-11-20T03:58:49.212893+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253119&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000142",
+    "name": "순천향대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000142",
+    "checked_at": "2026-11-20T03:58:49.234900+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253347&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000143",
+    "name": "숭실대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000143",
+    "checked_at": "2026-11-20T03:58:49.313994+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253666&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000065",
+    "name": "신경주대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000065",
+    "checked_at": "2026-11-20T03:58:49.333992+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252958&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000144",
+    "name": "신라대학교[본교]",
+    "region": "부산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000144",
+    "checked_at": "2026-11-20T03:58:49.560412+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252265&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0002712",
+    "name": "신한대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0002712",
+    "checked_at": "2026-11-20T03:58:49.611837+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000255031&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0002800",
+    "name": "신한대학교[제2캠퍼스]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0002800",
+    "checked_at": "2026-11-20T03:58:49.616835+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000255039&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000145",
+    "name": "아신대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000145",
+    "checked_at": "2026-11-20T03:58:49.620835+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254192&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000146",
+    "name": "아주대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000146",
+    "checked_at": "2026-11-20T03:58:49.823739+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253142&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000147",
+    "name": "안양대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000147",
+    "checked_at": "2026-11-20T03:58:49.860828+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252933&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000148",
+    "name": "안양대학교[제2캠퍼스]",
+    "region": "인천",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000148",
+    "checked_at": "2026-11-20T03:58:49.863831+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252941&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000149",
+    "name": "연세대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000149",
+    "checked_at": "2026-11-20T03:58:49.885347+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252227&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000150",
+    "name": "연세대학교(미래)[분교]",
+    "region": "강원",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000150",
+    "checked_at": "2026-11-20T03:58:50.114866+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254072&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000151",
+    "name": "영남대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000151",
+    "checked_at": "2026-11-20T03:58:50.121871+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254599&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000155",
+    "name": "영산선학대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000155",
+    "checked_at": "2026-11-20T03:58:50.157383+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252638&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000228",
+    "name": "예수대학교[본교]",
+    "region": "전북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000228",
+    "checked_at": "2026-11-20T03:58:50.162384+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252664&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000156",
+    "name": "용인대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000156",
+    "checked_at": "2026-11-20T03:58:50.421870+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252269&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000157",
+    "name": "우석대학교[본교]",
+    "region": "전북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000157",
+    "checked_at": "2026-11-20T03:58:50.454932+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252507&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000240",
+    "name": "우송대학교[본교]",
+    "region": "대전",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000240",
+    "checked_at": "2026-11-20T03:58:50.469938+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254295&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000158",
+    "name": "울산대학교[본교]",
+    "region": "울산",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000158",
+    "checked_at": "2026-11-20T03:58:50.484966+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252962&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000159",
+    "name": "원광대학교[본교]",
+    "region": "전북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000159",
+    "checked_at": "2026-11-20T03:58:50.688979+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252880&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000160",
+    "name": "위덕대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000160",
+    "checked_at": "2026-11-20T03:58:50.716002+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252376&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000154",
+    "name": "유원대학교[본교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000154",
+    "checked_at": "2026-11-20T03:58:50.752144+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253198&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000161",
+    "name": "을지대학교[본교]",
+    "region": "대전",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000161",
+    "checked_at": "2026-11-20T03:58:50.760655+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254980&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000163",
+    "name": "이화여자대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000163",
+    "checked_at": "2026-11-20T03:58:50.969459+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252511&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000164",
+    "name": "인제대학교[본교]",
+    "region": "경남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000164",
+    "checked_at": "2026-11-20T03:58:51.012482+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254624&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000168",
+    "name": "인천가톨릭대학교[본교]",
+    "region": "인천",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000168",
+    "checked_at": "2026-11-20T03:58:51.019479+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252787&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000167",
+    "name": "인천가톨릭대학교[제2캠퍼스]",
+    "region": "인천",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000167",
+    "checked_at": "2026-11-20T03:58:51.022479+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252539&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0002660",
+    "name": "인천대학교[본교]",
+    "region": "인천",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0002660",
+    "checked_at": "2026-11-20T03:58:51.255260+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254439&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000169",
+    "name": "인하대학교[본교]",
+    "region": "인천",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000169",
+    "checked_at": "2026-11-20T03:58:51.276261+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254720&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000170",
+    "name": "장로회신학대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000170",
+    "checked_at": "2026-11-20T03:58:51.355825+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254056&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000023",
+    "name": "전남대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000023",
+    "checked_at": "2026-11-20T03:58:51.378831+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254336&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000024",
+    "name": "전남대학교[제2캠퍼스]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000024",
+    "checked_at": "2026-11-20T03:58:51.604486+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254939&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000025",
+    "name": "전북대학교[본교]",
+    "region": "전북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000025",
+    "checked_at": "2026-11-20T03:58:51.609999+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254366&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000258",
+    "name": "전주교육대학교[본교]",
+    "region": "전북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000258",
+    "checked_at": "2026-11-20T03:58:51.631509+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254743&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000171",
+    "name": "전주대학교[본교]",
+    "region": "전북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000171",
+    "checked_at": "2026-11-20T03:58:51.647512+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254806&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000248",
+    "name": "제주국제대학교[본교]",
+    "region": "제주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000248",
+    "checked_at": "2026-11-20T03:58:51.849659+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252488&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000027",
+    "name": "제주대학교[본교]",
+    "region": "제주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000027",
+    "checked_at": "2026-11-20T03:58:51.872726+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254344&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000172",
+    "name": "조선대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000172",
+    "checked_at": "2026-11-20T03:58:51.892726+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254520&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000173",
+    "name": "중부대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000173",
+    "checked_at": "2026-11-20T03:58:51.918736+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253595&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000175",
+    "name": "중앙대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000175",
+    "checked_at": "2026-11-20T03:58:52.090290+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254319&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000174",
+    "name": "중앙대학교[제2캠퍼스]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000174",
+    "checked_at": "2026-11-20T03:58:52.150826+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000266913&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000177",
+    "name": "중앙승가대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000177",
+    "checked_at": "2026-11-20T03:58:52.187827+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252780&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000239",
+    "name": "중원대학교[본교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000239",
+    "checked_at": "2026-11-20T03:58:52.194830+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253713&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000187",
+    "name": "차의과학대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000187",
+    "checked_at": "2026-11-20T03:58:52.317886+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254348&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000249",
+    "name": "창신대학교[본교]",
+    "region": "경남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000249",
+    "checked_at": "2026-11-20T03:58:52.456738+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252222&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000284",
+    "name": "청운대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000284",
+    "checked_at": "2026-11-20T03:58:52.475742+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253123&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000261",
+    "name": "청주교육대학교[본교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000261",
+    "checked_at": "2026-11-20T03:58:52.494281+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252452&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000179",
+    "name": "청주대학교[본교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000179",
+    "checked_at": "2026-11-20T03:58:52.531295+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252811&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000246",
+    "name": "초당대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000246",
+    "checked_at": "2026-11-20T03:58:52.686545+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253645&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000180",
+    "name": "총신대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000180",
+    "checked_at": "2026-11-20T03:58:52.706053+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253153&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000181",
+    "name": "추계예술대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000181",
+    "checked_at": "2026-11-20T03:58:52.723053+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252717&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000029",
+    "name": "충남대학교[본교]",
+    "region": "대전",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000029",
+    "checked_at": "2026-11-20T03:58:52.795641+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252519&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000030",
+    "name": "충북대학교[본교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000030",
+    "checked_at": "2026-11-20T03:58:52.932130+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253485&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000184",
+    "name": "칼빈대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000184",
+    "checked_at": "2026-11-20T03:58:52.950127+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253282&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000186",
+    "name": "평택대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000186",
+    "checked_at": "2026-11-20T03:58:52.967632+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254258&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000037",
+    "name": "한경국립대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000037",
+    "checked_at": "2026-11-20T03:58:53.022152+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254910&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000247",
+    "name": "한국공학대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000247",
+    "checked_at": "2026-11-20T03:58:53.204419+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254702&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000031",
+    "name": "한국교원대학교[본교]",
+    "region": "충북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000031",
+    "checked_at": "2026-11-20T03:58:53.226417+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252460&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000189",
+    "name": "한국기술교육대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000189",
+    "checked_at": "2026-11-20T03:58:53.296992+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252285&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000191",
+    "name": "한국성서대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000191",
+    "checked_at": "2026-11-20T03:58:53.320503+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252754&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000192",
+    "name": "한국외국어대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000192",
+    "checked_at": "2026-11-20T03:58:53.517074+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252446&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000032",
+    "name": "한국체육대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000032",
+    "checked_at": "2026-11-20T03:58:53.535072+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254254&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000182",
+    "name": "한국침례신학대학교[본교]",
+    "region": "대전",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000182",
+    "checked_at": "2026-11-20T03:58:53.554074+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252515&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000194",
+    "name": "한국항공대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000194",
+    "checked_at": "2026-11-20T03:58:53.571582+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254489&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000195",
+    "name": "한남대학교[본교]",
+    "region": "대전",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000195",
+    "checked_at": "2026-11-20T03:58:53.770649+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254340&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000196",
+    "name": "한동대학교[본교]",
+    "region": "경북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000196",
+    "checked_at": "2026-11-20T03:58:53.787652+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252154&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000197",
+    "name": "한라대학교[본교]",
+    "region": "강원",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000197",
+    "checked_at": "2026-11-20T03:58:53.823668+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253165&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000198",
+    "name": "한림대학교[본교]",
+    "region": "강원",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000198",
+    "checked_at": "2026-11-20T03:58:53.828668+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252498&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000199",
+    "name": "한서대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000199",
+    "checked_at": "2026-11-20T03:58:54.060113+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253242&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000200",
+    "name": "한성대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000200",
+    "checked_at": "2026-11-20T03:58:54.078485+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253193&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000201",
+    "name": "한세대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000201",
+    "checked_at": "2026-11-20T03:58:54.097827+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254456&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000202",
+    "name": "한신대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000202",
+    "checked_at": "2026-11-20T03:58:54.115332+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252188&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000203",
+    "name": "한양대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000203",
+    "checked_at": "2026-11-20T03:58:54.412094+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253276&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000204",
+    "name": "한양대학교(ERICA)[분교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000204",
+    "checked_at": "2026-11-20T03:58:54.437092+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254757&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000207",
+    "name": "협성대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000207",
+    "checked_at": "2026-11-20T03:58:54.471095+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252296&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000208",
+    "name": "호남대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000208",
+    "checked_at": "2026-11-20T03:58:54.483399+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252713&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000209",
+    "name": "호남신학대학교[본교]",
+    "region": "전남광주",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000209",
+    "checked_at": "2026-11-20T03:58:54.701017+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253628&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000211",
+    "name": "호서대학교[본교]",
+    "region": "충남",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000211",
+    "checked_at": "2026-11-20T03:58:54.741274+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252468&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000282",
+    "name": "호원대학교[본교]",
+    "region": "전북",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000282",
+    "checked_at": "2026-11-20T03:58:54.766290+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253307&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000212",
+    "name": "홍익대학교[본교]",
+    "region": "서울",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000212",
+    "checked_at": "2026-11-20T03:58:54.774798+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253202&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0002949",
+    "name": "홍익대학교[제2캠퍼스]",
+    "region": "세종",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0002949",
+    "checked_at": "2026-11-20T03:58:55.006469+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253206&fileSn=1",
+    "official_links": []
+  },
+  {
+    "code": "0000233",
+    "name": "화성의과학대학교[본교]",
+    "region": "경기",
+    "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000233",
+    "checked_at": "2026-11-20T03:58:55.051467+00:00",
+    "file_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253741&fileSn=1",
+    "official_links": []
+  }
+]

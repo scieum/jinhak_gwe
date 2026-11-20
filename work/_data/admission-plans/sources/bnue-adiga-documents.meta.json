@@ -1,0 +1,11 @@
+{
+  "id": "bnue-adiga-documents",
+  "url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000254",
+  "checked_at": "2026-11-20T03:57:22.111411+00:00",
+  "final_url": "https://www.adiga.kr/ucp/uvt/uni/univDetail.do?menuId=PCUVTINF2000&searchSyr=2028&unvCd=0000254",
+  "status": 200,
+  "bytes": 103273,
+  "sha256": "8e52d830b8e08d905bfe8464ad8031415f99b201a8352e6f930b1315e0d23251",
+  "kind": "html",
+  "has_2028": true
+}

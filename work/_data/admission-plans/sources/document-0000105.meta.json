@@ -1,0 +1,23 @@
+{
+  "id": "document-0000105",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252429&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.345513+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252429&fileSn=1",
+  "status": 200,
+  "bytes": 921088,
+  "sha256": "a224469b9814f7ca1f18dbe138ac41721900034b03c8522d7dfd645bacd727de",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "2028학년도 신입학 대학입학전형 시행계획(안).hwp",
+      "zip_name": "2028학년도 신입학 대학입학전형 시행계획(안).hwp",
+      "bytes": 954368
+    },
+    {
+      "name": "2028학년도 외국인 신입학 특별전형 시행계획(안).hwp",
+      "zip_name": "2028학년도 외국인 신입학 특별전형 시행계획(안).hwp",
+      "bytes": 129536
+    }
+  ],
+  "has_2028": true
+}

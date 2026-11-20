@@ -1,0 +1,9 @@
+.interest-control { display: grid; gap: var(--spacing-xs); align-content: start; }
+.interest-heart { display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-xs); min-width: 44px; min-height: 44px; padding: var(--spacing-xs) var(--spacing-sm); background: var(--color-canvas); border: 1px solid var(--color-hairline); color: var(--color-ink); cursor: pointer; }
+.interest-heart[aria-pressed="true"] .icon svg { fill: var(--color-heart); stroke: var(--color-heart); }
+.interest-heart:disabled { cursor: default; opacity: .65; }
+.interest-list { display: grid; gap: var(--spacing-md); min-width: 0; }
+.interest-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(130px, 200px); gap: var(--spacing-md); padding: var(--spacing-md); border-bottom: 1px solid var(--color-hairline-soft); }
+.interest-row__info { display: grid; gap: var(--spacing-xs); min-width: 0; overflow-wrap: anywhere; }
+.interest-row__info > a { color: inherit; }
+@media (max-width: 767px) { .interest-row { grid-template-columns: minmax(0, 1fr); } .interest-row .interest-control { justify-items: start; } }

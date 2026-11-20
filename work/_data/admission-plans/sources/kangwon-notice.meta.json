@@ -1,0 +1,11 @@
+{
+  "id": "kangwon-notice",
+  "url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+  "checked_at": "2026-11-20T03:53:58.294610+00:00",
+  "final_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+  "status": 200,
+  "bytes": 87383,
+  "sha256": "bdbd340fa0950ceeba056aa30d02630fadb11b0a3fb1948b1055ce0e17acf53e",
+  "kind": "html",
+  "has_2028": true
+}

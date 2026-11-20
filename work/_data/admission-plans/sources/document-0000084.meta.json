@@ -1,0 +1,23 @@
+{
+  "id": "document-0000084",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254307&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.236864+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254307&fileSn=1",
+  "status": 200,
+  "bytes": 1562542,
+  "sha256": "961317082bcb0381221854cb25d578d2942e18e0d696be8a15746339c0199434",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "[공개용]2028학년도_대학입학전형 시행계획(2027교육편제)_배포용.hwp",
+      "zip_name": "[공개용]2028학년도_대학입학전형 시행계획(2027교육편제)_배포용.hwp",
+      "bytes": 1025536
+    },
+    {
+      "name": "[공개용]2028학년도_대학입학전형 시행계획(2027교육편제)_배포용.pdf",
+      "zip_name": "[공개용]2028학년도_대학입학전형 시행계획(2027교육편제)_배포용.pdf",
+      "bytes": 808104
+    }
+  ],
+  "has_2028": true
+}

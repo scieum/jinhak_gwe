@@ -1,0 +1,11 @@
+.plan-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-md); }
+.plan-detail { display: grid; gap: var(--spacing-md); border-block: 2px solid var(--color-accent); padding-block: var(--spacing-lg); min-width: 0; }
+.plan-facts { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: var(--spacing-sm); }
+.plan-facts dt, .plan-topics dt { font-weight: 600; }
+.plan-facts dd, .plan-topics dd { margin: 0; }
+.plan-topics { display: grid; gap: var(--spacing-sm); margin-top: var(--spacing-sm); }
+.plan-topics dd { display: flex; flex-wrap: wrap; gap: var(--spacing-sm); }
+.plan-detail summary { cursor: pointer; padding-block: var(--spacing-sm); }
+.plan-filename, .plan-notices { overflow-wrap: anywhere; }
+.plan-notices { padding-left: var(--spacing-lg); display: grid; gap: var(--spacing-sm); }
+@media (max-width: 767px) { .plan-grid { grid-template-columns: 1fr; } }

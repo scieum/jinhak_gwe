@@ -1,0 +1,11 @@
+{
+  "id": "notice-2fb926bf2028",
+  "url": "https://iphak.gwangju.ac.kr/index?d=admission01&action=view&data_id=2735&bbs_id=15",
+  "checked_at": "2026-11-20T03:55:40.360441+00:00",
+  "final_url": "https://iphak.gwangju.ac.kr/index?d=admission01&action=view&data_id=2735&bbs_id=15",
+  "status": 200,
+  "bytes": 41890,
+  "sha256": "531369eb5f2c806360279e7985b24332cd662c695395f81a35747a9c2a659daa",
+  "kind": "html",
+  "has_2028": true
+}

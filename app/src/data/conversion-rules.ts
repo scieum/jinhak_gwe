@@ -2,6 +2,7 @@ import type { ConversionRule, DistributionRule, EnrollmentRule, PlacementTable }
 import type { JudgmentRule } from '../engine/judgment';
 
 // Drafts are deliberately not promoted by unit tests. Production activation requires content review.
+// 2026-11-18: official enrollment rounding/tie text is now accessible; see app/IMPLEMENTATION.md.
 export const baseConversionRule: ConversionRule = {
   id: 'R-CONV-001-004-v1', source: 'docs/prd.md §9', review_status: 'draft',
   five_midpoints: [5, 22, 50, 78, 95],

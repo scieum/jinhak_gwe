@@ -1,0 +1,12 @@
+{
+  "id": "document-0000136",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253580&fileSn=1",
+  "checked_at": "2026-11-20T03:59:45.146306+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253580&fileSn=1",
+  "status": 200,
+  "bytes": 1163350,
+  "sha256": "4380b8e75cf44f5d1b3b8f1befeabb74d4c1810f4f3c08eec3722fb23703e7d3",
+  "kind": "pdf",
+  "pages": 32,
+  "has_2028": true
+}

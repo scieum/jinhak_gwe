@@ -1,0 +1,28 @@
+{
+  "id": "document-0000066",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252503&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.041473+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252503&fileSn=1",
+  "status": 200,
+  "bytes": 20951177,
+  "sha256": "71bfa0c1d47a7f49d5e704952fd09511adcba37b193e5b511ba69a93a120798e",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "2028학년도 외국인전형 전형시행계획(안).pdf",
+      "zip_name": "2028학년도 외국인전형 전형시행계획(안).pdf",
+      "bytes": 120433
+    },
+    {
+      "name": "2028학년도 경희대학교 대학입학전형계획(안).pdf",
+      "zip_name": "2028학년도 경희대학교 대학입학전형계획(안).pdf",
+      "bytes": 20881386
+    },
+    {
+      "name": "2028학년도 경희대학교 재외국민특별전형 대학입학전형계획(안).pdf",
+      "zip_name": "2028학년도 경희대학교 재외국민특별전형 대학입학전형계획(안).pdf",
+      "bytes": 297296
+    }
+  ],
+  "has_2028": true
+}

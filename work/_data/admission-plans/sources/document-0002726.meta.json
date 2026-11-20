@@ -1,0 +1,23 @@
+{
+  "id": "document-0002726",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252484&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.221862+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252484&fileSn=1",
+  "status": 200,
+  "bytes": 673846,
+  "sha256": "233b54b41511f071cd0e92fc3aa3f9a6fcf7d6a2defb58ab92ec4c298d72f0e7",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "[단국대] 2028학년도 대학입학전형시행계획(재외국민 포함)_배포용_20260430.pdf",
+      "zip_name": "[단국대] 2028학년도 대학입학전형시행계획(재외국민 포함)_배포용_20260430.pdf",
+      "bytes": 547235
+    },
+    {
+      "name": "[단국대] 2028학년도 외국인 신입학 특별전형 기본계획(안)_배포용_20260430.pdf",
+      "zip_name": "[단국대] 2028학년도 외국인 신입학 특별전형 기본계획(안)_배포용_20260430.pdf",
+      "bytes": 186739
+    }
+  ],
+  "has_2028": true
+}

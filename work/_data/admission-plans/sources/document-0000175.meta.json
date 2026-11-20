@@ -1,0 +1,23 @@
+{
+  "id": "document-0000175",
+  "url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254319&fileSn=1",
+  "checked_at": "2026-11-20T04:00:41.573689+00:00",
+  "final_url": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000254319&fileSn=1",
+  "status": 200,
+  "bytes": 1748665,
+  "sha256": "b932d211991bc36d31acd93ddca8c960a34866227094b671df737ba230fcaae4",
+  "kind": "zip",
+  "members": [
+    {
+      "name": "2028학년도 중앙대학교 입학전형시행계획/2028학년도 중앙대학교 입학전형시행계획_순수외국인.pdf",
+      "zip_name": "2028학년도 중앙대학교 입학전형시행계획/2028학년도 중앙대학교 입학전형시행계획_순수외국인.pdf",
+      "bytes": 74328
+    },
+    {
+      "name": "2028학년도 중앙대학교 입학전형시행계획/중앙대학교_2028학년도 입학전형 시행계획(낱장)_0710_안내추가.pdf",
+      "zip_name": "2028학년도 중앙대학교 입학전형시행계획/중앙대학교_2028학년도 입학전형 시행계획(낱장)_0710_안내추가.pdf",
+      "bytes": 2304578
+    }
+  ],
+  "has_2028": true
+}

@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-19",
+  "figmaUrl": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=172-5788",
+  "variants": [
+    {
+      "id": "record",
+      "title": "꾸준히 쌓는 기록가",
+      "caption": "체크 수첩 · 차분하게 한 칸씩",
+      "file": "app/public/assets/admission-style/gilkong-record-v1.png",
+      "imageHash": "1e339fe9e9ed780c65575bc5ebd87382d2192c4c"
+    },
+    {
+      "id": "explore",
+      "title": "깊이 파는 탐구가",
+      "caption": "돋보기 · 궁금한 것을 더 깊게",
+      "file": "app/public/assets/admission-style/gilkong-explore-v1.png",
+      "imageHash": "3da47d96734712ba40b50a6821da785189754369"
+    },
+    {
+      "id": "reason",
+      "title": "근거를 잇는 논증가",
+      "caption": "연결 보드 · 근거를 이어 설명하기",
+      "file": "app/public/assets/admission-style/gilkong-reason-v1.png",
+      "imageHash": "7c8f92d00eb61eb89172505fc72f0cb0f88e0373"
+    },
+    {
+      "id": "practice",
+      "title": "반복하며 만드는 실천가",
+      "caption": "블록과 앞치마 · 직접 만들고 다듬기",
+      "file": "app/public/assets/admission-style/gilkong-practice-v1.png",
+      "imageHash": "0774250b9f8067f9b2117fafad303fff8b6470e5"
+    },
+    {
+      "id": "exam",
+      "title": "전략을 세우는 도전가",
+      "caption": "전략판과 타이머 · 계획하고 도전하기",
+      "file": "app/public/assets/admission-style/gilkong-exam-v1.png",
+      "imageHash": "5da5fadfe8427f52df20c5b1a6ad247a5d20ba7c"
+    },
+    {
+      "id": "mixed",
+      "title": "여러 길을 살피는 탐색가",
+      "caption": "갈림길 지도 · 여러 관심을 함께",
+      "file": "app/public/assets/admission-style/gilkong-mixed-v1.png",
+      "imageHash": "02e4e38e54c7659d2323deadb72dd726ac2b08ba"
+    },
+    {
+      "id": "open",
+      "title": "가능성을 열어 둔 탐색가",
+      "caption": "열린 팔과 별 · 가능성을 환영하기",
+      "file": "app/public/assets/admission-style/gilkong-open-v1.png",
+      "imageHash": "faaf4304150fc4d010934ad3950f594d84dacdf1"
+    },
+    {
+      "id": "insufficient",
+      "title": "경험을 더 알아가는 탐색가",
+      "caption": "새싹 · 작은 경험부터 키워가기",
+      "file": "app/public/assets/admission-style/gilkong-insufficient-v1.png",
+      "imageHash": "c04ef04b2ea070382a15a515ec964e8e026307dc"
+    }
+  ],
+  "updatedResultImages": 16,
+  "notes": "8 character variants on comparison board. 8 existing result images updated on each of the original and dedicated feature pages. Intro and question mascot retained. No application logic modified."
+}

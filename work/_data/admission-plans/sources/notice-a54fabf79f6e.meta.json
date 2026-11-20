@@ -1,0 +1,11 @@
+{
+  "id": "notice-a54fabf79f6e",
+  "url": "https://ipsi.halla.ac.kr/community/data01.php?sub=1&admin_mode=read&no=8230231",
+  "checked_at": "2026-11-20T03:55:37.554359+00:00",
+  "final_url": "https://ipsi.halla.ac.kr/community/data01.php?sub=1&admin_mode=read&no=8230231",
+  "status": 200,
+  "bytes": 28570,
+  "sha256": "89bcd57a4dab207cb384a0b3022440dae0251ff32e7d4c5480c050fe7725ef3f",
+  "kind": "html",
+  "has_2028": true
+}

@@ -1,0 +1,12 @@
+{
+  "id": "hallym-plan",
+  "url": "https://admission.hallym.ac.kr/pdfView/admission/20/19/fileDownload.do",
+  "checked_at": "2026-11-20T03:53:58.295615+00:00",
+  "final_url": "https://admission.hallym.ac.kr/pdfView/admission/20/19/fileDownload.do",
+  "status": 200,
+  "bytes": 342859,
+  "sha256": "7977689503c78912b041041d1fc6053f457aeee4f843f47acd498922bd34fba0",
+  "kind": "pdf",
+  "pages": 25,
+  "has_2028": true
+}
