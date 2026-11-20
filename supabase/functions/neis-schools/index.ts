@@ -13,13 +13,19 @@ Deno.serve(async req => {
   const url = new URL(req.url), sido = url.searchParams.get('sido') ?? '', level = url.searchParams.get('level') ?? '', q = (url.searchParams.get('q') ?? '').trim();
   const code = SIDO_CODE[sido];
   if (!code || !LEVELS.has(level) || q.length < 2 || q.length > 30) return json({ error: '시/도·학교급과 학교 이름 두 글자 이상이 필요해요.' }, 400);
-  const key = Deno.env.get('NEIS_API_KEY');
-  if (!key) return json({ error: '학교 목록 연결을 준비하고 있어요.' }, 503);
+  // 비밀값 이름은 NEIS_API_KEY. 대시보드에서 이름을 조금 다르게 넣어도 찾고, 못 찾으면 "이름"만 알려 줘요(값은 내보내지 않음).
+  const env = Deno.env.toObject();
+  const names = Object.keys(env).filter(n => /neis/i.test(n));
+  const key = (env.NEIS_API_KEY ?? env[names.find(n => /^neis_?(api_?)?key$/i.test(n.trim())) ?? ''] ?? '').trim();
+  if (!key) return json({ error: '학교 목록 연결을 준비하고 있어요.', neis_secret_names: names }, 503);
   const neis = new URL('https://open.neis.go.kr/hub/schoolInfo');
   for (const [k, v] of Object.entries({ KEY: key, Type: 'json', pIndex: '1', pSize: '50', ATPT_OFCDC_SC_CODE: code, SCHUL_KND_SC_NM: level, SCHUL_NM: q })) neis.searchParams.set(k, v);
   try {
     const res = await fetch(neis);
     const data = await res.json();
+    // 결과가 없으면 NEIS는 RESULT.CODE INFO-200을 줘요. 그 밖의 코드(예: ERROR-290 인증키 오류)는 그대로 알려요.
+    const result = data?.RESULT;
+    if (result && result.CODE !== 'INFO-200') return json({ error: 'NEIS가 요청을 거절했어요.', neis_code: result.CODE, neis_message: result.MESSAGE }, 502);
     const rows = data?.schoolInfo?.[1]?.row ?? [];
     return json(rows.map((r: Record<string, string>) => ({ code: r.SD_SCHUL_CODE, name: r.SCHUL_NM, region: r.LCTN_SC_NM, address: r.ORG_RDNMA ?? '' })));
   } catch {

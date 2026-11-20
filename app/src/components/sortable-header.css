@@ -1,0 +1,10 @@
+.sort-header-button { display: inline-flex; align-items: center; gap: var(--spacing-xxs); min-height: 44px; max-width: 100%; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; font-weight: 600; text-align: inherit; white-space: nowrap; cursor: pointer; }
+.sort-header-button:hover { text-decoration: underline; }
+.sort-header-button:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+.sort-header-arrow { color: var(--color-text-muted); }
+th[aria-sort='ascending'] .sort-header-arrow, th[aria-sort='descending'] .sort-header-arrow { color: var(--color-ink); font-weight: 700; }
+.data-table th:has(> .sort-header-button) { padding-block: 0; }
+.collection-sort-help { padding: 0 var(--spacing-card) var(--spacing-xs); }
+@media (max-width: 767px) {
+  .collection-table th:not(:first-child) .sort-header-button { flex-direction: column; justify-content: center; align-items: flex-end; gap: 0; }
+}

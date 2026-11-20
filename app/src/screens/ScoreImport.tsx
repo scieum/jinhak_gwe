@@ -61,6 +61,7 @@ function ImportBody({ info, students, mocks }: ClassState & { info: NonNullable<
     {error && <p role="alert" className="error-note">{error}</p>}
 
     {step === 'file' && <>
+      <section className="filter-panel" aria-label="불러올 성적 조건">
       <SegmentedControl label="불러올 성적" value={kind} onChange={setKind} options={[{ value: 'mock', label: '모의고사 등급' }, { value: 'school', label: '내신 학기 평균' }]} />
       {kind === 'mock' ? <div className="form-grid">
         <label>연도<input type="number" min={2024} max={2035} value={year} onChange={e => setYear(Number(e.target.value))} /></label>
@@ -68,7 +69,7 @@ function ImportBody({ info, students, mocks }: ClassState & { info: NonNullable<
         <SegmentedControl label="종류" value={examKind} onChange={setExamKind} options={EXAM_KINDS.map(k => ({ value: k, label: k }))} />
       </div> : <p className="t-body-sm text-muted">학기별 5등급 평균(1-1~3-2)을 불러와요. 빈 학기는 그대로 둬요.</p>}
       <p className="t-caption text-muted">{kind === 'mock' ? '영역 등급(국어·수학·영어·한국사·탐구1·탐구2)을 불러와요. 원점수·백분위는 아직 받지 않아요.' : '반영하면 같은 학기 값은 새 값으로 바뀌어요.'}</p>
-      <label className="drop-zone"><span>성적 파일(xlsx·csv)을 골라 주세요 · 첫 줄은 머리글</span><span className="button-outline">파일 고르기</span>
+      </section><label className="drop-zone"><span>성적 파일(xlsx·csv)을 골라 주세요 · 첫 줄은 머리글</span><span className="button-outline">파일 고르기</span>
         <input type="file" accept=".xlsx,.csv" className="sr-only" aria-label="성적 파일 고르기" onChange={e => { read(e.target.files?.[0]); e.target.value = ''; }} /></label>
       <ButtonOutline onClick={template}>번호·별칭을 채운 양식 내려받기</ButtonOutline>
     </>}

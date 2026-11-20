@@ -102,8 +102,8 @@ export function Doelgak() {
         ? pending('같은 반영 교과 기준의 입결 자료가 필요해요.')
         : judgeRange(conversion.value, p.license_status === 'allowed' ? p.cut : null, judgmentRule) }));
     return <><p className="text-muted">환산 범위의 불리한 쪽을 기준으로 입결과 비교해요. 수능최저와 충원율은 따로 확인해 주세요.</p>
-      <SegmentedControl label="판정 반영 교과" value={combo} onChange={setCombo} options={Object.keys(combinations).map(value => ({ value, label: value }))} />
-      <SegmentedControl label="판정 필터" value={filter} onChange={setFilter} options={['전체', '안정', '적정', '소신', '위험'].map(value => ({ value, label: value }))} />
+      <section className="filter-panel" aria-label="판정 조회 조건"><SegmentedControl label="판정 반영 교과" value={combo} onChange={setCombo} options={Object.keys(combinations).map(value => ({ value, label: value }))} />
+      <SegmentedControl label="판정 필터" value={filter} onChange={setFilter} options={['전체', '안정', '적정', '소신', '위험'].map(value => ({ value, label: value }))} /></section>
       {conversion.status !== 'ready' && <p className="notice">{data.grades.length ? conversion.reason : '성적을 입력하면 검수된 기준으로 비교할 수 있어요.'}</p>}
       {!rows.length && <div className="empty-state"><h3 className="t-heading-3">검수된 입결 자료를 준비하고 있어요</h3><p>입결과 판정 기준이 모두 준비된 전형만 판정해요.</p></div>}
       {rows.filter(({ r }) => filter === '전체' || (r?.status === 'ready' && r.value.label === filter)).map(({ p, r }) => <article className="univ-card" key={p.id}><h3 className="t-heading-3">{p.university} · {p.department}</h3><p>{p.program}</p>

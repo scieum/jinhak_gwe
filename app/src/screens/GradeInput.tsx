@@ -84,7 +84,7 @@ export function GradeInput() {
     <p className="grade-input__save t-caption text-muted"><Icon name="lock" size={16} /> 입력한 성적은 이 기기에만 저장돼요. <button type="button" className="text-button t-link" onClick={() => setMenu('export')}>백업하기</button></p>
     <input hidden ref={replyRef} type="file" accept=".jnavi" aria-label="선생님 답장 파일" onChange={e => { const f = e.target.files?.[0]; e.target.value = ''; if (f) void run(async () => { if (f.size > 1_000_000) throw new Error('1MB 이하 파일을 골라 주세요.'); setReply(await openReply(await f.text())); }); }} />
     <input hidden ref={inputRef} type="file" accept=".csv,.xlsx,.pdf" aria-label="성적 파일" onChange={e => { const f = e.target.files?.[0]; e.target.value = ''; if (f) void importFile(f); }} />
-    <div className="grade-input__pick">{view !== '전체' ? <SegmentedControl label={view === '학년별' ? '학년' : '학기'} value={unitValue} onChange={v => setSemester(v as Semester)} options={units} /> : <span />}
+    <div className="grade-input__pick filter-panel">{view !== '전체' ? <SegmentedControl label={view === '학년별' ? '학년' : '학기'} value={unitValue} onChange={v => setSemester(v as Semester)} options={units} /> : <span />}
       <div className="grade-input__view grade-desktop-only"><span className="t-caption text-muted">보기</span><SegmentedControl label="보기" value={view} onChange={setView} options={['학기별', '학년별', '전체'].map(value => ({ value, label: value }))} /></div></div>
     {busy && <p role="status">처리하고 있어요.</p>}{message && <p role="status">{message}</p>}{error && <p className="error-note" role="alert">{error}</p>}
     {!selected.length ? <div className="empty-state empty-state--plain"><Icon name="file-text" size={32} /><h3 className="t-heading-4">아직 입력한 성적이 없어요</h3>
@@ -168,7 +168,7 @@ function AttendanceFields({ initial, onSave }: { initial: AttendanceRecord; onSa
   const [a, set] = useState(initial), errors = validateAttendance(a);
   const commit = (next: AttendanceRecord) => { set(next); if (!validateAttendance(next).length && JSON.stringify(next) !== JSON.stringify(initial)) void onSave(next); };
   const num = (v: string) => (v === '' ? 0 : Number(v));
-  return <div className="grade-input__attendance">
+  return <div className="grade-input__attendance result-panel">
     <div className="section-row"><h3 className="t-heading-3">{a.year}학년 출결</h3>
       <span className="attendance-days"><label className="attendance-days">수업일수<input type="number" inputMode="numeric" min="0" max="366" value={a.school_days || ''} placeholder="0" onChange={e => set({ ...a, school_days: num(e.target.value) })} onBlur={() => commit(a)} /></label><span className="t-caption text-muted">일</span></span></div>
     <div className="attendance-grid" role="group" aria-label={`${a.year}학년 출결 입력`}>

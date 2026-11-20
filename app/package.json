@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "test": "vitest run",
     "typecheck": "tsc",
-    "data:import-results": "python tools/import_admission_results.py"
+    "data:import-results": "python tools/import_admission_results.py",
+    "data:build-placement": "python tools/build_national_placement.py"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.119.2",

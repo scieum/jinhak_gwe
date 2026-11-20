@@ -139,7 +139,8 @@ work/_pending/design-plan.md(조사 후 작성) 참고. 시안 전에는 개발�
 ## Supabase 1차 (2026-11-20)
 - 서버: supabase/migrations/20261120000000_init.sql(profiles: 역할은 서버에서만, 본인 이름만 수정 / class_snapshots: 교사 본인 RLS, 관리자도 못 봄), supabase/functions/neis-schools(NEIS 키는 서버 비밀값).
 - 앱: @supabase/supabase-js 2.119.2. VITE_SUPABASE_URL·VITE_SUPABASE_PUBLISHABLE_KEY 있을 때만 켜짐(.env.example). 로그인(역할로 이동)·가입(시/도+학교급+이름 검색, 확인 메일)·비밀번호 찾기·로그아웃, 학급 관리 "서버에 저장/불러오기", 새 기기 빈 화면에서 서버 학급 불러오기.
-- 미완: 첫 SQL 실행에서 "profiles already exists" 오류 — 원인 확인 필요. 생기부 AI 프록시 함수, 약관 전문, 서버 저장 자동화(지금은 수동 버튼).
+- 2026-11-20 실서버 확인: 아이디 가입(example.com 내부 주소, 메일 확인 끔) → 자동 로그인 → 프로필 트리거 → 학급 서버 저장·목록. "profiles already exists"는 첫 Run 성공 뒤 재실행이었음. 학교 검색 함수는 대시보드 이름 hyper-action. 고등학교만.
+- 미완: 생기부 AI 프록시 함수, 약관 전문, 서버 저장 자동화(지금은 수동 버튼), 비밀번호 초기화는 관리자가 대시보드에서.
 
 
 ## 전형계획 자료 연결 (2026-11-20)
@@ -149,3 +150,8 @@ work/_pending/design-plan.md(조사 후 작성) 참고. 시안 전에는 개발�
 - 출처·학년도·검수 상태·캠퍼스 중복·쪽수 범위 검증. 조회 실패 재시도. 성적 판정에 사용하지 않음.
 - 전 대학·전 전형의 구조화 완료는 아님. 나머지 전형 요약, 최신 수정본 지속 확인, 최종 모집요강 연결은 후속 범위.
 - 전체 36개 파일 341개 테스트 통과(`--maxWorkers=2`), TypeScript 검사·프로덕션 빌드 성공.
+
+## 생기부 AI 프록시 (2026-11-20)
+- supabase/functions/saenggibu-ai: Claude Sonnet 5.5(사용자 결정), structured output(json_schema), effort low, 서버 측 fallbacks "default"(정책 거절 시 다른 모델로). 키는 Secrets ANTHROPIC_API_KEY만. 본문 저장·로그 없음(R-AI-005).
+- supabase/migrations/20261120010000_ai_usage.sql: 기기(브라우저 id)별 한국 날짜 하루 3회(사용자 결정), take_ai_quota()는 서버 함수만 호출.
+- 앱: requestAnalysis가 x-device-id를 보내고, 서버 오류는 재요청하지 않음(횟수 보호). 모양이 틀린 200 응답만 1회 재요청(R-AI-002). VITE_AI_PROXY_URL = 함수 주소.

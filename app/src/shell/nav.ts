@@ -52,6 +52,7 @@ export const NAV: Record<Mode, NavGroup[]> = {
         student('전형 성향 탐색', 'admission-style', 'sparkles'),
         student('전형계획', 'admissions-list', 'file-text'),
         student('수시 입결', 'admission-results', 'chart-column'),
+        student('전국 배치표', 'national-placement', 'layout-grid'),
         student('될각', 'doelgak', 'target'),
         student('지원 자격 확인표', 'eligibility-check', 'check'),
       ],

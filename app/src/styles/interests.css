@@ -2,6 +2,13 @@
 .interest-heart { display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-xs); min-width: 44px; min-height: 44px; padding: var(--spacing-xs) var(--spacing-sm); background: var(--color-canvas); border: 1px solid var(--color-hairline); color: var(--color-ink); cursor: pointer; }
 .interest-heart[aria-pressed="true"] .icon svg { fill: var(--color-heart); stroke: var(--color-heart); }
 .interest-heart:disabled { cursor: default; opacity: .65; }
+.interest-control--compact .interest-heart { width: 44px; padding: 0; border-color: transparent; background: transparent; }
+.interest-control--compact .interest-heart:hover { background: var(--color-canvas-soft); border-color: var(--color-hairline); }
+.interest-control--compact .error-note { white-space: normal; overflow-wrap: anywhere; }
+.collection-program, .collection-unit-heading { display: flex; align-items: center; gap: var(--spacing-xs); }
+.collection-program > span, .collection-unit-heading .collection-unit { min-width: 0; }
+.collection-program .interest-control, .collection-unit-heading .interest-control { flex: 0 0 44px; }
+.collection-unit-heading .collection-unit { flex: 1; }
 .interest-list { display: grid; gap: var(--spacing-md); min-width: 0; }
 .interest-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(130px, 200px); gap: var(--spacing-md); padding: var(--spacing-md); border-bottom: 1px solid var(--color-hairline-soft); }
 .interest-row__info { display: grid; gap: var(--spacing-xs); min-width: 0; overflow-wrap: anywhere; }

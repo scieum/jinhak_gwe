@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { InterestButton } from '../components/InterestButton';
 import { PrepareProgram } from '../components/PrepareProgram';
-import { programPath } from '../domain/interests';
+import { interestId, programPath } from '../domain/interests';
 import { useReleasedResults } from '../data/releasedResults';
 import { programLines, programSummaries, yearsOf } from '../domain/resultBrowse';
 import { RESULT_NOTICE } from './AdmissionResults';
@@ -36,7 +36,7 @@ export function UnivDetail() {
     {!shown.length ? <div className="empty-state"><h3 className="t-heading-3">이 유형의 공개 입결은 없어요</h3><p>다른 유형을 골라 보세요.</p></div>
       : <ul className="program-list">{shown.map(p => <li className="interest-row" key={programPath(name, p.program)}><Link className="interest-row__info" to={programPath(name, p.program)}>
         <strong>{p.program}</strong>
-        <span className="t-body-sm text-muted">{p.type} · {p.year}학년도 입결 · 모집단위 {p.units}개{p.quota !== null && ` · 모집 ${p.quota}명`}</span><span aria-hidden="true">›</span></Link><InterestButton university={name} program={p.program} /></li>)}</ul>}
+        <span className="t-body-sm text-muted">{p.type} · {p.year}학년도 입결 · 모집단위 {p.units}개{p.quota !== null && ` · 모집 ${p.quota}명`}</span><span aria-hidden="true">›</span></Link><Link className="button-outline" aria-label={`${name} ${p.program} 관심 학과 선택`} to={programPath(name, p.program)}>관심 학과 선택</Link></li>)}</ul>}
     <Link className="button-outline" to="/admission-results?view=interests">관심 전형 모아보기</Link>
     <p className="disclaimer-note">{RESULT_NOTICE}</p>
   </section>;
@@ -50,15 +50,16 @@ export function ProgramDetail() {
   const years = yearsOf(lines), last = years[years.length - 1];
   return <section className="student-screen" data-slug="program-detail" aria-label="전형 상세">
     <div className="screen-heading"><div><p className="t-caption text-muted"><Link className="t-link" to={`/univ-detail?u=${encodeURIComponent(name)}`}>{name}</Link></p>
-      <h2 className="t-heading-1">{program}</h2><span className="data-status-badge">공개 입결 기준</span></div><InterestButton key={programPath(name, program)} university={name} program={program} /></div>
+      <h2 className="t-heading-1">{program}</h2><span className="data-status-badge">공개 입결 기준</span></div></div>
     <Link className="t-link" to="/admission-results?view=interests">관심 전형 모아보기</Link>
     <PrepareProgram key={programPath(name, program)} university={name} program={program} />
     <PlanLink name={name} />
     <h3 className="t-heading-2">모집단위별 70% 컷</h3>
+    <p className="t-caption text-muted">관심 있는 학과 옆의 하트를 눌러 저장하세요. 같은 전형의 다른 학과는 함께 저장되지 않아요.</p>
     <div className="table-scroll"><table className="data-table result-table">
       <thead><tr><th>모집단위</th>{years.map(y => <th key={y} className="num">{y}</th>)}<th className="num">경쟁률</th><th className="num">모집</th><th>기준</th><th>원문</th></tr></thead>
       <tbody>{lines.map(l => { const c = l.years.get(last) ?? [...l.years.values()].pop()!;
-        return <tr key={l.key}><td>{l.unit}</td>{years.map(y => <td key={y} className={`num${y === last ? ' strong' : ''}`}>{l.years.get(y)?.cut70 ?? '—'}</td>)}
+        return <tr key={l.key}><td><div className="collection-program">{l.unit.trim() && <InterestButton key={interestId(name, program, l.unit)} university={name} program={program} department={l.unit} compact />}<span>{l.unit}</span></div></td>{years.map(y => <td key={y} className={`num${y === last ? ' strong' : ''}`}>{l.years.get(y)?.cut70 ?? '—'}</td>)}
           <td className="num">{c.competition || '—'}</td><td className="num">{c.quota || '—'}</td><td>{[c.metric || '지표 미기재', c.basis].filter(Boolean).join(' · ')}</td>
           <td><a className="t-link" href={c.source} target="_blank" rel="noreferrer">원문 ↗</a></td></tr>; })}</tbody></table></div>
     <p className="t-caption text-muted">경쟁률·모집은 가장 최근 학년도 값이에요. 기준이 다른 값은 서로 바로 비교하지 않아요.</p>

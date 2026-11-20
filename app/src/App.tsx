@@ -8,6 +8,7 @@ import { AdmissionStyle } from './screens/AdmissionStyle';
 import { Preparation, CounselTasks } from './screens/Preparation';
 import { AdmissionResults } from './screens/AdmissionResults';
 import { AdmissionsList } from './screens/AdmissionsList';
+import { NationalPlacement } from './screens/NationalPlacement';
 import { Doelgak, FiveToNine, ScoreTrend, StudentHome, UniversityScores } from './screens/Results';
 import { AdminReview } from './screens/AdminReview';
 import { ProgramDetail, UnivDetail } from './screens/UnivDetail';
@@ -25,11 +26,13 @@ import { ResultSummary } from './screens/ResultSummary';
 import { Login, Signup } from './screens/Auth';
 import { AdminRules as RuleEditorScreen } from './screens/AdminRules';
 import './styles/student.css';
+import './styles/workspace-layout.css';
 
 // slug admin-rules covers both the rule editor and review paths (nav.ts).
 function AdminRules() { return useLocation().pathname.endsWith('/review') ? <AdminReview /> : <RuleEditorScreen />; }
 
 const implemented: Record<string, React.ReactNode> = {
+  'national-placement': <NationalPlacement />,
   'admissions-list': <AdmissionsList />,
   'admission-style': <AdmissionStyle />,
   'application-checklist': <Preparation view="checklist" />, 'eligibility-check': <Preparation view="eligibility" />,

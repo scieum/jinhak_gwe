@@ -71,6 +71,14 @@ export function validateAi(value: unknown, sentences: readonly Sentence[]): Anal
   return { mode: 'ai', questions, gaps, sentences: sentences.map(s => ({ ...s, item: items.get(s.index) ?? null })) };
 }
 
+/** 프록시가 기기별 하루 횟수를 세는 데 쓰는 브라우저 id(개인정보 아님, 이 브라우저에만). */
+function deviceId(): string {
+  try {
+    let id = localStorage.getItem('jinhak-navi-device');
+    if (!id) { id = crypto.randomUUID(); localStorage.setItem('jinhak-navi-device', id); }
+    return id;
+  } catch { return crypto.randomUUID(); }
+}
 /** Stateless proxy (R-AI-005, R-PRIV-004). Configured per deployment; absent until the server exists. */
 export const aiProxyUrl = (): string => import.meta.env.VITE_AI_PROXY_URL ?? '';
 export async function requestAnalysis(major: string, sentences: readonly Sentence[], fetcher: typeof fetch = fetch): Promise<Analysis> {
@@ -78,9 +86,10 @@ export async function requestAnalysis(major: string, sentences: readonly Sentenc
   if (!url) throw new Error('AI 연결을 준비하고 있어요.');
   const body = JSON.stringify({ target_major: major, sentences: sentences.map(s => ({ index: s.index, area: s.area, text: s.text })) });
   for (let attempt = 0; attempt < 2; attempt++) {
-    const res = await fetcher(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
+    const res = await fetcher(url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-device-id': deviceId() }, body });
     if (res.status === 429) throw new Error('오늘 분석 횟수를 다 썼어요');
-    if (!res.ok) continue;
+    // 서버 쪽 실패는 다시 보내지 않아요(하루 횟수를 한 번 더 쓰게 돼요). 다시 보내는 건 모양이 틀린 응답일 때만(R-AI-002).
+    if (!res.ok) throw new Error((await res.json().catch(() => null))?.error ?? '결과를 받지 못했어요');
     const parsed = validateAi(await res.json().catch(() => null), sentences);
     if (parsed) return parsed;
   }

@@ -80,9 +80,9 @@ test('대학 검색·상세 원문·일부 전형 요약과 성적 판정 제외
   fireEvent.change(screen.getByLabelText('대학·캠퍼스·전형 검색'), { target: { value: '없는대학명' } });
   expect(screen.getByText(/조건에 맞는 전형계획이 없어요/)).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '검색 조건 초기화' }));
-  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(20);
+  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(24);
   fireEvent.click(screen.getByRole('button', { name: '다음' }));
-  expect(screen.getByText('2 / 11 페이지')).toBeTruthy();
+  expect(screen.getByText('2 / 10 페이지')).toBeTruthy();
   fireEvent.click(screen.getByLabelText('일부 전형 요약이 있는 대학만'));
   expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(4);
   fireEvent.change(screen.getByLabelText('지역'), { target: { value: '강원' } });
@@ -106,7 +106,7 @@ test('조회 실패는 빈 검색과 구분하고 재시도한다', async () => 
   expect(screen.queryByText(/조건에 맞는 전형계획이 없어요/)).toBeNull();
   fireEvent.click(screen.getByRole('button', { name: '자료 다시 불러오기' }));
   await screen.findByText(/선택한 전형계획을 찾지 못했어요/);
-  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(20);
+  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(24);
 });
 
 test('로더는 구조가 잘못된 응답을 빈 목록으로 바꾸지 않는다', async () => {

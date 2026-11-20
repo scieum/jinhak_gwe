@@ -28,7 +28,7 @@ export function CollectedResultPicker({ busy, onLoad }: {
     catch (e) { setError(e instanceof Error ? e.message : '수집 자료를 불러오지 못했어요.'); }
     finally { setLoading(false); }
   };
-  return <section aria-label="모아둔 입결 자료">
+  return <section className="filter-panel" aria-label="모아둔 입결 자료">
     <h3 className="t-heading-3">모아둔 입결 자료</h3>
     {index && <p className="text-muted">대학·캠퍼스명 {index.universities.length}개 · {index.rows.toLocaleString()}행 · 원문 {index.sources.toLocaleString()}건 · 검수 전</p>}
     <div className="toolbar">

@@ -88,8 +88,8 @@ export function AppShell() {
       <div className="shell__main">
         <header className="topbar">
           <div className="topbar__heading">
-            {breadcrumb && <p className="t-caption text-muted">{breadcrumb}</p>}
-            <h1 className="t-heading-3">{title}</h1>
+            <p className="t-caption text-muted">{breadcrumb ?? title}</p>
+            <h1 className="sr-only">{title}</h1>
           </div>
           <div className="topbar__actions">{mode !== 'admin' && <ModeSwitch mode={mode} />}{modeOf(pathname) === 'teacher' && <TeacherLockButton />}</div>
         </header>

@@ -6,7 +6,7 @@ import { studentDb } from '../src/store/studentDb';
 import { resetReleasedRules } from '../src/data/releasedRules';
 import { App } from '../src/App';
 import { approve, blockers, diffRules, newRuleDraft, newTest, nextVersion, parseRuleRelease, reject, releaseRules, requestReview, runTest, testInputs, type RuleDraft, type TestCase } from '../src/domain/ruleEditor';
-import { checkSignup } from '../src/domain/auth';
+import { checkSignup, emailToId, idToEmail, validId } from '../src/domain/auth';
 
 afterEach(cleanup);
 
@@ -64,14 +64,15 @@ describe('규칙 편집기 · 검수 (PRD 6-11)', () => {
 
 describe('로그인·회원가입', () => {
   it('가입 입력을 검사한다', () => {
-    const e = checkSignup({ sido: '', region: '', level: '고등학교', school: '', name: '', email: 'x', password: '1234', confirm: '12', terms: {} });
-    expect(e).toEqual({ school: '학교를 골라 주세요', name: '이름을 입력해 주세요', email: '이메일 형식을 확인해 주세요', password: '비밀번호를 8자 이상으로 입력해 주세요', confirm: '비밀번호가 서로 달라요. 한 번 더 확인해 주세요', terms: '필수 약관에 동의해 주세요' });
+    const e = checkSignup({ sido: '', region: '', school: '', name: '', id: '1ab', password: '1234', confirm: '12', terms: {} });
+    expect(e).toEqual({ school: '학교를 골라 주세요', name: '이름을 입력해 주세요', id: '아이디는 영문 소문자로 시작하고, 영문·숫자·. _ - 로 4~20자예요', password: '비밀번호를 8자 이상으로 입력해 주세요', confirm: '비밀번호가 서로 달라요. 한 번 더 확인해 주세요', terms: '필수 약관에 동의해 주세요' });
   });
   it('로그인은 서버가 없으면 보내지 않고 이 기기 교사 모드를 안내한다', () => {
     render(<MemoryRouter initialEntries={['/login']}><App /></MemoryRouter>);
     const button = screen.getByRole('button', { name: '로그인' }) as HTMLButtonElement;
     expect(button.disabled).toBe(true);
-    fireEvent.change(screen.getByLabelText('개인 이메일'), { target: { value: 'teacher@example.com' } });
+    fireEvent.change(screen.getByLabelText('아이디'), { target: { value: 'teacher01' } });
+    expect(idToEmail('Teacher01')).toBe('teacher01@example.com'); expect(emailToId('teacher01@example.com')).toBe('teacher01'); expect(validId('ab')).toBe(false);
     fireEvent.change(screen.getByLabelText('비밀번호'), { target: { value: 'abcdefgh' } });
     fireEvent.click(button);
     expect(screen.getByRole('status').textContent).toContain('계정 서버를 준비하고 있어요');
@@ -95,5 +96,14 @@ describe('배포 규칙 → 학생 대학별 환산', () => {
     render(<MemoryRouter initialEntries={['/univ-score']}><App /></MemoryRouter>);
     expect(await screen.findByRole('heading', { name: '가나대학교' })).toBeTruthy();
     expect(await screen.findByText('98.32 / 100')).toBeTruthy();
+  });
+});
+
+describe('회원가입 폼', () => {
+  it('시/도를 고르면 그대로 남는다(학교 선택을 비워도 덮어쓰지 않음)', () => {
+    render(<MemoryRouter initialEntries={['/signup']}><App /></MemoryRouter>);
+    fireEvent.change(screen.getByLabelText('시/도'), { target: { value: '서울특별시' } });
+    expect((screen.getByLabelText('시/도') as HTMLSelectElement).value).toBe('서울특별시');
+    expect(screen.queryByText('학교급')).toBeNull();
   });
 });

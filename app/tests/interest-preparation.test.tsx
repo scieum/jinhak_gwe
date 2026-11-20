@@ -146,3 +146,14 @@ test('manual checklist creation also opens the matching existing record', async 
   await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
   expect(await studentDb.applications.toArray()).toEqual([original]);
 });
+
+test('department-specific interest carries only the saved department into preparation', async () => {
+  await studentDb.setInterest(university, program, true, '의예과');
+  at('/admission-results?view=interests');
+  fireEvent.click(await screen.findByRole('button', { name: `${university} ${program} 의예과 지원 준비에 추가` }));
+  const dialog = screen.getByRole('dialog', { name: '지원 전형 편집' });
+  expect(within(dialog).getByLabelText('모집단위(선택)')).toHaveProperty('value', '의예과');
+  await save(dialog);
+  await waitFor(async () => expect((await studentDb.applications.toArray())[0]).toMatchObject({ university, program, department: '의예과' }));
+  expect(await studentDb.interests.get(interestId(university, program, '의예과'))).toBeTruthy();
+});

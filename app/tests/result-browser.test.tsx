@@ -1,9 +1,11 @@
-import { describe, expect, it } from 'vitest';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { afterEach, describe, expect, it } from 'vitest';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ResultBrowser } from '../src/components/ResultBrowser';
 import { axisRange, delta, resultLines } from '../src/domain/resultBrowse';
 import { RESULT_COLUMNS, type ReleasedUnit, type ResultRow } from '../src/domain/resultReview';
+
+afterEach(cleanup);
 
 const row = (o: Partial<ResultRow>): ResultRow => ({ ...Object.fromEntries(RESULT_COLUMNS.map(c => [c, ''])), university: '가나대학교', round: '수시', admission_type: '교과', program: '학생부교과', metric: '교과등급', source_url: 'https://a.ac.kr/x', ...o } as ResultRow);
 const unit = (year: number, rows: Partial<ResultRow>[]): ReleasedUnit => ({ university: '가나대학교', year, source_url: 'https://a.ac.kr/x', license: 'allowed', approvals: [], rows: rows.map(r => row({ result_year: String(year), ...r })) });
@@ -41,5 +43,23 @@ describe('ResultBrowser', () => {
     expect(within(table).getByText('환산점수')).toBeTruthy();
     fireEvent.click(within(screen.getByRole('group', { name: '전형 유형' })).getByRole('button', { name: '논술' }));
     expect(screen.getByRole('heading', { name: '이 전형이 없어요' })).toBeTruthy();
+  });
+  it('연도별 컷·경쟁률·모집·문자 열을 정렬하고 빈 컷은 양방향 모두 마지막에 둔다', () => {
+    const rows = [unit(2026, [
+      { recruit_unit: '나학과', program: '나전형', cut_70: '10', competition_rate: '12', quota: '100' },
+      { recruit_unit: '가학과', program: '가전형', cut_70: '2.4', competition_rate: '2', quota: '9' },
+      { recruit_unit: '다학과', program: '다전형', cut_70: '' },
+    ])];
+    render(<MemoryRouter><ResultBrowser units={rows} /></MemoryRouter>);
+    fireEvent.click(screen.getByRole('button', { name: '표' }));
+    const table = screen.getByRole('table');
+    const order = () => [...table.querySelectorAll('tbody tr')].map(r => r.querySelector('td')!.textContent);
+    for (const label of ['모집단위', '전형', '2026', '경쟁률', '모집']) {
+      fireEvent.click(within(table).getByRole('button', { name: `${label} 오름차순 정렬` }));
+      expect(order()[0]).toBe('가학과');
+    }
+    fireEvent.click(within(table).getByRole('button', { name: '2026 오름차순 정렬' }));
+    fireEvent.click(within(table).getByRole('button', { name: '2026 내림차순 정렬' }));
+    expect(order()).toEqual(['나학과', '가학과', '다학과']);
   });
 });

@@ -18,3 +18,4 @@
 ## 알려진 한계
 - 에이전트 frontmatter는 도구 종류만 제한한다. "자기 파일만 편집"은 지침으로만 지켜진다.
 - 훅이 강제로 막는 범위: `docs/`, `rules/`, `scripts/`, `work/*/04-approval.md`
+1

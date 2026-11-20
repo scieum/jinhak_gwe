@@ -1,17 +1,21 @@
+import 'fake-indexeddb/auto';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { afterEach, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { CollectedResultBrowser } from '../src/components/CollectedResultBrowser';
 import { AdmissionResults } from '../src/screens/AdmissionResults';
 import * as loader from '../src/data/collectedResults';
 import { RESULT_COLUMNS, type ResultRow } from '../src/domain/resultReview';
 import type { CollectedIndex } from '../src/domain/collectedResults';
+import { studentDb } from '../src/store/studentDb';
+import { collectedProgramPath, interestId } from '../src/domain/interests';
 
 vi.mock('../src/data/releasedResults', () => ({ useReleasedResults: () => [] }));
 const index: CollectedIndex = { format: 'jinhak-navi-collected-index', version: 1, status: 'draft', generated_at: '', source_file: '_all.csv', source_sha256: 'a'.repeat(64), rows: 2, sources: 2,
   universities: ['가온대', '누리대'].map(university => ({ university, file: 'a'.repeat(64) + '.json', sha256: 'a'.repeat(64), bytes: 1, rows: 1, sources: 1, years: ['2026'], rounds: { 수시: 1 } })) };
 const row = (change: Partial<ResultRow> = {}): ResultRow => ({ ...Object.fromEntries(RESULT_COLUMNS.map(c => [c, ''])), university: '가온대', result_year: '2026', round: '수시', admission_type: '교과', program: '일반전형', recruit_unit: '국어교육과', metric: '교과등급', cut_70: '2.400', source_url: 'https://example.invalid/result.pdf', source_page: '12쪽 표3', note: 'draft; 원문 대조 필요', ...change }) as ResultRow;
-afterEach(() => { cleanup(); vi.restoreAllMocks(); });
+beforeEach(async () => { await studentDb.interests.clear(); });
+afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 function setup(rows: ResultRow[]) {
   vi.spyOn(loader, 'loadCollectedIndex').mockResolvedValue(index);
   return vi.spyOn(loader, 'loadCollectedRows').mockResolvedValue(rows);
@@ -84,4 +88,127 @@ test('자료 읽기 실패는 빈 결과와 구분하고 재시도하며 위험�
   expect(within(dialog).getByText('평균 2.35 / 최저 3.10')).toBeTruthy();
   expect(within(dialog).queryByRole('link')).toBeNull();
   expect(within(dialog).getByText(/등급 범위/)).toBeTruthy();
+});
+
+test('대학 검색에서 결과 없음은 현재 선택을 유지하고 선택한 대학 자료를 연다', async () => {
+  const load = setup([row()]);
+  load.mockImplementation(async entry => [row({ university: entry.university, recruit_unit: `${entry.university} 학과` })]);
+  render(<CollectedResultBrowser />);
+  await screen.findByText('가온대 학과');
+  fireEvent.click(screen.getByRole('button', { name: '대학 검색' }));
+  const dialog = screen.getByRole('dialog', { name: '대학 검색·선택' });
+  fireEvent.change(within(dialog).getByLabelText('수집 대학 검색'), { target: { value: '없는대학' } });
+  expect(within(dialog).getByText(/검색한 대학이 없어요/)).toBeTruthy();
+  expect(screen.getByLabelText('수집 대학')).toHaveProperty('value', '가온대');
+  fireEvent.change(within(dialog).getByLabelText('수집 대학 검색'), { target: { value: '누리' } });
+  fireEvent.click(within(dialog).getByRole('button', { name: '누리대' }));
+  await screen.findByText('누리대 학과');
+  expect(screen.queryByRole('dialog')).toBeNull();
+});
+
+test('모바일 조건은 적용 전까지 결과를 유지하고 닫으면 초안을 버린다', async () => {
+  vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() })));
+  setup([row(), row({ round: '정시', recruit_unit: '수학과', metric: '환산점수', cut_70: '910.00' })]);
+  render(<CollectedResultBrowser />);
+  await screen.findByText('국어교육과');
+  fireEvent.click(screen.getByRole('button', { name: '조건' }));
+  let dialog = screen.getByRole('dialog', { name: '입결 조회 조건' });
+  fireEvent.change(within(dialog).getByLabelText('모집시기'), { target: { value: '정시' } });
+  expect(screen.getByText('국어교육과')).toBeTruthy();
+  fireEvent.click(within(dialog).getByRole('button', { name: '닫기' }));
+  fireEvent.click(screen.getByRole('button', { name: '조건' }));
+  dialog = screen.getByRole('dialog');
+  expect(within(dialog).getByLabelText('모집시기')).toHaveProperty('value', '수시');
+  fireEvent.change(within(dialog).getByLabelText('모집시기'), { target: { value: '정시' } });
+  fireEvent.click(within(dialog).getByRole('button', { name: '1건 결과 보기' }));
+  expect(screen.queryByText('국어교육과')).toBeNull();
+  expect(screen.getByText('수학과')).toBeTruthy();
+  expect(screen.getByText('환산점수')).toBeTruthy();
+  expect(screen.getByText('910.00')).toBeTruthy();
+  expect(screen.getAllByRole('columnheader')).toHaveLength(3);
+  fireEvent.click(screen.getByRole('button', { name: /수학과 원문·상세/ }));
+  expect(within(screen.getByRole('dialog')).getByText('12쪽 표3')).toBeTruthy();
+});
+
+test('모든 데이터 헤더가 양방향 정렬되고 전체 결과를 정렬한 뒤 첫 페이지부터 표시한다', async () => {
+  setup(Array.from({ length: 55 }, (_, i) => row({ recruit_unit: `학과${i}`, cut_70: ((65 - i) / 10).toFixed(3) })).concat(row({ recruit_unit: '미공개학과', cut_70: '' })));
+  render(<CollectedResultBrowser />);
+  await screen.findByText('6.500');
+  const table = screen.getByRole('table');
+  const first = () => table.querySelector('tbody tr')!;
+  for (const label of ['학년도', '시기', '전형', '모집단위', '모집', '경쟁률', '50% 컷', '70% 컷', '지표']) {
+    fireEvent.click(within(table).getByRole('button', { name: `${label} 오름차순 정렬` }));
+    expect(within(table).getByRole('button', { name: `${label} 내림차순 정렬` }).closest('th')?.getAttribute('aria-sort')).toBe('ascending');
+    fireEvent.click(within(table).getByRole('button', { name: `${label} 내림차순 정렬` }));
+    expect(within(table).getByRole('button', { name: `${label} 오름차순 정렬` }).closest('th')?.getAttribute('aria-sort')).toBe('descending');
+  }
+  fireEvent.click(screen.getByRole('button', { name: '다음' }));
+  fireEvent.click(within(table).getByRole('button', { name: '70% 컷 오름차순 정렬' }));
+  expect(screen.getByText('1 / 2 페이지')).toBeTruthy();
+  expect(first().textContent).toContain('학과54');
+  expect(first().textContent).toContain('1.100');
+  fireEvent.click(within(table).getByRole('button', { name: '70% 컷 내림차순 정렬' }));
+  expect(first().textContent).toContain('6.500');
+  fireEvent.click(screen.getByRole('button', { name: '다음' }));
+  expect(table.querySelector('tbody tr:last-child')?.textContent).toContain('미공개학과');
+  fireEvent.change(screen.getByLabelText('전형·모집단위 검색'), { target: { value: '학과5' } });
+  expect(first().textContent).toContain('학과5');
+  expect(first().textContent).toContain('6.000');
+  fireEvent.click(screen.getByRole('button', { name: '원문 순서로 보기' }));
+  expect(table.querySelector('th[aria-sort="ascending"],th[aria-sort="descending"]')).toBeNull();
+});
+
+test('모바일에서도 모집단위와 컷 헤더를 눌러 정렬하고 해당 행의 상세를 연다', async () => {
+  vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() })));
+  setup([row({ recruit_unit: '나학과', cut_70: '10.000' }), row({ recruit_unit: '가학과', cut_70: '2.400', source_page: '가학과 7쪽' })]);
+  render(<CollectedResultBrowser />);
+  await screen.findByText('나학과');
+  fireEvent.click(screen.getByRole('button', { name: '70% 컷 오름차순 정렬' }));
+  const first = screen.getByRole('table').querySelector('tbody tr')!;
+  expect(first.textContent).toContain('가학과');
+  fireEvent.click(within(first as HTMLElement).getByRole('button', { name: /원문·상세/ }));
+  expect(within(screen.getByRole('dialog')).getByText('가학과 7쪽')).toBeTruthy();
+});
+
+test.each([false, true])('목록 하트는 선택한 학과만 저장하고 기존 전형 전체 항목을 대체하며 재진입 후 유지한다 (모바일 %s)', async compact => {
+  vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: compact, addEventListener: vi.fn(), removeEventListener: vi.fn() })));
+  setup([row(), row({ result_year: '2025' }), row({ recruit_unit: '수학교육과' }), row({ recruit_unit: '국어교육과(야간)' }), row({ program: '일반전형Ⅱ' }), row({ program: '' }), row({ recruit_unit: '' })]);
+  await studentDb.setInterest('가온대', '일반전형', true);
+  const mount = (path = '/admission-results') => render(<MemoryRouter initialEntries={[path]}><AdmissionResults /></MemoryRouter>);
+  mount();
+  await screen.findAllByText('2.400');
+  let hearts = screen.getAllByRole('button', { name: '가온대 일반전형 국어교육과 관심에 담기' });
+  expect(hearts).toHaveLength(2);
+  await waitFor(() => expect((hearts[0] as HTMLButtonElement).disabled).toBe(false));
+  fireEvent.click(hearts[0]);
+  await waitFor(() => expect(screen.getAllByRole('button', { name: '가온대 일반전형 국어교육과 관심에서 빼기' })).toHaveLength(2));
+  expect(screen.getByRole('button', { name: '가온대 일반전형 수학교육과 관심에 담기' }).getAttribute('aria-pressed')).toBe('false');
+  expect(screen.getByRole('button', { name: '가온대 일반전형Ⅱ 국어교육과 관심에 담기' }).getAttribute('aria-pressed')).toBe('false');
+  expect(await studentDb.interests.get(interestId('가온대', '일반전형'))).toBeUndefined();
+  expect(await studentDb.interests.count()).toBe(1);
+  expect(screen.queryByRole('dialog')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: '관심 전형' }));
+  await screen.findByRole('heading', { name: '관심 전형 1개' });
+  expect(screen.getByRole('link', { name: '국어교육과' })).toBeTruthy();
+  expect(screen.queryByText('수학교육과')).toBeNull();
+  fireEvent.click(screen.getByRole('link', { name: '수집 입결에서 찾기' }));
+  await waitFor(() => expect(screen.getAllByRole('button', { name: '가온대 일반전형 국어교육과 관심에서 빼기' })).toHaveLength(2));
+  expect(screen.getByRole('table').querySelectorAll('tbody tr')).toHaveLength(2);
+  cleanup(); mount(collectedProgramPath('가온대', '일반전형', '국어교육과'));
+  hearts = await screen.findAllByRole('button', { name: '가온대 일반전형 국어교육과 관심에서 빼기' });
+  fireEvent.click(hearts[0]);
+  await waitFor(() => expect(screen.getAllByRole('button', { name: '가온대 일반전형 국어교육과 관심에 담기' })).toHaveLength(2));
+  expect(await studentDb.interests.count()).toBe(0);
+  fireEvent.click(screen.getByRole('button', { name: '학과 선택 해제' }));
+  expect(screen.getByRole('table').querySelectorAll('tbody tr')).toHaveLength(7);
+});
+
+test('관심 링크는 선택한 대학과 전형으로 이동하고 정시 자료도 찾는다', async () => {
+  const load = setup([row({ university: '누리대', round: '정시', program: '수능(일반)' }), row({ university: '누리대', program: '다른전형' })]);
+  render(<MemoryRouter initialEntries={[collectedProgramPath('누리대', '수능(일반)')]}><AdmissionResults /></MemoryRouter>);
+  await screen.findByText('2.400');
+  expect(load).toHaveBeenCalledWith(expect.objectContaining({ university: '누리대' }));
+  expect(screen.getByLabelText('수집 대학')).toHaveProperty('value', '누리대');
+  expect(screen.getByLabelText('전형·모집단위 검색')).toHaveProperty('value', '수능(일반)');
+  expect(screen.getByRole('table').querySelectorAll('tbody tr')).toHaveLength(1);
 });

@@ -38,6 +38,7 @@ export function PlacementExplorer({ onClose, combination, average, range, inputB
         <SegmentedControl label="입결 보기 방식" value={view} onChange={setView} options={(['표', '배치표', '대학별 점'] as const).map(value => ({ value, label: value }))} />
         <button className="placement-close" type="button" onClick={onClose} aria-label="입결 창 닫기"><Icon name="x" /></button></header>
       <p className="t-body-sm">{combination} · 내 5등급 평균 {average?.toFixed(2) ?? '입력 전'} → 환산 9등급 {range ? `약 ${rangeText(range)}` : '준비 중'}</p>
+      <a className="button-outline" href="/national-placement" onClick={onClose}>전국 수집 입결 배치표 보기 · 검수 전 참고자료</a>
       <div className="placement-filters">
         <SegmentedControl label="입결 전형 유형" value={type} onChange={setType} options={[...admissionTypes, '전체'].map(value => ({ value, label: value }))} />
         <label>지역<select value={region} onChange={e => setRegion(e.target.value)}><option>전체</option>{regions.map(r => <option key={r}>{r}</option>)}</select></label>

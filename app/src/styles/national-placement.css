@@ -1,0 +1,42 @@
+.national-filter-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)) minmax(180px, 1.4fr); gap: var(--spacing-md); }
+.national-query-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; align-items: end; gap: var(--spacing-md); }
+.national-advanced > summary { min-height: 44px; padding-block: var(--spacing-sm); cursor: pointer; font-size: var(--font-body-sm-size); font-weight: 600; }
+.national-advanced[open] > summary { margin-bottom: var(--spacing-xs); }
+.national-filter-grid select, .national-query-grid input { width: 100%; }
+.national-range { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: var(--spacing-xs); align-items: end; }
+.national-range > span { padding-bottom: var(--spacing-sm); }
+.national-pagination { justify-content: center; }
+.national-plot-scroll { overflow: auto; max-height: 620px; border: 1px solid var(--color-hairline); }
+.national-plot-scroll:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+.national-plot { width: 100%; min-width: 900px; }
+.national-axis, .national-university-row { display: grid; grid-template-columns: 180px minmax(720px, 1fr); border-bottom: 1px solid var(--color-hairline); }
+.national-axis { position: sticky; top: 0; height: 44px; z-index: 3; background: var(--color-canvas-soft); font-size: var(--font-label-size); }
+.national-axis > strong { position: sticky; left: 0; display: flex; align-items: center; padding: var(--spacing-sm); z-index: 4; background: var(--color-canvas-soft); }
+.national-axis > div { position: relative; }
+.national-axis > div > span:not(.sr-only) { position: absolute; top: 12px; transform: translateX(-50%); }
+.national-university-label { position: sticky; left: 0; z-index: 2; padding: var(--spacing-sm); background: var(--color-canvas); border-right: 1px solid var(--color-hairline); display: flex; flex-direction: column; justify-content: center; gap: var(--spacing-xs); font-size: var(--font-body-sm-size); }
+.national-tracks { position: relative; min-width: 0; }
+.national-gridline { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--color-hairline-soft); pointer-events: none; }
+.national-point { position: absolute; transform: translateX(-50%); display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font-size: var(--font-label-size); font-variant-numeric: tabular-nums; cursor: pointer; }
+.national-point:hover, .national-point:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 0; background: var(--color-canvas-soft); z-index: 1; }
+.national-table { min-width: 1100px; }
+.national-table td:last-child { white-space: nowrap; }
+.dialog:has(.national-source-options) { grid-auto-rows: max-content; align-content: start; }
+.national-source-options { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--spacing-xs); min-width: 0; }
+.national-source-options > button { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--spacing-xs); height: auto; min-height: 52px; min-width: 0; width: 100%; text-align: left; justify-content: stretch; align-content: start; white-space: normal; overflow-wrap: anywhere; padding: var(--spacing-md); }
+.national-source-options > button > span { min-width: 0; }
+.national-source-options .t-caption { font-weight: var(--font-body-weight); }
+@media (max-width: 1100px) {
+  .national-filter-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .national-query-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+  .national-filter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .national-query-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .national-query-grid > button { grid-column: 1 / -1; justify-self: end; }
+  .national-range { grid-column: 1 / -1; }
+  .national-plot-scroll { max-height: 60dvh; }
+  .national-plot { min-width: 840px; }
+  .national-axis, .national-university-row { grid-template-columns: 120px minmax(720px, 1fr); }
+  .national-pagination { gap: var(--spacing-xs); font-size: var(--font-caption-size); }
+}

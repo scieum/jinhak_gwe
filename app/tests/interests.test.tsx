@@ -7,7 +7,7 @@ import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { App } from '../src/App';
 import { InterestButton } from '../src/components/InterestButton';
 import { InterestList } from '../src/components/InterestList';
-import { interestId, parseInterests, programPath } from '../src/domain/interests';
+import { collectedProgramPath, interestId, parseInterests, programPath } from '../src/domain/interests';
 import { parseStudentBackup } from '../src/domain/student';
 import { RESULT_COLUMNS, type ReleasedUnit, type ResultRow } from '../src/domain/resultReview';
 import { decryptBackup, encryptBackup } from '../src/io/backup';
@@ -99,16 +99,17 @@ test('save limit allows existing entries and removal while rejecting new ones', 
 
 test('save from university detail, view from admission results after remount, open detail and remove', async () => {
   at(`/univ-detail?u=${encodeURIComponent(university)}`);
-  const add = await screen.findByRole('button', { name: `${university} ${program} 관심에 담기` });
+  fireEvent.click(await screen.findByRole('link', { name: `${university} ${program} 관심 학과 선택` }));
+  const add = await screen.findByRole('button', { name: `${university} ${program} 검증학과 관심에 담기` });
   await waitFor(() => expect((add as HTMLButtonElement).disabled).toBe(false));
   fireEvent.click(add);
-  await screen.findByRole('button', { name: `${university} ${program} 관심에서 빼기` });
-  expect(screen.getByRole('heading', { name: university })).toBeTruthy();
+  await screen.findByRole('button', { name: `${university} ${program} 검증학과 관심에서 빼기` });
+  expect(screen.getByRole('heading', { name: program })).toBeTruthy();
   cleanup(); at('/admission-results?view=interests');
   expect(await screen.findByRole('heading', { name: '관심 전형 1개' })).toBeTruthy();
   fireEvent.click(screen.getByRole('link', { name: program }));
   expect(await screen.findByRole('heading', { name: program })).toBeTruthy();
-  const remove = await screen.findByRole('button', { name: `${university} ${program} 관심에서 빼기` });
+  const remove = await screen.findByRole('button', { name: `${university} ${program} 검증학과 관심에서 빼기` });
   fireEvent.click(remove);
   await waitFor(async () => expect(await studentDb.interests.count()).toBe(0));
   fireEvent.click(screen.getByRole('link', { name: '관심 전형 모아보기' }));
@@ -143,9 +144,9 @@ test('a failed save is reported and does not claim success or mark the heart', a
 test('storage failure leaves public results usable and disables the interest action', async () => {
   vi.spyOn(studentDb.interests, 'get').mockRejectedValue(new Error('denied'));
   at(programPath(university, program));
-  expect(await screen.findByRole('alert')).toHaveProperty('textContent', '관심 전형 저장소를 열지 못했어요. 브라우저 저장 권한을 확인해 주세요.');
+  expect((await screen.findByRole('alert')).getAttribute('aria-label')).toBe('관심 전형 저장소를 열지 못했어요. 브라우저 저장 권한을 확인해 주세요.');
   expect(within(screen.getByRole('table')).getByText('검증학과')).toBeTruthy();
-  expect((screen.getByRole('button', { name: `${university} ${program} 관심에 담기` }) as HTMLButtonElement).disabled).toBe(true);
+  expect((screen.getByRole('button', { name: `${university} ${program} 검증학과 관심에 담기` }) as HTMLButtonElement).disabled).toBe(true);
 });
 
 test('list read failure is distinct from an empty saved list', async () => {
@@ -153,4 +154,55 @@ test('list read failure is distinct from an empty saved list', async () => {
   render(<MemoryRouter><InterestList units={[]} /></MemoryRouter>);
   expect(await screen.findByRole('alert')).toHaveProperty('textContent', '관심 전형 목록을 읽지 못했어요. 브라우저 저장 권한을 확인해 주세요.');
   expect(screen.queryByText('아직 관심 전형이 없어요')).toBeNull();
+});
+
+test('department identity and backups preserve separate departments alongside legacy records', async () => {
+  const department = '의예과';
+  const saved = { ...item(), id: interestId(university, program, department), department };
+  expect(saved.id).not.toBe(item().id);
+  expect(saved.id).not.toBe(interestId(university, program, '약학과'));
+  expect(parseInterests([item(), { ...saved, department: ` ${department} ` }])).toEqual([item(), saved]);
+  for (const value of [{ ...saved, department: '' }, { ...saved, department: null }, { ...saved, department: '약학과' }, { ...saved, id: item().id }]) {
+    expect(() => parseInterests([value])).toThrow('관심 전형');
+  }
+  expect(collectedProgramPath(university, program, '학과 & 전공')).toContain(`&cd=${encodeURIComponent('학과 & 전공')}`);
+  await studentDb.setInterest(university, program, true, department);
+  await studentDb.setInterest(university, program, true, '약학과');
+  const before = await studentDb.snapshot();
+  const restored = await decryptBackup(await encryptBackup(before, 'department-backup'), 'department-backup');
+  await studentDb.clearStudentData(); await studentDb.restore(restored);
+  expect((await studentDb.snapshot()).interests).toEqual(before.interests);
+  await studentDb.setInterest(university, program, false, department);
+  expect((await studentDb.interests.toArray()).map(i => i.department)).toEqual(['약학과']);
+});
+
+test('a department choice replaces only its legacy bookmark even at the limit and rolls back on failure', async () => {
+  await studentDb.interests.bulkPut([item(), ...Array.from({ length: 499 }, (_, i) => item(`다른대학${i}`))]);
+  const add = vi.spyOn(studentDb.interests, 'add').mockRejectedValueOnce(new Error('storage failure'));
+  await expect(studentDb.setInterest(university, program, true, '의예과')).rejects.toThrow('storage failure');
+  expect(await studentDb.interests.get(item().id)).toEqual(item());
+  expect(await studentDb.interests.count()).toBe(500);
+  add.mockRestore();
+  await studentDb.setInterest(university, program, true, '의예과');
+  expect(await studentDb.interests.get(item().id)).toBeUndefined();
+  expect(await studentDb.interests.get(interestId(university, program, '의예과'))).toMatchObject({ department: '의예과' });
+  expect(await studentDb.interests.count()).toBe(500);
+  await expect(studentDb.setInterest(university, program, true, '약학과')).rejects.toThrow('500개');
+  await studentDb.setInterest(university, program, true, '의예과');
+  expect(await studentDb.interests.count()).toBe(500);
+});
+
+test('legacy entries are explicitly unspecified and department search and removal stay separate', async () => {
+  await studentDb.setInterest(university, program, true);
+  render(<MemoryRouter><InterestList units={[]} /></MemoryRouter>);
+  await screen.findByText('학과 미지정');
+  expect(screen.getByRole('link', { name: '학과 선택하기' }).getAttribute('href')).toBe(collectedProgramPath(university, program));
+  await studentDb.setInterest(university, program, true, '의예과');
+  await studentDb.setInterest(university, program, true, '약학과');
+  await screen.findByRole('link', { name: '의예과' });
+  expect(screen.queryByText('학과 미지정')).toBeNull();
+  fireEvent.change(screen.getByLabelText('관심 전형 검색'), { target: { value: '의예과' } });
+  expect(screen.queryByRole('link', { name: '약학과' })).toBeNull();
+  fireEvent.click(await screen.findByRole('button', { name: `${university} ${program} 의예과 관심에서 빼기` }));
+  await waitFor(async () => expect((await studentDb.interests.toArray()).map(i => i.department)).toEqual(['약학과']));
 });

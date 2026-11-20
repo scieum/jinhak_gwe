@@ -17,10 +17,12 @@ export const RESULT_NOTICE = 'ⓘ 각 대학이 공식 발표한 수시 입결�
 export function AdmissionResults() {
   const units = useReleasedResults(), [query, setQuery] = useSearchParams();
   const view = query.get('view') === 'interests' ? 'interests' : query.get('view') === 'results' || query.has('u') ? 'results' : 'collected';
+  const tabs = <SegmentedControl label="입결과 관심 전형" value={view} onChange={value => { const next = new URLSearchParams(query); next.set('view', value); if (value === 'collected') next.delete('u'); setQuery(next); }} options={[{ value: 'collected', label: '수집 자료' }, { value: 'results', label: '검수 완료 입결' }, { value: 'interests', label: '관심 전형' }]} />;
   return <section data-slug="admission-results" aria-label="수시 입결" className="student-screen">
-    <div className="screen-heading"><h2 className="t-heading-1">수시 입결</h2></div>
-    <SegmentedControl label="입결과 관심 전형" value={view} onChange={value => { const next = new URLSearchParams(query); next.set('view', value); if (value === 'collected') next.delete('u'); setQuery(next); }} options={[{ value: 'collected', label: '수집 자료' }, { value: 'results', label: '검수 완료 입결' }, { value: 'interests', label: '관심 전형' }]} />
-    {view === 'collected' ? <CollectedResultBrowser /> : view === 'interests' ? <InterestList units={units} /> : !units ? <p role="status">공개 입결 자료를 읽고 있어요.</p> : <ResultBrowser units={units} initialUniversity={query.get('u') ?? undefined} />}
+    <div className="screen-heading admission-results-intro"><h2 className="t-heading-1">수시 입결</h2><p className="text-muted">대학이 발표한 지난 입결을 찾아보세요.</p><Link className="button-outline" to="/national-placement">전국 배치표 보기</Link></div>
+
+    {view !== 'collected' && <div className="filter-panel">{tabs}</div>}
+    {view === 'collected' ? <CollectedResultBrowser key={JSON.stringify([query.get('cu'), query.get('cp'), query.get('cd')])} tabs={tabs} initialUniversity={query.get('cu') ?? ''} initialProgram={query.get('cp') ?? ''} initialDepartment={query.get('cd') ?? ''} /> : view === 'interests' ? <InterestList units={units} /> : !units ? <p role="status">공개 입결 자료를 읽고 있어요.</p> : <ResultBrowser units={units} initialUniversity={query.get('u') ?? undefined} />}
     {view !== 'collected' && <><p className="disclaimer-note">{RESULT_NOTICE}</p>
     <details><summary>내 성적과 비교하는 조건</summary><ComparisonConditions /></details></>}
   </section>;

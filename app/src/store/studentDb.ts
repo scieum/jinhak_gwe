@@ -120,13 +120,17 @@ export class StudentDatabase extends Dexie {
     });
   }
   async deleteBoard(id: string) { await this.boards.delete(id); }
-  async setInterest(university: string, program: string, saved: boolean) {
-    const item = parseInterests([{ id: interestId(university, program), university, program, created_at: new Date().toISOString() }])[0];
+  async setInterest(university: string, program: string, saved: boolean, department?: string) {
+    const item = parseInterests([{ id: interestId(university, program, department), university, program,
+      ...(department !== undefined ? { department } : {}), created_at: new Date().toISOString() }])[0];
     await this.transaction('rw', this.interests, async () => {
       if (!saved) { await this.interests.delete(item.id); return; }
-      if (await this.interests.get(item.id)) return;
-      if (await this.interests.count() >= 500) throw new Error('관심 전형은 500개까지 담을 수 있어요. 먼저 목록을 정리해 주세요.');
-      await this.interests.add(item);
+      const existing = await this.interests.get(item.id);
+      const legacy = item.department ? await this.interests.get(interestId(item.university, item.program)) : undefined;
+      if (!existing && await this.interests.count() - (legacy ? 1 : 0) >= 500) throw new Error('관심 전형은 500개까지 담을 수 있어요. 먼저 목록을 정리해 주세요.');
+      if (!existing) await this.interests.add(item);
+      // A deliberate department choice replaces the old unspecified bookmark atomically.
+      if (legacy) await this.interests.delete(legacy.id);
     });
   }
   async clearStudentData() { await this.restore({ grades: [], attendance: [], planning: emptyPlanner(), boards: [], mocks: [], interests: [] }); }

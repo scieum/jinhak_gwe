@@ -1,0 +1,9 @@
+# 전형계획 대학 로고 적용
+
+- 대학 목록 218개 캠퍼스 카드와 대학 상세 제목에 로고를 표시한다. 194개 대학/218개 캠퍼스에 196개 원본 이미지 파일을 연결했다. 캠퍼스가 같거나 로고가 같은 파일은 SHA-256 기준으로 재사용한다.
+- 카드의 48×48px 영역에서 원본 비율을 유지한다. 목록은 지연 로딩하며, 이미지 오류 시 기존 책 아이콘으로 대체한다. 이미지 옆에 대학 이름이 있어 이미지는 장식 요소로 처리한다.
+- 출처는 [대입정보포털 어디가 대학정보](https://www.adiga.kr/ucp/uvt/uni/univView.do?menuId=PCUVTINF2000)의 대학·캠퍼스 코드별 페이지이다. 포털에서 파일이 누락된 부산교육대학교는 [공식 UI 안내](https://www.bnue.ac.kr/content/intro03_02), 대전신학대학교는 [공식 홈페이지](https://www.daejeon.ac.kr/), 칼빈대학교는 [공식 홈페이지](http://www.calvin.ac.kr/main/index.do)의 로고를 사용한다. 국립창원대학교 제3캠퍼스는 별도 파일이 없어 같은 대학 본교 로고를 사용하며 출처 기록의 `shared_from`에 표시했다.
+- PNG/JPEG/GIF/BMP 원본 바이트를 변경하지 않고 프로젝트에 저장했다. 로고 때문에 외부 이미지 서버에 접속하지 않는다. 파일 크기 합계는 약 10MB이며 현재 페이지의 필요한 이미지만 로딩한다.
+- 원본 주소·확인 시각·캠퍼스 대응·파일 크기·해시는 `app/public/assets/universities/sources.json`, UI 대응표는 `app/src/data/universityLogos.json`에 보관한다. 재수집 도구는 `app/tools/collect_university_logos.py`이며 Python의 beautifulsoup4/Pillow와 공개 사이트 네트워크 접근이 필요하다.
+- 관련 기존 테스트 8개와 빌드 통과. 전체 218개 대응표의 파일 존재·크기·해시를 확인했다. 기존 큰 번들 경고는 유지된다.
+- 실제 브라우저에서 10페이지 전체 218개 이미지 디코딩과 로컬 주소를 확인했다. 1920/1440/390/320px에서 카드 넘침·문서 가로 넘침 없음, 상세 로고 및 이미지 요청 실패 시 대체 아이콘 동작을 확인했다. 임시 기록: `outputs/layout-review/university-logos.json`, 크기별 PNG.

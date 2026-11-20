@@ -40,6 +40,13 @@ describe('AI 응답 검증 (R-AI-002~004)', () => {
     await expect(requestAnalysis('화학공학과', sentences, bad)).rejects.toThrow('결과를 받지 못했어요');
     expect(bad).toHaveBeenCalledTimes(2);
   });
+  it('기기 id를 보내고, 서버 오류는 다시 보내지 않는다(하루 횟수 보호)', async () => {
+    vi.stubEnv('VITE_AI_PROXY_URL', 'https://proxy.test/ai');
+    const fail = vi.fn().mockResolvedValue(new Response(JSON.stringify({ error: 'AI 연결을 준비하고 있어요.' }), { status: 503 }));
+    await expect(requestAnalysis('화학공학과', sentences, fail)).rejects.toThrow('AI 연결을 준비하고 있어요.');
+    expect(fail).toHaveBeenCalledTimes(1);
+    expect(fail.mock.calls[0][1].headers['x-device-id']).toMatch(/^[0-9a-f-]{36}$/);
+  });
   it('프록시가 없으면 보내지 않는다', async () => {
     vi.stubEnv('VITE_AI_PROXY_URL', '');
     const fetcher = vi.fn();
@@ -61,8 +68,44 @@ describe('생기부 AI 화면', () => {
     expect(local.disabled).toBe(true);
     fireEvent.click(screen.getByLabelText('가린 내용을 확인했어요'));
     fireEvent.click(local);
-    expect(screen.getByRole('heading', { name: '낱말로 나눠 본 내 기록이에요' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: '내 기록을 역량별로 나눴어요' })).toBeTruthy();
+    expect(screen.getByText('자동 · 낱말로 나눴어요 · 참고용')).toBeTruthy();
+    // 평가 항목을 고르면 그 항목 문장만 칠해요
+    fireEvent.click(screen.getByRole('button', { name: /^탐구력/ }));
+    expect(screen.getByText(/탐구력 · 학업역량 문장만 칠했어요 · 1문장/)).toBeTruthy();
+    expect(document.querySelectorAll('.sg-sentence.is-dim').length).toBe(2);
+    expect((screen.getByRole('button', { name: /^리더십/ }) as HTMLButtonElement).disabled).toBe(true);
+    // 자동 결과에는 면접 질문이 없어요
+    fireEvent.click(screen.getByRole('button', { name: '면접 질문' }));
+    expect(screen.getByRole('heading', { name: '면접 질문은 AI 분석에서 만들어요' })).toBeTruthy();
+    // 가린 낱말은 블록으로 보여요
+    fireEvent.click(screen.getByRole('button', { name: '원문 색칠' }));
+    expect(screen.getAllByLabelText('가린 낱말').length).toBeGreaterThan(0);
     expect(screen.queryByText(/홍길동/)).toBeNull();
     expect(fetchSpy).not.toHaveBeenCalled(); fetchSpy.mockRestore();
+  });
+});
+
+describe('생기부 AI 결과(AI 모드)', () => {
+  it('면접 질문 탭에서 근거를 원문에서 볼 수 있고, 보완점이 보인다', async () => {
+    vi.stubEnv('VITE_AI_PROXY_URL', 'https://proxy.test/ai');
+    const reply = { sentences: [{ index: 0, item: '탐구력' }, { index: 2, item: '협업과 소통' }], gaps: ['발표 기회를 찾아봐요'],
+      interview_questions: [{ question: '실험을 다시 한 이유는?', intent: '탐구 과정을 보려는 질문이에요.', quote: '원인을 보고서로 정리함.' }] };
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify(reply)));
+    render(<MemoryRouter><SaenggibuAi /></MemoryRouter>);
+    fireEvent.change(screen.getByLabelText('희망 계열·학과'), { target: { value: '화학공학과' } });
+    fireEvent.change(screen.getByLabelText('교과 세특'), { target: { value: text } });
+    fireEvent.click(screen.getByRole('button', { name: '가림 확인으로' }));
+    fireEvent.click(screen.getByLabelText('가린 내용을 확인했어요'));
+    fireEvent.click(screen.getByRole('button', { name: 'AI 분석 보내기' }));
+    expect(await screen.findByRole('heading', { name: '내 기록을 역량별로 나눴어요' })).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: '면접 질문 1' }));
+    fireEvent.click(screen.getByText('실험을 다시 한 이유는?'));
+    fireEvent.click(screen.getByRole('button', { name: '원문에서 보기' }));
+    expect(screen.getByRole('region', { name: '보낸 원문' })).toBeTruthy();
+    expect(document.querySelector('.sg-sentence.is-flash')?.textContent).toContain('원인을 보고서로 정리함');
+    fireEvent.click(screen.getByRole('button', { name: '보완점' }));
+    expect(screen.getByText('발표 기회를 찾아봐요')).toBeTruthy();
+    fetchSpy.mockRestore();
   });
 });

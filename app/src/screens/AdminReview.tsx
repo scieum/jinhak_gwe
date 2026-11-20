@@ -67,7 +67,7 @@ export function AdminReview() {
       setUnits(grouped); setFileName(label); setPage(0); setFilter('전체'); setQuery(''); setOpenKey(null); setError('');
       setMessage(`${rows.length.toLocaleString()}행, 원문 ${grouped.length.toLocaleString()}건을 불러왔어요.`);
     }} />
-    <div className="form-grid">
+    <div className="form-grid filter-panel">
       <label>검수자 이름<input value={reviewer} onChange={e => { setReviewer(e.target.value); saveName(e.target.value); }} placeholder="예: 관리자 A" /></label>
       <label>입결 CSV 불러오기<input type="file" accept=".csv,text/csv" disabled={busy} onChange={e => { const f = e.target.files?.[0]; if (f) loadCsv(f); e.target.value = ''; }} /></label>
       <label>검수 기록 가져오기<input type="file" accept=".json,application/json" disabled={busy} onChange={e => { const f = e.target.files?.[0]; if (f) importRecords(f); e.target.value = ''; }} /></label>

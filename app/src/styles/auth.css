@@ -39,3 +39,4 @@
 .auth label, .auth .label { font-size: var(--font-label-size); font-weight: var(--font-label-weight); }
 .school-list { list-style: none; padding: 0; max-height: 240px; overflow-y: auto; }
 .auth__link-button { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; text-decoration: none; }
+.progress-steps--3 { grid-template-columns: repeat(3, 1fr); }

@@ -29,7 +29,7 @@ export function ServerSync() {
   if (!account) return <p className="t-body-sm">로그인하면 학급 데이터를 서버에 보관하고 다른 기기에서 이어 쓸 수 있어요. <Link className="t-link" to="/login">로그인 ›</Link></p>;
   const run = async (fn: () => Promise<void>) => { setBusy(true); setError(''); setMessage(''); try { await fn(); } catch (e) { setError(e instanceof Error ? e.message : '처리하지 못했어요.'); } finally { setBusy(false); } };
   return <fieldset className="form-grid"><legend className="t-heading-4">서버 보관</legend>
-    <p className="t-caption text-muted">{account.school} · {account.name} · {account.email}</p>
+    <p className="t-caption text-muted">{account.school} · {account.name} · 아이디 {account.id}</p>
     <div className="toolbar"><ButtonOutline disabled={busy} onClick={() => run(async () => setMessage(`서버에 저장했어요 · ${when(await saveClassToServer())}`))}>서버에 저장</ButtonOutline>
       <ButtonOutline disabled={busy} onClick={() => run(async () => setList(await listServerClasses()))}>서버에서 불러오기</ButtonOutline>
       <ButtonOutline onClick={() => void signOut()}>로그아웃</ButtonOutline></div>

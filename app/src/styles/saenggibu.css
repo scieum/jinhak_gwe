@@ -22,3 +22,39 @@
 .question-list details { background: var(--color-canvas-soft); padding: var(--spacing-md); }
 .evidence-quote { margin: var(--spacing-sm) 0 0; padding-left: var(--spacing-md); border-left: 2px solid var(--color-ink); }
 .ai-label { display: inline-block; padding: 0 var(--spacing-sm); background: var(--color-canvas-soft); font-size: var(--font-label-size); font-weight: var(--font-label-weight); }
+
+/* 결과 단계 v2 (work/saenggibu-ai/02-spec.md): PC 왼쪽 원문 744 + 오른쪽 패널 360, 모바일은 패널이 먼저. 모서리 0, 그림자 없음. */
+.sg-result { display: grid; gap: var(--spacing-lg); grid-template-columns: 1fr; grid-template-areas: 'head' 'panel' 'body'; }
+.sg-head { grid-area: head; display: grid; gap: var(--spacing-xs); align-content: start; }
+.sg-body { grid-area: body; display: grid; gap: var(--spacing-md); align-content: start; min-width: 0; }
+.sg-panel { grid-area: panel; display: grid; gap: var(--spacing-sm); align-content: start; padding: var(--spacing-lg); border: 1px solid var(--color-hairline-soft); background: var(--color-canvas); }
+.sg-jump { justify-self: start; }
+.sg-panel .competency-bar { height: 6px; gap: 2px; background: none; }
+.sg-cards { display: grid; gap: var(--spacing-xs); }
+.sg-card { border: 1px solid var(--color-hairline-soft); padding: var(--spacing-xs) var(--spacing-md); }
+.sg-card__head { display: flex; justify-content: space-between; align-items: center; min-height: 40px; margin: 0; font-size: var(--font-heading-4-size); }
+.sg-card ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; }
+.sg-item { display: flex; justify-content: space-between; width: 100%; min-height: 44px; padding: 0 var(--spacing-sm); border: 0; border-top: 1px solid var(--color-hairline-soft); background: none; font: inherit; font-size: var(--font-body-sm-size); cursor: pointer; text-align: left; }
+.sg-item:disabled { color: var(--color-text-muted); cursor: default; }
+.sg-item.is-selected { background: var(--color-accent-soft); box-shadow: inset 3px 0 0 var(--color-accent); }
+.sg-text { display: grid; gap: var(--spacing-sm); padding: var(--spacing-lg); border: 1px solid var(--color-hairline-soft); }
+.sg-legend { display: inline-flex; gap: var(--spacing-md); flex-wrap: wrap; }
+.sg-area { display: grid; gap: var(--spacing-xxs); }
+.sg-para { margin: 0; line-height: 1.8; max-width: 72ch; }
+.sg-sentence { position: relative; cursor: pointer; padding: 2px 0; }
+.sg-sentence:focus-visible { outline: 2px solid var(--color-ink); }
+.sg-sentence.hl-academic { background: var(--color-comp-academic-tint); }
+.sg-sentence.hl-career { background: var(--color-comp-career-tint); }
+.sg-sentence.hl-community { background: var(--color-comp-community-tint); }
+.sg-sentence.is-dim { color: var(--color-text-muted); }
+.sg-sentence.is-flash { background: var(--color-accent-soft); }
+.sg-bubble { display: inline-flex; align-items: center; gap: var(--spacing-xxs); margin-left: var(--spacing-xxs); padding: 0 var(--spacing-xs); border: 1px solid var(--color-hairline); background: var(--color-canvas); font-size: var(--font-caption-size); white-space: nowrap; }
+.mask-block { display: inline-block; background: var(--color-ink); color: var(--color-ink); letter-spacing: -2px; }
+.sg-gaps { display: grid; gap: var(--spacing-xs); padding-left: var(--spacing-lg); }
+@media (min-width: 1024px) {
+  .sg-result { grid-template-columns: minmax(0, 1fr) 360px; grid-template-rows: auto 1fr; grid-template-areas: 'head panel' 'body panel'; }
+  .sg-panel { position: sticky; top: var(--spacing-md); }
+  .sg-card ul { grid-template-columns: 1fr; }
+  .sg-result .sg-jump { display: none; }
+}
+.sg-body > .button-outline { justify-self: start; }

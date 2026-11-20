@@ -77,6 +77,7 @@ describe('교사 화면 흐름', () => {
     fireEvent.change(screen.getByLabelText(/명단/), { target: { value: '7 하늘\n15 바다' } });
     fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: '학급 만들기' }));
     expect(await screen.findByRole('heading', { name: '학생 한눈에' })).toBeTruthy();
+    expect(screen.getByRole('region', { name: '우리 반 홈' }).classList.contains('teacher-screen')).toBe(true);
     const code = (await teacherDb.meta.get('class'))!.code;
     unmount();
 
@@ -87,6 +88,7 @@ describe('교사 화면 흐름', () => {
     fireEvent.click(await screen.findByRole('button', { name: '1개 표에 반영하기' }));
     expect(await screen.findByText('상담카드 1개를 불러왔어요')).toBeTruthy();
     expect(await screen.findByRole('cell', { name: /가온대/ })).toBeTruthy();
+    expect(screen.getByRole('region', { name: '카드 수합' }).classList.contains('student-screen')).toBe(true);
     fireEvent.click(screen.getByRole('link', { name: '07 · 하늘' }));
 
     expect(await screen.findByRole('heading', { name: '3학년 2반 7번 하늘' })).toBeTruthy();
