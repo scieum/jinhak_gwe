@@ -5,6 +5,7 @@ import { Modal } from '../components/Modal';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { studentDb, useStudent } from '../store/studentDb';
 import { SendToTeacher } from '../components/SendToTeacher';
+import { UniversityLogo } from '../components/UniversityLogo';
 import { boardWarnings, csatStates, examKinds, isExempt, LIMIT, newBoard, SCENARIO_NAMES, type Board, type BoardSlot } from '../domain/board';
 import type { ApplicationPlan } from '../domain/planner';
 import '../styles/susiro.css';
@@ -51,7 +52,7 @@ export function Susiro() {
   const slotView = (s: BoardSlot, rank: number | null, index = -1) => { const a = app(s.application_id);
     return <li key={s.application_id} className={`susi-slot${focus.includes(s.application_id) ? ' susi-slot--focus' : ''}`}>
       <span className="susi-slot__rank num">{rank ?? '제외'}</span>
-      <div className="susi-slot__body"><strong>{a?.university ?? '지운 전형'}</strong><span className="t-caption text-muted">{a ? [`${a.year}학년도`, a.program, a.department].filter(Boolean).join(' · ') : '목록에서 지운 전형이에요. 이 칸을 비워 주세요.'}</span>
+      <div className="susi-slot__body">{a && <UniversityLogo university={a.university} />}<strong>{a?.university ?? '지운 전형'}</strong><span className="t-caption text-muted">{a ? [`${a.year}학년도`, a.program, a.department].filter(Boolean).join(' · ') : '목록에서 지운 전형이에요. 이 칸을 비워 주세요.'}</span>
         <span className="susi-slot__chips"><span className="judge-badge judge-none">— 판정 준비 중</span>
           {s.exam_kind !== 'none' && <span className="data-status-badge">{s.exam_kind}{s.exam_date ? ` ${s.exam_date.slice(5).replace('-', '.')}` : ' 일정 미정'}</span>}
           <span className="data-status-badge">{csatStates[s.csat]}</span></span>
@@ -61,18 +62,15 @@ export function Susiro() {
         <button className="text-button" disabled={busy} onClick={() => { setError(''); setEditing({ boardId: board.id, slot: s }); }}>상세</button></div></li>; };
 
   return <section className="student-screen susiro" data-slug="susiro" aria-label="수시로">
-    <div className="screen-heading"><div><h2 className="t-heading-1">수시로</h2><p className="num">6회 제한 {board.slots.length}/{LIMIT}장{board.exempt.length > 0 && ` · 6회 제외 ${board.exempt.length}장`}</p></div>
-      <div><ButtonPrimary disabled={busy || (!board.slots.length && !board.exempt.length)} onClick={() => setSharing(true)}>상담카드 보내기</ButtonPrimary>
-        {!board.slots.length && !board.exempt.length && <p className="t-caption text-muted">1장 이상 담아야 보낼 수 있어요</p>}</div></div>
+    <div className="screen-heading"><h2 className="t-heading-1">수시로</h2><p className="num">6회 제한 {board.slots.length}/{LIMIT}장{board.exempt.length > 0 && ` · 6회 제외 ${board.exempt.length}장`}</p></div>
+    <a className="susi-mobile-summary" href="#susi-check">조합 점검 {warnings.length}건 · 6회 제한 {board.slots.length}/{LIMIT}장 <span aria-hidden="true">↓</span></a>
+    <div className="analysis-layout"><div className="analysis-main">
     <fieldset className="toolbar susi-scenarios" disabled={busy}><legend className="sr-only">시나리오 관리</legend>{boards.length > 0 && <SegmentedControl label="시나리오" value={board.id} onChange={id => { setBoardId(id); setFocus([]); setError(''); setMessage(''); }} options={orderedBoards.map(b => ({ value: b.id, label: b.name }))} />}
       <ButtonOutline disabled={boards.length >= SCENARIO_NAMES.length} onClick={() => void addScenario()}>+ 새 안</ButtonOutline>
       <ButtonOutline disabled={boards.length >= SCENARIO_NAMES.length || board === initialBoard} onClick={() => void addScenario(true)}>현재 안 복사</ButtonOutline>
       <ButtonOutline disabled={board === initialBoard} onClick={() => { setError(''); setDeleting(board); }}>현재 안 삭제</ButtonOutline></fieldset>
     <p className="t-caption text-muted">최대 5개 안을 만들 수 있어요. 복사한 안의 카드·메모·일정은 원래 안과 따로 수정돼요.</p>
     {error && !picking && !editing && !deleting && <p role="alert" className="error-note">{error}</p>}{message && <p role="status">{message}</p>}
-    {warnings.length > 0 && <div className="warning-list" aria-label="조합 점검">{warnings.map(w => <button key={w.code + w.title} className="warning-callout" onClick={() => setFocus(w.slots)}>
-      <strong>▲ {w.title}</strong><span>{w.message}</span></button>)}</div>}
-    <p className="t-caption text-muted">판정 기준이 검수되면 소신·위험 쏠림도 함께 점검해요. 지금은 고사 일정 겹침과 6장 제한만 점검해요.</p>
     {!board.slots.length && !board.exempt.length && <div className="empty-state"><h3 className="t-heading-3">아직 담은 대학이 없어요</h3>
       <p>원서·서류 체크리스트에 등록한 전형을 빈 칸에 담으면 여기에 6칸으로 모여요.</p></div>}
     <ol className="susi-board">{board.slots.map((s, i) => slotView(s, i + 1, i))}
@@ -80,6 +78,12 @@ export function Susiro() {
     {board.slots.length === LIMIT && <ButtonOutline disabled={busy} onClick={() => { setError(''); setPicking({ id: board.id, create: false }); }}>6회 제외 전형 담기</ButtonOutline>}
     {board.exempt.length > 0 && <><p className="t-caption text-muted">6회 제외 {board.exempt.length}장</p><ul className="susi-board">{board.exempt.map(s => slotView(s, null))}</ul></>}
     <p className="disclaimer-note">ⓘ 대학 공식 자료가 최종 기준이에요 · 6회 제외 기관은 과학기술원·사관학교·경찰대 목록으로 나눠요</p>
+    </div><aside id="susi-check" className="analysis-aside" aria-label="조합 점검"><h3 className="t-heading-3">조합 점검</h3>
+      <dl className="analysis-facts"><div><dt>6회 제한 전형</dt><dd>{board.slots.length} / {LIMIT}장</dd></div><div><dt>6회 제외 전형</dt><dd>{board.exempt.length}장</dd></div><div><dt>일정·구성 확인</dt><dd>{warnings.length}건</dd></div></dl>
+      {warnings.length > 0 ? <div className="warning-list">{warnings.map(w => <button key={w.code + w.title} className="warning-callout" onClick={() => setFocus(w.slots)}><strong>▲ {w.title}</strong><span>{w.message}</span></button>)}</div> : <p className="t-body-sm text-muted">등록한 일정과 카드에서 확인할 항목이 없어요. 미정인 일정은 대학 발표 후 입력해 주세요.</p>}
+      <p className="t-caption text-muted">판정 기준이 검수되면 소신·위험 쏠림도 함께 점검해요. 지금은 고사 일정 겹침과 6장 제한만 점검해요.</p>
+      <div className="susi-summary-send"><ButtonPrimary disabled={busy || (!board.slots.length && !board.exempt.length)} onClick={() => setSharing(true)}>상담카드 보내기</ButtonPrimary>{!board.slots.length && !board.exempt.length && <p className="t-caption text-muted">1장 이상 담아야 보낼 수 있어요</p>}</div>
+    </aside></div>
 
     {picking && <Modal label="대학 담기" onClose={() => { if (!busy) setPicking(null); }}><h3 className="t-heading-3">담을 전형 고르기</h3>
       {error && <p role="alert" className="error-note">{error}</p>}

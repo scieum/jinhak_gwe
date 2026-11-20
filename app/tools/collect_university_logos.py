@@ -55,6 +55,17 @@ def logo_source(entry, codes):
     return page, urljoin(PORTAL, image['src'])
 
 
+def write_mappings(records):
+    mapping = {r['id']: r['file'] for r in records if 'file' in r}
+    names = {}
+    for record in sorted(records, key=lambda r: r['campus'] != '본교'):
+        if 'file' in record:
+            names.setdefault(record['university'], record['file'])
+    for filename, data in [('universityLogos.json', mapping), ('universityLogoNames.json', names)]:
+        (APP / 'src/data' / filename).write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    return mapping
+
+
 def build():
     CACHE.mkdir(parents=True, exist_ok=True)
     OUTPUT.mkdir(parents=True, exist_ok=True)
@@ -112,8 +123,7 @@ def build():
     records = [{**r, **images.get(r.get('source_image'), {})} for r in records]
     manifest = {'provider': '대입정보포털 어디가 및 대학 공식 홈페이지', 'checked_at': datetime.now(timezone.utc).isoformat(), 'entries': records}
     (OUTPUT / 'sources.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    mapping = {r['id']: r['file'] for r in records if 'file' in r}
-    (APP / 'src/data/universityLogos.json').write_text(json.dumps(mapping, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    mapping = write_mappings(records)
     print(json.dumps({'cards': len(records), 'logos': len(mapping), 'unique_images': len({r['file'] for r in records if 'file' in r}), 'missing': [r for r in records if 'file' not in r]}, ensure_ascii=False), flush=True)
 
 

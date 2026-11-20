@@ -6,6 +6,22 @@
 .national-range { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: var(--spacing-xs); align-items: end; }
 .national-range > span { padding-bottom: var(--spacing-sm); }
 .national-pagination { justify-content: center; }
+.national-coverage-note { padding: var(--spacing-md); margin-block: var(--spacing-md); border: 1px solid var(--color-hairline); background: var(--color-canvas-soft); overflow-wrap: anywhere; }
+.national-coverage-note p { margin-block: 0 var(--spacing-sm); }
+.national-coverage-note summary { cursor: pointer; padding-block: var(--spacing-xs); }
+.national-coverage-note ul { padding-left: var(--spacing-md); margin-bottom: 0; }
+.national-coverage-note li { padding-block: var(--spacing-xs); }
+.national-statistic-actions { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); margin-bottom: var(--spacing-sm); }
+.national-statistic-actions button { white-space: normal; height: auto; min-height: 44px; }
+.national-coverage-table { min-width: 1040px; }
+.national-coverage { min-width: 0; max-width: 100%; }
+.national-placement .result-panel > .section-row { flex-wrap: wrap; }
+.national-placement .segmented-control { max-width: 100%; flex-wrap: wrap; }
+.national-coverage-table td, .national-coverage-table th { vertical-align: top; }
+.national-coverage-table td:nth-child(5) { min-width: 240px; }
+.national-coverage > .section-row { flex-wrap: wrap; }
+.national-coverage > .section-row label { display: flex; align-items: center; gap: var(--spacing-xs); }
+.national-coverage input[type="checkbox"] { width: auto; }
 .national-plot-scroll { overflow: auto; max-height: 620px; border: 1px solid var(--color-hairline); }
 .national-plot-scroll:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
 .national-plot { width: 100%; min-width: 900px; }

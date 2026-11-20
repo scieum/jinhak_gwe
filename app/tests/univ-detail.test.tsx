@@ -25,7 +25,7 @@ describe('대학·전형 상세', () => {
     at('/univ-detail?u=가나대학교');
     expect(await screen.findByRole('heading', { name: '가나대학교' })).toBeTruthy();
     expect(screen.getByText(/시행계획·모집요강 자료/)).toBeTruthy();
-    expect(screen.getByRole('link', { name: /학생부교과/ }).getAttribute('href')).toBe('/program-detail?u=%EA%B0%80%EB%82%98%EB%8C%80%ED%95%99%EA%B5%90&p=%ED%95%99%EC%83%9D%EB%B6%80%EA%B5%90%EA%B3%BC');
+    expect(screen.getByRole('link', { name: /^학생부교과/ }).getAttribute('href')).toBe('/program-detail?u=%EA%B0%80%EB%82%98%EB%8C%80%ED%95%99%EA%B5%90&p=%ED%95%99%EC%83%9D%EB%B6%80%EA%B5%90%EA%B3%BC');
     fireEvent.click(within(screen.getByRole('group', { name: '전형 유형' })).getByRole('button', { name: '논술' }));
     expect(screen.getByRole('heading', { name: '이 유형의 공개 입결은 없어요' })).toBeTruthy();
   });

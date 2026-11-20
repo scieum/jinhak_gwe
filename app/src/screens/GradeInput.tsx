@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ButtonOutline, ButtonPrimary } from '../components/Buttons';
 import { Modal } from '../components/Modal';
 import { Icon } from '../components/Icon';
@@ -17,11 +17,17 @@ import { gradesCsv, parseCsv, rowsToGrades, readGradePdf, readSpreadsheet, templ
 
 export function GradeInput() {
   const state = useStudent();
+  const [query, setQuery] = useSearchParams();
   const [semester, setSemester] = useState<Semester>('1-1');
   const [view, setView] = useState('학기별'), [filter, setFilter] = useState('전체');
   const [message, setMessage] = useState(''), [error, setError] = useState(''), [busy, setBusy] = useState(false);
   const [preview, setPreview] = useState<ImportPreview | null>(null), [restore, setRestore] = useState<StudentBackup | null>(null);
   const [password, setPassword] = useState(''), [backupOpen, setBackupOpen] = useState(false);
+  useEffect(() => {
+    if (query.get('backup') !== '1') return;
+    setBackupOpen(true);
+    const next = new URLSearchParams(query); next.delete('backup'); setQuery(next, { replace: true });
+  }, [query, setQuery]);
   const [deleting, setDeleting] = useState<GradeRecord | null>(null);
   const inputRef = useRef<HTMLInputElement>(null), backupRef = useRef<HTMLInputElement>(null), replyRef = useRef<HTMLInputElement>(null);
   const [reply, setReply] = useState<Exchange<TeacherReply> | null>(null);

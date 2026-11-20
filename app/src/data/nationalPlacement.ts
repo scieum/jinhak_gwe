@@ -21,6 +21,7 @@ export async function loadPlacementSource(row: NationalPlacementRow, collection:
   const entry = collection.universities.find(e => e.university === row.university);
   if (!entry) throw new Error('대학 원문 자료를 찾지 못했어요.');
   const source = (await loadCollectedRows(entry))[row.sourceRow];
-  if (!source || source.result_year !== row.year || source.grade_system !== '9' || PLACEMENT_FIELDS.some(f => source[f] !== row[f])) throw new Error('배치표와 원문 자료가 일치하지 않아요. 새로고침해 주세요.');
+  if (!source || source.result_year !== row.year || PLACEMENT_FIELDS.some(f => source[f] !== row[f])
+    || Object.values(row.statistics ?? {}).some(stat => !source.cut_other.includes(stat.evidence))) throw new Error('배치표와 원문 자료가 일치하지 않아요. 새로고침해 주세요.');
   return source;
 }

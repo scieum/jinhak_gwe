@@ -6,6 +6,7 @@ import { ModeSwitch } from './ModeSwitch';
 import { MODE_HOME, MORE_PATH, NAV, locate, modeOf, type NavGroup } from './nav';
 import { workspaceOf } from './workspace';
 import { TeacherLockButton, TeacherLockGate } from '../components/TeacherLock';
+import { dataAsOf } from '../data/catalog';
 import './shell.css';
 
 // 소분류가 없는 대분류(학생 "홈")는 그룹 행 없이 바로 선택하는 메뉴 하나로 그린다
@@ -42,7 +43,7 @@ export function AppShell() {
   ];
 
   return (
-    <div className="shell">
+    <div className="shell" data-screen={pathname.split('/').filter(Boolean).at(-1) ?? 'home'}>
       <aside className="sidebar">
         <Link to={MODE_HOME[mode]} className="sidebar__wordmark" aria-label="진학내비 홈">
           <BrandLogo />
@@ -83,15 +84,16 @@ export function AppShell() {
             );
           })}</div>)}
         </nav>
+        <footer className="sidebar__footer"><p className="t-caption text-muted">데이터 기준일 {dataAsOf}</p>{mode === 'student' && <Link to="/grade-input?backup=1"><Icon name="download" size={20} />백업</Link>}</footer>
       </aside>
 
       <div className="shell__main">
         <header className="topbar">
           <div className="topbar__heading">
             <p className="t-caption text-muted">{breadcrumb ?? title}</p>
-            <h1 className="sr-only">{title}</h1>
+            <h1 className="t-heading-3">{title}</h1>
           </div>
-          <div className="topbar__actions">{mode !== 'admin' && <ModeSwitch mode={mode} />}{modeOf(pathname) === 'teacher' && <TeacherLockButton />}</div>
+          <div className="topbar__actions"><div id="topbar-screen-actions" />{mode !== 'admin' && <ModeSwitch mode={mode} />}{modeOf(pathname) === 'teacher' && <TeacherLockButton />}</div>
         </header>
 
         <header className="appbar">

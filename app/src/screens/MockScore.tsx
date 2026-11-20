@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { ButtonPrimary } from '../components/Buttons';
 import { studentDb, useStudent } from '../store/studentDb';
 import { SendToTeacher } from '../components/SendToTeacher';
+import { ScreenActions } from '../components/ScreenActions';
 import { AREAS, gradeLabel, readGrade, validRaw, type Area } from '../domain/mock';
 import { cutTables, mockExams } from '../data/mock-exams';
 
@@ -37,12 +38,14 @@ function MockScoreForm({ requestedExam }: { requestedExam: string | null }) {
   const apps = state.data.planning?.applications ?? [], board = state.data.boards?.[0];
   const csatCards = (board?.slots ?? []).map((s, i) => ({ s, i, a: apps.find(x => x.id === s.application_id) })).filter(c => c.s.csat !== 'none' && c.a);
   return <section className="student-screen" data-slug="mock-score" aria-label="모의고사">
-    <div className="screen-heading"><h2 className="t-heading-1">모의고사</h2><ButtonPrimary disabled={!entered} onClick={() => setSending(true)}>선생님께 보내기</ButtonPrimary></div>
+    <div className="screen-heading"><h2 className="t-heading-1">모의고사</h2><ScreenActions><ButtonPrimary disabled={!entered} onClick={() => setSending(true)}>선생님께 보내기</ButtonPrimary></ScreenActions></div>
     {sending && saved && <SendToTeacher title="모의고사" kind="mock_score" payload={{ exam, raw: saved.raw, cut_table: table?.version ?? null }} filename={`모의고사_${exam}`} onClose={() => setSending(false)} onDone={setMessage}>
       <p>{exam} 원점수 {entered}개를 파일(.jnavi)로 저장해요.</p></SendToTeacher>}
+    <div className="analysis-layout"><div className="analysis-main">
     <section className="filter-panel" aria-label="모의고사 선택"><div className="section-row"><label>시험<select value={exam} onChange={e => { setExam(e.target.value); setDrafts({}); setError(''); setMessage(''); }}>{exams.map(x => <option key={x}>{x}</option>)}</select></label><Link className="button-outline" to="/score-trend">성적 추이 보기</Link></div>
     <p className="t-caption text-muted">{table ? `등급컷 ${table.version} · 기준일 ${table.as_of}` : '이 시험의 검수된 예상 등급컷이 아직 없어요. 원점수는 저장되고, 등급컷이 등록되면 예상 등급을 보여 줘요.'}</p></section>
     {error && <p role="alert" className="error-note">{error}</p>}{message && <p role="status">{message}</p>}
+    <div className="analysis-stat-tiles"><div><span>원점수 입력</span><strong>{entered} / 6</strong><small>입력한 영역 수예요.</small></div><div><span>수능최저 확인 카드</span><strong>{csatCards.length}장</strong><small>최저 기준과 등급컷 등록 후 판정해요.</small></div><div><span>정시 위치</span><strong>준비 중</strong><small>검수된 정시 환산 규칙이 생기면 보여 드려요.</small></div></div>
     <section className="result-panel" aria-label="영역별 원점수"><div className="section-row"><h3 className="t-heading-3">영역별 원점수</h3><span className="t-caption text-muted num">6개 중 {entered}개 입력</span></div>
     <div className="table-scroll"><table className="data-table"><thead><tr><th>영역</th><th className="num">원점수</th><th>예상 등급(추정)</th></tr></thead>
       <tbody>{AREAS.map(({ key, max }) => <tr key={key}><td>{key}</td>
@@ -50,11 +53,13 @@ function MockScoreForm({ requestedExam }: { requestedExam: string | null }) {
         <td>{gradeLabel(readGrade(saved?.raw[key], key, table))}</td></tr>)}</tbody></table></div>
     <p className="t-caption text-muted">표준점수·백분위는 준비 중이에요 <span className="data-status-badge">환산 규칙 준비 중</span></p>
     <p className="disclaimer-note">ⓘ 예상 등급은 가채점 원점수와 예상 등급컷으로 본 추정이에요 · 성적 통지표가 최종 기준이에요</p></section>
-    <section className="result-panel" aria-label="수능 최저 충족 현황"><h3 className="t-heading-3">수능 최저 충족 현황</h3>
+    </div><aside className="analysis-aside" aria-label="수능 최저 충족 현황"><h3 className="t-heading-3">수능 최저 충족 현황</h3>
     {!board ? <p className="text-muted">수시로에 카드를 담으면 최저가 있는 카드를 여기서 함께 볼 수 있어요. <Link className="t-link" to="/susiro">수시로 가기 ›</Link></p>
       : !csatCards.length ? <p className="text-muted">{board.name}에 최저가 있거나 확인이 필요한 카드가 없어요.</p>
       : <ul className="program-list">{csatCards.map(({ a, i }) => <li key={a!.id} className="univ-card"><strong>{i + 1}번 · {a!.university}</strong>
         <span className="t-caption text-muted">{[a!.program, a!.department].filter(Boolean).join(' · ')}</span>
-        <span className="judge-badge judge-none">자료 부족 · 최저 기준과 등급컷 등록 전</span></li>)}</ul>}</section>
+        <span className="judge-badge judge-none">자료 부족 · 최저 기준과 등급컷 등록 전</span></li>)}</ul>}
+      <section><h4 className="t-body-sm">계산 기준</h4><p className="t-caption text-muted">{table ? `등급컷 ${table.version} · ${table.as_of} 기준` : '검수된 등급컷이 등록되기 전에는 원점수만 표시해요.'}</p><Link className="button-outline" to="/susiro">수시로 카드 확인</Link></section>
+    </aside></div>
   </section>;
 }

@@ -9,7 +9,9 @@
     "test": "vitest run",
     "typecheck": "tsc",
     "data:import-results": "python tools/import_admission_results.py",
-    "data:build-placement": "python tools/build_national_placement.py"
+    "data:build-placement": "python tools/build_national_placement.py",
+    "data:audit-placement": "python tools/audit_national_placement.py",
+    "test:placement-statistics": "python -m unittest discover -s tools -p test_placement_statistics.py"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.119.2",

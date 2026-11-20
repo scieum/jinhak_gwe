@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loadNationalCatalog, loadNationalYear, loadPlacementSource } from '../data/nationalPlacement';
-import { defaultPlacementFilters, filterNationalRows, placementBounds, placementX, pointLanes, universityPoints, type CutField, type NationalPlacementRow, type PlacementFilters } from '../domain/nationalPlacement';
+import { defaultPlacementFilters, filterNationalRows, matchesUniversity, placementBounds, placementX, pointLanes, statisticValue, statisticDetail, STATISTIC_LABELS, universityPoints, type CutField, type NationalPlacementRow, type PlacementFilters } from '../domain/nationalPlacement';
 import { nextTableSort, sortTableRows, type TableSort } from '../domain/tableSort';
 import type { ResultRow } from '../domain/resultReview';
 import { SegmentedControl } from '../components/SegmentedControl';
@@ -9,11 +9,11 @@ import { SortableHeader } from '../components/SortableHeader';
 import { Modal } from '../components/Modal';
 import { useCompactResults } from '../components/ResultFilters';
 import { CollectedResultFields } from '../components/CollectedResultFields';
+import { PlacementCoverage } from '../components/PlacementCoverage';
 import '../styles/national-placement.css';
 
 type Catalog = Awaited<ReturnType<typeof loadNationalCatalog>>;
-type SortKey = 'university' | 'program' | 'recruit_unit' | 'admission_type' | 'round' | 'cut_50' | 'cut_70' | 'basis';
-const TABLE_COLUMNS: [SortKey, string][] = [['university', '대학·캠퍼스'], ['recruit_unit', '모집단위'], ['program', '전형'], ['admission_type', '유형'], ['round', '시기'], ['cut_50', '50% 컷'], ['cut_70', '70% 컷'], ['basis', '산출 기준']];
+type SortKey = 'university' | 'program' | 'recruit_unit' | 'admission_type' | 'round' | CutField | 'basis';
 const UNIVERSITY_PAGE = 10, ROW_PAGE = 50;
 
 export function NationalPlacement() {
@@ -22,7 +22,7 @@ export function NationalPlacement() {
   const [rows, setRows] = useState<NationalPlacementRow[] | null>(null), [error, setError] = useState(''), [indexError, setIndexError] = useState('');
   const [attempt, setAttempt] = useState(0), [indexAttempt, setIndexAttempt] = useState(0);
   const [filters, setFilters] = useState<PlacementFilters>({ ...defaultPlacementFilters });
-  const [view, setView] = useState<'plot' | 'table'>('plot'), [page, setPage] = useState(0);
+  const [view, setView] = useState<'plot' | 'table' | 'coverage'>('plot'), [page, setPage] = useState(0);
   const [sort, setSort] = useState<TableSort<SortKey>>(null), [selected, setSelected] = useState<NationalPlacementRow[] | null>(null);
   useEffect(() => {
     let active = true; setIndexError('');
@@ -39,7 +39,16 @@ export function NationalPlacement() {
   }, [catalog, year, attempt]);
   const filtered = useMemo(() => filterNationalRows(rows ?? [], filters), [rows, filters]);
   const groups = useMemo(() => universityPoints(filtered, filters.cut), [filtered, filters.cut]);
-  const sorted = useMemo(() => sortTableRows(filtered, sort, (r, key) => r[key], key => key === 'cut_50' || key === 'cut_70'), [filtered, sort]);
+  const alternatives = useMemo(() => {
+    const visible = new Set(filtered.map(r => r.university));
+    return (Object.keys(STATISTIC_LABELS) as CutField[]).filter(cut => cut !== filters.cut).map(cut => ({ cut,
+      names: [...new Set(filterNationalRows(rows ?? [], { ...filters, cut }).map(r => r.university))].filter(name => !visible.has(name)) })).filter(item => item.names.length);
+  }, [rows, filtered, filters]);
+  const collectedMatches = useMemo(() => filters.university.trim()
+    ? catalog?.collection.universities.filter(e => matchesUniversity(e.university, filters.university)) ?? [] : [], [catalog, filters.university]);
+  const tableValue = (row: NationalPlacementRow, key: SortKey) => key in STATISTIC_LABELS ? statisticValue(row, key as CutField) : key === 'basis' ? statisticDetail(row, filters.cut) : row[key as 'university'];
+  const sorted = sortTableRows(filtered, sort, tableValue, key => key in STATISTIC_LABELS);
+  const tableColumns: [SortKey, string][] = [['university', '대학·캠퍼스'], ['recruit_unit', '모집단위'], ['program', '전형'], ['admission_type', '유형'], ['round', '시기'], [filters.cut, STATISTIC_LABELS[filters.cut]], ['basis', '산출 기준·대상']];
   const pages = Math.max(1, Math.ceil((view === 'plot' ? groups.length : filtered.length) / (view === 'plot' ? UNIVERSITY_PAGE : ROW_PAGE)));
   const current = Math.min(page, pages - 1), bounds = placementBounds(filters);
   const patch = (next: Partial<PlacementFilters>) => { setFilters(f => ({ ...f, ...next })); setPage(0); setSelected(null); };
@@ -57,13 +66,13 @@ export function NationalPlacement() {
 
             <button className="button-outline" onClick={reset}>조건 초기화</button>
           </div>
-          <details className="national-advanced" open={!compact}><summary>상세 조건 · {year}학년도 · {filters.round} · {filters.cut === 'cut_70' ? '70%' : '50%'} 컷</summary>
+          <details className="national-advanced" open={!compact}><summary>상세 조건 · {year}학년도 · {filters.round} · {STATISTIC_LABELS[filters.cut]}</summary>
           <div className="national-filter-grid">
             <label>입결 학년도<select value={year} onChange={e => { setYear(e.target.value); setPage(0); }}>{catalog.index.years.map(y => <option key={y.year} value={y.year}>{y.year}학년도</option>)}</select></label>
             <label>모집시기<select value={filters.round} onChange={e => patch({ round: e.target.value })}><option>전체</option>{[...new Set(['수시', ...choice('round')])].map(r => <option key={r}>{r}</option>)}</select></label>
             <label>전형 유형<select value={filters.type} onChange={e => patch({ type: e.target.value })}><option>전체</option>{[...new Set([...choice('admission_type'), ...(filters.type === '전체' ? [] : [filters.type])])].map(t => <option key={t}>{t}</option>)}</select></label>
             <label>입결 지표<select value={filters.metric} onChange={e => patch({ metric: e.target.value })}><option>교과등급</option><option>수능등급</option></select></label>
-            <label>컷 기준<select value={filters.cut} onChange={e => patch({ cut: e.target.value as CutField })}><option value="cut_70">70% 컷</option><option value="cut_50">50% 컷</option></select></label>
+            <label>컷·통계 기준<select value={filters.cut} onChange={e => { patch({ cut: e.target.value as CutField }); setSort(null); }}>{Object.entries(STATISTIC_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
             <div className="national-range"><label>등급 범위 시작<input type="number" min="1" max="9" step="0.1" value={filters.min} onChange={e => patch({ min: e.target.value })} /></label><span aria-hidden="true">~</span><label>등급 범위 끝<input type="number" min="1" max="9" step="0.1" value={filters.max} onChange={e => patch({ max: e.target.value })} /></label></div>
           </div>
           </details>
@@ -71,23 +80,34 @@ export function NationalPlacement() {
           <p className="t-caption text-muted">대학마다 반영 교과와 산출 기준이 달라요. 성적 판정·지원 가능성 계산에는 사용하지 않으며, 원문 대조와 이용 조건 확인 전 자료예요.</p>
         </section>
         <section className="result-panel" aria-label="전국 배치표 조회 결과" aria-busy={!rows && !error}>
-          <div className="section-row"><div><h3 className="t-heading-2">{year}학년도 · {filters.metric} {filters.cut === 'cut_70' ? '70%' : '50%'} 컷</h3>{rows && <p className="t-body-sm" role="status">{groups.length}개 대학·캠퍼스 · 원문 {filtered.length.toLocaleString()}행</p>}</div>
-            <SegmentedControl label="배치표 보기" value={view} onChange={value => { setView(value); setPage(0); }} options={[{ value: 'plot', label: '좌표 배치표' }, { value: 'table', label: '전체 목록' }]} /></div>
+          <div className="section-row"><div><h3 className="t-heading-2">{year}학년도 · {filters.metric} {STATISTIC_LABELS[filters.cut]}</h3>{rows && <p className="t-body-sm" role="status">{groups.length}개 대학·캠퍼스 · 원문 {filtered.length.toLocaleString()}행</p>}</div>
+            <SegmentedControl label="배치표 보기" value={view} onChange={value => { setView(value); setPage(0); }} options={[{ value: 'plot', label: '좌표 배치표' }, { value: 'table', label: '전체 목록' }, { value: 'coverage', label: `수집 대학 ${catalog.collection.universities.length}` }]} /></div>
+          {view !== 'coverage' && rows && !error && alternatives.length > 0 && <div className="national-coverage-note" role="note">
+            <p>현재 보이지 않는 대학도 다른 통계로 조회할 수 있어요.</p>
+            <div className="national-statistic-actions">{alternatives.map(item => <button key={item.cut} className="button-outline" onClick={() => { patch({ cut: item.cut }); setSort(null); }} aria-label={`${STATISTIC_LABELS[item.cut]}으로 보기`}>{STATISTIC_LABELS[item.cut]} · 추가 {item.names.length}곳</button>)}</div>
+            <p className="t-caption text-muted">통계마다 대상과 산출 기준이 달라요. 평균을 컷으로 바꾸거나 서로 다른 컷을 같은 값으로 취급하지 않아요.</p>
+          </div>}
+          {view !== 'coverage' && rows && !error && collectedMatches.length > 0 && <details className="national-coverage-note" open={!filtered.length}>
+            <summary>검색한 대학의 수집 자료 {collectedMatches.length}곳 · 좌표가 없어도 원문 보기</summary>
+            <p className="t-caption text-muted">수집 여부와 좌표 표시 여부는 달라요. 75% 컷·평균 등 다른 기준이나 다른 학년도 자료는 수집 자료에서 확인해 주세요.</p>
+            <ul>{collectedMatches.map(entry => <li key={entry.university}><Link to={`/admission-results?view=collected&cu=${encodeURIComponent(entry.university)}`}>{entry.university} 수집 자료</Link><span className="t-caption text-muted"> · {entry.years.join('·')}학년도</span></li>)}</ul>
+          </details>}
           {error ? <div role="alert"><p>{error}</p><button className="button-outline" onClick={() => setAttempt(n => n + 1)}>자료 다시 불러오기</button></div>
             : !rows ? <p role="status">{year}학년도 배치표를 읽고 있어요.</p>
+              : view === 'coverage' ? <PlacementCoverage key={JSON.stringify([year, filters])} collection={catalog.collection} rows={rows} filters={filters} year={year} onChoose={(university, cut) => { patch({ university, cut, min: '1', max: '9' }); setSort(null); setView('plot'); }} />
               : !filtered.length ? <div className="empty-state"><h4 className="t-heading-3">조건에 맞는 입결 좌표가 없어요</h4><p>대학·학과 검색이나 학년도·지표·컷 기준을 바꿔 보세요. 9등급제와 선택한 컷 수치가 명시된 자료만 표시해요.</p></div> : <>
                 {view === 'plot' ? <>
                   <p className="t-caption text-muted">가로 위치 = 발표 등급 · 왼쪽일수록 낮은 등급 숫자. 겹치는 점은 위아래로 나눴고 세로 위치에는 의미가 없어요. 점을 누르면 해당 원문을 확인할 수 있어요.</p>
                   <NationalPlot key={JSON.stringify([year, current, filters])} groups={groups.slice(current * UNIVERSITY_PAGE, (current + 1) * UNIVERSITY_PAGE)} cut={filters.cut} onSelect={setSelected} />
                   <p className="t-caption text-muted">대학은 가나다순이에요. 같은 대학의 같은 값은 한 점으로 묶어요. 점 안의 숫자는 연결된 원문 행 수예요.</p>
-                </> : <div className="table-scroll"><table className="data-table national-table"><caption className="sr-only">전국 대학 수집 입결 목록</caption><thead><tr>{TABLE_COLUMNS.map(([key, label]) => <SortableHeader key={key} column={key} label={label} sort={sort} onSort={key => { setSort(s => nextTableSort(s, key)); setPage(0); }} />)}<th scope="col">상세</th></tr></thead>
-                  <tbody>{sorted.slice(current * ROW_PAGE, (current + 1) * ROW_PAGE).map(r => <tr key={r.id}>{TABLE_COLUMNS.map(([key]) => <td key={key}>{r[key] || '—'}</td>)}<td><button className="text-button" onClick={() => setSelected([r])} aria-label={`${r.university} ${r.program} ${r.recruit_unit} 원문 상세`}>원문·상세</button></td></tr>)}</tbody></table></div>}
+                </> : <div className="table-scroll"><table className="data-table national-table"><caption className="sr-only">전국 대학 수집 입결 목록</caption><thead><tr>{tableColumns.map(([key, label]) => <SortableHeader key={key} column={key} label={label} sort={sort} onSort={key => { setSort(s => nextTableSort(s, key)); setPage(0); }} />)}<th scope="col">상세</th></tr></thead>
+                  <tbody>{sorted.slice(current * ROW_PAGE, (current + 1) * ROW_PAGE).map(r => <tr key={r.id}>{tableColumns.map(([key]) => <td key={key}>{tableValue(r, key) || '—'}</td>)}<td><button className="text-button" onClick={() => setSelected([r])} aria-label={`${r.university} ${r.program} ${r.recruit_unit} 원문 상세`}>원문·상세</button></td></tr>)}</tbody></table></div>}
                 <nav className="toolbar national-pagination" aria-label="배치표 페이지"><button className="button-outline" disabled={!current} onClick={() => setPage(p => p - 1)}>이전</button><span>{current + 1} / {pages} 페이지 · {view === 'plot' ? `${UNIVERSITY_PAGE}개 대학씩` : `${ROW_PAGE}행씩`}</span><button className="button-outline" disabled={current + 1 >= pages} onClick={() => setPage(p => p + 1)}>다음</button></nav>
               </>}
-          <p className="t-caption text-muted">전국 수집본 전체가 표시되는 것은 아니에요. 등급제 미기재·점수 지표·범위 밖 값·선택한 컷이 없는 행은 제외해요. 같은 지표라도 산출 기준은 원문에서 확인해 주세요.</p>
+          <p className="t-caption text-muted">좌표는 9등급제의 명확한 단일 수치만 표시해요. 통계 대상은 최종등록자·합격자 등으로 다를 수 있어요. 좌표가 없는 대학도 ‘수집 대학’에서 제외 사유와 원문을 확인할 수 있어요.</p>
         </section>
       </>}
-    {selected && catalog && <NationalSource key={selected[0].id} records={selected} collection={catalog.collection} onClose={() => setSelected(null)} />}
+    {selected && catalog && <NationalSource key={selected[0].id} records={selected} cut={filters.cut} collection={catalog.collection} onClose={() => setSelected(null)} />}
   </section>;
 }
 
@@ -113,7 +133,7 @@ function NationalPlot({ groups, cut, onSelect }: { groups: ReturnType<typeof uni
             {Array.from({ length: 9 }, (_, i) => <i key={i} className="national-gridline" style={{ left: placementX(i + 1, trackWidth) }} aria-hidden="true" />)}
             {points.map(point => <button type="button" key={point.value} className="national-point" style={{ left: point.x, top: 8 + point.lane * 28 }} onClick={() => onSelect(point.records)}
               title={`${group.university} · ${point.value}등급 · ${point.records.length}행`}
-              aria-label={`${group.university} ${cut === 'cut_70' ? '70%' : '50%'} 컷 ${point.value}등급, 원문 ${point.records.length}행 상세`}><span aria-hidden="true">{point.records.length > 1 ? point.records.length : '●'}</span></button>)}
+              aria-label={`${group.university} ${STATISTIC_LABELS[cut]} ${point.value}등급, 원문 ${point.records.length}행 상세`}><span aria-hidden="true">{point.records.length > 1 ? point.records.length : '●'}</span></button>)}
           </div>
         </div>;
       })}
@@ -121,7 +141,7 @@ function NationalPlot({ groups, cut, onSelect }: { groups: ReturnType<typeof uni
   </div>;
 }
 
-function NationalSource({ records, collection, onClose }: { records: NationalPlacementRow[]; collection: Catalog['collection']; onClose: () => void }) {
+function NationalSource({ records, cut, collection, onClose }: { records: NationalPlacementRow[]; cut: CutField; collection: Catalog['collection']; onClose: () => void }) {
   const [chosen, setChosen] = useState<NationalPlacementRow | null>(records.length === 1 ? records[0] : null);
   const [row, setRow] = useState<ResultRow | null>(null), [error, setError] = useState(''), [attempt, setAttempt] = useState(0), [page, setPage] = useState(0);
   useEffect(() => {
@@ -131,7 +151,7 @@ function NationalSource({ records, collection, onClose }: { records: NationalPla
   }, [chosen, collection, attempt]);
   return <Modal wide label="배치표 입결 원문 상세" onClose={onClose}>
     <div className="section-row"><h3 className="t-heading-3">{records[0].university} · {records[0].year}학년도</h3><button className="button-outline" onClick={onClose}>닫기</button></div>
-    {chosen ? <>{records.length > 1 && <button className="button-outline" onClick={() => setChosen(null)}>같은 위치의 {records.length}행 보기</button>}
+    {chosen ? <><div className="national-coverage-note"><strong>{STATISTIC_LABELS[cut]} · {statisticValue(chosen, cut)}등급</strong><p>{statisticDetail(chosen, cut)}</p></div>{records.length > 1 && <button className="button-outline" onClick={() => setChosen(null)}>같은 위치의 {records.length}행 보기</button>}
       {error ? <div role="alert"><p>{error}</p><button className="button-outline" onClick={() => setAttempt(n => n + 1)}>원문 다시 불러오기</button></div> : row ? <CollectedResultFields row={row} /> : <p role="status">원문 자료를 읽고 있어요.</p>}</>
       : <><p>같은 위치의 원문 {records.length}행이에요. 확인할 전형·모집단위를 선택해 주세요.</p><div className="national-source-options">{records.slice(page * 20, (page + 1) * 20).map(r => <button className="button-outline" key={r.id} onClick={() => setChosen(r)}><span>{r.recruit_unit} · {r.program} · {r.round}</span><span className="t-caption text-muted">{r.basis || '산출 기준 미기재'}</span></button>)}</div>
         {records.length > 20 && <nav className="toolbar" aria-label="같은 좌표 원문 페이지"><button className="button-outline" disabled={!page} onClick={() => setPage(p => p - 1)}>이전</button><span>{page + 1} / {Math.ceil(records.length / 20)}</span><button className="button-outline" disabled={(page + 1) * 20 >= records.length} onClick={() => setPage(p => p + 1)}>다음</button></nav>}</>}

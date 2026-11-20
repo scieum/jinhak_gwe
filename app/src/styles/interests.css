@@ -10,6 +10,29 @@
 .collection-program .interest-control, .collection-unit-heading .interest-control { flex: 0 0 44px; }
 .collection-unit-heading .collection-unit { flex: 1; }
 .interest-list { display: grid; gap: var(--spacing-md); min-width: 0; }
+.interest-overview { grid-template-columns: minmax(0, 1fr) minmax(240px, 380px); align-items: end; }
+.interest-overview > div { display: grid; gap: var(--spacing-xs); }
+.interest-overview input { width: 100%; }
+.interest-results { min-width: 0; border: 1px solid var(--color-hairline); background: var(--color-canvas-soft); }
+.interest-results-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--spacing-sm); padding: var(--spacing-md) var(--spacing-card); background: var(--color-canvas); border-bottom: 2px solid var(--color-hairline); }
+.interest-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-md); padding: var(--spacing-card); margin: 0; list-style: none; }
+.interest-card { min-width: 0; display: grid; grid-template-rows: auto 1fr auto; border: 1px solid var(--color-hairline); background: var(--color-canvas); }
+.interest-card-heading { display: grid; grid-template-columns: 48px minmax(0, 1fr) 44px; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-card); border-bottom: 1px solid var(--color-hairline); }
+.interest-card-heading > div { display: grid; gap: var(--spacing-xxs); min-width: 0; overflow-wrap: anywhere; }
+.interest-card-body { display: grid; align-content: start; gap: var(--spacing-xs); min-width: 0; padding: var(--spacing-card); overflow-wrap: anywhere; }
+.interest-department-needed { display: grid; gap: var(--spacing-xs); padding: var(--spacing-sm); border-left: 3px solid var(--color-ink); background: var(--color-canvas-soft); }
+.interest-department-needed strong { display: flex; align-items: center; gap: var(--spacing-xs); }
+.interest-card-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-xs); padding: var(--spacing-md) var(--spacing-card); border-top: 1px solid var(--color-hairline); }
+.interest-card-actions > a, .interest-card-actions > button { min-width: 0; height: auto; min-height: 44px; padding: var(--spacing-xs); text-align: center; }
+.interest-card-actions > :last-child:nth-child(3) { grid-column: 1 / -1; }
+@media (max-width: 1199px) { .interest-cards { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 767px) {
+  .interest-overview { grid-template-columns: minmax(0, 1fr); }
+  .interest-results-heading, .interest-cards, .interest-card-heading, .interest-card-body, .interest-card-actions { padding: var(--spacing-md); }
+  .interest-card-heading { gap: var(--spacing-xs); }
+  .interest-card-actions { grid-template-columns: minmax(0, 1fr); }
+  .interest-card-actions > a, .interest-card-actions > button { min-height: 52px; }
+}
 .interest-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(130px, 200px); gap: var(--spacing-md); padding: var(--spacing-md); border-bottom: 1px solid var(--color-hairline-soft); }
 .interest-row__info { display: grid; gap: var(--spacing-xs); min-width: 0; overflow-wrap: anywhere; }
 .interest-row__info > a { color: inherit; }

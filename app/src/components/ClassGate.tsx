@@ -6,6 +6,7 @@ import { checkClass, newClassCode, parseRoster } from '../domain/classroom';
 import { teacherDb, useClass, type ClassState } from '../store/teacherDb';
 import '../styles/teacher.css';
 import { ServerRestore } from './ServerSync';
+import { ClassWelcome } from './ClassWelcome';
 
 type Ready = ClassState & { info: NonNullable<ClassState['info']> };
 /** 교사 화면 공통: 학급 저장소를 읽고, 학급이 없으면 빈 상태(만들기는 우리 반 홈에서만). */
@@ -14,11 +15,14 @@ export function ClassGate({ slug, title, children, setup = false }: { slug: stri
   const wrap = (body: ReactNode) => <section className="student-screen teacher-screen" data-slug={slug} aria-label={title}><div className="screen-heading"><h2 className="t-heading-1">{title}</h2></div>{body}</section>;
   if (!state) return wrap(<p role="status">학급 데이터를 읽고 있어요.</p>);
   if (!state.data) return wrap(<p role="alert">{state.error}</p>);
+  if ((!state.data.info || !state.data.students.length) && setup) return wrap(<>
+    <div className="class-welcome-restore"><ServerRestore /></div>
+    <ClassWelcome onCreate={() => setMaking(true)} />
+    {making && <ClassSetup onClose={() => setMaking(false)} />}
+  </>);
   if (!state.data.info || !state.data.students.length) return wrap(<div className="empty-state"><h3 className="t-heading-3">아직 불러온 학생이 없어요</h3>
     <p>반 이름과 번호·별칭 명단을 넣으면 학급 코드가 생겨요. 학생은 이 코드를 넣어 카드를 보내요.</p>
-    {setup && <ServerRestore />}
-    {setup ? <ButtonPrimary onClick={() => setMaking(true)}>학급 만들기</ButtonPrimary> : <Link className="button-outline" to="/teacher/teacher-dashboard">우리 반 홈에서 학급 만들기 ›</Link>}
-    {making && <ClassSetup onClose={() => setMaking(false)} />}</div>);
+    <Link className="button-outline" to="/teacher/teacher-dashboard">우리 반 홈에서 학급 만들기 ›</Link></div>);
   return wrap(children(state.data as Ready));
 }
 

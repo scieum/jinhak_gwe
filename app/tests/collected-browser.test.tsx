@@ -21,9 +21,9 @@ function setup(rows: ResultRow[]) {
   return vi.spyOn(loader, 'loadCollectedRows').mockResolvedValue(rows);
 }
 
-test('학생 기본 화면에 수집본을 표시하고 같은 전형의 서로 다른 원문과 정밀도를 보존한다', async () => {
+test('수집 자료 탭에 수집본을 표시하고 같은 전형의 서로 다른 원문과 정밀도를 보존한다', async () => {
   setup([row(), row({ source_url: 'https://example.invalid/other.pdf', metric: '환산점수', cut_70: '910.00' })]);
-  render(<MemoryRouter><AdmissionResults /></MemoryRouter>);
+  render(<MemoryRouter initialEntries={['/admission-results?view=collected']}><AdmissionResults /></MemoryRouter>);
   await screen.findByText('2.400');
   expect(screen.getByText('910.00')).toBeTruthy();
   expect(screen.getAllByText('국어교육과')).toHaveLength(2);
@@ -36,7 +36,9 @@ test('학생 기본 화면에 수집본을 표시하고 같은 전형의 서로 
   expect(within(dialog).getByRole('link')).toHaveProperty('href', 'https://example.invalid/result.pdf');
   expect(within(dialog).getByText('2.400')).toBeTruthy();
   fireEvent.click(within(dialog).getByRole('button', { name: '닫기' }));
-  fireEvent.click(screen.getByRole('button', { name: '검수 완료 입결' }));
+  // 검수 완료 입결은 탭이 아니라 기존 주소(view=results)로 열려요(Figma: 대학별 · 내 비교 탭 2개).
+  cleanup();
+  render(<MemoryRouter initialEntries={['/admission-results?view=results']}><AdmissionResults /></MemoryRouter>);
   expect(screen.getByText('공개된 수시 입결이 아직 없어요')).toBeTruthy();
   expect(screen.queryByText('2.400')).toBeNull();
 });
@@ -174,7 +176,7 @@ test.each([false, true])('목록 하트는 선택한 학과만 저장하고 기�
   vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: compact, addEventListener: vi.fn(), removeEventListener: vi.fn() })));
   setup([row(), row({ result_year: '2025' }), row({ recruit_unit: '수학교육과' }), row({ recruit_unit: '국어교육과(야간)' }), row({ program: '일반전형Ⅱ' }), row({ program: '' }), row({ recruit_unit: '' })]);
   await studentDb.setInterest('가온대', '일반전형', true);
-  const mount = (path = '/admission-results') => render(<MemoryRouter initialEntries={[path]}><AdmissionResults /></MemoryRouter>);
+  const mount = (path = '/admission-results?view=collected') => render(<MemoryRouter initialEntries={[path]}><AdmissionResults /></MemoryRouter>);
   mount();
   await screen.findAllByText('2.400');
   let hearts = screen.getAllByRole('button', { name: '가온대 일반전형 국어교육과 관심에 담기' });
@@ -187,7 +189,7 @@ test.each([false, true])('목록 하트는 선택한 학과만 저장하고 기�
   expect(await studentDb.interests.get(interestId('가온대', '일반전형'))).toBeUndefined();
   expect(await studentDb.interests.count()).toBe(1);
   expect(screen.queryByRole('dialog')).toBeNull();
-  fireEvent.click(screen.getByRole('button', { name: '관심 전형' }));
+  fireEvent.click(await screen.findByRole('button', { name: '내 비교 1' }));
   await screen.findByRole('heading', { name: '관심 전형 1개' });
   expect(screen.getByRole('link', { name: '국어교육과' })).toBeTruthy();
   expect(screen.queryByText('수학교육과')).toBeNull();

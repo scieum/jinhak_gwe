@@ -18,6 +18,9 @@
   --color-ink-soft: #262626;
   --color-text-muted: #707070;
   --color-text-faint: #adadad;
+  /* 입결 점 그래프 연도 구분(Year Ramp, design.md) */
+  --color-year-prev: #5c5c5c;
+  --color-year-old: #8c8c8c;
   --color-on-primary: #ffffff;
 
   /* 관심 하트·전년 대비 증감 */

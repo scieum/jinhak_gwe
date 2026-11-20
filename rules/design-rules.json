@@ -1,7 +1,7 @@
 {
   "source": {
     "file": "docs/design.md",
-    "sha256": "5ed48a412dcc52f9078a71706539faee561117ea82aea806921a55ab8e243784"
+    "sha256": "a7526e12d73daf5b13aa41e5bd38348b88064bf0c952409b01b62f026765605b"
   },
   "frames": [
     [
@@ -49,7 +49,9 @@
     "#0e9f6e",
     "#d6f2e6",
     "#b58400",
-    "#fbefc7"
+    "#fbefc7",
+    "#5c5c5c",
+    "#8c8c8c"
   ],
   "radius": [
     0

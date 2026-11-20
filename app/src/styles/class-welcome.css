@@ -1,0 +1,39 @@
+/* teacher-dashboard empty: Figma 103:191035 / 103:190920 */
+.class-welcome { display: grid; gap: var(--spacing-xl); min-width: 0; }
+.class-welcome__hero { display: grid; grid-template-columns: minmax(0, 1fr) 352px; gap: var(--spacing-xl); align-items: center; padding: var(--spacing-xl); border: 1px solid var(--color-hairline); background: var(--color-canvas); }
+.class-welcome__main { display: grid; gap: var(--spacing-xl); min-width: 0; }
+.class-welcome__intro { display: grid; gap: var(--spacing-md); }
+.class-welcome__label { display: flex; align-items: center; gap: var(--spacing-xs); }
+.class-welcome__label span:last-child { font-size: var(--font-caption-size); color: var(--color-text-muted); }
+.class-welcome__intro h2 { font-size: 32px; line-height: 1.3; font-weight: 700; }
+.class-welcome__description { color: var(--color-text-muted); font-size: var(--font-body-size); line-height: 1.5; }
+.class-welcome__action { display: grid; gap: var(--spacing-sm); justify-items: start; }
+.class-welcome__action > button { width: 180px; min-height: 52px; display: inline-flex; justify-content: center; align-items: center; gap: var(--spacing-xs); }
+.class-welcome__prepare { display: grid; gap: var(--spacing-card); min-width: 0; padding: var(--spacing-lg); background: var(--color-canvas-soft); }
+.class-welcome__prepare h3 { font-size: 21px; line-height: 1.35; font-weight: 700; }
+.class-welcome__prepare > div { font-size: var(--font-body-size); line-height: 1.5; }
+.class-welcome__next { display: grid; gap: var(--spacing-card); }
+.class-welcome__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--spacing-lg); list-style: none; margin: 0; padding: 0; }
+.class-welcome__steps li { display: grid; gap: var(--spacing-xxs); align-content: start; min-width: 0; min-height: 117px; padding: var(--spacing-card); border: 1px solid var(--color-hairline-soft); }
+.class-welcome__steps h4 { font-size: 24px; line-height: 1.2; font-weight: 700; }
+.class-welcome__steps li > p { font-size: 14px; line-height: 1.5; color: var(--color-text-muted); }
+.class-welcome-restore:empty { display: none; }
+.class-welcome-restore .menu-rows { padding: var(--spacing-lg); border: 1px solid var(--color-hairline); }
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .class-welcome__hero { grid-template-columns: minmax(0, 1fr) 280px; gap: var(--spacing-lg); padding: var(--spacing-lg); }
+  .class-welcome__steps { gap: var(--spacing-md); }
+  .class-welcome__steps h4 { font-size: 20px; }
+  .class-welcome__steps li { min-height: 132px; }
+  .class-welcome__steps li > p { font-size: 13px; }
+}
+@media (max-width: 1023px) {
+  .class-welcome__hero { grid-template-columns: minmax(0, 1fr); padding: var(--spacing-card); }
+  .class-welcome__intro h2 { font-size: 22px; line-height: 1.35; }
+  .class-welcome__action { justify-items: stretch; }
+  .class-welcome__action > button { width: 100%; }
+  .class-welcome__prepare h3 { font-size: 16px; line-height: 1.4; font-weight: 600; }
+  .class-welcome__steps { grid-template-columns: minmax(0, 1fr); gap: var(--spacing-md); }
+  .class-welcome__steps h4 { font-size: 20px; }
+  .class-welcome__steps li { min-height: 132px; }
+  .class-welcome__steps li > p { font-size: 13px; }
+}
