@@ -29,11 +29,14 @@ export function UniversityResultOverview() {
   const rows = loaded?.university === university ? loaded.rows : null;
   const model = useMemo(() => universityPlot(rows ?? [], tab, query.get('gp') ?? ''), [rows, tab, query]);
   const departments = model.departments.filter(d => d.name.includes(departmentSearch.trim()));
+  const plottable = model.departments.some(d => d.points.length);
   const visible = departments.slice(page * 10, (page + 1) * 10);
   const range = axisRange(departments.flatMap(d => d.points.map(r => gradeCut(r, model.cut)!)));
-  const ticks = Array.from({ length: (range.max - range.min) * 2 + 1 }, (_, i) => range.min + i / 2);
   const plotRef = useRef<HTMLDivElement>(null);
   const [trackWidth, setTrackWidth] = useState(260); // smallest supported track until measured
+  // Labels need ~28px each; narrow (mobile) tracks fall back to whole-grade ticks.
+  const step = trackWidth / ((range.max - range.min) * 2) < 28 ? 1 : 0.5;
+  const ticks = Array.from({ length: Math.floor((range.max - range.min) / step) + 1 }, (_, i) => range.min + i * step);
   useEffect(() => {
     if (typeof ResizeObserver === 'undefined') return;
     const track = () =>plotRef.current?.querySelector('.university-history-track')?.clientWidth;
@@ -73,13 +76,15 @@ export function UniversityResultOverview() {
     </div>
     <div className="university-overview-content"><section className="university-history" aria-label="학과별 입결 그래프">
       {error ? <div role="alert"><p>{error}</p><button className="button-outline" onClick={() => setAttempt(n => n + 1)}>대학 자료 다시 불러오기</button></div> : !rows ? <p role="status">{university} 자료를 읽고 있어요.</p> : <>
-        <div className="university-history-heading"><h4 className="t-heading-4">{model.selected || tab} · 최근 3년 {model.cutLabel}</h4><span className="data-status-badge">검수 전 참고자료</span></div>
+        <div className="university-history-heading"><h4 className="t-heading-4">{model.selected || tab}{plottable && ` · 최근 3년 ${model.cutLabel}`}</h4><span className="data-status-badge">검수 전 참고자료</span></div>
+        {plottable && <>
         <p className="t-caption text-muted">● 대학 발표 {model.cutLabel}{model.cut === 'cut_50' ? '(이 전형은 70% 컷을 발표하지 않았어요)' : ''} · 점 하나는 개별 학생이 아닌 학과·연도별 통계예요. 9등급제 교과등급이며, 점을 누르면 원문과 산출 기준을 볼 수 있어요.</p>
         <div className="university-history-legend">{model.years.map(year => <span key={year}><svg aria-hidden="true" className={`history-dot ${yearTone(model.rows, year)}`} viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" /></svg>{year}학년도{!model.rows.some(r => Number(r.result_year) === year) && ' · 자료 없음'}</span>)}</div>
         <p className="t-caption text-muted">진할수록 최근 연도예요{(() => { const shown = Math.max(0, ...model.rows.map(r => Number(r.result_year)).filter(Number.isFinite)); return shown && shown < model.latest ? ` · ${model.latest}학년도 자료가 없어 ${shown}학년도가 가장 진한 점이에요` : ''; })()}.</p>
+        </>}
         <p className="t-caption text-muted">개별 불합격 사례는 아직 수집되지 않았어요. 불합격자가 없다는 뜻은 아니에요.</p>
         {!departments.length ? <div className="empty-state"><h4 className="t-heading-4">조건에 맞는 학과가 없어요</h4><p>다른 전형 유형이나 학과 이름으로 찾아보세요.</p></div>
-        : !model.departments.some(d => d.points.length) ? <div className="empty-state"><h4 className="t-heading-4">그래프로 그릴 컷이 없어요</h4><p>{noPlotReason(model.rows)} 원문 값은 아래 표에서 그대로 볼 수 있어요.</p></div> : <>
+        : !plottable ? <div className="empty-state"><h4 className="t-heading-4">그래프로 그릴 컷이 없어요</h4><p>{noPlotReason(model.rows)} 원문 값은 아래 표에서 그대로 볼 수 있어요.</p></div> : <>
           <div className="university-history-plot" ref={plotRef} role="list" aria-label={`학과별 최근 3년 ${model.cutLabel}`}>
             {visible.map(d => {
               // Keep years on one line, as in the design. Only points whose 16px hit targets overlap move down.
@@ -105,10 +110,10 @@ export function UniversityResultOverview() {
           </div>
           {departments.length > 10 && <nav className="toolbar" aria-label="학과 그래프 페이지"><button className="button-outline" disabled={!page} onClick={() => setPage(p => p - 1)}>이전 학과</button><span>{page + 1} / {Math.ceil(departments.length / 10)}</span><button className="button-outline" disabled={(page + 1) * 10 >= departments.length} onClick={() => setPage(p => p + 1)}>다음 학과</button></nav>}
         </>}
-        <p className="t-caption text-muted">{model.excluded}행은 {model.cutLabel} 미공개 또는 지표·등급제 확인이 필요해 그래프에서 제외했어요. 같은 학과·연도의 원문이 여러 개면 점을 모두 표시해요. 세로 위치는 점을 구분하기 위한 것으로 성적 차이를 뜻하지 않아요.</p>
-        <Link className="t-link" to={collectedProgramPath(university, model.selected)}>이 전형의 전체 자료를 표로 보기 →</Link>
+        {plottable && <p className="t-caption text-muted">{model.excluded}행은 {model.cutLabel} 미공개 또는 지표·등급제 확인이 필요해 그래프에서 제외했어요. 같은 학과·연도의 원문이 여러 개면 점을 모두 표시해요. 세로 위치는 점을 구분하기 위한 것으로 성적 차이를 뜻하지 않아요.</p>}
+        {model.programs.length > 0 && <Link className="t-link" to={collectedProgramPath(university, model.selected)}>이 전형의 전체 자료를 표로 보기 →</Link>}
       </>}
-    </section><ComparisonPanel years={model.years} rows={model.rows} cutLabel={model.cutLabel} onDetails={() => setConditions(true)} /></div>
+    </section><ComparisonPanel years={model.years} rows={model.rows} cutLabel={plottable ? model.cutLabel : '그래프용 컷 없음'} onDetails={() => setConditions(true)} /></div>
     <p className="university-overview-footnote t-caption text-muted">대학별·연도별 산출 기준이 달라요. 검수 전 자료는 성적 판정에 사용하지 않으며, 대학 공식 자료가 최종 기준이에요.</p>
     {choosing && <Modal label="그래프 대학 바꾸기" onClose={() => setChoosing(false)}><div className="section-row"><h3 className="t-heading-3">대학 바꾸기</h3><button className="button-outline" onClick={() => setChoosing(false)}>닫기</button></div><label>대학 검색<input type="search" value={search} onChange={e => setSearch(e.target.value)} /></label><p role="status">{index.universities.filter(e => e.university.includes(search.trim())).length}개 대학·캠퍼스</p><div className="university-options">{index.universities.filter(e => e.university.includes(search.trim())).map(e => <button className="button-outline" key={e.university} aria-pressed={university === e.university} onClick={() => { update({ gu: e.university, gp: null, gt: null }); setChoosing(false); }}>{e.university}</button>)}</div></Modal>}
     {opened && <Modal wide label="그래프 입결 원문 상세" onClose={() => setOpened(null)}><div className="section-row"><h3 className="t-heading-3">{opened.recruit_unit} · {opened.result_year}학년도</h3><button className="button-outline" onClick={() => setOpened(null)}>닫기</button></div><CollectedResultFields row={opened} /></Modal>}

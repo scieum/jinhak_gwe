@@ -105,6 +105,7 @@
 .university-history { padding: 0; gap: 12px; }
 .university-history-row { border: 0; }
 .university-history-row, .university-history-axis { grid-template-columns: minmax(140px, 185px) minmax(260px, 1fr); min-width: 440px; gap: 12px; }
+@media (max-width: 480px) { .university-history-row, .university-history-axis { grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr); min-width: 0; gap: 8px; } }
 .university-history-department { padding-block: 0; font-size: 13px; }
 .university-comparison { padding: 0; border: 0; }
 .university-comparison section { min-height: 100px; padding-block: 12px; border-color: var(--color-hairline-soft); }
