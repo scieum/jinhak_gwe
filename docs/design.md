@@ -25,7 +25,7 @@ Overview
 
 흑백 캔버스 + 의미 색만 허용: 될각 판정 4색, Route Blue 1색(내 위치 + 선택 표시)
 직각 모서리: 모든 요소 모서리 0 (원형 표식만 예외)
-그림자 없는 깊이: 옅은 회색 단계와 1px 선으로 위계를 만들고, 그림자는 떠 있는 레이어(모달·바텀시트·토스트·드롭다운)에만 허용
+그림자 없는 깊이: 회색 화면 바탕(Page) 위에 테두리 없는 흰 카드를 올려 위계를 만들고(2026-11-22 v2), 그림자는 떠 있는 레이어(모달·바텀시트·토스트·드롭다운)에만 허용
 Pretendard 굵기 대비 + 고정폭 숫자
 모바일은 하단 탭바, PC는 왼쪽 사이드바 앱 셸
 계산 결과에는 항상 "산출 근거" 펼치기가 따라붙는 구조
@@ -157,7 +157,7 @@ App Shell
 상단 앱바 56px: 화면 제목({typography.heading-4}), 왼쪽 뒤로가기, 오른쪽 보조 동작 1개
 하단 탭바(tab-bar-pill): 화면 아래에 떠 있는 알약 막대입니다. 탭은 대분류 다섯 개입니다: 홈 · 성적 · 대학 찾기 · 수시 전략 · 더보기(교사 모드·설정·잠금). 교사 모드에서는 홈 대신 우리 반 · 성적 관리 · 수합·집계 · 더보기입니다. 소분류는 상단 앱바 바로 아래 `sub-nav`(가로 탭)로 고릅니다. 상세 화면(뒤로가기 있는 화면)에는 sub-nav를 두지 않습니다.
 내비게이션은 대분류-소분류 2단계입니다(2026-11-18 사용자 결정).
-학생 대분류: 홈 / 성적(성적 입력 · 성적 추이 · 5 to 9 · 대학별 환산 · 모의고사) / 대학 찾기(전형계획 · 수시 입결 · 될각) / 수시 전략(수시로 · 생기부 AI). 대학 상세·전형 상세는 대학 찾기 아래의 상세 화면(소분류 아님)입니다.
+학생 대분류: 홈 / 성적(성적 입력 · 성적 추이 · 5 to 9 · 대학별 환산 · 모의고사) / 대학 찾기(전형계획 · 수시 입결 · 될각 · 최저로 찾기) / 수시 전략(수시로 · 생기부 AI). 대학 상세·전형 상세는 대학 찾기 아래의 상세 화면(소분류 아님)입니다.
 교사 대분류(교사 모드에서만): 우리 반(우리 반 홈 · 학생 기록 · 학생 상담 · 누가기록) / 성적 관리(성적 불러오기 · 수능 최저 판정 · 모의고사 수합) / 수합·집계(카드 수합 · 결과 집계). 학생 기록 상세는 우리 반 아래의 상세 화면입니다.
 관리자 대분류(관리자 계정에서만): 규칙 관리(규칙 편집기 · 검수).
 하단 안전 영역(safe-area)을 지킵니다.
@@ -209,13 +209,15 @@ Whitespace Philosophy
 
 Elevation & Depth
 Level	처리	용도
-0	{colors.canvas} 위 평면	대부분의 화면
-1	{colors.canvas-soft} 채움, 선 없음	사이드바, 하단 탭바, 세그먼트 트랙, 근거 아코디언, 보조 버튼
-2	흰 바탕 + 1px {colors.hairline-soft} 외곽선	대학 카드, 수시로 슬롯 카드, 통계 카드
+Page	{colors.canvas-soft} 화면 바탕	앱 셸 안 콘텐츠 영역 전체(2026-11-22 v2). 흰 카드·표·차트 묶음이 이 위에 놓입니다
+0	{colors.canvas} 위 평면	카드 안쪽, 로그인 전 화면
+1	{colors.canvas-soft} 채움, 선 없음	흰 카드 안의 보조 면: 세그먼트 트랙, 근거 아코디언, 보조 버튼, 표 머리글
+2	흰 카드, 선 없음(Page 바탕 위). 흰 바탕 위에 놓일 때만 1px {colors.hairline-soft} 외곽선	대학 카드, 수시로 슬롯 카드, 통계 카드, 표·차트 묶음(2026-11-22 v2)
 3	1px {colors.ink} 안쪽 테두리	선택된 카드, 표에서 선택된 행
 Overlay	{colors.canvas} + {shadow.overlay}	모달, 바텀시트, 드롭다운, 토스트(그림자 허용 유일 단계)
 Inverse	{colors.ink} 채움 + {colors.on-primary} 글자	주요 버튼, 공개 페이지 푸터, 토스트
 Selected	{colors.accent-soft} 채움 + {colors.accent} 표시 막대·테두리	사이드바 선택 메뉴, 선택된 세그먼트·탭·필터 칩, 선택 행
+{colors.canvas-soft} 채움 요소(data-status-badge, 5등급 grade-chip, segmented-control·mode-switch 트랙, button-pill-soft)가 Page 바탕 위에 직접 놓이면 채움을 {colors.canvas}로 바꿔 바탕과 구분합니다(2026-11-22 v2). 흰 카드 안에서는 그대로 {colors.canvas-soft}입니다.
 {shadow.overlay}: 0 8px 24px rgba(20, 20, 20, 0.12). 화면 위에 떠서 다른 내용을 가리는 레이어에만 씁니다.
 세그먼트 토글의 선택된 칸은 {colors.accent-soft} 채움 + 아래 2px {colors.accent} 막대 + {colors.ink} 글자이고 그림자는 없습니다.
 그 밖의 카드, 버튼, 사이드바에는 그림자를 쓰지 않습니다.
@@ -291,12 +293,15 @@ stat-tile — 홈 내 요약, 대시보드 숫자
 
 라벨 {typography.caption} {colors.text-muted} → 값 {typography.numeric} → 보조 설명 {typography.body-sm}
 내 위치 값과 화면의 핵심 숫자만 {colors.accent} 글자를 허용합니다.
+변형 hero(2026-11-22 v2): 화면 맨 위 한 곳에만 둡니다. 카드 없이 Page 바탕 위에 라벨 → 값 {typography.display} → 해석 한 줄 {typography.body} {colors.ink}(예: "5등급 평균 2.1을 옮긴 범위예요"). 한 화면에 hero는 1개입니다.
+변형 filter(2026-11-22 v2): 타일 줄이 아래 목록을 거를 때만 씁니다. 선택된 타일 1개 = Elevation Selected 처리, 나머지 = 흰 카드. 판정 개수 타일은 값 앞에 판정 아이콘과 판정 글자색을 씁니다.
+목록을 거르지 않는 같은 무게의 타일을 3개 이상 늘어놓지 않습니다. 그럴 땐 hero 1개 + 보조 숫자 한 줄(라벨 · 값)로 줄입니다.
 
 range-bar-5to9 — 5 to 9 핵심 컴포넌트
 
 1~9 구간을 {colors.grade-1}~{colors.grade-9}로 채운 트랙(높이 12, 모서리 0), 눈금 숫자는 트랙 아래 {typography.caption} {colors.ink}
 방법별 추정값(A-1, A-2, A-3, B)은 트랙 위 작은 잉크 점(흰 1px 테두리), 그 사이 범위는 트랙 위쪽 2px {colors.ink} 괄호선
-내 위치(대표값)는 {colors.accent} 원형 + 흰 3px 테두리 + 바깥 1px {colors.ink} 선(색 트랙 위에서도 보이게) + 위쪽 말풍선 숫자
+내 위치(대표값)는 {colors.accent} 원형(지름 20) + 흰 3px 테두리 + 바깥 1px {colors.ink} 선(색 트랙 위에서도 보이게) + 트랙을 위아래로 가로지르는 2px {colors.ink} 세로선 + 위쪽 말풍선 숫자(2026-11-22 v2)
 아래에 신뢰도 배지(높음/보통/낮음, 흑백 알약)
 모바일에서는 트랙이 화면 폭 전체, PC에서는 최대 720px
 
@@ -309,11 +314,12 @@ judge-badge — 될각 판정
 
 알약, {typography.label}, 판정 색 쌍(fg 글자 + bg 채움), 왼쪽에 판정 아이콘
 아이콘: 안정 ●, 적정 ◐, 소신 ▲, 위험 ■, 경계는 점선 외곽선 알약 + "경계"
+크기(2026-11-22 v2): 기본 = {typography.label} 높이 24. size=lg = {typography.title} 높이 32, 카드 머리 줄(univ-card 첫 줄)에 씁니다. compact = 채움 없이 판정 글자색 아이콘 + 판정 이름 {typography.label}, 판정 칸이 많은 data-table에 씁니다(색 + 아이콘 + 이름은 그대로).
 종합전형은 "적합도 높음/보통/낮음"으로 표시하고 색은 안정/적정/소신 쌍을 재사용
 
-수능 최저 판정 배지(2026-11-18): judge-badge 색 쌍을 재사용 — 충족 = 안정 쌍 ● / 근접 = 적정 쌍 ◐ / 미충족 = 위험 쌍 ■ / 자료 부족·판정 불가 = 판정 없음 쌍(아이콘 없음, 이름만). 문구는 "충족 현황"(예측 표현 금지).
+수능 최저 판정 배지(2026-11-18): judge-badge 색 쌍을 재사용 — 충족 = 안정 쌍 ● / 근접 = 적정 쌍 ◐ / 미충족 = 위험 쌍 ■ / 자료 부족·판정 불가 = 판정 없음 쌍(아이콘 없음, 이름만). 문구는 "충족 현황"(예측 표현 금지). 학생 화면(최저로 찾기·모의고사)은 검수 전 기준을 판정하지 않고 "검수 전이라 판정하지 않은 전형 n개"와 "준비 중" data-status-badge로 개수만 보여 줍니다. 교사 화면(수능 최저 판정)은 교사 입력 기준을 "미검수" 배지와 함께 판정합니다.
 
-grade-trend-chart — 등급 추이 선 차트(2026-11-18): 세로축 등급(1이 위, 내신 1~5 / 모의고사 1~9 눈금), 가로축 학기 또는 시험 회차. 선택한 계열 1개만 2px {colors.accent} 선 + 점, 나머지 계열은 1px {colors.text-faint} 선 + 선 끝 이름표(계열을 색으로 구분하지 않음). 가장 최근 점에 값 라벨. 기준선은 1px {colors.hairline} 점선 + 캡션 1개. 차트 아래 같은 값의 data-table(대체 텍스트 역할). 모서리 0, 그림자 없음.
+grade-trend-chart — 등급 추이 선 차트(2026-11-18): 세로축 등급(1이 위, 내신 1~5 / 모의고사 1~9 눈금. 기본 보기는 데이터 범위 ±0.5로 좁히고 전체 눈금은 토글(2026-11-22 v2)), 가로축 학기 또는 시험 회차. 선택한 계열 1개만 2px {colors.accent} 선 + 점, 나머지 계열은 1px {colors.text-faint} 선 + 선 끝 이름표(계열을 색으로 구분하지 않음). 가장 최근 점에 값 라벨. 기준선은 1px {colors.hairline} 점선 + 캡션 1개. 차트 아래 같은 값의 data-table(대체 텍스트 역할). 모서리 0, 그림자 없음.
 
 cut-dot-plot — 입결 점 그래프(2026-11-18 사용자 요청 "점으로 다 찍혀서 학교별로 어느 과 몇 점대인지 한눈에"): 가로축 9등급(1이 왼쪽, 0.5 눈금 {typography.caption} {colors.ink}, 세로 1px {colors.hairline-soft} 격자), 세로축 행 = 대학(또는 대학·학과) 한 줄씩, 행 머리 = univ-logo 20 + 이름(한 줄). 점 = 학과·전형 하나의 입결 컷(기본 70% 컷), 지름 8, {colors.ink}. 전형 유형은 탭(교과 · 종합 · 논술 · 기타 · 전체)으로 거르고, 전체일 때만 점 모양으로 구분합니다: 교과 ● 채운 원, 종합 ○ 빈 원(1.5px), 논술 ◆ 채운 마름모, 기타 ◇ 빈 마름모 + 그래프 위 범례. 최근 3년을 같이 볼 때 자료가 있는 가장 최근 연도 = {colors.ink}, 1년 전 = {colors.year-prev}, 2년 전 = {colors.year-old} 같은 모양(흰 바탕 그래픽 대비 3:1 이상), 연도 점 사이 1px {colors.text-muted} 선. 내 위치 = 환산 범위 {colors.accent-soft} 세로 띠 + 대표값 2px {colors.accent} 세로선 + 위 말풍선. 점을 누르면 말풍선(대학 · 학과 · 전형 · 연도 · 컷 · 모집인원). 판정 이름·판정 색은 쓰지 않습니다(될각과 섞이지 않게). 검수 전 데이터는 점을 찍지 않고 행 끝에 "준비 중" data-status-badge. 표 보기(data-table)와 같은 데이터를 세그먼트로 전환합니다.
 
@@ -327,17 +333,19 @@ univ-card — 대학·전형 카드
 
 흰 카드 + 1px {colors.hairline-soft}, {rounded.md}, 패딩 {spacing.md}(모바일) / {spacing.lg}(PC)
 왼쪽 univ-logo(로고 파일이 없으면 univ-monogram), 대학명 {typography.heading-3}, 전형·모집단위 {typography.body-sm} {colors.text-muted}
-오른쪽 위 judge-badge, 아래 줄에 핵심 숫자(내 환산 / 70% 컷) + 수능최저 배지
-관심 담기(2026-11-18): 카드 오른쪽 위 interest-heart(icon/heart, 터치 영역 44×44). 안 담김 = {colors.ink} 선 하트, 담김 = {colors.heart} 채운 하트(관심 표시 전용 색, 2026-11-18 사용자 결정). 이때 judge-badge는 대학명 줄 오른쪽으로 옮깁니다. 전형계획·대학 상세·될각·대학별 환산의 "관심 담기"는 모두 이 하트로 합니다.
+첫 줄 = judge-badge size=lg(판정이 카드의 머리)(2026-11-22 v2), 둘째 줄 = 로고 + 대학명, 아래 줄에 핵심 숫자(내 환산 / 70% 컷) {typography.title} {colors.ink} + 수능최저 배지. 카드 안 숫자에는 Route Blue를 쓰지 않고, Route Blue는 cut-compare-bar의 내 위치 구간에만 씁니다.
+관심 담기(2026-11-18): 카드 오른쪽 위 interest-heart(icon/heart, 터치 영역 44×44). 안 담김 = {colors.ink} 선 하트, 담김 = {colors.heart} 채운 하트(관심 표시 전용 색, 2026-11-18 사용자 결정). 전형계획·대학 상세·될각·대학별 환산의 "관심 담기"는 모두 이 하트로 합니다.
 하단 button-pill-soft "수시로에 담기"
 
 data-status-badge — 시행계획 기준 · 모집요강 반영 · 환산 규칙 준비 중
 
 흑백 알약({colors.canvas-soft} + {colors.text-muted}). 데이터 상태는 판정 색을 쓰지 않습니다.
+같은 상태가 한 표·목록에서 3칸 이상 반복되면 칸마다 붙이지 않고, 그 묶음 위에 한 줄("준비 중인 항목 12개 — 검수가 끝나면 채워져요")로 묶습니다(2026-11-22 v2).
 
 data-table — 대학별 환산, 학급 대시보드, 카드 수합, 결과 집계
 
-머리글 {colors.canvas-soft}, 행 구분 1px {colors.hairline}, 본문 {typography.table} 고정폭 숫자, 숫자 열 오른쪽 정렬
+흰 카드 안에 둡니다(2026-11-22 v2). 머리글 {colors.canvas-soft}, 행 구분 1px {colors.hairline}, 본문 {typography.table} 고정폭 숫자, 숫자 열 오른쪽 정렬
+판정 칸이 한 화면에 10개를 넘으면 judge-badge compact를 씁니다. 주의가 필요한 행(위험·미충족·미제출)은 행 첫 칸 앞에 판정 아이콘을 둬서 먼저 읽히게 합니다.
 선택 행: {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대 + 아래 1px {colors.hairline}(Elevation Selected 규칙, 2026-11-18). 내 점수 행(학생 화면): {colors.accent-soft} 채움
 첫 열 고정, 머리글 고정, 정렬 가능한 열에는 정렬 화살표
 모바일에서는 univ-card 또는 student-row-card 목록으로 바뀝니다.
@@ -443,19 +451,22 @@ sidebar-group — PC 사이드바 대분류 행(2026-11-18): 아이콘 + {typogr
 
 sub-nav — 모바일 소분류 가로 탭(2026-11-18): 앱바 아래 높이 44, {colors.canvas} 바탕 + 아래 1px {colors.hairline}. 탭 = {typography.link}, 선택 = {colors.ink} SemiBold + 아래 2px {colors.accent} 막대, 나머지 {colors.text-muted}. 넘치면 가로 스크롤(잘린 탭이 보이게 오른쪽 여백 0). 모서리 0, 그림자 없음.
 
-sidebar-item — PC 사이드바 메뉴 행: 아이콘 + {typography.link}, 선택 = {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대 + {colors.ink} 글자
+sidebar-item — PC 사이드바 메뉴 행: 아이콘 + {typography.link}(소분류 아이콘은 그 메뉴 뜻에 맞는 고유 아이콘이고, 자기 대분류 아이콘이나 같은 사이드바의 다른 메뉴 아이콘과 겹치지 않습니다 — 2026-11-22 사용자 피드백), 선택 = {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대 + {colors.ink} 글자
 
 filter-chip — 필터 선택지(off/on): off = {colors.canvas-soft} 채움, on = {colors.accent-soft} 채움 + 1px {colors.accent} 테두리 + {colors.ink} 글자, 모서리 0
+모바일 목록 위 컨트롤은 검색 1줄 + filter-chip 가로 스크롤 1줄까지입니다(2026-11-22 v2). 정렬·상세 조건은 칩을 누르면 bottom-sheet로 엽니다.
+
+page-header — PC 화면 머리(2026-11-22 v2): 모든 PC 앱 셸 화면에 같은 규격으로 둡니다. 콘텐츠 영역 위 여백 32, 왼쪽에 상위 메뉴 이름 {typography.caption} {colors.text-muted}(선택) → 화면 제목 {typography.heading-1} → 리드 한 줄 {typography.body-lg}(선택). 오른쪽 끝 정렬로 데이터 기준일 data-status-badge + 화면 동작 버튼(주요 버튼은 최대 1개). 아래 여백 24 뒤에 첫 카드가 옵니다. 모바일은 app-bar(상세) 또는 화면 제목 {typography.heading-1}(대분류 첫 화면)을 씁니다.
 
 tab-bar-pill — 모바일 하단 탭바
 
-화면 아래 {spacing.md} 띄워 떠 있는 알약 막대, {colors.canvas-soft}, 높이 64px
+화면 아래 {spacing.md} 띄워 떠 있는 알약 막대, {colors.canvas} + 1px {colors.hairline} 외곽선(Page 바탕과 구분)(2026-11-22 v2), 높이 64px
 아이콘 + {typography.label} 이름. 선택된 탭은 {colors.accent} 아이콘 + {colors.ink} SemiBold 글자
 스크롤을 내리면 숨지 않고 그대로 있습니다.
 
 sidebar — PC 앱 셸
 
-{colors.canvas-soft}, 위에 워드마크 "진학 내비", 메뉴 행은 직각, 선택은 {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대 + {colors.ink} 글자
+{colors.canvas} + 오른쪽 1px {colors.hairline-soft}(Page 바탕과 구분)(2026-11-22 v2), 위에 워드마크 "진학 내비", 메뉴 행은 직각, 선택은 {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대 + {colors.ink} 글자
 그룹 이름 {typography.caption} {colors.text-muted}
 맨 아래 데이터 기준일과 백업 버튼
 
@@ -491,7 +502,8 @@ Accessibility
 차트(5 to 9 막대, 입결 비교 막대)에는 같은 내용을 문장으로 읽어주는 대체 텍스트를 둡니다. 예: "환산 9등급 약 2.2에서 2.8 사이, 대표값 2.5".
 Do's and Don'ts
 Do
-바탕은 {colors.canvas} 흰색, 구조는 옅은 회색 단계와 1px 선으로 만드세요.
+앱 셸 안 화면 바탕은 {colors.canvas-soft}, 내용은 테두리 없는 흰 카드로 묶으세요(2026-11-22 v2).
+화면마다 주인공 하나를 정하세요: hero 숫자 + 해석 한 줄, 또는 교사 화면은 "오늘 할 일" 한 묶음.
 모든 모서리를 0으로 만드세요(원형 표식만 ELLIPSE로 예외).
 색은 될각 판정·경고·오류(결정 신호)와 Route Blue(내 위치·선택 상태·링크·핵심 숫자)에만 쓰세요. 주요 버튼은 잉크입니다.
 판정은 항상 색 + 아이콘 + 이름을 함께 쓰세요.
@@ -511,5 +523,7 @@ AI 분석 결과에 판정 색을 쓰지 마세요.
 자간을 조절하거나 영문을 대문자로만 쓰지 마세요.
 대학 사진을 쓰지 마세요. 대학 로고의 색·비율을 바꾸지 마세요.
 카드·버튼·배지·입력칸에 둥근 모서리를 넣지 마세요.
+같은 무게의 stat-tile을 습관처럼 4개씩 늘어놓지 마세요(2026-11-22 v2).
+시안마다 다른 예시 숫자를 만들지 마세요. 시안 예시 값은 work/_data/demo-dataset.md 하나만 씁니다.
 교사용 넓은 표를 모바일에서 억지로 줄이지 마세요. 보기 전용 요약과 "PC에서 열기" 안내로 대신합니다.
 

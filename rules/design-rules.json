@@ -1,7 +1,7 @@
 {
   "source": {
     "file": "docs/design.md",
-    "sha256": "a7526e12d73daf5b13aa41e5bd38348b88064bf0c952409b01b62f026765605b"
+    "sha256": "d745c6233f1aeb2cff72183797d012cebbe20381c09e56100d88380b62579dbb"
   },
   "frames": [
     [
@@ -146,7 +146,8 @@
     "sidebar-group",
     "sub-nav",
     "cut-dot-plot",
-    "placement-board"
+    "placement-board",
+    "page-header"
   ],
   "screens": {
     "홈": "home",
@@ -172,12 +173,14 @@
     "내 성적 추이": "score-trend",
     "수시 입결": "admission-results",
     "로그인": "login",
-    "회원가입": "signup"
+    "회원가입": "signup",
+    "최저로 찾기": "minimum-search"
   },
   "requires_trace_accordion": [
     "five-to-nine",
     "univ-score",
-    "doelgak"
+    "doelgak",
+    "minimum-search"
   ],
   "requires_disclaimer_note": [
     "home",
@@ -191,7 +194,8 @@
     "minimum-board",
     "score-trend",
     "teacher-dashboard",
-    "admission-results"
+    "admission-results",
+    "minimum-search"
   ],
   "gates": {
     "G1": {
