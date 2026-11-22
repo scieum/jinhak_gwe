@@ -24,12 +24,14 @@ OFFICIAL = {
     'plan-0000254': ('https://www.bnue.ac.kr/content/intro03_02', 'https://www.bnue.ac.kr/resources/custom/images/main/sub/bnue_logo.png'),
     'plan-0000238': ('https://www.daejeon.ac.kr/', 'https://www.daejeon.ac.kr/images/common/logo.png'),
     'plan-0000184': ('http://www.calvin.ac.kr/main/index.do', 'http://www.calvin.ac.kr/jsp/main/images/h_logo.png'),
+    # The portal copy is squeezed horizontally; the official UI page has the true proportions.
+    'plan-0000072': ('https://www.cku.ac.kr/cku_kr/5597/subview.do', 'https://www.cku.ac.kr/sites/cku_kr/images/sub/new/symbol-logo.jpg'),
 }
 
 
 def fetch(url):
     parsed = urlparse(url)
-    if not ((parsed.scheme == 'https' and parsed.hostname in {'www.adiga.kr', 'www.bnue.ac.kr', 'www.daejeon.ac.kr'})
+    if not ((parsed.scheme == 'https' and parsed.hostname in {'www.adiga.kr', 'www.bnue.ac.kr', 'www.daejeon.ac.kr', 'www.cku.ac.kr'})
             or (parsed.scheme == 'http' and parsed.hostname == 'www.calvin.ac.kr')):
         raise ValueError('Unexpected logo source host')
     with urlopen(Request(url, headers={'User-Agent': 'Mozilla/5.0'}), timeout=30) as response:
