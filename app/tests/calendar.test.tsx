@@ -1,0 +1,80 @@
+import 'fake-indexeddb/auto';
+import { afterEach, beforeEach, expect, test } from 'vitest';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { applicationEvents, calendarIcs, eventStatus, monthDays, shiftMonth } from '../src/domain/calendar';
+import { newApplication, seoulDate } from '../src/domain/planner';
+import { newBoard, newSlot } from '../src/domain/board';
+import { ApplicationCalendar } from '../src/screens/ApplicationCalendar';
+import { studentDb } from '../src/store/studentDb';
+
+const plan = () => ({ ...newApplication(2028), university: '강원대학교', program: '미래인재', department: '간호학과' });
+beforeEach(async () => { await studentDb.clearStudentData(); });
+afterEach(cleanup);
+test('calendar handles leap days and month/year boundaries without local timezone drift', () => {
+  expect(monthDays('2028-02').flat().filter(Boolean)).toHaveLength(29);
+  expect(monthDays('2027-02').flat().filter(Boolean)).toHaveLength(28);
+  expect(shiftMonth('2028-01', -1)).toBe('2027-12');
+  expect(shiftMonth('2028-12', 1)).toBe('2029-01');
+});
+test('scenario copies deduplicate the same exam but preserve different dates and application identities', () => {
+  const a = plan(), b = { ...plan(), department: '약학과' };
+  a.steps[0].status = 'na';
+  const first = { ...newBoard('A안'), slots: [{ ...newSlot(a.id), exam_kind: '면접' as const, exam_date: '2027-11-01' }] };
+  const second = { ...newBoard('B안'), slots: [...first.slots, { ...newSlot(b.id), exam_kind: '면접' as const, exam_date: '2027-11-01' }] };
+  const third = { ...newBoard('C안'), slots: [{ ...first.slots[0], exam_date: '2027-11-02' }] };
+  const before = JSON.stringify([a, b, first, second, third]);
+  const events = applicationEvents([a, b], [first, second, third]);
+  expect(events.filter(e => e.kind === 'exam')).toHaveLength(3);
+  expect(events.find(e => e.kind === 'exam' && e.application.id === a.id && e.date === '2027-11-01')?.boards).toEqual(['A안', 'B안']);
+  expect(events.filter(e => !e.date)).toHaveLength(9);
+  expect(JSON.stringify([a, b, first, second, third])).toBe(before);
+});
+test('Korean deadlines distinguish yesterday, elapsed hours, today, future and completion', () => {
+  const a = plan(); a.steps[0].due_at = '2027-09-01T09:00';
+  const event = applicationEvents([a], [])[0];
+  const now = new Date('2027-09-01T01:00:00Z');
+  expect(eventStatus(event, seoulDate(now), now)).toBe('기한 지남');
+  expect(eventStatus({ ...event, time: '18:00' }, seoulDate(now), now)).toBe('오늘');
+  expect(eventStatus({ ...event, date: '2027-09-03' }, seoulDate(now), now)).toBe('D-2');
+  expect(eventStatus({ ...event, done: true }, seoulDate(now), now)).toBe('완료');
+  expect(eventStatus({ ...event, date: null }, seoulDate(now), now)).toBe('날짜 미정');
+});
+test('ICS keeps Korean time, exclusive all-day end, stable identity, UTF-8 folding and escaped text', () => {
+  const a = plan(); a.steps[0].due_at = '2027-09-01T18:00'; a.steps[0].note = '쉼표, 세미콜론; 역슬래시\\\n다음 줄';
+  a.university = '한글'.repeat(80); a.steps[0].source_url = 'javascript:alert(1)';
+  const board = { ...newBoard('A안'), slots: [{ ...newSlot(a.id), exam_kind: '면접' as const, exam_date: '2027-12-31' }] };
+  const events = applicationEvents([a], [board]); const now = new Date('2027-01-01T00:00:00Z');
+  const ics = calendarIcs(events, now), unfolded = ics.replace(/\r\n /g, '');
+  expect(unfolded.match(/BEGIN:VEVENT/g)).toHaveLength(2);
+  expect(unfolded).toContain('DTSTART:20270901T090000Z');
+  expect(unfolded).toContain('DTEND;VALUE=DATE:20280101');
+  expect(unfolded).toContain('쉼표\\, 세미콜론\\; 역슬래시\\\\\\n다음 줄');
+  expect(unfolded).not.toContain('javascript:');
+  expect(ics.split('\r\n').every(line => new TextEncoder().encode(line).length <= 75)).toBe(true);
+  expect(calendarIcs(events, now)).toBe(ics);
+  const withWhitespace = calendarIcs([{ ...events[0], source: 'https://example.edu/plan?\r\nx=y' }], now).replace(/\r\n /g, '');
+  expect(withWhitespace).toContain('URL:https://example.edu/plan?x=y\r\nEND:VEVENT');
+});
+test('saved deadlines appear live; completion filter, exact application detail and missing dates are preserved', async () => {
+  const a = plan(), today = seoulDate(); a.steps[0].due_at = `${today}T18:00`;
+  await studentDb.saveApplication(a);
+  render(<MemoryRouter><ApplicationCalendar /></MemoryRouter>);
+  expect(await screen.findByRole('button', { name: `${today} 일정 1개` })).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '강원대학교 간호학과 원서 작성 일정 상세' }));
+  expect(screen.getByRole('dialog', { name: '입시 일정 상세' }).textContent).toContain('2028학년도 · 미래인재');
+  expect(screen.getByRole('link', { name: '일정 수정하러 가기' }).getAttribute('href')).toContain(a.id);
+  fireEvent.click(screen.getByRole('button', { name: '닫기' }));
+  a.steps[0] = { ...a.steps[0], status: 'done', checked_at: new Date().toISOString() };
+  await studentDb.saveApplication(a);
+  await waitFor(() => expect(screen.queryByRole('button', { name: `${today} 일정 1개` })).toBeNull());
+  fireEvent.click(screen.getByLabelText('완료 일정 포함'));
+  expect(await screen.findByRole('button', { name: `${today} 일정 1개` })).toBeTruthy();
+  expect(screen.getByText(/날짜 미정 4개/)).toBeTruthy();
+});
+test('stale application links do not silently display another application', async () => {
+  await studentDb.saveApplication(plan());
+  render(<MemoryRouter initialEntries={['/calendar?plan=deleted']}><ApplicationCalendar /></MemoryRouter>);
+  expect((await screen.findByRole('alert')).textContent).toContain('이 전형을 찾지 못했어요');
+  expect(screen.queryByText(/날짜 미정 5개/)).toBeNull();
+});

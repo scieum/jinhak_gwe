@@ -104,3 +104,19 @@ test('추가 통계 로딩 실패를 70%나 평균으로 대체하지 않는다'
   expect(screen.getAllByText('통계 파일 연결 실패').length).toBeGreaterThan(0);
   expect(screen.queryByText('2.400')).toBeNull();
 });
+
+test('비교에서 선택한 학과만 지원 준비로 이어지고 입결 연도와 지원 학년도를 구분한다', async () => {
+  const items = [interest(), interest('누리대')]; await save(items); show(items.map(item => item.id));
+  fireEvent.click(await screen.findByRole('button', { name: '가온대 일반전형 간호학과 지원 준비에 추가' }));
+  const dialog = within(screen.getByRole('dialog'));
+  expect(dialog.getByText(/살펴본 입결은 2026학년도/)).toBeTruthy();
+  expect(dialog.getByLabelText('모집단위(선택)')).toHaveProperty('value', '간호학과');
+  fireEvent.change(dialog.getByLabelText('학년도'), { target: { value: '2029' } });
+  const saveButton = dialog.getByRole('button', { name: '저장' });
+  await waitFor(() => expect(saveButton).toHaveProperty('disabled', false));
+  fireEvent.click(saveButton);
+  await waitFor(async () => expect(await studentDb.applications.count()).toBe(1));
+  expect((await studentDb.applications.toArray())[0]).toMatchObject({ university: '가온대', program: '일반전형', department: '간호학과', year: 2029 });
+  expect(await studentDb.interests.count()).toBe(2);
+  expect(await studentDb.boards.count()).toBe(0);
+});

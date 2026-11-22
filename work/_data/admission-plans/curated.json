@@ -1,40 +1,645 @@
 {
-  "visual_year_checks": ["document-0000020", "document-0000163"],
+  "visual_year_checks": [
+    "document-0000020",
+    "document-0000163"
+  ],
   "universities": [
     {
-      "name": "한림대학교", "campus": "본교", "document": "hallym-plan",
-      "notice_url": "https://admission.hallym.ac.kr/pdfView/admission/20/19/fileDownload.do",
-      "version_label": "입학처 전형계획(안), 2026년 4월 표기",
+      "name": "한림대학교",
+      "campus": "본교",
+      "document": "hallym-plan-20260602",
+      "notice_url": "https://www.hallym.ac.kr/bbs/admission/957/385146/artclView.do",
+      "version_label": "입학처 2028 시행계획 · 260602 최종 첨부본",
       "programs": [
-        {"name":"학생부교과(교과우수자전형)","round":"수시","type":"교과","quota":"503명","method":"교과 성적 90%와 출결 10%. 성취도·이수학점 가산점은 별도 반영.","minimum":"간호학과는 국어·수학·영어·사회 또는 과학탐구 중 3개 영역 합 12등급 이내. 나머지 학과는 미적용.","eligibility":"세부 지원자격은 해당 전형 원문 확인","pages":[13]},
-        {"name":"학생부교과(지역인재전형)","round":"수시","type":"교과","quota":"301명","method":"교과 성적 90%와 출결 10%. 성취도·이수학점 가산점은 별도 반영.","minimum":"간호학과는 국어·수학·영어·사회 또는 과학탐구 중 3개 영역 합 12등급 이내. 나머지 학과는 미적용.","eligibility":"지역인재 지원자격은 원문 확인","pages":[13]},
-        {"name":"학생부종합(학교생활우수자전형)","round":"수시","type":"종합","quota":"531명","method":"1단계 서류 100%로 4배수 선발. 2단계는 1단계 성적 70%와 면접 30%.","minimum":"의학과는 국어·수학·영어·과학탐구 중 3개 합 4등급 이내. 영어를 반영하면 1등급이어야 함. 의학과 외에는 미적용.","eligibility":"세부 지원자격은 해당 전형 원문 확인","pages":[12]}
+        {
+          "name": "학생부교과(교과우수자전형)",
+          "round": "수시",
+          "type": "교과",
+          "quota": "503명",
+          "method": "교과 성적 90%와 출결 10%. 성취도·이수학점 가산점은 별도 반영.",
+          "minimum": "간호학과는 국어·수학·영어·사회 또는 과학탐구 중 3개 영역 합 12등급 이내. 나머지 학과는 미적용.",
+          "eligibility": "지원자격 표에서 일반고·특목고·자율고·검정고시·특성화고·국외고 지원을 허용. 졸업·동등 학력 및 제출서류는 최종 모집요강 확인.",
+          "pages": [
+            4,
+            5,
+            13
+          ],
+          "interview": "면접 없음(교과 90%·출결 10%).",
+          "field_pages": {
+            "method": [
+              13
+            ],
+            "minimum": [
+              13
+            ],
+            "eligibility": [
+              4,
+              5
+            ],
+            "interview": [
+              13
+            ]
+          },
+          "scope": "전형 전체 모집인원. 의학과·간호학과의 별도 조건 확인."
+        },
+        {
+          "name": "학생부교과(지역인재전형)",
+          "round": "수시",
+          "type": "교과",
+          "quota": "301명",
+          "method": "교과 성적 90%와 출결 10%. 성취도·이수학점 가산점은 별도 반영.",
+          "minimum": "간호학과는 국어·수학·영어·사회 또는 과학탐구 중 3개 영역 합 12등급 이내. 나머지 학과는 미적용.",
+          "eligibility": "강원지역 고교 출신자. 간호학과는 비수도권 중학교와 강원 고교 출신으로 재학기간 해당 학교 소재 지역 거주 요건을 추가 확인. 검정고시·국외고는 지원자격 표에서 제외.",
+          "pages": [
+            4,
+            5,
+            13
+          ],
+          "interview": "면접 없음(교과 90%·출결 10%).",
+          "field_pages": {
+            "method": [
+              13
+            ],
+            "minimum": [
+              13
+            ],
+            "eligibility": [
+              4,
+              5
+            ],
+            "interview": [
+              13
+            ]
+          },
+          "scope": "전형 전체 모집인원. 의학과·간호학과의 별도 조건 확인."
+        },
+        {
+          "name": "학생부종합(학교생활우수자전형)",
+          "round": "수시",
+          "type": "종합",
+          "quota": "531명",
+          "method": "1단계 서류 100%로 4배수 선발. 2단계는 1단계 성적 70%와 면접 30%.",
+          "minimum": "의학과는 국어·수학·영어·과학탐구 중 3개 합 4등급 이내. 영어를 반영하면 1등급이어야 함. 의학과 외에는 미적용.",
+          "eligibility": "지원자격 표에서 일반고·특목고·자율고·검정고시·특성화고·국외고 지원을 허용. 졸업·동등 학력 및 제출서류는 최종 모집요강 확인.",
+          "pages": [
+            4,
+            5,
+            12
+          ],
+          "interview": "있음. 2단계 면접 30%.",
+          "field_pages": {
+            "method": [
+              12
+            ],
+            "minimum": [
+              12
+            ],
+            "eligibility": [
+              4,
+              5
+            ],
+            "interview": [
+              12
+            ]
+          },
+          "scope": "전형 전체 모집인원. 의학과·간호학과의 별도 조건 확인."
+        }
+      ],
+      "notice_title": "2028 신입학 전형계획 공지 · 260602 최종 첨부본",
+      "change_notice": true
+    },
+    {
+      "name": "춘천교육대학교",
+      "campus": "본교",
+      "document": "cnue-plan",
+      "notice_url": "https://www.cnue.ac.kr/enter/communication/plan.do?articleNo=41320&mode=view",
+      "version_label": "입학처 시행계획, 2026-04-30 공고",
+      "programs": [
+        {
+          "name": "학생부종합(교직적·인성인재)",
+          "round": "수시",
+          "type": "종합",
+          "quota": "96명",
+          "method": "일괄합산, 서류평가 100%.",
+          "minimum": "국어·수학·영어·사회/과학탐구(상위 1과목) 중 3개 영역 합 9 이내, 한국사 4등급 이내.",
+          "eligibility": "고교 졸업(예정) 또는 동등 학력 인정자",
+          "pages": [
+            5
+          ]
+        },
+        {
+          "name": "학생부종합(강원교육인재)",
+          "round": "수시",
+          "type": "종합",
+          "quota": "60명",
+          "method": "일괄합산, 서류평가 100%.",
+          "minimum": "국어·수학·영어·사회/과학탐구(상위 1과목) 중 3개 영역 합 10 이내, 한국사 4등급 이내.",
+          "eligibility": "입학부터 졸업(예정)까지 강원지역 고교에서 전 교육과정을 이수한 졸업(예정)자",
+          "pages": [
+            5
+          ]
+        }
       ]
     },
     {
-      "name":"춘천교육대학교","campus":"본교","document":"cnue-plan",
-      "notice_url":"https://www.cnue.ac.kr/enter/communication/plan.do?articleNo=41320&mode=view",
-      "version_label":"입학처 시행계획, 2026-04-30 공고",
-      "programs":[
-        {"name":"학생부종합(교직적·인성인재)","round":"수시","type":"종합","quota":"96명","method":"일괄합산, 서류평가 100%.","minimum":"국어·수학·영어·사회/과학탐구(상위 1과목) 중 3개 영역 합 9 이내, 한국사 4등급 이내.","eligibility":"고교 졸업(예정) 또는 동등 학력 인정자","pages":[5]},
-        {"name":"학생부종합(강원교육인재)","round":"수시","type":"종합","quota":"60명","method":"일괄합산, 서류평가 100%.","minimum":"국어·수학·영어·사회/과학탐구(상위 1과목) 중 3개 영역 합 10 이내, 한국사 4등급 이내.","eligibility":"입학부터 졸업(예정)까지 강원지역 고교에서 전 교육과정을 이수한 졸업(예정)자","pages":[5]}
+      "name": "한국교원대학교",
+      "campus": "본교",
+      "document": "knue-plan",
+      "notice_url": "https://www.knue.ac.kr/ipsi/selectBbsNttView.do?bbsNo=276&key=1845&nttNo=82605",
+      "version_label": "입학처 2026년 6월 변경 공지 첨부본",
+      "programs": [
+        {
+          "name": "학생부종합우수자",
+          "round": "수시",
+          "type": "종합",
+          "quota": "모집단위별 원문 확인",
+          "method": "1단계 서류 100%로 3배수 선발. 2단계 서류 80%와 면접 20%.",
+          "minimum": "모집단위에 따라 다름. 초등·불어교육과 제외 기준과 독어·중국어교육과의 탐구 반영 예외를 원문 PDF 11쪽에서 확인.",
+          "eligibility": "모집단위별 지원자격과 권장이수과목 확인",
+          "pages": [
+            10,
+            11
+          ]
+        },
+        {
+          "name": "지역인재 특별전형",
+          "round": "수시",
+          "type": "종합",
+          "quota": "모집단위별 원문 확인",
+          "method": "2028학년도 학생부종합 유형. 1단계 서류 100%로 3배수, 2단계 서류 80%와 면접 20%.",
+          "minimum": "국어·수학·영어·사회·과학 5과목 중 상위 3과목 합 10등급 이내. 탐구 반영 예외는 원문 확인.",
+          "eligibility": "지역인재 지원자격은 원문 확인",
+          "pages": [
+            3,
+            10,
+            11
+          ]
+        }
       ]
     },
     {
-      "name":"한국교원대학교","campus":"본교","document":"knue-plan",
-      "notice_url":"https://www.knue.ac.kr/ipsi/selectBbsNttView.do?bbsNo=276&key=1845&nttNo=82605",
-      "version_label":"입학처 2026년 6월 변경 공지 첨부본",
-      "programs":[
-        {"name":"학생부종합우수자","round":"수시","type":"종합","quota":"모집단위별 원문 확인","method":"1단계 서류 100%로 3배수 선발. 2단계 서류 80%와 면접 20%.","minimum":"모집단위에 따라 다름. 초등·불어교육과 제외 기준과 독어·중국어교육과의 탐구 반영 예외를 원문 PDF 11쪽에서 확인.","eligibility":"모집단위별 지원자격과 권장이수과목 확인","pages":[10,11]},
-        {"name":"지역인재 특별전형","round":"수시","type":"종합","quota":"모집단위별 원문 확인","method":"2028학년도 학생부종합 유형. 1단계 서류 100%로 3배수, 2단계 서류 80%와 면접 20%.","minimum":"국어·수학·영어·사회·과학 5과목 중 상위 3과목 합 10등급 이내. 탐구 반영 예외는 원문 확인.","eligibility":"지역인재 지원자격은 원문 확인","pages":[3,10,11]}
+      "name": "포항공과대학교",
+      "campus": "본교",
+      "document": "postech-plan",
+      "notice_url": "https://adm-u.postech.ac.kr/admission-helper/notices/?pi=794",
+      "version_label": "입학처 2028 시행계획 통합본",
+      "programs": [
+        {
+          "name": "학생부종합(일반전형Ⅰ)",
+          "round": "수시",
+          "type": "종합",
+          "quota": "220명",
+          "method": "1단계 서류 100%로 3.5배수 선발. 2단계 서류 40%와 면접 60%.",
+          "minimum": "수능최저 미적용.",
+          "eligibility": "고교 졸업(예정)·조기졸업·검정고시 등 자격별 요건은 원문 확인",
+          "pages": [
+            2,
+            3
+          ]
+        }
       ]
     },
     {
-      "name":"포항공과대학교","campus":"본교","document":"postech-plan",
-      "notice_url":"https://adm-u.postech.ac.kr/admission-helper/notices/?pi=794",
-      "version_label":"입학처 2028 시행계획 통합본",
-      "programs":[
-        {"name":"학생부종합(일반전형Ⅰ)","round":"수시","type":"종합","quota":"220명","method":"1단계 서류 100%로 3.5배수 선발. 2단계 서류 40%와 면접 60%.","minimum":"수능최저 미적용.","eligibility":"고교 졸업(예정)·조기졸업·검정고시 등 자격별 요건은 원문 확인","pages":[2,3]}
+      "name": "가천대학교",
+      "campus": "본교",
+      "document": "gachon-plan-20261019",
+      "notice_url": "https://admission.gachon.ac.kr/admission/html/counsel/noticeView.asp?BOARD_IDX=29980",
+      "version_label": "입학처 2028 시행계획 · 현재 공지 첨부본",
+      "notice_title": "입학처 2028 시행계획 · 현재 공지 첨부본",
+      "change_notice": false,
+      "programs": [
+        {
+          "name": "학생부우수자 전형",
+          "round": "수시",
+          "type": "교과",
+          "quota": "426명",
+          "method": "학생부교과 100%.",
+          "minimum": "인문·자연은 국어·수학·영어·사회탐구·과학탐구 중 2개 합 6, 바이오로직스학과는 2개 합 5. 의예과는 국어·수학·영어·과학탐구 중 3개 각 1등급, 한의예과는 2개 각 1등급, 약학과는 3개 합 5 이내.",
+          "eligibility": "국내 고등학교 졸업(예정)자.",
+          "interview": "면접 없음(학생부교과 100%).",
+          "scope": "전형 전체 모집인원. 의약학·바이오로직스 별도 최저 적용.",
+          "field_pages": {
+            "method": [
+              9
+            ],
+            "minimum": [
+              9
+            ],
+            "eligibility": [
+              9
+            ],
+            "interview": [
+              9
+            ]
+          },
+          "pages": [
+            9
+          ]
+        },
+        {
+          "name": "지역균형 전형",
+          "round": "수시",
+          "type": "교과",
+          "quota": "360명",
+          "method": "1단계 교과 100%로 5배수. 2단계 1단계 평가 50%·면접 50%.",
+          "minimum": "미적용.",
+          "eligibility": "국내 고교 졸업(예정)자로 해당 고등학교장의 추천을 받은 사람.",
+          "interview": "있음. 2단계에서 50% 반영.",
+          "scope": "학교장추천 전형. 전형 전체 모집인원.",
+          "field_pages": {
+            "method": [
+              10
+            ],
+            "minimum": [
+              10
+            ],
+            "eligibility": [
+              10
+            ],
+            "interview": [
+              10
+            ]
+          },
+          "pages": [
+            10
+          ]
+        },
+        {
+          "name": "가천바람개비 전형",
+          "round": "수시",
+          "type": "종합",
+          "quota": "447명",
+          "method": "1단계 서류 100%로 4배수. 2단계 1단계 평가 50%·면접 50%.",
+          "minimum": "미적용.",
+          "eligibility": "국내 고등학교 졸업(예정)자.",
+          "interview": "있음. 2단계에서 50% 반영.",
+          "scope": "전형 전체 모집인원.",
+          "field_pages": {
+            "method": [
+              14
+            ],
+            "minimum": [
+              14
+            ],
+            "eligibility": [
+              14
+            ],
+            "interview": [
+              14
+            ]
+          },
+          "pages": [
+            14
+          ]
+        },
+        {
+          "name": "논술 전형",
+          "round": "수시",
+          "type": "논술",
+          "quota": "1,054명",
+          "method": "논술 100%.",
+          "minimum": "인문·자연은 국어·수학·영어·사회탐구·과학탐구 중 2개 합 6, 바이오로직스학과는 2개 합 5. 의예과는 국어·수학·영어·과학탐구 중 3개 각 1등급, 한의예과는 2개 각 1등급, 약학과는 3개 합 5 이내. 인문·자연의 국어 또는 수학 반영 시 1개 등급 상향 조건은 원문을 확인.",
+          "eligibility": "고교 졸업(예정)자 또는 동등 이상 학력 인정자.",
+          "interview": "면접 없음(논술 100%).",
+          "scope": "전형 전체 모집인원. 모집단위별 최저 예외와 국어·수학 조건 확인.",
+          "field_pages": {
+            "method": [
+              8
+            ],
+            "minimum": [
+              8
+            ],
+            "eligibility": [
+              8
+            ],
+            "interview": [
+              8
+            ]
+          },
+          "pages": [
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "name": "강원대학교",
+      "campus": "본교",
+      "document": "kangwon-chuncheon-20260611",
+      "notice_url": "https://admission.kangwon.ac.kr/admission/conts/1160/web.do",
+      "version_label": "춘천캠퍼스 입학처 시행계획 · 2026-06-11 게시 파일",
+      "notice_title": "춘천캠퍼스 입학처 시행계획 · 2026-06-11 게시 파일",
+      "change_notice": true,
+      "programs": [
+        {
+          "name": "학생부교과(일반전형)",
+          "round": "수시",
+          "type": "교과",
+          "quota": "742명",
+          "method": "학생부교과 100% 일괄합산.",
+          "minimum": "국어·수학·영어·탐구 중 2개 영역 합 적용. 일반전형은 사범·간호 6, 그 외 해당 인문·자연 모집단위 8 이내. 강원인재는 사범·간호 7, 그 외 해당 모집단위 8 이내. 학과별 필수 영역·탐구 허용 범위는 PDF 35쪽 확인. 수의·약학·의예의 정성평가 전형은 별도 조건.",
+          "eligibility": "고교 졸업(예정)자 또는 동등 학력 인정자.",
+          "interview": "면접 없음(교과 100%).",
+          "scope": "춘천캠퍼스. 일반-정성평가전형과 별개.",
+          "field_pages": {
+            "method": [
+              15
+            ],
+            "minimum": [
+              35
+            ],
+            "eligibility": [
+              15
+            ],
+            "interview": [
+              15
+            ]
+          },
+          "pages": [
+            15,
+            35
+          ]
+        },
+        {
+          "name": "학생부교과(강원인재전형)",
+          "round": "수시",
+          "type": "교과",
+          "quota": "487명",
+          "method": "학생부교과 100% 일괄합산.",
+          "minimum": "국어·수학·영어·탐구 중 2개 영역 합 적용. 일반전형은 사범·간호 6, 그 외 해당 인문·자연 모집단위 8 이내. 강원인재는 사범·간호 7, 그 외 해당 모집단위 8 이내. 학과별 필수 영역·탐구 허용 범위는 PDF 35쪽 확인. 수의·약학·의예의 정성평가 전형은 별도 조건.",
+          "eligibility": "강원지역 고등학교의 입학부터 졸업까지 전 과정을 이수한 졸업(예정)자. 간호학과는 2022학년도 이후 중학교 입학자의 비수도권 중학교·거주 및 강원 고교·거주 요건을 추가 확인. 2021학년도 이전 입학자는 강원 고교 전 과정 요건 적용.",
+          "interview": "면접 없음(교과 100%).",
+          "scope": "춘천캠퍼스. 간호학과 지원자격 예외 있음.",
+          "field_pages": {
+            "method": [
+              15
+            ],
+            "minimum": [
+              35
+            ],
+            "eligibility": [
+              15
+            ],
+            "interview": [
+              15
+            ]
+          },
+          "pages": [
+            15,
+            35
+          ]
+        },
+        {
+          "name": "학생부종합(미래인재서류전형)",
+          "round": "수시",
+          "type": "종합",
+          "quota": "462명",
+          "method": "서류평가 100% 일괄합산.",
+          "minimum": "간호학과는 2개 영역 합 7, 수의학과는 수학 포함 3개 합 8 이내. 그 외 미적용. 학과별 탐구 반영 범위는 PDF 35쪽 확인.",
+          "eligibility": "국내 고등학교 전 교육과정을 이수한 졸업(예정)자(고교 졸업 학력 인정학교 포함).",
+          "interview": "면접 없음(서류평가 100%).",
+          "scope": "춘천캠퍼스. 간호·수의 최저 적용.",
+          "field_pages": {
+            "method": [
+              10
+            ],
+            "minimum": [
+              10,
+              35
+            ],
+            "eligibility": [
+              10
+            ],
+            "interview": [
+              10
+            ]
+          },
+          "pages": [
+            10,
+            35
+          ]
+        },
+        {
+          "name": "학생부종합(미래인재면접전형)",
+          "round": "수시",
+          "type": "종합",
+          "quota": "372명",
+          "method": "1단계 서류 100%, 4배수 이내(모집인원 6명 이상 모집단위는 3배수 이내). 2단계 서류 60%·면접 40%.",
+          "minimum": "미적용.",
+          "eligibility": "국내 고등학교 전 교육과정을 이수한 졸업(예정)자(고교 졸업 학력 인정학교 포함).",
+          "interview": "있음. 2단계 40% 반영.",
+          "scope": "춘천캠퍼스. 모집단위 인원에 따른 1단계 배수 차이 있음.",
+          "field_pages": {
+            "method": [
+              11
+            ],
+            "minimum": [
+              11
+            ],
+            "eligibility": [
+              11
+            ],
+            "interview": [
+              11
+            ]
+          },
+          "pages": [
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "name": "강원대학교",
+      "campus": "제2캠퍼스",
+      "document": "kangwon-samcheok-20260611",
+      "notice_url": "https://admission.kangwon.ac.kr/admission/conts/1162/web.do",
+      "version_label": "삼척·도계캠퍼스 입학처 시행계획 · 2026-06-11 게시 파일",
+      "notice_title": "삼척·도계캠퍼스 입학처 시행계획 · 2026-06-11 게시 파일",
+      "change_notice": true,
+      "programs": [
+        {
+          "name": "학생부교과(일반전형)",
+          "round": "수시",
+          "type": "교과",
+          "quota": "609명",
+          "method": "학생부교과 100% 일괄합산.",
+          "minimum": "미적용.",
+          "eligibility": "고교 졸업(예정)자 또는 동등 학력 인정자.",
+          "interview": "면접 없음(교과 100%).",
+          "scope": "삼척·도계캠퍼스. 춘천캠퍼스와 별도 기준.",
+          "field_pages": {
+            "method": [
+              11
+            ],
+            "minimum": [
+              11
+            ],
+            "eligibility": [
+              11
+            ],
+            "interview": [
+              11
+            ]
+          },
+          "pages": [
+            11
+          ]
+        },
+        {
+          "name": "학생부종합(미래인재서류전형)",
+          "round": "수시",
+          "type": "종합",
+          "quota": "199명",
+          "method": "서류평가 100% 일괄합산.",
+          "minimum": "미적용.",
+          "eligibility": "국내 고등학교 전 교육과정을 이수한 졸업(예정)자(고교 졸업 학력 인정학교 포함).",
+          "interview": "면접 없음(서류평가 100%).",
+          "scope": "삼척·도계캠퍼스.",
+          "field_pages": {
+            "method": [
+              8
+            ],
+            "minimum": [
+              8
+            ],
+            "eligibility": [
+              8
+            ],
+            "interview": [
+              8
+            ]
+          },
+          "pages": [
+            8
+          ]
+        },
+        {
+          "name": "학생부종합(미래인재면접전형)",
+          "round": "수시",
+          "type": "종합",
+          "quota": "36명",
+          "method": "1단계 서류 100%로 4배수 이내. 2단계 서류 60%·면접 40%.",
+          "minimum": "미적용.",
+          "eligibility": "국내 고등학교 전 교육과정을 이수한 졸업(예정)자(고교 졸업 학력 인정학교 포함).",
+          "interview": "있음. 2단계 40% 반영.",
+          "scope": "삼척·도계캠퍼스.",
+          "field_pages": {
+            "method": [
+              9
+            ],
+            "minimum": [
+              9
+            ],
+            "eligibility": [
+              9
+            ],
+            "interview": [
+              9
+            ]
+          },
+          "pages": [
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "name": "가톨릭관동대학교",
+      "campus": "본교",
+      "document": "cku-plan-20260716",
+      "notice_url": "https://ipsi.cku.ac.kr/bbs/iphak/1005/364704/artclView.do",
+      "version_label": "입학처 2028 시행계획 · 2026-07-16 수정본",
+      "notice_title": "입학처 2028 시행계획 · 2026-07-16 수정본",
+      "change_notice": true,
+      "programs": [
+        {
+          "name": "학생부교과(일반)",
+          "round": "수시",
+          "type": "교과",
+          "quota": "모집단위별 원문 확인",
+          "method": "교과 90%·출결 10%(실질비율 교과 93.1%·출결 6.9%).",
+          "minimum": "의학과(의예과)는 국어·수학·영어·통합과학 상위 3개 합 4 이내. 간호학과는 국어·수학·영어·통합사회·통합과학 상위 2개 합 9 이내. 나머지 모집단위는 미적용.",
+          "eligibility": "고교 졸업(예정)자 또는 동등 학력 인정자.",
+          "interview": "면접 없음(교과·출결 평가).",
+          "scope": "의학과·간호학과 최저 별도 적용.",
+          "field_pages": {
+            "method": [
+              5
+            ],
+            "minimum": [
+              21
+            ],
+            "eligibility": [
+              5
+            ],
+            "interview": [
+              5
+            ]
+          },
+          "pages": [
+            5,
+            21
+          ]
+        },
+        {
+          "name": "학생부종합(일반)",
+          "round": "수시",
+          "type": "종합",
+          "quota": "모집단위별 원문 확인",
+          "method": "서류 100%.",
+          "minimum": "의학과(의예과)는 국어·수학·영어·통합과학 상위 3개 합 5 이내. 간호학과는 국어·수학·영어·통합사회·통합과학 상위 2개 합 9 이내. 나머지 모집단위는 미적용.",
+          "eligibility": "고교 졸업(예정)자 또는 동등 학력 인정자.",
+          "interview": "면접 없음(서류 100%).",
+          "scope": "의학과·간호학과 최저 별도 적용.",
+          "field_pages": {
+            "method": [
+              6
+            ],
+            "minimum": [
+              21
+            ],
+            "eligibility": [
+              6
+            ],
+            "interview": [
+              6
+            ]
+          },
+          "pages": [
+            6,
+            21
+          ]
+        },
+        {
+          "name": "학생부교과(지역인재)",
+          "round": "수시",
+          "type": "교과",
+          "quota": "모집단위별 원문 확인",
+          "method": "교과 90%·출결 10%(실질비율 교과 93.1%·출결 6.9%).",
+          "minimum": "의학과(의예과)는 국어·수학·영어·통합과학 상위 3개 합 5 이내. 간호학과는 국어·수학·영어·통합사회·통합과학 상위 2개 합 9 이내. 나머지 모집단위는 미적용.",
+          "eligibility": "강원지역 고등학교의 입학부터 졸업까지 전 과정을 이수한 졸업(예정)자. 의학·간호 지원자 중 2022학년도 이후 중학교 입학자는 비수도권 중학교 전 과정·소재 지역 거주와 강원 고교 전 과정·강원 거주 요건을 추가 확인.",
+          "interview": "면접 없음(교과·출결 평가).",
+          "scope": "의학·간호는 중학교 입학 연도에 따라 지원자격이 다름.",
+          "field_pages": {
+            "method": [
+              5
+            ],
+            "minimum": [
+              21
+            ],
+            "eligibility": [
+              5
+            ],
+            "interview": [
+              5
+            ]
+          },
+          "pages": [
+            5,
+            21
+          ]
+        }
       ]
     }
   ]

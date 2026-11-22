@@ -157,3 +157,19 @@ test('department-specific interest carries only the saved department into prepar
   await waitFor(async () => expect((await studentDb.applications.toArray())[0]).toMatchObject({ university, program, department: '의예과' }));
   expect(await studentDb.interests.get(interestId(university, program, '의예과'))).toBeTruthy();
 });
+
+test('linked preparation adds to the chosen scenario only after confirmation and blocks a different admission year', async () => {
+  const original = plan(2028, '간호학과'), other = plan(2029, '간호학과');
+  await studentDb.applications.bulkPut([original, other]);
+  const a = await studentDb.createScenario();
+  at(`/susiro?plan=${original.id}`);
+  await screen.findByRole('region', { name: '지원 준비에서 가져온 전형' });
+  expect((await studentDb.boards.get(a.id))!.slots).toHaveLength(0);
+  fireEvent.click(screen.getByRole('button', { name: '이 전형을 A안에 담기' }));
+  await waitFor(async () => expect((await studentDb.boards.get(a.id))!.slots[0].application_id).toBe(original.id));
+  await expect(studentDb.changeBoard(a.id, { kind: 'add', application_id: other.id })).rejects.toThrow('같은 지원 학년도');
+  expect((await studentDb.boards.get(a.id))!.slots).toHaveLength(1);
+  const b = await studentDb.createScenario();
+  await studentDb.changeBoard(b.id, { kind: 'add', application_id: other.id });
+  expect((await studentDb.boards.get(b.id))!.slots[0].application_id).toBe(other.id);
+});

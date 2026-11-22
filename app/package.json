@@ -6,11 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:deploy": "npm run data:check-deploy && npm run build && python tools/deployment_data.py check --root dist",
     "test": "vitest run",
     "typecheck": "tsc",
     "data:import-results": "python tools/import_admission_results.py",
     "data:build-placement": "python tools/build_national_placement.py",
     "data:audit-placement": "python tools/audit_national_placement.py",
+    "data:check-deploy": "python tools/deployment_data.py check",
+    "data:bundle": "python tools/deployment_data.py bundle",
+    "data:restore": "python tools/deployment_data.py restore",
+    "test:deployment-data": "python -m unittest discover -s tools -p test_deployment_data.py",
     "test:placement-statistics": "python -m unittest discover -s tools -p test_placement_statistics.py"
   },
   "dependencies": {

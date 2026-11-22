@@ -13,6 +13,7 @@ import { SegmentedControl } from '../components/SegmentedControl';
 import { Modal } from '../components/Modal';
 import { CollectedResultFields } from '../components/CollectedResultFields';
 import { Icon } from '../components/Icon';
+import { PrepareProgram } from '../components/PrepareProgram';
 import '../styles/interest-comparison.css';
 
 type Package = { rows: ResultRow[]; error: string };
@@ -106,6 +107,7 @@ export function InterestComparison() {
   };
   const tableRows: { key: string; label: string; fixed?: boolean; values: Cell[] }[] = [
     { key: 'department', label: '모집단위', fixed: true, values: selected.map(item => cell(item.department!)) },
+    { key: 'prepare', label: '지원 준비', fixed: true, values: selected.map(item => ({ ...unknown('지원 준비에 추가'), content: <PrepareProgram university={item.university} program={item.program} department={item.department} referenceYear={year} /> })) },
     { key: 'type', label: `${year} 전형 유형`, values: selected.map(item => fact(item, 'admission_type')) },
     { key: 'quota', label: `${year} 모집인원`, values: selected.map(item => fact(item, 'quota')) },
     ...['반영 교과', '수능최저', '면접'].map(label => ({ key: label, label, values: selected.map(() => unknown('해당 연도 모집요강 확인 필요')) })),

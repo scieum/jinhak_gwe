@@ -107,6 +107,8 @@ def build():
         document = source_document(extra['document'], extra['version_label'], extra['notice_url'], curated['visual_year_checks'])
         entry['documents'].insert(0, document)
         entry['programs'] = [{**p, 'document_id': document['id']} for p in extra['programs']]
+        if extra.get('notice_title'):
+            entry['notices'].insert(0, {'title': extra['notice_title'], 'url': extra['notice_url'], 'checked_at': document['checked_at'], 'change_notice': extra.get('change_notice', False)})
     result = {'format': 'jinhak-navi-admission-plans', 'version': 1, 'year': 2028,
               'checked_at': datetime.now(timezone.utc).date().isoformat(), 'review_status': 'draft',
               'entries': sorted(entries.values(), key=lambda e: (e['university'], e['campus']))}

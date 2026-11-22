@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ButtonOutline, ButtonPrimary } from '../components/Buttons';
 import { Modal } from '../components/Modal';
 import { SegmentedControl } from '../components/SegmentedControl';
@@ -20,6 +20,7 @@ export const counselCard = (board: Board, apps: readonly ApplicationPlan[]) => {
 
 export function Susiro() {
   const state = useStudent();
+  const [query, setQuery] = useSearchParams();
   const [initialBoard] = useState(() => newBoard('A안'));
   const [boardId, setBoardId] = useState(''), [picking, setPicking] = useState<{ id: string; create: boolean } | null>(null);
   const [editing, setEditing] = useState<{ boardId: string; slot: BoardSlot } | null>(null), [sharing, setSharing] = useState(false);
@@ -31,6 +32,9 @@ export function Susiro() {
   const orderedBoards = [...boards].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
   const board = boards.find(b => b.id === boardId) ?? orderedBoards[0] ?? initialBoard;
   const app = (id: string) => apps.find(a => a.id === id);
+  const requested = app(query.get('plan') ?? '');
+  const alreadyAdded = !!requested && [...board.slots, ...board.exempt].some(slot => slot.application_id === requested.id);
+  const clearRequest = () => { const next = new URLSearchParams(query); next.delete('plan'); setQuery(next, { replace: true }); };
   const name = (id: string) => app(id)?.university ?? '지운 전형';
   const warnings = boardWarnings(board, name);
   const run = async (action: () => Promise<void>) => {
@@ -65,6 +69,7 @@ export function Susiro() {
     <div className="screen-heading"><h2 className="t-heading-1">수시로</h2><p className="num">6회 제한 {board.slots.length}/{LIMIT}장{board.exempt.length > 0 && ` · 6회 제외 ${board.exempt.length}장`}</p></div>
     <a className="susi-mobile-summary" href="#susi-check">조합 점검 {warnings.length}건 · 6회 제한 {board.slots.length}/{LIMIT}장 <span aria-hidden="true">↓</span></a>
     <div className="analysis-layout"><div className="analysis-main">
+    {query.has('plan') && <section className="filter-panel" aria-label="지원 준비에서 가져온 전형">{requested ? <><h3 className="t-heading-3">{requested.university} · {requested.department || '모집단위 미입력'}</h3><p>{requested.year}학년도 · {requested.program}</p><p className="t-caption text-muted">아래에서 담을 안을 선택한 뒤 추가해 주세요. 학년도·전형·학과를 그대로 연결해요.</p><div className="toolbar"><ButtonPrimary disabled={busy || alreadyAdded} onClick={() => void run(async () => { const next = await studentDb.changeBoard(board.id, { kind: 'add', application_id: requested.id }, board === initialBoard); setBoardId(next.id); setFocus([requested.id]); clearRequest(); setMessage(`${next.name}에 ${requested.department || requested.program}을 담았어요.`); })}>{alreadyAdded ? `${board.name}에 이미 담았어요` : `이 전형을 ${board.name}에 담기`}</ButtonPrimary><ButtonOutline disabled={busy} onClick={clearRequest}>나중에 담기</ButtonOutline></div></> : <><p role="alert">연결된 지원 준비 기록을 찾지 못했어요. 체크리스트에서 다시 선택해 주세요.</p><Link to="/application-checklist">지원 준비 확인</Link><button className="text-button" onClick={clearRequest}>안내 닫기</button></>}</section>}
     <fieldset className="toolbar susi-scenarios" disabled={busy}><legend className="sr-only">시나리오 관리</legend>{boards.length > 0 && <SegmentedControl label="시나리오" value={board.id} onChange={id => { setBoardId(id); setFocus([]); setError(''); setMessage(''); }} options={orderedBoards.map(b => ({ value: b.id, label: b.name }))} />}
       <ButtonOutline disabled={boards.length >= SCENARIO_NAMES.length} onClick={() => void addScenario()}>+ 새 안</ButtonOutline>
       <ButtonOutline disabled={boards.length >= SCENARIO_NAMES.length || board === initialBoard} onClick={() => void addScenario(true)}>현재 안 복사</ButtonOutline>

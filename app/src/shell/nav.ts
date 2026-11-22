@@ -61,7 +61,7 @@ export const NAV: Record<Mode, NavGroup[]> = {
     {
       label: '수시 전략',
       icon: 'layout-grid',
-      items: [student('수시로', 'susiro', 'layout-grid'), student('원서·서류 체크리스트', 'application-checklist', 'check'), student('상담 질문·할 일', 'counsel-tasks', 'message-square'), student('생기부 AI', 'saenggibu-ai', 'sparkles')],
+      items: [student('수시로', 'susiro', 'layout-grid'), student('원서·서류 체크리스트', 'application-checklist', 'check'), student('입시 일정', 'calendar', 'calendar'), student('상담 질문·할 일', 'counsel-tasks', 'message-square'), student('생기부 AI', 'saenggibu-ai', 'sparkles')],
     },
   ],
   teacher: [

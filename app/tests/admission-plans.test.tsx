@@ -25,11 +25,13 @@ test('공식 포털 202개 캠퍼스의 다운로드 출처와 파일 해시를 
     const meta = JSON.parse(readFileSync(`../work/_data/admission-plans/sources/${document.id}.meta.json`, 'utf8'));
     expect(meta.sha256).toBe(document.sha256);
   }
-  expect(catalog.entries.flatMap(e => e.programs)).toHaveLength(8);
+  expect(catalog.entries.flatMap(e => e.programs)).toHaveLength(22);
   for (const entry of catalog.entries) for (const program of entry.programs) {
     const document = entry.documents.find(d => d.id === program.document_id)!;
-    const meta = JSON.parse(readFileSync(`../work/_data/admission-plans/sources/${document.id}.meta.json`, 'utf8'));
-    expect(meta.sha256).toBe(document.sha256);
+    // New collection evidence stays local with its originals. A code checkout still validates
+    // the public catalog; when local evidence exists, independently reconcile its file hash.
+    const metaPath = `../work/_data/admission-plans/sources/${document.id}.meta.json`;
+    if (existsSync(metaPath)) expect(JSON.parse(readFileSync(metaPath, 'utf8')).sha256).toBe(document.sha256);
     expect(program.pages.every(p => p <= document.page_count!)).toBe(true);
   }
   const sgu = catalog.entries.flatMap(e => e.notices.map(n => ({ university: e.university, url: n.url }))).filter(n => new URL(n.url).hostname === 'sgu.ac.kr');
@@ -84,9 +86,9 @@ test('대학 검색·상세 원문·일부 전형 요약과 성적 판정 제외
   fireEvent.click(screen.getByRole('button', { name: '다음' }));
   expect(screen.getByText('2 / 10 페이지')).toBeTruthy();
   fireEvent.click(screen.getByLabelText('일부 전형 요약이 있는 대학만'));
-  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(4);
+  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(8);
   fireEvent.change(screen.getByLabelText('지역'), { target: { value: '강원' } });
-  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(2);
+  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(5);
 });
 
 test('직접 연결된 캠퍼스 상세는 목록 필터와 독립적으로 열리고 ZIP 파일명을 안내한다', async () => {
@@ -112,4 +114,26 @@ test('조회 실패는 빈 검색과 구분하고 재시도한다', async () => 
 test('로더는 구조가 잘못된 응답을 빈 목록으로 바꾸지 않는다', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ entries: [] }))));
   await expect(loadAdmissionPlans()).rejects.toThrow();
+});
+
+test('보강 요약의 항목별 쪽수·면접·캠퍼스 조건을 보존하고 빠진 근거를 거부한다', () => {
+  const chuncheon = catalog.entries.find(e => e.id === 'plan-0000003')!;
+  const samcheok = catalog.entries.find(e => e.id === 'plan-0000004')!;
+  expect(chuncheon.programs.find(p => p.name === '학생부교과(일반전형)')!.minimum).toContain('필수 영역');
+  expect(samcheok.programs.find(p => p.name === '학생부교과(일반전형)')!.minimum).toBe('미적용.');
+  for (const entry of catalog.entries) for (const program of entry.programs.filter(p => p.field_pages)) {
+    expect(program.interview).toBeTruthy();
+    expect(program.scope).toBeTruthy();
+    expect(Object.values(program.field_pages!).flat().every(page => program.pages.includes(page))).toBe(true);
+  }
+  const value = raw();
+  value.entries.find((e: { id: string }) => e.id === 'plan-0000003').programs[0].field_pages.minimum = [39];
+  expect(() => parsePlanCatalog(value)).toThrow();
+});
+
+test('전형 요약은 면접 여부와 각 항목의 PDF 근거를 바로 제공한다', async () => {
+  serve(); at('/admissions-list?plan=plan-0000063');
+  const detail = await screen.findByRole('region', { name: '가천대학교 본교 전형계획 상세' });
+  expect(within(detail).getAllByText('있음. 2단계에서 50% 반영.')).toHaveLength(2);
+  expect(within(detail).getByRole('link', { name: '지원자격 근거 PDF 9쪽 ↗' }).getAttribute('href')).toContain('#page=9');
 });

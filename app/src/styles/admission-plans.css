@@ -28,3 +28,5 @@
   .plan-results-heading, .plan-results .plan-grid { padding: var(--spacing-md); }
   .plan-results-heading h3 { font-size: var(--font-heading-3-size); }
 }
+.plan-facts > .plan-fact-row { display: contents; }
+.plan-field-sources { display: flex; flex-wrap: wrap; gap: var(--spacing-sm); margin-top: var(--spacing-xs); font-size: var(--font-caption-size); }

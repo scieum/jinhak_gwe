@@ -1,0 +1,36 @@
+.application-calendar { gap: var(--spacing-lg); }
+.calendar-filters { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto; gap: var(--spacing-md); padding-block: var(--spacing-md); border-block: 1px solid var(--color-hairline); align-items: end; }
+.calendar-filters select { width: 100%; min-width: 0; }
+.calendar-completed { display: flex !important; flex-direction: row !important; align-items: center; gap: var(--spacing-sm); min-height: 44px; }
+.calendar-completed input { width: 20px; height: 20px; }
+.calendar-toolbar { display: flex; justify-content: space-between; gap: var(--spacing-md); flex-wrap: wrap; align-items: center; }
+.calendar-toolbar .toolbar { margin: 0; }
+.calendar-toolbar h3 { margin: 0; }
+.calendar-month { table-layout: fixed; width: 100%; border-collapse: collapse; }
+.calendar-month th { background: var(--color-canvas-soft); font-size: var(--font-caption-size); padding: var(--spacing-sm); }
+.calendar-month td { border: 1px solid var(--color-hairline-soft); padding: 0; height: 64px; vertical-align: top; }
+.calendar-month button { display: flex; width: 100%; height: 100%; min-height: 64px; padding: var(--spacing-sm); align-items: flex-start; justify-content: space-between; gap: var(--spacing-xs); background: var(--color-canvas); border: 0; color: var(--color-ink); cursor: pointer; }
+.calendar-month button[aria-current='date'] > span:first-child { font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.calendar-month button[aria-pressed='true'] { background: var(--color-accent-soft); box-shadow: inset 0 -2px var(--color-accent); }
+.calendar-day-count { font-size: var(--font-caption-size); background: var(--color-canvas-soft); padding-inline: var(--spacing-xs); white-space: nowrap; }
+.calendar-events { list-style: none; padding: 0; margin: 0; }
+.calendar-events li { border-bottom: 1px solid var(--color-hairline-soft); }
+.calendar-events button { width: 100%; text-align: left; display: flex; justify-content: space-between; gap: var(--spacing-md); padding: var(--spacing-md) 0; background: var(--color-canvas); color: var(--color-ink); border: 0; cursor: pointer; }
+.calendar-events button > span { display: grid; gap: var(--spacing-xs); min-width: 0; overflow-wrap: anywhere; }
+.calendar-events button span span { font-size: var(--font-body-sm-size); color: var(--color-text-muted); }
+.calendar-event-date { text-align: right; flex-shrink: 0; }
+.calendar-upcoming { min-height: 100px; display: flex; justify-content: space-between; gap: var(--spacing-md); padding-block: var(--spacing-md); border-bottom: 1px solid var(--color-hairline-soft); }
+.calendar-upcoming p { font-size: var(--font-body-sm-size); }
+.calendar-upcoming > strong { white-space: nowrap; }
+.calendar-empty { padding-block: var(--spacing-lg); color: var(--color-text-muted); }
+.application-calendar details summary { cursor: pointer; padding-block: var(--spacing-md); }
+@media (max-width: 767px) {
+  .calendar-filters { grid-template-columns: minmax(0, 1fr); }
+  .calendar-toolbar { display: grid; }
+  .calendar-toolbar .toolbar { gap: var(--spacing-xs); }
+  .calendar-toolbar h3 { font-size: var(--font-heading-4-size); }
+  .calendar-toolbar button { padding-inline: var(--spacing-sm); }
+  .calendar-month button { flex-direction: column; align-items: center; padding: var(--spacing-xs); }
+  .calendar-events button { flex-direction: column; gap: var(--spacing-sm); }
+  .calendar-event-date { text-align: left; }
+}

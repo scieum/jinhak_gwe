@@ -37,7 +37,8 @@ function PlanDetail({ plan, onClose }: { plan: AdmissionPlan; onClose: () => voi
       : <><p className="notice">원문에서 확인한 일부 전형만 정리했어요. 전체 전형과 모집단위별 예외는 원문을 확인해 주세요. 검수 전 요약은 성적 판정에 사용하지 않아요.</p>
         {plan.programs.map(p => { const doc = plan.documents.find(d => d.id === p.document_id)!;
           return <article className="univ-card" key={p.name}><h5 className="t-heading-3">{p.name}</h5><p>{p.round} · {p.type} · 모집 {p.quota}</p>
-            <dl className="plan-facts"><dt>전형방법</dt><dd>{p.method}</dd><dt>수능최저</dt><dd>{p.minimum}</dd><dt>지원자격</dt><dd>{p.eligibility}</dd></dl>
+            {p.scope && <p className="t-caption text-muted">요약 범위: {p.scope}</p>}
+            <dl className="plan-facts">{([['eligibility', '지원자격'], ['method', '전형방법'], ['minimum', '수능최저'], ['interview', '면접']] as const).map(([key, label]) => <div className="plan-fact-row" key={key}><dt>{label}</dt><dd>{p[key] || '면접 여부는 원문 확인 필요'}{p.field_pages?.[key] && <span className="plan-field-sources">{p.field_pages[key].map(page => <SourceLink key={page} href={planPageUrl(doc, page)}>{label} 근거 PDF {page}쪽</SourceLink>)}</span>}</dd></div>)}</dl>
             <div className="toolbar">근거: {p.pages.map(page => <SourceLink key={page} href={planPageUrl(doc, page)}>PDF {page}쪽</SourceLink>)}</div>
           </article>;
         })}</>}

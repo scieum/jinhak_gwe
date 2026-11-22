@@ -275,5 +275,135 @@
       "pairs": "과목 N = 'subject N' 프레임(group/* 머리 + row/* 행 + error-note). show subject N이 셋을 함께 끄고, show group N은 머리만, show error N은 행 아래 오류 안내(triangle-alert + caption judge-risk)만 켠다. 과목 1은 항상 보임"},
     "grade-input-table/cell": {"state": "head|default|editing|error|미산출|해당 없음|빈칸 (해당 없음 = canvas-soft + '해당 없음' 고정, 빈칸 = judge-reach-bg + muted '–' 고정, 미산출 = 빗금 + '미산출' 고정)", "text#68:0": "TEXT (head·default·editing·error)", "show icon#80:134": "BOOLEAN false", "icon#80:140": "INSTANCE_SWAP icon/* 16×16 (기본 icon/triangle-alert)", "hatch": "미산출 빗금은 STRETCH 프레임 안 선 45개, 셀 폭 320까지 덮음",
       "width_override": "셀 폭 = 'width' 프레임 paddingLeft + 16.01 (cell.findOne(n => n.name === 'width').paddingLeft = 폭 − 16 − 0.01). 셀이 HUG일 때만 먹는다(grade-input-table 안 셀은 모두 HUG, 기본 64). 머리 행 같은 열 셀도 같은 값으로 맞춘다"}
+  },
+  "v2_2026_11_22": {
+    "note": "v2 시안용 변형(추가만, v1 기본값 그대로). v2 화면은 아래 변형만 쓴다. 바뀐 속성 키가 위 옛 키보다 우선한다.",
+    "sets": {
+      "judge-badge": {
+        "set": "29:26",
+        "size": "default | lg | compact"
+      },
+      "stat-tile": {
+        "set": "77:1901",
+        "variant": "default | hero | filter-off | filter-selected"
+      },
+      "univ-card": {
+        "set": "65:340",
+        "v2 화면용 version": "v3 (판정 lg 머리, 잉크 숫자)",
+        "v3 ids": [
+          "337:2885",
+          "337:2963",
+          "337:3042",
+          "337:3120"
+        ]
+      },
+      "judge-lane": {
+        "set": "339:12784",
+        "v1": "65:485",
+        "v2": "339:12609"
+      },
+      "tab-bar-pill": {
+        "set": "60:528",
+        "surface": "soft | white"
+      },
+      "sidebar": {
+        "set": "101:2747",
+        "surface=white": {
+          "학생": "335:2903",
+          "교사": "335:2932",
+          "관리자": "335:2959"
+        }
+      },
+      "range-bar-5to9": {
+        "set": "90:10936",
+        "marker-line=on": {
+          "full": "335:2973",
+          "mini": "335:3023"
+        }
+      },
+      "cut-compare-bar": {
+        "set": "335:84826",
+        "default": "64:254",
+        "compact": "335:84803"
+      },
+      "data-status-badge": {
+        "set": "335:84798",
+        "on=page": "335:84796"
+      },
+      "button-pill-soft": {
+        "set": "335:84802",
+        "on=page": "335:84799"
+      },
+      "grade-chip": {
+        "set": "29:37",
+        "on": "card | page"
+      },
+      "segmented-control": {
+        "set": "91:2815",
+        "on": "card | page"
+      },
+      "mode-switch": {
+        "set": "62:236",
+        "on": "card | page"
+      },
+      "page-header": {
+        "set": "339:12812",
+        "pc": "339:12785",
+        "mobile": "339:12808"
+      }
+    },
+    "renamed_property_keys": {
+      "data-status-badge": {
+        "label#335:285": "TEXT"
+      },
+      "button-pill-soft": {
+        "show icon#335:286": "BOOLEAN",
+        "icon#335:287": "INSTANCE_SWAP",
+        "label#335:288": "TEXT"
+      },
+      "cut-compare-bar": {
+        "show 50% cut#335:289": "BOOLEAN",
+        "cut-50 label#335:290": "TEXT",
+        "cut-70 label#335:291": "TEXT",
+        "show judge-badge#335:292": "BOOLEAN",
+        "show 70% cut#335:293": "BOOLEAN",
+        "axis-min#335:294": "TEXT",
+        "axis-max#335:295": "TEXT"
+      },
+      "judge-lane": {
+        "count#339:0": "TEXT",
+        "show card 3#339:1": "BOOLEAN"
+      },
+      "page-header": {
+        "parent#339:4": "TEXT",
+        "title#339:7": "TEXT",
+        "lead#339:10": "TEXT",
+        "show parent#339:13": "BOOLEAN",
+        "show lead#339:16": "BOOLEAN",
+        "show badge#339:19": "BOOLEAN",
+        "show mode-switch#339:22": "BOOLEAN",
+        "show outline#339:25": "BOOLEAN",
+        "show primary#339:28": "BOOLEAN"
+      }
+    },
+    "gotcha": "세트 안에서 변형을 복제하면 컴포넌트 속성 바인딩(텍스트·표시·로고 교체)이 조용히 빠진다. 복제 후 기본 변형에서 바인딩을 다시 복사할 것.",
+    "missing_logos": [
+      "건국대학교",
+      "동국대학교"
+    ],
+    "pilot_frames": {
+      "home": [
+        "320:4",
+        "320:49"
+      ],
+      "doelgak": [
+        "327:490",
+        "327:549"
+      ],
+      "teacher-dashboard": [
+        "330:16438",
+        "330:1766"
+      ]
+    }
   }
 }

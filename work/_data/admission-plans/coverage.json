@@ -1,7 +1,7 @@
 {
   "entries": 218,
   "university_names": 194,
-  "program_summaries": 8,
+  "program_summaries": 22,
   "archive_only": [
     {
       "university": "진주교육대학교",
@@ -100,5 +100,5 @@
       "member_sha256": "dbbf4ff01c4950b7b88c5be5a3506cd1dbe00d00cebd41ad5e5438498e628369"
     }
   ],
-  "source_only": 214
+  "source_only": 210
 }

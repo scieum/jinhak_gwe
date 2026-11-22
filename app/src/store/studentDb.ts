@@ -92,6 +92,7 @@ export class StudentDatabase extends Dexie {
       if (change.kind === 'add') {
         const app = apps.find(a => a.id === change.application_id);
         if (!app) throw new Error('지원 준비에서 삭제된 전형이에요. 목록을 다시 확인해 주세요.');
+        if ([...board.slots, ...board.exempt].some(slot => apps.find(item => item.id === slot.application_id)?.year !== app.year)) throw new Error('같은 지원 학년도의 전형만 한 안에 담을 수 있어요. 다른 안을 선택하거나 새 안을 만들어 주세요.');
         next = addToBoard(board, app.id, app.university);
       } else {
         const applicationId = change.kind === 'update' ? change.slot.application_id : change.application_id;

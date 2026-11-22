@@ -10,6 +10,7 @@ import { AdmissionResults } from './screens/AdmissionResults';
 import { AdmissionsList } from './screens/AdmissionsList';
 import { NationalPlacement } from './screens/NationalPlacement';
 import { InterestComparison } from './screens/InterestComparison';
+import { ApplicationCalendar } from './screens/ApplicationCalendar';
 import { Doelgak, FiveToNine, ScoreTrend, StudentHome, UniversityScores } from './screens/Results';
 import { AdminReview } from './screens/AdminReview';
 import { ProgramDetail, UnivDetail } from './screens/UnivDetail';
@@ -36,6 +37,7 @@ function AdminRules() { return useLocation().pathname.endsWith('/review') ? <Adm
 const implemented: Record<string, React.ReactNode> = {
   'national-placement': <NationalPlacement />,
   compare: <InterestComparison />,
+  calendar: <ApplicationCalendar />,
   'admissions-list': <AdmissionsList />,
   'admission-style': <AdmissionStyle />,
   'application-checklist': <Preparation view="checklist" />, 'eligibility-check': <Preparation view="eligibility" />,

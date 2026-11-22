@@ -8,6 +8,8 @@ export interface PlanDocument {
 export interface PlanProgram {
   name: string; round: string; type: string; quota: string; method: string; minimum: string;
   eligibility: string; pages: number[]; document_id: string;
+  interview?: string; scope?: string;
+  field_pages?: Record<'method' | 'minimum' | 'eligibility' | 'interview', number[]>;
 }
 export interface AdmissionPlan {
   id: string; university: string; campus: string; region: string; year: number; review_status: 'draft';
@@ -57,6 +59,15 @@ export function parsePlanCatalog(input: unknown): PlanCatalog {
     for (const item of e.programs) {
       const p = record(item); strings(p, ['name', 'round', 'type', 'quota', 'method', 'minimum', 'eligibility', 'document_id']);
       const d = docs.get(String(p.document_id)); requireValue(d?.format === 'pdf'); pages(p.pages, d.page_count);
+      if (p.interview !== undefined) strings(p, ['interview']);
+      if (p.scope !== undefined) strings(p, ['scope']);
+      if (p.field_pages !== undefined) {
+        const fields = record(p.field_pages); strings(p, ['interview']);
+        for (const key of ['method', 'minimum', 'eligibility', 'interview']) {
+          pages(fields[key], d.page_count);
+          requireValue((fields[key] as number[]).every(page => (p.pages as number[]).includes(page)));
+        }
+      }
     }
     for (const item of e.notices) { const n = record(item); strings(n, ['title']); url(n.url); date(n.checked_at); requireValue(typeof n.change_notice === 'boolean'); }
   }
