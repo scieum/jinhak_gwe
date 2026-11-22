@@ -168,11 +168,11 @@ App Shell
 
 PC (desktop · wide)
 
-왼쪽 사이드바 248px, {colors.canvas-soft} 배경입니다. 접으면 72px 레일이 됩니다.
+왼쪽 사이드바 248px, {colors.canvas} 배경 + 오른쪽 1px {colors.hairline-soft}입니다(2026-11-22 v2). 접으면 72px 레일이 됩니다.
 사이드바는 대분류 행(`sidebar-group`)과 그 아래 소분류 행(`sidebar-item`, 들여쓰기 16)으로 됩니다. 지금 화면이 속한 대분류만 펼치고 나머지는 접습니다(누르면 펼침). 학생: 홈 / 성적 / 대학 찾기 / 수시 전략
 교사(교사 모드에서만): 우리 반 / 성적 관리 / 수합·집계 (소분류는 App Shell 모바일 절의 표 참조, PRD 6-12). 상단 바 제목 앞에 경로 "대분류 › 소분류"를 {typography.caption} {colors.text-muted}로 보여줍니다.
 선택된 메뉴는 {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대 + {colors.ink} 글자
-상단 바 64px: 페이지 제목, 데이터 기준일 배지, 모드 전환(학생 · 교사 세그먼트), 잠금 버튼
+상단 바 대신 page-header를 씁니다(2026-11-22 v2): 페이지 제목, 데이터 기준일 배지, 모드 전환(학생 · 교사 세그먼트), 잠금 버튼
 오른쪽 보조 패널(선택) 360px: 산출 근거, 수시로 경고, 학생 상담 메모처럼 본문과 나란히 봐야 하는 내용
 
 로그인·회원가입(교사·관리자, 2026-11-18): lab-stock-app 화면을 그대로 따릅니다 — PC는 상단 web-header(워드마크 + 오른쪽 회원가입/로그인 버튼) + 왼쪽 반 폼(폭 440) / 오른쪽 반 {colors.canvas-soft} 서비스 소개 패널(제목 + 리드 + 소개 카드 4장, 진학 내비 내용), 모바일은 nav-pill + 폼만. 로그인 전 화면에는 탭바·사이드바·sub-nav가 없습니다. 모서리 0 등 이 문서의 규칙을 따릅니다.
@@ -271,7 +271,7 @@ grade-input-table — 성적 입력 표(PC)
 석차등급 미산출 과목의 등급 칸은 {colors.canvas-soft} 빗금 + "미산출" 캡션(입력 불가)
 과목 유형 열에 subject-type-chip(공통·일반·진로·융합·체육예술·과탐실험·교양)
 
-subject-card — 성적 입력(모바일)
+subject-card — 성적 입력(모바일). 변형 density=compact(2026-11-22 v2): 패딩 12·16, 카드 사이 선 하나로 이어지는 목록(첫 화면에 5과목 이상)
 
 흰 카드 + 1px {colors.hairline-soft}, {rounded.md}
 과목명 {typography.title}, 아래 줄에 학점 · 성취도 · 등급 칩, 오른쪽에 원점수/평균
@@ -294,7 +294,7 @@ stat-tile — 홈 내 요약, 대시보드 숫자
 라벨 {typography.caption} {colors.text-muted} → 값 {typography.numeric} → 보조 설명 {typography.body-sm}
 내 위치 값과 화면의 핵심 숫자만 {colors.accent} 글자를 허용합니다.
 변형 hero(2026-11-22 v2): 화면 맨 위 한 곳에만 둡니다. 카드 없이 Page 바탕 위에 라벨 → 값 {typography.display} → 해석 한 줄 {typography.body} {colors.ink}(예: "5등급 평균 2.1을 옮긴 범위예요"). 한 화면에 hero는 1개입니다.
-변형 filter(2026-11-22 v2): 타일 줄이 아래 목록을 거를 때만 씁니다. 선택된 타일 1개 = Elevation Selected 처리, 나머지 = 흰 카드. 판정 개수 타일은 값 앞에 판정 아이콘과 판정 글자색을 씁니다.
+변형 filter(2026-11-22 v2): 타일 줄이 아래 목록을 거를 때만 씁니다. 선택된 타일 1개 = Elevation Selected 처리, 나머지 = 흰 카드. 판정 개수 타일은 값 앞에 판정 아이콘과 판정 글자색을 씁니다(안정·충족 ● / 적정·근접 ◐ / 소신 ▲ / 위험·미충족 ■, 자료 부족은 아이콘 없음).
 목록을 거르지 않는 같은 무게의 타일을 3개 이상 늘어놓지 않습니다. 그럴 땐 hero 1개 + 보조 숫자 한 줄(라벨 · 값)로 줄입니다.
 
 range-bar-5to9 — 5 to 9 핵심 컴포넌트
@@ -321,7 +321,7 @@ judge-badge — 될각 판정
 
 grade-trend-chart — 등급 추이 선 차트(2026-11-18): 세로축 등급(1이 위, 내신 1~5 / 모의고사 1~9 눈금. 기본 보기는 데이터 범위 ±0.5로 좁히고 전체 눈금은 토글(2026-11-22 v2)), 가로축 학기 또는 시험 회차. 선택한 계열 1개만 2px {colors.accent} 선 + 점, 나머지 계열은 1px {colors.text-faint} 선 + 선 끝 이름표(계열을 색으로 구분하지 않음). 가장 최근 점에 값 라벨. 기준선은 1px {colors.hairline} 점선 + 캡션 1개. 차트 아래 같은 값의 data-table(대체 텍스트 역할). 모서리 0, 그림자 없음.
 
-cut-dot-plot — 입결 점 그래프(2026-11-18 사용자 요청 "점으로 다 찍혀서 학교별로 어느 과 몇 점대인지 한눈에"): 가로축 9등급(1이 왼쪽, 0.5 눈금 {typography.caption} {colors.ink}, 세로 1px {colors.hairline-soft} 격자), 세로축 행 = 대학(또는 대학·학과) 한 줄씩, 행 머리 = univ-logo 20 + 이름(한 줄). 점 = 학과·전형 하나의 입결 컷(기본 70% 컷), 지름 8, {colors.ink}. 전형 유형은 탭(교과 · 종합 · 논술 · 기타 · 전체)으로 거르고, 전체일 때만 점 모양으로 구분합니다: 교과 ● 채운 원, 종합 ○ 빈 원(1.5px), 논술 ◆ 채운 마름모, 기타 ◇ 빈 마름모 + 그래프 위 범례. 최근 3년을 같이 볼 때 자료가 있는 가장 최근 연도 = {colors.ink}, 1년 전 = {colors.year-prev}, 2년 전 = {colors.year-old} 같은 모양(흰 바탕 그래픽 대비 3:1 이상), 연도 점 사이 1px {colors.text-muted} 선. 내 위치 = 환산 범위 {colors.accent-soft} 세로 띠 + 대표값 2px {colors.accent} 세로선 + 위 말풍선. 점을 누르면 말풍선(대학 · 학과 · 전형 · 연도 · 컷 · 모집인원). 판정 이름·판정 색은 쓰지 않습니다(될각과 섞이지 않게). 검수 전 데이터는 점을 찍지 않고 행 끝에 "준비 중" data-status-badge. 표 보기(data-table)와 같은 데이터를 세그먼트로 전환합니다.
+cut-dot-plot — 입결 점 그래프(2026-11-18 사용자 요청 "점으로 다 찍혀서 학교별로 어느 과 몇 점대인지 한눈에"): 가로축 9등급(1이 왼쪽, 0.5 눈금 {typography.caption} {colors.ink}, 세로 1px {colors.hairline-soft} 격자), 세로축 행 = 대학(또는 대학·학과) 한 줄씩, 행 머리 = univ-logo 20 + 이름(한 줄). 점 = 학과·전형 하나의 입결 컷(기본 70% 컷), 지름 11(2026-11-22 v2), {colors.ink}. 전형 유형은 탭(교과 · 종합 · 논술 · 기타 · 전체)으로 거르고, 전체일 때만 점 모양으로 구분합니다: 교과 ● 채운 원, 종합 ○ 빈 원(1.5px), 논술 ◆ 채운 마름모, 기타 ◇ 빈 마름모 + 그래프 위 범례. 최근 3년을 같이 볼 때 자료가 있는 가장 최근 연도 = {colors.ink}, 1년 전 = {colors.year-prev}, 2년 전 = {colors.year-old} 같은 모양(흰 바탕 그래픽 대비 3:1 이상), 연도 점 사이 1px {colors.text-muted} 선. 내 위치 = 환산 범위 {colors.accent-soft} 세로 띠 + 대표값 2px {colors.accent} 세로선 + 위 말풍선. 점을 누르면 말풍선(대학 · 학과 · 전형 · 연도 · 컷 · 모집인원). 판정 이름·판정 색은 쓰지 않습니다(될각과 섞이지 않게). 검수 전 데이터는 점을 찍지 않고 행 끝에 "준비 중" data-status-badge. 표 보기(data-table)와 같은 데이터를 세그먼트로 전환합니다.
 
 placement-board — 배치표(2026-11-18 사용자 요청 "모든 대학을 좌표로 찍어 예전 정시 배치표 같은 느낌"): 세로축 = 환산 9등급(1이 위, 0.1 눈금, 0.5마다 {colors.hairline-soft} 가로 격자, 왼쪽 축 라벨 {typography.caption} {colors.ink}), 가로 = 열(기본 계열: 인문 · 사회 · 자연 · 공학 · 의약 · 예체능), 열 머리 {typography.label}. 칸 = 대학·학과 이름표(univ-logo 16 + "대학 학과" {typography.caption}, 한 줄 말줄임, 모서리 0, 채움 없음)를 그 학과 입결 컷(기본 70% 컷) 높이에 놓습니다. 같은 높이에서 겹치면 아래로 한 줄씩 밀어 쌓고 순서는 컷 순서를 지킵니다. 내 위치 = 모든 열을 가로지르는 {colors.accent-soft} 띠(환산 범위) + 2px {colors.accent} 가로선(대표값) + 축 옆 말풍선. 전형 유형 탭(교과 · 종합 · 논술 · 기타 · 전체)으로 거르고, 전체일 때만 이름표 앞에 모양 표시(● 교과 ○ 종합 ◆ 논술 ◇ 기타) + 범례. 기본 보기는 내 위치 ±1.0등급, 세로 스크롤로 1~9 전체. 판정 이름·판정 색은 쓰지 않습니다(될각과 섞이지 않게). 검수 전 데이터는 이름표 없이 열 아래 "준비 중 n개" data-status-badge. 모바일은 열 하나를 segmented-control로 골라 봅니다. 표 보기(data-table)·대학별 점 보기(cut-dot-plot)와 같은 데이터이며 보기 전환 segmented-control(표 · 배치표 · 대학별 점)로 바꿉니다.
 
@@ -329,7 +329,7 @@ judge-lane — 될각 PC 레인 보기
 
 판정별 세로 열 4개, 열 머리에 judge-badge + 개수, 열 안에 univ-card
 
-univ-card — 대학·전형 카드
+univ-card — 대학·전형 카드. 공개 변형(판정 없음)(2026-11-22 v2): 판정 머리 줄 없이 로고 + 대학명이 첫 줄, 판정·내 위치가 없는 전형계획 목록에 씁니다
 
 흰 카드 + 1px {colors.hairline-soft}, {rounded.md}, 패딩 {spacing.md}(모바일) / {spacing.lg}(PC)
 왼쪽 univ-logo(로고 파일이 없으면 univ-monogram), 대학명 {typography.heading-3}, 전형·모집단위 {typography.body-sm} {colors.text-muted}
@@ -458,6 +458,10 @@ filter-chip — 필터 선택지(off/on): off = {colors.canvas-soft} 채움, on 
 
 page-header — PC 화면 머리(2026-11-22 v2): 모든 PC 앱 셸 화면에 같은 규격으로 둡니다. 콘텐츠 영역 위 여백 32, 왼쪽에 상위 메뉴 이름 {typography.caption} {colors.text-muted}(선택) → 화면 제목 {typography.heading-1} → 리드 한 줄 {typography.body-lg}(선택). 오른쪽 끝 정렬로 데이터 기준일 data-status-badge + 화면 동작 버튼(주요 버튼은 최대 1개). 아래 여백 24 뒤에 첫 카드가 옵니다. 모바일은 app-bar(상세) 또는 화면 제목 {typography.heading-1}(대분류 첫 화면)을 씁니다.
 
+brand-logo — 서비스 워드마크(JINHAK 로고 이미지, 원본 비율 그대로)(2026-11-22 v2): PC 사이드바 위, 모바일 대분류 첫 화면 머리, 로그인·회원가입 머리에 같은 컴포넌트로 씁니다. 글자 "진학 내비" 워드마크를 따로 만들지 않습니다.
+
+score-bar — 단일 가로 막대(2026-11-22 v2): 높이 6, 모서리 0, 트랙 {colors.canvas-soft}, 채움 {colors.ink}. 내 값 하나를 보여 줄 때만 채움을 {colors.accent}로 씁니다. 축 범위를 좁히면 막대 아래 캡션으로 범위를 밝힙니다(예: "만점 대비 95~100%"). 대학별 환산의 만점 대비 비율 등에 씁니다.
+
 tab-bar-pill — 모바일 하단 탭바
 
 화면 아래 {spacing.md} 띄워 떠 있는 알약 막대, {colors.canvas} + 1px {colors.hairline} 외곽선(Page 바탕과 구분)(2026-11-22 v2), 높이 64px
@@ -468,7 +472,7 @@ sidebar — PC 앱 셸
 
 {colors.canvas} + 오른쪽 1px {colors.hairline-soft}(Page 바탕과 구분)(2026-11-22 v2), 위에 워드마크 "진학 내비", 메뉴 행은 직각, 선택은 {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대 + {colors.ink} 글자
 그룹 이름 {typography.caption} {colors.text-muted}
-맨 아래 데이터 기준일과 백업 버튼
+맨 아래 데이터 기준일과 백업 버튼. 로그인한 교사·관리자는 맨 아래 "로그아웃"(icon/log-out)(2026-11-22 v2)
 
 nav-pill — 공개 페이지 상단(PC)
 

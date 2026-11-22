@@ -1,7 +1,7 @@
 {
   "source": {
     "file": "docs/design.md",
-    "sha256": "d745c6233f1aeb2cff72183797d012cebbe20381c09e56100d88380b62579dbb"
+    "sha256": "b70075e1cbee1a6857de9023cacf5ae9451acfbce148b7db15c9a82c5d037f2c"
   },
   "frames": [
     [
@@ -147,7 +147,9 @@
     "sub-nav",
     "cut-dot-plot",
     "placement-board",
-    "page-header"
+    "page-header",
+    "brand-logo",
+    "score-bar"
   ],
   "screens": {
     "홈": "home",
