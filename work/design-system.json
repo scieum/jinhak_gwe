@@ -404,6 +404,64 @@
         "330:16438",
         "330:1766"
       ]
+    },
+    "round2": {
+      "icon/log-out": "350:4591",
+      "brand-logo": {
+        "set": "350:4602",
+        "size": {
+          "header": "350:4596",
+          "sidebar": "350:4598",
+          "login": "350:4600"
+        }
+      },
+      "score-bar": {
+        "set": "350:4617",
+        "fill": {
+          "ink": "350:4603",
+          "accent": "350:4610"
+        },
+        "show caption#350:0": "BOOLEAN false",
+        "axis-min#350:3": "TEXT",
+        "axis-max#350:6": "TEXT",
+        "position": "fill.paddingLeft = round(ratio × track width) − 1"
+      },
+      "stat-tile label": {
+        "safe": [
+          "351:40133",
+          "351:40140",
+          "351:40147",
+          "351:40154"
+        ],
+        "fit": [
+          "351:40161",
+          "351:40170",
+          "351:40179",
+          "351:40188"
+        ]
+      },
+      "sidebar white": {
+        "학생 최저로 찾기": "351:40197 (icon/menu)",
+        "교사 로그아웃": "351:40207",
+        "관리자 로그아웃": "351:40216",
+        "교사 백업 pill": "show icon=false"
+      },
+      "univ-card public": "351:40220",
+      "subject-card density": {
+        "compact default": "351:51041",
+        "compact error": "351:51052"
+      },
+      "cut-dot-plot/dot": {
+        "dot": "8 | 11",
+        "dot=11 ids": "351:51064 … 351:51086",
+        "recipe": "setProperties({dot:'11'}), dot-j-row.paddingLeft = round(px(v) − 5.5); 덮어쓴 점은 resetOverrides() 후 다시 설정"
+      },
+      "page-header": {
+        "show logo#351:47": "BOOLEAN false",
+        "logo#351:50": "INSTANCE_SWAP",
+        "show heart#351:53": "BOOLEAN false"
+      },
+      "grade-trend-chart axis": "y-tick-k = min + (k−1)(max−min)/(n−1); Y(g) = round(12 + (g−min)/(max−min) × 168)"
     }
   }
 }
