@@ -402,7 +402,7 @@ PC에서 누르면 왼쪽 원문 해당 위치로 스크롤하고 그 문장을 
 
 ai-label — "AI 분석 · 참고용"
 
-흑백 알약 배지. AI가 만든 모든 블록 머리에 붙입니다.
+흑백 알약 배지. AI가 만든 모든 블록 머리에 붙입니다. 예외(2026-11-23 대학 상세 위키): 관리자가 검수한 뒤 공개하는 공식 문서(시행계획·모집요강) 요약은 ai-label 대신 섹션 머리에 data-status-badge "공식 문서 요약 · 검수일 YYYY-MM-DD"를 한 번 붙이고, 사실 블록마다 출처 캡션 + "원문 보기 ↗"를 둡니다. 검수 전에는 본문 없이 섹션 제목과 "준비 중" data-status-badge만 보입니다.
 교사 모드
 
 mode-switch — 학생 · 교사 세그먼트(PC 상단 바, 모바일 메뉴)
@@ -448,6 +448,8 @@ Navigation
 app-bar — 모바일 상단 앱바: 높이 56, 왼쪽 icon/chevron-left, 가운데 화면 제목 {typography.heading-4}, 오른쪽 보조 동작 1개
 
 sidebar-group — PC 사이드바 대분류 행(2026-11-18): 아이콘 + {typography.link} SemiBold + 오른쪽 chevron(펼침 ▾ / 접힘 ›), 높이 44. 현재 대분류는 {colors.ink} 글자, 나머지는 {colors.ink-soft}. 대분류 행 자체에는 선택 채움을 쓰지 않고, 선택 표시는 소분류 행(sidebar-item)에만 둡니다.
+
+sub-nav 변형 anchor(2026-11-23 대학 상세 위키): 긴 상세 화면의 섹션 이동 탭입니다. 모양은 sub-nav와 같고(높이 44, {colors.canvas} + 아래 1px {colors.hairline}, 선택 = {colors.ink} SemiBold + 아래 2px {colors.accent} 막대), 상세 화면에서도 씁니다. 모바일은 app-bar 바로 아래, PC는 page-header 아래에 붙어 고정됩니다. 탭 이름 = 섹션 제목. 누르면 그 섹션 제목이 탭 아래로 오게 스크롤하고, 스크롤하면 화면 위쪽에 걸린 섹션의 탭이 선택됩니다. 소분류 이동용 sub-nav와 한 화면에 함께 두지 않습니다.
 
 sub-nav — 모바일 소분류 가로 탭(2026-11-18): 앱바 아래 높이 44, {colors.canvas} 바탕 + 아래 1px {colors.hairline}. 탭 = {typography.link}, 선택 = {colors.ink} SemiBold + 아래 2px {colors.accent} 막대, 나머지 {colors.text-muted}. 넘치면 가로 스크롤(잘린 탭이 보이게 오른쪽 여백 0). 모서리 0, 그림자 없음.
 
