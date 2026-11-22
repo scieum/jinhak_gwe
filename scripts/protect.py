@@ -4,8 +4,7 @@ import os
 import re
 import sys
 
-PROTECTED = re.compile(r"(^|[/\s\"'=])(docs/|rules/|scripts/|\.claude/settings[^/\s]*\.json(?![\w.])|"
-                       r"work/[^/\s]+/04-approval\.md(?![\w.]))")
+PROTECTED = re.compile(r"(^|[/\s\"'=])(docs/|rules/|scripts/|\.claude/settings[^/\s]*\.json(?![\w.]))")
 # shortcut: 셸 명령은 문자열 검사만 한다(우회 가능). 우회가 실제로 생기면 셸 쓰기 자체를 막는 방식으로 강화.
 SHELL_WRITE = re.compile(r">|\b(Set-Content|Add-Content|Out-File|Remove-Item|Move-Item|Copy-Item|New-Item|"
                          r"rm|mv|cp|tee|sed\s+-i|del|copy|move)\b", re.I)

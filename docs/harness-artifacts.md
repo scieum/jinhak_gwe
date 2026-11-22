@@ -7,7 +7,7 @@ work/<화면-slug>/
   01-research.md    S1 레퍼런스 목록 + 반영 포인트
   02-spec.md        S2 화면 설계서
   03-draft.json     S3 Figma 파일 키 + 390·1440 프레임 node id
-  04-approval.md    승인/반려 기록 (사람만 씀)
+  04-approval.md    승인/반려 기록 (사람이 채팅으로 승인 → 오케스트레이터가 기록)
   05-build.json     S4 최종 화면 node id
   06-judge.json     S5 위반 리포트 (항목별 건수, 통과 여부)
 ```

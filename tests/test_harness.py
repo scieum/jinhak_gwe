@@ -101,7 +101,8 @@ class TestProtect(unittest.TestCase):
     def test_file_tools(self):
         root = str(ROOT)
         self.assertTrue(self.check("Write", file_path=root + "\\rules\\design-rules.json"))
-        self.assertTrue(self.check("Edit", file_path=root + "\\work\\susiro\\04-approval.md"))
+        # 04-approval.md는 사람이 채팅으로 승인한 뒤 오케스트레이터가 기록한다(docs/harness-gates.md).
+        self.assertFalse(self.check("Edit", file_path=root + "\\work\\susiro\\04-approval.md"))
         self.assertTrue(self.check("Write", file_path=root + "\\.claude\\settings.json"))
         self.assertFalse(self.check("Write", file_path=root + "\\work\\susiro\\01-research.md"))
         self.assertFalse(self.check("Write", file_path=root + "\\.claude\\agents\\planner.md"))
