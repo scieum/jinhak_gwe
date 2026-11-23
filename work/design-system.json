@@ -185,6 +185,7 @@
     "icon/clipboard-check": "680:219211", "data-status-badge/self": "680:219218 (icon#680:1 INSTANCE_SWAP)", "sidebar-item/지원 자격 확인표": "680:219382 (white) · 680:219391 (soft)",
     "filter-chip label 연결": "13개 변형 글자 → label#520:6 (2026-11-24), event 변형은 trail-icon 없음", "sidebar 관리자 계열표·위키 요약": "101:2245 (soft) · 335:2959 (white) items/규칙 관리에 추가",
     "cut-dot-plot band/line 2026-11-24": "band-row 771:38335 · my-line-row 771:38337 (show my position#102:46), 위치 공식 L = 행 머리 폭 120|140|220",
+    "tab-bar-pill 관리자": "mode=관리자 (규칙 관리 · 더보기): 규칙 관리/soft 800:106 · 더보기/soft 800:132 · 규칙 관리/white 800:158 · 더보기/white 800:184",
     "checkbox": "466:176646", "checkbox/off": "466:176642", "checkbox/on": "466:176643", "brand-logo": "350:4602 (2026-11-23 U:NAVI SVG, header 350:4596 132w · sidebar 350:4598 176w · login 350:4600 176w, 노드 이름 brand-logo/… 팔레트 예외)",
     "icon/folder": "426:2", "data-status-badge/fact": "426:6", "univ-card/list-row": "426:8", "data-table/row/expand": "427:8596", "data-table/row/expand-open": "427:8881",
     "icon/layers": "413:12", "placement-board": "110:3433", "placement-board/layer": {"mobile": "415:3204", "pc": "415:3312"}, "placement-board/layer-cell": "415:3203", "placement-board/layer-cell/mobile": "415:3171", "placement-board/layer-cell/pc": "415:3187",
