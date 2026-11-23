@@ -57,7 +57,9 @@ test('rules screens의 모든 slug에 화면 자리가 있다', () => {
     readFileSync(resolve(process.cwd(), '../rules/design-rules.json'), 'utf8'),
   ) as { screens: Record<string, string> };
   const all = [...allItems(), ...DETAILS, ...OUTSIDE];
-  for (const slug of Object.values(rules.screens)) {
+  // 위키는 대학 상세를 늘린 것이라(02-spec 배치 결정) 대학 상세 화면 자리를 쓴다
+  const host: Record<string, string> = { 'univ-detail-wiki': 'univ-detail' };
+  for (const slug of Object.values(rules.screens).map((x) => host[x] ?? x)) {
     const s = all.find((x) => x.slug === slug);
     expect(s, slug).toBeDefined();
     const { container, unmount } = renderAt(s!.path);

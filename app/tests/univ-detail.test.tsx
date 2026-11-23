@@ -4,6 +4,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { ProgramDetail, UnivDetail } from '../src/screens/UnivDetail';
 import { programSummaries } from '../src/domain/resultBrowse';
 import { resetReleasedResults } from '../src/data/releasedResults';
+import { resetUnivWiki } from '../src/data/univWiki';
 import { sampleUnits } from './result-browser.test';
 
 const file = (units: unknown[]) => ({ format: 'jinhak-navi-released-results', version: 1, generated_at: '', units });
@@ -40,5 +41,20 @@ describe('대학·전형 상세', () => {
     serve([]);
     at('/univ-detail?u=없는대학');
     expect(await screen.findByRole('heading', { name: '대학을 찾지 못했어요' })).toBeTruthy();
+  });
+});
+
+describe('대학 상세 위키', () => {
+  it('섹션 이동 탭 6개, 검수 전 위키 섹션은 제목과 "준비 중"만 보인다', async () => {
+    resetUnivWiki();
+    serve(sampleUnits);
+    at('/univ-detail?u=가나대학교');
+    expect(await screen.findByRole('heading', { name: '가나대학교' })).toBeTruthy();
+    const nav = screen.getByRole('navigation', { name: '섹션 이동' });
+    expect(within(nav).getAllByRole('link').map(a => a.textContent)).toEqual(['개요', '특이점', '반영 방법', '수능 최저', '전형요소', '비슷한 대학']);
+    for (const title of ['올해 특이점', '전년 대비 바뀐 점', '2028 전형 목록', '전형별 반영 방법', '수능 최저', '전형요소', '입결이 비슷한 대학'])
+      expect(screen.getByRole('heading', { name: title })).toBeTruthy();
+    expect(await screen.findAllByText('준비 중')).toHaveLength(7);
+    expect(screen.queryByText(/공식 문서 요약/)).toBeNull();
   });
 });
