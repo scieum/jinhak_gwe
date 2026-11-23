@@ -1,7 +1,7 @@
 {
   "source": {
     "file": "docs/design.md",
-    "sha256": "367e55561ee4fb1cda939189cab49562f53df18ccde1badca21767ba0645fd77"
+    "sha256": "c94a146f1eee9f391be658352171acf01d6b8d068e2d207bf971d4a6bd6f4a76"
   },
   "frames": [
     [
@@ -177,14 +177,16 @@
     "로그인": "login",
     "회원가입": "signup",
     "최저로 찾기": "minimum-search",
-    "대학 상세 위키": "univ-detail-wiki"
+    "대학 상세 위키": "univ-detail-wiki",
+    "학과별 입결 구간표": "dept-tier"
   },
   "requires_trace_accordion": [
     "five-to-nine",
     "univ-score",
     "doelgak",
     "minimum-search",
-    "univ-detail-wiki"
+    "univ-detail-wiki",
+    "dept-tier"
   ],
   "requires_disclaimer_note": [
     "home",
@@ -200,7 +202,8 @@
     "teacher-dashboard",
     "admission-results",
     "minimum-search",
-    "univ-detail-wiki"
+    "univ-detail-wiki",
+    "dept-tier"
   ],
   "gates": {
     "G1": {
