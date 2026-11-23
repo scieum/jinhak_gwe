@@ -1,7 +1,7 @@
 {
   "source": {
     "file": "docs/design.md",
-    "sha256": "dfeff69123613ab97eb1e644fd0367f9eba63485540ccda05996ebaef2a4136b"
+    "sha256": "c0036f041e3b5594e21c9f11abfdd9959809445d45e668627eb68b403a1c773e"
   },
   "frames": [
     [
@@ -58,7 +58,8 @@
   ],
   "radius_exceptions": [],
   "palette_exempt": [
-    "univ-logo"
+    "univ-logo",
+    "brand-logo"
   ],
   "font_family": [
     "Pretendard",
@@ -173,7 +174,6 @@
     "학생 기록 상세": "student-record",
     "성적 불러오기": "score-import",
     "수능 최저 판정": "minimum-board",
-    "누가기록": "homeroom-logs",
     "내 성적 추이": "score-trend",
     "수시 입결": "admission-results",
     "로그인": "login",
