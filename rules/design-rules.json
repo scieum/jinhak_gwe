@@ -179,7 +179,16 @@
     "최저로 찾기": "minimum-search",
     "대학 상세 위키": "univ-detail-wiki",
     "학과별 입결 구간표": "dept-tier",
-    "특수 계열 모아보기": "special-tracks"
+    "특수 계열 모아보기": "special-tracks",
+    "전형 성향 탐색": "admission-style",
+    "전국 배치표": "national-placement",
+    "지원 자격 확인표": "eligibility-check",
+    "전형 비교": "compare",
+    "원서·서류 체크리스트": "application-checklist",
+    "입시 일정": "calendar",
+    "상담 질문·할 일": "counsel-tasks",
+    "학과 계열표 검수": "admin-fields",
+    "대학 위키 요약 검수": "admin-wiki"
   },
   "requires_trace_accordion": [
     "five-to-nine",
