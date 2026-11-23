@@ -276,7 +276,7 @@ text-input / text-input-focused
 
 text-input-error
 
-2px {colors.judge-risk} 링 + 아래에 {typography.caption} {colors.judge-risk} 안내 문구(예: "분포비율 합이 100%가 아니에요 (98.5%)")
+2px {colors.judge-risk} 링 + 아래에 icon/triangle-alert 14 {colors.judge-risk} + 간격 4 + {typography.caption} {colors.judge-risk} 안내 문구(예: "분포비율 합이 100%가 아니에요 (98.5%)"). 입력칸 밖 오류 줄(약관 동의 등)도 같은 아이콘 + 문구 모양을 씁니다(2026-11-23 사용자 결정: 색 + 아이콘 + 글자)
 checkbox(2026-11-23 원서·서류 체크리스트 · 전형 비교) — 켜고 끄는 네모 칸입니다. 20×20, 모서리 0, 꺼짐 = {colors.canvas} 채움 + 1.5px {colors.ink-soft} 테두리, 켜짐 = {colors.ink} 채움 + {colors.on-primary} 체크 표시, 누르는 영역 44×44. 판정 색 · Route Blue를 쓰지 않고, 켜져도 옆 글자에 취소선 · 회색 처리를 하지 않습니다(대비 유지). 옆에 상태 글자(예: "완료")를 함께 둡니다. 쓰는 곳: 원서·서류 체크리스트 항목을 한 번 눌러 완료로 표시, bottom-sheet 여러 개 고르는 목록, mask-preview의 "가린 내용을 확인했어요". 하나만 고르는 목록에는 쓰지 않습니다.
 파일 불러오기(2026-11-23 학과 계열표 검수): 브라우저 기본 파일 입력 모양을 그대로 쓰지 않고 button-outline "○○ 파일 고르기" + 아래 {typography.caption} {colors.text-muted} 형식 안내(고른 뒤에는 파일 이름)로 씁니다. 파일 창과 내려받기는 OS 기본 창이라 시안에 그리지 않습니다.
 
