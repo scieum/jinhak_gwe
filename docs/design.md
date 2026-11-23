@@ -264,7 +264,7 @@ button-pill-soft — "산출 근거 보기", "원문 보기 ↗", "필터"
 button-danger-text — "이 기기에서 학급 데이터 지우기"
 
 배경 없음, 글자 {colors.judge-risk}. 누르면 반드시 확인 모달을 띄웁니다.
-확인 창(2026-11-23): 지우기 · 되돌리기 어려운 저장 · 저장하지 않고 나가기 · 내보내기 전에 PC modal(최대 폭 560) / 모바일 bottom-sheet로 묻습니다. 제목 질문 {typography.heading-4} + 함께 지워지거나 바뀌는 것 한 줄 {typography.body} + button-primary 실행(잉크, 예: "삭제") + button-outline "취소"이고, PC는 버튼을 오른쪽 정렬합니다. 확인 창 안 실행 버튼에는 위험 색 채움을 쓰지 않습니다. 끝난 결과는 toast 한 줄로 알립니다.
+확인 창(2026-11-23): 지우기 · 되돌리기 어려운 저장 · 저장하지 않고 나가기 · 내보내기 전에 PC modal(최대 폭 560) / 모바일 bottom-sheet로 묻습니다. 예외: 내 기기에 파일로 저장하기(형식 목록에서 xlsx · hwpx · pdf를 고르는 저장)는 학교 밖으로 보내는 일이 아니라서 PC는 목록에서 고르면 바로 저장하고 toast로 알립니다. 모바일은 형식을 고르는 bottom-sheet의 "저장" 버튼이 확인을 겸합니다(2026-11-23 사용자 결정, 결과 집계). 제목 질문 {typography.heading-4} + 함께 지워지거나 바뀌는 것 한 줄 {typography.body} + button-primary 실행(잉크, 예: "삭제") + button-outline "취소"이고, PC는 버튼을 오른쪽 정렬합니다. 확인 창 안 실행 버튼에는 위험 색 채움을 쓰지 않습니다. 끝난 결과는 toast 한 줄로 알립니다.
 Inputs & Forms
 
 text-input / text-input-focused

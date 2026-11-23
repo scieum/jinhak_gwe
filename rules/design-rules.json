@@ -1,7 +1,7 @@
 {
   "source": {
     "file": "docs/design.md",
-    "sha256": "c0036f041e3b5594e21c9f11abfdd9959809445d45e668627eb68b403a1c773e"
+    "sha256": "130da87212524fd96fc1edbd209d8a0a9e5d7cc5d51469157d24e4020b45f92c"
   },
   "frames": [
     [
@@ -191,7 +191,8 @@
     "상담 질문·할 일": "counsel-tasks",
     "학과 계열표 검수": "admin-fields",
     "대학 위키 요약 검수": "admin-wiki",
-    "대학 지도": "univ-map"
+    "대학 지도": "univ-map",
+    "우리 반 입시 일정": "class-calendar"
   },
   "requires_trace_accordion": [
     "five-to-nine",
