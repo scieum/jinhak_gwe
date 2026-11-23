@@ -1,7 +1,7 @@
 {
   "source": {
     "file": "docs/design.md",
-    "sha256": "d1749cefbe9aff219d510f37a8aeaf8f3d512b2069bad5ff318e466aeed938e2"
+    "sha256": "54f42b31d014e244e4fd6969c8586d39b6f1870022b63f49a55b3857acc7e545"
   },
   "frames": [
     [
@@ -51,7 +51,17 @@
     "#b58400",
     "#fbefc7",
     "#5c5c5c",
-    "#8c8c8c"
+    "#8c8c8c",
+    "#646814",
+    "#f0f0d8",
+    "#466b38",
+    "#e6efe0",
+    "#5c4a9e",
+    "#edeaf6",
+    "#7e4a8c",
+    "#f3eaf4",
+    "#8a4070",
+    "#f6e9f0"
   ],
   "radius": [
     0
@@ -59,7 +69,8 @@
   "radius_exceptions": [],
   "palette_exempt": [
     "univ-logo",
-    "brand-logo"
+    "brand-logo",
+    "mascot-illustration"
   ],
   "font_family": [
     "Pretendard",
@@ -152,7 +163,9 @@
     "brand-logo",
     "score-bar",
     "checkbox",
-    "region-map"
+    "region-map",
+    "promo-banner",
+    "mascot-illustration"
   ],
   "screens": {
     "홈": "home",
