@@ -1,27 +1,33 @@
 # 02-spec — 결과 집계 (result-summary, 교사용)
 
-작성일 2026-11-18 · 담당 planner (S2)
+작성일 2026-11-18 · 개정 2026-11-23(나이스 연동 삭제 · 저장 기능 추가) · 담당 planner (S2)
 근거: 01-research.md(P1~P7, S2 메모), work/mock-score/01-research.md(가채점 내용), docs/prd.md(6-10 가채점 수합·수시 결과 집계, 7-3, 8장 AdmissionOutcome·MockScore), docs/design.md, work/_pending/apply4.py(내비 대분류-소분류)
 위치: 교사 대분류 "수합·집계" › 소분류 "결과 집계". 내비에 있던 "가채점 수합"은 이 화면의 탭으로 옮겨요(탭: 수시 결과 · 가채점 수합).
+
+개정 메모(2026-11-23, 사용자 요청 "나이스랑 연동될 게 없다 · hwpx, pdf 저장 기능 추가"):
+- 나이스(NEIS) 연동·불러오기를 모두 뺐어요: "나이스 엑셀 불러오기" 버튼, 불러오기 흐름·상태·덮어쓰기 확인 창, "나이스 대입전형자료 제공현황" 출처 문구.
+- "xlsx 내보내기"를 "저장" 하나로 바꾸고 형식(xlsx · hwpx · pdf)을 고르게 했어요(8절 저장 규칙).
 
 ## 0. 결정 사항
 
 | 항목 | 결정 |
 |---|---|
 | 화면 구조 | 위에서 아래로: 탭(수시 결과 · 가채점 수합) → `stat-tile` 한 줄 → 도구 줄 → `data-table` 하나 → `disclaimer-note`. |
+| 자료 출처 | 두 가지뿐이에요. ① 학생이 보낸 카드(카드 수합 card-collect에서 받은 지원 목록: 대학 · 전형) ② 교사가 학생별 보기에서 직접 입력한 결과. 외부 시스템(나이스 등) 연동·파일 불러오기는 없어요. |
 | 표 보기 | 수시 결과 탭은 `segmented-control` "대학별 · 학생별"로 같은 `data-table`의 보기를 바꿔요. 기본은 대학별. 결과 입력은 학생별 보기에서 해요. |
 | 결과 표기 | 실제 기록 값만 써요: 합격 · 충원 합격 · 불합격 · 1단계 불합격 · 미등록 · 미입력. 모두 {colors.ink} 흑백 글자이고 판정 색·판정 아이콘을 쓰지 않아요(카테고리 구분에 판정 색 금지). 미입력만 {colors.text-muted}. |
-| 결과 입력 | 셀 안 선택: `text-input`의 오른쪽 아이콘 변형(icon/chevron-down), 편집 중에는 `text-input-focused`(2px 잉크 링). 열린 목록은 Overlay 단계 드롭다운({colors.canvas} + {shadow.overlay}). 전용 컴포넌트 정의는 7절 design.md 수정 제안 1. |
+| 결과 입력 | 셀 안 선택: `text-input` 변형 select(오른쪽 icon/chevron-down), 편집 중에는 `text-input-focused`(2px 잉크 링). 열린 목록은 Overlay 떠 있는 목록({colors.canvas} + {shadow.overlay}). |
+| 저장 | 도구 줄 오른쪽 `button-outline` "저장" → 형식 고르기 xlsx · hwpx · pdf. PC는 `text-input` 변형 select의 PC 떠 있는 목록 모양, 모바일은 `bottom-sheet` 단일 선택 목록. 끝나면 `toast`. 저장 내용·주의 문구는 8절. |
 | 숫자 | 비율·백분율을 쓰지 않고 실제 건수로 써요("최종 합격 30 / 지원 162"). 모든 숫자는 고정폭. |
-| Route Blue | 화면 핵심 숫자 1개(최종 합격 건수, 가채점 탭은 제출 인원)와 선택 표시(사이드바·세그먼트·필터 칩·드롭다운 선택 옵션)·링크에만. |
-| 주요 버튼 | `button-primary`는 파일을 아직 안 불러온 빈 상태에서만 하나. 평소 화면의 버튼은 모두 `button-outline`. |
-| 학생 표기 | 번호·별칭만(R-PRIV-003). 내보내기 파일도 번호·별칭이 기본. |
-| 고지 | 실제 대학 이름이 나오므로 `disclaimer-note`에 "시안의 대학·숫자는 예시예요"를 넣어요. |
-| 모바일 | 보기 전용 요약 + "PC에서 열면 전체 기능을 쓸 수 있어요". 결과 입력·불러오기·내보내기는 PC에만. |
+| Route Blue | 화면 핵심 숫자 1개(최종 합격 건수, 가채점 탭은 제출 인원)와 선택 표시(사이드바·세그먼트·필터 칩·떠 있는 목록·시트의 선택 행)·링크에만. |
+| 주요 버튼 | 화면 위 `button-primary`는 아직 모은 결과가 없는 빈 상태에서만 하나("카드 수합으로 가기"). 평소 화면의 버튼은 모두 `button-outline`. 모바일 저장 시트 안의 "저장"은 시트의 주요 버튼 하나. |
+| 학생 표기 | 번호·별칭만(R-PRIV-003). 저장 파일도 번호·별칭만 들어가요(이름 열 없음). |
+| 고지 | `disclaimer-note`: "학생이 보낸 카드와 직접 입력한 결과를 모았어요 · 대학 공식 발표가 최종 기준이에요 · 시안의 대학·숫자는 예시예요". 저장 파일 맨 아래에도 같은 문구가 들어가요. |
+| 모바일 | 보기 전용 요약 + "PC에서 열면 전체 기능을 쓸 수 있어요". 결과 입력은 PC에만. 저장은 모바일에서도 돼요(앱바 오른쪽 저장 → `bottom-sheet`). |
 
 ## 1. 시안 데이터 (가상)
 
-반: 3학년 2반 28명 · 2028학년도 수시 · 나이스 "대입전형자료 제공현황" 불러온 날 2026-11-15.
+반: 3학년 2반 28명 · 2028학년도 수시 · 학생 카드 28명 받음, 마지막 카드 수합 2026-11-15.
 대학 이름은 실제, 숫자는 모두 예시예요.
 
 전체: 지원 162건 = 합격 21 + 충원 합격 9 + 불합격 118 + 미등록 7 + 미입력 7. 최종 합격 30건(합격 21 + 충원 합격 9), 합격한 학생 19명.
@@ -55,7 +61,7 @@
 | 19 별 | 1 | 강원대학교 지역인재 교과 · 충원 합격 | 가톨릭관동대학교 교과 · 합격 | 한림대학교 교과 · 불합격 | – | – | – |
 | 25 숲 | 1 | 강원대학교 미래인재 · 합격 | 연세대학교 미래캠퍼스 종합 · 불합격 | 강원대학교 지역인재 교과 · 미등록 | – | – | – |
 
-정렬: 미입력이 있는 학생 먼저(07 바다, 12 하늘, 03 솔), 그다음 번호 순. "–"는 지원 없음.
+정렬: 미입력이 있는 학생 먼저(07 바다, 12 하늘, 03 솔), 그다음 번호 순. "–"는 지원 없음. 지원 칸의 대학·전형은 학생이 보낸 카드에서 오고, 결과 값은 교사가 직접 입력해요.
 
 ### 1-3. 가채점 수합 (탭 2)
 
@@ -76,8 +82,8 @@
 앱 셸: 왼쪽 `sidebar` 248 + 본문 1192(좌우 패딩 32 → 콘텐츠 폭 1128). 데이터 화면이라 최대 폭 제한 없고 촘촘하게(블록 간격 24). 오른쪽 보조 패널 없음.
 
 ### 2-1. 사이드바 — `sidebar`
-- 위 워드마크 "진학 내비".
-- 교사 대분류 행(sidebar-group, 아직 rules에 없어 백틱 없이 표기): 우리 반 ›(접힘) · 성적 관리 ›(접힘) · 수합·집계 ▾(펼침, {colors.ink} 글자).
+- 위 워드마크.
+- 교사 대분류 행 `sidebar-group`: 우리 반 ›(접힘) · 성적 관리 ›(접힘) · 수합·집계 ▾(펼침, {colors.ink} 글자).
 - 수합·집계 아래 소분류 `sidebar-item`(들여쓰기 16): 카드 수합 · 결과 집계. "결과 집계" 선택 = {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대 + {colors.ink} 글자.
 - 그 아래 캡션 "학생" {colors.text-muted} + 학생 대분류 행 4개 모두 접힘: 홈 · 성적 · 대학 찾기 · 수시 전략.
 - 맨 아래 데이터 기준일 "2026-11-18" + 백업 버튼.
@@ -89,7 +95,7 @@
 ### 2-3. 탭 줄 (P4)
 - 왼쪽 `segmented-control` 2칸: "수시 결과"(`segmented-control-active`) · "가채점 수합". 칸 높이 40.
 - 탭 오른쪽에 "3학년 2반 · 2028학년도 수시" {typography.title}.
-- 줄 오른쪽 끝 캡션 "나이스 대입전형자료 제공현황 · 2026-11-15 불러옴" {typography.caption} {colors.text-muted}.
+- 줄 오른쪽 끝 캡션 "학생 카드 28명 · 마지막 수합 2026-11-15" {typography.caption} {colors.text-muted}.
 
 ### 2-4. 요약 — `stat-tile` ×4 한 줄 (P1)
 - 하나의 Level 2 띠(흰 바탕 + 1px {colors.hairline-soft}) 안에 같은 폭 4칸(각 282), 칸 사이 세로 1px {colors.hairline-soft}. 그림자 없음. 높이 약 96.
@@ -100,9 +106,9 @@
   4. 결과 미입력 / 7건 / "학생별 보기에서 셀을 눌러 입력해요"
 - 판정 색 없음. 값은 2번 외 모두 {colors.ink}.
 
-### 2-5. 도구 줄 A — 보기 전환 + 파일 버튼 (P2, P5)
+### 2-5. 도구 줄 A — 보기 전환 + 저장 (P2, P5)
 - 왼쪽 `segmented-control` "대학별"(`segmented-control-active`) · "학생별", 칸 높이 40.
-- 오른쪽 `button-outline` 2개(높이 40): "나이스 엑셀 불러오기"(icon/upload) · "xlsx 내보내기"(icon/download). 내보내기는 지금 보기(대학별/학생별)와 필터를 그대로 담아요.
+- 오른쪽 `button-outline` 하나(높이 40): icon/download + "저장" + 오른쪽 icon/chevron-down 16. 누르면 형식 목록이 열려요(S-4). 불러오기 버튼은 없어요.
 
 ### 2-6. 도구 줄 B — 검색 + 필터 (P4)
 - 왼쪽 `text-input` 폭 240, 앞에 icon/search, 안내 "학생·대학 검색".
@@ -123,24 +129,25 @@
 - 행을 누르면 선택 행 = {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대.
 
 ### 2-8. 고지 — `disclaimer-note`
-- 표 아래, 프레임 안에 보이게. ⓘ + "나이스 대입전형자료 제공현황과 직접 입력한 결과를 모았어요 · 대학 공식 발표가 최종 기준이에요 · 시안의 대학·숫자는 예시예요".
+- 표 아래, 프레임 안에 보이게. ⓘ + "학생이 보낸 카드와 직접 입력한 결과를 모았어요 · 대학 공식 발표가 최종 기준이에요 · 시안의 대학·숫자는 예시예요".
 
 ## 3. 모바일 390 (result-summary/390) — 보기 전용 요약
 
 좌우 여백 16, 섹션 간격 {spacing.xl}. 위에서 아래로:
 
 ### 3-1. 상단 앱바 56 — `app-bar`
-- 가운데 "수합·집계" {typography.heading-4}. 소분류 화면이라 뒤로가기 없음. 오른쪽 보조 동작 없음.
+- 가운데 "수합·집계" {typography.heading-4}. 소분류 화면이라 뒤로가기 없음.
+- 오른쪽 보조 동작 1개: icon/download 버튼(44×44, 접근 이름 "저장"). 누르면 저장 시트(S-6).
 
-### 3-2. 소분류 탭 44 (sub-nav, 아직 rules에 없어 백틱 없이 표기)
+### 3-2. 소분류 탭 44 — `sub-nav`
 - "카드 수합" · "결과 집계"(선택: {colors.ink} SemiBold + 아래 2px {colors.accent} 막대). 아래 1px {colors.hairline}.
 
 ### 3-3. PC 안내 띠
-- {colors.canvas-soft} 띠, icon/info + "PC에서 열면 전체 기능을 쓸 수 있어요" {typography.body-sm} + 캡션 "결과 입력·불러오기·내보내기는 PC에서 해요". 판정 색 없음.
+- {colors.canvas-soft} 띠, icon/info + "PC에서 열면 전체 기능을 쓸 수 있어요" {typography.body-sm} + 캡션 "결과 입력은 PC에서 해요". 판정 색 없음.
 
 ### 3-4. 탭 — `segmented-control`
 - "수시 결과"(`segmented-control-active`) · "가채점 수합", 칸 높이 44.
-- 아래 캡션 "3학년 2반 · 2028학년도 수시 · 2026-11-15 불러옴".
+- 아래 캡션 "3학년 2반 · 2028학년도 수시 · 마지막 수합 2026-11-15".
 
 ### 3-5. 요약 — `stat-tile` 2×2
 - PC와 같은 4개 값: 지원 162건 / 최종 합격 30건({colors.accent}, "합격 21 · 충원 합격 9") / 합격한 학생 19명 / 결과 미입력 7건. 칸 사이 1px {colors.hairline-soft}.
@@ -165,20 +172,38 @@
 ### 3-10. 가채점 수합 탭(모바일, 프레임 없이 규칙만)
 - `stat-tile` 2×2: 제출 22명({colors.accent}) / 최저 충족 48장 / 미충족 31장 "근접 9장 포함" / 미제출 6명.
 - `student-row-card`: 1줄 "07 바다" + 제출일 "11-14", 2줄 "국 3 · 수 3 · 영 2 · 탐 2 · 3" 고정폭, 3줄 카드별 최저 `judge-badge`(색 + 아이콘 + 이름) 최대 2개 + "외 n장". 미제출 학생은 2줄에 "미제출" {colors.text-muted}.
+- 앱바 저장도 같은 시트를 열고, 이 탭에서는 가채점 표를 저장해요.
 
 ### 3-11. 모바일 빈 상태(프레임 없이 규칙만)
-- `empty-state`: 선 아이콘 + "아직 불러온 결과가 없어요" + "PC에서 나이스 엑셀을 불러오면 여기서 볼 수 있어요". 모바일은 보기 전용이라 버튼을 두지 않아요(7절 수정 제안 4).
+- `empty-state`: 선 아이콘 + "아직 모은 결과가 없어요" + "카드 수합에서 학생 카드를 받으면 여기서 볼 수 있어요". 모바일은 보기 전용이라 버튼을 두지 않아요(7절 수정 제안 4). 빈 상태에서는 앱바 저장 버튼을 비활성으로 둬요.
 
-## 4. 상태 프레임 (PC 1440×900)
+### 3-12. 저장 완료(모바일, 프레임 없이 규칙만)
+- 시트가 닫힌 뒤 `toast`를 탭바 위(아래 여백 탭바 64 + 16 + 8)에 둬요. 문구는 S-5와 같아요.
+
+## 4. 상태 프레임
 
 G3는 03-draft.json의 frames 목록에 있는 노드만 세요. 그래서 상태 프레임은 같은 페이지에 따로 두고 03-draft.json에는 넣지 않아요(390·1440 두 개만). 이름은 "result-summary 상태/…"처럼 <slug>/390, <slug>/1440 패턴과 겹치지 않게 지어요. 판정이 상태 프레임도 세도록 05-build.json의 frames 목록에는 넣기를 권해요(오케스트레이터 판단).
-그림자 판정(J6)은 노드 이름이나 조상 이름이 정확히 dropdown · toast · modal · bottom-sheet일 때만 통과해요. 떠 있는 레이어 노드 이름을 그대로 "dropdown", "toast"로 지어요.
+그림자 판정(J6)은 노드 이름이나 조상 이름이 정확히 dropdown · toast · modal · bottom-sheet일 때만 통과해요. 떠 있는 레이어 노드 이름을 그대로 "dropdown", "toast", "bottom-sheet"로 지어요.
 
-### S-1. 파일 없음 — "result-summary 상태/파일 없음"
+상태 프레임 목록(7개):
+
+| 이름 | 크기 | 내용 |
+|---|---|---|
+| result-summary 상태/결과 없음 | 1440×900 | S-1 |
+| result-summary 상태/필터 0건 | 1440×900 | S-2 |
+| result-summary 상태/드롭다운 | 1440×900 | S-3 결과 입력 목록 |
+| result-summary 상태/저장 목록 | 1440×900 | S-4 형식 고르기 떠 있는 목록 |
+| result-summary 상태/저장 완료 | 1440×900 | S-5 저장 완료 toast |
+| result-summary 상태/저장 시트 390 | 390×844 | S-6 모바일 저장 시트 |
+| result-summary 상태/가채점 수합 | 1440×900 | S-7 |
+
+삭제된 상태: 나이스 엑셀 불러오기 흐름·팝업, 불러오기 덮어쓰기 확인, 기존 "토스트"(xlsx 내보내기) → "저장 완료"로 바뀜.
+
+### S-1. 결과 없음 — "result-summary 상태/결과 없음"
 - 사이드바·상단 바·탭 줄(2-1~2-3)은 그대로. 탭 줄 오른쪽 캡션 없음.
 - `stat-tile`·도구 줄·표 자리를 비우고 콘텐츠 가운데 `empty-state`:
-  - 흑백 선 아이콘(icon/file, 48) → "아직 불러온 결과가 없어요" {typography.heading-4} → "나이스 '대입전형자료 제공현황' 엑셀을 불러오면 학생별·대학별 결과표를 만들어요. 학생 이름은 번호·별칭으로 바꿔 저장해요." {typography.body-sm} {colors.text-muted} → `button-primary` "나이스 엑셀 불러오기"(높이 44, 화면의 주요 버튼 하나).
-- 아래 `disclaimer-note`는 두지 않아요(대학·숫자가 없음).
+  - 흑백 선 아이콘(icon/file, 48) → "아직 모은 결과가 없어요" {typography.heading-4} → "카드 수합에서 학생 카드를 받으면 지원 목록이 생기고, 결과는 학생별 보기에서 직접 입력해요. 학생은 번호·별칭으로만 보여요." {typography.body-sm} {colors.text-muted} → `button-primary` "카드 수합으로 가기"(높이 44, 화면의 주요 버튼 하나).
+- 저장 버튼은 두지 않아요(저장할 내용이 없음). 아래 `disclaimer-note`도 두지 않아요(대학·숫자가 없음).
 
 ### S-2. 필터 결과 0건 — "result-summary 상태/필터 0건"
 - 2절 기본 상태에서 `filter-chip` "논술·기타"와 "충원 합격 9"를 on.
@@ -197,24 +222,45 @@ G3는 03-draft.json의 frames 목록에 있는 노드만 세요. 그래서 상�
   - 옵션 행 높이 32, 좌우 12, {typography.table}: 합격 · 충원 합격 · 불합격 · 1단계 불합격 · 미등록 → 1px {colors.hairline} → "미입력으로 되돌리기" {colors.text-muted}.
   - 키보드로 고른 옵션 "불합격" = {colors.accent-soft} 채움 + {colors.ink} 글자. 현재 값 표시 체크(icon/check {colors.accent})는 값이 있을 때만.
   - 옵션에 판정 색·아이콘 없음.
-- 동작: 셀을 누르거나 Enter → 열림, ↑↓ 이동, Enter 선택, Esc 닫기. 고르면 셀 값이 바뀌고 요약 타일·대학별 표가 함께 갱신돼요. 직접 고친 값은 다음 불러오기 때 덮어쓰지 않고 확인을 물어요(`modal`, 이번 프레임 생략).
+- 동작: 셀을 누르거나 Enter → 열림, ↑↓ 이동, Enter 선택, Esc 닫기. 고르면 셀 값이 바로 이 기기에 저장되고 요약 타일·대학별 표가 함께 갱신돼요. 학생이 같은 카드를 다시 보내도 직접 입력한 결과는 지우지 않아요(카드에서 빠진 지원만 "카드에서 빠졌어요" {typography.caption} {colors.text-muted}로 표시).
 
-### S-4. 내보내기 토스트 — "result-summary 상태/토스트"
+### S-4. 저장 목록 — "result-summary 상태/저장 목록"
+- 2절 기본 상태(수시 결과 · 대학별), 도구 줄 A의 `button-outline` "저장"이 눌린 상태(`text-input-focused`와 같은 2px {colors.ink} 포커스 링).
+- 버튼 아래 4px에 떠 있는 목록(노드 이름 "dropdown"): `text-input` 변형 select의 PC 떠 있는 목록 모양. 오른쪽 끝을 버튼 오른쪽 끝에 맞추고 폭 320, {colors.canvas} + 1px {colors.hairline} + {shadow.overlay}, 모서리 0.
+  - 맨 위 머리(패딩 12 16): "저장할 내용" {typography.caption} {colors.text-muted} → "3학년 2반 · 2028학년도 수시 · 대학별 보기" {typography.body-sm} {colors.ink}. 필터가 켜져 있으면 뒤에 "· 필터 2개 적용". 아래 1px {colors.hairline-soft}.
+  - 형식 행 3개(높이 40, {typography.body}, 오른쪽 설명 {typography.caption} {colors.text-muted}):
+    1. "엑셀 (xlsx)" — "표를 고쳐 쓸 수 있어요"
+    2. "한글 (hwpx)" — "학교 문서에 붙이기 좋아요"
+    3. "PDF (pdf)" — "인쇄·보관용이에요"
+  - 키보드로 고른 행 "한글 (hwpx)" = Elevation Selected({colors.accent-soft} 채움) + {colors.ink} 글자. 마우스를 올린 행은 {colors.canvas-soft}.
+  - 맨 아래 주의(위 1px {colors.hairline-soft}, 패딩 12 16): ⓘ + "학생 번호·별칭과 결과가 들어 있어요. 파일을 학교 밖으로 보내지 말고, 다 쓴 파일은 지워 주세요." {typography.caption} {colors.ink}.
+- 동작: 행을 누르거나 Enter → 바로 저장하고 목록이 닫혀요(버튼 없음). Esc·바깥 누름 → 닫힘. ↑↓ 이동. 파일 저장 창은 OS 기본 창이라 그리지 않아요.
+
+### S-5. 저장 완료 — "result-summary 상태/저장 완료"
 - 2절 기본 상태 위에 `toast`(노드 이름 "toast"), 오른쪽 아래(오른쪽·아래 여백 24), {colors.ink} 채움 + {colors.on-primary} 글자, {shadow.overlay}, 모서리 0.
-  - 1줄 icon/check + "xlsx 파일을 저장했어요" {typography.link}
-  - 2줄 "결과집계_3학년2반_2028수시.xlsx · 학생은 번호·별칭으로 들어가요" {typography.body-sm}
+  - 1줄 icon/check + "hwpx 파일을 저장했어요" {typography.link}
+  - 2줄 "결과집계_3학년2반_2028수시_대학별.hwpx · 학생은 번호·별칭으로 들어가요" {typography.body-sm}
+- 형식 이름은 고른 형식(xlsx · hwpx · pdf)으로 바뀌어요. 저장하지 못하면 같은 자리에 `toast` "파일을 저장하지 못했어요. 다시 저장해 주세요."
 
-### S-5. 가채점 수합 탭 — "result-summary 상태/가채점 수합"
+### S-6. 저장 시트 390 — "result-summary 상태/저장 시트 390"
+- 3절 모바일 기본 화면 위에 {colors.scrim}, 아래에서 올라온 시트(노드 이름 "bottom-sheet"): {colors.canvas} + {shadow.overlay}, 모서리 0, 위 손잡이 막대.
+  - 제목 "저장할 형식을 골라요" {typography.heading-4} → 캡션 "학생별 보기 · 3학년 2반 · 2028학년도 수시" {typography.caption} {colors.text-muted}(모바일은 학생별 보기만 있어요).
+  - `bottom-sheet` 단일 선택 목록(행 높이 48, 행 사이 1px {colors.hairline-soft}): "엑셀 (xlsx)" · "한글 (hwpx)" · "PDF (pdf)", 이름 {typography.title} + 설명 한 줄 {typography.body-sm} {colors.text-muted}(S-4와 같은 설명). 고른 행 "엑셀 (xlsx)"(기본) = {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대 + 오른쪽 icon/check {colors.accent}.
+  - 주의 한 줄: ⓘ + "학생 번호·별칭과 결과가 들어 있어요. 파일을 학교 밖으로 보내지 말고, 다 쓴 파일은 지워 주세요." {typography.body-sm} {colors.ink}.
+  - 아래 고정 줄(높이 52 버튼, 사이 8): `button-outline` "취소" + `button-primary` "저장". 하단 안전 영역을 지켜요.
+- 동작: 형식을 고르고 "저장" → 시트가 닫히고 `toast`(3-12). 손잡이 끌어내리기·바깥 누름 → 닫힘.
+
+### S-7. 가채점 수합 탭 — "result-summary 상태/가채점 수합"
 - 탭 줄: "가채점 수합"이 `segmented-control-active`. 옆 제목 "3학년 2반 · 2028 수능 가채점", 오른쪽 캡션 "등급컷 기준 2028수능-v1".
 - `stat-tile` ×4 한 줄(2-4와 같은 모양), 묶음 이름은 "최저 충족 현황":
   1. 제출 / 22명 / "28명 중" — 값만 {colors.accent}.
   2. 최저 충족 / 48장 / "최저가 있는 카드 86장 중 · 자료 부족 7장"
   3. 미충족 / 31장 / "근접 9장 포함"
   4. 미제출 / 6명 / "학생에게 다시 알려 주세요"
-- 도구 줄: 왼쪽 `text-input` 검색 240 + `filter-chip` "근접 9" · "미충족 31" · "미제출 6". 오른쪽 `button-outline` "가채점 파일 불러오기"(.jnavi·CSV, icon/upload) · "xlsx 내보내기"(icon/download). 대학별/학생별 전환은 없어요(학생별만).
+- 도구 줄: 왼쪽 `text-input` 검색 240 + `filter-chip` "근접 9" · "미충족 31" · "미제출 6". 오른쪽 `button-outline` "가채점 파일 불러오기"(학생이 보낸 .jnavi·CSV, icon/upload) · "저장"(icon/download + icon/chevron-down, S-4와 같은 목록, 머리 "3학년 2반 · 2028 수능 가채점"). 대학별/학생별 전환은 없어요(학생별만).
 - `data-table` 열(폭): 학생 112(고정) | 제출일 72 | 국 48 | 수 48 | 영 48 | 탐1 48 | 탐2 48 | 최저 있는 카드 1~4 각 172 (= 1112).
   - 영역 머리글 아래 캡션 "추정 등급". 숫자 고정폭 오른쪽 정렬, 색 없음. 없음은 "–" {colors.text-muted}.
-  - 카드 칸: `univ-logo` 16 + 대학·전형 {typography.body-sm} + 아래 `judge-badge` 수능 최저 판정 배지(충족 ● 안정 쌍 / 근접 ◐ 적정 쌍 / 미충족 ■ 위험 쌍 / 자료 부족 = 판정 없음 쌍, 이름만). 최저가 없는 카드는 칸에 넣지 않아요.
+  - 카드 칸: `univ-logo` 16 + 대학·전형 {typography.body-sm} + 아래 `judge-badge` 수능 최저 판정 배지(충족 = 안정 쌍 / 근접 = 적정 쌍 / 미충족 = 위험 쌍 / 자료 부족 = 판정 없음 쌍, 이름만; 아이콘은 design.md 수능 최저 판정 배지 규칙). 최저가 없는 카드는 칸에 넣지 않아요.
   - 정렬: 근접 → 미충족 → 자료 부족 → 충족 → 미제출(minimum-board와 같은 순서). 미제출 행은 제출일 칸 "미제출" {colors.text-muted}, 나머지 "–".
   - 1-3의 5행.
 - `disclaimer-note`: "학생이 낸 가채점 원점수로 구한 추정 등급이에요 · 성적 통지표와 대학 모집요강이 최종 기준이에요 · 시안의 대학·숫자는 예시예요".
@@ -224,17 +270,40 @@ G3는 03-draft.json의 frames 목록에 있는 노드만 세요. 그래서 상�
 - 수시 결과 탭은 이미 나온 결과 기록만 말해요: 합격 · 충원 합격 · 불합격 · 1단계 불합격 · 미등록 · 미입력. 앞으로의 결과를 점치는 말, 합격자와 견주어 진단하는 말은 쓰지 않아요. rules의 forbidden_words(합격을 약속하거나 수치로 점치는 표현)는 한 번도 쓰지 않아요.
 - 비율·백분율 대신 건수: "최종 합격 30 / 지원 162".
 - 가채점 탭은 "최저 충족 현황", 등급은 "추정 등급". 판정 이름은 충족 / 근접 / 미충족 / 자료 부족만.
-- 빈 상태·0건·토스트 문구는 4절 그대로.
+- 자료 출처는 "학생이 보낸 카드", "직접 입력한 결과"로만 써요. "나이스", "불러온 결과" 같은 외부 연동 문구를 쓰지 않아요(가채점 탭의 학생 파일 불러오기는 예외).
+- 빈 상태·0건·저장 목록·저장 시트·토스트 문구는 4절 그대로.
 
 ## 6. 사용 컴포넌트
 
-`sidebar` · `sidebar-item` · `mode-switch` · `segmented-control` · `segmented-control-active` · `stat-tile` · `text-input` · `text-input-focused` · `filter-chip` · `button-outline` · `button-primary` · `data-table` · `univ-logo` · `univ-monogram` · `judge-badge` · `disclaimer-note` · `empty-state` · `toast` · `modal` · `app-bar` · `student-row-card` · `tab-bar-pill`
+`sidebar` · `sidebar-group` · `sidebar-item` · `mode-switch` · `segmented-control` · `segmented-control-active` · `stat-tile` · `text-input` · `text-input-focused` · `filter-chip` · `button-outline` · `button-primary` · `data-table` · `univ-logo` · `univ-monogram` · `judge-badge` · `disclaimer-note` · `empty-state` · `toast` · `bottom-sheet` · `app-bar` · `sub-nav` · `student-row-card` · `tab-bar-pill`
 
-rules components에 아직 없어 백틱 없이 쓴 것: sidebar-group(사이드바 대분류 행), sub-nav(모바일 소분류 탭) — work/_pending/apply4.py가 적용되면 들어가요. 드롭다운은 컴포넌트가 아니라 Elevation Overlay 단계로 그려요.
+떠 있는 목록(결과 입력 · 저장 형식)은 별도 컴포넌트가 아니라 `text-input` 변형 select의 PC 목록(Elevation Overlay)으로 그리고 노드 이름을 "dropdown"으로 지어요.
 
 ## 7. design.md 수정 제안 (S3 전 확인 필요)
 
-1. 선택형 입력: Inputs & Forms에 "text-input 선택형 변형 — 오른쪽 icon/chevron-down 16, 누르면 Overlay 드롭다운 목록(옵션 행 높이 PC 32 · 모바일 44, 키보드 선택 옵션 = {colors.accent-soft}, 현재 값 = icon/check {colors.accent})"을 정의하고, 이름(예: select-input, dropdown-menu)을 rules components에 넣어 주세요. 지금은 `text-input` + Overlay로 그려서 G2는 통과하지만, 셀 선택이 이 화면 말고도(카드 수합 등) 쓰이면 정의가 있어야 해요.
-2. 내비 IA(apply4.py): 교사 "성적 관리" 소분류에서 "가채점 수합"을 빼고 "결과 집계" 탭으로 옮겼다고 고쳐 주세요(성적 관리 = 성적 불러오기 · 수능 최저 판정). apply4.py가 아직 적용 전이면 그 IA 문장을 고친 뒤 적용하면 돼요. 모바일 탭바(3-9)·사이드바(2-1)·sub-nav(3-2)도 apply4 기준으로 설계했어요.
+1. (반영됨) 선택형 입력은 design.md 2026-11-23 `text-input` 변형 select로 정의됐어요. 다만 select 목록 행 높이가 40인데 S-3 표 셀 안 목록은 32로 그렸어요. 표 안 컨트롤(최소 32)용 행 높이 32 예외를 넣을지, S-3을 40으로 맞출지 정해 주세요.
+2. 내비 IA(apply4.py): 교사 "성적 관리" 소분류에서 "가채점 수합"을 빼고 "결과 집계" 탭으로 옮겼다고 고쳐 주세요. 모바일 탭바(3-9)·사이드바(2-1)·sub-nav(3-2)도 apply4 기준으로 설계했어요.
 3. 결과 기록 표기: design.md에 "수시 결과 값(합격·충원 합격·불합격·1단계 불합격·미등록)은 판정 색·아이콘 없이 흑백 글자로 쓴다" 한 줄을 data-table 아래에 더해 주세요(될각 판정과 섞이지 않게).
-4. student-row-card·empty-state: student-row-card 필드가 대시보드용(환산 범위·카드 제출·경고)으로만 적혀 있어요. "화면에 따라 2·3줄 내용을 바꿔 쓴다"를 더해 주세요. 또 모바일 보기 전용 화면의 empty-state는 버튼 없이 PC 안내 문구만 둔다는 예외를 적어 주세요.
+4. student-row-card·empty-state: student-row-card 필드가 대시보드용(환산 범위·카드 제출·경고)으로만 적혀 있어요. "화면에 따라 2·3줄 내용을 바꿔 쓴다"를 더해 주세요. 또 모바일 보기 전용 화면의 empty-state는 버튼 없이 안내 문구만 둔다는 예외를 적어 주세요.
+5. 파일 저장(새로): button-danger-text 확인 창 규칙은 "내보내기 전에" modal로 묻게 돼 있어요. 이 화면은 PC에서 형식 목록 안에 주의 문구를 두고 고르면 바로 저장해요(모바일은 시트의 "저장" 버튼으로 확정). "형식 고르기 목록 안에 개인정보 주의가 보이면 PC 확인 modal은 생략한다" 예외를 넣을지 정해 주세요. 넣지 않으면 PC도 목록에서 고른 뒤 modal(최대 폭 560)로 한 번 더 묻게 바꿔야 해요.
+
+## 8. 저장 규칙 · 앱 구현 메모
+
+### 8-1. 저장 내용 (세 형식 공통)
+- 지금 보고 있는 것 그대로: 탭(수시 결과 / 가채점 수합) · 보기(대학별 / 학생별) · 켜진 필터 · 검색어 · 정렬. 접힌 소계(논술·기타)는 파일에서 펼쳐 넣어요.
+- 머리: "결과 집계 · 3학년 2반 · 2028학년도 수시 · 대학별 보기 · 저장일 2026-11-23" + 필터가 있으면 "필터: 논술·기타, 충원 합격".
+- 본문: 화면 표와 같은 열·순서. 학생은 번호·별칭만(이름·학번 열 없음). 결과 값은 글자 그대로(색 없음). 가채점 탭은 판정을 "충족 ●"처럼 아이콘 + 이름 글자로 써서 흑백에서도 읽혀요.
+- 맨 아래: 화면의 `disclaimer-note` 문구 그대로.
+- 파일 이름: 결과집계_<학급>_<학년도><시기>_<보기>.<형식> (예: 결과집계_3학년2반_2028수시_대학별.hwpx). 가채점: 가채점수합_3학년2반_2028수능.<형식>.
+
+### 8-2. 개인정보 주의
+- 저장 목록·시트 안 주의 문구(4절)를 항상 보여요: 파일을 학교 밖으로 보내지 않기, 다 쓴 파일은 지우기.
+- 파일 본문 머리 아래에도 "학생 개인정보가 들어 있어요 · 학교 밖으로 보내지 마세요" 한 줄을 넣어요.
+- 서버로 보내지 않고 기기에서 바로 파일을 만들어요.
+
+### 8-3. 앱 구현 메모
+- xlsx: 지금 앱의 xlsx 내보내기를 "저장" 목록의 한 형식으로 옮겨요(머리·고지 줄 추가).
+- hwpx: 앱에 아직 없는 기능이에요. hwpx(OWPML, zip + XML) 파일을 기기에서 만들어야 해요. 표 하나 + 머리 문단 + 고지 문단이면 돼요. 새 의존성을 넣을지, 최소 템플릿 XML을 직접 묶을지 구현 때 정해요.
+- pdf: 앱에 아직 없는 기능이에요. A4 가로(표가 넓음), 흑백 기준, 머리글 행은 쪽마다 반복, 쪽 아래 "n / m"과 고지. 브라우저 인쇄(PDF로 저장)로 대신할지, 라이브러리로 만들지 구현 때 정해요.
+- 셋 다 한국어 글꼴(Pretendard)이 파일에 들어가거나 깨지지 않는지 확인해요.
+- 저장 실패 시 S-5의 실패 `toast`.
