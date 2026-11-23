@@ -23,10 +23,13 @@ export interface Wiki { sections: Map<string, Partial<Record<WikiSectionKey, Wik
 
 const text = (v: unknown) => typeof v === 'string' && v.trim() !== '';
 const date = (v: unknown) => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v);
-const https = (v: unknown) => { try { return typeof v === 'string' && new URL(v).protocol === 'https:'; } catch { return false; } };
+export const https = (v: unknown) => { try { return typeof v === 'string' && new URL(v).protocol === 'https:'; } catch { return false; } };
 const approved = (a: unknown) => Array.isArray(a) && new Set(a.map(x => text(x?.reviewer) ? x.reviewer : null).filter(Boolean)).size >= REQUIRED_APPROVALS;
+// NEVER-2: 합격을 점치는 표현이 든 요약은 검수를 거쳐도 보이지 않는다(띄어쓰기 무시)
+export const forbiddenIn = (v: string) => ['가능', '확률', '보장'].map(w => `합격${w}`).filter(w => v.replace(/\s/g, '').includes(w));
 const sectionOk = (s: WikiSection | undefined) => !!s && date(s.reviewed_at) && approved(s.approvals) && Array.isArray(s.items) && s.items.length > 0
-  && s.items.every(i => text(i?.text) && text(i?.source_label) && https(i?.source_url) && (i.heading === undefined || text(i.heading)));
+  && s.items.every(i => text(i?.text) && text(i?.source_label) && https(i?.source_url) && (i.heading === undefined || text(i.heading))
+    && !forbiddenIn(`${i.heading ?? ''} ${i.text}`).length);
 
 /** Trust boundary: anything not reviewed by two admins is dropped, so the screen shows "준비 중". */
 export function parseWiki(value: unknown): Wiki {
