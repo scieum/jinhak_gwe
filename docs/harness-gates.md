@@ -1,4 +1,4 @@
-# 하네스 게이트 — 진학 내비 화면 디자인
+# 하네스 게이트 — U:NAVI 화면 디자인
 
 > 모든 수치·목록은 rules/design-rules.json이 SSOT. 이 문서는 사람이 읽는 설명이다.
 > ★ = story-service.md "어기면 안 되는 것" 위반 시 걸리는 조건.
