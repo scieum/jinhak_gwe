@@ -1,7 +1,7 @@
 {
   "source": {
     "file": "docs/design.md",
-    "sha256": "fa192652d2732ae0b4de1fd36e9a7db2e60d7a43a274904c860d78ec9b74a27a"
+    "sha256": "d1749cefbe9aff219d510f37a8aeaf8f3d512b2069bad5ff318e466aeed938e2"
   },
   "frames": [
     [
@@ -226,7 +226,8 @@
     "application-checklist",
     "calendar",
     "national-placement",
-    "admission-style"
+    "admission-style",
+    "class-calendar"
   ],
   "gates": {
     "G1": {
