@@ -11,6 +11,7 @@ import { AdmissionsList } from './screens/AdmissionsList';
 import { NationalPlacement } from './screens/NationalPlacement';
 import { DeptTier } from './screens/DeptTier';
 import { SpecialTracks } from './screens/SpecialTracks';
+import { UnivMap } from './screens/UnivMap';
 import { InterestComparison } from './screens/InterestComparison';
 import { ApplicationCalendar } from './screens/ApplicationCalendar';
 import { Doelgak, FiveToNine, ScoreTrend, StudentHome, UniversityScores } from './screens/Results';
@@ -41,7 +42,7 @@ function AdminRules() { const p = useLocation().pathname; return p.endsWith('/re
 
 const implemented: Record<string, React.ReactNode> = {
   'national-placement': <NationalPlacement />,
-  'dept-tier': <DeptTier />, 'special-tracks': <SpecialTracks />,
+  'dept-tier': <DeptTier />, 'special-tracks': <SpecialTracks />, 'univ-map': <UnivMap />,
   compare: <InterestComparison />,
   calendar: <ApplicationCalendar />,
   'admissions-list': <AdmissionsList />,
