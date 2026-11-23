@@ -188,7 +188,8 @@
     "입시 일정": "calendar",
     "상담 질문·할 일": "counsel-tasks",
     "학과 계열표 검수": "admin-fields",
-    "대학 위키 요약 검수": "admin-wiki"
+    "대학 위키 요약 검수": "admin-wiki",
+    "대학 지도": "univ-map"
   },
   "requires_trace_accordion": [
     "five-to-nine",
