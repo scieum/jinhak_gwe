@@ -486,7 +486,7 @@ toast — "저장했어요", "상담카드 3개를 불러왔어요"
 empty-state — "아직 입력한 성적이 없어요"
 
 가운데 정렬, 흑백 선 아이콘, {typography.heading-4} + {typography.body-sm} 설명 + button-primary 하나
-화면 오류 줄(2026-11-23 전형 비교): 자료를 읽거나 저장하지 못했을 때 목록 · 표 위에 둡니다. 흰 카드(Page 위) 또는 흰 바탕 안에 icon/triangle-alert 20 {colors.ink} + {typography.body} {colors.ink} 문장 + (다시 할 수 있으면) button-outline 하나. 판정 색(위험 · 소신 쌍)을 쓰지 않습니다 — 입력칸 하나의 형식 오류만 text-input-error를 씁니다.
+화면 오류 줄(2026-11-23 전형 비교): 자료를 읽거나 저장하지 못했을 때 목록 · 표 위에 둡니다. 흰 카드(Page 위) 또는 흰 바탕 안에 icon/triangle-alert 20 {colors.ink} + {typography.body} {colors.ink} 문장 + (다시 할 수 있으면) button-outline 하나. 판정 색(위험 · 소신 쌍)을 쓰지 않습니다 — 입력칸 하나의 형식 오류만 text-input-error를 씁니다. 예외(2026-11-24 사용자 결정): 고쳐야 할 칸을 가리키는 검수 · 편집 오류 줄(관리자 검수 도구의 고칠 곳 · 편집기 결과 줄 등, 글자가 {colors.judge-risk}인 줄)은 icon/triangle-alert도 글자와 같은 {colors.judge-risk}로 칠하고, 충돌 · 주의 줄은 아이콘과 글자를 함께 {colors.judge-reach}로 칠합니다. 아이콘과 글자 색이 다른 줄은 만들지 않습니다.
 불러오는 중(2026-11-23 전국 배치표): 진행 막대 · 스켈레톤 없이 자리에 "○○을 읽고 있어요." {typography.body-sm} {colors.text-muted} 한 줄만 둡니다. 아이콘 · 버튼은 없습니다.
 Navigation
 
