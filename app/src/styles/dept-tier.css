@@ -1,0 +1,49 @@
+/* 학과별 입결 구간표 · placement-board 변형 layer (design.md). 모서리 0, 판정 · 층별 색 없음. Route Blue는 컨트롤 선택에만. */
+.dept-tier__controls, .dept-tier__card { display: grid; gap: var(--spacing-sm); padding: var(--spacing-card); background: var(--color-canvas); }
+.dept-tier__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-xs); }
+.dept-tier__row > .t-label { min-width: 56px; }
+.dept-tier__custom { display: grid; gap: var(--spacing-xxs); }
+.dept-tier .text-input { width: 96px; min-height: 40px; font-variant-numeric: tabular-nums; }
+.dept-tier .text-input-error { outline: 2px solid var(--color-judge-risk); outline-offset: -2px; }
+.dept-tier__error { color: var(--color-judge-risk); }
+.dept-tier .filter-chip { min-height: 32px; padding: 0 var(--spacing-sm); border: 1px solid var(--color-hairline); background: var(--color-canvas); font: inherit; font-size: var(--font-body-sm-size); cursor: pointer; }
+.dept-tier .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.dept-tier__mine { grid-template-columns: auto auto 1fr; align-items: center; }
+.dept-tier__pending { display: grid; gap: var(--spacing-xs); padding: var(--spacing-card); background: var(--color-canvas); }
+.dept-tier .empty-state { display: grid; justify-items: center; text-align: center; gap: var(--spacing-xs); background: var(--color-canvas); }
+.dept-tier__total { margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid var(--color-hairline); font-weight: 600; }
+
+.placement-board--layer { gap: 0; padding: var(--spacing-lg); }
+.tier-layer { display: grid; grid-template-columns: 120px minmax(0, 1fr); padding-block: var(--spacing-md); border-top: 1px solid var(--color-hairline); }
+.tier-layer:first-child { border-top: 0; }
+.tier-layer__head { display: grid; align-content: start; gap: var(--spacing-xxs); padding-right: var(--spacing-sm); border-right: 1px solid var(--color-hairline-soft); font: inherit; }
+.tier-layer__prefix { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+.tier-layer > p { align-self: center; text-align: center; }
+.tier-layer__cells { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-sm); list-style: none; margin: 0; padding: 0 0 0 var(--spacing-sm); max-width: calc(6 * 144px + 5 * var(--spacing-sm) + var(--spacing-sm)); justify-self: center; }
+.tier-cell { position: relative; display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xxs); width: 144px; height: 100%; padding: var(--spacing-sm); border: 1px solid var(--color-hairline-soft); color: var(--color-ink); text-align: center; text-decoration: none; }
+.tier-cell:hover { border-color: var(--color-ink); }
+.tier-cell .university-logo img { width: 32px; height: 32px; object-fit: contain; }
+.tier-cell__unit { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: keep-all; overflow-wrap: normal; }
+.tier-cell__go { position: absolute; right: var(--spacing-xxs); bottom: var(--spacing-xxs); color: var(--color-text-muted); }
+.dept-tier__picker { display: grid; gap: var(--spacing-xxs); }
+.dept-tier__picker-row { display: flex; justify-content: space-between; align-items: center; min-height: 48px; padding: 0 var(--spacing-sm); border: 0; border-left: 3px solid transparent; background: none; font: inherit; color: var(--color-ink); cursor: pointer; text-align: left; }
+.dept-tier__picker-row[aria-pressed='true'] { border-left-color: var(--color-accent); background: var(--color-accent-soft); }
+.dept-tier .dialog .text-input, .dialog .text-input[type='search'] { width: 100%; }
+
+@media (max-width: 767px) {
+  .dept-tier__controls { padding: 0; background: none; }
+  .dept-tier__row .segmented-control { flex: 1 1 auto; }
+  .dept-tier__width .segmented-control__option { flex: 1; padding: 0; min-width: 44px; }
+  .dept-tier__custom { flex-basis: 100%; }
+  .dept-tier .text-input { width: 100%; min-height: 44px; background: var(--color-canvas); }
+  .dept-tier__mine { grid-template-columns: auto 1fr; }
+  .dept-tier__mine p { grid-column: 1 / -1; }
+  .placement-board--layer { padding: var(--spacing-card); }
+  .tier-layer { grid-template-columns: 1fr; gap: var(--spacing-xs); }
+  .tier-layer__head { display: flex; justify-content: space-between; padding: 0; border: 0; }
+  .tier-layer__prefix { position: static; width: auto; height: auto; clip: auto; }
+  .tier-layer__cells { padding: 0; gap: var(--spacing-xs); max-width: none; }
+  .tier-cell { width: 98px; padding: var(--spacing-xs); min-height: 44px; }
+}
+@media (prefers-reduced-motion: no-preference) { .tier-layer { animation: tier-fade 150ms ease-out; } }
+@keyframes tier-fade { from { opacity: 0; } to { opacity: 1; } }

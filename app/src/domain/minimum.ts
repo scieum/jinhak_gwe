@@ -1,4 +1,6 @@
 import type { MockGrades } from './scoreImport';
+import { readGrade, type Area, type CutTable, type MockScore } from './mock';
+import { reviewed, type Provenance } from '../engine/types';
 
 /**
  * 수능 최저 판정(minimum-board 02-spec, PRD 6-12). 판정 5종: 충족 / 근접(한 영역만 1등급 오르면 충족) / 미충족 / 자료 부족 / 판정 불가.
@@ -70,4 +72,44 @@ export const verdictText = (v: Verdict) => `${ICON[v] ?? ''}${v}`;
 export function examsByRecent(names: Iterable<string>): string[] {
   const key = (n: string) => { const m = n.match(/(\d{4})년 (\d{1,2})월/); return m ? Number(m[1]) * 100 + Number(m[2]) : 0; };
   return [...new Set(names)].sort((a, b) => key(b) - key(a));
+}
+
+// ── 최저로 찾기(minimum-search 02-spec): 내 등급 × 관리자 검수 완료 기준 ──
+/** 검수된 수능 최저 기준 한 줄. review_status가 verified가 아니면 판정하지 않아요(D1, NEVER-1). */
+export interface MinimumRule extends Provenance { university: string; unit: string; admission: string; kind: string; field: string; region: string; reviewed_at: string; criterion: Criterion }
+export interface SearchRow { rule: MinimumRule; judged: Judged; sum: number | null }
+export const SEARCH_ORDER: Verdict[] = ['충족', '근접', '미충족', '자료 부족'];
+
+export const minimumSum = (g: MockGrades, c: Criterion) => bestSum(coreValues(g.grades, c), c);
+
+/** 원점수 → 판정용 등급. 검수된 등급컷으로 읽은 범위의 큰 숫자(불리한 쪽, D4). 읽은 영역이 없으면 null. */
+export function gradesForMinimum(mock: MockScore, table: CutTable | undefined): MockGrades | null {
+  const pick = (a: Area) => { const r = readGrade(mock.raw[a], a, table); return r.status === 'ready' ? r.max : undefined; };
+  const grades: MockGrades['grades'] = { 국어: pick('국어'), 수학: pick('수학'), 영어: pick('영어'), 한국사: pick('한국사'), 탐구1: pick('통합사회'), 탐구2: pick('통합과학') };
+  for (const k of Object.keys(grades)) if (grades[k] === undefined) delete grades[k];
+  return Object.keys(grades).length ? { number: '', exam: mock.exam, grades, updated_at: mock.updated_at } : null;
+}
+/** 영역별 대표 등급(탐구는 상위 1과목). */
+export function shownGrade(g: MockGrades, a: Core): number | undefined {
+  if (a !== '탐구') return g.grades[a] ?? undefined;
+  const t = [g.grades.탐구1, g.grades.탐구2].filter((v): v is number => typeof v === 'number');
+  return t.length ? Math.min(...t) : undefined;
+}
+/** 판정 순(충족 → 근접 → 미충족 → 자료 부족), 같은 판정은 대학 이름 가나다순(D8). */
+export function searchMinimum(rules: MinimumRule[], g: MockGrades): SearchRow[] {
+  return rules.filter(reviewed).map(rule => ({ rule, judged: judgeMinimum(g.exam, g, rule.criterion), sum: minimumSum(g, rule.criterion) }))
+    .sort((a, b) => SEARCH_ORDER.indexOf(a.judged.verdict) - SEARCH_ORDER.indexOf(b.judged.verdict) || a.rule.university.localeCompare(b.rule.university, 'ko') || a.rule.unit.localeCompare(b.rule.unit, 'ko'));
+}
+export interface WhatIf { area: Core; from: number | undefined; to: number | undefined; before: number; after: number; newly: string[] }
+/** 한 영역만 1등급 올려 보면 충족이 되는 전형(D3). 이미 1등급이거나 성적이 없는 영역은 계산하지 않아요. */
+export function whatIfMinimum(rules: MinimumRule[], g: MockGrades): WhatIf[] {
+  const now = searchMinimum(rules, g), met = new Set(now.filter(r => r.judged.verdict === '충족').map(r => r.rule.id));
+  return CORE.map(area => {
+    const from = shownGrade(g, area);
+    if (from === undefined || from <= 1) return { area, from, to: undefined, before: met.size, after: met.size, newly: [] };
+    const keys = area === '탐구' ? ['탐구1', '탐구2'] : [area], grades = { ...g.grades };
+    for (const k of keys) if (typeof grades[k] === 'number') grades[k] = Math.max(1, grades[k]! - 1);
+    const after = searchMinimum(rules, { ...g, grades }).filter(r => r.judged.verdict === '충족').map(r => r.rule.id);
+    return { area, from, to: from - 1, before: met.size, after: after.length, newly: after.filter(id => !met.has(id)) };
+  });
 }

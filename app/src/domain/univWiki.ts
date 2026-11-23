@@ -13,7 +13,8 @@ export const WIKI_SECTIONS = [
 export type WikiSectionKey = typeof WIKI_SECTIONS[number]['key'];
 export interface WikiItem { heading?: string; text: string; source_label: string; source_url: string }
 export interface WikiSection { reviewed_at: string; approvals: Approval[]; items: WikiItem[] }
-export interface FieldRow { university: string; unit: string; small: string; mid: string }
+/** major(대계열 인문|자연)는 학과별 구간표용 선택 열(dept-tier spec D3). 없으면 그 행은 구간표에 나오지 않는다. */
+export interface FieldRow { university: string; unit: string; small: string; mid: string; major?: string }
 export interface WikiFile {
   format: 'jinhak-navi-univ-wiki'; version: 1;
   fields: { reviewed_at: string; approvals: Approval[]; rows: FieldRow[] };

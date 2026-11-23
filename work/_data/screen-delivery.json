@@ -1,0 +1,10 @@
+{
+  "updated_at": "2026-11-24",
+  "design_only": ["special-tracks", "univ-map", "class-calendar"],
+  "host_routes": {
+    "univ-detail-wiki": {"slug": "univ-detail", "path": "/univ-detail"},
+    "admin-fields": {"slug": "admin-rules", "path": "/admin/admin-rules/fields"},
+    "admin-wiki": {"slug": "admin-rules", "path": "/admin/admin-rules/wiki"}
+  },
+  "note": "design_only는 Figma 시안만 있고 앱 경로는 아직 없는 화면이다. 구현 완료나 출시 가능을 뜻하지 않는다. 구현할 때 목록에서 제거하고 실제 화면 경로 테스트를 통과해야 한다."
+}
