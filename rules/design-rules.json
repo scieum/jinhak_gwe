@@ -1,7 +1,7 @@
 {
   "source": {
     "file": "docs/design.md",
-    "sha256": "c1baabe04ba7ca27dacb063948e25e8c5dc38df427c6444a4fafa2cece27b7f7"
+    "sha256": "24b44dbec741a7687fdf02e865597df3fa666dcf1027a53d9a49564c7f7c59ac"
   },
   "frames": [
     [
@@ -178,7 +178,8 @@
     "회원가입": "signup",
     "최저로 찾기": "minimum-search",
     "대학 상세 위키": "univ-detail-wiki",
-    "학과별 입결 구간표": "dept-tier"
+    "학과별 입결 구간표": "dept-tier",
+    "특수 계열 모아보기": "special-tracks"
   },
   "requires_trace_accordion": [
     "five-to-nine",
@@ -203,7 +204,8 @@
     "admission-results",
     "minimum-search",
     "univ-detail-wiki",
-    "dept-tier"
+    "dept-tier",
+    "special-tracks"
   ],
   "gates": {
     "G1": {
