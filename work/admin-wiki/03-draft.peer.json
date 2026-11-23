@@ -1,0 +1,36 @@
+{
+  "file_key": "AqkVdYZ4hvPYuAlewoBs4W",
+  "frames": {
+    "390": "568:121268",
+    "1440": "568:121346"
+  },
+  "states": {
+    "1440-empty": "624:173453",
+    "1440-filter-empty": "624:173513",
+    "1440-import-done": "624:173573",
+    "1440-import-error": "624:173633",
+    "1440-export-done": "624:173693",
+    "1440-export-error": "624:173753",
+    "1440-conflict": "624:173813",
+    "1440-editor-new": "624:173873",
+    "1440-editor-problems": "624:173933",
+    "1440-editor-unsaved": "624:173993",
+    "1440-editor-ready": "624:174053",
+    "1440-editor-mine": "624:174113",
+    "1440-editor-done": "624:174173",
+    "1440-editor-error": "624:174233",
+    "1440-editor-noname": "624:174293",
+    "390-empty": "624:174353",
+    "390-editor": "624:174377",
+    "390-editor-problems": "624:174401",
+    "390-conflict": "624:174425",
+    "1440-confirm-delete": "624:174449",
+    "1440-confirm-close": "624:174509",
+    "1440-confirm-reset": "624:174569",
+    "1440-confirm-export": "624:174629",
+    "1440-source-link": "624:174689",
+    "1440-reviewer-account": "624:174749"
+  },
+  "review_status": "awaiting-human-review",
+  "checked_at": "2026-11-24"
+}
