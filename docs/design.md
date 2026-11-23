@@ -88,7 +88,7 @@ Semantic — 될각 판정
 판정 없음	{colors.text-muted}	{colors.canvas-soft}	{colors.judge-none}
 경고(수시로 조합 경고)는 소신 색 쌍을 씁니다. 수능 최저 미충족은 "수능 최저 판정 배지" 규칙(위험 쌍 ✕)을 따르고, "예상" 같은 예측 표현 대신 "충족 현황"이라고 씁니다.
 입력 오류는 위험 색 쌍을 씁니다(글자색 + 입력칸 아래 안내 문구).
-완료·검수 완료는 안정 색 쌍을 씁니다.
+완료·검수 완료는 안정 색 쌍을 씁니다. 이 규칙은 환산 규칙 검수(규칙 편집기 · 검수)에만 적용하고, 계산이 없는 관리자 데이터(계열표 · 위키 요약)의 검수 대기 · 1인 승인 · 검수 완료는 흑백 data-status-badge로 씁니다(2026-11-23 사용자 결정, 판정 색 · ● 없음). 학생이 직접 적는 기록(지원 자격 확인표 · 원서·서류 체크리스트 · 상담 질문·할 일)의 완료 · 확인 표시도 판정 색을 쓰지 않습니다.
 모든 글자/배경 조합은 명도 대비 4.5:1 이상이어야 합니다. 구현 후 대비 검사 도구로 확인합니다.
 등급 표시
 
@@ -157,9 +157,9 @@ App Shell
 상단 앱바 56px: 화면 제목({typography.heading-4}), 왼쪽 뒤로가기, 오른쪽 보조 동작 1개
 하단 탭바(tab-bar-pill): 화면 아래에 떠 있는 알약 막대입니다. 탭은 대분류 다섯 개입니다: 홈 · 성적 · 대학 찾기 · 수시 전략 · 더보기(교사 모드·설정·잠금). 교사 모드에서는 홈 대신 우리 반 · 성적 관리 · 수합·집계 · 더보기입니다. 소분류는 상단 앱바 바로 아래 `sub-nav`(가로 탭)로 고릅니다. 상세 화면(뒤로가기 있는 화면)에는 sub-nav를 두지 않습니다.
 내비게이션은 대분류-소분류 2단계입니다(2026-11-18 사용자 결정).
-학생 대분류: 홈 / 성적(성적 입력 · 성적 추이 · 5 to 9 · 대학별 환산 · 모의고사) / 대학 찾기(전형계획 · 수시 입결 · 학과별 구간 · 계열 모아보기 · 될각 · 최저로 찾기) / 수시 전략(수시로 · 생기부 AI). 학과별 구간 소분류 아이콘은 icon/layers(2026-11-23 사용자 결정, 수시 전략 icon/layout-grid와 겹치지 않게), 계열 모아보기 소분류 아이콘은 icon/folder(2026-11-23 사용자 결정, icon/layers · icon/layout-grid와 겹치지 않게).
+학생 대분류: 홈 / 성적(성적 입력 · 성적 추이 · 5 to 9 · 대학별 환산 · 모의고사) / 대학 찾기(전형 성향 탐색 · 전형계획 · 대학 지도 · 수시 입결 · 전국 배치표 · 학과별 구간 · 계열 모아보기 · 될각 · 최저로 찾기 · 지원 자격 확인표 · 전형 비교) / 수시 전략(수시로 · 원서·서류 체크리스트 · 입시 일정 · 상담 질문·할 일 · 생기부 AI). 학과별 구간 소분류 아이콘은 icon/layers(2026-11-23 사용자 결정, 수시 전략 icon/layout-grid와 겹치지 않게), 계열 모아보기 소분류 아이콘은 icon/folder(2026-11-23 사용자 결정, icon/layers · icon/layout-grid와 겹치지 않게). 2026-11-23 사용자 결정으로 소분류 아이콘을 더 정합니다: 전형 성향 탐색 icon/compass(생기부 AI icon/sparkles와 겹치지 않게) · 전국 배치표 icon/chart-scatter(icon/layout-grid · icon/layers · icon/folder와 겹치지 않게) · 지원 자격 확인표 icon/clipboard-check · 전형 비교 icon/columns-2(대학별 환산 icon/arrow-up-down과 겹치지 않게) · 원서·서류 체크리스트 icon/list-checks(모의고사 icon/check와 겹치지 않게) · 입시 일정 icon/calendar(성적 추이는 icon/trending-up으로 바꿔 겹치지 않게) · 상담 질문·할 일 icon/message-square(교사 모드 학생 상담과 같은 아이콘이지만 학생 · 교사 사이드바가 따로라 한 사이드바 안에서는 겹치지 않음) · 대학 지도 icon/map(2026-11-23 대학 지도, 대학 찾기 대분류 icon/search · 전형 성향 탐색 icon/compass · 전국 배치표 icon/chart-scatter와 겹치지 않게).
 교사 대분류(교사 모드에서만): 우리 반(우리 반 홈 · 학생 기록 · 학생 상담 · 누가기록) / 성적 관리(성적 불러오기 · 수능 최저 판정 · 모의고사 수합) / 수합·집계(카드 수합 · 결과 집계). 학생 기록 상세는 우리 반 아래의 상세 화면입니다.
-관리자 대분류(관리자 계정에서만): 규칙 관리(규칙 편집기 · 검수).
+관리자 대분류(관리자 계정에서만): 규칙 관리(규칙 편집기 · 검수 · 계열표 · 위키 요약). 관리자 모바일 하단 탭바는 규칙 관리 · 더보기 두 칸이고, 관리자 상단에는 mode-switch · 잠금 버튼을 두지 않습니다. 소분류 아이콘은 규칙 편집기 icon/file-text · 검수 icon/check · 계열표 icon/layout-grid · 위키 요약 icon/book-open(2026-11-23 사용자 결정, 서로 겹치지 않게).
 하단 안전 영역(safe-area)을 지킵니다.
 
 태블릿 (tablet)
@@ -190,10 +190,19 @@ Responsive Strategy — 화면별 구성
 될각	교과 · 종합 세그먼트 → 판정별 그룹 목록(안정→위험) + 필터 바텀시트	왼쪽 필터 + 판정 4열 레인(judge-lane) 또는 표 보기 전환
 학과별 구간표(2026-11-23 학과별 입결 구간표)	대계열(인문 · 자연) 세그먼트 → 학과 묶음 바텀시트 → 구간 폭 세그먼트(직접 → 아래 입력칸) → 층 카드(한 줄 3칸, 넘치면 줄바꿈) → 근거 아코디언	대계열 세그먼트 + 중계열 · 소계열 칩 + 구간 폭 세그먼트(직접 → 오른쪽 입력칸) → 왼쪽 축(구간) + 층(한 줄 최대 6칸) → 근거 아코디언
 특수 계열 모아보기(2026-11-23)	묶음 filter-chip 가로 스크롤 한 줄(9개, 줄바꿈 없음) → 묶음 머리(설명 · 합계 · 기준일) → 교과 · 종합 세그먼트 + 세부 · 정렬 바텀시트 → univ-card 목록 변형 → 카드를 누르면 바텀시트(체육 · 예체능 실기는 실기 과목 · 채점 기준 섹션, 과목별 펼침) → 근거 아코디언	묶음 filter-chip 한 줄 + 세부 filter-chip 줄(오른쪽 끝 교과 · 종합 세그먼트) → 묶음 머리 → data-table(대학 · 모집단위 · 2028 전형 · 모집 · 70% 컷 · 경쟁률 · 충원율 · 기준) → 행을 누르면 모달(실기 섹션이 있으면 size=wide, 왼쪽 요약 · 오른쪽 실기 과목 · 채점 기준) → 근거 아코디언
+전형 성향 탐색(2026-11-23, 체험판)	소개 카드 → 준비 방식 카드 5장 세로(누르면 설명 바텀시트) → 문항 단계(진행 막대 + 문항 카드 + 세로 선택지 5개 + 이전 · 다음 한 줄) → 결과(히어로 + 결과 공유 → 전형 카드 1열 → 근거 아코디언 → 버튼 세로 4개 → 고지). 답변 한눈에 보기 · 확인 창 · 공유는 바텀시트, 지운 뒤 toast	page-header → 본문 최대 720 가운데(문항 · 결과), 준비 방식 카드 5장 한 줄 → 결과 전형 카드 2열. 설명 · 답변 보기 · 확인 창 · 공유는 모달. 판정 색 · 점수 · 캐릭터 없음
+전국 배치표(2026-11-23)	검색 1줄 + 조건 filter-chip 1줄(칩마다 바텀시트) → 보기 전환 세그먼트(좌표 · 목록 · 수집 대학) → 전형 유형 세그먼트 + 범례 → 내 위치 줄(검수 전 "준비 중") · 준비 중 묶음 줄 → cut-dot-plot(대학 행, 10곳씩) → 점을 누르면 말풍선 → 원문 바텀시트 → 근거 아코디언	page-header → 조건 카드(검색 2칸 + 상세 조건 세그먼트 · 칩 · 등급 범위 입력, 펼침 기본) → 결과 카드(보기 전환 세그먼트 · 전형 유형 세그먼트 · cut-dot-plot 10곳씩 / data-table 50행 / 수집 대학 data-table 20곳) → 점을 누르면 말풍선 → 원문 모달(size=wide) → 근거 아코디언. 계열 배치표(placement-board)는 넷째 보기 제안 참고 프레임에만
+대학 지도(2026-11-23)	검색 1줄 + filter-chip 한 줄(전국 ⌄ · 설립 · 캠퍼스 · 학교 종류, 누르면 바텀시트 — 지역은 17개 시·도 3열 격자) → region-map 전국 보기(시·도마다 개수 표식) → 시·도를 누르거나 고르면 시·도 보기(그 시·도만 확대 + 대학 핀 · 묶음 핀) → 핀을 누르면 지도 아래쪽 univ-card 지도 변형 → 대학 상세. 떠 있는 "목록 보기" 버튼으로 univ-card 지도 변형 목록과 전환. 묶음 핀 · 정렬은 바텀시트	page-header → 왼쪽 목록 패널 420(검색 · 칩 · 개수 · 정렬 · univ-card 지도 변형 목록) + 오른쪽 region-map 카드(지도 위 선택 카드). 목록 카드 ↔ 핀 선택이 함께 움직이고, 시·도 고르기는 칩 아래 떠 있는 격자, 묶음 핀은 왼쪽 목록을 거릅니다. 보기 전환 버튼 없음
+지원 자격 확인표(2026-11-23)	화면 제목 → 준비할 전형 선택 칸(누르면 바텀시트) → 전형 카드(이어서 갈 곳 버튼 가로 스크롤 한 줄) → 요약 stat-tile 2개 → 안내 → 항목 카드 세로 목록(상태 배지 · 메모 · 자료 링크 · 확인 기록) → 항목을 고치면 바텀시트 → 저장 뒤 toast	page-header(주요 버튼 "+ 지원 전형 추가") → 전형 카드(선택 칸 + 이어서 갈 곳 버튼 한 줄) → 요약 stat-tile 2개 + 안내 한 줄 → 항목 카드 2열 그리드 → 항목을 고치면 모달 → 저장 뒤 toast
+전형 비교(2026-11-23)	화면 제목 → 모든 항목 · 다른 점만 세그먼트 + 전형 추가 → 조건 filter-chip 한 줄(학년도 · 모집시기 · 지표 · 컷·통계, 누르면 비교 조건 바텀시트) → data-table 변형 compare(열 머리 고정 + 항목 이름 띠, 2열 보이고 3·4열은 가로로 밀기) → 고지. 전형 선택 · 원문 상세 · 지원 준비는 바텀시트, 빼면 toast	page-header(전형 추가) → 세그먼트 + 선택 입력칸 4개 한 줄 → data-table(첫 열 항목 고정 + 전형 2~4열, 가로 스크롤 없음) → 고지. 전형 선택 · 지원 준비는 모달, 원문 상세는 모달 size=wide, 빼면 toast
 수시로	6칸 세로 목록 + 상단 고정 경고 요약 바, 길게 눌러 순서 변경	3×2 카드 그리드 + 오른쪽 경고 패널, 끌어서 순서 변경, A·B·C안 탭
+원서·서류 체크리스트(2026-11-23)	화면 제목 → 준비할 전형 고르기(누르면 바텀시트 목록) → 전형 카드(전형 정보 · 수정 · 삭제 · 자료 링크 · 진행 막대 "완료 n / m" + 개수 한 줄 · 바로가기 2열) → 걸러 보기 filter-chip 한 줄(전체 · 남은 항목 · 기한 지남 · 완료) → 체크 항목 카드 목록(왼쪽 checkbox 한 번 눌러 완료 · 이름 · 진행 상태 아이콘+글자 · 마감 라벨 · 메모 · 자료 · 확인 기록 · 수정/삭제) → + 체크 항목 추가 → 고지. 편집 · 추가 · 삭제 확인 · 날짜 고르기는 모두 바텀시트	page-header(+ 지원 전형 추가) → 전형 카드 한 장(준비할 전형 고르기 + 전형 정보 + 진행 막대 + 개수 + 바로가기 한 줄) → 걸러 보기 filter-chip 한 줄 → data-table(완료 checkbox · 항목 · 진행 상태 · 마감 · 확인 기록 · 자료 · 동작) → 고지. 편집 · 추가 · 삭제 확인은 모달(최대 폭 560), 날짜 고르기는 모달 안 마감 칸 아래 펼침. 마감 라벨 · 진행 상태는 판정 색 없이 아이콘 + 글자 + 굵기로만 구분
+입시 일정(2026-11-23)	제목 + 월간 · 목록 세그먼트 → 다가오는 일정 stat-tile → filter-chip 한 줄(전형 ▾ · 일정 종류 · 완료 포함, 전형은 바텀시트) → 달 이동(월 제목 ▾를 누르면 달 고르기 바텀시트) + data-table 변형 month(고사 겹침 날은 ▲) → 이번 달(또는 고른 날) 일정 목록(겹침이 있으면 맨 위 warning-callout) → 날짜 미정 접힘 → .ics 내보내기(확인 바텀시트 → toast) → 고지. 일정 상세는 바텀시트	왼쪽 달력(data-table 변형 month) + 오른쪽 360 패널(다가오는 일정 stat-tile → 일정 목록 → 날짜 미정 · 내보내기), 위에 filter-chip 한 줄 + 오른쪽 월간 · 목록 세그먼트. 목록 보기는 왼쪽이 data-table로 바뀝니다. 전형 · 달 고르기는 누른 자리 아래 떠 있는 목록, 일정 상세 · 내보내기 확인은 모달
+상담 질문·할 일(2026-11-23)	화면 제목 줄(오른쪽 + 추가 · 상담카드에 담기) → 숫자 한 줄(진행할 항목 · 오늘까지 · 기한 지남) → filter-chip 가로 스크롤 한 줄(상태 3개 · 오늘까지 · 기한 지남 + 구분 · 전형은 바텀시트) → 상담 항목 카드 세로 목록(흰 카드: 구분 · 전형 · 상담일 캡션 → 제목 → 기한 줄 → 메모 칸 → 완료로 표시(질문은 "물어봤어요") · 수정 버튼) → 추가 · 수정은 bottom-sheet(삭제는 그 안 button-danger-text → 확인 바텀시트), 상담카드에 담기는 share-sheet	page-header(+ 질문·할 일 추가 · 상담카드에 담기) → 숫자 한 줄 → filter-chip 2줄(상태 · 기한 · 구분 / 전형) → 상담 항목 카드 2열 그리드 → 추가 · 수정은 modal(전형 고르기는 filter-chip 묶음), 상담카드에 담기는 share-sheet 모달. 기한 지남 · 오늘까지는 잉크 SemiBold 글자로만 구분하고 판정 색 · 판정 아이콘을 쓰지 않습니다. stat-tile을 쓰지 않습니다
 생기부 AI	붙여넣기 → 가림 확인 → 결과(역량 카드 → 근거 인용 → 면접 질문) 단계형	왼쪽 원문(가림 표시), 오른쪽 결과. 근거 인용을 누르면 원문 위치로 이동
 교사 대시보드·카드 수합·결과 집계	보기 전용 요약 + "PC에서 열면 전체 기능을 쓸 수 있어요" 안내	전체 기능. 첫 열(학생) 고정 표, 위험 경고 학생 먼저 정렬
 학생 상담	학생 요약 카드 + 상담 메모 입력만	3단: 학생 요약 / 될각·수시로 / 상담 메모 타임라인
+대학 위키 요약 검수(2026-11-23, 관리자)	제목 + 공개 파일 내보내기 → 안내 띠 → 요약 쓰기 카드(입력 세로) → 검색 + 검수 상태 filter-chip 한 줄 → 카드 목록 → 카드를 누르면 bottom-sheet 편집기. 삭제 · 닫기 · 다시 저장 · 내보내기 확인은 바텀시트, 완료는 toast	page-header → 안내 띠 → 요약 쓰기 카드(입력 한 줄) → 검색 + 검수 상태 segmented-control + 기록 가져오기 · 내보내기 → data-table → 대학을 누르면 modal size=wide 편집기. 삭제 · 닫기 · 다시 저장 · 내보내기 확인은 modal 560, 완료는 toast. 검수 상태는 모두 흑백 data-status-badge
 
 공통 원칙
 
@@ -232,7 +241,7 @@ Token	값	용도
 {rounded.sm}	0px	(=none)
 {rounded.md}	0px	(=none)
 {rounded.full}	0px	(=none)
-원형 표식(판정 아이콘 ●, 내 위치 점, 5단계 점, 범위 막대 위 방법별 점, counsel-timeline 마디 점, cut-dot-plot 원 점)만 Figma ELLIPSE로 그립니다.
+원형 표식(판정 아이콘 ●, 내 위치 점, 5단계 점, 범위 막대 위 방법별 점, counsel-timeline 마디 점, cut-dot-plot 원 점, region-map 대학 핀 · 묶음 핀 · 개수 표식)만 Figma ELLIPSE로 그립니다.
 대학 표시
 대학은 실제 대학 로고(univ-logo, SVG)로 표시합니다(2026-11-18 사용자 결정 — 비상업 배포 전제. 상업 배포로 바뀌면 대학별 사용 허락이 필요합니다). 로고는 원본 색·비율 그대로 쓰고, 로고 색은 팔레트 예외입니다. 로고 파일이 없는 대학만 대학 이름 첫 글자를 넣은 모노그램 정사각형(univ-monogram, 모서리 0)을 씁니다. {colors.canvas-soft} 바탕 + {colors.ink} 글자입니다.
 Components
@@ -242,6 +251,7 @@ button-primary — "성적 입력하기", "수시로에 담기", "상담카드 �
 
 채움 {colors.primary}, 글자 {colors.on-primary} {typography.link}, 모서리 0, 높이 모바일 52px · PC 44px
 한 화면에 주요 버튼은 하나만 둡니다.
+비활성(2026-11-23): 필요한 입력이 없을 때 {colors.canvas-soft} 채움 + {colors.text-faint} 글자, 누를 수 없고 포인터 변화 없음. 왜 꺼졌는지는 버튼 근처 문장이나 보조 기술용 설명으로 알립니다.
 
 button-outline — "엑셀 불러오기", "B안으로 복제"
 
@@ -254,17 +264,21 @@ button-pill-soft — "산출 근거 보기", "원문 보기 ↗", "필터"
 button-danger-text — "이 기기에서 학급 데이터 지우기"
 
 배경 없음, 글자 {colors.judge-risk}. 누르면 반드시 확인 모달을 띄웁니다.
+확인 창(2026-11-23): 지우기 · 되돌리기 어려운 저장 · 저장하지 않고 나가기 · 내보내기 전에 PC modal(최대 폭 560) / 모바일 bottom-sheet로 묻습니다. 제목 질문 {typography.heading-4} + 함께 지워지거나 바뀌는 것 한 줄 {typography.body} + button-primary 실행(잉크, 예: "삭제") + button-outline "취소"이고, PC는 버튼을 오른쪽 정렬합니다. 확인 창 안 실행 버튼에는 위험 색 채움을 쓰지 않습니다. 끝난 결과는 toast 한 줄로 알립니다.
 Inputs & Forms
 
 text-input / text-input-focused
 
 {colors.field} 채움, 선 없음, {rounded.sm}, {spacing.sm} {spacing.md}
 변형(2026-11-23 학과별 입결 구간표): on=card(기본, {colors.field} 채움) | page(Page 바탕 위에 직접 놓일 때 {colors.canvas} 채움, Elevation 규칙). 높이 size=lg 48(기본) | md 44(모바일 한 줄 입력) | sm 40(PC 툴바 안 짧은 입력). text-input-error도 같은 변형을 따릅니다.
+변형 select · multiline · type=date(2026-11-23 지원 자격 확인표 · 전형 비교 · 원서·서류 체크리스트 · 입시 일정 · 상담 질문·할 일 · 대학 위키 요약 검수): 세 변형 모두 채움 · 모서리 0 · on · size · 포커스 · 오류 규칙은 text-input · text-input-error와 같습니다. ① select = 정해진 값 중 하나를 고르는 칸입니다. 직접 타이핑하지 않고 오른쪽 끝에 icon/chevron-down 20 {colors.ink}를 두며, 값이 넘치면 한 줄 말줄임입니다. 누르면 모바일은 bottom-sheet 단일 선택 목록, PC는 칸 바로 아래 같은 폭 이상의 떠 있는 목록(Overlay: {colors.canvas} + 1px {colors.hairline} + {shadow.overlay}, 모서리 0, 행 높이 40 {typography.body}, 마우스를 올린 행 {colors.canvas-soft}, 고른 행 = Elevation Selected + 오른쪽 icon/check {colors.accent})이 열리고, 바깥을 누르거나 Esc로 닫으며 행을 고르면 바로 닫힙니다. PC에서 폼 밖(filter-chip · 달력 월 제목 등)에서 고르기를 열 때도 같은 떠 있는 목록을 누른 자리 아래 4px에 엽니다(폭 = 누른 요소 이상 최대 360, 2026-11-23 입시 일정). 버튼이 있는 확인 · 편집 내용은 modal을 씁니다. 선택지가 5개 이하이고 한 줄에 들어가면 select 대신 segmented-control을, 모바일 목록 위 조건은 filter-chip 줄 + bottom-sheet를, 폼 밖 화면 위 고르기 버튼은 button-pill-soft + ▾를 먼저 씁니다. ② multiline = 메모처럼 여러 줄을 넣는 칸입니다. 글자 {typography.body-sm}, 높이 = 보이는 줄 수 × 24 + 위아래 패딩(기본 4줄 112, 짧은 입력은 3줄 96)에서 시작해 내용만큼 최대 8줄 208까지 늘고, 그 뒤는 칸 안 세로 스크롤입니다. 글자 수 제한이 있으면 칸 오른쪽 아래 바깥에 "n/최대" {typography.caption} {colors.text-muted} 고정폭을 둡니다. ③ type=date(시각까지 넣으면 type=datetime) = 날짜 한 개를 넣는 칸입니다. 값은 "2026-11-24"(datetime은 "2026-11-24 18:00") 고정폭 숫자, 빈 값 안내는 "YYYY-MM-DD" {colors.text-faint}, 오른쪽 끝에 icon/calendar 16 {colors.ink-soft}. 누르면 날짜 고르기(bottom-sheet 변형 date, PC는 칸 아래 펼침)를 엽니다. 선택 입력이면 라벨 뒤에 "(선택)"을 붙입니다.
 포커스 시 2px {colors.ink} 링
 
 text-input-error
 
 2px {colors.judge-risk} 링 + 아래에 {typography.caption} {colors.judge-risk} 안내 문구(예: "분포비율 합이 100%가 아니에요 (98.5%)")
+checkbox(2026-11-23 원서·서류 체크리스트 · 전형 비교) — 켜고 끄는 네모 칸입니다. 20×20, 모서리 0, 꺼짐 = {colors.canvas} 채움 + 1.5px {colors.ink-soft} 테두리, 켜짐 = {colors.ink} 채움 + {colors.on-primary} 체크 표시, 누르는 영역 44×44. 판정 색 · Route Blue를 쓰지 않고, 켜져도 옆 글자에 취소선 · 회색 처리를 하지 않습니다(대비 유지). 옆에 상태 글자(예: "완료")를 함께 둡니다. 쓰는 곳: 원서·서류 체크리스트 항목을 한 번 눌러 완료로 표시, bottom-sheet 여러 개 고르는 목록, mask-preview의 "가린 내용을 확인했어요". 하나만 고르는 목록에는 쓰지 않습니다.
+파일 불러오기(2026-11-23 학과 계열표 검수): 브라우저 기본 파일 입력 모양을 그대로 쓰지 않고 button-outline "○○ 파일 고르기" + 아래 {typography.caption} {colors.text-muted} 형식 안내(고른 뒤에는 파일 이름)로 씁니다. 파일 창과 내려받기는 OS 기본 창이라 시안에 그리지 않습니다.
 
 grade-input-table — 성적 입력 표(PC)
 
@@ -325,9 +339,12 @@ judge-badge — 될각 판정
 grade-trend-chart — 등급 추이 선 차트(2026-11-18): 세로축 등급(1이 위, 내신 1~5 / 모의고사 1~9 눈금. 기본 보기는 데이터 범위 ±0.5로 좁히고 전체 눈금은 토글(2026-11-22 v2)), 가로축 학기 또는 시험 회차. 선택한 계열 1개만 2px {colors.accent} 선 + 점, 나머지 계열은 1px {colors.text-faint} 선 + 선 끝 이름표(계열을 색으로 구분하지 않음). 가장 최근 점에 값 라벨. 기준선은 1px {colors.hairline} 점선 + 캡션 1개. 차트 아래 같은 값의 data-table(대체 텍스트 역할). 모서리 0, 그림자 없음.
 
 cut-dot-plot — 입결 점 그래프(2026-11-18 사용자 요청 "점으로 다 찍혀서 학교별로 어느 과 몇 점대인지 한눈에"): 가로축 9등급(1이 왼쪽, 0.5 눈금 {typography.caption} {colors.ink}, 세로 1px {colors.hairline-soft} 격자), 세로축 행 = 대학(또는 대학·학과) 한 줄씩, 행 머리 = univ-logo 20 + 이름(한 줄). 점 = 학과·전형 하나의 입결 컷(기본 70% 컷), 지름 11(2026-11-22 v2), {colors.ink}. 전형 유형은 탭(교과 · 종합 · 논술 · 기타 · 전체)으로 거르고, 전체일 때만 점 모양으로 구분합니다: 교과 ● 채운 원, 종합 ○ 빈 원(1.5px), 논술 ◆ 채운 마름모, 기타 ◇ 빈 마름모 + 그래프 위 범례. 최근 3년을 같이 볼 때 자료가 있는 가장 최근 연도 = {colors.ink}, 1년 전 = {colors.year-prev}, 2년 전 = {colors.year-old} 같은 모양(흰 바탕 그래픽 대비 3:1 이상), 연도 점 사이 1px {colors.text-muted} 선. 내 위치 = 환산 범위 {colors.accent-soft} 세로 띠 + 대표값 2px {colors.accent} 세로선 + 위 말풍선. 점을 누르면 말풍선(대학 · 학과 · 전형 · 연도 · 컷 · 모집인원). 판정 이름·판정 색은 쓰지 않습니다(될각과 섞이지 않게). 검수 전 데이터는 점을 찍지 않고 행 끝에 "준비 중" data-status-badge. 표 보기(data-table)와 같은 데이터를 세그먼트로 전환합니다.
+전국 배치표 규칙(2026-11-23): 같은 대학 · 같은 값(소수 첫째 자리) 행은 점 하나로 묶고 점 오른쪽 위에 원문 행 수를 {typography.caption} {colors.text-muted}로 적습니다. 한 행 안에서 점끼리 0.15등급 안으로 붙으면 그 행을 위아래 두 줄로 나눕니다(줄 간격 14). 대학이 많으면 10곳씩 페이지로 나누고(data-table 페이지 이동 줄) 축 머리는 위에 붙입니다. 같은 위치에 원문이 여러 행이면 말풍선에 "같은 위치 n행"만 적고 원문 상세에서 고르게 합니다.
 
 placement-board — 배치표(2026-11-18 사용자 요청 "모든 대학을 좌표로 찍어 예전 정시 배치표 같은 느낌"): 세로축 = 환산 9등급(1이 위, 0.1 눈금, 0.5마다 {colors.hairline-soft} 가로 격자, 왼쪽 축 라벨 {typography.caption} {colors.ink}), 가로 = 열(기본 계열: 인문 · 사회 · 자연 · 공학 · 의약 · 예체능), 열 머리 {typography.label}. 칸 = 대학·학과 이름표(univ-logo 16 + "대학 학과" {typography.caption}, 한 줄 말줄임, 모서리 0, 채움 없음)를 그 학과 입결 컷(기본 70% 컷) 높이에 놓습니다. 같은 높이에서 겹치면 아래로 한 줄씩 밀어 쌓고 순서는 컷 순서를 지킵니다. 내 위치 = 모든 열을 가로지르는 {colors.accent-soft} 띠(환산 범위) + 2px {colors.accent} 가로선(대표값) + 축 옆 말풍선. 전형 유형 탭(교과 · 종합 · 논술 · 기타 · 전체)으로 거르고, 전체일 때만 이름표 앞에 모양 표시(● 교과 ○ 종합 ◆ 논술 ◇ 기타) + 범례. 기본 보기는 내 위치 ±1.0등급, 세로 스크롤로 1~9 전체. 판정 이름·판정 색은 쓰지 않습니다(될각과 섞이지 않게). 검수 전 데이터는 이름표 없이 열 아래 "준비 중 n개" data-status-badge. 모바일은 열 하나를 segmented-control로 골라 봅니다. 표 보기(data-table)·대학별 점 보기(cut-dot-plot)와 같은 데이터이며 보기 전환 segmented-control(표 · 배치표 · 대학별 점)로 바꿉니다.
+전국 배치표 화면(2026-11-23 사용자 결정)은 앱 모양 그대로 cut-dot-plot(가로축 9등급 · 대학 행)을 기본 보기로 쓰고, 보기 전환은 "좌표 배치표 · 전체 목록 · 수집 대학"입니다. 이 컴포넌트(계열 배치표)는 넷째 보기 제안으로 참고 프레임에만 그리고, 학과 계열표 검수가 끝난 뒤 보기 전환에 넣을지 다시 정합니다.
 placement-board 변형 layer(2026-11-23 학과별 입결 구간표): 한 학과 묶음(대계열 › 중계열 › 소계열)의 공개 입결을 구간 층으로 쌓습니다. 새 토큰 없음. 배치표와 같은 점: 칸 = 로고 + 학과 이름 + 컷, 판정 이름 · 판정 색 금지, 검수 전은 "준비 중 n개" data-status-badge, 내 위치 = {colors.accent-soft} 띠 + 2px {colors.accent} 선 + 말풍선(검수된 환산이 없으면 "준비 중"). 다른 점: ① 세로축 대신 구간 층. 구간 폭은 학생이 segmented-control "구간 폭"으로 고릅니다(0.1 · 0.2 · 0.3 · 0.5 · 직접, 기본 0.5). "직접"을 고르면 모바일은 세그먼트 아래, PC는 오른쪽에 text-input이 열려 0.05~1.0 사이 값을 소수 둘째 자리까지 넣습니다. 범위 밖 · 형식 오류는 text-input-error(입력칸 아래 안내 문구)로 알리고 표는 직전 폭을 유지합니다. 고른 폭과 직접 넣은 값은 이 기기에만 기억합니다. 경계는 1.0부터 폭만큼, 아래 경계 포함 · 위 경계 미포함(9.0은 마지막 층), 표기 자릿수는 폭의 소수 자릿수에 맞춥니다(0.2 → 2.4~2.6, 0.25 → 2.50~2.75). 층이 많아도 접거나 줄이지 않고 위 층부터 세로 스크롤합니다. 층은 데이터의 가장 작은 컷~가장 큰 컷 범위 안에만 만들고, 그 안의 빈 층은 지우지 않고 "이 구간에는 공개된 입결이 없어요" 한 줄. 층 사이 1px {colors.hairline} ② 열 없이 한 학과 묶음만, 층 안 칸은 가운데 정렬 · 가나다순(칸 수에 따라 피라미드 모양이 생깁니다) ③ 칸 = 세로 스택(univ-logo 32 → 대학명 {typography.caption} → 그 대학이 실제로 쓰는 모집단위 이름 {typography.body-sm} 두 줄까지(단어 단위 줄바꿈, 넘치면 둘째 줄 말줄임) → 70% 컷 {typography.title}), 채움 없음, 1px {colors.hairline-soft} 테두리, 모서리 0, 모바일 한 줄 3칸 · PC 최대 6칸, 같은 대학 같은 소계열 모집단위가 여럿이면 각각 칸 ④ 층 머리 = "70% 컷 a~b" {typography.label} + "모집단위 n개" {typography.caption} {colors.text-muted}, PC는 왼쪽 축 칸 120 ⑤ 순번 · 트로피 · 층별 색 · S/A/B 같은 등급 이름 금지. 칸을 누르면 그 대학 상세로 갑니다.
+region-map — 대학 지도(2026-11-23 대학 지도): 정적 SVG 시·도 경계 위에 4년제 대학 위치를 보여 주는 지도입니다. 지도 타일(카카오 · 네이버 · OSM 등)과 자유 줌 · 끌기는 쓰지 않고, 보기는 전국 / 시·도 하나 두 단계 고정 축척입니다. ① 바탕: 흰 카드(Elevation 2) 안, 육지 = {colors.canvas-soft} 채움, 시·도 경계 = 1px {colors.text-muted}, 바다 = 카드 흰 바탕. 울릉도 · 독도는 오른쪽 위 작은 상자(1px {colors.hairline}, 이름 {typography.caption})에 넣어 늘 보이게 합니다. ② 시·도는 누르는 영역입니다. 선택된 시·도 = {colors.accent-soft} 채움 + 1.5px {colors.accent} 경계(Selected), PC 마우스 올림 = {colors.hairline} 채움. 대학 수에 따라 시·도를 색 · 명도로 칠하지 않습니다(단계 구분도 금지). ③ 개수 표식(전국 보기, 시·도마다 1개) = 지름 28 ELLIPSE {colors.ink} 채움 + {colors.on-primary} 숫자 {typography.label} 고정폭(세 자리면 지름 36). PC는 표식 아래 시·도 이름 {typography.caption} {colors.ink}를 둡니다. 작은 시·도는 표식을 가까운 바다 · 빈 곳으로 옮기고 1px {colors.ink} 지시선으로 잇습니다. 개수가 0이면 표식을 두지 않고, 모두 검수 전이면 "확인 중" {typography.caption}만 둡니다. ④ 시·도 보기: 고른 시·도만 지도 칸에 맞게 확대하고, 둘레 시·도는 채움 없이 1px {colors.hairline} 경계만 둡니다(누르면 그 시·도로 바뀜). 대학 핀 = 지름 12 ELLIPSE {colors.ink} + 2px {colors.canvas} 테두리, 누르는 영역 44×44. 핀끼리 24px 안으로 붙으면 묶음 핀(개수 표식과 같은 모양, 숫자 = 대학 수)으로 합치고, 누르면 그 묶음 목록(모바일 bottom-sheet 단일 선택 목록, PC 왼쪽 목록 거르기)을 엽니다. 선택된 핀 = 지름 20 {colors.accent} + 3px {colors.canvas} 테두리 + 바깥 1px {colors.ink} 선, 한 번에 하나이고 선택된 대학은 묶음에서 빼서 따로 그립니다. 판정 색 · 입결 숫자 · 순위를 지도에 올리지 않습니다. ⑤ 지도 위에 놓이는 것은 그림자 없이 그립니다: 선택한 대학의 univ-card 지도 변형(Elevation 3, 지도 칸 아래쪽 12 띄움, PC는 왼쪽 아래 폭 340), 모바일 보기 전환 button-primary "≡ 목록 보기" / "지도 보기"(지도 아래 가운데, 카드가 있으면 카드 위), 시·도 보기의 button-pill-soft "‹ 전국으로". ⑥ 시·도 고르기: filter-chip "전국 ⌄"을 누르면 모바일은 bottom-sheet, PC는 칩 아래 떠 있는 목록(Overlay, 폭 360)에 "전국" 한 칸(폭 전체) + 17개 시·도 3열 격자(칸 = filter-chip, 높이 모바일 48 · PC 40, "강원 9"처럼 이름 + 대학 수 고정폭)를 두고, 칸을 누르면 바로 닫히고 지도가 바뀝니다. ⑦ 지도 카드 아래에 출처 {typography.caption} {colors.text-muted} 두 줄(대학 위치 출처 · 기준일 · 검수일 / 지도 경계 출처)을 둡니다. ⑧ 지도는 목록의 보조 보기입니다. 시·도 · 핀은 키보드로 이동하는 버튼("강원특별자치도, 대학 9곳" · "강원대학교 삼척캠퍼스, 분교, 국립")이고 같은 내용을 목록으로 모두 볼 수 있어야 합니다. 위치 검수 전 대학은 핀 · 개수에 넣지 않고 지도 아래 data-status-badge "위치 확인 중 n곳"으로 개수만 보여 줍니다.
 
 judge-lane — 될각 PC 레인 보기
 
@@ -336,6 +353,7 @@ judge-lane — 될각 PC 레인 보기
 univ-card — 대학·전형 카드. 공개 변형(판정 없음)(2026-11-22 v2): 판정 머리 줄 없이 로고 + 대학명이 첫 줄, 판정·내 위치가 없는 전형계획 목록에 씁니다
 univ-card 비교 변형(2026-11-23 대학 상세 위키): 공개 변형에서 interest-heart와 하단 버튼을 빼고, 둘째 줄 = 모집단위 · 전형 유형 · 계열 관계(같은 계열 / 관련 계열) {typography.body-sm} {colors.text-muted}, 셋째 줄 = 70% 컷 + 기준 대비 차이(부호 포함, 예: +0.1) {typography.title} {colors.ink}. 차이에는 판정 색·Route Blue·순위 번호를 쓰지 않습니다. 카드 전체가 그 대학 상세로 가는 링크(오른쪽 ›)입니다. "입결이 비슷한 대학" 목록에만 씁니다.
 univ-card 목록 변형(2026-11-23 특수 계열 모아보기): 공개 변형에서 하단 "수시로에 담기" 버튼을 빼고 interest-heart는 둡니다. 카드 하나가 모집단위 하나입니다. 첫 줄 = 로고 + 대학명 {typography.heading-3}, 둘째 줄 = 모집단위 이름 {typography.title} {colors.ink}(사실 태그가 있으면 그 아래 data-status-badge 변형 fact 1개), 셋째 줄 = 2028 전형 유형별 모집인원 {typography.body-sm} {colors.text-muted}, 넷째 줄 = 위 1px {colors.hairline-soft} 아래 라벨/값 두 쌍(70% 컷 · 경쟁률, 라벨 {typography.caption} {colors.text-muted}, 값 {typography.numeric} {colors.ink} 고정폭, 값이 없으면 "미공개" 같은 글자 {typography.body-sm} {colors.text-muted}). 판정 · Route Blue · 순위 번호를 쓰지 않습니다. 카드 전체가 상세(모바일 bottom-sheet)로 가는 링크(오른쪽 ›)입니다. data-table을 모바일에서 카드 목록으로 바꿀 때, 판정이 없는 공개 목록에 씁니다.
+univ-card 지도 변형(2026-11-23 대학 지도): 공개 변형에서 interest-heart와 하단 버튼을 빼고 카드 하나가 캠퍼스 위치 하나입니다. 첫 줄 = 로고 + 대학명 {typography.heading-3}(목록 패널 안에서는 로고 24 + {typography.heading-4}), 둘째 줄 = 캠퍼스 이름 · 본교/분교 {typography.title}(목록에서는 {typography.body-sm} {colors.ink}), 셋째 줄 = 설립 · 학교 종류 · 시·도 시·군 {typography.body-sm} {colors.text-muted}. 입결 · 경쟁률 · 판정 · Route Blue 숫자 · 순위 번호를 쓰지 않습니다. 카드 전체가 대학 상세로 가는 링크(오른쪽 ›, 지도 위 카드는 "대학 상세 보기 ›")입니다. 지도 위에 놓일 때는 선택된 대학의 카드라서 Elevation 3(1px {colors.ink} 안쪽 테두리) + 오른쪽 위 닫기 ✕(44×44)이고 그림자를 쓰지 않습니다. PC 목록에서 지도 핀과 함께 선택된 카드는 Elevation Selected입니다. region-map과 그 목록에만 씁니다.
 
 흰 카드 + 1px {colors.hairline-soft}, {rounded.md}, 패딩 {spacing.md}(모바일) / {spacing.lg}(PC)
 왼쪽 univ-logo(로고 파일이 없으면 univ-monogram), 대학명 {typography.heading-3}, 전형·모집단위 {typography.body-sm} {colors.text-muted}
@@ -346,8 +364,10 @@ univ-card 목록 변형(2026-11-23 특수 계열 모아보기): 공개 변형에
 data-status-badge — 시행계획 기준 · 모집요강 반영 · 환산 규칙 준비 중
 
 흑백 알약({colors.canvas-soft} + {colors.text-muted}). 데이터 상태는 판정 색을 쓰지 않습니다.
+관리자 검수 상태(2026-11-23 사용자 결정): 계열표 · 위키 요약처럼 계산이 없는 관리자 데이터의 작성 중 · 검수 대기 · 1인 승인 · 검수 완료 · 반려는 모두 이 흑백 알약으로 씁니다(판정 색 · ● 없음). 안정 색 쌍은 환산 규칙 검수(규칙 편집기 · 검수)에만 씁니다.
 같은 상태가 한 표·목록에서 3칸 이상 반복되면 칸마다 붙이지 않고, 그 묶음 위에 한 줄("준비 중인 항목 12개 — 검수가 끝나면 채워져요")로 묶습니다(2026-11-22 v2).
 변형 fact(2026-11-23 특수 계열 모아보기): 모집단위의 성격을 사실로만 적는 태그입니다(예: 채용 조건형 · 의무 복무 조건 · 특수법 설립 · 초등교원 양성). 채움 {colors.canvas} + 1px {colors.hairline} 외곽선 + {colors.ink-soft} 글자 {typography.label}, 높이 20, 좌우 패딩 {spacing.xs}, 모서리 0이고, Page 바탕 위에서도 같은 모양입니다. 판정 색 · Route Blue · 아이콘을 쓰지 않고, 근거(원문 쪽수 또는 법령)가 관리자 검수 자료에 있을 때만 붙입니다. 한 행 · 카드에 1개까지이고 모집단위 이름 바로 아래에 둡니다. 데이터 상태(준비 중 · 기준일)에는 쓰지 않습니다.
+변형 self(2026-11-23 지원 자격 확인표): 학생이 모집요강을 보고 직접 적은 확인 기록의 상태입니다(확인 필요 · 충족으로 확인 · 미충족으로 확인 · 해당 없음). 채움 {colors.canvas} + 1px {colors.hairline} 외곽선 + {colors.ink-soft} 글자 {typography.label}, 높이 24, 좌우 패딩 {spacing.xs}, 모서리 0이고 Page 바탕 위에서도 같은 모양입니다. 이름 앞에 아이콘 12({colors.ink-soft})를 둡니다: 확인 필요 icon/circle-help · 충족으로 확인 icon/check · 미충족으로 확인 icon/x · 해당 없음 icon/minus. 서비스 판정이 아니라 내 기록이라서 판정 색 · Route Blue를 쓰지 않고, 이름은 "…으로 확인"처럼 기록임을 드러내는 문구를 그대로 씁니다. 수능 최저 판정 배지 · judge-badge와 한 화면에 섞어 쓰지 않습니다.
 
 data-table — 대학별 환산, 학급 대시보드, 카드 수합, 결과 집계
 
@@ -356,13 +376,16 @@ data-table — 대학별 환산, 학급 대시보드, 카드 수합, 결과 집�
 기준 행(2026-11-23 대학 상세 위키): 채움 없이 Elevation 3(1px {colors.ink} 안쪽 테두리) + 첫 칸 위 "지금 보고 있는 학과" {typography.caption} {colors.text-muted}. 비교 목록의 기준 항목에만 쓰고 선택 행과 함께 쓰지 않습니다.
 선택 행: {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대 + 아래 1px {colors.hairline}(Elevation Selected 규칙, 2026-11-18). 내 점수 행(학생 화면): {colors.accent-soft} 채움
 변형 expand(2026-11-23 특수 계열 모아보기): 행마다 딸린 세부 표가 있을 때 씁니다(예: 실기 과목 행 → 그 과목의 채점 기준 표). 행 오른쪽 끝에 펼침 표시 ▾(접힘) / ▴(펼침) {colors.ink}, 행 전체가 누르는 영역(모바일 44 이상)입니다. 펼치면 그 행 바로 아래에 {colors.canvas-soft} 채움 영역(좌우 패딩 {spacing.sm}, 위아래 {spacing.xs})이 열리고, 안에 같은 규칙의 작은 data-table(행 높이 40, 머리글 {colors.canvas} + {typography.table-head})을 둡니다. 처음엔 모두 접혀 있고 여러 행을 동시에 펼칠 수 있습니다. 펼친 행은 선택 행이 아니라서 Route Blue · accent-soft를 쓰지 않습니다. 산출 근거 설명에는 이 변형 대신 trace-accordion을 씁니다.
+변형 compare(2026-11-23 전형 비교): 항목(행) × 비교 대상(열) 표를 모바일에서 카드 목록으로 바꾸지 않고 표로 둘 때 씁니다. 열 머리 줄은 위에 붙어 고정되고, 행마다 표 폭 전체에 걸친 항목 이름 띠(높이 32, {colors.canvas-soft} 채움, {typography.label} {colors.ink-soft}, 가로로 밀어도 글자는 제자리)를 두고 그 아래에 열 값을 놓습니다. 열 폭 150, 열 사이 1px {colors.hairline-soft} 세로선, 화면 폭에 다 안 들어가는 열은 오른쪽 끝이 잘려 보이게 해서 가로로 밀 수 있음을 알리고 표 아래 caption으로 한 번 더 안내합니다. 열 순서는 사용자가 고른 순서이고 최고/최저 강조 · 순위 · 판정 색 · Route Blue를 쓰지 않습니다. PC에서는 기본 data-table(첫 열 항목 고정)로 돌아갑니다.
+변형 month(2026-11-23 입시 일정): 한 달을 7열(일~토) 표로 보여 주는 달력입니다. 머리글 {colors.canvas-soft} + {typography.table-head}, 칸 구분 1px {colors.hairline-soft}, 요일 글자에 색을 쓰지 않습니다. 칸 = 날짜 숫자 {typography.table} 고정폭 + 일정이 있으면 아래 "n건" {typography.caption} {colors.ink}(일정 이름 막대 · 색 점은 쓰지 않음). 칸 전체가 버튼이고 모바일 칸은 50×48(44 이상), PC 칸은 높이 88입니다. 오늘 = 날짜 숫자를 24×24 {colors.primary} 채움 정사각 + {colors.on-primary} 글자로, 선택한 날 = 칸 전체 {colors.accent-soft} + 1px {colors.accent} 안쪽 테두리(Elevation Selected의 칸 버전), 다른 달 칸은 비웁니다. PC 호버 = Elevation 3. 고사 일정이 겹쳐 경고가 있는 날은 "n건" 옆 ▲ {colors.judge-reach}를 두고 내용은 그날 목록의 warning-callout과 칸 대체 텍스트로 읽히게 합니다. 모바일에서도 카드 목록으로 바꾸지 않고 표로 둡니다.
 첫 열 고정, 머리글 고정, 정렬 가능한 열에는 정렬 화살표
+페이지 이동 줄(2026-11-23 전국 배치표 · 학과 계열표 검수): 한 번에 다 보여 주지 않는 표 · 그래프(cut-dot-plot 10곳씩, 50행이 넘는 관리자 표) 아래에 button-outline "이전" · 고정폭 "n / m" {typography.caption} · button-outline "다음"을 둡니다. 학생 화면은 가운데, 관리자 표 카드는 오른쪽 정렬이고 버튼 높이는 PC 32 · 모바일 44입니다. 첫 쪽의 "이전", 마지막 쪽의 "다음"은 비활성({colors.text-faint} 글자 · {colors.hairline-soft} 테두리)입니다. 번호 버튼 줄 · 무한 스크롤은 쓰지 않습니다.
 모바일에서는 univ-card 또는 student-row-card 목록으로 바뀝니다.
 계산 근거
 
 trace-accordion — 산출 근거 펼치기
 
-{colors.canvas-soft} 막대, {rounded.sm}, 제목 "어떻게 계산했나요?" + 펼침 화살표. 고르는 기준을 설명할 때는 제목을 "어떻게 골랐나요?"로 바꿉니다(2026-11-23 대학 상세 위키). 숫자를 구간으로 나눈 기준을 설명할 때는 "어떻게 나눴나요?"(2026-11-23 학과별 입결 구간표), 모집단위를 묶음에 넣은 기준을 설명할 때는 "어떻게 묶었나요?"(2026-11-23 특수 계열 모아보기)
+{colors.canvas-soft} 막대, {rounded.sm}, 제목 "어떻게 계산했나요?" + 펼침 화살표. 고르는 기준을 설명할 때는 제목을 "어떻게 골랐나요?"로 바꿉니다(2026-11-23 대학 상세 위키). 숫자를 구간으로 나눈 기준을 설명할 때는 "어떻게 나눴나요?"(2026-11-23 학과별 입결 구간표), 모집단위를 묶음에 넣은 기준을 설명할 때는 "어떻게 묶었나요?"(2026-11-23 특수 계열 모아보기), 발표값을 좌표에 찍은 기준을 설명할 때는 "어떻게 찍었나요?"(2026-11-23 전국 배치표), 자기탐색 결과를 나눈 규칙을 설명할 때는 "결과는 어떻게 정했나요?"(2026-11-23 전형 성향 탐색 — 규칙 문장만 쓰고 학생의 계산값은 넣지 않습니다)
 펼치면 단계별 줄: 단계 이름({typography.body-sm} {colors.text-muted}) → 수식/값({typography.table} 고정폭)
 마지막 줄은 최종값 굵게 + 위에 1px {colors.hairline}
 맨 아래 disclaimer-note
@@ -384,6 +407,7 @@ warning-callout — 조합 경고
 경고를 누르면 관련 칸이 1px 잉크 테두리로 강조됩니다.
 모바일: 보드 위 고정 요약 바("경고 2개") → 누르면 바텀시트로 목록
 PC: 오른쪽 보조 패널에 목록
+변형 tone=neutral(2026-11-23 원서·서류 체크리스트): 수시로 조합 경고가 아닌 화면에서, 저장하면 기록이 바뀌거나 이미 같은 기록이 있다는 걸 알리는 안내 블록입니다. {colors.canvas-soft} 채움(흰 카드 · 모달 안) 또는 {colors.canvas} 채움(Page 위), 모서리 0, 패딩 {spacing.sm} {spacing.md}, 왼쪽 ⓘ 아이콘 {colors.ink} + 글자 {typography.body-sm} {colors.ink}(제목 줄이 있으면 {typography.label} SemiBold). 판정 색 · ▲ 아이콘 · Route Blue를 쓰지 않습니다. 관련 입력칸 바로 아래에 두고, 블록 안에 버튼을 두지 않습니다(바뀐 주요 버튼 글자로 다음 동작을 알립니다).
 
 scenario-tabs — A안 · B안 · C안
 
@@ -408,6 +432,7 @@ evidence-quote — 근거 인용
 
 왼쪽 2px {colors.ink} 세로선 + 인용문 {typography.body} + 출처 캡션(예: "2학년 화학Ⅰ 세특")
 PC에서 누르면 왼쪽 원문 해당 위치로 스크롤하고 그 문장을 {colors.accent-soft}로 잠깐 칠합니다.
+전형 성향 탐색 결과 카드의 "이 답변을 참고했어요"에도 같은 모양을 씁니다(2026-11-23). 출처 캡션 = "n번 문항 · 고른 답", 누름 동작 없음, 응답값 숫자 없음.
 
 ai-label — "AI 분석 · 참고용"
 
@@ -435,15 +460,19 @@ share-sheet — 상담카드·모의고사 보내기
 
 바텀시트(모바일) / 모달(PC)
 선택지 두 개: "QR로 보여주기"(큰 QR + 남은 개수 표시, 데이터가 크면 여러 장으로 넘김), "파일로 저장"(.jnavi)
+변형 result(2026-11-23 전형 성향 탐색): 위에 공유될 결과 카드 미리보기(유형 이름 · 함께 살펴볼 전형 이름 · "자기탐색 체험판 결과예요" 고지)를 두고, 선택지는 "이미지로 저장" · "QR로 보여주기" 두 개입니다. 근거 문장과 개별 답은 담지 않고, 링크 공유는 두지 않습니다(서버 저장 없음).
 Overlays
 
 bottom-sheet — 모바일 편집·필터·경고 목록
 
 위쪽 {rounded.sm}, 손잡이 막대, {shadow.overlay}, 뒤 {colors.scrim}
+단일 선택 목록(2026-11-23 지원 자격 확인표): 바텀시트 · 모달 안에서 선택지 하나를 고를 때 씁니다(text-input 변형 select의 모바일 목록도 이것입니다. 라디오 · checkbox 모양은 쓰지 않습니다). 행 높이 모바일 48 · PC 40, 행 = (아이콘 16) + 이름 {typography.title} + (설명 한 줄 {typography.body-sm} {colors.text-muted}), 행 사이 1px {colors.hairline-soft}. 고른 행 = Elevation Selected({colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대) + 오른쪽 icon/check {colors.accent}. 라디오 묶음으로 읽히고 방향키로 이동합니다. 고르면 바로 닫히는 목록(정렬 · 전형 고르기)과 저장 버튼으로 확정하는 목록(편집기 안 상태)을 모두 이 모양으로 그립니다.
+여러 개 고르는 목록(2026-11-23 전형 비교, modal에서도 같음): 행 높이 64(모바일) · 56(PC), 행 오른쪽 끝에 checkbox를 둡니다. 고른 행 = Elevation Selected({colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대) + checkbox 켜짐, 안 고른 행 = 흰 바탕 + checkbox 꺼짐, 고를 수 없는 행 = 글자 {colors.text-faint} + checkbox 없음 + 이유 링크. 위에 "n / 최대개수 선택" 상태 줄, 아래 고정 줄에 button-outline "취소" + button-primary "선택한 n개 …"(최소 개수 미만이면 비활성).
+변형 date(2026-11-23 원서·서류 체크리스트 · 상담 질문·할 일): 날짜(· 시각)를 고르는 시트입니다. 머리 = 제목 {typography.heading-4} + (비워 둘 수 있으면) 오른쪽 button-pill-soft "마감 없음". 본문 = 월 이동(‹ 2026년 11월 ›) + 7열 달력 격자(칸 44×44, 모서리 0, 날짜 {typography.numeric} 고정폭): 고른 날 = {colors.accent-soft} 채움 + {colors.ink} 글자, 오늘 = 1px {colors.ink} 테두리, 다른 달 날짜 = {colors.text-faint}. 시각을 넣는 칸이면 아래 시각 text-input(HH:MM) + 캡션 "한국 시간 기준이에요". 아래 고정 줄 button-outline "취소" + button-primary "적용". PC는 같은 내용을 모달 안 날짜 칸 아래 펼침 영역으로 둡니다. 판정 색 · 주말 빨강을 쓰지 않습니다.
 
 modal — PC 확인·편집
 
-{rounded.md}, 최대 폭 560px, {shadow.overlay}. 변형 size=wide(2026-11-18 사용자 결정): 표가 주인공인 모달(예: 5 to 9 배치표)은 최대 폭 960px, 높이는 화면의 최대 80%이고 머리(제목·닫기)와 아래 고정 줄은 두고 표 영역만 스크롤합니다.
+{rounded.md}, 최대 폭 560px, {shadow.overlay}. 변형 size=wide(2026-11-18 사용자 결정): 표가 주인공인 모달(예: 5 to 9 배치표)과 같은 항목이 반복되는 긴 편집 폼(예: 위키 요약 편집기, 2026-11-23)은 최대 폭 960px, 높이는 화면의 최대 80%이고 머리(제목·닫기)와 아래 고정 줄은 두고 표 영역만 스크롤합니다.
 
 toast — "저장했어요", "상담카드 3개를 불러왔어요"
 
@@ -452,6 +481,8 @@ toast — "저장했어요", "상담카드 3개를 불러왔어요"
 empty-state — "아직 입력한 성적이 없어요"
 
 가운데 정렬, 흑백 선 아이콘, {typography.heading-4} + {typography.body-sm} 설명 + button-primary 하나
+화면 오류 줄(2026-11-23 전형 비교): 자료를 읽거나 저장하지 못했을 때 목록 · 표 위에 둡니다. 흰 카드(Page 위) 또는 흰 바탕 안에 icon/triangle-alert 20 {colors.ink} + {typography.body} {colors.ink} 문장 + (다시 할 수 있으면) button-outline 하나. 판정 색(위험 · 소신 쌍)을 쓰지 않습니다 — 입력칸 하나의 형식 오류만 text-input-error를 씁니다.
+불러오는 중(2026-11-23 전국 배치표): 진행 막대 · 스켈레톤 없이 자리에 "○○을 읽고 있어요." {typography.body-sm} {colors.text-muted} 한 줄만 둡니다. 아이콘 · 버튼은 없습니다.
 Navigation
 
 app-bar — 모바일 상단 앱바: 높이 56, 왼쪽 icon/chevron-left, 가운데 화면 제목 {typography.heading-4}, 오른쪽 보조 동작 1개
@@ -466,12 +497,14 @@ sidebar-item — PC 사이드바 메뉴 행: 아이콘 + {typography.link}(소�
 
 filter-chip — 필터 선택지(off/on): off = {colors.canvas-soft} 채움, on = {colors.accent-soft} 채움 + 1px {colors.accent} 테두리 + {colors.ink} 글자, 모서리 0
 모바일 목록 위 컨트롤은 검색 1줄 + filter-chip 가로 스크롤 1줄까지입니다(2026-11-22 v2). 정렬·상세 조건은 칩을 누르면 bottom-sheet로 엽니다.
+변형 option(2026-11-23 전형 성향 탐색): 질문 하나에 답 하나를 고르는 세로 선택지입니다. 카드 폭 전체, 높이 모바일 56 · PC 52 이상, 사이 {spacing.xs}, 왼쪽 글자 {typography.body} · 오른쪽 표시 {typography.label} 고정폭(번호 01~, 고르면 ✓). off · on 모양은 filter-chip과 같고(off {colors.canvas-soft}, on {colors.accent-soft} 채움 + 1px {colors.accent} 테두리 + {colors.ink} 글자), 단일 선택(라디오)입니다. "잘 모르겠어요"처럼 척도 밖 선택지는 위에 1px {colors.hairline-soft} 구분선을 둡니다. 점수 숫자를 선택지에 쓰지 않습니다.
 
 page-header — PC 화면 머리(2026-11-22 v2): 모든 PC 앱 셸 화면에 같은 규격으로 둡니다. 콘텐츠 영역 위 여백 32, 왼쪽에 상위 메뉴 이름 {typography.caption} {colors.text-muted}(선택) → 화면 제목 {typography.heading-1} → 리드 한 줄 {typography.body-lg}(선택). 오른쪽 끝 정렬로 데이터 기준일 data-status-badge + 화면 동작 버튼(주요 버튼은 최대 1개). 아래 여백 24 뒤에 첫 카드가 옵니다. 모바일은 app-bar(상세) 또는 화면 제목 {typography.heading-1}(대분류 첫 화면)을 씁니다.
 
 brand-logo — 서비스 워드마크(U:NAVI 로고 unavi-logo-v1.svg, 원본 비율 그대로)(2026-11-22 v2, 로고 2026-11-23 사용자 결정: 파랑 그라데이션 글자 + 콜론 자리의 상승 경로): PC 사이드바 위, 모바일 대분류 첫 화면 머리, 로그인·회원가입 머리에 같은 컴포넌트로 씁니다. 글자 "U:NAVI" 워드마크를 따로 만들지 않습니다.
 
 score-bar — 단일 가로 막대(2026-11-22 v2): 높이 6, 모서리 0, 트랙 {colors.canvas-soft}, 채움 {colors.ink}. 내 값 하나를 보여 줄 때만 채움을 {colors.accent}로 씁니다. 축 범위를 좁히면 막대 아래 캡션으로 범위를 밝힙니다(예: "만점 대비 95~100%"). 대학별 환산의 만점 대비 비율 등에 씁니다.
+변형 progress(2026-11-23 전형 성향 탐색 · 원서·서류 체크리스트): 진행을 보여 줄 때 씁니다. 높이 6, 트랙 {colors.canvas-soft}. ① 단계 진행(여러 단계 중 지금 몇 번째인지) = 채움 {colors.accent}(Route Blue "진행 표시"), 막대 위 오른쪽에 "n / 전체" {typography.label} 고정폭. ② 내가 등록한 항목의 완료 비율 = 채움 {colors.ink}(Route Blue 없음), 막대 위 "완료 n / m" {typography.title} 고정폭, 분모에서 뺀 항목이 있으면 막대 아래 캡션으로 밝힙니다(예: "해당 없음 2개는 빼고 셌어요"). 점수 · 결과 크기 · 목표 대비 성취 · 서열을 보여 주는 데는 쓰지 않습니다.
 
 tab-bar-pill — 모바일 하단 탭바
 

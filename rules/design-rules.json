@@ -1,7 +1,7 @@
 {
   "source": {
     "file": "docs/design.md",
-    "sha256": "fc24f9cb144947fc3699949ff4688f250b40d418f98f97815dbbef7154f6218f"
+    "sha256": "dfeff69123613ab97eb1e644fd0367f9eba63485540ccda05996ebaef2a4136b"
   },
   "frames": [
     [
@@ -149,7 +149,9 @@
     "placement-board",
     "page-header",
     "brand-logo",
-    "score-bar"
+    "score-bar",
+    "checkbox",
+    "region-map"
   ],
   "screens": {
     "홈": "home",
@@ -197,7 +199,9 @@
     "doelgak",
     "minimum-search",
     "univ-detail-wiki",
-    "dept-tier"
+    "dept-tier",
+    "national-placement",
+    "admission-style"
   ],
   "requires_disclaimer_note": [
     "home",
@@ -215,7 +219,13 @@
     "minimum-search",
     "univ-detail-wiki",
     "dept-tier",
-    "special-tracks"
+    "special-tracks",
+    "univ-map",
+    "compare",
+    "application-checklist",
+    "calendar",
+    "national-placement",
+    "admission-style"
   ],
   "gates": {
     "G1": {
