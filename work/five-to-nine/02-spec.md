@@ -1085,3 +1085,153 @@ PC 이름표 좌표 — 모달 기준(프레임 기준은 x + 240 · y + 90). �
 5. 말풍선 "축 옆" 자리: 축 열 안 두 줄 말풍선(꼭지가 선을 가리킴)으로 정했어요. 정의에 한 줄로 적어 주세요.
 6. 이름표 대학 이름: 열 폭에서 말줄임을 줄이려고 짧은 대학 이름(광주과기원 등)을 썼어요. 정의의 "대학 학과"가 짧은 이름인지 적어 주세요.
 7. Responsive Strategy "5 to 9" 행: "입결 보기 팝업 = 배치표(placement-board) · 표 · 대학별 점(`cut-dot-plot`) 전환, 기본 배치표"를 덧붙여 주세요.
+
+## v4 (2026-11-24): 상세화 — 상태 프레임
+
+> 근거: 사용자 요청(2026-11-24) "기존 시안에도 자세하게 만들지 않고 하나씩만 있는 경우가 많은데 그것들 전부 자세하게 만들어줘", 앱 구현(app/src/screens/Results.tsx `FiveToNine` · `SavedGradeConversion`, components/QuickGradeCalculator.tsx · PlacementExplorer.tsx · Modal.tsx · CalculationDetails.tsx · GradeRange.tsx, store/studentDb.ts 오류 문구), docs/design.md 최신(U:NAVI · `brand-logo` 124/92 · 확인 창 규칙 · text-input 변형 · 화면 오류 줄 · 불러오는 중 · `warning-callout` tone=neutral · `page-header`), rules/design-rules.json(`cut-dot-plot` · `placement-board`가 목록에 들어감).
+> v4가 v1~v3.3과 다르면 **v4가 우선**이에요. 숫자는 모두 v3.1-2 · v3.2-1 · v3.2-7 · v3.3-2와 간편 계산 공식(R-CONV-001 · 002 구간 중앙값 보간, A-1과 같은 식)에서만 가져왔어요. 새 숫자를 지어내지 않았어요.
+> 필수 포함: 본 화면 `trace-accordion` · `disclaimer-note`, 팝업 `disclaimer-note`는 그대로예요.
+
+### v4-0. 앱에서 찾은 상태 · 팝업 목록
+
+| # | 앱 위치 | 상태 · 팝업 | 이번 프레임 |
+|---|---|---|---|
+| A1 | FiveToNine 보기 전환 | "간편 등급 계산 · 내 성적 분석" 세그먼트(앱 기본 = 간편 등급 계산) | 기본 2장에 세그먼트 추가(v4-1) + quick 프레임 |
+| A2 | QuickGradeCalculator | 세 칸(5등급제 평균 · 9등급제 평균 · 상위 누적 비율) 중 아무 칸이나 입력 → 나머지 두 칸 변환 | 390-quick · 390-quick-nine · 1440-quick |
+| A3 | QuickGradeCalculator | 범위 밖 · 형식 오류 "○○은 a~b 사이의 숫자로 입력해 주세요." / 빈 칸 "계산할 값을 입력해 주세요." | 390-quick-error · 1440-quick-error |
+| A4 | QuickGradeCalculator | 끝 구간 제한 캡션 | 390-quick-capped |
+| A5 | QuickGradeCalculator | "계산 방법과 참고 사이트의 차이" 펼침 | 390-quick-method |
+| A6 | StudentDataScreen | 불러오는 중 "기기에 저장된 성적을 읽고 있어요." | 390-loading · 1440-loading |
+| A7 | studentDb | 저장소 오류 "이 브라우저에서 기기 저장소를 열 수 없어요. 저장 권한과 비공개 모드를 확인해 주세요." | 390-error · 1440-error |
+| A8 | EmptyGrades | 성적 0과목 | 390-empty · 1440-empty |
+| A9 | SavedGradeConversion | 석차등급 있는 과목 없음(범위 계산 안 됨) | 390-no-ranked |
+| A10 | 반영 교과 세그먼트 | 교과 조합 바꾸기(값 통째 변경) | 390-combo · 1440-combo |
+| A11 | TraceAccordion | 모바일 근거 펼침 | 390-trace-open |
+| A12 | fiveToNine 엔진 b | B "실측표 사용 허락 확인 중이에요" | 390-b-pending · 1440-b-pending |
+| A13 | fiveToNine 엔진 confidence | 신뢰도 낮음 | 390-low-confidence |
+| A14 | 입결 보기 진입 | 검수 전 비활성(v2-8) | 390-entry-off · 1440-entry-off |
+| A15 | PlacementExplorer | 학년도 · 지표 고르기(select: 입결 학년도, 입결 지표 = 원등급 평균 · 환산 등급(추정)) | 390-placement-options · 1440-placement-options |
+| A16 | PlacementExplorer canShowPosition | 기준 불일치 → 내 위치 숨김 + 안내 | 390-placement-no-position · 1440-placement-no-position |
+| A17 | PlacementExplorer | 고른 조건 0건 + "필터 초기화" | 390-placement-empty · 1440-placement-empty |
+| A18 | PlacementExplorer | 그 학년도 · 지표 자료 없음 "공식 입결 자료를 준비하고 있어요" | 390-placement-no-data · 1440-placement-no-data |
+| A19 | PlacementBoard | 한 계열 이름표 없음 · 검수 전 "준비 중 n개" | 390-placement-pending |
+| A20 | 전형 유형 세그먼트 | 한 유형 탭(교과) 배치표 | 390-placement-board-subject · 1440-placement-board-subject |
+| A21 | Modal | Esc · X · 포커스 가둠 · 닫으면 진입 버튼으로 포커스 | 그림 없음(v2-8 접근성 그대로) |
+| A22 | 표 칸 · 이름표 | 누르면 입결 출처 새 창 | 그림 없음(v4-1 6번 표기만) |
+
+- 이 화면에는 지우기 · 저장 · 내보내기 · 저장하지 않고 나가기가 없어요(간편 계산은 "성적 저장 없이 이용", 내 성적 분석은 읽기만). design.md 확인 창 규칙에 걸리는 동작이 없어 확인 창 · 완료 `toast` 프레임은 만들지 않아요. 대신 넣은 안전장치: ① 0건일 때 "필터 초기화"로 한 번에 되돌리기(A17) ② 내 위치를 숨길 때 이유 안내(A16) ③ 간편 계산 이론값 고지를 결과 바로 아래 고정(390-quick).
+- 대학별 점 말풍선(v3-4 T7)은 기존 dots 프레임에 이미 있어 따로 만들지 않아요.
+
+### v4-1. 기본 프레임 바로잡기 (최신 design.md · 앱과 맞춤, 레이아웃은 그대로)
+
+1. 서비스 이름은 U:NAVI예요. PC `sidebar` 맨 위는 글자 워드마크가 아니라 `brand-logo` 폭 124(원본 비율 1273:297, 팔레트 예외)예요. 모바일은 대분류 첫 화면이 아니라서 로고를 두지 않아요.
+2. PC 셸: `sidebar` = `sidebar-group` 홈 · 성적(펼침, icon/chart-column, {colors.ink}) · 대학 찾기 · 수시 전략(접힘, {colors.ink-soft}) → 성적 아래 `sidebar-item` 성적 입력 · 성적 추이 · **5 to 9**(icon/sliders-horizontal, 선택 = {colors.accent-soft} + 왼쪽 3px {colors.accent} + {colors.ink}) · 대학별 환산 · 모의고사 → 맨 아래 데이터 기준일 · 백업. v1 · v2-4의 "상단 바 64px"는 `page-header`로 바꿔요: 위 여백 32 → 상위 메뉴 "성적" {typography.caption} {colors.text-muted} → 제목 "5 to 9" {typography.heading-1} → 오른쪽 끝 `data-status-badge` "데이터 기준일 2026-11-18" + `button-outline` "성적 입력·수정"(앱 ScreenActions) + `mode-switch`(학생) + 잠금 버튼 → 아래 여백 24. 본문 · 오른쪽 패널 폭은 그대로예요.
+3. 모바일 셸: `app-bar` 제목 "5 to 9"(소분류 화면이라 뒤로가기 없음, 오른쪽 보조 동작 icon/pencil 24 "성적 입력·수정") → 바로 아래 `sub-nav` "성적 입력 · 성적 추이 · 5 to 9 · 대학별 환산 · 모의고사"(5 to 9 선택, 넘치면 가로 스크롤) → 하단 `tab-bar-pill` 성적 탭.
+4. 보기 전환(A1): 셸 바로 아래, M1 · P1 위에 `segmented-control` "간편 등급 계산 · 내 성적 분석"(그룹 이름 "5 to 9 보기"). 모바일 같은 폭 2칸 × 44, PC 2칸 각 140 × 40. 기본 2장은 "내 성적 분석" 선택으로 그려요(승인된 화면 = 내 성적 분석). 세그먼트 한 줄(44 + 간격 16)만큼 아래가 내려가고, 모바일 첫 화면은 M1~M3까지 보이면 돼요.
+5. `range-bar-5to9` 내 위치: design.md(2026-11-22 v2)대로 원 지름 16 → **20** + 트랙을 위아래로 가로지르는 2px {colors.ink} 세로선을 더해요. 나머지(v2-2 · v3.2-4)는 그대로예요.
+6. 입결 팝업(표 · 배치표 · 대학별 점 공통, 앱 PlacementExplorer와 맞춤):
+   - 계열은 6계열(인문 · 사회 · 자연 · 공학 · 의약 · 예체능)로 맞춰요(앱과 같음). 표 · 대학별 점의 계열 칩도 "전체 + 6계열"이에요(v3.3-9 제안 2를 앱 기준으로 정리). 모바일 표 보기의 계열 열 1개 규칙은 그대로예요.
+   - 지역 칩 줄 끝에 `filter-chip` "입결 조건 ▾"(값 요약 "2026학년도 · 원등급 평균")을 하나 더해요. 누르면 모바일 `bottom-sheet`, PC 떠 있는 목록(390/1440-placement-options).
+   - 기준 줄 아래 `button-outline` "전국 수집 입결 배치표 보기 · 검수 전 참고자료"(모바일 전체 폭 44, PC 높이 40 왼쪽 정렬, 누르면 팝업을 닫고 전국 배치표로 이동).
+   - 표 칸 "대학 학과"와 배치표 이름표 · 대학별 점 행 머리는 누르면 입결 출처가 새 창으로 열려요(v2-5 "칸은 누르는 동작이 없어요"를 바꿈). 표 칸만 글자 뒤 "↗" {colors.ink}, 이름표 · 행 머리는 모양을 바꾸지 않아요. Route Blue 링크 색은 쓰지 않아요. 접근 이름 끝에 ", 출처 새 창".
+   - `disclaimer-note` 바로 위 캡션 "학과 이름을 누르면 입결 출처가 새 창으로 열려요. 전형별 지원 자격과 수능최저는 대학 공식 모집요강에서 확인해 주세요." {typography.caption} {colors.text-muted}.
+   - 닫기 X 접근 이름 "입결 창 닫기"(앱과 같음).
+7. 컴포넌트 표기: `cut-dot-plot` · `placement-board`가 rules 목록에 들어갔어요. v3 · v3.3의 "백틱 없이 적었어요" · "apply4/5/6 적용 전 S3 시작 안 함"은 풀려요.
+8. 진입 버튼 문구 "이 등급대 입결 보기"(승인 문구)는 그대로 둬요. 앱 문구와 다른 점은 v4-9 참고 1.
+
+### v4-2. 상태 프레임 (03-draft.json `states`에만 적고 `frames`에는 넣지 않아요)
+
+이름 = five-to-nine/<폭>-<상태>, 크기 390×844 · 1440×900. 모바일 20장 + PC 13장 = **33장**. 셸 · 세그먼트 · 값은 따로 적지 않으면 기본 프레임(v4-1 반영)과 같아요. 떠 있는 레이어 노드 이름은 정확히 bottom-sheet · modal · dropdown.
+
+#### v4-2-1. 모바일 390×844 (20)
+
+| 프레임 | 무엇을 그리나 |
+|---|---|
+| five-to-nine/390-quick | 보기 "간편 등급 계산" 선택. 안내 "평균 등급 하나만 입력해 보세요. 세 값 중 어느 것을 바꿔도 바로 계산해요." {typography.body} + 캡션 "성적 저장 없이 이용 · 등급 구간 중앙값으로 계산한 참고용 추정" → 흰 카드 3장(세로, 간격 12): 라벨 "5등급제 평균" · "9등급제 평균" · "상위 누적 비율" {typography.label} → 같은 줄 `text-input` size md 44(폭 120, 숫자 고정폭) + 단위 "등급" · "%" → 캡션 "1~5등급 · 입력 기준" / "1~9등급 · 변환값" / "0~100% · 변환값" → 값 막대(`score-bar`, 슬라이더 대체 v4-9 제안 2) → 빠른 선택 `button-pill-soft` 5개 높이 32(1~5등급 / 1·3·5·7·9등급 / 4·10·25·50·75%). 입력 중인 카드(5등급제)만 Elevation Selected({colors.accent-soft} + 왼쪽 3px {colors.accent}). 값: 5등급제 "2.00"(입력) · 9등급제 "3.34" · 누적 "22.00" → 결과 카드: 캡션 "구간 중앙값 기준 · 추정 결과" → "5등급제 **2.00** ↔ 9등급제 **3.34**" {typography.heading-2} {colors.ink} 고정폭 → "상위 누적 비율 약 22.00%" → 바로 아래 고정 캡션 "누적 비율은 계산을 위한 이론값이며 실제 전국 석차가 아니에요. 대학이 정한 공식 환산점수와도 다를 수 있어요." 결과 카드 아래(접기 아래, 프레임 끝에서 잘린 채): 5등급제 · 9등급제 구간 막대 2줄(v4-9 제안 1 대체안: {colors.canvas-soft} 칸 + 1px {colors.hairline} 구분, 칸 안 등급 숫자 {colors.ink}, 22% 위치 2px {colors.ink} 세로선) → 접힌 `trace-accordion` "계산 방법과 참고 사이트의 차이" → `disclaimer-note`. 이 보기에는 Route Blue 숫자가 없어요(내 성적이 아니라 넣어 본 값) |
+| five-to-nine/390-quick-nine | 9등급제 칸에 "3.00" 입력. 9등급제 카드가 선택 표시, 캡션 "1~9등급 · 입력 기준", 5등급제 "1.71"(변환값) · 누적 "17.00". 결과 "5등급제 **1.71** ↔ 9등급제 **3.00**" · "상위 누적 비율 약 17.00%". 구간 막대 세로선 17% |
+| five-to-nine/390-quick-error | 5등급제 칸 "6" 입력, `text-input-error`(2px 링 + icon/triangle-alert 14 + "5등급제 평균은 1~5 사이의 숫자로 입력해 주세요."). 다른 두 칸은 빈 값. 결과 카드 자리 "올바른 값을 입력하면 변환 결과가 여기에 나타나요." {typography.body} {colors.text-muted}. 구간 막대 없음. 칸을 비우면 같은 자리 문구가 "계산할 값을 입력해 주세요."(시안은 범위 밖 문구만) |
+| five-to-nine/390-quick-capped | 상위 누적 비율 칸 "3" 입력 → 5등급제 "1.00" · 9등급제 "1.18". 결과 카드 아래 캡션 "끝 구간에서는 평균 등급을 최저·최고 등급으로 제한해요. 이때 등급만으로 원래 누적 비율을 되돌릴 수는 없어요." {typography.caption} {colors.ink}. 구간 막대 세로선 3% |
+| five-to-nine/390-quick-method | 390-quick을 아래로 스크롤해 `trace-accordion` "계산 방법과 참고 사이트의 차이"를 펼친 상태. 문단 3개(앱 문장 그대로: 구간 중앙값 5·22·50·78·95% / 2·7.5·17·31.5·50·68.5·83·92.5·98% 연결, 예 "5등급제 평균 2.00은 누적 22%, 9등급제 약 3.34" · 막대는 과목별 명목 등급 비율 · 참고 사이트와 다를 수 있는 이유) → 링크 2개 "교육부 등급제 개편 자료 ↗" · "참고 계산기 ↗"(링크 {colors.accent}, 새 창) → 아코디언 맨 아래 `disclaimer-note` |
+| five-to-nine/390-loading | 보기 "내 성적 분석". 셸 · 보기 세그먼트 아래 한 줄 "기기에 저장된 성적을 읽고 있어요." {typography.body-sm} {colors.text-muted}(불러오는 중 규칙: 아이콘 · 버튼 · 스켈레톤 없음). 교과 조합 · 요약 · 막대 없음 |
+| five-to-nine/390-error | 같은 자리 화면 오류 줄: icon/triangle-alert 20 {colors.ink} + "이 브라우저에서 기기 저장소를 열 수 없어요. 저장 권한과 비공개 모드를 확인해 주세요." {typography.body} + `button-outline` "다시 열기". 판정 색 없음 |
+| five-to-nine/390-empty | 성적 0과목. 교과 조합 세그먼트는 그대로, 아래 `empty-state`: 선 아이콘 icon/chart-column 48 → "아직 입력한 성적이 없어요" {typography.heading-4} → "성적 입력 화면에서 과목을 추가해 주세요." {typography.body-sm} → `button-primary` "성적 입력하기". 그 아래 입결 보기 버튼(내 위치 없이 열려요, 390-placement-no-position) → `disclaimer-note`. 요약 · 막대 · 카드 · 아코디언 없음 |
+| five-to-nine/390-no-ranked | 성적은 있지만 석차등급 있는 과목이 없음. `empty-state`: "석차등급이 있는 과목이 없어요" → "석차등급이 있는 과목을 입력하면 범위를 보여드려요." → `button-primary` "성적 입력하기". 요약 · 막대 없음 |
+| five-to-nine/390-combo | 교과 조합 "국수영사" 선택(overflow=scroll, 국수영사 칸이 다 보이게 스크롤). 값(v3.2-1 · v3.2-5): 요약 1.35 → "약 2.1~2.4", 보조 "대표값 약 2.21 · 신뢰도 보통" / 막대 점 A-2 2.17 · B 2.21 · A-1 2.36, 괄호선 2.1~2.4, 말풍선 "약 2.21" / `stat-tile` 11개 · 9% · 0.2등급 / A-1 근거 "학점 가중 5등급 평균 1.35를 누적비로 바꿨어요" / M6 "…내 평균 1.35도 이 구간이라 A-1이 B보다 약 0.15등급 높게 나왔어요…" |
+| five-to-nine/390-trace-open | 기본 상태에서 M7 `trace-accordion` "어떻게 계산했나요?"를 펼쳐 화면 가운데로 스크롤. v3.2-5 단계 ①~⑧(전 교과) + ⑦ 아래 두 줄 캡션 + A-3 "준비 중" 줄 + 맨 아래 캡션. ⑧ "약 2.0~2.3 · 약 2.13" 굵게(Route Blue 아님) |
+| five-to-nine/390-b-pending | v3.2-7 "B 사용 허락 확인 중": B 카드 값 자리 `data-status-badge` "준비 중" + 근거 "실측표 사용 허락 확인 중이에요", 막대에 B 점 없음(A-2 2.09 · A-1 2.29만), 요약 "약 2.0~2.3" · "대표값 약 2.19 · 신뢰도 보통", 말풍선 "약 2.19", M6은 v3.2-7 문장 |
+| five-to-nine/390-low-confidence | v3.2-7 "B 학기 기준 다름": B 카드 2줄 "내 성적은 3개 학기, 표는 2개 학기 기준이에요 · 가장 가까운 표라 신뢰도를 한 단계 낮췄어요". 막대 아래 배지 "신뢰도 낮음"(흑백), 요약 보조 "대표값 약 2.13 · 신뢰도 낮음". M6 끝에 "표의 학기 기준이 내 성적과 달라 신뢰도를 낮췄어요." |
+| five-to-nine/390-entry-off | 입결 보기 검수 전(v2-8): M3b `button-outline` 비활성(글자 · icon/chart-column {colors.text-faint}) + 아래 캡션 "입결 위치는 준비 중이에요" {colors.text-muted} + `data-status-badge` "준비 중". 눌러도 시트가 열리지 않아요 |
+| five-to-nine/390-placement-options | 배치표 시트(390-placement-board) 위에서 "입결 조건 ▾" 칩을 누른 뒤. 두 번째 `bottom-sheet`(뒤에 {colors.scrim} 한 겹 더, 높이 약 60%): 제목 "입결 조건" {typography.heading-4} → 소제목 "입결 학년도" {typography.label} + 단일 선택 목록(행 48) "2026학년도"(선택: accent-soft + 3px 막대 + icon/check) · "2025학년도" → 소제목 "입결 지표" + "원등급 평균"(선택, 설명 "대학이 발표한 원래 등급 평균") · "환산 등급(추정)"(설명 "9등급으로 바꾼 추정값이에요") → 캡션 "고르면 바로 바뀌어요. 학년도나 지표를 바꾸면 지역은 전체로 돌아가요." 버튼 없음 |
+| five-to-nine/390-placement-no-position | 배치표 시트, 내 성적과 입결의 기준이 다를 때. 기준 줄 아래 `warning-callout` tone=neutral: ⓘ "내 성적과 입결의 학년도·등급제·반영 교과·산식이 일치하기 전에는 내 위치선이나 점수 차이를 표시하지 않아요. 아래는 공식 발표 입결 자체의 위치예요." 배치표에 {colors.accent-soft} 띠 · 2px 선 · 말풍선 없음(이름표 · 격자 · 준비 중 줄은 그대로). 팝업 Route Blue는 선택 표시만 |
+| five-to-nine/390-placement-empty | 지역 "강원" + 계열 "예체능" + 전형 유형 "논술"로 0건. 배치표 자리 `empty-state`: icon/search 48 → "고른 조건에 맞는 학과가 없어요" → "전형 유형·계열·지역을 바꿔 보세요." → `button-primary` "필터 초기화"(전형 유형 · 지역 · 계열이 전체로). 범례 · 준비 중 줄 없음, 고지 그대로 |
+| five-to-nine/390-placement-no-data | 입결 조건을 2025학년도 · 환산 등급(추정)으로 바꿔 자료가 없음. 칩 값 "2025학년도 · 환산 등급(추정)". `empty-state`: icon/chart-column 48 → "공식 입결 자료를 준비하고 있어요" → "선택한 학년도·지표의 자료가 등록되면 표·배치표·점 그래프로 확인할 수 있어요." → `button-primary` "입결 조건 바꾸기"(390-placement-options를 다시 열어요) |
+| five-to-nine/390-placement-pending | 배치표 · 계열 "의약", 보이는 범위의 의약 학과가 모두 검수 전: 열에 0.5 격자 · 띠 · 선만, 가운데 "—" {colors.text-muted}(접근 이름 "이 범위에 맞는 학과가 없어요") + 아래 고정 줄 `data-status-badge` "준비 중 2개" |
+| five-to-nine/390-placement-board-subject | 배치표 · 전형 유형 "교과" · 계열 자연. 이름표 앞 모양 기호 없음, 범례 자리 "학생부교과 70% 컷" {typography.caption} {colors.ink}. 종합 학과 4개(광주과기원 기초과학부 · 연세대 시스템생물학과 · 고려대 생명공학부 · 중앙대 생명과학과)는 빠지고 성균관대 화학과 1.35 · 경희대 생물학과 2.55 · 강원대 화학과 2.82 · 한림대 생명과학과 3.08만 제자리(v3.3-2 모바일 식, 밀림 없음) |
+
+#### v4-2-2. PC 1440×900 (13)
+
+| 프레임 | 무엇을 그리나 |
+|---|---|
+| five-to-nine/1440-quick | 보기 "간편 등급 계산". 오른쪽 근거 패널 없이 본문(좌우 32 패딩) 안: 안내 + 캡션 → 세 칸 카드 가로 3열(내용은 390-quick과 같음, `text-input` size sm 40) → 결과 카드(전체 폭, "5등급제 **2.00** ↔ 9등급제 **3.34**" {typography.display} 44 고정폭 + 누적 줄 + 고정 캡션) → 구간 막대 2줄(최대 720, 제안 1 대체안) → 접힌 `trace-accordion` "계산 방법과 참고 사이트의 차이" → `disclaimer-note` |
+| five-to-nine/1440-quick-error | 9등급제 칸 "10" 입력: `text-input-error` "9등급제 평균은 1~9 사이의 숫자로 입력해 주세요.", 나머지 두 칸 빈 값, 결과 카드 자리 "올바른 값을 입력하면 변환 결과가 여기에 나타나요." 구간 막대 없음 |
+| five-to-nine/1440-loading | `page-header` · 보기 세그먼트 아래 본문 왼쪽 위 한 줄 "기기에 저장된 성적을 읽고 있어요." {typography.body-sm} {colors.text-muted}. 오른쪽 패널 비움 |
+| five-to-nine/1440-error | 같은 자리 흰 카드 화면 오류 줄(390-error 문구 + `button-outline` "다시 열기"). 오른쪽 패널 비움 |
+| five-to-nine/1440-empty | 본문 가운데 `empty-state`(390-empty 문구 + `button-primary` "성적 입력하기"), 아래 입결 보기 `button-outline` + `disclaimer-note`. 오른쪽 패널: 제목 "신뢰도 · —" + "성적을 입력하면 신뢰도와 계산 과정을 보여드려요." {typography.body-sm} {colors.text-muted} + 접힌 `trace-accordion`(펼치면 "검수된 규칙과 필요한 성적이 준비되면 계산 과정을 보여드려요.") |
+| five-to-nine/1440-combo | 교과 조합 "국수영사". 390-combo 값 + P4 표 "사용한 입력" A-1 · B 칸 "학점 가중 5등급 평균 1.35", 환산 9등급 행 A-1 약 2.4₉ · A-2 약 2.2₉ · B 약 2.2₉. 오른쪽 패널 R1 11개 · 9% · 0.2등급, R2 국수영사 단계(v3.1-2 · v3.2-5 표) |
+| five-to-nine/1440-b-pending | 390-b-pending과 같은 상태. P4 B 열: 환산 9등급 `data-status-badge` "준비 중", 출처 칸 "사용 허락 확인 중", 범위 계산 "뺐어요". R2 ⑦ 값 자리 "준비 중", ⑧ "약 2.0~2.3 · 약 2.19" |
+| five-to-nine/1440-entry-off | P3b `button-outline` 비활성 + 같은 줄 캡션 "입결 위치는 준비 중이에요" + `data-status-badge` "준비 중" |
+| five-to-nine/1440-placement-options | 1440-placement-board 모달 안 "입결 조건 ▾" 칩 아래 4px 떠 있는 목록(노드 이름 dropdown, 폭 320, {colors.canvas} + 1px {colors.hairline} + {shadow.overlay}): 머리 "입결 학년도" 2행(2026학년도 선택) → 1px {colors.hairline} → "입결 지표" 2행(원등급 평균 선택 · 환산 등급(추정)), 행 40, 고른 행 accent-soft + 오른쪽 icon/check {colors.accent}. 고르면 바로 닫힘 |
+| five-to-nine/1440-placement-no-position | 배치표 모달, 기준 줄 아래 `warning-callout` tone=neutral(390-placement-no-position 문구, 모달 안이라 {colors.canvas-soft} 채움). 띠 · 선 · 축 말풍선 없음. 배치표 보이는 영역이 안내 높이(약 56)만큼 줄어요 |
+| five-to-nine/1440-placement-empty | 배치표 자리 가운데 `empty-state`(390-placement-empty 문구 + "필터 초기화"). 열 머리 · 준비 중 줄 숨김, 고지 고정 |
+| five-to-nine/1440-placement-no-data | 칩 값 "2025학년도 · 환산 등급(추정)", 가운데 `empty-state` "공식 입결 자료를 준비하고 있어요"(390-placement-no-data 문구) + `button-primary` "입결 조건 바꾸기"(누르면 1440-placement-options) |
+| five-to-nine/1440-placement-board-subject | 배치표 · 전형 유형 "교과" · 6열. 모양 기호 없음, 범례 자리 "학생부교과 70% 컷". v3.3-2 PC 표에서 ○ 종합 8개 · ◇ 기타 2개를 뺀 ● 40개만, 밀림은 남은 이름표로 v3.3-1 규칙대로 다시 계산. 준비 중 줄 그대로 |
+
+### v4-3. 문구 (v4 추가분, 해요체)
+
+| 자리 | 문구 |
+|---|---|
+| 보기 전환 | 간편 등급 계산 · 내 성적 분석 |
+| 간편 계산 안내 | 평균 등급 하나만 입력해 보세요. 세 값 중 어느 것을 바꿔도 바로 계산해요. / 성적 저장 없이 이용 · 등급 구간 중앙값으로 계산한 참고용 추정 |
+| 간편 계산 오류 | ○○은 a~b 사이의 숫자로 입력해 주세요. / 계산할 값을 입력해 주세요. / 올바른 값을 입력하면 변환 결과가 여기에 나타나요. |
+| 간편 계산 고지 | 누적 비율은 계산을 위한 이론값이며 실제 전국 석차가 아니에요. 대학이 정한 공식 환산점수와도 다를 수 있어요. |
+| 불러오는 중 · 오류 | 기기에 저장된 성적을 읽고 있어요. / 이 브라우저에서 기기 저장소를 열 수 없어요. 저장 권한과 비공개 모드를 확인해 주세요. |
+| 빈 상태 | 아직 입력한 성적이 없어요 · 성적 입력 화면에서 과목을 추가해 주세요. / 석차등급이 있는 과목이 없어요 · 석차등급이 있는 과목을 입력하면 범위를 보여드려요. |
+| 팝업 안내 | 내 성적과 입결의 학년도·등급제·반영 교과·산식이 일치하기 전에는 내 위치선이나 점수 차이를 표시하지 않아요. 아래는 공식 발표 입결 자체의 위치예요. |
+| 팝업 빈 상태 | 고른 조건에 맞는 학과가 없어요 · 전형 유형·계열·지역을 바꿔 보세요. / 공식 입결 자료를 준비하고 있어요 · 선택한 학년도·지표의 자료가 등록되면 표·배치표·점 그래프로 확인할 수 있어요. |
+
+- 결과를 약속하거나 확률로 읽히는 말, 판정 이름은 새로 쓰지 않았어요. "상위 누적 비율"은 간편 계산의 입력 · 변환 칸 이름(앱 그대로)이고 순위 배지로 쓰지 않아요. 이론값 고지를 결과 바로 아래 고정해요.
+- 환산값에는 "약 · 범위 · 추정"을, 입력값(5등급 평균 · 간편 계산에 넣은 값)에는 붙이지 않아요.
+
+### v4-4. 접근성 (v4 추가분)
+
+- 간편 계산: 세 칸 모두 라벨 연결, 오류 칸은 aria-invalid + 오류 문구 연결, 결과 카드는 role=status. 값 막대는 "○○ 슬라이더" 이름, 빠른 선택은 "○○ 빠른 선택" 묶음. 구간 막대는 그림 역할 + "5등급제 명목 구간에서 상위 22.00% 위치" 대체 텍스트.
+- 불러오는 중은 role=status, 저장소 오류는 role=alert.
+- 두 번째 시트 · 떠 있는 목록: 포커스를 안에 가두고 Esc로 그것만 닫아요(입결 팝업은 남아요). 닫으면 "입결 조건 ▾" 칩으로 포커스.
+- 팝업 0건 · 자료 없음은 role=status로 읽어 줘요. "필터 초기화" 뒤 포커스는 배치표 영역.
+- 출처 링크는 접근 이름 끝에 ", 출처 새 창".
+
+### v4-8. 디자이너 메모 (8장 — 상세화 프레임 그리는 순서)
+
+1. **기본 2장 먼저 고쳐요(v4-1)**: five-to-nine/390 · five-to-nine/1440에 셸(`sidebar` + `brand-logo` 124 + `sidebar-group` · `sidebar-item` · `page-header` / `app-bar` + `sub-nav`) → 보기 세그먼트 → `range-bar-5to9` 내 위치 원 20 + 세로선. 이어서 기존 팝업 6장(390/1440-placement · -placement-board · -placement-dots)에 6계열 칩 · "입결 조건 ▾" 칩 · 전국 배치표 버튼 · 출처 캡션 · 표 칸 "↗"를 넣어요.
+2. **내 성적 분석 상태(기본 복제 → 값 바꾸기)**: 390/1440-combo → 390/1440-b-pending → 390-low-confidence → 390-trace-open → 390/1440-entry-off.
+3. **불러오는 중 · 오류 · 빈 상태**: 390/1440-loading → 390/1440-error → 390/1440-empty → 390-no-ranked. 기본 프레임에서 본문을 지우고 셸 · 세그먼트만 남겨 만들어요.
+4. **간편 계산**: 390-quick를 새로 그린 뒤 복제해 390-quick-nine · -quick-error · -quick-capped · -quick-method, 그다음 1440-quick · 1440-quick-error.
+5. **입결 팝업 상태**: 배치표 프레임(390/1440-placement-board)을 복제해 -placement-options → -placement-no-position → -placement-empty → -placement-no-data → 390-placement-pending → -placement-board-subject.
+6. 03-draft.json `frames`는 그대로 390 · 1440 두 개. `states`에 v4-2의 33개 키("390-quick" … "1440-placement-board-subject")를 더해요(기존 placement 6개 키는 그대로).
+7. 레이어 이름 = 컴포넌트 이름: `segmented-control`, `segmented-control-active`, `text-input`, `text-input-error`, `score-bar`, `button-pill-soft`, `button-outline`, `button-primary`, `empty-state`, `warning-callout`, `data-status-badge`, `bottom-sheet`, `modal`, `filter-chip`, `placement-board`, `cut-dot-plot`, `trace-accordion`, `disclaimer-note`, `page-header`, `sub-nav`, `brand-logo`. 화면 오류 줄 "screen-error", 불러오는 줄 "loading-line", 간편 계산 묶음 "quick-field" · "quick-result" · "quick-scale", PC 떠 있는 목록은 노드 이름 dropdown(컴포넌트 아님).
+8. 색 · 모양: 모든 cornerRadius 0, 그림자는 bottom-sheet · modal · dropdown 노드에만. 등급 색은 `range-bar-5to9` 트랙에만(간편 계산 구간 막대는 제안 1 반영 전까지 흑백 대체안). 위험 색은 `text-input-error` 링 · 아이콘 · 글자에만. Route Blue는 기존 쓰임 + 선택 표시(보기 세그먼트 · 고른 목록 행 · 입력 중 카드 막대) · 링크(390-quick-method)만.
+9. Figma MCP 호출 한도가 있어 위 순서대로 한 묶음씩 복제해 그려요.
+
+### v4-9. design.md 수정 제안 (9장 — 만들지 않고 제안만, 시안은 괄호 안 대체안으로 그려요)
+
+1. **`range-bar-5to9` 변형 quick(간편 계산 구간 막대)**: 축 = 누적 비율 0~100%, 5등급제 5칸 · 9등급제 9칸을 명목 비율 폭으로 나눠 등급 색으로 채우는 두 줄 막대(앱 구현). 지금 등급 색은 5 to 9 범위 막대의 1~9 채움에만 허용돼요. 제안: "간편 등급 계산의 명목 구간 막대도 등급 색을 씁니다(5등급제 5칸의 색은 결정 필요). 위치 표시는 2px {colors.ink} 세로선이고 Route Blue를 쓰지 않습니다." (대체안: {colors.canvas-soft} 칸 + 1px {colors.hairline} 구분 + 칸 안 등급 숫자 {colors.ink}.)
+2. **slider(값 끌어 고르기)**: 앱 간편 계산에 슬라이더가 있지만 design.md에 부품이 없어요. 제안: "slider — 트랙 높이 4 {colors.canvas-soft}, 채움 {colors.ink}, 손잡이 20×20 정사각 {colors.ink}(모서리 0), 누르는 영역 44, 포커스 2px 잉크 링." (대체안: `score-bar`로 값 위치만 보여 줘요.)
+3. **`data-table` 칸 출처 링크**: 칸 글자를 누르면 원문이 새 창으로 열리는 표기가 design.md에 아직 없어요. doelgak에서 제안한 `data-table` 변형 link와 합쳐 정해 주세요. (대체안: 칸 글자 뒤 "↗" {colors.ink}.)
+4. **`empty-state` 버튼**: 정의가 "버튼 하나"라 할 일이 없는 빈 상태의 처리가 없어요. 이 명세는 "입결 조건 바꾸기"처럼 실제 동작을 붙였어요. "할 동작이 없으면 버튼을 뺍니다"를 한 줄 더해 주세요.
+5. **겹친 `bottom-sheet`**: 시트 위에 두 번째 시트(390-placement-options)를 여는 규칙이 없어요. "두 겹까지, 뒤 시트 위에 {colors.scrim} 한 겹 더, Esc는 위 시트만 닫음"을 적어 주세요.
+
+참고(design.md 아님 — 앱 · 문구 확인):
+
+1. 진입 버튼 문구: 승인 시안 "이 등급대 입결 보기" ↔ 앱 "작년 입결 기준 위치 보기". 한쪽으로 맞춰 주세요(01-research P10은 앱 문구 쪽).
+2. 간편 계산은 R-CONV-001 · 002(구간 중앙값 보간)를 써요. 이 규칙이 검수 전이면 간편 계산 결과도 "준비 중"으로 바꿔야 해요(NEVER-1). 시안 숫자 3.34 · 1.71 · 1.18은 앱 안내 문장의 예시(2.00 → 22% → 3.34)와 같은 식으로 셌어요.
+3. 앱 빈 상태(성적 없음)에는 버튼이 없고, 시안은 design.md대로 `button-primary` "성적 입력하기"를 둬요. 앱 반영 사항이에요.

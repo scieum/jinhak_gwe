@@ -4,6 +4,7 @@
 > 화면 위치: 학생 대분류 "대학 찾기"의 첫 소분류 "전형계획"(소분류: 전형계획 · 대학 지도 · 수시 입결 · 전국 배치표 · 학과별 구간 · 계열 모아보기 · 될각 · 최저로 찾기 · 지원 자격 확인표 · 전형 비교). 행을 누르면 전형 상세(program-detail), 대학명을 누르면 대학 상세(univ-detail)로 가요. 전형 성향 탐색은 메뉴가 아니라 이 화면 위 배너로 들어가요.
 > 성격: 누구나(로그인 없음) 보는 공개 데이터 목록이에요. 판정 배지·판정 색·내 환산 숫자·내 위치 표시는 쓰지 않아요(그건 될각·대학별 환산의 몫).
 > 필수 컴포넌트: admissions-list는 requires_trace_accordion, requires_disclaimer_note 어디에도 없어요. 계산이 없으니 산출 근거 펼치기는 넣지 않고, 데이터 기준일 고지(PRD 6-1·13장)를 위해 `disclaimer-note`를 넣어요.
+> 개정 2026-11-24 (S2 상세화): 상태 프레임을 3장 → 32장(모바일 17 · PC 15)으로 늘리고 이름을 admissions-list/<폭>-<상태>로 바꿨어요(5장). 앱(AdmissionsList.tsx · InterestButton.tsx)의 불러오는 중 · 오류 · 못 찾음 · 0건 · 페이지 이동 · 관심 안내를 모두 넣고, 관심 빼기 확인 창을 안전장치로 더했어요. 기본 2장은 레이아웃 그대로 두고 페이지 이동 줄 · PC 정렬 트리거 · 사이드바 아이콘만 최신 design.md에 맞췄어요.
 > 개정 2026-11-24 (S2 개정): 전형 성향 탐색 배너(닫기 없는 상시 진입점)를 넣고, 최신 design.md와 어긋난 부분(서비스 이름 · 로고, 메뉴 목록, 패치 대기 메모, 모바일 컨트롤 줄 수, univ-card 공개 변형, 조건 표시)을 고쳤어요.
 
 ## 0. 결정 사항
@@ -21,6 +22,8 @@
 | 증감 표시 | 모집인원 전년 대비 증감은 ▲/▼ 기호 + 차이값 + delta 색(오름 delta-up, 내림 delta-down). 변화 없음은 기호 없이 값만. 바뀐 2028 값은 Bold. |
 | 대학 | univ-logo 인스턴스가 있는 9개 대학만 써요: 강원대학교 · 경희대학교 · 고려대학교 · 광주과학기술원 · 성균관대학교 · 연세대학교 · 중앙대학교 · 한림대학교 · 한양대학교. `univ-monogram`은 로고 없는 대학용 대체로만 남겨 두고 이 시안에는 나오지 않아요. |
 | 고지 | `disclaimer-note` "대학 공식 자료가 최종 기준이에요 · 데이터 기준일 2026-11-18 · 시안의 대학·숫자는 예시예요" |
+| 페이지 (2026-11-24 상세화) | 한 쪽 10행 + 목록 · 표 아래 페이지 이동 줄(design.md data-table 페이지 이동 줄, 학생 화면이라 가운데). 시안 12행 = 2쪽. 앱은 지금 24행씩이라 10행으로 맞춰요. 번호 버튼 · 무한 스크롤 없음 |
+| 관심 빼기 확인 (2026-11-24 상세화) | 일반 목록에서는 하트를 누르면 바로 빼고 `toast`로 알려요(다시 누르면 담겨요). "관심만 보기"에서 빼면 행이 사라지니 확인 창(모바일 `bottom-sheet` · PC `modal`)으로 한 번 물어요 |
 | 밀도 | 이름·셀은 한 줄 우선. 대학명은 한 줄(9개 모두 한 줄에 들어감), 전형·모집단위 줄은 모바일에서만 말줄임 허용(전체 이름은 상세에서). |
 
 ## 1. 예시 데이터 (대학명은 실제, 숫자는 모두 가상)
@@ -78,6 +81,7 @@
    - 변화 없음 행은 "모집 568명"만. 정시 행 3줄 왼쪽은 "정시 · 면접 없음".
    - 행 전체를 누르면 전형 상세, 1줄의 로고·대학명을 누르면 대학 상세. 하트는 행 이동과 따로 눌려요.
    - 첫 화면에는 1~3행(강원대학교 2행, 경희대학교)이 보여요. 1행 하트는 담김(heart 채움).
+   - 10행 뒤에 페이지 이동 줄(`button-outline` "이전"(비활성) · "1 / 2" · `button-outline` "다음", 높이 44, 가운데). 프레임 밖 스크롤 영역이라 390-page-end에서 보여요.
 10. 하단 탭바 (바닥에서 16 띄움, 높이 64) — `tab-bar-pill`
    - 대분류 다섯 개: 홈 · 성적 · 대학 찾기(선택: Route Blue 아이콘 + 잉크 SemiBold) · 수시 전략 · 더보기
    - 목록 끝 여백 = 64 + 16 + safe-area + 16. 토스트는 탭바 위 12에 떠요.
@@ -90,7 +94,7 @@
 
 1. 사이드바 (248, 전체 높이) — `sidebar`
    - {colors.canvas} + 오른쪽 1px {colors.hairline-soft}. 맨 위 `brand-logo` 폭 124 → 그룹 이름 "학생" → `sidebar-group` 홈 › · 성적 › · 대학 찾기 ▾(펼침, 잉크) · 수시 전략 ›
-   - 대학 찾기 아래 들여쓰기 16의 `sidebar-item` 10개: 전형계획(선택 = accent-soft 채움 + 왼쪽 3px Route Blue 막대 + 잉크 글자) · 대학 지도 · 수시 입결 · 전국 배치표 · 학과별 구간 · 계열 모아보기 · 될각 · 최저로 찾기 · 지원 자격 확인표 · 전형 비교. 전형 성향 탐색 메뉴는 없어요.
+   - 대학 찾기 아래 들여쓰기 16의 `sidebar-item` 10개(소분류마다 design.md App Shell의 고유 아이콘 — 대학 지도 icon/map · 전국 배치표 icon/chart-scatter · 학과별 구간 icon/layers · 계열 모아보기 icon/folder · 지원 자격 확인표 icon/clipboard-check · 전형 비교 icon/columns-2 등, 서로 겹치지 않게): 전형계획(선택 = accent-soft 채움 + 왼쪽 3px Route Blue 막대 + 잉크 글자) · 대학 지도 · 수시 입결 · 전국 배치표 · 학과별 구간 · 계열 모아보기 · 될각 · 최저로 찾기 · 지원 자격 확인표 · 전형 비교. 전형 성향 탐색 메뉴는 없어요.
    - 맨 아래 데이터 기준일 2026-11-18 + 백업 버튼
 2. 화면 머리 — `page-header`(위 여백 32)
    - 왼쪽: 경로 caption {colors.text-muted} "대학 찾기 › 전형계획" → 제목 "전형계획" {typography.heading-1}
@@ -110,8 +114,8 @@
    - 패널 오른쪽 위 텍스트 버튼 "초기화"(잉크 SemiBold, 조건이 걸렸을 때만). PC는 칩이 바로 적용돼서 적용 버튼이 없어요.
 6. 결과 줄 (y 약 540, 높이 40) [P3, P4]
    - 왼쪽: "전형 12개"(title, 고정폭) + `filter-chip` "관심만 보기 1"(off)
-   - 오른쪽: 정렬 드롭다운 트리거 `button-outline` "가나다순"(아이콘 chevron-down, 높이 40) + `segmented-control` 목록 · 표(표 = `segmented-control-active`)
-   - 정렬 드롭다운은 단일 선택 목록 4줄(가나다순 · 모집인원 많은 순 · 지역순 · 최근 변경순), 선택 줄 = Elevation Selected + 오른쪽 체크(Route Blue). 그림자는 드롭다운에만. 프레임에는 닫힌 상태로 그려요.
+   - 오른쪽: 정렬 트리거 `button-pill-soft` "가나다순" + icon/chevron-down(높이 40, Page 위라 {colors.canvas} 채움 — design.md "폼 밖 화면 위 고르기 버튼은 button-pill-soft + ▾", 이전 `button-outline`에서 바꿈) + `segmented-control` 목록 · 표(표 = `segmented-control-active`)
+   - 정렬은 트리거 아래 4px 떠 있는 목록 4줄(가나다순 · 모집인원 많은 순 · 지역순 · 최근 변경순, 행 40), 선택 줄 = Elevation Selected + 오른쪽 icon/check {colors.accent}. 그림자는 떠 있는 목록에만. 기본 프레임에는 닫힌 상태, 열린 모습은 1440-sort-dropdown.
 7. 고지 (y 약 592, 한 줄) — `disclaimer-note` "ⓘ 대학 공식 자료가 최종 기준이에요 · 데이터 기준일 2026-11-18 · 시안의 대학·숫자는 예시예요". 표 끝에 두면 묻혀서 표 바로 위에 둬요.
 8. 표 (y 약 620부터) [P5] — 흰 카드 안 `data-table`, 폭 1128, 머리글 높이 40({colors.canvas-soft}), 행 높이 48(셀 패딩 12·16)
    - 열(폭): 대학 200 · 지역 72 · 전형명 FILL(약 284) · 유형 72 · 모집단위 140 · 모집인원 136 · 수능최저 96 · 면접 72 · 관심 56
@@ -122,11 +126,11 @@
    - 관심: `interest-heart`(1행 담김). 셀 높이 48 안에 터치 영역 44 그대로 들어가요.
    - 정렬 화살표: 대학(현재 가나다순, 활성) · 지역 · 모집인원. 머리글을 눌러도 정렬 드롭다운과 같은 값으로 맞춰져요.
    - 행을 누르면 전형 상세, 대학 셀의 대학명을 누르면 대학 상세. 선택 행 표시는 쓰지 않아요(상세로 바로 이동).
-   - 첫 화면에 머리글 + 5행이 보이고 6~12행은 스크롤(배너가 들어와 이전보다 3행 줄어요).
+   - 첫 화면에 머리글 + 5행이 보이고 6~10행은 스크롤(배너가 들어와 이전보다 3행 줄어요). 표 카드 아래 가운데 페이지 이동 줄("이전"(비활성) · "1 / 2" · "다음", 높이 32).
 
-목록 보기(프레임에 그리지 않음): 같은 자리에 `univ-card` 공개 변형 박스 2열 그리드(카드 552 × 고정 높이, 간격 24, 패딩 24, 흰 카드 테두리 없음). 카드 구성은 모바일 행과 같아요(로고 + 대학명 한 줄 + 지역 / 전형·모집단위 / 수능최저 · 면접 글자 + 모집인원·증감 / 오른쪽 위 하트).
+목록 보기(1440-list-view로 그림): 같은 자리에 `univ-card` 공개 변형 박스 2열 그리드(카드 552 × 고정 높이, 간격 24, 패딩 24, 흰 카드 테두리 없음). 카드 구성은 모바일 행과 같아요(로고 + 대학명 한 줄 + 지역 / 전형·모집단위 / 수능최저 · 면접 글자 + 모집인원·증감 / 오른쪽 위 하트).
 
-PC 상태(그리지 않음): 빈 결과는 표 자리에 `empty-state`(5-2와 같은 문구, 배너 · 필터 패널은 그대로). 관심 담기 `toast`는 오른쪽 아래.
+PC 상태: 5-2의 15장으로 그려요(빈 결과는 표 자리 `empty-state`, 배너 · 필터 패널은 그대로, `toast`는 오른쪽 아래).
 
 ## 4. 배너 동작 · 접근성
 
@@ -142,47 +146,62 @@ PC 상태(그리지 않음): 빈 결과는 표 자리에 `empty-state`(5-2와 �
 | 대비 | 굵은 줄 ink · 보조 줄 ink-soft가 {colors.canvas-soft} 위 4.5:1 이상 |
 | 색 | Route Blue · 판정 색 · 숫자 배지 · 퍼센트 없음. 색은 길콩 그림 안 원본 색뿐 |
 
-## 5. 상태 프레임 (모바일 390 × 844 3개)
+## 5. 상태 프레임 (03-draft.json `states`에만 적고 `frames`에는 넣지 않아요)
 
-G3은 03-draft.json `frames`에 적힌 두 프레임(admissions-list/390, admissions-list/1440)만 세요. 본 프레임 두 개는 배너가 보이는 기본 상태로 고쳐 그려요(2 · 3장). 상태 프레임은 그 옆에 두되 `frames`에는 넣지 않고 `states`에 적어요. 이름은 "admissions-list 상태 · ○○"예요. 규칙(팔레트·모서리 0·글꼴·그림자)은 본 프레임과 똑같이 지켜요. 세 상태 모두 배너는 2장 4번 자리에 그대로 있어요(시트 상태는 scrim 아래).
+G3은 03-draft.json `frames`의 두 프레임(admissions-list/390, admissions-list/1440)만 세요. 상태 프레임은 같은 페이지 기본 2장 옆에 두고 `states`에만 적어요. 이름 = admissions-list/<폭>-<상태>(예전 이름 "admissions-list 상태 · 필터 열림 / 결과 없음 / 관심 담기"는 390-filter-sheet · 390-filter-empty · 390-interest-added로 바꿔요). 모바일 17장 + PC 15장 = 32장.
+공통: 모두 기본 2장을 복제해서 바꿀 곳만 고쳐요. 배너는 모든 상태에서 같은 자리에 그대로 있어요(4장). 규칙(팔레트 · 모서리 0 · 글꼴 · 그림자)은 기본 프레임과 같아요. 떠 있는 레이어 노드 이름은 정확히 bottom-sheet · modal · toast · dropdown으로 지어요. 판정 색 · 판정 아이콘 · 위험 색 채움은 어느 프레임에도 없어요.
+앱 대응(app/src/screens/AdmissionsList.tsx · components/InterestButton.tsx): 불러오는 중 · 불러오기 오류 + 다시 불러오기 · 고른 항목 못 찾음 · 조건 0건 + 조건 초기화 · 페이지 이동(이전 · 다음) · 관심 담기/빼기 안내 · 관심 저장소 오류가 앱에 있어요 → 모두 프레임으로 그려요. 앱에 없는 것(정렬 · 필터 시트, 관심만 보기, 관심 빼기 확인 창)은 새 기능 · 안전장치로 넣어요. 앱의 인라인 상세 펼침은 전형 상세(program-detail) 화면 몫이라 여기서 그리지 않아요. 앱에는 Modal · window.confirm · toast 컴포넌트를 이 화면에서 쓰지 않아요(관심 안내는 하트 옆 글자) → 시안에서는 design.md대로 `toast`로 그려요.
 
-### 5-1. admissions-list 상태 · 필터 열림 [P2]
+### 5-1. 모바일 390×844 (17)
 
-- 바탕: 2장 화면(배너 포함) + scrim({colors.scrim}) 전체.
-- `bottom-sheet` (아래에서 올라옴, 높이 약 680, 모서리 0, 그림자 overlay)
-  - 손잡이 막대, 제목 "필터", 오른쪽 닫기(x, 44×44)
-  - 본문(섹션 제목 heading-4 + `filter-chip` 다중 선택 묶음, 섹션 간격 24, 시트 안 스크롤):
-    - 지역: 강원(on) · 수도권(on) · 충청권 · 영남권 · 호남권 · 제주
-    - 설립·캠퍼스: 국립 · 공립 · 사립 · 그 밖 / 본캠퍼스 · 분캠퍼스
-    - 전형 유형: 교과 · 종합 · 논술 · 실기 · 정시
-    - 계열: 인문 · 사회 · 자연 · 공학 · 의약 · 예체능
-    - 조건: 수능최저 있음 · 수능최저 없음 · 면접 있음 · 재학생만
-  - 아래 고정 줄: `button-outline` "초기화" + `button-primary` "전형 11개 보기"(적용 결과 개수를 미리 보여줘요. 광주과학기술원 1행이 빠진 값)
-- 정렬 시트는 같은 `bottom-sheet` 단일 선택 목록이라 따로 그리지 않아요: 제목 "정렬", 4줄(행 높이 48), 고른 줄 = Elevation Selected + 오른쪽 체크(Route Blue), 아래 버튼 없음(고르면 바로 닫힘).
+| 프레임 | 무엇을 그리나 |
+|---|---|
+| admissions-list/390-loading | 머리 줄 · 화면 제목 · `sub-nav` · 배너까지 그대로. 그 아래 흰 카드 하나에 "전형계획을 읽고 있어요." {typography.body-sm} {colors.text-muted} 한 줄(불러오는 중 규칙 — 진행 막대 · 스켈레톤 · 아이콘 · 버튼 없음). 검색 · 칩 줄 · 결과 줄 · 고지 · 목록은 숨김(개수가 아직 없어서) |
+| admissions-list/390-error | 390-loading과 같은 자리에 화면 오류 줄: 흰 카드 안 icon/triangle-alert 20 {colors.ink} + "전형계획 자료를 불러오지 못했어요. 인터넷 연결을 확인하고 다시 불러와 주세요." {typography.body} {colors.ink} → `button-outline` "다시 불러오기"(높이 44). 판정 색 · 위험 색 없음 |
+| admissions-list/390-plan-missing | 예전 링크로 들어와 고른 전형을 찾지 못함. 기본 화면 그대로 + 고지 아래 · 목록 위에 화면 오류 줄 "고른 전형을 목록에서 찾지 못했어요. 시행계획이 바뀌었을 수 있어요. 아래 목록에서 다시 골라 주세요." (버튼 없음 — 목록이 바로 아래에 있어요) |
+| admissions-list/390-search-result | 검색칸 `text-input-focused`(2px 잉크 링) 값 "강원". 결과 줄 "전형 2개", 목록 = 강원대학교 2행만(한림대학교는 이름에 "강원"이 없어 빠져요). 빠른 칩 개수도 검색 결과 기준 "전체 2 · 교과 1 · 종합 1 · 논술 0 · 실기 0 · 정시 0". 키보드는 그리지 않아요 |
+| admissions-list/390-search-empty | 검색칸 값 "한빛"(포커스 없음, 오류 모양 아님). 결과 줄 "전형 0개", 정렬 트리거 숨김. 목록 자리 `empty-state`: 선 아이콘 search 48 → "'한빛'에 맞는 대학이 없어요" {typography.heading-4} → "대학 이름을 다시 확인해 주세요. 줄임말(강원대)로도 찾을 수 있어요." {typography.body-sm} → `button-primary` "검색어 지우기" |
+| admissions-list/390-filter-sheet | 기본 화면 + scrim + `bottom-sheet`(높이 약 680, 손잡이, 제목 "필터" + 오른쪽 닫기 x 44×44). 섹션 제목 heading-4 + `filter-chip` 다중 선택 묶음(섹션 간격 24, 시트 안 스크롤): 지역 강원(on) · 수도권(on) · 충청권 · 영남권 · 호남권 · 제주 / 설립·캠퍼스 국립 · 공립 · 사립 · 그 밖 · 본캠퍼스 · 분캠퍼스 / 전형 유형 교과 · 종합 · 논술 · 실기 · 정시 / 계열 인문 · 사회 · 자연 · 공학 · 의약 · 예체능 / 조건 수능최저 있음 · 수능최저 없음 · 면접 있음 · 재학생만. 아래 고정 줄 `button-outline` "초기화" + `button-primary` "전형 11개 보기"(광주과학기술원 1행이 빠진 값) |
+| admissions-list/390-filter-applied | 시트에서 "전형 11개 보기"를 누른 뒤. 칩 줄 맨 앞 "필터 2"(걸린 조건이 있어 `filter-chip` on과 같은 accent-soft + 1px accent 테두리), 결과 줄 "전형 11개", 목록에서 광주과학기술원 행이 빠져요. 빠른 칩 개수도 "전체 11 · 교과 8 · 종합 1 · 논술 1 · 실기 0 · 정시 1" |
+| admissions-list/390-filter-empty | 빠른 칩 "논술 1"(on) + "필터 2"(강원 · 면접 있음). 결과 줄 "전형 0개" + `data-status-badge` "시행계획 기준", 정렬 트리거 숨김. 목록 자리 `empty-state`: 선 아이콘 search 48 → "조건에 맞는 전형이 없어요" → "강원 · 논술 · 면접 있음으로 찾았어요. 조건을 하나씩 풀어 보세요." → `button-primary` "필터 초기화". 배너 · 고지는 그대로 |
+| admissions-list/390-sort-sheet | 정렬 트리거 "가나다순"을 누른 뒤. scrim + `bottom-sheet`: 제목 "정렬" + 닫기 → 단일 선택 목록(행 48, 행 사이 1px {colors.hairline-soft}): 가나다순(고른 행 = Elevation Selected + 오른쪽 icon/check {colors.accent}) · 모집인원 많은 순 · 지역순 · 최근 변경순. 버튼 없음(고르면 바로 닫혀요) |
+| admissions-list/390-sort-recent | "최근 변경순"을 고른 뒤. 정렬 트리거 "최근 변경순". 행 순서 = 고려대학교 논술전형(11.12 변경) → 강원대학교 학생부교과(지역인재)(11.10 변경) → 한림대학교 학생부교과(지역인재)(11.06 변경) …. 각 행 2줄 끝에 caption {colors.text-muted} "11.12 변경"(고정폭). 날짜는 예시예요 |
+| admissions-list/390-interest-added | 2행(강원대학교 학생부종합(미래인재)) `interest-heart` 담김(heart 채움), 칩 "관심 2". `toast`(탭바 위 12, 좌우 16): icon/check + "관심 전형에 담았어요" 1줄 + {typography.body-sm} "이 기기에만 저장돼요" 2줄. 3초 뒤 사라져요 |
+| admissions-list/390-interest-removed | 기본 화면에서 1행 하트를 다시 누른 뒤. 1행 하트 안 담김(잉크 선), 칩 "관심 0". `toast` "관심 전형에서 뺐어요". 일반 목록에서는 다시 누르면 바로 담겨서 확인 창 없이 빼요 |
+| admissions-list/390-interest-only | 칩 "관심 1"(on)을 누른 뒤. 결과 줄 "전형 1개", 목록 = 강원대학교 학생부교과(지역인재) 1행(하트 담김). 빠른 칩 개수는 관심 기준 "전체 1 · 교과 1 · 종합 0 · 논술 0 · 실기 0 · 정시 0" |
+| admissions-list/390-interest-only-empty | 관심 0개에서 "관심 0" 칩(on). 결과 줄 "전형 0개", 정렬 트리거 숨김. `empty-state`: 선 아이콘 heart 48({colors.ink} 선, heart 색 아님) → "아직 담은 전형이 없어요" → "목록에서 하트를 눌러 담아 보세요. 담은 전형은 이 기기에만 저장돼요." → `button-primary` "관심만 보기 끄기" |
+| admissions-list/390-interest-remove-confirm | 390-interest-only에서 1행 하트를 누른 뒤(새 안전장치 — 관심만 보기에서는 빼면 행이 목록에서 사라져서 물어봐요). scrim + 확인 `bottom-sheet`: "관심에서 뺄까요?" {typography.heading-4} → "강원대학교 학생부교과(지역인재)가 관심 목록에서 빠져요. 대학 상세 · 될각의 관심 표시도 함께 꺼져요." {typography.body} → `button-outline` "취소" · `button-primary` "빼기"(잉크, 위험 색 채움 없음). 뺀 뒤 390-interest-only-empty + `toast` "관심 전형에서 뺐어요" |
+| admissions-list/390-interest-error | 관심 저장소를 열지 못함(브라우저 저장 막힘). 고지 아래 · 목록 위 화면 오류 줄: icon/triangle-alert 20 {colors.ink} + "관심 전형을 저장하지 못했어요. 브라우저 설정에서 사이트 저장을 허용한 뒤 다시 눌러 주세요." 버튼 없음. 칩은 개수 없이 "관심"만. 하트는 안 담김 모양 그대로(비활성 모양은 9장 제안 — 반영 전까지 이 대체안) |
+| admissions-list/390-page-end | 목록 끝까지 내린 2쪽. 결과 줄 "전형 12개", 목록 = 11 · 12행(한림대학교 · 한양대학교) → 페이지 이동 줄 가운데: `button-outline` "이전"(높이 44) · "2 / 2" {typography.caption} 고정폭 · `button-outline` "다음"(비활성 {colors.text-faint} 글자 · {colors.hairline-soft} 테두리) → 아래 여백(탭바 + 16) |
 
-### 5-2. admissions-list 상태 · 결과 없음 [P6]
+### 5-2. PC 1440×900 (15)
 
-- 2장 화면에서 조건: 빠른 칩 "논술 1"(on), "필터 2"(강원 · 면접 있음). 걸린 조건은 칩 줄과 빈 상태 설명에 그대로 보여서 바로 풀 수 있어요.
-- 결과 줄: "전형 0개" + `data-status-badge` "시행계획 기준", 정렬 트리거는 숨김.
-- 목록 자리: `empty-state`(가운데, 흑백 선 아이콘 search)
-  - 제목 "조건에 맞는 전형이 없어요"
-  - 설명 "강원 · 논술 · 면접 있음으로 찾았어요. 조건을 하나씩 풀어 보세요."
-  - `button-primary` "필터 초기화"(이 상태의 유일한 주요 버튼)
-- 검색어로 0건일 때(그리지 않음): 검색칸에 검색어를 그대로 두고 제목 "'한빛'에 맞는 대학이 없어요", 설명 "대학 이름을 다시 확인해 주세요." 버튼은 `button-pill-soft` "검색어 지우기". 검색칸은 오류 모양(`text-input-error`)으로 바꾸지 않아요(입력 형식 오류가 아니라 결과 없음이라서).
-- 배너 · `disclaimer-note`는 그대로 둬요.
-
-### 5-3. admissions-list 상태 · 관심 담기 [P4]
-
-- 2장 화면에서 2행(강원대학교 학생부종합(미래인재)) `interest-heart`를 담김(heart 채움)으로 바꿔요. 칩 "관심 2".
-- `toast` "관심 전형에 담았어요. 이 기기에만 저장돼요" — 잉크 채움 + 흰 글자, 탭바 위 12, 좌우 16, 모서리 0, 그림자 overlay.
-- 다시 누르면 담김이 풀리고 `toast` "관심 전형에서 뺐어요"(그리지 않음).
+| 프레임 | 무엇을 그리나 |
+|---|---|
+| admissions-list/1440-loading | 사이드바 · `page-header` · 배너까지 그대로. 아래 흰 카드(폭 1128) 안 "전형계획을 읽고 있어요." {typography.body-sm} {colors.text-muted}. 검색 · 필터 패널 · 결과 줄 · 표 숨김. `page-header` 오른쪽 `data-status-badge`도 숨김(기준일을 아직 몰라서) |
+| admissions-list/1440-error | 같은 자리 화면 오류 줄: icon/triangle-alert 20 + "전형계획 자료를 불러오지 못했어요. 인터넷 연결을 확인하고 다시 불러와 주세요." + 오른쪽 `button-outline` "다시 불러오기"(높이 40) |
+| admissions-list/1440-plan-missing | 기본 화면 + 고지 아래 · 표 위 화면 오류 줄 "고른 전형을 목록에서 찾지 못했어요. 시행계획이 바뀌었을 수 있어요. 아래 목록에서 다시 골라 주세요." |
+| admissions-list/1440-search-result | 검색칸 `text-input-focused` 값 "강원". 필터 패널 전형 유형 칩 개수 "전체 2 · 교과 1 · 종합 1 · 논술 0 · 실기 0 · 정시 0", 결과 줄 "전형 2개", 표 = 강원대학교 2행 |
+| admissions-list/1440-search-empty | 검색칸 값 "한빛". 결과 줄 "전형 0개"(정렬 · 보기 전환 숨김). 표 자리 흰 카드 안 `empty-state` "'한빛'에 맞는 대학이 없어요" / "대학 이름을 다시 확인해 주세요. 줄임말(강원대)로도 찾을 수 있어요." / `button-primary` "검색어 지우기" |
+| admissions-list/1440-filtered | 필터 패널 지역 "강원"(on) + 전형 유형 "교과 2"(on), 패널 오른쪽 위 "초기화" 텍스트 버튼 보임. 결과 줄 "전형 2개", 표 = 강원대학교 학생부교과(지역인재) · 한림대학교 학생부교과(지역인재) |
+| admissions-list/1440-filter-empty | 지역 "강원" + 유형 "논술 0" + 조건 "면접 있음"(on). 결과 줄 "전형 0개". 표 자리 `empty-state` "조건에 맞는 전형이 없어요" / "강원 · 논술 · 면접 있음으로 찾았어요. 조건을 하나씩 풀어 보세요." / `button-primary` "필터 초기화" |
+| admissions-list/1440-sort-dropdown | 정렬 트리거를 누른 뒤. 트리거 아래 4px 떠 있는 목록(노드 이름 dropdown, {colors.canvas} + 1px {colors.hairline} + {shadow.overlay}, 폭 220, 행 40 {typography.body}): 가나다순(Elevation Selected + 오른쪽 icon/check {colors.accent}) · 모집인원 많은 순(마우스 올림 {colors.canvas-soft}) · 지역순 · 최근 변경순. 바깥을 누르거나 Esc로 닫혀요 |
+| admissions-list/1440-sort-recent | "최근 변경순" 선택. 트리거 글자 "최근 변경순", 표 머리글 정렬 화살표는 모두 꺼짐(열 정렬이 아니라서). 전형명 셀 아래 caption {colors.text-muted} "11.12 변경". 행 순서는 390-sort-recent와 같아요 |
+| admissions-list/1440-list-view | `segmented-control` "목록" 선택. 표 자리에 `univ-card` 공개 변형 2열 그리드(카드 552, 간격 24, 패딩 24, 흰 카드 테두리 없음). 카드 = 로고 32 + 대학명 heading-4 + 지역 caption / 전형명 · 모집단위 body-sm muted / "수능최저 있음 · 면접 없음" + 오른쪽 "모집 412명 ▲38" / 오른쪽 위 `interest-heart`. 첫 화면 2열 × 2줄(1~4행) |
+| admissions-list/1440-interest-added | 표 2행 하트 담김, 결과 줄 "관심만 보기 2". `toast` 오른쪽 아래(오른쪽 · 아래 32): icon/check + "관심 전형에 담았어요" + 2줄 "이 기기에만 저장돼요" |
+| admissions-list/1440-interest-only | 결과 줄 `filter-chip` "관심만 보기 1"(on). 결과 "전형 1개", 표 = 강원대학교 학생부교과(지역인재) 1행 |
+| admissions-list/1440-interest-remove-confirm | 1440-interest-only에서 하트를 누른 뒤. scrim + `modal`(폭 560): "관심에서 뺄까요?" → "강원대학교 학생부교과(지역인재)가 관심 목록에서 빠져요. 대학 상세 · 될각의 관심 표시도 함께 꺼져요." → 오른쪽 정렬 `button-outline` "취소" · `button-primary` "빼기". 닫으면 누른 하트로 포커스 |
+| admissions-list/1440-interest-error | 고지 아래 · 표 위 화면 오류 줄 "관심 전형을 저장하지 못했어요. 브라우저 설정에서 사이트 저장을 허용한 뒤 다시 눌러 주세요." 결과 줄 칩 "관심만 보기"(개수 없음) |
+| admissions-list/1440-page-end | 표를 2쪽으로 넘긴 상태. 표 = 11 · 12행 → 표 카드 아래 가운데 페이지 이동 줄 `button-outline` "이전"(높이 32) · "2 / 2" · "다음"(비활성) |
 
 ## 6. 상호작용
 
 - 빠른 칩·필터: 모바일 빠른 칩은 바로 적용, 필터 시트는 "보기" 버튼으로 적용, PC 패널 칩은 바로 적용. 결과 개수·빠른 칩 개수가 함께 바뀌어요.
 - 정렬 기본값은 가나다순. 지역순은 강원 → 수도권 → 충청권 → 영남권 → 호남권 → 제주 순, 같은 지역 안은 가나다순.
 - 최근 변경순: 시행계획·모집요강 반영으로 값이 바뀐 날짜 순. 이 정렬일 때만 2줄 끝에 caption "11.12 변경"을 붙여요.
-- 관심 담기는 학생 기기에 저장(PRD 6-1). 로그인 없이 동작해요.
+- 관심 담기는 학생 기기에 저장(PRD 6-1). 로그인 없이 동작해요. 일반 목록에서 빼기는 바로 + `toast`, "관심만 보기"에서 빼기는 확인 창(5장 390/1440-interest-remove-confirm).
+- 페이지: 10행씩. 조건 · 검색 · 정렬을 바꾸면 1쪽으로 돌아가요. "다음"을 누르면 목록 맨 위(결과 줄)로 스크롤하고 포커스를 결과 줄에 둬요.
+- 불러오기 오류 · 저장 오류는 화면 오류 줄(흑백 icon/triangle-alert + 문장)로만 알려요. 검색칸 · 칩은 오류 모양으로 바꾸지 않아요(형식 오류가 아니라서).
 - 배너: 4장.
 - 키보드(PC): 표 행 위·아래 방향키 이동, Enter = 전형 상세. 포커스 2px 잉크 링. 하트는 Tab으로 따로 닿아요.
 - 터치: 모바일 누르는 요소 최소 44 × 44, PC 표 안 컨트롤 최소 32.
@@ -201,24 +220,33 @@ G3은 03-draft.json `frames`에 적힌 두 프레임(admissions-list/390, admiss
 | 행 조건 | 수능최저 있음 · 면접 없음 |
 | 시트 버튼 | 초기화 / 전형 11개 보기 |
 | 빈 결과 | 조건에 맞는 전형이 없어요 / 강원 · 논술 · 면접 있음으로 찾았어요. 조건을 하나씩 풀어 보세요. / 필터 초기화 |
-| 검색 0건 | '한빛'에 맞는 대학이 없어요 / 대학 이름을 다시 확인해 주세요. |
-| 토스트 | 관심 전형에 담았어요. 이 기기에만 저장돼요 / 관심 전형에서 뺐어요 |
+| 검색 0건 | '한빛'에 맞는 대학이 없어요 / 대학 이름을 다시 확인해 주세요. 줄임말(강원대)로도 찾을 수 있어요. / 검색어 지우기 |
+| 토스트 | 관심 전형에 담았어요 · 이 기기에만 저장돼요 / 관심 전형에서 뺐어요 |
+| 불러오는 중 | 전형계획을 읽고 있어요. |
+| 불러오기 오류 | 전형계획 자료를 불러오지 못했어요. 인터넷 연결을 확인하고 다시 불러와 주세요. / 다시 불러오기 |
+| 못 찾음 | 고른 전형을 목록에서 찾지 못했어요. 시행계획이 바뀌었을 수 있어요. 아래 목록에서 다시 골라 주세요. |
+| 관심 저장 오류 | 관심 전형을 저장하지 못했어요. 브라우저 설정에서 사이트 저장을 허용한 뒤 다시 눌러 주세요. |
+| 관심 0개 | 아직 담은 전형이 없어요 / 목록에서 하트를 눌러 담아 보세요. 담은 전형은 이 기기에만 저장돼요. / 관심만 보기 끄기 |
+| 관심 빼기 확인 | 관심에서 뺄까요? / 강원대학교 학생부교과(지역인재)가 관심 목록에서 빠져요. 대학 상세 · 될각의 관심 표시도 함께 꺼져요. / 취소 · 빼기 |
+| 정렬 날짜 | 11.12 변경 |
+| 페이지 | 이전 · 1 / 2 · 다음 |
 | 하트 대체 텍스트 | 관심에 담기 / 관심에서 빼기 |
 | 고지 | 대학 공식 자료가 최종 기준이에요 · 데이터 기준일 2026-11-18 · 시안의 대학·숫자는 예시예요 |
 
-결과를 약속하거나 가능성을 말하는 문구는 없어요. 증감은 사실(▲38)만 보여주고 해석 문장을 붙이지 않아요.
+결과를 약속하거나 예측하는 문구는 없어요. 증감은 사실(▲38)만 보여주고 해석 문장을 붙이지 않아요.
 
 ## 8. 사용 컴포넌트 · G2 자가 점검
 
-`brand-logo`, `sub-nav`, `promo-banner`, `mascot-illustration`, `text-input`, `filter-chip`, `button-pill-soft`, `button-outline`, `button-primary`, `univ-card`, `univ-logo`, `univ-monogram`, `interest-heart`, `data-status-badge`, `data-table`, `segmented-control`, `segmented-control-active`, `sidebar`, `sidebar-group`, `sidebar-item`, `page-header`, `tab-bar-pill`, `bottom-sheet`, `empty-state`, `toast`, `disclaimer-note`
+`brand-logo`, `sub-nav`, `promo-banner`, `mascot-illustration`, `text-input`, `filter-chip`, `button-pill-soft`, `button-outline`, `button-primary`, `univ-card`, `univ-logo`, `univ-monogram`, `interest-heart`, `data-status-badge`, `data-table`, `segmented-control`, `segmented-control-active`, `sidebar`, `sidebar-group`, `sidebar-item`, `page-header`, `tab-bar-pill`, `bottom-sheet`, `modal`, `empty-state`, `toast`, `disclaimer-note`, `text-input-focused`
 
-- 백틱 안 이름은 모두 rules `components`에 있어요(5-2의 `text-input-error`도 있음 — 쓰지 않는다는 설명이에요).
+- 백틱 안 이름은 모두 rules `components`에 있어요(`text-input-error`는 쓰지 않는다는 설명에만 나와요). 상태 프레임 이름 · 노드 이름 dropdown은 컴포넌트 이름이 아니라 백틱 없이 적어요.
 - 필수 컴포넌트 대상 화면이 아니지만 `disclaimer-note`는 넣었어요.
 - NEVER-2 금지 표현: 0.
 
 ## 9. design.md 수정 제안
 
-- 없어요. 이전 제안 3건은 정리됐어요: univ-card 공개 변형은 design.md에 들어왔고, 드롭다운형 칩은 모바일 컨트롤 한 줄 규칙에 맞춰 필터 시트로 옮겼고, 조건 칩은 사실 글자로 바꿔 `data-status-badge`를 빌려 쓰지 않아요.
+- 제안 1 (2026-11-24 상세화, interest-heart 비활성 모양): "interest-heart — 관심 저장소를 쓸 수 없을 때(브라우저 저장 막힘)는 비활성 = {colors.text-faint} 선 하트, 누르는 영역 44×44는 그대로, 눌러도 바뀌지 않고 화면 오류 줄로 이유를 알립니다. 대체 텍스트 '관심에 담을 수 없어요'." 반영 전까지 390/1440-interest-error는 하트를 안 담김 모양 그대로 두고 화면 오류 줄로만 알려요(새 부품 없음).
+- 이전 제안 3건은 정리됐어요: univ-card 공개 변형은 design.md에 들어왔고, 드롭다운형 칩은 모바일 컨트롤 한 줄 규칙에 맞춰 필터 시트로 옮겼고, 조건 칩은 사실 글자로 바꿔 `data-status-badge`를 빌려 쓰지 않아요.
 
 ## 10. 디자이너 메모
 
@@ -229,4 +257,11 @@ G3은 03-draft.json `frames`에 적힌 두 프레임(admissions-list/390, admiss
 - 그림자는 `bottom-sheet`, `toast`, 정렬 드롭다운에만. 배너에는 없어요.
 - 글꼴은 디자인 시스템 텍스트 스타일(IBM Plex Sans KR 300·400·600·700), 자간 0, 숫자(모집인원·증감·개수·날짜)는 고정폭.
 - 레이어 이름 = 컴포넌트 이름(promo-banner, univ-card, data-table, filter-chip …). 묶음은 한국어 이름(검색, 칩 줄, 결과 줄).
-- 03-draft.json `frames`에는 admissions-list/390, admissions-list/1440 두 개만 적어요(기존 노드 346:123524 · 346:125015를 고쳐 그리거나 같은 이름으로 다시 그림). 상태 프레임 3개는 `states`에 적어요(5장).
+- 03-draft.json `frames`에는 admissions-list/390, admissions-list/1440 두 개만 적어요(기존 노드 346:123524 · 346:125015를 고쳐 그림). 상태 프레임 32개는 `states`에 적어요(5장). 예전 상태 프레임 3개는 새 이름으로 바꿔 다시 써요.
+- 이번 상세화 그리는 순서(Figma 호출 한도 때문에 한 번에 한 묶음씩):
+  1. 기본 2장 손보기 — 390에 페이지 이동 줄, 1440에 정렬 트리거 `button-pill-soft` 교체 · 사이드바 소분류 아이콘 · 표 아래 페이지 이동 줄.
+  2. 오버레이 없는 목록 상태(기본 복제 → 결과 줄 · 목록만 바꿈): 390-search-result · 390-filter-applied · 390-sort-recent · 390-interest-only · 390-page-end / 1440-search-result · 1440-filtered · 1440-sort-recent · 1440-interest-only · 1440-page-end · 1440-list-view.
+  3. 빈 · 불러오기 상태: 390-loading · 390-error · 390-plan-missing · 390-search-empty · 390-filter-empty · 390-interest-only-empty · 390-interest-error / 1440-loading · 1440-error · 1440-plan-missing · 1440-search-empty · 1440-filter-empty · 1440-interest-error. 화면 오류 줄은 하나 만들어 복제해요.
+  4. 떠 있는 레이어: 390-filter-sheet · 390-sort-sheet · 390-interest-remove-confirm / 1440-sort-dropdown · 1440-interest-remove-confirm(scrim + bottom-sheet · modal · dropdown, 그림자는 이 노드에만).
+  5. toast: 390-interest-added · 390-interest-removed / 1440-interest-added.
+  6. 끝나면 03-draft.json `states`에 32개 이름 = 노드 id를 적고, 이름이 5장 표와 똑같은지 확인해요.

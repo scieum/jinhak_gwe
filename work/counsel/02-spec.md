@@ -1,25 +1,26 @@
 # 02-spec — 학생 상담 (counsel, 교사)
 
+> 개정 2026-11-24(상세화): 사용자 요청 "전체적으로 기존에 시안에도 자세하게 만들지 않고 하나씩만 있는 경우가 많은데 그것들 전부 자세하게 만들어줘". ① 5장 앱 구현 목록 새로 씀 ② 6장 상태 프레임 35장(모바일 15 · PC 20)으로 늘림 ③ 기본 프레임을 최신 design.md에 맞춤(U:NAVI `brand-logo`, 우리 반 소분류 3개, `page-header`, `text-input` 변형 multiline, 수능 최저 근접 ▲ · 미충족 ✕, `text-input-error` 아이콘, 패널 아래 확정 잠금 · 답장 칸) ④ 8장 그리는 순서. 승인된 3단 배치는 그대로예요.
 > 근거: PRD 6-10 "학생 상담 화면 … 상담 메모(시간순 기록)", 3-4 "변경 이력과 상담 메모를 남기고", 6-12(담임 기록, 실행 중 AI 없음), 13장(데이터 기준일·공식 자료 고지, 규칙 계산만)
-> design.md Responsive Strategy "학생 상담", App Shell(오른쪽 보조 패널 360px), Components, 곧 들어갈 대분류-소분류 내비(work/_pending/apply4.py — 사이드바 대분류 행 sidebar-group, 모바일 소분류 가로 탭 sub-nav. 아직 rules에 없어서 이 문서에서는 이름만 적고 컴포넌트 표기는 하지 않아요)
+> design.md Responsive Strategy "학생 상담", App Shell(오른쪽 보조 패널 360px), Components, 대분류-소분류 내비(`sidebar-group`, `sub-nav` — 이제 rules에 있어요)
 > 01-research.md 반영 포인트 P1~P8 · work/_ref/schs_lms-homeroom.md 3(a) 상담 탭 필드(날짜·영역·내용·작성자·수정됨)
 > 필수 컴포넌트(requires_disclaimer_note): `disclaimer-note` 포함
 
-## 공통 원칙
+## 1. 공통 원칙
 
 - 이 화면은 **상담하는 동안 쓰는 작업 화면**이에요. 학생 기록 상세(student-record)는 기록을 열람하는 화면이라 성적 추이 차트·표는 거기에 두고, 여기에서는 숫자 요약과 메모 쓰기만 해요. 차트 없음.
 - 실행 중 AI 없음. 요약·충족 현황·판정은 모두 저장된 값과 정해진 규칙으로 보여줘요. AI 요약, "상담 메모에 붙이기"는 넣지 않아요.
 - 학생은 번호와 별칭으로만 보여요("3학년 2반 7번 하늘"). 사진·실명·아바타 없음. 아래 수치는 모두 가상값이에요.
 - 대학별 환산 점수는 이 화면에 보여주지 않아요(검수 규칙이 필요한 계산이라 대학별 환산 화면 몫, NEVER-1). 성적은 5 to 9 환산 범위만 써요.
 - 숫자 문구는 범위 + "약" + "추정"(예: "환산 9등급 약 3.7~4.0 (추정)"), 수능 최저는 "충족 현황"이라고 써요. 예측 표현("예상" 등)은 쓰지 않아요(NEVER-2).
-- 판정은 늘 `judge-badge`(색 + 아이콘 + 이름)로 보여줘요. 판정 색은 배지 안에만 쓰고 영역 라벨·메모에는 쓰지 않아요.
+- 판정은 늘 `judge-badge`(색 + 아이콘 + 이름)로 보여줘요. 수능 최저 판정 배지는 충족 ● 안정 쌍 · 근접 ▲(속이 찬 세모) 적정 쌍 · 미충족 ✕ 위험 쌍 · 자료 부족 판정 없음 쌍(아이콘 없이 이름만)이에요. 판정 색은 배지 안에만 쓰고 영역 라벨·메모에는 쓰지 않아요.
 - 바탕은 흰 캔버스, 카드는 흰 바탕 + 1px hairline-soft, 모서리 0, 그림자 없음(토스트·바텀시트만 overlay 그림자).
 - Route Blue는 ① 선택 상태(사이드바 선택 메뉴, 선택된 학생 행, 선택된 필터 칩·세그먼트, 소분류 탭 막대, 하단 탭바 선택 아이콘) ② 핵심 숫자 1개(환산 9등급 범위 "약 3.7~4.0")에만 써요. 나머지 숫자는 잉크예요.
 - 숫자(날짜, 시각, 등급, 칸 번호)는 모두 고정폭 숫자예요.
 - 화면의 주요 버튼은 `button-primary` "메모 저장" 하나예요.
 - 이름·셀은 한 줄을 우선해요. 폭을 다시 나눠도 넘치면 단어 사이에서만 두 줄로 흘리고, 말줄임은 모바일 목록 한 줄 요약(학생 행 메타 줄)에만 써요.
 
-## 가상 데이터 (모든 프레임 공통)
+## 2. 가상 데이터 (모든 프레임 공통)
 
 학생: 3학년 2반 7번 · 별칭 하늘 · 희망 진로 간호 · 상담 5회 · 마지막 상담 2026-11-12
 
@@ -42,7 +43,7 @@
 |---|---|---|---|---|
 | 1 | 강원대 간호 | 교과 지역인재 | 적정 ◐ | 충족 ● |
 | 2 | 강릉원주대 간호 | 교과 지역인재 | 안정 ● | – (최저 없음) |
-| 3 | 연세대 미래 간호 | 교과 학교추천 | 소신 ▲ | 근접 ◐ |
+| 3 | 연세대 미래 간호 | 교과 학교추천 | 소신 ▲ | 근접 ▲ |
 | 4 | 한림대 간호 | 교과 지역인재 | 적정 ◐ | 충족 ● |
 | 5 | 가톨릭관동대 간호 | 교과 일반 | 안정 ● | – (최저 없음) |
 | 6 | 상지대 간호 | 교과 지역인재 | 안정 ● | – (최저 없음) |
@@ -86,7 +87,7 @@
 
 ---
 
-## 모바일 390 × 844
+## 3. 모바일 390 × 844 (frame counsel/390)
 
 좌우 패딩 16px(design.md mobile 그리드), 4열, 섹션 간격 24px. 설계: design.md "학생 요약 카드 + 상담 메모 입력만". 모바일 밀도: 카드 패딩 16, 줄 사이 8, 누를 수 있는 요소 44 × 44 이상, 이름은 한 줄.
 학생 상담은 우리 반의 소분류 화면이라 앱바에 뒤로가기가 없고, 앱바 아래 소분류 탭과 하단 탭바가 있어요.
@@ -94,11 +95,11 @@
 
 ### M1. 상단 앱바 (56px)
 
-- `app-bar`: 가운데 제목 {typography.heading-4} "학생 상담", 왼쪽 뒤로가기 없음(소분류 화면), 오른쪽 보조 동작 1개 = 기록 아이콘 "학생 기록"(지금 학생의 학생 기록 상세로, 터치 영역 44 × 44).
+- `app-bar`: 가운데 제목 {typography.heading-4} "학생 상담", 왼쪽 뒤로가기 없음(소분류 화면). `brand-logo`는 두지 않아요(모바일 로고 92는 대분류 첫 화면 "우리 반 홈" 머리에만), 오른쪽 보조 동작 1개 = 기록 아이콘 "학생 기록"(지금 학생의 학생 기록 상세로, 터치 영역 44 × 44).
 
 ### M2. 소분류 탭 (44px)
 
-- 소분류 가로 탭(sub-nav, apply4): 우리 반 홈 · 학생 기록 · 학생 상담 · 누가기록. 선택 = "학생 상담"(잉크 SemiBold + 아래 2px Route Blue 막대), 나머지 text-muted. 아래 1px hairline. 넘치면 가로 스크롤.
+- `sub-nav`: 우리 반 홈 · 학생 기록 · 학생 상담(누가기록은 2026-11-23 결정으로 빠졌어요). 선택 = "학생 상담"(잉크 SemiBold + 아래 2px Route Blue 막대), 나머지 text-muted. 아래 1px hairline. 넘치면 가로 스크롤.
 
 ### M3. 학생 요약 카드 [P1, P7, P8]
 
@@ -106,7 +107,7 @@
 
 1. 머리 줄
    - 이름 {typography.heading-4} 한 줄: "3학년 2반 7번 하늘"
-   - 오른쪽 `button-pill-soft` "학생 바꾸기"(높이 32, 터치 영역 44). 누르면 학생 고르기 `bottom-sheet`(상태 S3).
+   - 오른쪽 `button-pill-soft` "학생 바꾸기"(높이 32, 터치 영역 44). 누르면 학생 고르기 `bottom-sheet`(counsel/390-student-sheet).
    - 메타 {typography.caption} text-muted 한 줄: "희망 진로 간호 · 상담 5회 · 마지막 11-12"
 2. 숫자 2칸(2열, 사이 12px). 각 칸 `stat-tile`, 테두리 없이 숫자만.
 
@@ -116,7 +117,7 @@
 | 오른쪽 | 수능 최저 충족 현황 | 2 / 3 (잉크) | 근접 1 · 10월 학평 기준 |
 
 3. 수시로 6장 줄: 캡션 "수시로 6장 · 카드 v3" + `judge-badge` 3개 한 줄 — ● 안정 3 · ◐ 적정 2 · ▲ 소신 1 (배지 높이 24, 사이 8). 줄 끝 `button-pill-soft` "6장 보기 ›"(→ 학생 기록 상세 수시로 탭). 한 줄에 안 들어가면 버튼만 다음 줄로 내려요.
-4. `trace-accordion` 접힘: "어떻게 계산했나요?" + 펼침 화살표(canvas-soft 막대, 높이 44). 펼친 내용은 상태 S6.
+4. `trace-accordion` 접힘: "어떻게 계산했나요?" + 펼침 화살표(canvas-soft 막대, 높이 44). 펼친 내용은 상태 프레임 …-trace-open.
 
 ### M4. 상담 메모 쓰기 [P2, P4, P5]
 
@@ -124,9 +125,9 @@
 
 1. 제목 줄: {typography.heading-4} "상담 메모" + 오른쪽 {typography.caption} text-muted "오늘 2026-11-18"
 2. 영역 `segmented-control` 4칸(높이 44, 폭 358): 진로 · 성적 · 수시로 · 생활. 선택 = `segmented-control-active` "수시로".
-3. 메모 칸 `text-input` 여러 줄(높이 120, 약 4줄, 위쪽 정렬, field 채움, 선 없음). 안내 문구 text-faint: "상담하면서 바로 적어요. 학생이 한 말, 같이 정한 것을 남겨요."
-4. 다음에 볼 것 칸 `text-input` 한 줄(높이 44): 안내 문구 "다음에 볼 것 (선택) · 예: 11-25까지 수학 오답 같이 보기". 앞에 기한 날짜를 쓰면 "11-25까지"로 읽어요(날짜 고르기 컴포넌트는 따로 두지 않아요).
-5. `button-primary` "메모 저장"(폭 358, 높이 52). 메모 칸이 비어 있으면 누를 때 오류 상태 S5.
+3. 메모 칸 `text-input` 변형 multiline(글자 {typography.body-sm}, 4줄 112에서 시작해 8줄 208까지 늘어남, field 채움, 선 없음). 칸 오른쪽 아래 바깥에 "0/2000" {typography.caption} text-muted 고정폭. 안내 문구 text-faint: "상담하면서 바로 적어요. 학생이 한 말, 같이 정한 것을 남겨요."
+4. 다음에 볼 것 칸 `text-input` size=md(높이 44, 200자까지): 안내 문구 "다음에 볼 것 (선택) · 예: 11-25까지 수학 오답 같이 보기". 앞에 기한 날짜를 쓰면 "11-25까지"로 읽어요(날짜 고르기 컴포넌트는 따로 두지 않아요).
+5. `button-primary` "메모 저장"(폭 358, 높이 52). 메모 칸이 비어 있으면 누를 때 오류 상태 counsel/390-empty-error.
 - 메모 칸에 포커스가 가면 키보드 위로 저장 버튼이 붙어 따라 올라와요(프레임에는 키보드 없이 그려요).
 
 ### M5. 지난 메모 (스크롤 아래) [P3, P5, P7]
@@ -149,7 +150,7 @@
 
 ### M7. 하단 탭바
 
-- `tab-bar-pill`(교사 모드, apply4): 우리 반(선택, Route Blue 아이콘 + 잉크 SemiBold) · 성적 관리 · 수합·집계 · 더보기. 화면 아래 16 띄워 떠 있어요.
+- `tab-bar-pill`(교사 모드): 우리 반(선택, Route Blue 아이콘 + 잉크 SemiBold) · 성적 관리 · 수합·집계 · 더보기. 화면 아래 16 띄워 떠 있어요.
 
 ### 모바일 높이 맞춤 (참고)
 
@@ -157,9 +158,9 @@
 
 ---
 
-## PC 1440 × 900
+## 4. PC 1440 × 900 (frame counsel/1440)
 
-앱 셸: 왼쪽 `sidebar` 248px + 상단 바 64px(사이드바 오른쪽 1192px). 본문은 3단이에요(이 화면 결정 — 아래 "design.md 수정 제안" 1).
+앱 셸: 왼쪽 `sidebar` 248px + `page-header` 띠 64px(사이드바 오른쪽 1192px). 본문은 3단이에요(이 화면 결정 — 아래 9장 "design.md 수정 제안" 1).
 
 | 열 | 폭 | 내용 | 스크롤 |
 |---|---|---|---|
@@ -171,23 +172,23 @@
 
 ### D1. 사이드바 (248px, 전체 높이)
 
-- `sidebar`: canvas-soft 배경, 맨 위 워드마크 "진학 내비".
-- 대분류 행(sidebar-group, apply4): 우리 반(펼침 ▾, 잉크) / 성적 관리(접힘 ›, ink-soft) / 수합·집계(접힘 ›, ink-soft). 대분류 행에는 선택 채움을 쓰지 않아요.
-- 우리 반 아래 소분류 행 `sidebar-item`(들여쓰기 16): 우리 반 홈 · 학생 기록 · 학생 상담 · 누가기록. 선택 = 학생 상담: accent-soft 채움 + 왼쪽 3px Route Blue 막대 + 잉크 글자.
-- 맨 아래: "데이터 기준일 2026-11-18" 캡션 + `button-pill-soft` "백업".
+- `sidebar`: canvas 배경 + 오른쪽 1px hairline-soft(v2), 맨 위 `brand-logo` 폭 124(U:NAVI 로고 원본 비율, 글자 워드마크를 따로 만들지 않아요).
+- 대분류 행 `sidebar-group`: 우리 반(펼침 ▾, 잉크) / 성적 관리(접힘 ›, ink-soft) / 수합·집계(접힘 ›, ink-soft). 대분류 행에는 선택 채움을 쓰지 않아요.
+- 우리 반 아래 소분류 행 `sidebar-item`(들여쓰기 16): 우리 반 홈 · 학생 기록 · 학생 상담(icon/message-square). 선택 = 학생 상담: accent-soft 채움 + 왼쪽 3px Route Blue 막대 + 잉크 글자.
+- 맨 아래: "데이터 기준일 2026-11-18" 캡션 + `button-pill-soft` "백업" + "로그아웃"(icon/log-out).
 
-### D2. 상단 바 (64px)
+### D2. 화면 머리 `page-header`
 
-- 왼쪽: 경로 {typography.caption} text-muted "우리 반 ›" + 페이지 제목 {typography.heading-4} "학생 상담".
+- 왼쪽: 경로 {typography.caption} text-muted "우리 반 › 학생 상담" + 페이지 제목 "학생 상담". 높이는 승인 시안의 64 띠를 그대로 두고 이름만 `page-header`로 맞춰요(3단 배치 유지).
 - 오른쪽: `data-status-badge` "데이터 기준일 2026-11-18" → `mode-switch` 학생 · 교사(교사 선택) → `button-pill-soft` "잠금".
 
 ### D3. 학생 목록 열 (264px) [P1]
 
 1. 머리: {typography.heading-4} "우리 반 28명"
-2. `text-input` 검색(높이 40): 안내 문구 "번호·별칭으로 찾기"
+2. `text-input` 검색 size=sm(높이 40): 안내 문구 "번호·별칭으로 찾기"
 3. `filter-chip` 줄(높이 32, 두 줄까지 허용): 전체 28(on) · 상담 없음 6 · 대기 있음 4. on = accent-soft 채움 + 1px Route Blue 테두리 + 잉크.
 4. `student-row-card` 목록(행 높이 56, 행 구분 1px hairline, 가상 데이터 학생 목록 12행이 보이고 나머지는 열 안 스크롤)
-   - 1줄: 번호·별칭 {typography.title} 한 줄 "7번 하늘" + 오른쪽 카드 칩 "제출"/"미제출"(흑백 칩, canvas-soft + {typography.label}) + 경고가 있으면 경고 배지 "▲ 1"(소신 색 쌍 + ▲ + 숫자, 이름은 대체 텍스트 "조합 경고 1개")
+   - 1줄: 번호·별칭 {typography.title} 한 줄 "7번 하늘" + 오른쪽 카드 칩 "제출"/"미제출"/"새 버전"(받고 아직 안 연 카드)/"확정"(확정 잠금)(흑백 칩, canvas-soft + {typography.label}) + 경고가 있으면 경고 배지 "▲ 1"(소신 색 쌍 + ▲ + 숫자, 이름은 대체 텍스트 "조합 경고 1개")
    - 2줄: {typography.caption} text-muted 한 줄 "약 3.7~4.0 · 상담 11-12"(상담이 없으면 "상담 없음")
    - 선택 행(7번 하늘) = accent-soft 채움 + 왼쪽 3px Route Blue 막대. 범위 숫자는 선택 행에서도 잉크예요(Route Blue 숫자는 D5 하나).
    - 키보드: 위·아래 화살표로 학생 이동, Enter로 고르기.
@@ -200,8 +201,8 @@
    - 오른쪽 `button-outline` "학생 기록 열기"(높이 40, → 학생 기록 상세)
 2. 메모 쓰기(머리 아래 16, 카드 없이 캔버스 위)
    - 한 줄: 영역 `segmented-control` 4칸(진로 · 성적 · 수시로 · 생활, 높이 40, 폭 320, `segmented-control-active` "수시로") + 오른쪽 {typography.caption} text-muted "오늘 2026-11-18"
-   - 메모 칸 `text-input-focused` 여러 줄(폭 504, 높이 112, 2px 잉크 링). 쓰는 중인 글(잉크 {typography.body}): "3번 칸 근접 이유를 다시 봤어요. 수학 3등급이 2등급이 되면 충족이라 11월 문제집 진도를 같이 정했어요."
-   - 다음에 볼 것 `text-input` 한 줄(폭 504, 높이 40): 안내 문구 "다음에 볼 것 (선택) · 예: 11-25까지 수학 오답 같이 보기"
+   - 메모 칸 `text-input-focused` 변형 multiline(폭 504, 높이 112, 2px 잉크 링, 글자 {typography.body-sm}, 칸 오른쪽 아래 바깥 "58/2000"). 쓰는 중인 글(잉크 {typography.body}): "3번 칸 근접 이유를 다시 봤어요. 수학 3등급이 2등급이 되면 충족이라 11월 문제집 진도를 같이 정했어요."
+   - 다음에 볼 것 `text-input` size=sm(폭 504, 높이 40, 200자까지): 안내 문구 "다음에 볼 것 (선택) · 예: 11-25까지 수학 오답 같이 보기"
    - 버튼 줄(오른쪽 정렬): {typography.caption} text-muted "Ctrl + Enter로 저장" + `button-primary` "메모 저장"(높이 44)
 3. 거르기 줄(메모 쓰기 아래 24): `filter-chip` 전체 5(on) · 진로 2 · 성적 1 · 수시로 1 · 생활 1. 시스템 줄은 전체·수시로에서만 보여요.
 4. `counsel-timeline`(폭 504, 가상 데이터 상담 메모 7줄 전부, 넘치면 이 영역만 스크롤)
@@ -218,18 +219,22 @@
    - 라벨 "환산 9등급 (추정)" → 값 "약 3.7~4.0" Route Blue(화면 핵심 숫자) → 보조 "내신 5등급 2.3 · 신뢰도 보통"
    - 라벨 "10월 학평 국 · 수 · 영 · 탐" → 값 "2 · 3 · 1 · 2" 잉크 → 보조 "9등급"
    - 모의고사 등급은 합치거나 평균 내지 않아요.
-3. `trace-accordion` 접힘 "어떻게 계산했나요?"(높이 44). 펼친 내용은 상태 S6.
+3. `trace-accordion` 접힘 "어떻게 계산했나요?"(높이 44). 펼친 내용은 상태 프레임 …-trace-open.
 4. 수시로 6장(위 24)
    - 제목 {typography.heading-4} "수시로 6장" + 캡션 "카드 v3 · 2026-11-10 받음"
    - `data-table`(폭 312): 칸 28 | 대학 · 전형 140 | 판정 72 | 최저 72. 머리글 canvas-soft + {typography.table-head}, 행 높이 44, 행 구분 1px hairline.
      - 대학 · 전형 셀: `univ-logo` 20(로고 파일이 없으면 `univ-monogram` 20) + 이름 {typography.table} 한 줄 "강원대 간호", 아래 {typography.caption} text-muted "교과 지역인재".
      - 판정 셀: `judge-badge`(안정 ● / 적정 ◐ / 소신 ▲).
-     - 최저 셀: `judge-badge` 수능 최저 판정 배지(충족 ● 안정 쌍 / 근접 ◐ 적정 쌍), 최저가 없으면 "–" text-muted.
+     - 최저 셀: `judge-badge` 수능 최저 판정 배지(충족 ● 안정 쌍 / 근접 ▲ 적정 쌍 / 미충족 ✕ 위험 쌍), 최저가 없으면 "–" text-muted.
+     - 판정을 아직 못 낸 칸은 판정 셀에 판정 없음 쌍 "판정 준비 중"(아이콘 없음).
      - 행은 가상 데이터 수시로 6장 그대로.
    - 표 아래 {typography.caption} text-muted: "안정 3 · 적정 2 · 소신 1 · 조합 경고 없음"
 5. 수능 최저 충족 현황(위 12): {typography.body-sm} 잉크 "최저 있는 칸 3개 중 충족 2 · 근접 1 (10월 학평 기준)" / 다음 줄 "3번 칸 · 수학 1등급만 오르면 충족해요"
 6. `button-pill-soft` "수시로 카드 보기 ›"(→ 학생 기록 상세 수시로 탭)
-7. `disclaimer-note`(패널 맨 아래): "ⓘ 환산 9등급은 추정 범위예요. 판정과 최저 충족 현황은 대학 공식 자료가 최종 기준이에요 · 시안의 대학·숫자는 예시예요 · 데이터 기준일 2026-11-18"
+7. 패널 스크롤 아래(첫 화면 밖, 승인 시안의 보이는 부분은 그대로):
+   - 확정 잠금 줄: {typography.body-sm} 잉크 "지금 상태: 제출" + 오른쪽 `button-outline` "최종 확정으로 잠그기"(높이 40). 잠그면 이 학생 카드를 새로 받지 않아요(앱 LockToggle).
+   - 답장 칸: 라벨 {typography.label} "A안 카드에 답장"(앞은 학생이 붙인 안 이름, 가상값 A안) → `text-input` 변형 multiline 3줄(96, 1000자, "0/1000") 안내 "예: 3번 칸은 최저가 근접이라 11월까지 수학을 같이 보자." → `button-outline` "답장 파일 저장"(.jnavi, 보낸 말은 상담 메모 수시로에도 남아요).
+8. `disclaimer-note`(패널 맨 아래): "ⓘ 환산 9등급은 추정 범위예요. 판정과 최저 충족 현황은 대학 공식 자료가 최종 기준이에요 · 시안의 대학·숫자는 예시예요 · 데이터 기준일 2026-11-18"
 - 앱 화면이라 `footer`는 두지 않아요.
 
 ### PC 높이 맞춤 (참고)
@@ -239,44 +244,93 @@
 
 ---
 
-## 상태 프레임
+## 5. 앱 구현 목록 (app/src/screens/Counsel.tsx · components/ClassGate.tsx · Modal.tsx 기준)
 
-상태는 두 기본 프레임 밖에 따로 그려요. 이름은 counsel-state/… 로 두고, 03-draft.json의 frames에는 넣지 않아요(G3는 counsel/390 · counsel/1440 두 개만 세요).
+앱에 있는 것은 모두 상태 프레임으로 옮기고, 앱에 없는 안전장치는 "앱에 없음"으로 표시해 새로 넣어요(앱 반영 사항).
 
-### S1. 메모 0건 (첫 상담) — 390 · 1440 [P6]
+| # | 앱에 있는 것 | 문구(앱 그대로 또는 다듬음) | 상태 프레임 |
+|---|---|---|---|
+| A1 | 학급 데이터 읽는 중(ClassGate) | "학급 데이터를 읽고 있어요." | 390-loading · 1440-loading |
+| A2 | 학급 데이터 읽기 실패(ClassGate 오류) | "학급 데이터를 읽지 못했어요. 다시 읽어 주세요." | 390-load-error · 1440-load-error |
+| A3 | 학급 없음 · 학생 0명(ClassGate 빈 상태) | "아직 불러온 학생이 없어요" + 우리 반 홈으로 | 390-no-class · 1440-no-class |
+| A4 | 메모 · 카드 0건(타임라인 empty-state, 패널 "아직 받은 수시로 카드가 없어요") | 아래 6장 참고 | 390-first · 1440-first |
+| A5 | 빈 메모 저장 오류(role=alert) | "메모 내용이 비어 있어요. 한 글자 이상 적고 저장해 주세요." | 390-empty-error · 1440-empty-error |
+| A6 | 저장 알림(role=status "상담 메모를 저장했어요") | `toast`로 그려요 | 390-saved · 1440-saved |
+| A7 | 저장 실패(앱에 없음 — DB 오류 시 글이 사라지지 않게) | "메모를 저장하지 못했어요. 적은 글은 그대로 있어요." | 390-save-error · 1440-save-error |
+| A8 | 학생 검색 · 거르기(검색 + 전체 · 상담 없음 · 대기 있음) 결과 0명(앱은 빈 목록만) | "이 조건에 맞는 학생이 없어요." | 390-student-search-empty · 1440-search-empty |
+| A9 | 쓰다 만 메모가 있을 때 학생 바꾸기 `modal`(계속 쓰기 · 저장하지 않고 바꾸기 · 저장하고 바꾸기) | 앱 그대로 | 390-unsaved-sheet · 1440-unsaved-modal |
+| A10 | 다음에 볼 것 상태(대기 · 완료 · 기한 지남) + "완료로 표시" | 완료 뒤 `toast`는 앱에 없음 → 넣어요 | 1440-overdue · 1440-mark-done |
+| A11 | 타임라인 영역 거르기(전체 · 진로 · 성적 · 수시로 · 생활, 0건 칩도 보임) | 0건 칩을 고르면 "이 영역 메모가 아직 없어요." 한 줄 | 규칙만(6-3) |
+| A12 | 받은 카드가 조합 경고를 가짐(`warning-callout`), 판정 없는 칸 "판정 준비 중" | 앱 R-CARD-003 문구 그대로 | 390-warning · 1440-warning |
+| A13 | 새 카드를 열면 "새 버전" → 읽음 처리(seen) | 목록 칩 "새 버전" | 규칙만(D3) |
+| A14 | 최종 확정 잠금 · 풀기(LockToggle) | 잠그기 확인 창은 앱에 없음 → 넣어요 | 1440-lock-confirm · 1440-locked |
+| A15 | 답장 파일 저장(ReplyBox, 1000자, 빈 칸 오류 "학생에게 남길 말을 적어 주세요.") | 학생에게 건넬 파일이라 내보내기 확인 창을 넣어요(앱에 없음) | 1440-reply-error · 1440-reply-confirm · 1440-reply-saved |
+| A16 | 메모 수정("수정" · "수정됨", 앱에 아직 없음 — 승인 시안에 있는 버튼) | 고치다 나가면 확인 창 | 390-memo-edit · 1440-memo-edit · 390-edit-discard · 1440-edit-discard |
+| A17 | 산출 근거 `trace-accordion` 펼침 | 6-3 단계 줄 | 390-trace-open · 1440-trace-open |
+| A18 | 모바일 학생 고르기 `bottom-sheet`, 지난 메모 "전체 5건 보기" | 3장 M3 · M5 | 390-student-sheet · 390-timeline |
 
-- 학생: 2번 솔(상담 없음, 카드 미제출). 요약 카드·패널은 그대로 두고 숫자만 바꿔요: 환산 "약 4.1~4.6", 수시로 6장 자리 = {typography.body-sm} text-muted "아직 받은 수시로 카드가 없어요. 카드를 받으면 판정과 최저 충족 현황이 여기에 보여요."
-- 타임라인 자리에 `empty-state`: 흑백 선 아이콘(메모) + {typography.heading-4} "아직 남긴 상담 메모가 없어요" + {typography.body-sm} "위 칸에 첫 상담 내용을 적고 저장하면 여기에 날짜순으로 쌓여요."
-- 화면의 주요 버튼이 이미 "메모 저장"이라 `empty-state` 안 `button-primary`는 두지 않아요(design.md 수정 제안 3).
-- 거르기 `filter-chip` 줄은 숨겨요. `disclaimer-note`는 그대로.
+- 앱에 없는 확인 창 · 안내 3가지(A7 저장 실패, A14 잠그기 확인, A15 답장 내보내기 확인)와 완료 `toast`(A10)는 승인 뒤 앱에 반영해요.
+- 모바일은 design.md대로 "학생 요약 카드 + 메모 입력만"이라 확정 잠금 · 답장(A14 · A15)은 PC에만 그려요. 모바일에서는 "6장 보기 ›"로 학생 기록 상세 수시로 탭에서 해요.
+- 메모 삭제는 앱 · PRD에 없어서 넣지 않아요.
 
-### S2. 저장 직후 `toast` — 390 · 1440 [P2]
+---
 
-- 메모 저장을 누르면 메모 칸·다음에 볼 것 칸이 비고, 타임라인 맨 위에 새 마디(2026-11-18 · 수시로)가 들어가요. 새 마디 본문 배경을 accent-soft로 1초 칠했다가 지워요(prefers-reduced-motion이면 칠하지 않음).
-- `toast` "상담 메모를 저장했어요"(잉크 바탕 + 흰 글자, 모서리 0, overlay 그림자). 모바일은 탭바 위 16, PC는 오른쪽 아래(가장자리 24). 3초 뒤 사라져요.
-- 학생 메타의 상담 횟수가 "상담 6회 · 마지막 11-18"로 바뀌어요.
+## 6. 상태 프레임 (03-draft.json states에만 적고 frames에는 넣지 않아요)
 
-### S3. 학생 고르기 `bottom-sheet` — 390 [P7]
+이름 = counsel/<폭>-<상태>. 모바일 15장 + PC 20장 = 35장. 모든 상태 프레임은 기본 프레임(counsel/390 · counsel/1440)을 복제해서 바뀌는 곳만 고쳐요. 크기는 390×844 · 1440×900 그대로이고, 모바일에서 스크롤 아래를 보여 주는 프레임은 그 자리까지 스크롤한 모습으로 그려요(앱바 · `sub-nav` · `tab-bar-pill`은 제자리).
 
-- 학생 바꾸기를 누르면 열려요. 뒤 scrim, 위쪽 손잡이 막대, overlay 그림자, 모서리 0, 높이 화면의 80%.
-- 제목 {typography.heading-4} "학생 고르기" + 오른쪽 닫기(44 × 44).
-- `text-input` 검색 "번호·별칭으로 찾기"(높이 44).
-- `filter-chip` 전체 28(on) · 상담 없음 6 · 대기 있음 4(높이 32, 터치 44).
-- `student-row-card` 목록(행 높이 64): 1줄 번호·별칭 {typography.title} + 오른쪽 카드 칩 · 경고 배지, 2줄 caption 한 줄 "약 3.7~4.0 · 상담 11-12"(넘치면 말줄임). 지금 학생(7번 하늘) 행 = accent-soft 채움 + 왼쪽 3px Route Blue 막대.
-- 행을 누르면 시트가 닫히고 화면이 그 학생으로 바뀌어요. 쓰다 만 메모가 있으면 S4를 먼저 띄워요.
+### 6-1. 모바일 390 × 844 (15)
 
-### S4. 쓰다 만 메모가 있을 때 학생 바꾸기 — 390(`bottom-sheet`) · 1440(`modal`)
+| # | 프레임 | 무엇을 보여 주나요 |
+|---|---|---|
+| M-1 | counsel/390-loading | 앱바 · `sub-nav` · 탭바만 두고 본문 자리에 "학급 데이터를 읽고 있어요." {typography.body-sm} text-muted 한 줄(아이콘 · 버튼 · 스켈레톤 없음). |
+| M-2 | counsel/390-load-error | 본문 맨 위 화면 오류 줄: icon/triangle-alert 20 잉크 + {typography.body} "학급 데이터를 읽지 못했어요. 다시 읽어 주세요." + `button-outline` "다시 읽기". 판정 색 없음. |
+| M-3 | counsel/390-no-class | `empty-state`(가운데, 흑백 선 아이콘 사람 둘): "아직 불러온 학생이 없어요" + "반 이름과 번호·별칭 명단을 넣으면 학급 코드가 생겨요. 학생은 이 코드를 넣어 카드를 보내요." + `button-primary` "우리 반 홈에서 학급 만들기 ›". |
+| M-4 | counsel/390-first | 2번 솔(상담 없음 · 카드 미제출). 요약 카드 숫자 "약 4.1~4.6", 최저 칸 "–" + 보조 "받은 카드가 없어요", 6장 줄 자리 {typography.body-sm} text-muted "아직 받은 수시로 카드가 없어요. 카드를 받으면 판정과 최저 충족 현황이 여기에 보여요." 메타 "희망 진로 미입력 · 상담 0회". 스크롤 아래 지난 메모 자리는 `empty-state`(메모 아이콘) "아직 남긴 상담 메모가 없어요" + "위 칸에 첫 상담 내용을 적고 저장하면 여기에 날짜순으로 쌓여요."(버튼 없음, 9장 제안 3). |
+| M-5 | counsel/390-empty-error | 메모 칸 빈 채로 저장을 누른 뒤: 메모 칸 `text-input-error`(2px 위험색 링) + 아래 icon/triangle-alert 14 위험색 + 4 + {typography.caption} 위험색 "메모 내용이 비어 있어요. 한 글자 이상 적고 저장해 주세요." 포커스는 메모 칸. |
+| M-6 | counsel/390-saved | 저장 직후: 메모 칸 · 다음에 볼 것 칸이 비고 카운터 "0/2000", 요약 카드 메타 "희망 진로 간호 · 상담 6회 · 마지막 11-18". 탭바 위 16에 `toast` "상담 메모를 저장했어요"(잉크 알약 + 흰 글자, overlay 그림자, 3초). |
+| M-7 | counsel/390-save-error | 저장이 실패한 뒤: 적은 글이 메모 칸에 그대로 있고, 메모 칸 위에 화면 오류 줄 icon/triangle-alert 20 잉크 + "메모를 저장하지 못했어요. 적은 글은 그대로 있어요. 다시 저장해 주세요." 버튼은 아래 "메모 저장" 하나(오류 줄 안 버튼 없음). |
+| M-8 | counsel/390-student-sheet | 학생 고르기 `bottom-sheet`(높이 80%, scrim, 손잡이): 제목 "학생 고르기" + 닫기 44 → `text-input` size=md 검색 "번호·별칭으로 찾기" → `filter-chip` 전체 28(on) · 상담 없음 6 · 대기 있음 4 → `student-row-card` 목록(행 64, 1줄 번호·별칭 + 카드 칩 + 경고 배지, 2줄 "약 3.7~4.0 · 상담 11-12" 말줄임). 지금 학생 7번 하늘 = accent-soft + 왼쪽 3px Route Blue 막대 + 오른쪽 icon/check Route Blue. 위 가상 데이터 12행 중 보이는 만큼. |
+| M-9 | counsel/390-student-search-empty | 같은 시트에 검색어 "15 바람" → 목록 자리 {typography.body-sm} 잉크 "이 조건에 맞는 학생이 없어요. 번호나 별칭을 다시 확인해 주세요." + `button-pill-soft` "검색 지우기". 칩으로 거른 결과가 0명일 때도 같은 문장 + "전체 보기". |
+| M-10 | counsel/390-unsaved-sheet | 메모를 쓰다가 다른 학생 행을 누름: 확인 `bottom-sheet` 제목 {typography.heading-4} "저장하지 않은 메모가 있어요" + {typography.body} "7번 하늘에게 쓰던 메모를 저장할까요? 저장하지 않으면 지워져요." + 세로 버튼 `button-primary` "저장하고 바꾸기" · `button-outline` "저장하지 않고 바꾸기" · 글자 버튼 "계속 쓰기"(밑줄, 44). |
+| M-11 | counsel/390-trace-open | 요약 카드의 `trace-accordion` 펼침(6-3 산출 근거 단계 줄). 메모 쓰기는 아래로 밀려요. |
+| M-12 | counsel/390-timeline | "전체 5건 보기"를 누른 뒤 스크롤한 모습: 지난 메모 7줄 전부(시스템 줄 2개 포함), 버튼 자리 "접기". 11-12 줄 "대기" + `button-pill-soft` "완료로 표시", 11-03 줄 "완료" text-muted. |
+| M-13 | counsel/390-memo-edit | 11-12 메모의 "수정"을 누른 뒤: 그 마디 본문이 `text-input-focused` 변형 multiline(본문 그대로 들어 있음, "93/2000")로 바뀌고, 영역 `segmented-control`(수시로), 다음에 볼 것 `text-input` size=md, 아래 한 줄 글자 버튼 "취소"(밑줄, 44) + `button-outline` "고친 내용 저장"(화면 주요 버튼은 "메모 저장" 하나라 보조 버튼). 저장 뒤 메타 "16:40 · 수정됨" + `toast` "메모를 고쳤어요". |
+| M-14 | counsel/390-edit-discard | 수정 중 "취소"나 다른 학생으로 이동: 확인 `bottom-sheet` "고친 내용을 버릴까요?" + "11-12 메모는 고치기 전 내용으로 남아요." + `button-primary` "버리기" · `button-outline` "계속 고치기". |
+| M-15 | counsel/390-warning | 3번 다온(6-3 데이터). 요약 카드 6장 줄 = ● 안정 1 · ◐ 적정 1 · ▲ 소신 3 · ■ 위험 1, 그 아래 `warning-callout` "▲ 소신·위험 쪽으로 쏠렸어요" + "6장 중 4장이 소신·위험이고 안정은 1장이에요. 입결과 비교하면 안정에 드는 카드를 1장 이상 넣어 보세요." 최저 칸 "1 / 2" + 보조 "미충족 1 · 10월 학평 기준". |
 
-- 제목 "저장하지 않은 메모가 있어요", 설명 "7번 하늘에게 쓰던 메모를 저장할까요? 저장하지 않으면 지워져요."
-- 버튼: `button-primary` "저장하고 바꾸기" · `button-outline` "저장하지 않고 바꾸기" · 글자 버튼 "계속 쓰기". (오버레이 안의 주요 버튼 하나)
+### 6-2. PC 1440 × 900 (20)
 
-### S5. 빈 메모 저장 — 390 · 1440
+| # | 프레임 | 무엇을 보여 주나요 |
+|---|---|---|
+| P-1 | counsel/1440-loading | 사이드바 · `page-header`는 그대로, 3단 자리를 비우고 본문 왼쪽 위에 "학급 데이터를 읽고 있어요." {typography.body-sm} text-muted 한 줄. |
+| P-2 | counsel/1440-load-error | 본문 위 화면 오류 줄(흰 바탕, icon/triangle-alert 20 잉크 + "학급 데이터를 읽지 못했어요. 다시 읽어 주세요." + `button-outline` "다시 읽기"). 3단은 그리지 않아요. |
+| P-3 | counsel/1440-no-class | 3단 대신 본문 가운데 `empty-state`: "아직 불러온 학생이 없어요" + 설명 한 줄 + `button-primary` "우리 반 홈에서 학급 만들기 ›". |
+| P-4 | counsel/1440-first | 2번 솔 선택(목록 2행 선택 표시). 가운데: 메타 "상담 0회", 거르기 칩 줄 숨김, 타임라인 자리 `empty-state`(버튼 없음). 오른쪽 패널: 숫자 "약 4.1~4.6", 6장 자리 "아직 받은 수시로 카드가 없어요. 카드를 받으면 판정과 최저 충족 현황이 여기에 보여요.", 확정 잠금 · 답장 칸 숨김, `disclaimer-note` 그대로. |
+| P-5 | counsel/1440-empty-error | 메모 칸 `text-input-error` + icon/triangle-alert 14 + 위험색 caption "메모 내용이 비어 있어요. 한 글자 이상 적고 저장해 주세요." |
+| P-6 | counsel/1440-saved | 메모 칸 비움("0/2000"), 타임라인 맨 위 새 마디 "2026-11-18 · 수시로"(기본 프레임의 쓰는 중 글, 1초 accent-soft 칠 — 프레임은 칠한 순간), 거르기 칩 "전체 6 · 수시로 2", 메타 "상담 6회 · 마지막 2026-11-18". 오른쪽 아래(가장자리 24) `toast` "상담 메모를 저장했어요". |
+| P-7 | counsel/1440-save-error | 글이 남은 메모 칸 위 화면 오류 줄 "메모를 저장하지 못했어요. 적은 글은 그대로 있어요. 다시 저장해 주세요."(아이콘 잉크, 버튼 없음 — "메모 저장"이 다시 하기). |
+| P-8 | counsel/1440-search-empty | 학생 목록 열 검색 "15 바람" → 목록 자리 {typography.body-sm} "이 조건에 맞는 학생이 없어요." + `button-pill-soft` "검색 지우기". 가운데 · 오른쪽은 지금 학생(7번 하늘) 그대로. |
+| P-9 | counsel/1440-unsaved-modal | 쓰는 중에 목록의 5번 한결을 누름: scrim + `modal`(최대 폭 560) 제목 "저장하지 않은 메모가 있어요" + "7번 하늘에게 쓰던 메모를 저장할까요? 저장하지 않으면 지워져요." + 오른쪽 정렬 글자 버튼 "계속 쓰기" · `button-outline` "저장하지 않고 바꾸기" · `button-primary` "저장하고 바꾸기". |
+| P-10 | counsel/1440-trace-open | 오른쪽 패널 `trace-accordion` 펼침(6-3). 표는 패널 스크롤 아래로 밀려요. |
+| P-11 | counsel/1440-overdue | 시안 날짜 2026-11-26(오늘 캡션 "오늘 2026-11-26"): 11-12 메모 "다음에 볼 것 · 11-25까지 · 수학 오답 유형 같이 보기" 상태 라벨 "기한 지남"({typography.label} 잉크 Bold, 색 없음) + `button-pill-soft` "완료로 표시". 학생 목록 "대기 있음" 칩 수는 그대로(기한 지남도 대기로 세요). |
+| P-12 | counsel/1440-mark-done | 11-12 줄의 "완료로 표시"를 누른 뒤: 상태 라벨 "완료" text-muted, 버튼 사라짐, 거르기 칩 "대기 있음 3", `toast` "다음에 볼 것을 완료로 표시했어요". |
+| P-13 | counsel/1440-memo-edit | 11-12 마디 "수정"을 누른 뒤: 본문이 `text-input-focused` 변형 multiline("93/2000"), 영역 `segmented-control`, 다음에 볼 것 `text-input` size=sm, 오른쪽 정렬 글자 버튼 "취소" + `button-outline` "고친 내용 저장"(화면 주요 버튼은 위 "메모 저장" 하나라 보조 버튼). 위 메모 칸은 비어 있어요. |
+| P-14 | counsel/1440-edit-discard | 수정 중 다른 학생을 누름: `modal` "고친 내용을 버릴까요?" + "11-12 메모는 고치기 전 내용으로 남아요." + 오른쪽 정렬 `button-outline` "계속 고치기" · `button-primary` "버리기". |
+| P-15 | counsel/1440-warning | 3번 다온 선택. 패널 표(6-3 데이터): 판정 셀 소신 ▲ · 위험 ■, 최저 셀 미충족 ✕. 표 아래 `warning-callout` "▲ 소신·위험 쪽으로 쏠렸어요" + 앱 문구. 표 아래 캡션 "안정 1 · 적정 1 · 소신 3 · 위험 1 · 조합 경고 1". 목록 3번 행 경고 배지 "▲ 1". |
+| P-16 | counsel/1440-lock-confirm | 패널을 스크롤해 "최종 확정으로 잠그기"를 누름: `modal` 제목 "7번 하늘 카드를 최종 확정으로 잠글까요?" + "잠그면 하늘이 새 카드를 보내도 받지 않아요. 잠금은 이 화면에서 다시 풀 수 있어요." + 오른쪽 정렬 `button-outline` "취소" · `button-primary` "잠그기"(위험 색 채움 없음). 앱에 없는 확인 창이에요. |
+| P-17 | counsel/1440-locked | 잠근 뒤: 패널 줄 "확정 잠금이에요. 새 카드를 받지 않아요." + `button-outline` "확정 잠금 풀기"(풀기는 확인 없이 바로, 받기를 다시 여는 쪽이라서), 목록 7번 행 카드 칩 "확정", `toast` "최종 확정으로 잠갔어요". |
+| P-18 | counsel/1440-reply-error | 패널 스크롤 아래 답장 칸이 빈 채 "답장 파일 저장"을 누름: 칸 `text-input-error` + 아이콘 + "학생에게 남길 말을 적어 주세요." |
+| P-19 | counsel/1440-reply-confirm | 답장 칸에 "3번 칸은 최저가 근접이라 11월까지 수학을 같이 보자." 적고 저장을 누름: `modal` "하늘에게 줄 답장 파일을 저장할까요?" + "답장 내용, 6장 대학 이름, 학급 코드 · 번호 · 별칭이 파일에 들어가요. 보낸 말은 상담 메모(수시로)에도 남아요." + `button-outline` "취소" · `button-primary` "파일 저장". 학생에게 건네는 파일이라 내보내기 확인 창을 둬요(앱에 없음). 저장 창은 OS 기본 창이라 그리지 않아요. |
+| P-20 | counsel/1440-reply-saved | 저장 뒤: 답장 칸 비움, 타임라인 맨 위 새 마디 "2026-11-18 · 수시로 · 답장 보냄 · 3번 칸은 최저가 근접이라 …", `toast` "답장 파일을 저장했어요. 학생에게 전달해 주세요." |
 
-- 메모 칸 `text-input-error`(2px 위험색 링) + 아래 {typography.caption} 위험색 "메모 내용이 비어 있어요. 한 글자 이상 적고 저장해 주세요."
+### 6-3. 상태 프레임 공통 규칙 · 추가 데이터
 
-### S6. 산출 근거 펼침 — `trace-accordion`
-
-- 단계 줄(이름 {typography.body-sm} text-muted → 값 {typography.table} 고정폭):
+- 타임라인 거르기(A11): 0건인 영역 칩도 보이고, 고르면 타임라인 자리에 {typography.body-sm} text-muted "이 영역 메모가 아직 없어요." 한 줄(프레임 없음).
+- 다음에 볼 것 상태 라벨: 대기 = {typography.label} 잉크, 완료 = text-muted, 기한 지남 = 잉크 Bold. 판정 색 · Route Blue 없음(판정 · 경고 신호가 아님).
+- `toast`는 한 번에 하나, 3초. 모바일 탭바 위 16, PC 오른쪽 아래 24.
+- 확인 창은 design.md 확인 창 규칙(제목 질문 heading-4 + 바뀌는 것 한 줄 + 실행 `button-primary` 잉크 + `button-outline` 취소, PC 오른쪽 정렬, 모바일 `bottom-sheet`). 학생 바꾸기 확인만 앱대로 버튼 3개예요.
+- 산출 근거 펼침(…-trace-open) 단계 줄(이름 {typography.body-sm} text-muted → 값 {typography.table} 고정폭):
   1. 내신 5등급 평균(전 교과, 학점 가중) → 2.3
   2. 누적비(5등급 기준점 보간) → 22 + 0.3 × 28 = 30.4%
   3. A-1 평균 기반 → 3.9
@@ -284,34 +338,56 @@
   5. A-3 원점수 보정 → 4.0
   6. 배치표(B) → 허락된 표가 없어 쓰지 않아요
   - 마지막 줄(위 1px hairline, 굵게): 환산 9등급 범위 → 약 3.7~4.0 · 신뢰도 보통
-- 맨 아래 "5 to 9에서 자세히 보기 ›" 링크(잉크 밑줄).
+  - 맨 아래 "5 to 9에서 자세히 보기 ›" 링크(잉크 밑줄).
+- 3번 다온 데이터(…-warning, 가상값): 환산 9등급 약 3.0~3.3 · 카드 v2 · 2026-11-05 받음 · 마지막 상담 11-05.
 
-### S7. 다음에 볼 것 기한 지남
-
-- 기한이 오늘보다 앞이고 대기면 상태 라벨이 "기한 지남"({typography.label} 잉크 Bold)으로 바뀌어요. 색은 쓰지 않아요(판정·경고 신호가 아님).
+| 칸 | 대학 · 모집단위 | 전형 | 판정 | 수능 최저 |
+|---|---|---|---|---|
+| 1 | 강원대 간호 | 교과 지역인재 | 안정 ● | 충족 ● |
+| 2 | 한림대 간호 | 교과 지역인재 | 적정 ◐ | – (최저 없음) |
+| 3 | 연세대 미래 간호 | 교과 학교추천 | 소신 ▲ | 미충족 ✕ |
+| 4 | 가톨릭관동대 간호 | 교과 일반 | 소신 ▲ | – (최저 없음) |
+| 5 | 상지대 간호 | 교과 지역인재 | 소신 ▲ | – (최저 없음) |
+| 6 | 강릉원주대 간호 | 교과 지역인재 | 위험 ■ | – (최저 없음) |
 
 ---
 
-## 사용 컴포넌트
+## 7. 사용 컴포넌트
 
-`app-bar`, `tab-bar-pill`, `sidebar`, `sidebar-item`, `data-status-badge`, `mode-switch`, `button-primary`, `button-outline`, `button-pill-soft`, `text-input`, `text-input-focused`, `text-input-error`, `segmented-control`, `segmented-control-active`, `filter-chip`, `student-row-card`, `counsel-timeline`, `stat-tile`, `judge-badge`, `data-table`, `univ-logo`, `univ-monogram`, `trace-accordion`, `disclaimer-note`, `empty-state`, `toast`, `bottom-sheet`, `modal`, `footer`(쓰지 않음 표기)
+`app-bar`, `sub-nav`, `tab-bar-pill`, `sidebar`, `sidebar-group`, `sidebar-item`, `brand-logo`, `page-header`, `data-status-badge`, `mode-switch`, `button-primary`, `button-outline`, `button-pill-soft`, `text-input`, `text-input-focused`, `text-input-error`, `segmented-control`, `segmented-control-active`, `filter-chip`, `student-row-card`, `counsel-timeline`, `stat-tile`, `judge-badge`, `data-table`, `univ-logo`, `univ-monogram`, `trace-accordion`, `warning-callout`, `disclaimer-note`, `empty-state`, `toast`, `bottom-sheet`, `modal`, `footer`(쓰지 않음 표기)
 
-- 곧 들어갈 내비 이름(rules에 없어 표기만): 사이드바 대분류 행 sidebar-group, 모바일 소분류 가로 탭 sub-nav. apply4.py가 적용되기 전에 S3를 하면 대분류 행은 sidebar 안 글자 행으로, 소분류 탭은 앱바 아래 글자 탭 줄로 같은 모양만 그려요.
-- 컴포넌트가 없는 요소의 연결: 학생 머리(이름·메타) → 텍스트만, 영역 라벨 → counsel-timeline 안 흑백 라벨, 다음에 볼 것 줄 → counsel-timeline 안 한 줄 + 글자 라벨, 카드 칩·경고 배지 → student-row-card 안 요소, 학생 요약 패널 틀 → App Shell 오른쪽 보조 패널.
-- 이 화면에서 쓰지 않는 것: `grade-trend-chart`(성적 추이는 student-record 몫), `susi-slot`(6장 보드 전체는 수시로·학생 기록 몫, 여기는 표 요약), `warning-callout`(가상 데이터에 조합 경고 없음 — 경고가 있으면 D5-4 표 아래에 넣어요), `ai-label`(AI 없음), `interest-heart`.
+- 컴포넌트가 없는 요소의 연결: 학생 머리(이름·메타) → 텍스트만, 영역 라벨 → counsel-timeline 안 흑백 라벨, 다음에 볼 것 줄 → counsel-timeline 안 한 줄 + 글자 라벨, 카드 칩·경고 배지 → student-row-card 안 요소, 학생 요약 패널 틀 → App Shell 오른쪽 보조 패널, 화면 오류 줄 · 불러오는 중 → design.md Overlays 절 정의(아이콘 + 문장), 확정 잠금 줄 → 글자 + `button-outline`, 답장 칸 → `text-input` 변형 multiline.
+- 이 화면에서 쓰지 않는 것: `grade-trend-chart`(성적 추이는 student-record 몫), `susi-slot`(6장 보드 전체는 수시로·학생 기록 몫, 여기는 표 요약), `checkbox`(다음에 볼 것 완료는 승인 시안대로 `button-pill-soft` "완료로 표시" + 글자 라벨), `ai-label`(AI 없음), `interest-heart`, `promo-banner`(교사 화면에 두지 않음), `share-sheet`(답장은 파일 하나라 확인 `modal`로 충분).
 
-## design.md 수정 제안 (사람 확인 필요)
+---
 
-1. Responsive Strategy "학생 상담" PC: 지금 "3단: 학생 요약 / 될각·수시로 / 상담 메모 타임라인" → 이 설계는 "3단: 학생 목록 / 상담 메모 쓰기 + 타임라인 / 학생 요약 보조 패널(성적 범위 · 수시로 6장 · 최저 충족 현황)". App Shell 보조 패널 예시 "학생 상담 메모"도 "학생 상담 요약"으로. PRD 6-10의 대학별 환산 · 지원 가능 대학(될각 목록)은 이 화면에 넣지 않고 학생 기록 상세·될각으로 가는 링크로 대신했어요(판단 필요).
-2. text-input 여러 줄 변형: design.md 본문에 정의가 없어요. "text-input 여러 줄 — 같은 채움·패딩·모서리, 높이 112~120(약 4줄), 위쪽 정렬, 내용이 늘면 8줄까지 자라고 그 뒤 칸 안 스크롤" 한 줄 추가를 제안해요. 이 문서는 `text-input` 이름 그대로 높이만 늘려 써요.
-3. empty-state: "button-primary 하나"가 정의에 들어 있어요. 화면에 이미 주요 버튼이 있으면 빼도 된다는 예외 한 줄을 제안해요.
-4. counsel-timeline: 영역 라벨(흑백), "다음에 볼 것" 줄(기한 + 내용 + 대기/완료/기한 지남 글자 라벨), 메타 줄(시각 · 수정됨)을 정의에 더하는 것을 제안해요. 체크박스·할 일 목록 컴포넌트는 만들지 않았어요.
+## 8. 디자이너 메모
 
-## 디자이너 메모
-
-- 기본 프레임은 counsel/390 (390×844), counsel/1440 (1440×900) 두 개예요. 상태 프레임(counsel-state/…)은 03-draft.json frames에 넣지 않아요.
+- 기본 프레임은 counsel/390 (390×844), counsel/1440 (1440×900) 두 개예요. 상태 프레임 35장(counsel/<폭>-<상태>)은 03-draft.json states에만 적고 frames에는 넣지 않아요(G3는 기본 2장만 세요). 상태 프레임은 기본 섹션 오른쪽에 모바일 한 줄 · PC 한 줄로 나란히 둬요.
 - 레이어 이름 = 컴포넌트 이름이에요(예: counsel-timeline, disclaimer-note, toast, bottom-sheet). J6 그림자 검사는 이름을 봐요 — 그림자는 toast · bottom-sheet · modal 레이어에만.
 - 모서리는 모두 0이에요. ELLIPSE는 타임라인 마디 점과 judge-badge 판정 아이콘 ●에만.
-- 색은 rules/design-rules.json colors 안에서만, Figma 변수에 연결해서 써요. 등급 색 9개 · 역량 색 · heart · delta 색은 이 화면에서 쓰지 않아요. 대학 로고(univ-logo)만 팔레트 예외.
+- 색은 rules/design-rules.json colors 안에서만, Figma 변수에 연결해서 써요. 등급 색 9개 · 역량 색 · heart · delta · 일정 종류 색은 이 화면에서 쓰지 않아요. 대학 로고(univ-logo) · `brand-logo`만 팔레트 예외.
 - 글꼴 Pretendard(없으면 IBM Plex Sans KR), 굵기 300/400/600/700, 자간 0.
-- Route Blue 숫자는 "약 3.7~4.0" 하나예요(모바일 요약 카드, PC 보조 패널). 학생 목록의 범위 숫자는 잉크예요.
+- Route Blue 숫자는 "약 3.7~4.0" 하나예요(다온 · 솔 프레임에서는 그 학생 범위 하나). 학생 목록의 범위 숫자는 잉크예요. 판정 색은 `judge-badge` · `warning-callout` · `text-input-error` 안에만.
+
+이번 상세화(2026-11-24) 그리는 순서
+
+1. 기본 2장 먼저 고쳐요(승인 배치 유지): 사이드바 `brand-logo` 124 + canvas 배경 + 소분류 3개(누가기록 지움) + 로그아웃, 모바일 `sub-nav` 3개, `page-header` 이름, 메모 칸 multiline 112 + 카운터, 수능 최저 근접 ◐ → ▲, 패널 스크롤 아래 확정 잠금 줄 · 답장 칸.
+2. 셸만 바뀌는 PC 3장 → 모바일 3장: 1440-loading · 1440-load-error · 1440-no-class → 390-loading · 390-load-error · 390-no-class.
+3. 데이터가 바뀌는 학생 프레임: 1440-first · 390-first(2번 솔) → 1440-warning · 390-warning(3번 다온, 6-3 표).
+4. 메모 쓰기 흐름: empty-error → saved → save-error(PC 먼저, 모바일 이어서).
+5. 학생 고르기: 390-student-sheet → 390-student-search-empty → 1440-search-empty → 390-unsaved-sheet · 1440-unsaved-modal.
+6. 타임라인: 390-timeline → 1440-overdue → 1440-mark-done → 1440-memo-edit · 390-memo-edit → 1440-edit-discard · 390-edit-discard.
+7. 근거: 1440-trace-open · 390-trace-open.
+8. 패널 아래(PC만): 1440-lock-confirm → 1440-locked → 1440-reply-error → 1440-reply-confirm → 1440-reply-saved.
+9. 오버레이 프레임(시트 · 모달 · toast)은 기본 화면을 복제한 뒤 scrim · overlay 그림자 레이어만 얹어요. Figma 호출 한도가 있으니 복제 → 글자 바꾸기를 한 번에 묶어 처리해요.
+
+---
+
+## 9. design.md 수정 제안 (사람 확인 필요)
+
+1. Responsive Strategy "학생 상담" PC: 지금 "3단: 학생 요약 / 될각·수시로 / 상담 메모 타임라인" → 이 설계는 "3단: 학생 목록 / 상담 메모 쓰기 + 타임라인 / 학생 요약 보조 패널(성적 범위 · 수시로 6장 · 최저 충족 현황 · 확정 잠금 · 답장)". App Shell 보조 패널 예시 "학생 상담 메모"도 "학생 상담 요약"으로. PRD 6-10의 대학별 환산 · 될각 목록은 이 화면에 넣지 않고 학생 기록 상세·될각으로 가는 링크로 대신했어요(판단 필요).
+2. (반영됨) text-input 변형 multiline이 design.md에 들어와서 제안을 거둬요.
+3. empty-state: "button-primary 하나"가 정의에 들어 있어요. 화면에 이미 주요 버튼이 있으면(메모 저장) 빼도 된다는 예외 한 줄을 제안해요. 상태 프레임 390-first · 1440-first는 버튼 없이 그려요.
+4. counsel-timeline: 영역 라벨(흑백), "다음에 볼 것" 줄(기한 + 내용 + 대기/완료/기한 지남 글자 라벨), 메타 줄(시각 · 수정됨), 고치기 모드(본문이 text-input 변형 multiline으로 바뀜 + 취소 · 고친 내용 저장)를 정의에 더하는 것을 제안해요. 체크박스·할 일 목록 컴포넌트는 만들지 않았어요.
+5. 확정 잠금(최종 확정으로 잠그기): 확인 창 규칙의 적용 대상에 "받기를 막는 잠금"을 넣을지 정해 주세요. 이 문서는 잠글 때만 확인 창을 두고 풀 때는 바로 풀어요(새 부품 없음).

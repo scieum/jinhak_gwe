@@ -5,6 +5,55 @@
 > 01-research.md 반영 포인트 P1~P7
 > requires_trace_accordion / requires_disclaimer_note 대상 화면이 아니에요. 그래도 PRD 6-8 고지 때문에 `disclaimer-note`를 넣어요. 계산 화면이 아니라서 `trace-accordion`은 쓰지 않아요.
 > 그리는 프레임은 **결과 화면** 1장씩이에요(saenggibu-ai/390, saenggibu-ai/1440). 붙여넣기·가림 확인 단계는 맨 아래 절에 짧게만 적어요.
+> 2026-11-24 상세화: 맨 아래 "5. 상태 프레임 · 8. 디자이너 메모 (상세화) · 9. design.md 수정 제안 (상세화)"가 붙었어요. 기본 프레임 2장(v2, 승인 2026-11-23)은 그대로 두고, 아래 0장의 바로잡기만 반영해요.
+
+## 0. 개정 결정 (2026-11-24 상세화)
+
+근거: 사용자 요청(2026-11-24) "기존 시안에 하나씩만 있는 경우가 많은데 전부 자세하게" · 앱 구현 app/src/screens/SaenggibuAi.tsx · app/src/domain/saenggibu.ts · 최신 docs/design.md.
+
+### 0-1. 기본 프레임 바로잡기 (레이아웃은 그대로, 글자·부품만)
+
+| 어디 | 지금 (v2) | 바로잡기 |
+|---|---|---|
+| PC 사이드바 맨 위 | 워드마크 글자 "진학 내비" | `brand-logo`(U:NAVI 로고 이미지, 원본 비율, 폭 124). 글자로 만들지 않아요 |
+| PC 사이드바 메뉴 | 학생 메뉴 10개를 한 줄로 나열 | `sidebar-group` 홈 · 성적 · 대학 찾기 · 수시 전략 중 **수시 전략만 펼침** → `sidebar-item` 수시로 · 원서·서류 체크리스트 · 입시 일정 · 상담 질문·할 일 · 생기부 AI(icon/sparkles, 선택). 나머지 대분류는 접힌 행(›) |
+| PC 상단 바 | 제목 "생기부 AI" | 제목 앞 경로 caption text-muted "수시 전략 ›"를 붙여요(`page-header` 규칙). 오른쪽 `data-status-badge` · `mode-switch` · "잠금"은 그대로 |
+| 바탕 | 흰 바탕 + 1px hairline-soft 카드 | 콘텐츠 영역 = Page(canvas-soft), 그 위 흰 카드는 선 없음(design.md Elevation 2026-11-22 v2). 이미 그렇게 그려져 있으면 그대로 |
+| 고지 맨 끝 구절 | "결과는 이 기기에만 저장돼요" | 앱 문구로 바꿔요: "결과는 저장하지 않아요(화면을 닫으면 사라져요)". 자동 결과일 때 첫 구절은 "낱말로 나눈 결과는 참고용이며 …" |
+| 원문 맨 아래 caption | "가린 내용을 확인하고 보냈어요" | 앞에 icon/lock 16 ink를 붙여요(앱과 같게) |
+| 모바일 결과 아래쪽 | M6 원문 · M7 면접 질문 · M8 보완점을 위아래로 이어 붙임 | 앱처럼 모바일도 `segmented-control` "원문 색칠 · 면접 질문 10 · 보완점" 하나로 바꿔 봐요. 기본 프레임 844 안에는 이 부분이 안 보이니 기본 프레임은 고치지 않고, 상태 프레임에서만 이렇게 그려요 |
+| 분석 중 | 회색 자리 표시 카드 3장 | design.md "불러오는 중" 규칙대로 한 줄만: "AI가 읽고 있어요." {typography.body-sm} text-muted. 자리 표시 카드 · 진행 막대 없음 |
+| 오류 | `empty-state` "결과를 받지 못했어요" | design.md "화면 오류 줄": icon/triangle-alert 20 ink + {typography.body} ink 문장 + `button-outline` 하나. 판정 색 없음 |
+| 가림 확인 체크 | "체크박스" | `checkbox`(20×20, 모서리 0, 켜짐 = ink 채움 + 흰 체크, 누르는 영역 44×44) |
+| 붙여넣기 칸 | `text-input` | 영역 5칸 = `text-input` 변형 multiline(on=card, 4줄 높이), 희망 계열·학과 = 한 줄(모바일 size md 44, PC lg 48) |
+
+- 모서리 0 · 그림자 없음 규칙은 그대로예요. 그림자는 아래 상태 프레임의 `bottom-sheet` · `modal` · `toast`에만 써요(Overlay).
+- 판정 색 4쌍은 상태 프레임에서도 쓰지 않아요. 입력 글자 수가 꽉 찬 상태도 오류가 아니라서 `text-input-error`(위험 색 링)를 쓰지 않고 중립 caption으로 알려요.
+
+### 0-2. 앱 상태 목록 (SaenggibuAi.tsx에서 찾은 것)
+
+| # | 단계 | 앱에 있는 상태 · 문구 | 상태 프레임 |
+|---|---|---|---|
+| A1 | 붙여넣기 | 희망 학과 · 교과 세특이 비면 "가림 확인으로" 비활성 + caption "희망 학과와 교과 세특을 적으면 다음으로 갈 수 있어요." | paste |
+| A2 | 붙여넣기 | 칸마다 글자 수 "n/1500"(maxLength 1500) | paste-filled, paste-max |
+| A3 | 가림 확인 | 가린 낱말 칩(누르면 가림 풀기) · "푼 가림 되돌리기" · "더 가릴 낱말" 입력 | mask, mask-checked |
+| A4 | 가림 확인 | 자동 가림 0개: "자동으로 가린 낱말이 없어요. 이름 등을 위 칸에 적어 주세요." | mask-no-words |
+| A5 | 가림 확인 | checkbox "가린 내용을 확인했어요" 꺼짐 → "AI 분석 보내기" 비활성 | mask, mask-checked |
+| A6 | 가림 확인 | 보내는 중: 버튼 글자 "AI가 읽고 있어요"(비활성) | loading |
+| A7 | 가림 확인 | 오류 줄(role=alert) + "낱말로 나눠 보기": "결과를 받지 못했어요" / "오늘 분석 횟수를 다 썼어요"(429) | mask-error, mask-limit |
+| A8 | 가림 확인 | AI 연결 없음: 안내 "지금은 AI 연결을 준비하고 있어서, 이 기기 안에서 낱말로 나눠 볼 수 있어요." + `button-outline` "낱말로 나눠 보기" | mask-offline |
+| A9 | 결과 | 평가 항목 초점(다시 누르면 풀림) · 상태 줄 "○ 문장만 칠했어요 · n문장" + "전체 보기" | focus, text-focus |
+| A10 | 결과 | 문장 말풍선 "탐구력 · 학업역량" / 나누지 않은 문장 "나누지 않은 문장이에요" | text, 1440 기본 |
+| A11 | 결과 | 면접 질문 탭: 펼침(질문 의도 · 근거 인용 · "원문에서 보기"), 초점 거르기 "○ 문장에 연결된 질문만 보여요 · n개", 0건 "이 항목에 연결된 질문이 없어요." | questions, questions-empty |
+| A12 | 결과 | "원문에서 보기" → 원문 탭으로 바꾸고 그 문장 accent-soft 약 1.2초 | flash |
+| A13 | 결과 | 보완점 탭 / 0건 "제안할 보완점이 없어요." | gaps |
+| A14 | 결과(자동) | "자동 · 낱말로 나눴어요 · 참고용", 패널 "· 자동", 면접 질문 · 보완점 `empty-state` | auto, auto-questions |
+| A15 | 결과 | 나눈 문장 0개: `empty-state` "나눌 수 있는 문장이 없어요" + `button-primary` "다시 붙여넣기" | no-sentences |
+| A16 | 결과 | "새로 분석" · "다른 학과로 다시 분석하기" → 결과가 바로 사라지고 1단계로(붙여넣은 글은 남음) | **앱에 확인 없음 → 안전장치 추가**: restart-confirm, restart-toast |
+| A17 | 결과 | 결과가 저장되지 않는데 뒤로가기 · 다른 메뉴로 나가도 묻지 않음 | **안전장치 추가**: leave-confirm |
+
+- 앱에 Modal · window.confirm · bottom sheet · toast는 없어요. A16 · A17의 확인 창과 완료 toast는 design.md 확인 창 규칙("되돌리기 어려운 일 · 저장하지 않고 나가기 전에 묻기")에 따라 새로 넣는 안전장치예요.
+- 보내기 자체는 가림 확인 단계(`checkbox` + 주요 버튼)가 확인을 겸해서 따로 확인 창을 두지 않아요(R-AI-001).
 
 ## 공통 원칙
 
@@ -173,7 +222,7 @@
 - `mask-preview`: 원문 위 가린 단어가 ink 알약 블록. 블록을 누르면 가림 해제, 가리지 않은 단어를 누르면 가림 추가. 맨 아래 체크박스 "가린 내용을 확인했어요".
 - `button-primary` "AI 분석 보내기" — 체크 전에는 비활성(text-faint), 체크해야 켜져요. 화면의 주요 버튼은 이것 하나예요.
 - 버튼 아래 canvas-soft 안내 상자(모서리 16px, body-sm text-muted): "가린 뒤의 글만 보내고, 서버에는 저장하지 않아요."
-- PC: 왼쪽 열 `mask-preview`(가림 토글 가능), 오른쪽 열 확인 패널(체크박스 + `button-primary` + 안내 상자).
+- PC: 왼쪽 열 `mask-preview`(가림을 켜고 끌 수 있음), 오른쪽 열 확인 패널(체크박스 + `button-primary` + 안내 상자).
 
 ### 기타 상태 (그리지 않음)
 
@@ -474,3 +523,97 @@
 - 판정 색 4쌍, 등급 색, 증감 색은 쓰지 않아요.
 - 글꼴 Pretendard(없으면 IBM Plex Sans KR), 굵기 300/400/600/700, 자간 0. 문장 수 · 날짜는 고정폭 숫자예요.
 - 대체 텍스트: competency-bar "학업 7 · 진로 6 · 공동체 3", competency-card "학업역량 7문장. 학업성취도 2, 학업태도 2, 탐구력 3", competency-highlight 문장마다 "탐구력 · 학업역량".
+
+---
+
+## 5. 상태 프레임 (2026-11-24 상세화 · 03-draft.json states에만 적고 frames에는 넣지 않아요)
+
+- 이름 = saenggibu-ai/<폭>-<상태>. 크기는 기본 프레임과 같아요(390×844, 1440×900). G3는 기본 프레임 2장만 세니까 states에만 넣어요.
+- 앱 셸(모바일 `app-bar` "생기부 AI" + 뒤로가기, PC `sidebar` · 상단 바)은 0-1 바로잡기를 반영한 기본 프레임에서 복제해요. 아래 표는 본문만 적어요.
+- 단계 caption("1 붙여넣기 · 2 가림 확인 · 3 결과")은 모든 프레임에 있고, 지금 단계만 ink 600이에요.
+- 앞 단계(붙여넣기 · 가림 확인) PC는 본문 폭 720 안 한 열이에요. 가림 확인만 v1처럼 왼쪽 `mask-preview` + 오른쪽 확인 패널 360이에요.
+- 문장 · 낱말 · 날짜는 모두 가상이에요. 가린 낱말 예시는 앱 안내 예시와 같은 "홍길동 · 한빛고등학교 · 김민수"만 써요.
+
+### 5-1. 1단계 붙여넣기 (4장)
+
+| 프레임 | 앱 근거 | 무엇을 그리나 |
+|---|---|---|
+| saenggibu-ai/390-paste | A1 | 제목 {typography.heading-2} "생기부를 영역별로 붙여넣어 주세요" + 리드 text-muted "붙여넣은 글은 보내기 전에 이름·학교명을 먼저 가려요." → 한 줄 `text-input`(size md) "희망 계열·학과"(안내 글 "예: 화학공학과" text-faint) → multiline `text-input` 5칸(교과 세특 · 창체 자율 · 창체 동아리 · 창체 진로 · 행동특성 및 종합의견) 모두 빈칸, 칸 아래 오른쪽 caption 고정폭 "0/1500" → `button-primary` "가림 확인으로" 비활성(text-faint) → caption text-muted "희망 학과와 교과 세특을 적으면 다음으로 갈 수 있어요." 프레임 안에는 창체 동아리 칸까지 보이고 나머지는 잘려도 돼요 |
+| saenggibu-ai/1440-paste | A1 | 본문 폭 720 한 열에 위와 같은 순서. 제목 {typography.heading-1}. 5칸이 모두 보이게 칸 높이 4줄(약 112). 버튼 비활성 + 같은 caption |
+| saenggibu-ai/390-paste-filled | A2 | 희망 학과 "화학공학과", 교과 세특 칸에 가상 세특 4줄(S1 · S2 문장, 이름 자리 "홍길동은 …") + "312/1500", 창체 진로 칸이 `text-input-focused`(2px ink 링) 입력 중 "86/1500". `button-primary` "가림 확인으로" 켜짐(ink 채움), 안내 caption 없음 |
+| saenggibu-ai/390-paste-max | A2 | 교과 세특 칸이 꽉 찬 상태: 글자 수 caption "1500/1500" ink 600 + 그 아래 caption text-muted "한 칸에 1500자까지 넣을 수 있어요. 남는 글은 다른 영역 칸에 나눠 넣어 주세요." 위험 색 링 · 경고 아이콘 없음(오류가 아니에요). 버튼은 켜짐 |
+
+### 5-2. 2단계 가림 확인 (7장)
+
+| 프레임 | 앱 근거 | 무엇을 그리나 |
+|---|---|---|
+| saenggibu-ai/390-mask | A3 · A5 | 제목 "보내기 전에 가린 내용을 확인해 주세요" → 한 줄 `text-input` "더 가릴 낱말(쉼표로 구분, 내 이름·학교·선생님 이름)" 안내 글 "예: 홍길동, 한빛" → "가린 낱말 칩" 줄(`data-status-badge` 모양 + " ✕", 누르는 영역 44): "홍길동 ✕" · "한빛고등학교 ✕" · "김민수 ✕" → `mask-preview`(영역 소제목 caption + 원문, 가린 자리 ink 직각 블록 ■■■) → `checkbox` 꺼짐 + "가린 내용을 확인했어요" → 줄: `button-outline` "뒤로" + `button-primary` "AI 분석 보내기" 비활성 → canvas-soft 안내 상자 "가린 뒤의 글만 보내고, 서버에는 저장하지 않아요." |
+| saenggibu-ai/1440-mask | A3 · A5 | 왼쪽 열(744): "더 가릴 낱말" 입력 + 칩 줄 + `mask-preview`(교과 세특 · 창체 진로 두 영역). 오른쪽 확인 패널(360, 흰 카드): `checkbox` 꺼짐 + "가린 내용을 확인했어요" → `button-primary` "AI 분석 보내기" 비활성 → `button-outline` "뒤로" → 안내 상자 |
+| saenggibu-ai/390-mask-checked | A3 · A5 | 칩 "김민수"를 눌러 가림을 푼 뒤: 칩 줄은 2개 + 오른쪽 "푼 가림 되돌리기"(caption ink-soft 밑줄 텍스트 버튼), `mask-preview`에서 "김민수" 자리가 블록이 아니라 글자로 보여요. `checkbox` 켜짐 → `button-primary` "AI 분석 보내기" 켜짐 |
+| saenggibu-ai/390-mask-no-words | A4 | 칩 줄 자리에 caption text-muted "자동으로 가린 낱말이 없어요. 이름 등을 위 칸에 적어 주세요." `mask-preview`에 블록 없음, "더 가릴 낱말" 칸이 `text-input-focused`. `checkbox` 꺼짐, 버튼 비활성 |
+| saenggibu-ai/390-mask-error | A7 | `checkbox` 켜짐 상태 아래 "화면 오류 줄"(흰 카드): icon/triangle-alert 20 ink + {typography.body} "결과를 받지 못했어요. 잠시 뒤 다시 보내 주세요. 붙여넣은 글은 그대로 있어요." + `button-outline` "낱말로 나눠 보기". 아래 `button-primary` "AI 분석 보내기"는 다시 켜져 있어요(다시 보내기) |
+| saenggibu-ai/1440-mask-limit | A7 | 1440-mask와 같고 `checkbox` 켜짐, 오른쪽 패널 `button-primary` 위에 "화면 오류 줄": icon/triangle-alert + "오늘 분석 횟수를 다 썼어요. 내일 다시 AI 분석을 쓸 수 있어요." + `button-outline` "낱말로 나눠 보기"(이 기기 안에서 나눠요) |
+| saenggibu-ai/390-mask-offline | A8 | AI 연결이 없을 때: 안내 상자 "가린 뒤의 글만 보내고, 서버에는 저장하지 않아요. 지금은 AI 연결을 준비하고 있어서, 이 기기 안에서 낱말로 나눠 볼 수 있어요." + 그 아래 `button-outline` "낱말로 나눠 보기"(`checkbox` 켜짐이라 켜짐) |
+
+### 5-3. 분석 중 (2장)
+
+| 프레임 | 앱 근거 | 무엇을 그리나 |
+|---|---|---|
+| saenggibu-ai/390-loading | A6 | 390-mask-checked에서 보낸 직후: `button-primary` 글자 "AI가 읽고 있어요"(비활성), 버튼 위 한 줄 "AI가 읽고 있어요. 화면을 닫지 말고 잠시 기다려 주세요." {typography.body-sm} text-muted(role=status). `checkbox` · 칩 · "뒤로"도 비활성. 진행 막대 · 자리 표시 카드 없음 |
+| saenggibu-ai/1440-loading | A6 | 1440-mask에서 오른쪽 패널 버튼만 "AI가 읽고 있어요"(비활성) + 같은 한 줄 |
+
+### 5-4. 3단계 결과 — 보기 전환 · 초점 (9장)
+
+모바일 결과 아래쪽은 0-1처럼 `segmented-control` "원문 색칠 · 면접 질문 10 · 보완점"이에요. 아래 390 프레임은 이 세그먼트가 화면 위쪽에 오도록 스크롤한 위치예요.
+
+| 프레임 | 앱 근거 | 무엇을 그리나 |
+|---|---|---|
+| saenggibu-ai/390-text | A10 | 초점 없음 · "원문 색칠" 선택: 머리 "보낸 원문" + caption → "역량 범례"(점 3개 + 이름) + caption text-muted "문장을 누르면 평가항목이 보여요" → `mask-preview` 안 S1~S5 모두 `competency-highlight` 칠, S4 위 "역량 말풍선"(점 + "협업과 소통 · 공동체역량") |
+| saenggibu-ai/390-text-focus | A9 | 기본 프레임에서 "탐구력 3"을 고른 뒤 "원문 보기 ↓"로 내려온 위치: 상태 줄 "탐구력 · 학업역량 문장만 칠했어요 · 3문장" + `button-pill-soft` "전체 보기" → S1 · S6만 comp-academic-tint, 나머지 문장은 칠 없이 text-muted |
+| saenggibu-ai/1440-focus | A9 | 오른쪽 패널 학업역량 카드 "탐구력 3" 행이 초점(accent-soft + 왼쪽 3px accent). 왼쪽 원문은 S1 · S6만 칠, 나머지 text-muted, 상태 줄 + "전체 보기". 말풍선 없음 |
+| saenggibu-ai/390-questions | A11 | "면접 질문 10" 선택: 머리 `ai-label` → "면접 질문 행" 4개, 1번 펼침(caption "질문 의도" → "탐구 중에 스스로 문제를 찾는 과정을 확인해요" → `evidence-quote` S1 + 출처 "2학년 화학Ⅰ 세특" → `button-pill-soft` "원문에서 보기"), 2~4번 접힘 |
+| saenggibu-ai/1440-questions | A11 | 왼쪽 열 "면접 질문 10" 선택, 질문 행 10개 중 1번 펼침(위와 같음), 2~7번 접힘이 프레임 안에 보여요. 오른쪽 패널은 초점 없음 |
+| saenggibu-ai/1440-questions-empty | A11 | 패널 초점 "학업태도 2" + 면접 질문 탭: 머리 줄 `ai-label` + caption "학업태도 문장에 연결된 질문만 보여요 · 0개" → 본문 text-muted "이 항목에 연결된 질문이 없어요." 질문 행 없음 |
+| saenggibu-ai/1440-flash | A12 | 1번 질문 "원문에서 보기"를 누른 직후: 탭이 "원문 색칠"로 바뀌고 초점이 풀려요. S1이 화면 가운데로 스크롤되어 accent-soft(#e6f0ff)로 칠해진 순간(다른 문장은 역량 칠 그대로). 레이어 이름 "잠깐 칠 (1.2초)" |
+| saenggibu-ai/390-gaps | A13 | "보완점" 선택: `ai-label` → "보완점 행" 3개(M8 예시 문장, 행마다 역량 점 + "나눔과 배려 · 공동체역량" 같은 caption). 경고 상자 · 색 아이콘 없음 |
+| saenggibu-ai/1440-gaps | A13 | 왼쪽 열 "보완점" 선택, 행 3개 + 아래 `button-outline` "다른 학과로 다시 분석하기". 오른쪽 패널 그대로 |
+
+### 5-5. 결과 — 자동 · 빈 결과 (3장)
+
+| 프레임 | 앱 근거 | 무엇을 그리나 |
+|---|---|---|
+| saenggibu-ai/390-auto | A14 | "낱말로 나눠 보기" 결과: `ai-label` 자리에 caption text-muted "자동 · 낱말로 나눴어요 · 참고용" + "2026-11-24 14:20 나눔", AI 고지 caption 줄 없음. 패널 머리 "평가 항목 16문장 · 자동"(`ai-label` 없음). `competency-bar` · `competency-card`는 같은 모양(가상 숫자 학업 6 · 진로 5 · 공동체 3, 나누지 않은 문장 2개) |
+| saenggibu-ai/1440-auto-questions | A14 | 자동 결과 + "면접 질문" 탭(숫자 없이 "면접 질문"): `empty-state` 흑백 선 아이콘 → "면접 질문은 AI 분석에서 만들어요" {typography.heading-4} → "내일 다시 AI 분석을 쓸 수 있어요." 버튼 없음. 패널 `disclaimer-note` 첫 구절 "낱말로 나눈 결과는 참고용이며 …" |
+| saenggibu-ai/390-no-sentences | A15 | 패널 자리에 `empty-state`: "나눌 수 있는 문장이 없어요" → "교과 세특이나 창체 글을 더 붙여넣어 주세요." → `button-primary` "다시 붙여넣기". `competency-bar` · 카드 없음, 아래 `disclaimer-note` |
+
+### 5-6. 안전장치 — 앱에 없는 확인 창 · 완료 toast (5장)
+
+| 프레임 | 근거 | 무엇을 그리나 |
+|---|---|---|
+| saenggibu-ai/390-restart-confirm | A16 · design.md 확인 창 | 결과 화면에서 "새로 분석"을 누른 뒤: 뒤 scrim, `bottom-sheet`(손잡이, Overlay 그림자) 제목 {typography.heading-4} "새로 분석할까요?" → {typography.body} "지금 결과는 저장되지 않아 사라져요. 붙여넣은 글과 희망 학과는 그대로 남아요." → 아래 고정 줄 `button-outline` "취소" + `button-primary` "새로 분석"(ink 채움, 위험 색 없음) |
+| saenggibu-ai/1440-restart-confirm | A16 | "다른 학과로 다시 분석하기"를 누른 뒤: `modal`(최대 폭 560, 가운데, 뒤 scrim) 제목 "다른 학과로 다시 분석할까요?" → "지금 결과는 저장되지 않아 사라져요. 붙여넣은 글은 그대로 남고, 희망 학과만 바꿔 다시 보낼 수 있어요." → 오른쪽 정렬 `button-outline` "취소" + `button-primary` "다시 분석하기" |
+| saenggibu-ai/1440-restart-toast | A16 | 확인 뒤 1단계 붙여넣기 화면(1440-paste에 글이 채워진 상태, 희망 학과 칸 `text-input-focused`) + 오른쪽 아래 `toast` "결과를 지우고 1단계로 돌아왔어요. 붙여넣은 글은 그대로예요." |
+| saenggibu-ai/390-leave-confirm | A17 | 결과 화면에서 앱바 뒤로가기를 누른 뒤: `bottom-sheet` 제목 "결과 화면에서 나갈까요?" → "결과는 저장되지 않아서 나가면 사라져요." → `button-outline` "계속 보기" + `button-primary` "나가기" |
+| saenggibu-ai/1440-leave-confirm | A17 | 사이드바의 다른 메뉴("입시 일정")를 누른 뒤: `modal` 제목 "결과 화면에서 나갈까요?" → 같은 설명 → 오른쪽 정렬 `button-outline` "계속 보기" + `button-primary` "나가기" |
+
+합계 30장(모바일 17 · PC 13). 기본 프레임 2장과 합치면 32장이에요.
+
+---
+
+## 8. 디자이너 메모 (상세화 · 그리는 순서)
+
+1. 기본 프레임 2장에 0-1 바로잡기부터 반영해요(`brand-logo` 폭 124, 수시 전략만 펼친 사이드바, 경로 caption, Page 바탕, 고지 끝 구절, icon/lock). 레이아웃 · 좌표는 건드리지 않아요.
+2. 바로잡은 기본 프레임을 복제해 결과 쪽부터 그려요: 5-4(9장) → 5-5(3장). 셸 · 패널은 복제본 그대로 두고 본문만 바꿔요.
+3. 1440-paste · 390-paste를 새로 짜고 → 5-1 나머지(2장) → 5-2 가림 확인(7장) → 5-3 분석 중(2장) 순서로 복제해요.
+4. 마지막에 5-6 안전장치 5장: 해당 화면을 복제하고 그 위에 scrim · `bottom-sheet` · `modal` · `toast`만 얹어요. 그림자(Overlay)는 이 네 부품에만 써요.
+5. 각 프레임 node id를 03-draft.json `states`에 "390-paste": "id" 형식으로 적어요. `frames`에는 기본 2장만 둬요(G3).
+6. 레이어 이름: 부품은 컴포넌트 이름 그대로(`checkbox`, `bottom-sheet`, `modal`, `toast`, `empty-state`, `text-input-focused` …), 부품이 없는 것은 한글 이름("가린 낱말 칩", "화면 오류 줄", "푼 가림 되돌리기", "잠깐 칠 (1.2초)", "역량 말풍선", "면접 질문 행", "보완점 행").
+7. 색 확인: 판정 색 4쌍과 위험 색 링은 30장 어디에도 없어요. Route Blue는 선택 표시(사이드바 · 세그먼트 · 초점 행)와 1440-flash의 잠깐 칠에만 써요. 역량 색은 결과 프레임의 칠 · 점 · 막대에만 써요.
+8. Figma MCP 호출 한도가 있으니 한 번에 5장 안팎씩 나눠 그리고, 다른 화면 디자이너 작업과 동시에 돌리지 않아요.
+
+## 9. design.md 수정 제안 (상세화)
+
+1. 지울 수 있는 칩이 없어요. 가림 확인의 "가린 낱말 칩"은 이번엔 `data-status-badge` 모양 + " ✕" 글자 + 누르는 영역 44로 대신 그렸어요. `filter-chip`이나 `data-status-badge`에 "지울 수 있음(✕)" 변형을 정해 주면 좋겠어요.
+2. 일반 텍스트 버튼("푼 가림 되돌리기")이 정의돼 있지 않아요. `promo-banner`의 "다시 보지 않기"와 같은 caption ink-soft 밑줄 모양으로 대신 그렸어요. 공용 텍스트 버튼으로 올려 주면 좋겠어요.
+3. 입력칸 글자 수 상한에 닿은 상태가 없어요. 오류가 아니라서 `text-input-error`(위험 색) 대신 글자 수 caption을 ink 600으로 바꾸고 안내 caption 한 줄을 두었어요. `text-input` 변형 multiline에 "글자 수 · 상한" 표시 규칙을 넣어 주세요.
+4. v1 2번(스테퍼)은 이제 `score-bar` 변형 progress(단계 진행)로 대신할 수 있어요. 승인된 caption 단계 표시는 그대로 두고, 바꿀지는 다음 개편 때 정해 주세요. v1 3·4번(`mask-preview` 읽기 전용, 단계형 화면 탭바 숨김)과 v2 제안은 그대로 남아 있어요.

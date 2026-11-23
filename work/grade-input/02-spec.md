@@ -793,3 +793,245 @@ PC "내보내기·백업" `modal`(최대 폭 560)
 2. 저장 위치 표현: "이 기기에만"으로 통일했어요. v3 안의 저장 안내, 불러오기 창 caption, 공용 기기 안내, 되살리기 안내를 모두 "이 기기"로 바꿨어요.
 3. 모바일 "+ 과목 추가": 목록 끝 그대로 둬요(v3-6 8번). 탭바 위 고정 띠는 두지 않아요.
 4. 학기 세그먼트: 3학년 1학기까지만 둬요(PC "1학년 1학기 … 3학년 1학기", 모바일 "1-1 … 3-1"). 3학년 2학기는 넣지 않아요.
+
+## v4 (2026-11-24): 상세화 — 상태 프레임
+
+### v4-0. 근거와 우선순위
+
+- 근거: 사용자 요청(2026-11-24) "기존 시안에도 자세하게 만들지 않고 하나씩만 있는 경우가 많은데 그것들 전부 자세하게 만들어줘", 앞서 정한 원칙(앱에 있는 팝업·확인 창·바텀시트·toast·빈/로딩/오류 상태는 모두 상태 프레임으로, 앱에 없는 확인 창·완료 toast 같은 안전장치도 넣기), docs/design.md 최신본(U:NAVI, `brand-logo` 124/92, 확인 창 규칙과 내 기기 파일 저장 예외, `text-input` 변형 select·multiline, `text-input-error` 아이콘, `checkbox`, 화면 오류 줄, 불러오는 중, 단일 선택 목록), 앱 구현 app/src/screens/GradeInput.tsx(GradeEditor · AttendanceFields · MenuRow 포함)와 app/src/io/grades.ts · io/backup.ts · domain/student.ts · domain/reply.ts의 문구.
+- **우선순위: v4가 v1~v3와 다르면 v4가 우선이에요.** v4가 다루지 않는 것은 v3 → v2 → v1 순서로 그대로 써요. 기본 프레임 grade-input/390 · grade-input/1440의 승인된 레이아웃(v3-4 · v3-6)은 v4-1의 바로잡기만 더하고 그대로 둬요.
+- 필수 컴포넌트 점검: grade-input은 requires_trace_accordion · requires_disclaimer_note 어느 목록에도 없어요(v1~v3와 같음). 상태 프레임에도 산출 근거 펼치기·고지 문구를 넣지 않아요.
+- 금지(NEVER-1·2): 대학 지원 결과를 약속하거나 가능성을 수치로 말하는 표현을 쓰지 않아요. 평균은 v3-12 1번 확정 산식 문구만 쓰고, 대학별 환산 숫자는 이 화면에 없어요. 판정 색 쌍은 판정에 쓰지 않아요 — 이 화면의 judge-risk는 design.md `text-input-error`(입력 형식 오류)와 `button-danger-text` 규칙 안에서만, judge-reach는 v2의 `warning-callout` 안에서만 써요. 화면 오류 줄과 확인 창은 판정 색 없이 잉크예요.
+
+### v4-1. 기본 프레임 바로잡기 (최신 design.md 기준, 레이아웃은 그대로)
+
+| # | 지금 설계서 | 바로잡기 |
+|---|---|---|
+| 1 | 서비스 이름 표기 없음 / v1 "진학 내비" 맥락 | 서비스 이름은 U:NAVI예요. 화면 안 문구에 서비스 이름을 새로 넣지 않아요. 백업·답장 파일 확장자 ".jnavi"는 앱이 실제로 쓰는 형식이라 그대로 둬요(v4-10 1번). |
+| 2 | PC `sidebar` 위 워드마크 글자 | 맨 위 `brand-logo` 폭 124(원본 비율 1273:297, 팔레트 예외, 변수 연결 안 함). 글자 "U:NAVI"를 따로 만들지 않아요. 그 아래 `sidebar-group` "성적"(펼침 ▾) → `sidebar-item` "성적 입력" 선택(accent-soft 채움 + 왼쪽 3px accent 막대). |
+| 3 | PC 상단 바 64(경로 caption + 제목) | `page-header` 규격으로 읽어요: 위 여백 32, 상위 메뉴 이름 caption text-muted "성적" → heading-1 "성적 입력", 오른쪽 끝 데이터 기준일 `data-status-badge` · `mode-switch` · 잠금 버튼. 그 아래 v3-4 2번 머리 줄(heading-2 묶음 이름 + 버튼 3개)부터는 그대로예요. |
+| 4 | 모바일 v3-6 1번 `app-bar` "성적 입력" + 더보기 | 성적 대분류의 첫 화면이라 대분류 첫 화면 머리로 그려요: 높이 56, 왼쪽 `brand-logo` 폭 92, 오른쪽 보조 동작 icon/more 44×44(누르면 "성적 파일" `bottom-sheet`). 그 아래 heading-1 "성적"(높이 40) → `sub-nav`. 뒤로가기는 두지 않아요. 아래 내용은 40만큼 내려가요(v4-9 제안 1, v4-10 2번). |
+| 5 | `sub-nav` "… · 대학별 환산 · 가채점"(v2-0-1 4번) | design.md 메뉴 목록대로 "성적 입력 · 성적 추이 · 5 to 9 · 대학별 환산 · 모의고사"("성적 입력" 선택). PC `sidebar-item`도 같은 다섯 개예요. |
+| 6 | 오류 표시 ■(subject-card 아래 줄, `filter-chip` "확인 필요", 표 합계 셀, 시트 합계 줄, 확인 화면 칸) | ■ 대신 icon/triangle-alert 14 judge-risk + 간격 4 + caption judge-risk(design.md `text-input-error` 아이콘 규칙, 색 + 아이콘 + 글자). 표 셀은 judge-risk-bg 채움 + 같은 아이콘. |
+| 7 | 공동교육과정 "체크박스"(v1 §4-9, §8 "생기부 AI 가림 확인과 같은 모양") | `checkbox` 20×20, 모서리 0, 꺼짐 = canvas 채움 + 1.5px ink-soft 테두리, 켜짐 = ink 채움 + on-primary 체크, 누르는 영역 44×44, 옆 글자 "공동교육과정·온라인학교 과목이에요". |
+| 8 | 과목 유형·학기를 고르는 칸 정의 없음(앱은 select) | `text-input` 변형 select(오른쪽 icon/chevron-down 20). 누르면 모바일은 `bottom-sheet` 단일 선택 목록, PC는 칸 아래 떠 있는 목록. 성취도·분할점수처럼 선택지 5개 이하이고 한 줄에 들어가면 `segmented-control`(v1 §4 그대로). |
+| 9 | 붙여넣기 칸 "여러 줄 입력칸(높이 200)"(v3-7) | `text-input` 변형 multiline: body-sm, 8줄 208에서 멈추고 그 뒤는 칸 안 스크롤. |
+| 10 | 확인 창 제목 heading-3(v2-6 덮어쓰기), 버튼 순서 제각각 | design.md 확인 창: 제목 질문 heading-4 + 함께 바뀌거나 지워지는 것 한 줄 body + `button-outline` "취소" · `button-primary` 실행(잉크 채움, 위험 색 채움 없음). PC는 버튼 오른쪽 정렬, 모바일은 아래 고정 2열(취소 | 실행). 끝나면 `toast` 한 줄. |
+| 11 | 모바일 보기 고르기 선택 줄 높이 56(v3-7) | design.md 단일 선택 목록: 행 높이 48(PC 40), 행 사이 1px hairline-soft, 고른 행 = accent-soft 채움 + 왼쪽 3px accent 막대 + 오른쪽 icon/check accent. 고르면 바로 닫혀요. |
+| 12 | 과목 삭제 자리 없음(앱은 표·카드마다 "삭제" 글자 버튼) | 삭제는 편집 창(모바일 시트 · PC `modal`) 맨 아래 `button-danger-text` "이 과목 삭제" 한 곳에만 둬요. 표 열·카드에 삭제 버튼을 늘어놓지 않아요(v3 정리 유지). 누르면 반드시 확인 창(390-delete). |
+| 13 | 저장 버튼만(v1 §4-10) | 앱의 "작성 중으로 보관"을 살려요: 아래 고정 줄 `button-outline` "작성 중으로 보관" + `button-primary` "저장". 오류가 남으면 "저장"만 비활성(canvas-soft 채움 + text-faint), 보관은 누를 수 있고 카드에 확인 필요가 붙어요(v1 §4 "입력한 값이 사라지지 않게"와 같은 뜻). |
+| 14 | 수능 최저 배지 ▲·✕, `data-table` 변형 expand·link, 수시 결과 흑백 글자, 일정 종류 색, `promo-banner` | 이 화면에는 해당 없어요. 쓰지 않아요. |
+
+### v4-2. 앱 구현에서 찾은 상태 목록 (GradeInput.tsx 기준)
+
+| 앱 상태 | 앱 문구(지금) | 상태 프레임 |
+|---|---|---|
+| 기기 DB 읽는 중(`!state`) | 기기에 저장된 성적을 읽고 있어요. | 1440-loading |
+| 기기 DB 오류(`!state.data`) | state.error 그대로 | 390-load-error |
+| 빈 학기 | 아직 입력한 성적이 없어요 … 과목 추가하기 | 1440-empty · 390-empty |
+| 거르기 켬(확인 필요) | 칩 눌림 | 390-filter-check |
+| 거르기 결과 0건 | 조건에 맞는 과목이 없어요. | 390-filter-none |
+| 보기 전환 학년별 · 전체 | 학년·전체 요약, 학기별 소계 줄 | 1440-view-year · 390-view-year · 1440-view-all · 390-view-all |
+| 모바일 보기 창(menu='view') | 보기 · 한 학기씩 봐요 … | 390-view-sheet |
+| 과목 추가 + 과목명 추천 목록(datalist) | 새 과목 | 1440-add-row |
+| 과목 편집 Modal(GradeEditor), 오류 목록, 저장 비활성, 작성 중으로 보관 | 과목 편집 / 추천 목록에 없는 과목은 … | 390-edit · 1440-edit |
+| 학기·과목 유형·성취도 select | 선택 | 390-edit-select |
+| 과목 삭제 Modal | 이 과목을 삭제할까요? | 390-delete |
+| 저장 결과 메시지(role=status, 9종) | 성적을 이 기기에 저장했어요. 외 | 390-save-toast(모양), v4-4 toast 표 |
+| 출결 오류(validateAttendance) | 결석 합계는 수업일수를 넘을 수 없어요. | 390-attendance-error |
+| 불러오기 Modal(import) · 모바일 성적 파일(files) · 내보내기·백업(export) | 성적 불러오기 / 성적 파일 / 내보내기·백업 | 1440-import · 390-files |
+| 표 붙여넣기 Modal | 엑셀 표 붙여넣기 · 가져올 값 확인 | 1440-paste |
+| 가져올 성적 확인 Modal(preview, 경고, 빼기) | 가져올 성적을 확인해 주세요 | 1440-import-preview |
+| 파일 읽기 오류(run catch) | CSV 또는 XLSX 파일을 선택해 주세요. 외 | 1440-import-fail |
+| 선생님 답장 Modal | 선생님 답장 / 답장은 이 기기에 저장하지 않아요 … | 1440-reply |
+| 생기부 PDF 읽기(readGradePdf) | 글자 층이 없는 스캔 PDF예요 … | 1440-pdf-drop · 390-pdf-drop · 1440-pdf-reading · 1440-pdf-review · 390-pdf-review · 1440-pdf-overwrite · 1440-pdf-fail · 390-pdf-leave |
+| 백업 Modal(암호, 백업 내려받기) | 암호화 백업·복원 | 1440-backup-create |
+| 되살리기 안내(restore + "현재 데이터 대신 복원") | … 현재 성적·출결을 바꿀까요? | 1440-restore-confirm |
+| 처리 중(busy) | 처리하고 있어요. | 창의 실행 버튼 비활성 + 버튼 글자 "저장하고 있어요"(따로 프레임 없음) |
+
+앱에 없는 안전장치(v4에서 더함)
+
+- 편집 중 닫기 확인: 고친 칸이 있는데 닫기·바깥 누르기·뒤로 가기를 하면 "고친 내용을 저장하지 않고 닫을까요?"(390-edit-leave). 앱은 그냥 닫혀요.
+- 생기부 확인 화면 나가기 확인: v2-5에서 "그리지는 않아요"였던 창을 그려요(390-pdf-leave).
+- 되살리기 확인: 앱은 백업 창 안 안내 글 + 테두리 버튼이에요. 확인 창 규칙(되돌리기 어려운 저장)으로 따로 띄워요(1440-restore-confirm).
+- 완료 알림: 앱은 화면 위 글 한 줄(role=status)이에요. 모두 `toast` 한 줄로 바꿔요(v4-4).
+- 거르기 결과 0건에서 빠져나오기: 앱은 개수 0인 칩을 비활성으로 둬서, 켠 채 학기를 바꾸면 끌 수 없어요. 켜진 칩은 개수가 0이어도 누를 수 있게 두고, 빈 자리에 "거르기 풀기"를 둬요(390-filter-none).
+- 내 기기 파일 저장 예외: CSV 내보내기 · 엑셀 양식 내려받기 · 백업 파일 저장은 학교 밖으로 보내는 일이 아니라서 확인 창 없이 바로 저장하고 `toast`로 알려요(design.md 확인 창 예외).
+
+### v4-3. 상태 프레임 목록 (35장)
+
+이름은 grade-input/<폭>-<상태>예요. 1440 = 1440×900, 390 = 390×844. 뒤 화면은 v4-1을 반영한 기본 프레임(PC v3-4 · 모바일 v3-6)이에요. "다른 폭" 칸에 적은 폭은 같은 규칙이라 따로 그리지 않아요.
+
+#### A. 목록·보기 (13장)
+
+| # | 프레임 | 뒤 화면 / 겹 | 보여 주는 것 | 다른 폭 |
+|---|---|---|---|---|
+| 1 | grade-input/1440-loading | 셸 + `page-header` + 머리 줄(버튼 비활성) | 표 자리에 body-sm text-muted 한 줄 "기기에 저장된 성적을 읽고 있어요."만. 진행 막대·스켈레톤·아이콘 없음(design.md 불러오는 중). | 390 같음 |
+| 2 | grade-input/390-load-error | 머리 + `sub-nav` | 화면 오류 줄(흰 바탕, icon/triangle-alert 20 ink + body ink "기기에 저장된 성적을 읽지 못했어요. 브라우저 저장 공간이 꺼져 있으면 켠 뒤 다시 읽어 주세요." + `button-outline` "다시 읽기"). 판정 색 없음. 아래는 비워요. | 1440 같음 |
+| 3 | grade-input/1440-empty | v3-5 | v3-5 그대로(머리 줄 버튼 2개, 채움 없는 `empty-state` + `button-primary` "과목 추가하기", 출결 빈 칸). 이전 이름 1440-v3-empty. | — |
+| 4 | grade-input/390-empty | v3-6-1 | v3-6-1 그대로. 이전 이름 390-v3-empty. | — |
+| 5 | grade-input/390-filter-check | 기본 | `filter-chip` "확인 필요 1" 켜짐(accent-soft + 1px accent 테두리, 앞에 icon/triangle-alert 14 judge-risk). 카드는 사회 묶음 머리 + 여행지리 카드 1장만, 아래 줄 "분포비율 합이 98.5%예요. 100%가 되도록 확인해 주세요.". 요약 caption은 학기 전체 값 그대로. | 1440: 표에 여행지리 행 + 이유 줄만 남는 같은 규칙 |
+| 6 | grade-input/390-filter-none | 2-2 선택, 확인 필요 칩 켠 채 | 칩 "확인 필요 0"은 켜진 채 누를 수 있어요. 카드 자리에 body-sm text-muted "2학년 2학기에는 확인 필요 과목이 없어요." + `button-pill-soft` "거르기 풀기"(높이 44). `empty-state`(주요 버튼)는 쓰지 않아요. 2학년 2학기 데이터는 v2-1(반영 뒤 10과목)이에요. | 1440 같음 |
+| 7 | grade-input/1440-view-year | v3-4 + 보기 "학년별" | v2-8 PC 그대로이되 머리·고르는 줄은 v3(머리 줄 제목 "2학년", 단위 세그먼트 "1학년 · 2학년 · 3학년", 오른쪽 작은 보기 세그먼트 "학년별"). 학기 소계·학년 소계 행, 오른쪽 아래 `toast` "4개 학기를 반영했어요 · 되돌리기". | — |
+| 8 | grade-input/390-view-year | 기본 + 보기 "학년별" | 머리 줄 "2학년" + `button-pill-soft` "학년별 보기", 단위 세그먼트 "1학년 · 2학년 · 3학년", 요약 caption "19과목 · 학점 합 52 · 석차등급 평균 2.32", 학기 묶음 머리 44 "2학년 1학기 · 9과목" / "학점 26 · 평균 2.39", 카드, `toast` 되돌리기(탭바 위). | — |
+| 9 | grade-input/1440-view-all | 보기 "전체" | 단위 세그먼트 없음(보기 세그먼트만 오른쪽 끝). 머리 줄 "전체 학기". 표 = 학년 묶음 행 3개(1·2학년 접힘 ›, 3학년 "비어 있어요 · PDF에서 읽지 못한 학기예요" + `button-pill-soft` "직접 입력하기") + 학년 소계 행 + 전체 합계 행 "전체 합계 · 43과목 · 112 · 평균 2.31". | — |
+| 10 | grade-input/390-view-all | 보기 "전체" | 단위 세그먼트 없음, 머리 줄 "전체 학기" + "전체 보기", 요약 "43과목 · 학점 합 112 · 석차등급 평균 2.31", 학년 줄 3개(48, "1학년 · 24과목" / "학점 60 · 평균 2.30" + ›), 3학년 줄 "비어 있어요" text-muted. 카드 없음. | — |
+| 11 | grade-input/390-view-sheet | 기본 + scrim | 보기 고르기 `bottom-sheet`: 손잡이 → heading-4 "보기" + 닫기 → 단일 선택 목록 3행(48): 학기별(고른 행, 오른쪽 icon/check accent) "한 학기씩 봐요" · 학년별 "학기 소계와 학년 소계를 같이 봐요" · 전체 "모든 학기를 한 번에 봐요". 이전 이름 390-v3-view. | PC는 세그먼트라 없음 |
+| 12 | grade-input/1440-add-row | v3-4, "+ 과목 추가"를 누른 뒤 | 표 맨 아래 새 행(과목 셀 2px ink 링, 입력 "기후"), 셀 바로 아래 떠 있는 추천 목록(canvas + 1px hairline + overlay 그림자, 레이어 이름 dropdown, 행 40): "기후변화와 환경생태 · 과학 · 융합선택"(마우스 올린 행 canvas-soft) · "기후변화와 지속가능한 세계 · 사회 · 융합선택". 목록 맨 아래 caption text-muted "목록에 없으면 그대로 입력하고 유형을 골라 주세요." 나머지 칸은 빈 칸(text-faint "—"). | 모바일은 390-edit 안 과목명 칸에서 같은 목록 |
+| 13 | grade-input/390-attendance-error | 기본을 출결 섹션까지 내린 상태 | "2학년 출결", 수업일수 "190", 결석 질병 칸 "200"이 `text-input-error`(2px judge-risk 링), 아래 icon/triangle-alert 14 + caption judge-risk "결석 합계는 수업일수를 넘을 수 없어요." 오류가 있으면 이 학년 출결은 저장하지 않고 칸 값만 남겨요. 평소 안내 caption "질병·미인정·기타를 구분해 입력해요. 칸을 옮기면 저장돼요."는 오류 문구로 바뀌어요. | 1440 같음 |
+
+#### B. 과목 편집 (6장)
+
+| # | 프레임 | 뒤 화면 / 겹 | 보여 주는 것 | 다른 폭 |
+|---|---|---|---|---|
+| 14 | grade-input/390-edit | 기본 + scrim | v1 §4 편집 `bottom-sheet`(여행지리)에 v4-1 7·8·12·13을 더한 모양: 머리 "여행지리" + 닫기 → 2열 `text-input` 변형 select "학기 · 2학년 1학기" / "과목 유형 · 융합선택" → 학점 · 수강자수 → 원점수 · 과목평균 → 성취도 `segmented-control` A~E → 분포비율 A~E(`text-input-error` 5칸) + 합계 줄 "98.5%"(icon/triangle-alert) + 오류 문구 한 번 → 분할점수 `segmented-control` "모름 · 고정분할 · 추정분할" → 석차등급 미산출 빗금 칸 → `checkbox` 공동교육과정 → `button-danger-text` "이 과목 삭제" → 아래 고정 `button-outline` "작성 중으로 보관" / `button-primary` "저장"(비활성). v3의 선택 프레임 390-edit와 같은 이름이에요. | — |
+| 15 | grade-input/1440-edit | v3-4 + scrim | 과목 이름 셀을 누르면 여는 `modal` size=wide(960): 머리 heading-3 "여행지리 편집" + 닫기 → 3열 격자(과목명 · 교과 · 학기 select / 과목 유형 select · 학점 · 석차등급 미산출 / 원점수 · 과목평균 · 수강자수) → 성취도 · 분할점수 `segmented-control` 한 줄 → 분포비율 5칸 + 합계 + 오류 문구 → `checkbox` → caption text-muted "추천 목록에 없는 과목은 직접 입력할 수 있어요. 과목 유형은 성적표와 대조해 주세요." → 아래 고정 줄: 왼쪽 `button-danger-text` "이 과목 삭제", 오른쪽 `button-outline` "작성 중으로 보관" · `button-primary` "저장"(비활성). 표 셀 바로 고치기(v1 §5)는 그대로 두고, 셀에 없는 칸(유형·분포비율·공동교육과정)과 삭제는 이 창에서 해요. | — |
+| 16 | grade-input/390-edit-select | 390-edit + 두 번째 시트 | "과목 유형" 단일 선택 목록 `bottom-sheet`(뒤 시트 위에 scrim 한 겹 더): 7행(48) 공통 · 일반선택 · 진로선택 · 융합선택(고른 행) · 체육예술 · 과탐실험 · 교양, 행마다 설명 한 줄(예: 융합선택 "석차등급 없이 성취도와 분포비율을 적어요", 교양 "이수 여부만 적어요"). 아래 caption text-muted "유형을 바꾸면 그 유형에 없는 칸은 비워져요." | PC는 칸 아래 떠 있는 목록 |
+| 17 | grade-input/390-edit-leave | 390-edit + scrim | 확인 창 `bottom-sheet`(앱에 없는 안전장치): heading-4 "고친 내용을 저장하지 않고 닫을까요?" + body "이번에 고친 칸 3개가 처음 값으로 돌아가요. 남겨 두려면 작성 중으로 보관해 주세요." + 아래 2열 `button-outline` "취소" / `button-primary` "저장하지 않고 닫기". 고친 칸이 없으면 묻지 않고 닫혀요. | 1440 `modal` 560, 같은 문구 |
+| 18 | grade-input/390-delete | 390-edit + scrim | 확인 창 `bottom-sheet`: heading-4 "이 과목을 삭제할까요?" + body "여행지리(2학년 1학기)의 입력한 칸이 모두 지워져요." + 2열 `button-outline` "취소" / `button-primary` "삭제"(잉크 채움). 끝나면 시트가 모두 닫히고 `toast` "과목을 삭제했어요." | 1440 `modal` 560, 버튼 오른쪽 정렬 |
+| 19 | grade-input/390-save-toast | 기본(저장 직후) | 탭바 위 `toast`(ink 채움, on-primary body-sm, 모서리 0, 그림자 overlay) "성적을 이 기기에 저장했어요." 한 줄. 여행지리 카드는 고친 값(분포비율 합 100.0, 오류 줄 없음), 칩 "입력 완료 9" · "확인 필요 0"(0 칩 글자 text-faint). 4초 뒤 사라져요. | 1440 오른쪽 아래 |
+
+#### C. 불러오기 (6장)
+
+| # | 프레임 | 뒤 화면 / 겹 | 보여 주는 것 | 다른 폭 |
+|---|---|---|---|---|
+| 20 | grade-input/1440-import | v3-4 + scrim | v3-7 "성적 불러오기" `modal` 560: 선택 줄 5개(생기부 PDF 올리기 · 엑셀·CSV 올리기 · 표 붙여넣기 · 선생님이 보낸 파일 열기 · 엑셀 양식 내려받기) + caption "파일은 이 기기 안에서 읽고, 어디로도 보내지 않아요." 선생님 파일 caption은 앱대로 ".jnavi 답장 파일을 열어요". 이전 이름 1440-v3-import. | 모바일은 390-files |
+| 21 | grade-input/390-files | 기본 + scrim | v3-7 "성적 파일" `bottom-sheet`: 불러오기 5줄 → 내보내기·백업 3줄 → 공용 기기 안내. 화면에 들어오는 만큼(시트 최대 85%). 이전 이름 390-v3-files. PC 내보내기·백업 `modal`(v3-7)은 선택 줄 모양이 같아 따로 그리지 않아요. | — |
+| 22 | grade-input/1440-paste | 1440-import 다음 단계 | 같은 `modal` size=wide: 머리 ‹ + heading-3 "표 붙여넣기" → body-sm "엑셀에서 과목 행을 복사해 아래 칸에 붙여넣어 주세요. 제목 행도 함께 복사해 주세요." → `text-input` 변형 multiline(8줄 208, 붙여넣은 탭 구분 값 6줄이 고정폭으로 보임, `text-input-focused`) → 아래 고정 줄 오른쪽 `button-outline` "취소" · `button-primary` "가져올 값 확인". 넣은 값은 바로 저장하지 않고 23번 확인을 거쳐요(앱과 같음). | 모바일은 390-files 시트 안 같은 단계 |
+| 23 | grade-input/1440-import-preview | v3-4 + scrim | `modal` size=wide "가져올 성적을 확인해 주세요": body "지금 성적에 9개 과목을 더해요. 같은 과목이 이미 있으면 겹치지 않는지 확인해 주세요." → 경고 목록(행마다 icon/triangle-alert 14 judge-risk + caption: "8행 여행지리: 분포비율 합이 100%가 아니에요(98.5%)." · "11행: 학기를 읽지 못해 제외했어요.") → `data-table`(학기 · 과목 · 학점 · 등급 · 원점수/평균 · 수강자수 · 빼기, 등급 없는 행 "미산출", 빼기 = `button-pill-soft` "빼기") → 아래 고정 줄 `button-outline` "취소" · `button-primary` "확인한 9과목 더하기". 끝나면 `toast` "과목 9개를 더했어요 · 확인 필요 1개". | 모바일은 같은 내용을 시트 + 카드 목록 |
+| 24 | grade-input/1440-import-fail | 1440-import 열린 채 | 같은 `modal` 안 선택 줄 위에 화면 오류 줄: icon/triangle-alert 20 ink + body "성적 표를 찾지 못했어요. 학기·교과·과목·유형·학점 열이 있는 양식인지 확인해 주세요." + `button-outline` "엑셀 양식 내려받기". 그 아래 caption text-muted "고른 파일: 2학기-성적.xlsx". 다른 원인 문구는 v4-5 표. 판정 색 없음. | 390 같음 |
+| 25 | grade-input/1440-reply | v3-4 + scrim | "선생님 답장" `modal` 560: caption text-muted 고정폭 "12번 김OO · 상향 카드 · 2026-11-20" → 답장 글 body(흰 바탕 + 1px hairline-soft 묶음) → 수시 6칸 목록 body-sm 번호 1~6(대학 이름만, 판정 색·배지 없음) → caption text-muted "답장은 이 기기에 저장하지 않아요. 다시 보려면 파일을 다시 열어 주세요." → 오른쪽 `button-outline` "닫기". 이 창에는 `button-primary`가 없어요. 이름은 가상이에요. | 390 `bottom-sheet` |
+
+#### D. 생기부 PDF (8장, v2-10 다시 정리)
+
+v2-10의 12장 중 아래 8장만 그려요. 뒤 화면이 성적 표인 프레임은 v3 머리 줄·고르는 줄 + v4-1로 맞춰요. 내용은 v2-3~v2-7 그대로이고, 확인 창·오류 표시는 v4-1 6·10을 따라요.
+
+| # | 프레임 | 보여 주는 것 |
+|---|---|---|
+| 26 | grade-input/1440-pdf-drop | v2-3 PC `modal`: 단계 caption, 미리 알림 2줄, 끌어다 놓는 자리 + `button-primary` "PDF 파일 고르기", 저장 안내. |
+| 27 | grade-input/390-pdf-drop | v2-3 모바일 `bottom-sheet`: "1/4 파일 고르기", 미리 알림, 저장 안내, 아래 고정 주요 버튼. |
+| 28 | grade-input/1440-pdf-reading | v2-4: 단계 3줄(icon/check · icon/loader accent), "4/6쪽", `button-outline` "그만 읽기". 모바일은 같은 시트 안이라 그리지 않아요. |
+| 29 | grade-input/1440-pdf-review | v2-5 PC 확인 화면(본문 + 원문 패널 `mask-preview`), 확인 필요 칸 = judge-risk-bg + icon/triangle-alert, 비활성 반영 버튼. |
+| 30 | grade-input/390-pdf-review | v2-5 모바일 확인 화면(전체 화면, `app-bar` 왼쪽 icon/x — 작업 화면이라 `brand-logo` 머리가 아니에요). |
+| 31 | grade-input/1440-pdf-overwrite | v2-6 `modal`: 제목 heading-4(v4-1 10번), 학기 줄 2개, 바뀌는 칸 목록, "그대로 두기 · PDF 값으로". 버튼 오른쪽 정렬 `button-outline` "취소" · `button-primary` "반영하기". 모바일은 같은 내용 세로라 그리지 않아요. |
+| 32 | grade-input/1440-pdf-fail | v2-7 전체 실패 `modal`(사진·스캔 PDF). 원인 문구는 v2-7 표와 v4-5를 써요. |
+| 33 | grade-input/390-pdf-leave | 390-pdf-review + scrim, 확인 창 `bottom-sheet`(v2-5에서 그리지 않던 창): heading-4 "읽은 내용을 버리고 나갈까요?" + body "고친 칸 1개도 함께 사라져요. 성적에는 아무것도 들어가지 않아요." + 2열 `button-outline` "계속 확인하기" / `button-primary` "나가기". |
+
+#### E. 백업 (2장)
+
+| # | 프레임 | 뒤 화면 / 겹 | 보여 주는 것 | 다른 폭 |
+|---|---|---|---|---|
+| 34 | grade-input/1440-backup-create | v3-4 + scrim | 내보내기·백업 `modal` 560의 "백업 파일 만들기" 단계: 머리 ‹ + heading-3 "백업 파일 만들기" → body-sm "성적·출결·모의고사, 관심 전형, 지원 전형·수시로·체크리스트·자격 확인·상담 기록을 함께 담아요." → `text-input` 암호(8자 이상, 가린 글자) → `text-input-error` 암호 확인(icon/triangle-alert 14 + caption "두 암호가 달라요. 다시 입력해 주세요.") → caption text-muted "이 암호가 있어야 다시 열 수 있어요. 잃어버리면 되살릴 수 없어요." → 아래 오른쪽 `button-outline` "취소" · `button-primary` "백업 파일 저장"(비활성). 내 기기 파일 저장이라 확인 창 없이 저장하고 `toast` "백업 파일을 저장했어요." | 390 시트 안 같은 단계 |
+| 35 | grade-input/1440-restore-confirm | v3-4 + scrim | 백업 파일과 암호를 넣은 뒤 띄우는 확인 창 `modal` 560(앱의 창 안 안내를 따로 띄움): heading-4 "지금 이 기기의 기록을 백업 내용으로 바꿀까요?" + body "과목 43개 · 출결 2개 학년으로 바뀌고, 지원 전형 6개 · 상담 항목 4개 · 수시로 · 모의고사 · 관심 전형도 백업 내용으로 바뀌어요." + caption text-muted "고른 파일: 내-성적.jnavi" + 오른쪽 `button-outline` "취소" · `button-primary` "되살리기". 끝나면 `toast` "백업을 되살렸어요." 암호가 틀리면 이 창 대신 백업 단계 암호 칸이 `text-input-error` "암호가 다르거나 파일이 손상됐어요. 학생 백업 파일인지 확인해 주세요."(그리지 않음). | 390 `bottom-sheet` |
+
+- 합계: A 13 · B 6 · C 6 · D 8 · E 2 = 35장. v2·v3에서 이름만 있던 프레임(1440-empty · 390-empty · 390-view-sheet · 1440-import · 390-files · 390-edit · view-year 2 · pdf 7)은 위 표 이름으로 그려요(이전 "v3-" 접두어는 쓰지 않아요).
+- 그리지 않는 것: 1440-v3-backup(390-files와 선택 줄 모양이 같음), v2의 390-pdf-reading · 390-pdf-overwrite · 390-pdf-fail(시트 안 같은 내용), 1440 쪽 확인 창(390과 같은 문구, 버튼 오른쪽 정렬만 다름).
+
+### v4-4. toast 문구 (한 줄)
+
+| 일 | 문구 | 비고 |
+|---|---|---|
+| 편집 저장 | 성적을 이 기기에 저장했어요. | 390-save-toast |
+| 표 셀 저장 | 저장했어요. | 같은 문구는 4초 안에 한 번만 |
+| 작성 중 보관 | 작성 중으로 보관했어요 · 확인 필요 1개 | |
+| 과목 삭제 | 과목을 삭제했어요. | |
+| 출결 저장 | 출결을 저장했어요. | |
+| 엑셀·CSV·붙여넣기 더하기 | 과목 9개를 더했어요 · 확인 필요 1개 | |
+| 생기부 반영 · 되돌리기 | 4개 학기를 반영했어요 · 되돌리기 / 되돌렸어요 | v2-6 |
+| 엑셀 양식 내려받기 | 엑셀 양식을 내려받았어요. | 내 기기 저장, 확인 창 없음 |
+| CSV 내보내기 | CSV 파일을 저장했어요. | 내 기기 저장, 확인 창 없음 |
+| 백업 저장 | 백업 파일을 저장했어요. | 내 기기 저장, 확인 창 없음 |
+| 되살리기 | 백업을 되살렸어요. | |
+
+### v4-5. 오류·안내 문구 (앱 문구를 해요체로 다듬음)
+
+| 경우 | 문구 | 표시 |
+|---|---|---|
+| 기기 DB 읽기 실패 | 기기에 저장된 성적을 읽지 못했어요. 브라우저 저장 공간이 꺼져 있으면 켠 뒤 다시 읽어 주세요. | 화면 오류 줄 |
+| 파일 형식 | CSV 또는 엑셀(xlsx) 파일을 골라 주세요. | 화면 오류 줄(창 안) |
+| 파일 크기 | 10MB 이하 파일을 골라 주세요. / 답장 파일은 1MB 이하예요. / 백업 파일은 5MB 이하예요. | 화면 오류 줄 |
+| 열 없음 | 성적 표를 찾지 못했어요. 학기·교과·과목·유형·학점 열이 있는 양식인지 확인해 주세요. | 화면 오류 줄 + "엑셀 양식 내려받기" |
+| 수식 | 수식 대신 값을 붙여넣은 파일을 골라 주세요. | 화면 오류 줄 |
+| 개수 | 한 번에 1~1,000개 과목까지 불러올 수 있어요. | 화면 오류 줄 |
+| CSV 따옴표 | CSV의 따옴표가 닫히지 않았어요. 파일을 확인해 주세요. | 화면 오류 줄 |
+| 스캔 PDF | 사진으로 된 PDF라 글자를 읽을 수 없어요. / 나이스나 정부24에서 PDF로 다시 내려받으면 읽을 수 있어요. | v2-7 |
+| PDF 쪽수·크기 | 60쪽 이하, 20MB 이하 PDF를 골라 주세요. | v2-3 잘못된 파일 줄 |
+| 답장 파일 | 파일이 깨졌거나 U:NAVI 파일이 아니에요. 선생님께 다시 받아 주세요. / 선생님 답장 파일이 아니에요. | 화면 오류 줄 |
+| 과목명·교과 | 과목명과 교과를 입력해 주세요. | `text-input-error` |
+| 학점 | 학점은 1에서 30 사이 정수로 입력해 주세요. | `text-input-error` |
+| 석차등급 | 석차등급은 1에서 5 사이로 입력해 주세요. | `text-input-error` |
+| 미산출 과목 | 석차등급이 없는 과목이라 등급을 입력하지 않아요. | 칸 비활성 + caption |
+| 원점수 | 원점수는 0에서 100 사이로 입력해 주세요. | `text-input-error` |
+| 수강자수 | 수강자수는 1명 이상으로 입력해 주세요. | `text-input-error` |
+| 분포비율 | 분포비율 합이 98.5%예요. 100%가 되도록 확인해 주세요. | `text-input-error` |
+| 성취도 | 과목 유형에 맞는 성취도를 골라 주세요. | `segmented-control` 아래 오류 줄 |
+| 출결 범위 | 출결은 0에서 366 사이 정수로 입력해 주세요. | `text-input-error` |
+| 결석 합계 | 결석 합계는 수업일수를 넘을 수 없어요. | `text-input-error` |
+| 백업 암호 | 백업 암호는 8자 이상 입력해 주세요. / 두 암호가 달라요. 다시 입력해 주세요. | `text-input-error` |
+| 되살리기 실패 | 암호가 다르거나 파일이 손상됐어요. 학생 백업 파일인지 확인해 주세요. | `text-input-error`(암호 칸) |
+| 그 밖 | 처리하지 못했어요. 다시 해 주세요. | 화면 오류 줄 |
+
+### v4-6. 컴포넌트가 없는 요소 → 기존 대체
+
+| 요소 | 대체 |
+|---|---|
+| 과목명 추천 목록 | `text-input` 변형 select의 PC 떠 있는 목록 모양(canvas + 1px hairline + overlay 그림자, 행 40, 레이어 이름 dropdown). 모바일은 시트 안 과목명 칸 바로 아래 같은 목록을 흰 바탕으로 펼쳐요(그림자 없음). |
+| 거르기 결과 0건 | body-sm text-muted 한 줄 + `button-pill-soft` "거르기 풀기". `empty-state`는 빈 학기에만 써요. |
+| 화면 오류 줄 | design.md 화면 오류 줄 그대로(흰 바탕, icon/triangle-alert 20 ink, body, `button-outline` 하나). |
+| 시트 위 두 번째 시트(유형 고르기·확인 창) | 같은 `bottom-sheet`를 한 겹 더 올리고 scrim도 한 겹 더(ink 40%). 뒤 시트는 그대로 보여요. |
+| 편집 창 맨 아래 삭제 | `button-danger-text` "이 과목 삭제"(design.md 규칙 그대로, 누르면 확인 창). |
+| 경고 목록(가져올 성적 확인) | 행마다 icon/triangle-alert 14 judge-risk + caption, 행 사이 4. 묶음 채움·선 없음. |
+| 답장 글 묶음 | 흰 바탕 + 1px hairline-soft, 패딩 16, 모서리 0. |
+
+### v4-7. 문구 모음 (v4 추가분)
+
+| 위치 | 문구 |
+|---|---|
+| 불러오는 중 | 기기에 저장된 성적을 읽고 있어요. |
+| 거르기 0건 | 2학년 2학기에는 확인 필요 과목이 없어요. · 거르기 풀기 |
+| 추천 목록 | 목록에 없으면 그대로 입력하고 유형을 골라 주세요. |
+| 편집 창 | 여행지리 편집 · 작성 중으로 보관 · 저장 · 이 과목 삭제 · 추천 목록에 없는 과목은 직접 입력할 수 있어요. 과목 유형은 성적표와 대조해 주세요. |
+| 유형 고르기 | 과목 유형 · 유형을 바꾸면 그 유형에 없는 칸은 비워져요. |
+| 닫기 확인 | 고친 내용을 저장하지 않고 닫을까요? / 이번에 고친 칸 3개가 처음 값으로 돌아가요. 남겨 두려면 작성 중으로 보관해 주세요. / 취소 · 저장하지 않고 닫기 |
+| 삭제 확인 | 이 과목을 삭제할까요? / 여행지리(2학년 1학기)의 입력한 칸이 모두 지워져요. / 취소 · 삭제 |
+| 출결 안내 | 질병·미인정·기타를 구분해 입력해요. 칸을 옮기면 저장돼요. |
+| 붙여넣기 | 표 붙여넣기 / 엑셀에서 과목 행을 복사해 아래 칸에 붙여넣어 주세요. 제목 행도 함께 복사해 주세요. / 가져올 값 확인 |
+| 가져올 성적 확인 | 가져올 성적을 확인해 주세요 / 지금 성적에 9개 과목을 더해요. 같은 과목이 이미 있으면 겹치지 않는지 확인해 주세요. / 빼기 / 확인한 9과목 더하기 |
+| 답장 | 선생님 답장 / 답장은 이 기기에 저장하지 않아요. 다시 보려면 파일을 다시 열어 주세요. / 닫기 |
+| 생기부 나가기 | 읽은 내용을 버리고 나갈까요? / 고친 칸 1개도 함께 사라져요. 성적에는 아무것도 들어가지 않아요. / 계속 확인하기 · 나가기 |
+| 백업 만들기 | 백업 파일 만들기 / 성적·출결·모의고사, 관심 전형, 지원 전형·수시로·체크리스트·자격 확인·상담 기록을 함께 담아요. / 백업 파일 저장 |
+| 되살리기 확인 | 지금 이 기기의 기록을 백업 내용으로 바꿀까요? / 과목 43개 · 출결 2개 학년으로 바뀌고, 지원 전형 6개 · 상담 항목 4개 · 수시로 · 모의고사 · 관심 전형도 백업 내용으로 바뀌어요. / 취소 · 되살리기 |
+
+### v4-8. 디자이너 메모 (상세화 프레임 그리는 순서)
+
+1. 기본 프레임 2장을 먼저 v4-1대로 고쳐요: grade-input/1440(`brand-logo` 124, `page-header`, ■ → icon/triangle-alert) → grade-input/390(`brand-logo` 92 머리 + heading-1 "성적" + `sub-nav` "… · 모의고사", ■ → icon/triangle-alert). 상태 프레임은 이 두 장을 복제해서 시작해요.
+2. 목록 화면(A): 1440-loading → 390-load-error → 1440-empty · 390-empty → 390-filter-check → 390-filter-none → 1440-view-year · 390-view-year → 1440-view-all · 390-view-all → 390-view-sheet → 1440-add-row → 390-attendance-error.
+3. 편집(B): 390-edit를 먼저 완성한 뒤 복제해 390-edit-select · 390-edit-leave · 390-delete를 겹으로 올려요 → 1440-edit → 390-save-toast.
+4. 불러오기(C): 1440-import → 1440-paste · 1440-import-fail(같은 창 복제) → 1440-import-preview → 1440-reply → 390-files.
+5. 생기부 PDF(D): 1440-pdf-drop → 390-pdf-drop → 1440-pdf-reading → 1440-pdf-review → 390-pdf-review → 390-pdf-leave → 1440-pdf-overwrite → 1440-pdf-fail.
+6. 백업(E): 1440-backup-create → 1440-restore-confirm.
+7. Figma 호출 한도(Education 플랜)를 생각해 묶음(A~E) 하나씩 끝내고, 여러 디자이너가 같은 파일을 동시에 고치지 않아요.
+
+공통 규칙
+
+- G3 주의: 03-draft.json `frames`에는 grade-input/390 · grade-input/1440 두 개만 넣고, 상태 프레임 35장 id는 `states`에 적어요.
+- 모서리 전부 0, 그림자는 `modal`·`bottom-sheet`·`toast`·dropdown(추천 목록·select 목록) 레이어에만, scrim = ink 40%, 자간 0, 숫자 고정폭, 굵기 300/400/600/700.
+- 레이어 이름 = 컴포넌트 이름(`bottom-sheet`, `modal`, `toast`, `empty-state`, `filter-chip`, `checkbox`, `text-input`, `text-input-focused`, `text-input-error`, `button-danger-text`, `brand-logo`, `page-header`, `sub-nav`, `data-table` 등). 조합 요소(화면 오류 줄, 거르기 0건 줄, 메뉴 선택 줄, 경고 목록)는 한글 이름으로 두고 새 영어 하이픈 이름을 만들지 않아요. 추천 목록 레이어는 dropdown.
+- 색: 흑백 + judge-risk 쌍(입력 오류 표시와 `button-danger-text` 글자만) + judge-reach 쌍(v2 `warning-callout`만) + Route Blue·accent-soft(선택·링크·진행·원문 위치). 등급 숫자에 색 없음. 화면 오류 줄과 확인 창 실행 버튼에는 판정 색을 쓰지 않아요.
+- `brand-logo`는 원본 이미지 채움(팔레트 예외)이고 변수에 연결하지 않아요. 나머지 색은 모두 변수에 연결해요.
+- 답장의 "김OO" 같은 가상 이름 말고 실제 학생 정보를 넣지 않아요.
+
+### v4-9. design.md 수정 제안 (v4, 반영은 사람 판단)
+
+1. 대분류 첫 화면 머리(`brand-logo` 92 줄)에 보조 동작 1개를 둘 수 있는지 규칙이 없어요. 성적 입력은 오른쪽 더보기(성적 파일)가 필요해서 v4는 `app-bar`의 "오른쪽 보조 동작 1개" 규칙을 빌려 썼어요.
+2. 과목명처럼 직접 치면서 목록에서도 고르는 칸(추천 목록 입력)이 없어요. v4는 `text-input` 변형 select의 떠 있는 목록 모양으로 대신했어요. `text-input` 변형 combobox(입력 + 추천 목록)를 적어 두면 좋겠어요.
+3. 거르기 결과 0건 모양이 없어요(`empty-state`는 주요 버튼 하나가 필수라 맞지 않아요). v4는 body-sm 한 줄 + `button-pill-soft` "거르기 풀기"로 썼어요.
+4. 시트 위에 시트를 한 겹 더 올리는 규칙(scrim 겹, 최대 겹 수)이 없어요.
+5. 앞 설계서 제안 중 아직 남은 것: subject-card 오류 상태(이제 icon/triangle-alert로), toast 안 동작 글자("되돌리기"), 메뉴 선택 줄(모달·시트 안 동작 목록), 단계 표시, 아이콘 목록(icon/more · icon/triangle-alert · icon/loader 등).
+
+### v4-10. 확인할 것 (사람 결정)
+
+1. 백업·답장 파일 확장자 ".jnavi"(앱 io/backup · exchange)가 서비스 이름 U:NAVI로 바뀐 뒤에도 그대로인지. 바뀌면 v3-7 · v4 문구의 ".jnavi"를 함께 고쳐야 해요.
+2. 모바일 대분류 첫 화면 머리(v4-1 4번)로 바꾸면 첫 화면에 보이는 카드가 한 장쯤 줄어요. 승인된 v3-6 그대로(`app-bar` "성적 입력")를 원하면 4번만 되돌려요.
+3. 과목 삭제 뒤 되돌리기(toast 안 "되돌리기")를 둘지. v4는 확인 창으로 막고 toast는 알림만 둬요.
+4. 셀 저장 toast를 셀마다 띄울지, 표 위 저장 안내 한 줄로만 둘지(v4는 같은 문구 4초 안 한 번).
