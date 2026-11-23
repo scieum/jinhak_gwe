@@ -330,6 +330,7 @@ judge-lane — 될각 PC 레인 보기
 판정별 세로 열 4개, 열 머리에 judge-badge + 개수, 열 안에 univ-card
 
 univ-card — 대학·전형 카드. 공개 변형(판정 없음)(2026-11-22 v2): 판정 머리 줄 없이 로고 + 대학명이 첫 줄, 판정·내 위치가 없는 전형계획 목록에 씁니다
+univ-card 비교 변형(2026-11-23 대학 상세 위키): 공개 변형에서 interest-heart와 하단 버튼을 빼고, 둘째 줄 = 모집단위 · 전형 유형 · 계열 관계(같은 계열 / 관련 계열) {typography.body-sm} {colors.text-muted}, 셋째 줄 = 70% 컷 + 기준 대비 차이(부호 포함, 예: +0.1) {typography.title} {colors.ink}. 차이에는 판정 색·Route Blue·순위 번호를 쓰지 않습니다. 카드 전체가 그 대학 상세로 가는 링크(오른쪽 ›)입니다. "입결이 비슷한 대학" 목록에만 씁니다.
 
 흰 카드 + 1px {colors.hairline-soft}, {rounded.md}, 패딩 {spacing.md}(모바일) / {spacing.lg}(PC)
 왼쪽 univ-logo(로고 파일이 없으면 univ-monogram), 대학명 {typography.heading-3}, 전형·모집단위 {typography.body-sm} {colors.text-muted}
@@ -346,6 +347,7 @@ data-table — 대학별 환산, 학급 대시보드, 카드 수합, 결과 집�
 
 흰 카드 안에 둡니다(2026-11-22 v2). 머리글 {colors.canvas-soft}, 행 구분 1px {colors.hairline}, 본문 {typography.table} 고정폭 숫자, 숫자 열 오른쪽 정렬
 판정 칸이 한 화면에 10개를 넘으면 judge-badge compact를 씁니다. 주의가 필요한 행(위험·미충족·미제출)은 행 첫 칸 앞에 판정 아이콘을 둬서 먼저 읽히게 합니다.
+기준 행(2026-11-23 대학 상세 위키): 채움 없이 Elevation 3(1px {colors.ink} 안쪽 테두리) + 첫 칸 위 "지금 보고 있는 학과" {typography.caption} {colors.text-muted}. 비교 목록의 기준 항목에만 쓰고 선택 행과 함께 쓰지 않습니다.
 선택 행: {colors.accent-soft} 채움 + 왼쪽 3px {colors.accent} 막대 + 아래 1px {colors.hairline}(Elevation Selected 규칙, 2026-11-18). 내 점수 행(학생 화면): {colors.accent-soft} 채움
 첫 열 고정, 머리글 고정, 정렬 가능한 열에는 정렬 화살표
 모바일에서는 univ-card 또는 student-row-card 목록으로 바뀝니다.
@@ -353,7 +355,7 @@ data-table — 대학별 환산, 학급 대시보드, 카드 수합, 결과 집�
 
 trace-accordion — 산출 근거 펼치기
 
-{colors.canvas-soft} 막대, {rounded.sm}, 제목 "어떻게 계산했나요?" + 펼침 화살표
+{colors.canvas-soft} 막대, {rounded.sm}, 제목 "어떻게 계산했나요?" + 펼침 화살표. 고르는 기준을 설명할 때는 제목을 "어떻게 골랐나요?"로 바꿉니다(2026-11-23 대학 상세 위키)
 펼치면 단계별 줄: 단계 이름({typography.body-sm} {colors.text-muted}) → 수식/값({typography.table} 고정폭)
 마지막 줄은 최종값 굵게 + 위에 1px {colors.hairline}
 맨 아래 disclaimer-note
