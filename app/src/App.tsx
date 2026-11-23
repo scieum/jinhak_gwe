@@ -10,6 +10,7 @@ import { AdmissionResults } from './screens/AdmissionResults';
 import { AdmissionsList } from './screens/AdmissionsList';
 import { NationalPlacement } from './screens/NationalPlacement';
 import { DeptTier } from './screens/DeptTier';
+import { SpecialTracks } from './screens/SpecialTracks';
 import { InterestComparison } from './screens/InterestComparison';
 import { ApplicationCalendar } from './screens/ApplicationCalendar';
 import { Doelgak, FiveToNine, ScoreTrend, StudentHome, UniversityScores } from './screens/Results';
@@ -28,6 +29,7 @@ import { MinimumBoard } from './screens/MinimumBoard';
 import { MinimumSearch } from './screens/MinimumSearch';
 import { StudentRecord } from './screens/StudentRecord';
 import { ResultSummary } from './screens/ResultSummary';
+import { ClassCalendar } from './screens/ClassCalendar';
 import { Login, Signup } from './screens/Auth';
 import { AdminRules as RuleEditorScreen } from './screens/AdminRules';
 import './styles/student.css';
@@ -39,7 +41,7 @@ function AdminRules() { const p = useLocation().pathname; return p.endsWith('/re
 
 const implemented: Record<string, React.ReactNode> = {
   'national-placement': <NationalPlacement />,
-  'dept-tier': <DeptTier />,
+  'dept-tier': <DeptTier />, 'special-tracks': <SpecialTracks />,
   compare: <InterestComparison />,
   calendar: <ApplicationCalendar />,
   'admissions-list': <AdmissionsList />,
@@ -48,7 +50,7 @@ const implemented: Record<string, React.ReactNode> = {
   'counsel-tasks': <CounselTasks />, 'admission-results': <AdmissionResults />,
   home: <StudentHome />, 'grade-input': <GradeInput />, 'five-to-nine': <FiveToNine />,
   'admin-rules': <AdminRules />, 'univ-detail': <UnivDetail />, 'program-detail': <ProgramDetail />, susiro: <Susiro />, 'mock-score': <MockScore />, 'saenggibu-ai': <SaenggibuAi />,
-  'teacher-dashboard': <TeacherDashboard />, 'card-collect': <CardCollect />, counsel: <Counsel />, 'score-import': <ScoreImport />, 'minimum-board': <MinimumBoard />, 'minimum-search': <MinimumSearch />, 'student-record': <StudentRecord />, 'result-summary': <ResultSummary />,
+  'teacher-dashboard': <TeacherDashboard />, 'card-collect': <CardCollect />, counsel: <Counsel />, 'score-import': <ScoreImport />, 'minimum-board': <MinimumBoard />, 'minimum-search': <MinimumSearch />, 'student-record': <StudentRecord />, 'result-summary': <ResultSummary />, 'class-calendar': <ClassCalendar />,
   'univ-score': <UniversityScores />, doelgak: <Doelgak />, 'score-trend': <ScoreTrend />,
 };
 

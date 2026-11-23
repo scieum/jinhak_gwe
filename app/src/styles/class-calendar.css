@@ -1,0 +1,92 @@
+/* 우리 반 입시 일정(class-calendar 02-spec). 모서리 0, 일정 종류 색은 표식 · 옆 막대 · 태그 · 범례에만, 글자는 늘 ink. */
+[data-kind='doc'] { --event: var(--color-event-doc); --event-tint: var(--color-event-doc-tint); }
+[data-kind='exam'] { --event: var(--color-event-exam); --event-tint: var(--color-event-exam-tint); }
+[data-kind='first'] { --event: var(--color-event-first); --event-tint: var(--color-event-first-tint); }
+[data-kind='final'] { --event: var(--color-event-final); --event-tint: var(--color-event-final-tint); }
+[data-kind='waitlist'] { --event: var(--color-event-waitlist); --event-tint: var(--color-event-waitlist-tint); }
+.event-mark, .event-mark-slot { display: inline-block; flex: none; width: 8px; height: 8px; }
+.event-mark { background: var(--event); }
+.event-tag { display: inline-flex; align-items: center; gap: var(--spacing-xxs); height: 20px; padding: 0 var(--spacing-xs); background: var(--event-tint); color: var(--color-ink);
+  font-size: var(--font-label-size); font-weight: var(--font-label-weight); white-space: nowrap; }
+
+.class-calendar { display: grid; gap: var(--spacing-lg); min-width: 0; }
+.cc-head { align-items: center; }
+.cc-head .button-outline { display: inline-flex; align-items: center; gap: var(--spacing-xxs); }
+.cc-card { background: var(--color-canvas); padding: var(--spacing-md); display: grid; gap: var(--spacing-sm); min-width: 0; }
+.cc-filters { display: flex; gap: var(--spacing-xs); align-items: center; overflow-x: auto; padding-bottom: var(--spacing-xxs); }
+.cc-filters .filter-chip { display: inline-flex; align-items: center; gap: 6px; flex: none; white-space: nowrap; }
+.cc-student select { border: 0; background: none; font: inherit; color: inherit; min-height: 40px; }
+.cc-divider { flex: none; width: 1px; height: 16px; background: var(--color-hairline); }
+.cc-layout { display: grid; gap: var(--spacing-lg); align-items: start; }
+.cc-main, .cc-aside, .cc-day { display: grid; gap: var(--spacing-md); min-width: 0; align-content: start; }
+.cc-month td { height: 52px; }
+.cc-month button { flex-direction: column; justify-content: flex-start; align-items: center; gap: 2px; min-height: 52px; padding: var(--spacing-xxs) 2px; }
+.cc-month button[aria-pressed='true'] { box-shadow: inset 0 0 0 1px var(--color-accent); }
+.cc-month button[aria-current='date'] .cc-date { background: var(--color-ink); color: var(--color-on-primary); text-decoration: none; min-width: 22px; }
+.cc-month button:focus-visible { outline: 2px solid var(--color-ink); outline-offset: -2px; }
+.cc-count { font-size: var(--font-caption-size); white-space: nowrap; }
+.cc-marks { display: flex; gap: 2px; margin-top: auto; }
+.cc-marks .event-mark, .cc-marks .event-mark-slot { width: 6px; height: 6px; }
+.cc-legend { display: flex; flex-wrap: wrap; gap: var(--spacing-xxs) var(--spacing-sm); list-style: none; padding: var(--spacing-xs) 0 0; margin: 0; font-size: var(--font-caption-size); }
+.cc-legend li { display: inline-flex; align-items: center; gap: 6px; }
+.cc-period { display: flex; align-items: center; gap: var(--spacing-xs); width: 100%; min-height: 44px; padding: var(--spacing-xs) var(--spacing-md); border: 0; background: var(--color-canvas);
+  color: var(--color-ink); font: inherit; font-size: var(--font-body-sm-size); text-align: left; cursor: pointer; }
+.cc-period span:nth-child(2) { flex: 1; }
+.cc-notice { justify-items: start; }
+.cc-group { padding: 0; gap: 0; }
+.cc-group-head { display: grid; gap: var(--spacing-xxs); padding: var(--spacing-sm) var(--spacing-xxs) var(--spacing-sm) var(--spacing-md); border-bottom: 1px solid var(--color-hairline-soft); }
+.cc-group-top { display: flex; justify-content: space-between; align-items: center; min-height: 32px; }
+.cc-edit { color: var(--color-ink); }
+.cc-edit:hover { background: var(--color-canvas-soft); }
+.cc-edit:focus-visible { outline: 2px solid var(--color-ink); }
+.cc-rows { list-style: none; padding: 0; margin: 0; }
+.cc-row { display: flex; align-items: center; gap: var(--spacing-xs); min-height: 56px; padding: var(--spacing-xs) var(--spacing-md); border-top: 1px solid var(--color-hairline-soft); }
+.cc-check { display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; margin-left: calc(-1 * var(--spacing-sm)); }
+.cc-check input { width: 20px; height: 20px; accent-color: var(--color-ink); }
+.cc-who { display: grid; flex: 1; min-width: 0; }
+.cc-status { flex: none; white-space: nowrap; }
+.cc-result { width: 128px; min-height: 44px; flex: none; color: var(--color-ink); }
+.cc-result.text-muted { color: var(--color-text-muted); }
+.cc-group details summary { cursor: pointer; padding: var(--spacing-sm) var(--spacing-md); border-top: 1px solid var(--color-hairline-soft); min-height: 44px; }
+.cc-sync { padding: var(--spacing-sm) var(--spacing-md); border-top: 1px solid var(--color-hairline-soft); }
+.cc-sync a { color: var(--color-accent); }
+.cc-list-day { display: grid; gap: var(--spacing-xs); padding-top: var(--spacing-sm); }
+.cc-list-day .cc-group { border: 1px solid var(--color-hairline-soft); }
+.cc-empty { padding-block: var(--spacing-lg); }
+.cc-undated summary { cursor: pointer; min-height: 44px; }
+.cc-undated ul { list-style: none; padding: 0; display: grid; gap: var(--spacing-xs); }
+.cc-undated li { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); align-items: center; }
+.cc-week th, .cc-week td { vertical-align: top; }
+.cc-week th.is-today { text-decoration: underline; text-underline-offset: 4px; }
+.cc-week td.is-picked { background: var(--color-accent-soft); }
+.cc-week-cell { display: grid; gap: var(--spacing-xxs); width: 100%; min-height: 32px; border: 0; background: none; padding: 0; font: inherit; text-align: left; cursor: pointer; }
+.cc-week-item { display: grid; padding-left: 6px; box-shadow: inset 2px 0 0 var(--event); font-size: var(--font-caption-size); color: var(--color-ink); }
+.cc-sheet { display: grid; gap: var(--spacing-md); }
+.cc-sheet label { display: grid; gap: var(--spacing-xxs); font-size: var(--font-label-size); font-weight: var(--font-label-weight); }
+.cc-sheet select, .cc-sheet input, .cc-sheet textarea { width: 100%; min-height: 44px; font: inherit; font-weight: 400; }
+.cc-kind-field { display: flex; align-items: center; gap: var(--spacing-xs); }
+.cc-two { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm); }
+.cc-callout { padding: var(--spacing-md); background: var(--color-canvas-soft); color: var(--color-ink); }
+.cc-actions { justify-content: flex-end; }
+.button-danger-text { justify-self: start; min-height: 44px; border: 0; background: none; padding: 0; color: var(--color-judge-risk); font: inherit; text-decoration: underline; cursor: pointer; }
+.cc-save-list { list-style: none; padding: 0; margin: 0; }
+.cc-save-list button { display: grid; width: 100%; min-height: 56px; padding: var(--spacing-xs) 0; border: 0; border-bottom: 1px solid var(--color-hairline-soft); background: none; font: inherit; color: var(--color-ink); text-align: left; cursor: pointer; }
+.cc-save-list button:disabled { color: var(--color-text-faint); cursor: default; }
+.class-calendar .toast { display: grid; gap: 2px; }
+.class-calendar-empty { display: grid; justify-items: center; gap: var(--spacing-sm); text-align: center; }
+
+@media (min-width: 1024px) {
+  .cc-layout { grid-template-columns: minmax(0, 1fr) 360px; gap: var(--spacing-lg); }
+  .cc-aside { max-height: calc(100dvh - 120px); overflow-y: auto; position: sticky; top: var(--spacing-lg); }
+  .cc-month td, .cc-month button { height: 88px; min-height: 88px; }
+  .cc-month button { align-items: flex-start; padding: var(--spacing-xs); }
+  .cc-marks { gap: var(--spacing-xxs); }
+  .cc-marks .event-mark, .cc-marks .event-mark-slot { width: 8px; height: 8px; }
+  .cc-result { min-height: 32px; width: 120px; }
+}
+@media (max-width: 767px) {
+  .dialog-backdrop:has(.cc-sheet) { align-items: flex-end; padding: 0; }
+  .dialog-backdrop:has(.cc-sheet) .dialog { width: 100%; max-height: 90dvh; }
+  .cc-month button { padding: var(--spacing-xxs) 0; }
+}
+@media (prefers-reduced-motion: reduce) { .class-calendar * { transition: none !important; } }

@@ -36,6 +36,18 @@
   --color-comp-community: #b58400;
   --color-comp-community-tint: #fbefc7;
 
+  /* 일정 종류 색(design.md Colors Event): 표식 · 옆 막대 · 종류 태그 · 범례에만. 글자는 늘 ink */
+  --color-event-doc: #646814;
+  --color-event-doc-tint: #f0f0d8;
+  --color-event-exam: #466b38;
+  --color-event-exam-tint: #e6efe0;
+  --color-event-first: #5c4a9e;
+  --color-event-first-tint: #edeaf6;
+  --color-event-final: #7e4a8c;
+  --color-event-final-tint: #f3eaf4;
+  --color-event-waitlist: #8a4070;
+  --color-event-waitlist-tint: #f6e9f0;
+
   /* 될각 판정 (fg / bg 쌍) */
   --color-judge-safe: #137a3f;
   --color-judge-safe-bg: #e7f5ec;

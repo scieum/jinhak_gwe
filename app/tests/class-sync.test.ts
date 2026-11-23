@@ -40,3 +40,16 @@ test('모양이 맞지 않는 서버 묶음은 기기 데이터를 바꾸지 않
   expect(await teacherDb.students.count()).toBe(1);
   await expect(saveClassToServer()).resolves.toBeTruthy();
 });
+
+test('일정 테이블이 없던 예전 묶음도 읽고, 새 묶음에는 일정이 함께 들어간다', async () => {
+  rows.set('7Q4K', { class_code: '7Q4K', class_name: '3학년 2반', updated_at: '', data: { version: 1, tables: { meta: [{ key: 'class', name: '3학년 2반', code: '7Q4K', created_at: '' }], students: parseRoster('7 하늘') } } });
+  await loadClassFromServer('7Q4K');
+  expect(await teacherDb.schedules.count()).toBe(0);
+  await teacherDb.schedules.add({ university: '강원대학교', program: '지역인재', kind: '최종 발표', date: '2026-12-11' });
+  await teacherDb.scheduleDone.put({ key: 'k', number: '07', university: '강원대학교', program: '지역인재', kind: '서류 제출' });
+  await saveClassToServer();
+  await teacherDb.clearClass();
+  await loadClassFromServer('7Q4K');
+  expect((await teacherDb.schedules.toArray())[0].kind).toBe('최종 발표');
+  expect(await teacherDb.scheduleDone.count()).toBe(1);
+});

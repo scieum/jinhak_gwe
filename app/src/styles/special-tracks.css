@@ -1,0 +1,54 @@
+/* 특수 계열 모아보기 (design.md filter-chip · univ-card 목록 변형 · data-table 변형 expand · data-status-badge 변형 fact). 모서리 0, 판정 색 없음. Route Blue는 컨트롤 선택 · 링크에만. */
+.st-controls, .st-pending, .st-table-card { display: grid; gap: var(--spacing-sm); padding: var(--spacing-lg); background: var(--color-canvas); }
+.st-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-xs); }
+.st-row > .t-label { min-width: 40px; }
+.st-row--sub .segmented-control { margin-left: auto; }
+.st-chips { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
+.special-tracks .filter-chip { min-height: 32px; padding: 0 var(--spacing-sm); border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: var(--font-body-sm-size); white-space: nowrap; cursor: pointer; }
+.special-tracks .filter-chip[aria-checked='true'], .special-tracks .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.special-tracks .num { font-variant-numeric: tabular-nums; }
+.st-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--spacing-md); }
+.st-head > div { display: grid; gap: var(--spacing-xxs); }
+.data-status-badge--fact { padding: 0 var(--spacing-xs); line-height: 20px; background: var(--color-canvas); border: 1px solid var(--color-hairline); color: var(--color-ink-soft); }
+.st-table { table-layout: auto; }
+.st-table td { vertical-align: top; }
+.st-table tbody tr:hover { box-shadow: inset 0 0 0 1px var(--color-ink); }
+.st-univ { display: inline-flex; align-items: center; gap: var(--spacing-xs); word-break: keep-all; }
+.st-univ .university-logo img, .st-detail-title .university-logo img { width: 20px; height: 20px; object-fit: contain; }
+.st-basis { cursor: help; }
+.st-row-open, .st-expand { min-width: 44px; min-height: 44px; border: 0; background: none; color: var(--color-ink); font: inherit; cursor: pointer; }
+.st-cards { display: grid; gap: var(--spacing-sm); list-style: none; margin: 0; padding: 0; }
+.st-card { display: grid; gap: var(--spacing-xs); padding: var(--spacing-md); background: var(--color-canvas); border: 0; }
+.st-card header { display: flex; align-items: center; gap: var(--spacing-xs); }
+.st-card header .t-heading-3 { flex: 1; word-break: keep-all; }
+.st-card .university-logo img { width: 32px; height: 32px; object-fit: contain; }
+.st-card__open { position: relative; display: grid; gap: var(--spacing-xxs); justify-items: start; padding: 0 var(--spacing-lg) 0 0; border: 0; background: none; color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
+.st-card__kv { display: flex; gap: var(--spacing-md); width: 100%; margin-top: var(--spacing-xxs); padding-top: var(--spacing-xs); border-top: 1px solid var(--color-hairline-soft); }
+.st-card__go { position: absolute; right: 0; bottom: 0; color: var(--color-text-muted); }
+.st-total { margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid var(--color-hairline); font-weight: 600; }
+.special-tracks .empty-state { display: grid; justify-items: center; text-align: center; gap: var(--spacing-xs); background: var(--color-canvas); }
+.st-sheet { display: grid; gap: var(--spacing-xxs); }
+.st-sheet__row { display: flex; justify-content: space-between; align-items: center; min-height: 48px; padding: 0 var(--spacing-sm); border: 0; border-left: 3px solid transparent; background: none; font: inherit; color: var(--color-ink); cursor: pointer; text-align: left; }
+.st-sheet__row[aria-pressed='true'] { border-left-color: var(--color-accent); background: var(--color-accent-soft); }
+.st-detail-title { display: flex; align-items: center; gap: var(--spacing-xs); }
+.st-detail, .st-detail__main, .st-detail section, .st-practical, .st-practical__item { display: grid; gap: var(--spacing-xs); align-content: start; }
+.st-detail--wide { grid-template-columns: 300px minmax(0, 1fr); gap: var(--spacing-lg); }
+.dialog-wide:has(.st-detail--wide) { width: 960px; }
+.st-kv { display: flex; justify-content: space-between; gap: var(--spacing-sm); padding-block: var(--spacing-xxs); border-bottom: 1px solid var(--color-hairline-soft); }
+.st-links { display: grid; gap: var(--spacing-xs); }
+.st-links a, .st-practical a { color: var(--color-accent); }
+.st-criteria > td { padding: var(--spacing-xs) var(--spacing-sm); background: var(--color-canvas-soft); }
+.st-criteria .data-table thead { background: var(--color-canvas); }
+.st-criteria .data-table td, .st-criteria .data-table th { padding-block: var(--spacing-xxs); }
+
+@media (max-width: 767px) {
+  .st-controls { padding: 0; background: none; }
+  .st-chips { flex-wrap: nowrap; overflow-x: auto; margin-right: calc(-1 * var(--spacing-card)); scrollbar-width: none; }
+  .st-controls .st-row > .t-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+  .special-tracks .filter-chip { min-height: 44px; }
+  .st-pick .segmented-control { flex: 1 1 140px; }
+  .st-pick .button-pill-soft { min-height: 44px; }
+  .st-detail--wide { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) { .st-cards, .st-table-card, .st-criteria { animation: st-fade 150ms ease-out; } }
+@keyframes st-fade { from { opacity: 0; } to { opacity: 1; } }

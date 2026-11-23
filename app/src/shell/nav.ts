@@ -54,6 +54,7 @@ export const NAV: Record<Mode, NavGroup[]> = {
         student('수시 입결', 'admission-results', 'chart-column'),
         student('전국 배치표', 'national-placement', 'layout-grid'),
         student('학과별 구간', 'dept-tier', 'layers'),
+        student('계열 모아보기', 'special-tracks', 'folder'),
         student('될각', 'doelgak', 'target'),
         student('최저로 찾기', 'minimum-search', 'book-open'),
         student('지원 자격 확인표', 'eligibility-check', 'check'),
@@ -89,7 +90,7 @@ export const NAV: Record<Mode, NavGroup[]> = {
     {
       label: '수합·집계',
       icon: 'layout-grid',
-      items: [teacher('카드 수합', 'card-collect', 'upload'), teacher('결과 집계', 'result-summary', 'chart-column')],
+      items: [teacher('카드 수합', 'card-collect', 'upload'), teacher('우리 반 입시 일정', 'class-calendar', 'calendar-check'), teacher('결과 집계', 'result-summary', 'chart-column')],
     },
   ],
   admin: [

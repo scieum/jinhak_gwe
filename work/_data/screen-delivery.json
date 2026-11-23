@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-11-24",
-  "design_only": ["special-tracks", "univ-map", "class-calendar"],
+  "design_only": ["univ-map"],
   "host_routes": {
     "univ-detail-wiki": {"slug": "univ-detail", "path": "/univ-detail"},
     "admin-fields": {"slug": "admin-rules", "path": "/admin/admin-rules/fields"},
