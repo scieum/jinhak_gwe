@@ -13,6 +13,7 @@ import { InterestComparison } from './screens/InterestComparison';
 import { ApplicationCalendar } from './screens/ApplicationCalendar';
 import { Doelgak, FiveToNine, ScoreTrend, StudentHome, UniversityScores } from './screens/Results';
 import { AdminReview } from './screens/AdminReview';
+import { AdminFields } from './screens/AdminFields';
 import { ProgramDetail, UnivDetail } from './screens/UnivDetail';
 import { Susiro } from './screens/Susiro';
 import { MockScore } from './screens/MockScore';
@@ -32,7 +33,7 @@ import './styles/workspace-layout.css';
 import './styles/figma-alignment.css';
 
 // slug admin-rules covers both the rule editor and review paths (nav.ts).
-function AdminRules() { return useLocation().pathname.endsWith('/review') ? <AdminReview /> : <RuleEditorScreen />; }
+function AdminRules() { const p = useLocation().pathname; return p.endsWith('/review') ? <AdminReview /> : p.endsWith('/fields') ? <AdminFields /> : <RuleEditorScreen />; }
 
 const implemented: Record<string, React.ReactNode> = {
   'national-placement': <NationalPlacement />,
