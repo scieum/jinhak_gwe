@@ -63,7 +63,7 @@ export function judgeMinimum(exam: string, g: MockGrades | undefined, c: Criteri
 
 export const VERDICT_ORDER: Verdict[] = ['근접', '미충족', '자료 부족', '판정 불가', '충족'];
 export const VERDICT_CLASS: Record<Verdict, string> = { 충족: 'judge-safe', 근접: 'judge-fit', 미충족: 'judge-risk', '자료 부족': 'judge-none', '판정 불가': 'judge-none' };
-const ICON: Partial<Record<Verdict, string>> = { 충족: '● ', 근접: '◐ ', 미충족: '■ ' };
+const ICON: Partial<Record<Verdict, string>> = { 충족: '● ', 근접: '▲ ', 미충족: '✕ ' }; // 2026-11-23 사용자 결정: 근접 속이 찬 세모, 미충족 엑스
 export const verdictText = (v: Verdict) => `${ICON[v] ?? ''}${v}`;
 
 /** "2026년 10월 학평" 순서대로(최근이 앞). */

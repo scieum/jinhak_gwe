@@ -5,14 +5,13 @@
 
 .brand-logo {
   display: block;
-  width: 192px;
-  height: 64px;
-  object-fit: contain;
+  width: 176px;
+  height: auto;
 }
 
 .appbar .brand-logo {
-  width: 150px;
-  height: 50px;
+  width: 132px;
+  height: auto;
 }
 
 .shell__content {

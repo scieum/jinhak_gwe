@@ -114,16 +114,7 @@ export function nextState(memo: Memo, today: string): '대기' | '완료' | '기
   return due && due < today ? '기한 지남' : '대기';
 }
 
-/** 누가기록(homeroom-logs): 같은 날 같은 글은 고른 학생 모두에게 기록 하나로 남아요. */
+/** 누가기록 화면은 2026-11-23 사용자 결정으로 뺐어요. 기기에 남은 기록과 백업 파일 형식을 깨지 않으려고 타입만 남겨요. */
 export const LOG_AREAS = ['자율·자치', '진로'] as const;
 export type LogArea = typeof LOG_AREAS[number];
 export interface HomeroomLog { id?: number; date: string; area: LogArea; text: string; numbers: string[]; created_at: string }
-export function logStats(number: string, logs: readonly HomeroomLog[]) {
-  const mine = logs.filter(l => l.numbers.includes(number));
-  return { counts: Object.fromEntries(LOG_AREAS.map(a => [a, mine.filter(l => l.area === a).length])) as Record<LogArea, number>, last: mine.map(l => l.date).sort().at(-1) ?? null };
-}
-/** 월요일 시작 한 주(YYYY-MM-DD 7개). */
-export function weekOf(date: string): string[] {
-  const d = new Date(`${date}T00:00:00`), monday = new Date(d); monday.setDate(d.getDate() - ((d.getDay() + 6) % 7));
-  return Array.from({ length: 7 }, (_, i) => { const x = new Date(monday); x.setDate(monday.getDate() + i); return x.toLocaleDateString('sv-SE'); });
-}

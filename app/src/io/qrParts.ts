@@ -20,7 +20,7 @@ export function qrSvg(part: string): string {
 }
 
 export interface QrProgress { id: string; have: number; total: number; text?: string }
-/** 찍은 QR을 모아요. 진학 내비 QR이 아니면 null, 다 모이면 text가 채워져요. */
+/** 찍은 QR을 모아요. U:NAVI QR이 아니면 null, 다 모이면 text가 채워져요. */
 export class QrCollector {
   private parts = new Map<string, { total: number; got: Map<number, string> }>();
   add(raw: string): QrProgress | null {

@@ -21,7 +21,7 @@ export function AppShell() {
   const isMore = pathname === MORE_PATH[mode];
   // 교사 셸은 학생 메뉴 전체 + 교사 메뉴(teacher-dashboard 02-spec P1)
   const sections: [string | null, NavGroup[]][] = mode === 'teacher' ? [['학생', NAV.student], ['교사', NAV.teacher]] : [[null, NAV[mode]]];
-  const title = item?.label ?? detail?.label ?? (isMore ? '더보기' : '진학 내비');
+  const title = item?.label ?? detail?.label ?? (isMore ? '더보기' : 'U:NAVI');
   const breadcrumb = group && !isSingle(group) ? `${group.label} › ${title}` : null;
   const groups = NAV[mode];
   const isHome = mode !== 'admin' && pathname === groups[0].items[0].path;
@@ -45,7 +45,7 @@ export function AppShell() {
   return (
     <div className="shell" data-screen={pathname.split('/').filter(Boolean).at(-1) ?? 'home'}>
       <aside className="sidebar">
-        <Link to={MODE_HOME[mode]} className="sidebar__wordmark" aria-label="진학내비 홈">
+        <Link to={MODE_HOME[mode]} className="sidebar__wordmark" aria-label="U:NAVI 홈">
           <BrandLogo />
         </Link>
         <nav aria-label="주 메뉴">

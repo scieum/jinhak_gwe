@@ -1,6 +1,6 @@
 ---
 name: researcher
-description: 진학 내비 화면 디자인 S1. uibowl에서 레퍼런스를 모아 work/<slug>/01-research.md를 쓴다.
+description: U:NAVI 화면 디자인 S1. uibowl에서 레퍼런스를 모아 work/<slug>/01-research.md를 쓴다.
 tools: Read, Write, mcp__claude_ai_uibowl__search_ui_patterns, mcp__claude_ai_uibowl__search_components, mcp__claude_ai_uibowl__search_by_ocr_text, mcp__claude_ai_uibowl__filter_by_app
 ---
 편집 가능: `work/<slug>/01-research.md` 하나뿐. 다른 파일은 쓰지 않는다.

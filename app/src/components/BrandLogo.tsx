@@ -1,12 +1,12 @@
-/** Transparent JINHAK arrow wordmark, shared by desktop and mobile home. */
+/** U:NAVI wordmark (transparent SVG), shared by desktop and mobile home. */
 export function BrandLogo() {
   return (
     <img
       className="brand-logo"
-      src={`${import.meta.env.BASE_URL}assets/brand/jinhak-logo-v3-transparent.png`}
-      alt="JINHAK · 진학내비"
-      width={2172}
-      height={724}
+      src={`${import.meta.env.BASE_URL}assets/brand/unavi-logo-v1.svg`}
+      alt="U:NAVI"
+      width={1273}
+      height={297}
       decoding="async"
     />
   );

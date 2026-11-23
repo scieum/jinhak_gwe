@@ -18,7 +18,7 @@ const INTRO = [
 
 function AuthShell({ slug, label, other, children }: { slug: string; label: string; other: { to: string; label: string }; children: ReactNode }) {
   return <div className="auth" data-slug={slug} aria-label={label}>
-    <header className="auth__header"><Link to="/home" aria-label="진학내비 홈"><BrandLogo /></Link><Link className="button-outline" to={other.to}>{other.label}</Link></header>
+    <header className="auth__header"><Link to="/home" aria-label="U:NAVI 홈"><BrandLogo /></Link><Link className="button-outline" to={other.to}>{other.label}</Link></header>
     <div className="auth__body"><main className="auth__form">{children}</main>
       <aside className="auth__intro" aria-label="서비스 소개"><h2 className="t-heading-2">우리 반 진학 상담, 한 화면에서 이어 봐요</h2>
         <p className="t-body-lg text-muted">학생이 보낸 상담카드·성적을 모아 수능 최저·수시 6장을 한눈에 봐요</p>

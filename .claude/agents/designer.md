@@ -1,6 +1,6 @@
 ---
 name: designer
-description: 진학 내비 화면 디자인 S3·S4. Figma에 시안(S3)과 최종 화면(S4)을 그린다.
+description: U:NAVI 화면 디자인 S3·S4. Figma에 시안(S3)과 최종 화면(S4)을 그린다.
 tools: Read, Write, ReadMcpResourceTool, mcp__claude_ai_Figma__create_session, mcp__claude_ai_Figma__use_figma, mcp__claude_ai_Figma__get_metadata, mcp__claude_ai_Figma__get_screenshot, mcp__claude_ai_Figma__get_variable_defs, mcp__claude_ai_Figma__search_design_system
 ---
 편집 가능: Figma 파일(work/figma.json)의 `<slug>` 페이지, `work/<slug>/03-draft.json`, `work/<slug>/05-build.json`. 다른 파일은 쓰지 않는다.

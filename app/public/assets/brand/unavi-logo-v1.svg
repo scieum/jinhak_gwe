@@ -1,0 +1,18 @@
+<svg viewBox="35 137 1273 297" role="img" aria-label="U:NAVI" xmlns="http://www.w3.org/2000/svg" width="1273" height="297">
+<title>U:NAVI</title>
+<desc>Rounded Route Blue wordmark with a rising sky blue navigation route replacing the colon, transparent background.</desc>
+<defs><linearGradient id="w" gradientUnits="userSpaceOnUse" x1="51" y1="418" x2="1292" y2="150"><stop offset="0" stop-color="#0040CC"/><stop offset=".55" stop-color="#0066FF"/><stop offset="1" stop-color="#2EC5FF"/></linearGradient><linearGradient id="r" gradientUnits="userSpaceOnUse" x1="303" y1="384" x2="450" y2="153"><stop offset="0" stop-color="#1FD1A0"/><stop offset="1" stop-color="#2EC5FF"/></linearGradient></defs>
+<g id="wordmark" fill="url(#w)">
+<path id="letter-u" d="M88 167C108 167 125 183 125 204V303C125 334 138 346 166 346C194 346 207 334 207 303V204C207 183 223 167 244 167C264 167 281 183 281 204V305C281 377 239 418 166 418C93 418 51 377 51 305V204C51 183 68 167 88 167Z" />
+<path id="letter-n" d="M503 418C482 418 466 402 466 381V205C466 184 481 167 502 167C516 167 526 173 536 186L629 308V204C629 183 645 167 666 167C687 167 703 183 703 204V380C703 402 687 418 666 418C653 418 642 412 633 400L540 279V381C540 402 524 418 503 418Z" />
+<path id="letter-a" fill-rule="evenodd" d="M755 418C729 418 712 394 723 370L803 194C811 175 825 165 847 165C868 165 883 175 891 194L972 370C983 394 966 418 941 418C925 418 914 410 907 394L896 368H798L787 394C781 410 770 418 755 418ZM820 313H874L847 247Z" />
+<path id="letter-v" d="M979 201L1068 380L1158 201" fill="none" stroke="url(#w)" stroke-width="74" stroke-linecap="round" stroke-linejoin="round" />
+<path id="letter-i" d="M1255 204V381" fill="none" stroke="url(#w)" stroke-width="74" stroke-linecap="round" />
+</g>
+<g id="navigation-colon" fill="url(#r)">
+<path d="M303 384L432 184" fill="none" stroke="url(#r)" stroke-width="10" stroke-linecap="round" />
+<circle cx="303" cy="384" r="23" />
+<circle cx="375" cy="272" r="23" />
+<path d="M395 182L450 153L449 216Z" />
+</g>
+</svg>

@@ -32,9 +32,6 @@
 .judge-reach-text { color: var(--color-judge-reach); font-weight: 600; }
 .judge-risk-text { color: var(--color-judge-risk); font-weight: 600; }
 .teacher-screen .step-current { font-weight: 600; box-shadow: inset 0 -2px 0 var(--color-accent); }
-.logs-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: var(--spacing-lg); align-items: start; }
-.logs-board, .logs-recent { display: grid; gap: var(--spacing-md); align-content: start; }
-.logs-write { display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: var(--spacing-md); align-items: start; }
 .week-picker { display: flex; align-items: center; gap: var(--spacing-xxs); flex-wrap: wrap; }
 .week-day { display: grid; justify-items: center; min-width: 44px; min-height: 44px; border: 0; background: none; font: inherit; cursor: pointer; }
 .week-day[aria-pressed='true'] { background: var(--color-accent-soft); box-shadow: inset 0 -2px 0 var(--color-accent); font-weight: 700; }
@@ -44,7 +41,6 @@
 .pick-table tbody tr { cursor: pointer; }
 .pick-table tr.is-picked { background: var(--color-accent-soft); box-shadow: inset 3px 0 0 var(--color-accent); }
 .pick-table input[type='checkbox'] { width: 20px; height: 20px; accent-color: var(--color-ink); }
-@media (max-width: 1100px) { .logs-layout, .logs-write { grid-template-columns: 1fr; } }
 .board-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--spacing-lg); align-items: start; }
 .board-main { display: grid; gap: var(--spacing-md); min-width: 0; }
 .teacher-screen .filter-chip { min-height: 44px; padding: 0 var(--spacing-md); border: 1px solid var(--color-hairline); background: var(--color-canvas); font: inherit; cursor: pointer; }

@@ -14,7 +14,7 @@ export function makeReply(comment: string, card: { scenario: string; created_at:
 /** 학생 쪽: 파일 경계라 모양을 다시 확인해요. */
 export async function openReply(text: string): Promise<Exchange<TeacherReply>> {
   let e;
-  try { e = await readExchange(text); } catch { throw new Error('파일이 깨졌거나 진학 내비 파일이 아니에요. 선생님께 다시 받아 주세요.'); }
+  try { e = await readExchange(text); } catch { throw new Error('파일이 깨졌거나 U:NAVI 파일이 아니에요. 선생님께 다시 받아 주세요.'); }
   if (e.kind !== 'teacher_reply') throw new Error('선생님 답장 파일이 아니에요. 다른 파일은 해당 화면에서 열어 주세요.');
   const p = e.payload as TeacherReply;
   if (!p || typeof p.comment !== 'string' || !p.comment.trim() || p.comment.length > REPLY_MAX || typeof p.scenario !== 'string' || !Array.isArray(p.slots)

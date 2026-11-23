@@ -16,7 +16,7 @@ export function HomeDashboard() {
   const data = state.data, result = fiveToNineFor(data.grades, '전 교과'), average = gradeSummary(data.grades);
   const interests = data.interests ?? [], apps = data.planning?.applications ?? [], board = data.boards?.[0];
   const ready = result.min !== null && result.max !== null;
-  return <section className="student-screen home-dashboard" data-slug="home" aria-label="나의 진학 내비">
+  return <section className="student-screen home-dashboard" data-slug="home" aria-label="나의 U:NAVI">
     <header className="home-greeting"><h2 className="t-heading-1">{data.grades.length ? '지금 내 위치예요' : '반가워요'}</h2><p className="text-muted">{data.grades.length ? '입력한 성적으로 계산한 추정 범위예요.' : '성적을 입력하면 내 위치를 추정 범위로 보여 드려요.'}</p></header>
     <div className="home-columns"><section className="home-summary" aria-label="내 성적 요약">
       {!data.grades.length ? <div className="home-empty"><Icon name="chart-column" size={36} /><h3 className="t-heading-3">아직 입력한 성적이 없어요</h3><p className="text-muted">첫 학기 성적부터 차근차근 입력해 보세요.</p><Link className="button-primary" to="/grade-input">성적 입력하기</Link></div> : <>

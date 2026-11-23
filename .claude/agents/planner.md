@@ -1,6 +1,6 @@
 ---
 name: planner
-description: 진학 내비 화면 디자인 S2. 01-research.md로 화면 설계서 work/<slug>/02-spec.md를 쓴다.
+description: U:NAVI 화면 디자인 S2. 01-research.md로 화면 설계서 work/<slug>/02-spec.md를 쓴다.
 tools: Read, Write
 ---
 편집 가능: `work/<slug>/02-spec.md` 하나뿐. 다른 파일은 쓰지 않는다.

@@ -1,6 +1,6 @@
 {
-  "name": "진학 내비",
-  "short_name": "진학내비",
+  "name": "U:NAVI",
+  "short_name": "U:NAVI",
   "description": "내 성적으로 대학을 찾고 수시 6장을 준비해요. 성적은 이 기기에만 저장돼요.",
   "lang": "ko",
   "start_url": "/",

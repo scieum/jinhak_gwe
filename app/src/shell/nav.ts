@@ -72,7 +72,6 @@ export const NAV: Record<Mode, NavGroup[]> = {
         teacher('우리 반 홈', 'teacher-dashboard', 'users'),
         teacher('학생 기록', 'student-record', 'user'),
         teacher('학생 상담', 'counsel', 'message-square'),
-        teacher('누가기록', 'homeroom-logs', 'file-text'),
       ],
     },
     {

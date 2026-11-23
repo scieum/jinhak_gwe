@@ -10,7 +10,7 @@ import { JudgeMark } from './CardCollect';
 import { VerdictBadge, judgeStudent } from './MinimumBoard';
 import { counselPath } from './TeacherDashboard';
 
-type Tab = 'trend' | 'minimum' | 'counsel' | 'logs' | 'susiro';
+type Tab = 'trend' | 'minimum' | 'counsel' | 'susiro';
 const today = () => new Date().toLocaleDateString('sv-SE');
 
 export function StudentRecord() {
@@ -18,7 +18,7 @@ export function StudentRecord() {
 }
 
 function Record(c: ClassState & { info: NonNullable<ClassState['info']> }) {
-  const { info, students, school, mocks, memos, logs, cards } = c;
+  const { info, students, school, mocks, memos, cards } = c;
   const [params, setParams] = useSearchParams();
   const [tab, setTab] = useState<Tab>('trend');
   const s = students.find(x => x.number === params.get('n')) ?? students[0];
@@ -26,7 +26,6 @@ function Record(c: ClassState & { info: NonNullable<ClassState['info']> }) {
   const exams = examsByRecent(myMocks.map(m => m.exam)).reverse(), lastExam = exams.at(-1), last = myMocks.find(m => m.exam === lastExam);
   const lastSem = [...SEMESTERS].reverse().find(k => grades?.semesters[k] !== undefined);
   const myMemos = memos.filter(m => m.number === s.number).sort((a, b) => b.created_at.localeCompare(a.created_at));
-  const myLogs = logs.filter(l => l.numbers.includes(s.number)).sort((a, b) => b.date.localeCompare(a.date));
   const card = cards.filter(x => x.number === s.number).sort((a, b) => b.created_at.localeCompare(a.created_at))[0];
 
   return <>
@@ -37,7 +36,7 @@ function Record(c: ClassState & { info: NonNullable<ClassState['info']> }) {
       <div><span className="t-caption">{lastSem ? `${lastSem} 내신 전 교과` : '내신'}</span><strong className="num key-number">{lastSem ? grades!.semesters[lastSem]!.toFixed(1) : '–'}</strong><span className="t-caption text-muted">5등급 평균{schoolAverage(grades) !== null ? ` · 전체 ${schoolAverage(grades)!.toFixed(2)}` : ''}</span></div>
       <div><span className="t-caption">{lastExam ?? '모의고사'} 국 · 수 · 영</span><strong className="num">{last ? ['국어', '수학', '영어'].map(a => last.grades[a] ?? '–').join(' · ') : '–'}</strong><span className="t-caption text-muted">9등급</span></div>
     </div>
-    <SegmentedControl label="기록 탭" value={tab} onChange={setTab} options={[{ value: 'trend', label: '성적 추이' }, { value: 'minimum', label: '수능 최저' }, { value: 'counsel', label: `상담 ${myMemos.length}` }, { value: 'logs', label: `누가기록 ${myLogs.length}` }, { value: 'susiro', label: '수시로' }]} />
+    <SegmentedControl label="기록 탭" value={tab} onChange={setTab} options={[{ value: 'trend', label: '성적 추이' }, { value: 'minimum', label: '수능 최저' }, { value: 'counsel', label: `상담 ${myMemos.length}` }, { value: 'susiro', label: '수시로' }]} />
 
     {tab === 'trend' && (!grades && !myMocks.length ? <div className="empty-state"><h3 className="t-heading-3">아직 불러온 성적이 없어요</h3><p>성적표를 불러오면 학기별·회차별 등급 흐름을 여기에서 볼 수 있어요.</p><Link className="button-outline" to="/teacher/score-import">성적 불러오기</Link></div>
       : <div className="record-cards">
@@ -52,8 +51,6 @@ function Record(c: ClassState & { info: NonNullable<ClassState['info']> }) {
     {tab === 'counsel' && (!myMemos.length ? <p className="text-muted">아직 남긴 상담 메모가 없어요. <Link to={counselPath(s.number)}>상담 쓰기 ›</Link></p>
       : <ol className="counsel-timeline">{myMemos.map(m => { const st = nextState(m, today()); return <li key={m.id}><p className="t-caption"><span className="num">{m.date}</span> · <strong>{m.area}</strong></p><p>{m.text}</p>{st && <p className="t-body-sm">다음에 볼 것 · {m.next} · <strong>{st}</strong></p>}</li>; })}</ol>)}
 
-    {tab === 'logs' && (!myLogs.length ? <p className="text-muted">아직 남긴 누가기록이 없어요.</p>
-      : <ol className="counsel-timeline">{myLogs.map(l => <li key={l.id}><p className="t-caption"><span className="num">{l.date}</span> · {l.area}</p><p>{l.text}</p></li>)}</ol>)}
 
     {tab === 'susiro' && (!card ? <p className="text-muted">아직 받은 수시로 카드가 없어요.</p> : <>
       <p className="t-caption text-muted">{card.card.scenario} · {card.received_at.slice(0, 10)} 받음</p>

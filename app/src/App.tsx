@@ -23,7 +23,6 @@ import { TeacherDashboard } from './screens/TeacherDashboard';
 import { CardCollect } from './screens/CardCollect';
 import { Counsel } from './screens/Counsel';
 import { ScoreImport } from './screens/ScoreImport';
-import { HomeroomLogs } from './screens/HomeroomLogs';
 import { MinimumBoard } from './screens/MinimumBoard';
 import { StudentRecord } from './screens/StudentRecord';
 import { ResultSummary } from './screens/ResultSummary';
@@ -46,7 +45,7 @@ const implemented: Record<string, React.ReactNode> = {
   'counsel-tasks': <CounselTasks />, 'admission-results': <AdmissionResults />,
   home: <StudentHome />, 'grade-input': <GradeInput />, 'five-to-nine': <FiveToNine />,
   'admin-rules': <AdminRules />, 'univ-detail': <UnivDetail />, 'program-detail': <ProgramDetail />, susiro: <Susiro />, 'mock-score': <MockScore />, 'saenggibu-ai': <SaenggibuAi />,
-  'teacher-dashboard': <TeacherDashboard />, 'card-collect': <CardCollect />, counsel: <Counsel />, 'score-import': <ScoreImport />, 'homeroom-logs': <HomeroomLogs />, 'minimum-board': <MinimumBoard />, 'student-record': <StudentRecord />, 'result-summary': <ResultSummary />,
+  'teacher-dashboard': <TeacherDashboard />, 'card-collect': <CardCollect />, counsel: <Counsel />, 'score-import': <ScoreImport />, 'minimum-board': <MinimumBoard />, 'student-record': <StudentRecord />, 'result-summary': <ResultSummary />,
   'univ-score': <UniversityScores />, doelgak: <Doelgak />, 'score-trend': <ScoreTrend />,
 };
 
