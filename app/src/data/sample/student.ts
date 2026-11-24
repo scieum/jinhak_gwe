@@ -8,6 +8,8 @@ import { interestId } from '../../domain/interests';
 /** 문자열 id를 쓰는 샘플 행은 모두 이 접두어로 시작해요. 지우기는 이 접두어로 샘플만 골라요. */
 export const SAMPLE_PREFIX = 'sample-';
 export const SAMPLE_STAMP = '2026-11-18T00:00:00.000Z';
+/** 학생 화면에서 부르는 샘플 학생 이름(홈 v2 시안 817:2 "민지님, 지금 내 위치예요"). 교사 화면은 같은 사람을 번호·별칭 "7번 하늘"로만 보여요(demo-dataset). */
+export const SAMPLE_STUDENT_NAME = '민지';
 const kst = (d: string) => new Date(`${d}:00+09:00`).toISOString(); // '2026-11-14T21:10' → UTC ISO
 
 type Dist = [number, number, number, number, number];
@@ -47,8 +49,8 @@ export const sampleAttendance: AttendanceRecord[] = [
 // 관심 대학 6곳(수시 6장), 모든 화면에서 같은 순서. 지원 전형은 샘플 판정에 쓰는 교과 전형(public.ts 입결)과 같아요
 // (2026-11-24 사용자 결정: 수시로·홈·될각 하트가 같은 전형을 가리키게).
 export const SAMPLE_UNIVERSITIES = [
-  ['경희대학교', '행정학과', '학생부교과(지역균형)'], ['건국대학교', '행정학과', '학생부교과'], ['성균관대학교', '행정학과', '학생부교과'],
-  ['동국대학교', '행정학과', '학생부교과'], ['한양대학교', '정책학과', '학생부교과'], ['중앙대학교', '공공인재학부', '학생부교과'],
+  ['경희대학교', '행정학과', '학생부교과(지역균형)'], ['건국대학교', '행정학과', '학생부교과'], ['성균관대학교', '행정학과', '학생부교과(학교장추천)'],
+  ['동국대학교', '행정학과', '학생부교과'], ['한양대학교', '정책학과', '학생부교과(추천형)'], ['중앙대학교', '공공인재학부', '학생부교과(지역균형)'],
 ] as const;
 export const sampleInterests: Interest[] = SAMPLE_UNIVERSITIES.map(([university, department, program], i) => ({
   id: interestId(university, program, department), university, program, department, created_at: `2026-11-10T00:00:0${i}.000Z`,

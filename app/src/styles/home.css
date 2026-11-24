@@ -28,6 +28,10 @@ div.home-heading > p { margin-top: 4px; font-size: var(--font-body-lg-size); fon
 /* 배너(promo-banner) 아래 "다시 보지 않기"는 배너 오른쪽 끝에 맞춰요 */
 .home-dashboard .promo-banner-never { min-height: 44px; padding: 0; }
 .home-dashboard .promo-banner { min-height: 74px; } /* 시안 프레임 실측 74(마스코트 60 + 위아래 6 + 테두리) */
+/* 시안 promo-banner: 글 · 길콩 · › · 닫기 사이 8, 보조 글 13/19.5(PC도), "다시 보지 않기" 줄높이 16.8 */
+.home-dashboard .promo-banner-link { padding-right: 8px; }
+.home-dashboard .promo-banner-text .t-body-sm { font-size: 13px; line-height: 19.5px; }
+.home-dashboard .promo-banner-never { line-height: var(--font-caption-line); }
 
 /* 5 to 9 내 위치 */
 .home-range { display: grid; gap: var(--spacing-md); }
@@ -77,9 +81,14 @@ div.home-heading > p { margin-top: 4px; font-size: var(--font-body-lg-size); fon
   .home-pc { display: inline; }
   .home-mobile { display: none; }
   /* 홈 page-header: 셸 머리에 인사 제목 · 리드를 그려요(Page 바탕 · 선 없음 · mode-switch는 셸 공통) */
-  .topbar__heading .home-heading h1 { margin-top: 0; font-size: 32px; line-height: 42px; } /* 셸 h1 28px 규칙보다 시안 우선 */
+  /* 셸 h1 규칙보다 시안 우선. 줄 상자 위 32 = 시안 글자 픽셀과 같음(1~2px 내리면 V 차이가 남) */
+  .topbar__heading .home-heading h1 { margin-top: 0; font-size: 32px; line-height: 42px; }
+  /* 시안 홈 page-header actions = 기준일 배지 + mode-switch만(잠금 button-outline은 숨김 레이어). 잠금은 더보기에서 써요 */
+  .shell:has(.home-dashboard) .topbar__actions > .teacher-lock__button { display: none; }
+  .shell:has(.home-dashboard) #topbar-screen-actions { display: flex; align-items: center; }
   .shell:has(.home-dashboard) .topbar__heading > :not(.home-heading) { display: none; }
   .topbar .home-asof { background: var(--color-canvas); }
+  .home-note { justify-self: start; } /* 시안 disclaimer-note는 글 폭만큼(476) */
 }
 
 @media (max-width: 1023px) {

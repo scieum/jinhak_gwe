@@ -5,12 +5,12 @@
 
 .brand-logo {
   display: block;
-  width: 96px;
+  width: 124px; /* v2 시안 전 화면: 사이드바 124 · 앱바 92(2026-11-24 시안 절대 우선, 앞선 96/76 축소를 되돌림) */
   height: auto;
 }
 
 .appbar .brand-logo {
-  width: 76px;
+  width: 92px;
   height: auto;
 }
 
@@ -167,13 +167,13 @@
     background: var(--color-canvas); /* design.md sidebar v2: canvas + 오른쪽 1px hairline-soft */
     border-right: 1px solid var(--color-hairline-soft);
   }
-  /* 로고 위 32·폭 96은 사용자 지정. 메뉴 시작 y 104는 v2 시안 실측 */
+  /* 로고 위 42·폭 124 · 메뉴 시작 y 104는 v2 시안 실측 */
   .sidebar__wordmark {
     display: flex;
     align-items: flex-start;
     box-sizing: border-box;
     height: 104px;
-    padding: 32px var(--spacing-md) 0;
+    padding: 42px var(--spacing-md) 0; /* v2 시안 실측 로고 y 42 */
   }
   /* 대분류 행 사이 4(v2 시안 groups 간격). 펼친 대분류 안 소분류 행은 붙어 있다 */
   .sidebar nav > div { display: grid; gap: var(--spacing-xxs); }
@@ -216,8 +216,7 @@
     font-weight: var(--font-body-weight);
   }
   .sidebar-item--top {
-    padding-left: calc(var(--spacing-md) - 3px);
-    font-weight: var(--font-link-weight);
+    padding-left: calc(var(--spacing-md) - 3px); /* v2 시안 '홈' 15/400 — 선택일 때만 600 */
   }
   .sidebar-item[aria-current='page'] {
     background: var(--color-accent-soft);
@@ -263,7 +262,7 @@
 .sample-band strong { color: var(--color-ink); }
 .sample-confirm__actions { display: flex; justify-content: flex-end; gap: var(--spacing-sm); }
 @media (min-width: 1024px) { .sample-band { padding: var(--spacing-xs) var(--spacing-xl); } }
-.sidebar__footer .button-pill-soft { justify-self: start; gap: var(--spacing-xs); font-size: var(--font-link-size); }
+.sidebar__footer .button-pill-soft { justify-self: start; gap: var(--spacing-xs); font-size: var(--font-link-size); font-weight: var(--font-link-weight); }
 .sidebar__footer .text-button { justify-self: start; min-height: 32px; padding: 0; font-size: 14px; text-align: left; }
 
 /* 교사 셸 머리 기준일 배지: 화면이 자기 기준일 배지를 머리에 넣으면(학생 기록 · 결과 집계) 셸 배지는 숨겨요 */

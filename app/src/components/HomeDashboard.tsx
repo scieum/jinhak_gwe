@@ -6,6 +6,7 @@ import { gradeSummary } from '../domain/student';
 import { fiveToNineFor, judgeUniversity } from '../domain/results';
 import { collectedProgramPath } from '../domain/interests';
 import { useSampleMode } from '../data/sample/mode';
+import { SAMPLE_STUDENT_NAME } from '../data/sample/student';
 import { dataAsOf } from '../data/catalog';
 import { UniversityLogo } from './UniversityLogo';
 import { GradeRange } from './GradeRange';
@@ -19,6 +20,8 @@ const DDAYS = [['수시 원서 접수', '2027-09-08'], ['수능', '2027-11-18']]
 const JUDGE = { 안정: ['judge-safe', '●'], 적정: ['judge-fit', '◐'], 소신: ['judge-reach', '▲'], 위험: ['judge-risk', '■'] } as const;
 const COMBO = '국수영사과'; // 될각 화면 기본 반영 교과와 같아요
 
+// 시안: 관심 대학 행 둘째 줄은 전형만 "학생부교과 · 지역균형"(모집단위는 빼요)
+const programLine = (program: string) => program.replace(/\s*\((.+)\)$/, ' · $1');
 const one = (v: number) => (Math.round(v * 10) / 10).toFixed(1);
 const rangeText = (min: number | null, max: number | null) => min === null || max === null ? '환산 준비 중' : `약 ${(Math.floor(min * 10) / 10).toFixed(1)}~${(Math.ceil(max * 10) / 10).toFixed(1)}`;
 const dday = (date: string) => { const now = new Date(); const d = Math.round((Date.parse(`${date}T00:00:00`) - new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()) / 864e5); return d > 0 ? `D-${d}` : d === 0 ? 'D-day' : `D+${-d}`; };
@@ -38,7 +41,7 @@ function useDesktop() {
 export function HomeDashboard() {
   const state = useStudent();
   const desktop = useDesktop();
-  useSampleMode(); // 샘플을 켜고 끄면 샘플 전형·판정 규칙이 바뀌어서 다시 그려요
+  const sample = useSampleMode(); // 샘플을 켜고 끄면 샘플 전형·판정 규칙이 바뀌어서 다시 그려요
   if (!state?.data) return <section className="student-screen" data-slug="home">{state ? <p role="alert">{state.error}</p> : <p role="status">기기에 저장된 성적을 읽고 있어요.</p>}</section>;
   const data = state.data, has = data.grades.length > 0;
   const result = fiveToNineFor(data.grades, '전 교과'), average = gradeSummary(data.grades).average;
@@ -56,7 +59,7 @@ export function HomeDashboard() {
   const judgedCount = rows.filter(r => r.j).length;
 
   const Title = desktop ? 'h1' : 'h2'; // 모바일은 앱바 로고가 h1이에요
-  const heading = <div className={`home-heading${desktop ? '' : ' screen-heading'}`}><Title>{has ? '지금 내 위치예요' : '반가워요'}</Title><p>{has ? '입력한 성적으로 계산한 추정 범위예요.' : desktop ? '성적을 입력하면 내 위치를 추정 범위로 보여 드려요.' : '성적을 입력하면 내 위치를 보여 드려요.'}</p></div>;
+  const heading = <div className={`home-heading${desktop ? '' : ' screen-heading'}`}><Title>{has ? `${sample ? `${SAMPLE_STUDENT_NAME}님, ` : ''}지금 내 위치예요` : '반가워요'}</Title><p>{has ? '입력한 성적으로 계산한 추정 범위예요.' : desktop ? '성적을 입력하면 내 위치를 추정 범위로 보여 드려요.' : '성적을 입력하면 내 위치를 보여 드려요.'}</p></div>;
   const headSlot = desktop ? document.querySelector('.topbar__heading') : null;
   const badgeSlot = typeof document === 'undefined' ? null : document.getElementById(desktop ? 'topbar-screen-actions' : 'appbar-actions');
   const shortcuts = [...(has ? [['성적 입력·수정', 'grade-input', 'file-text']] : []), ['대학별 환산', 'univ-score', 'arrow-up-down'], ['전형계획 살펴보기', 'admissions-list', 'book-open'], ['될각 확인하기', 'doelgak', 'sparkles']];
@@ -89,7 +92,8 @@ export function HomeDashboard() {
               : j.v.boundary ? <span className="judge-badge judge-edge">경계</span>
               : <span className={`judge-badge ${JUDGE[j.v.label][0]}`}><span aria-hidden="true">{JUDGE[j.v.label][1]}</span> {j.v.label}</span>;
             return <li className="univ-card" key={i.university}><UniversityLogo university={i.university} />
-              <Link to={collectedProgramPath(i.university, j?.p.program ?? i.program, j ? j.p.department || undefined : i.department)}><strong>{i.university}</strong><span>{j ? [j.p.program, j.p.department].filter(Boolean).join(' · ') : [i.program, i.department].filter(Boolean).join(' · ')}</span></Link>{badge}</li>;
+              <Link to={collectedProgramPath(i.university, j?.p.program ?? i.program, j ? j.p.department || undefined : i.department)}
+                aria-label={[i.university, programLine(j ? j.p.program : i.program), j ? j.p.department : i.department].filter(Boolean).join(' · ')}><strong>{i.university}</strong><span>{programLine(j ? j.p.program : i.program)}</span></Link>{badge}</li>;
           })}</ul>}
           {rows.length ? <Link className="button-pill-soft" to="/doelgak">될각 전체 보기</Link> : <Link className="button-pill-soft" to="/admissions-list">전형계획 둘러보기</Link>}
         </section>
@@ -99,6 +103,6 @@ export function HomeDashboard() {
       <h2 id="home-shortcuts-title"><span className="home-pc">이어서 준비해요</span><span className="home-mobile">바로가기</span></h2>
       <div className="home-shortcuts__list">{shortcuts.map(([label, route, icon]) => <Link to={`/${route}`} key={route}><Icon name={icon} /><span>{label}</span><Icon name="chevron-right" /></Link>)}</div>
     </section>
-    <p className="disclaimer-note home-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {dataAsOf}</span></p>
+    <p className="disclaimer-note home-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {dataAsOf}{sample && <> · <br className="home-mobile" />시안의 대학·숫자는 예시예요</>}</span></p>
   </section>;
 }

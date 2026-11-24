@@ -9,21 +9,27 @@ import { signIn, signUp } from '../io/account';
 import { searchSchools, supabase, type School } from '../io/supabase';
 import '../styles/auth.css';
 
+// v2 시안(login 467:151) 2×2 순서·줄바꿈 그대로
 const INTRO = [
-  { icon: 'users', title: '학교별 분리', text: '우리 학교·우리 반 학생 기록만 보여요. 학생은 번호·별칭으로만 저장해요' },
-  { icon: 'search', title: 'NEIS 학교 선택', text: '회원가입 때 시/도와 학교 이름으로 우리 고등학교를 골라요' },
-  { icon: 'qr-code', title: '상담카드 수합', text: '학생이 보낸 QR·파일 상담카드를 한 표로 모아요' },
-  { icon: 'check', title: '수능 최저 충족 현황', text: '반 학생의 수능 최저 충족 현황을 한눈에 정리해요. 예측이 아니에요' },
+  { icon: 'qr-code', title: '상담카드 수합', text: '학생이 보낸 QR·파일 상담카드를\n한 표로 모아요' },
+  { icon: 'users', title: '학교별 분리', text: '우리 학교·우리 반 학생 기록만 보여요.\n학생은 번호·별칭으로만 저장해요' },
+  { icon: 'search', title: 'NEIS 학교 선택', text: '회원가입 때 시/도와 학교 이름으로\n우리 고등학교를 골라요' },
+  { icon: 'check', title: '수능 최저 충족 현황', text: '반 학생의 수능 최저 충족 현황을\n한눈에 정리해요. 예측이 아니에요' },
 ];
 
-function AuthShell({ slug, label, other, children }: { slug: string; label: string; other: { to: string; label: string }; children: ReactNode }) {
+// 시안: 모바일은 폼 카드 아래, PC는 폼 아래에 "○○ ›" 알약 버튼 한 줄
+function SwitchRow({ question, to, label }: { question: string; to: string; label: string }) {
+  return <p className="auth__switch"><span className="t-body-sm text-muted">{question}</span><Link className="button-pill-soft t-link" to={to}>{label} ›</Link></p>;
+}
+
+function AuthShell({ slug, label, other, switchRow, children }: { slug: string; label: string; other: { to: string; label: string }; switchRow?: ReactNode; children: ReactNode }) {
   return <div className="auth" data-slug={slug} aria-label={label}>
     <header className="auth__header"><Link to="/home" aria-label="U:NAVI 홈"><BrandLogo /></Link><Link className="button-outline" to={other.to}>{other.label}</Link></header>
-    <div className="auth__body"><main className="auth__form">{children}</main>
-      <aside className="auth__intro" aria-label="서비스 소개"><h2 className="t-heading-2">우리 반 진학 상담, 한 화면에서 이어 봐요</h2>
+    <div className="auth__body"><main className="auth__form">{children}{switchRow}</main>
+      <aside className="auth__intro" aria-label="서비스 소개"><div className="auth__intro-inner"><h2 className="t-heading-2">우리 반 진학 상담, 한 화면에서 이어 봐요</h2>
         <p className="t-body-lg text-muted">학생이 보낸 상담카드·성적을 모아 수능 최저·수시 6장을 한눈에 봐요</p>
-        <ul>{INTRO.map(i => <li key={i.title} className="auth__card"><Icon name={i.icon} className="auth__icon" /><div><h3 className="t-heading-4">{i.title}</h3><p className="t-body-sm text-muted">{i.text}</p></div></li>)}</ul>
-        <p className="t-caption text-muted">학생은 로그인 없이 써요. 상담카드는 QR·파일로 선생님께 보내요</p></aside></div>
+        <ul>{INTRO.map(i => <li key={i.title} className="auth__card"><Icon name={i.icon} className="auth__icon" /><h3 className="t-heading-4">{i.title}</h3><p className="t-body-sm text-muted">{i.text}</p></li>)}</ul>
+        <p className="t-caption text-muted">학생은 로그인 없이 써요. 상담카드는 QR·파일로 선생님께 보내요</p></div></aside></div>
   </div>;
 }
 
@@ -34,11 +40,12 @@ const Band = ({ children }: { children: ReactNode }) => <div className="auth__ba
 function FieldError({ text }: { text?: string }) {
   return text ? <p className="field-error t-caption"><Icon name="triangle-alert" size={16} /> {text}</p> : null;
 }
-function Password({ id, label, value, onChange, placeholder, error }: { id: string; label: ReactNode; value: string; onChange: (v: string) => void; placeholder: string; error?: string }) {
+// toggle=false: 시안의 "비밀번호 확인" 칸은 보기 아이콘이 없다
+function Password({ id, label, value, onChange, placeholder, error, toggle = true }: { id: string; label: ReactNode; value: string; onChange: (v: string) => void; placeholder: string; error?: string; toggle?: boolean }) {
   const [shown, setShown] = useState(false);
   return <div className="auth__field"><label htmlFor={id}>{label}</label>
     <div className="password-field"><input id={id} type={shown ? 'text' : 'password'} value={value} placeholder={placeholder} aria-invalid={!!error} autoComplete={id === 'login-password' ? 'current-password' : 'new-password'} onChange={e => onChange(e.target.value)} />
-      <button type="button" className="icon-button" aria-label="비밀번호 보기" aria-pressed={shown} onClick={() => setShown(!shown)}><Icon name="eye-off" size={20} /></button></div>
+      {toggle && <button type="button" className="icon-button" aria-label="비밀번호 보기" aria-pressed={shown} onClick={() => setShown(!shown)}><Icon name="eye-off" size={20} /></button>}</div>
     <FieldError text={error} /></div>;
 }
 
@@ -56,18 +63,16 @@ export function Login() {
     catch (x) { setError(x instanceof Error ? x.message : '서버에 연결하지 못했어요. 잠시 후 다시 시도하세요.'); }
     finally { setBusy(false); }
   };
-  return <AuthShell slug="login" label="로그인" other={{ to: '/signup', label: '회원가입' }}>
-    <form onSubmit={submit} noValidate>
+  return <AuthShell slug="login" label="로그인" other={{ to: '/signup', label: '회원가입' }} switchRow={<SwitchRow question="아직 회원이 아니신가요?" to="/signup" label="회원가입" />}>
+    <form className="auth__card-form" onSubmit={submit} noValidate>
       <h1 className="t-heading-2">로그인</h1>
-      <p className="t-body-lg text-muted">아이디로 로그인하세요</p>
-      <div className="auth__field"><label htmlFor="login-id">아이디</label><input id="login-id" autoComplete="username" autoCapitalize="none" value={id} placeholder="아이디를 입력하세요" onChange={e => { setId(e.target.value); reset(); }} /></div>
+      <p className="auth__sub t-body-lg text-muted">아이디로 로그인하세요</p>
+      <div className="auth__field auth__lead"><label htmlFor="login-id">아이디</label><input id="login-id" autoComplete="username" autoCapitalize="none" value={id} placeholder="아이디를 입력하세요" onChange={e => { setId(e.target.value); reset(); }} /></div>
       <Password id="login-password" label="비밀번호" value={password} onChange={v => { setPassword(v); reset(); }} placeholder="비밀번호를 입력하세요" />
       <FieldError text={error} />
       {notReady && <NotReady />}
-      <ButtonPrimary type="submit" disabled={busy || !id || !password}>로그인</ButtonPrimary>
-      <p className="auth__center t-caption text-muted">비밀번호를 잊으면 관리자에게 초기화를 요청해 주세요.</p>
-      <p className="auth__center t-body-sm text-muted">아직 회원이 아니신가요? <Link className="button-pill-soft" to="/signup">회원가입 <Icon name="chevron-right" size={16} className="auth__icon" /></Link></p>
-      <p className="auth__center t-body-sm text-muted">U:NAVI가 처음이라면 <Link className="t-link" to="/about">서비스 소개 보기 ›</Link></p>
+      <ButtonPrimary className="auth__submit" type="submit" disabled={busy || !id || !password}>로그인</ButtonPrimary>
+      <p className="auth__note t-caption text-muted">비밀번호를 잊으면 관리자에게 초기화를 요청해 주세요.</p>
     </form>
   </AuthShell>;
 }
@@ -101,17 +106,17 @@ export function Signup() {
     } catch (x) { setServerError(x instanceof Error ? x.message : '서버에 연결하지 못했어요. 잠시 후 다시 시도하세요.'); }
     finally { setBusy(false); }
   };
-  const req = (text: string) => <>{text} <span className="t-caption text-muted">필수</span></>;
-  if (pending) return <AuthShell slug="signup" label="회원가입" other={{ to: '/login', label: '로그인' }}><form onSubmit={e => e.preventDefault()}>
-    <h1 className="t-heading-2">가입했어요</h1><p className="t-body-lg text-muted">계정은 만들어졌지만 바로 로그인되지 않았어요. 관리자가 계정 확인 설정을 끄면 로그인할 수 있어요.</p>
+  const req = (text: string) => <>{text}<span className="t-caption text-muted">필수</span></>;
+  if (pending) return <AuthShell slug="signup" label="회원가입" other={{ to: '/login', label: '로그인' }}><form className="auth__card-form" onSubmit={e => e.preventDefault()}>
+    <h1 className="t-heading-2">가입했어요</h1><p className="auth__sub t-body-lg text-muted">계정은 만들어졌지만 바로 로그인되지 않았어요. 관리자가 계정 확인 설정을 끄면 로그인할 수 있어요.</p>
     <Link className="button-primary auth__link-button" to="/login">로그인하러 가기</Link></form></AuthShell>;
-  return <AuthShell slug="signup" label="회원가입" other={{ to: '/login', label: '로그인' }}>
-    <form onSubmit={submit} noValidate>
-      <h1 className="t-heading-2">회원가입</h1><p className="t-body-lg text-muted">우리 고등학교를 고르고 계정을 만드세요</p>
-      <h2 className="t-heading-4">1 학교 선택</h2>
+  return <AuthShell slug="signup" label="회원가입" other={{ to: '/login', label: '로그인' }} switchRow={<SwitchRow question="이미 계정이 있으신가요?" to="/login" label="로그인" />}>
+    <form className="auth__card-form" onSubmit={submit} noValidate>
+      <h1 className="t-heading-2">회원가입</h1><p className="auth__sub t-body-lg text-muted">우리 고등학교를 고르고 계정을 만드세요</p>
+      <h2 className="t-heading-4 auth__lead">1 학교 선택</h2>
       <Band>고른 학교의 기록만 보여요. 가입한 뒤에는 바꿀 수 없어요</Band>
       <div className="progress-steps progress-steps--3" role="progressbar" aria-label="학교 선택 진행" aria-valuemin={0} aria-valuemax={3} aria-valuenow={filled}>{[0, 1, 2].map(i => <i key={i} className={i < filled ? 'is-on' : ''} />)}</div>
-      <div className="auth__field"><label htmlFor="sido">시/도</label><select id="sido" value={f.sido} onChange={e => { set({ sido: e.target.value }); pick(null); setSchools(null); }}><option value="">시/도 선택</option>{SIDO.map(s => <option key={s}>{s}</option>)}</select></div>
+      <div className="auth__field"><label htmlFor="sido">시/도</label><div className="password-field"><select id="sido" value={f.sido} onChange={e => { set({ sido: e.target.value }); pick(null); setSchools(null); }}><option value="">시/도 선택</option>{SIDO.map(s => <option key={s}>{s}</option>)}</select><Icon name="chevron-down" size={20} className="auth__select-icon" /></div></div>
       <div className="auth__field"><label htmlFor="school-q">학교 이름</label>
         <div className="password-field"><input id="school-q" value={query} placeholder="예: 한빛고" onChange={e => setQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); void search(); } }} />
           <button type="button" className="icon-button" aria-label="학교 찾기" onClick={() => void search()}><Icon name="search" size={20} /></button></div>
@@ -123,15 +128,14 @@ export function Signup() {
       <div className="auth__field"><label htmlFor="name">{req('이름')}</label><input id="name" value={f.name} autoComplete="name" placeholder="이름을 입력하세요" aria-invalid={!!errors.name} onChange={e => set({ name: e.target.value })} /><FieldError text={errors.name} /></div>
       <div className="auth__field"><label htmlFor="signup-id">{req('아이디')}</label><input id="signup-id" value={f.id} autoComplete="username" autoCapitalize="none" placeholder="영문 소문자로 시작, 4~20자" aria-invalid={!!errors.id} onChange={e => set({ id: e.target.value.toLowerCase() })} /><FieldError text={errors.id} /></div>
       <Password id="password" label={req('비밀번호')} value={f.password} onChange={v => set({ password: v })} placeholder="8자 이상 입력하세요" error={errors.password} />
-      <Password id="password-confirm" label={req('비밀번호 확인')} value={f.confirm} onChange={v => set({ confirm: v })} placeholder="비밀번호를 한 번 더 입력하세요" error={errors.confirm} />
+      <Password id="password-confirm" label={req('비밀번호 확인')} value={f.confirm} onChange={v => set({ confirm: v })} placeholder="비밀번호를 한 번 더 입력하세요" error={errors.confirm} toggle={false} />
       <fieldset className="terms"><legend className="sr-only">약관</legend>
-        <label className="terms__row terms__all"><input type="checkbox" checked={allAgreed} onChange={e => set({ terms: Object.fromEntries(TERMS.map(t => [t.key, e.target.checked])) })} /> 모두 동의</label>
-        {TERMS.map(t => <div key={t.key} className="terms__row"><label><input type="checkbox" checked={!!f.terms[t.key]} onChange={e => set({ terms: { ...f.terms, [t.key]: e.target.checked } })} /> {t.label}</label>
+        <label className="terms__row terms__all t-title"><input type="checkbox" checked={allAgreed} onChange={e => set({ terms: Object.fromEntries(TERMS.map(t => [t.key, e.target.checked])) })} /> 모두 동의</label>
+        {TERMS.map(t => <div key={t.key} className="terms__row"><label className="t-body-sm"><input type="checkbox" checked={!!f.terms[t.key]} onChange={e => set({ terms: { ...f.terms, [t.key]: e.target.checked } })} /> {t.label}</label>
           <button type="button" className="icon-button" aria-label={`${t.label.replace(' (필수)', '')} 보기`} onClick={() => setReading(t)}><Icon name="chevron-right" size={16} /></button></div>)}
         <FieldError text={errors.terms} /></fieldset>
       <FieldError text={serverError} />{notReady && <NotReady />}
-      <ButtonPrimary type="submit" disabled={busy}>가입하기</ButtonPrimary>
-      <p className="auth__center t-body-sm text-muted">이미 계정이 있으신가요? <Link className="button-pill-soft" to="/login">로그인 <Icon name="chevron-right" size={16} className="auth__icon" /></Link></p>
+      <ButtonPrimary className="auth__submit" type="submit" disabled={busy}>가입하기</ButtonPrimary>
     </form>
     {reading && <Modal label={reading.label} onClose={() => setReading(null)}><h3 className="t-heading-4">{reading.label.replace(' (필수)', '')}</h3>
       <p className="t-body-sm">약관 전문은 서비스를 공개하기 전에 확정해 여기에 실어요.</p>

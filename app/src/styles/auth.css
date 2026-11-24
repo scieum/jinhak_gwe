@@ -1,42 +1,87 @@
-/* login·signup 02-spec: 셸 밖 화면. 왼쪽 폼 + 오른쪽 소개 패널, 모서리 0, 그림자 없음. */
-.auth { min-height: 100dvh; display: grid; grid-template-rows: 64px 1fr; background: var(--color-canvas); }
-.auth__header { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--spacing-xl); border-bottom: 1px solid var(--color-hairline-soft); }
-.auth__body { display: grid; grid-template-columns: 1fr 1fr; }
-.auth__form { display: flex; justify-content: center; padding: var(--spacing-section-lg) var(--spacing-lg); }
-.auth__form form { width: 100%; max-width: 440px; display: grid; gap: var(--spacing-md); align-content: start; }
+/* login·signup v2 시안(login 346:262094·346:261947, signup 455:61169·455:60949): 셸 밖 화면. 모서리 0, 그림자 없음.
+   모바일: 회색 알약 머리(로고만) → 테두리 폼 카드 → 카드 밖 "○○ ›" 줄. PC: 상단 바 + 왼쪽 폼(440) + 오른쪽 소개 패널(2×2 카드). */
+.auth { min-height: 100dvh; display: flex; flex-direction: column; background: var(--color-canvas); }
+.auth__header { display: flex; align-items: center; justify-content: space-between; height: 48px; margin: 16px 20px 0; padding: 0 24px; background: var(--color-canvas-soft); }
+.auth__header .brand-logo { width: 92px; }
+.auth__header .button-outline { display: none; }
+.auth__body { flex: 1; display: flex; }
+.auth__form { flex: 1; display: flex; flex-direction: column; gap: 24px; padding: 24px 20px 32px; }
+.auth__intro { display: none; }
+
+/* 폼 카드: 칸 사이 간격은 시안 spacer 그대로 margin으로 */
+.auth__card-form { display: flex; flex-direction: column; border: 1px solid var(--color-hairline-soft); padding: 24px; }
+/* 시안 글자 상자는 줄높이를 정수 px로 반올림해 쌓는다(29.7→30, 25.5→26, 16.8→17). 같은 반올림으로 세로 위치를 맞춘다 */
+.auth__card-form > h1 { line-height: 30px; }
+.auth__sub { margin-top: 4px; line-height: 26px; }
+.auth__note, .auth__field > label { line-height: 17px !important; }
+.auth__lead { margin-top: 24px; }
 .auth__field { display: grid; gap: var(--spacing-xs); }
-.auth__field input, .auth__field select { min-height: 48px; width: 100%; }
-.auth__section { margin-top: var(--spacing-xl); }
-.auth__center { justify-self: center; text-align: center; }
-.auth__intro { background: var(--color-canvas-soft); padding: var(--spacing-section-lg); display: grid; gap: var(--spacing-md); align-content: start; }
-.auth__form h1, .auth__intro h2 { margin: 0; line-height: var(--font-heading-2-line); }
-.auth__intro ul { list-style: none; padding: 0; display: grid; gap: var(--spacing-sm); }
-.auth__card { display: flex; gap: var(--spacing-md); padding: var(--spacing-lg); background: var(--color-canvas); border: 1px solid var(--color-hairline-soft); }
-.auth__icon { color: var(--color-accent); flex: none; }
-.auth__band { display: flex; gap: var(--spacing-xs); align-items: flex-start; padding: var(--spacing-sm) var(--spacing-md); background: var(--color-canvas-soft); }
-.button-pill-soft { display: inline-flex; align-items: center; gap: var(--spacing-xxs); min-height: 44px; padding: 0 var(--spacing-md); background: var(--color-canvas-soft); color: var(--color-ink); font-weight: 600; text-decoration: none; }
-.password-field { display: flex; align-items: center; background: var(--color-field); }
-.password-field input { flex: 1; background: transparent; }
-.field-error { display: flex; gap: var(--spacing-xxs); align-items: center; color: var(--color-judge-risk); }
+.auth__field + .auth__field { margin-top: 16px; }
+.auth__submit { margin-top: 16px; width: 100%; }
+.auth__note { margin-top: 16px; text-align: center; }
+.auth__field > label { display: flex; gap: 6px; font-size: var(--font-label-size); font-weight: var(--font-label-weight); line-height: var(--font-label-line); }
+.auth__field > label > span { font-weight: var(--font-caption-weight); }
+
+.auth input:not([type='checkbox']), .auth select { width: 100%; height: 48px; font: inherit; color: var(--color-ink); background: var(--color-field); border: 0; padding: 0 var(--spacing-md); appearance: none; }
+.auth input::placeholder { color: var(--color-text-faint); opacity: 1; }
+.auth select:invalid, .auth select:has(option[value='']:checked) { color: var(--color-text-faint); }
+.auth input:focus-visible, .auth select:focus-visible { outline: 2px solid var(--color-ink); outline-offset: -2px; }
 .auth input[aria-invalid='true'], .auth select[aria-invalid='true'] { outline: 2px solid var(--color-judge-risk); outline-offset: -2px; }
-.progress-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-xxs); }
+/* 오른쪽 아이콘 칸: 아이콘 20, 오른쪽 16 */
+.password-field { position: relative; }
+.password-field:has(> .icon-button, > .auth__select-icon) > input, .password-field > select { padding-right: 52px; }
+.password-field > .icon-button { position: absolute; top: 0; right: 0; width: 52px; height: 48px; min-width: 0; color: var(--color-ink); }
+.auth__select-icon { position: absolute; top: 14px; right: 16px; color: var(--color-ink); pointer-events: none; }
+
+.auth__switch { display: flex; justify-content: center; align-items: center; gap: var(--spacing-xs); min-height: 44px; }
+.button-pill-soft { display: inline-flex; align-items: center; gap: var(--spacing-xxs); min-height: 44px; padding: 0 var(--spacing-md); background: var(--color-canvas-soft); color: var(--color-ink); font-weight: 600; text-decoration: none; } /* 공용(다른 화면도 씀) — 원래 규칙 그대로 */
+
+.auth__icon { color: var(--color-accent); flex: none; }
+.auth__band { display: flex; gap: var(--spacing-xs); align-items: center; padding: var(--spacing-sm) var(--spacing-md); background: var(--color-canvas-soft); margin-top: 12px; }
+.field-error { display: flex; gap: var(--spacing-xxs); align-items: center; color: var(--color-judge-risk); }
+
+/* signup: 학교 선택 → 계정 → 약관 */
+[data-slug='signup'] .auth__field + .auth__field { margin-top: 12px; }
+.progress-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-xxs); margin-top: 12px; }
+.progress-steps--3 { grid-template-columns: repeat(3, 1fr); }
 .progress-steps i { height: 4px; background: var(--color-hairline); }
 .progress-steps i.is-on { background: var(--color-accent); }
-.terms { border: 0; padding: 0; margin: 0; display: grid; }
+.progress-steps + .auth__field, .auth__section + .auth__field { margin-top: 16px; }
+.auth__section { margin-top: 32px; }
+.terms { border: 0; padding: 0; margin: 24px 0 0; display: grid; }
 .terms__row { display: flex; align-items: center; justify-content: space-between; min-height: 44px; gap: var(--spacing-xs); }
-.terms__row input { width: 20px; height: 20px; accent-color: var(--color-ink); }
-.terms__all { justify-content: flex-start; font-weight: 600; border-bottom: 1px solid var(--color-hairline-soft); }
-@media (max-width: 900px) {
-  .auth__body { grid-template-columns: 1fr; }
-  .auth__intro { display: none; }
-  .auth__header .button-outline { display: none; }
-  .auth__form { padding: var(--spacing-lg) var(--spacing-card); }
-  .auth__form form { border: 1px solid var(--color-hairline-soft); padding: var(--spacing-lg); }
-}
-.auth input:not([type='checkbox']), .auth select { font: inherit; color: var(--color-ink); background: var(--color-field); border: 0; padding: 0 var(--spacing-md); min-height: 48px; }
-.auth input:focus-visible, .auth select:focus-visible { outline: 2px solid var(--color-ink); outline-offset: -2px; }
-.auth select:disabled { color: var(--color-text-muted); }
-.auth label, .auth .label { font-size: var(--font-label-size); font-weight: var(--font-label-weight); }
+.terms__row > label, .terms__all { display: flex; align-items: center; gap: var(--spacing-sm); }
+.terms__all { justify-content: flex-start; }
+.terms__row input { appearance: none; flex: none; width: 20px; height: 20px; margin: 0; background: var(--color-canvas); border: 1.5px solid var(--color-ink-soft); cursor: pointer; }
+.terms__row input:checked { background: var(--color-ink); box-shadow: inset 0 0 0 3px var(--color-canvas); }
+.terms__row > .icon-button { flex: none; width: 44px; min-width: 0; padding: 0; justify-items: end; color: var(--color-text-muted); }
+[data-slug='signup'] .auth__submit { margin-top: 24px; }
 .school-list { list-style: none; padding: 0; max-height: 240px; overflow-y: auto; }
-.auth__link-button { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; text-decoration: none; }
-.progress-steps--3 { grid-template-columns: repeat(3, 1fr); }
+.auth__link-button { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; margin-top: 24px; text-decoration: none; }
+
+@media (min-width: 1024px) {
+  .auth__header { height: 64px; margin: 0; padding: 0 32px; background: var(--color-canvas); border-bottom: 1px solid var(--color-hairline-soft); }
+  .auth__header .brand-logo { width: 124px; }
+  .auth__header .button-outline { display: inline-flex; }
+  .auth__body { display: grid; grid-template-columns: 1fr 1fr; }
+  .auth__form { align-items: center; gap: 48px; padding: 64px 0; }
+  [data-slug='signup'] .auth__form { gap: 32px; }
+  .auth__card-form { width: 440px; border: 0; padding: 0; }
+  .auth__switch { width: 440px; }
+  .auth__card-form > h1 { line-height: 35px; }
+  .auth__sub { margin-top: 8px; line-height: 27px; }
+  .auth__lead { margin-top: 32px; }
+  .auth__submit { margin-top: 12px; }
+  [data-slug='signup'] .auth__field + .auth__field { margin-top: 16px; }
+  .auth__section { margin-top: 48px; }
+  .terms { margin-top: 32px; }
+  [data-slug='signup'] .auth__submit { margin-top: 32px; }
+
+  /* 긴 폼(signup)에서도 소개는 첫 화면 높이(64 아래 836) 가운데에 둔다 */
+  .auth__intro { display: flex; align-items: center; align-self: start; position: sticky; top: 0; height: calc(100dvh - 64px); padding: 0 64px; background: var(--color-canvas-soft); }
+  .auth__intro-inner { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+  .auth__intro ul { list-style: none; margin: 24px 0 16px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; gap: 12px; }
+  .auth__card { display: flex; flex-direction: column; padding: 24px; background: var(--color-canvas); }
+  .auth__card h3 { margin-top: 12px; }
+  .auth__card p { margin-top: 8px; white-space: pre-line; }
+}
