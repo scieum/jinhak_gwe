@@ -167,7 +167,7 @@ export function Doelgak() {
           {empty && <div className="empty-state dg-empty"><Icon name={empty.icon} size={40} /><h3 className="t-heading-4">{empty.title}</h3><p className="t-body-sm">{empty.body}</p>{empty.action}</div>}
           <TraceAccordion trace={[...conversion.trace, ...(active?.r?.trace ?? [])]} />
           {active && <ComparisonDetails input={inputBasis} cut={active.p.cut_basis} />}
-          <Disclaimer />
+          <Disclaimer icon />
         </div>
       </div>
       {sheet && <Modal label="필터" onClose={() => setSheet(false)}>

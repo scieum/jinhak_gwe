@@ -45,6 +45,7 @@
 .admissions-list .al-result__tools .segmented-control__option { flex: 1; min-height: 40px; padding: 0; }
 .al-note { display: flex; align-items: flex-start; gap: 4px; margin: 0 0 16px; color: var(--color-text-muted); font-size: var(--font-caption-size); }
 .al-note > .icon { flex: none; margin-top: 1px; }
+.al-mobile { display: none; }
 
 /* 표 */
 .al-table-card { padding: 24px; }
@@ -100,6 +101,7 @@
 
 @media (max-width: 1023px) {
   .admissions-list > .screen-heading { display: none; }
+  .al-mobile { display: inline; }
   .al-search { width: 100%; }
   .al-filters, .al-result__interest, .al-sort, .al-result__tools .segmented-control, .al-table-card { display: none; }
   .al-chiprow { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; overflow-x: auto; scrollbar-width: none; }
@@ -135,3 +137,60 @@
 .plan-notices { padding-left: var(--spacing-lg); display: grid; gap: var(--spacing-sm); }
 .plan-facts > .plan-fact-row { display: contents; }
 .plan-field-sources { display: flex; flex-wrap: wrap; gap: var(--spacing-sm); margin-top: var(--spacing-xs); font-size: var(--font-caption-size); }
+
+/* G5 시안 맞춤(2026-11-24, Figma admissions-list/1440 346:125015 · /390 346:123524 실측). 공용 student.css보다 앞서도록 .admissions-list로 묶어요.
+   줄높이는 시안 값(12·14px = 1.4) */
+.admissions-list .promo-banner { min-height: 74px; }
+.admissions-list .promo-banner-text .t-body-sm { font-size: 13px; line-height: 19.5px; }
+.admissions-list .filter-chip { line-height: var(--font-label-line); letter-spacing: 0.015em; } /* 시안 글자 상자 폭(정수 올림)과 칩 위치를 맞춰요 */
+.admissions-list .al-filters { row-gap: 4px; padding: 16px 24px; }
+.admissions-list .al-filters > * { min-height: 40px; display: flex; align-items: center; }
+.al-asof, .admissions-list .al-filters__label, .admissions-list .al-note, .admissions-list .al-result__badge { line-height: var(--font-caption-line); }
+.admissions-list .al-result__count { gap: 12px; }
+.admissions-list .al-result__badge { display: none; }
+.admissions-list .al-note { margin: 0 0 16px; color: var(--color-text-muted); }
+.admissions-list .al-pager .t-caption { color: var(--color-text-muted); }
+.admissions-list .al-card__head .al-univ { line-height: var(--font-heading-4-line); }
+.admissions-list .al-quota-label { color: var(--color-ink); }
+.admissions-list .al-quota.data-table { display: inline-flex; justify-content: flex-end; align-items: baseline; gap: 4px; min-width: 74px; font-size: var(--font-body-sm-size); line-height: 1.5; }
+.admissions-list .al-quota.data-table strong, .admissions-list .al-quota.data-table .delta-up, .admissions-list .al-quota.data-table .delta-down { font-size: var(--font-table-size); line-height: var(--font-table-line); }
+.al-quota-wrap { display: inline-flex; align-items: baseline; gap: 4px; white-space: nowrap; }
+
+/* 표(PC): 열 폭 · 행 48 + 1px 선 · 머리 44 · 정렬 화살표 간격 8 · 하트 아이콘 셀 왼쪽 16+2 */
+.admissions-list .al-table { table-layout: fixed; width: 100%; }
+.admissions-list .al-table thead th { height: 44px; padding: 0 16px; font-size: 12px; font-weight: 600; line-height: var(--font-table-head-line); color: var(--color-ink-soft); }
+.admissions-list .al-table td { height: 49px; padding: 0 16px; border-bottom: 1px solid var(--color-hairline); line-height: var(--font-table-line); vertical-align: middle; }
+.al-table th:nth-child(1) { width: 152px; } .al-table th:nth-child(2) { width: 72px; } .al-table th:nth-child(4) { width: 72px; }
+.al-table th:nth-child(5) { width: 140px; } .al-table th:nth-child(6) { width: 136px; } .al-table th:nth-child(7) { width: 96px; }
+.al-table th:nth-child(8) { width: 72px; } .al-table th:nth-child(9) { width: 56px; }
+.admissions-list .al-th-sort { gap: 8px; }
+.admissions-list .al-table .al-univ { display: flex; width: fit-content; } /* 줄 상자 기준선에 얹히면 2~3px 위로 떠요 */
+.admissions-list .al-table th:nth-child(2) { padding-left: 10px; } /* 시안 머리글 열 2는 본문보다 6 왼쪽(449)에서 시작해요 */
+.admissions-list .al-pager { gap: 16px; padding: 16px 0 0; }
+/* 시안: PC 표 보기에서는 페이지 이동 줄이 표 카드 안(표 아래 16, 카드 아래 24) */
+@media (min-width: 1024px) {
+  .admissions-list .al-table-card:not(.al-table-card--hidden) { padding-bottom: 0; }
+  .admissions-list .al-table-card:not(.al-table-card--hidden) + .al-pager { padding: 16px 0 24px; background: var(--color-canvas); }
+}
+.admissions-list .al-card__program { min-height: 20px; }
+.admissions-list .al-table .interest-heart { display: grid; place-items: center; margin: -10px 0 -10px -10px; }
+
+@media (max-width: 1023px) {
+  .student-screen.admissions-list { margin-top: -4px; } /* 시안: sub-nav 아래 16에서 배너 시작(셸 기본 20) */
+  .admissions-list .al-filters { display: none; }
+  .admissions-list .al-result { min-height: 32px; height: 32px; }
+  .admissions-list .al-sort-link { min-height: 44px; margin: -6px 0; font-size: 12px; line-height: var(--font-label-line); }
+  .admissions-list .al-result__badge { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: var(--color-canvas); }
+  .admissions-list .al-result__count { gap: 8px; }
+  .admissions-list .al-item { gap: 0; padding: 0; }
+  .admissions-list .al-card { gap: 4px; padding: 16px 20px 4px; }
+  .admissions-list .al-card__head { gap: 8px; height: 44px; }
+  .admissions-list .al-card__head .al-univ { gap: 8px; }
+  .admissions-list .al-card__head .al-univ .university-logo { flex-basis: 40px; width: 40px; height: 40px; }
+  .admissions-list .al-card .interest-heart { margin: 0 0 0 auto; }
+  .admissions-list .al-note { align-items: center; }
+  .admissions-list .al-card__facts { align-items: center; height: 36px; padding: 0 20px 16px; }
+}
+
+/* 공개 화면: 시안 머리 줄에는 시행계획 배지만 있어요(02-spec.md 3장 "모드 전환·잠금은 두지 않아요"). 이 화면이 열려 있을 때만 셸 머리의 모드 전환·잠금을 숨겨요 */
+body:has(.admissions-list) .topbar__actions > :not(#topbar-screen-actions) { display: none; }

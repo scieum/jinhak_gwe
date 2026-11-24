@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNod
 import { Link, useSearchParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { loadAdmissionPlans } from '../data/admissionPlans';
+import { samplePlanCatalog } from '../data/sample/admissionPlans';
+import { isSampleMode, useSampleMode } from '../data/sample/mode';
 import { UniversityLogo } from '../components/UniversityLogo';
 import { PromoBanner } from '../components/PromoBanner';
 import { Icon } from '../components/Icon';
@@ -95,7 +97,7 @@ function toRows(catalog: PlanCatalog): Row[] {
     if (!plan.programs.length) return [{ key: plan.id, plan, group, unit: '—', quota: null, date: latest }];
     return plan.programs.map(program => ({
       key: `${plan.id}|${program.name}`, plan, program, group, type: program.round === '정시' ? '정시' : program.type,
-      unit: /전형 전체|전체 모집/.test(program.scope ?? '') ? '전 모집단위' : '원문 확인', quota: count(program.quota),
+      unit: (program as PlanProgram & { unit?: string }).unit ?? (/전형 전체|전체 모집/.test(program.scope ?? '') ? '전 모집단위' : '원문 확인'), quota: count(program.quota),
       date: plan.documents.find(d => d.id === program.document_id)?.checked_at ?? latest,
       // 사실 글자만(판정 아님): 원문 요약이 "미적용"으로 시작하면 없음, 정시는 해당 없음, 그 밖에 기준이 적혀 있으면 있음
       minimum: program.round === '정시' ? '해당 없음' : /^(수능최저\s*)?미적용/.test(program.minimum) ? '없음' : '있음',
@@ -111,7 +113,7 @@ const facet = (row: Row, key: FilterKey, value: string) => key === 'region' ? ro
 const passes = (row: Row, f: Filters) => (Object.keys(f) as FilterKey[]).every(k => !f[k].length || (k === 'cond' ? f[k].every(v => facet(row, k, v)) : f[k].some(v => facet(row, k, v))));
 const filterCount = (f: Filters) => Object.values(f).reduce((n, v) => n + v.length, 0);
 const ko = (a: string, b: string) => a.localeCompare(b, 'ko');
-const byName = (a: Row, b: Row) => ko(a.plan.university, b.plan.university) || ko(a.plan.campus, b.plan.campus) || (a.program ? 0 : 1) - (b.program ? 0 : 1) || ko(a.program?.name ?? '', b.program?.name ?? '');
+const byName = (a: Row, b: Row) => ko(a.plan.university, b.plan.university) || ko(a.plan.campus, b.plan.campus) || (a.program ? 0 : 1) - (b.program ? 0 : 1); // 같은 캠퍼스 안은 자료 순서(수시 → 정시, 시안 순서)
 const ORDER = REGIONS.map(([name]) => name);
 const sorters: Record<Sort, (a: Row, b: Row) => number> = {
   가나다순: byName,
@@ -130,11 +132,12 @@ export function AdmissionsList() {
   const [sort, setSort] = useState<Sort>('가나다순'), [view, setView] = useState<'list' | 'table'>('table'), [interestOnly, setInterestOnly] = useState(false);
   const [page, setPage] = useState(0), [sheet, setSheet] = useState<'' | 'filter' | 'sort'>(''), [dropdown, setDropdown] = useState(false);
   const [confirm, setConfirm] = useState<Row | null>(null), [toast, setToast] = useState<{ text: string; sub?: string } | null>(null), [saveError, setSaveError] = useState(false);
-  const resultRef = useRef<HTMLDivElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null), sample = useSampleMode();
   useEffect(() => { let active = true; setError(false);
-    loadAdmissionPlans().then(value => { if (active) setCatalog(value); }).catch(() => { if (active) setError(true); });
+    // 샘플 모드: 공개 자료 대신 시안 데모 전형 12행(02-spec.md 1장). 샘플을 지우면 실제 시행계획 자료.
+    (isSampleMode() ? Promise.resolve(samplePlanCatalog) : loadAdmissionPlans()).then(value => { if (active) setCatalog(value); }).catch(() => { if (active) setError(true); });
     return () => { active = false; };
-  }, [attempt]);
+  }, [attempt, sample]);
   useEffect(() => { setPage(0); }, [query, type, filters, sort, interestOnly]);
   useEffect(() => { if (!toast) return; const t = window.setTimeout(() => setToast(null), 3000); return () => window.clearTimeout(t); }, [toast]);
   const interests = useLiveQuery(async () => { try { return new Set((await studentDb.interests.toArray()).map(i => i.id)); } catch { return null; } }, []);
@@ -167,7 +170,7 @@ export function AdmissionsList() {
     onClick={e => { e.stopPropagation(); void toggle(row); }}><Icon name="heart" size={20} /></button>;
   const open = (row: Row) => update('plan', row.plan.id);
   const univLink = (row: Row, logo = true) => <Link className="al-univ" to={`/univ-detail?u=${encodeURIComponent(row.plan.university)}`} onClick={e => e.stopPropagation()}>
-    {logo && <UniversityLogo planId={row.plan.id} />}<span>{row.plan.university}{row.plan.campus !== '본교' && ` ${row.plan.campus}`}</span></Link>;
+    {logo && <UniversityLogo planId={row.plan.id} university={(row.plan as AdmissionPlan & { logo_name?: string }).logo_name ?? row.plan.university} />}<span>{row.plan.university}{row.plan.campus !== '본교' && ` ${row.plan.campus}`}</span></Link>;
   const programText = (row: Row) => row.program?.name ?? '전형 요약 준비 중 · 원문 보기';
   const rowKeys = (row: Row) => (e: KeyboardEvent<HTMLElement>) => {
     if (e.target !== e.currentTarget) return;
@@ -175,6 +178,7 @@ export function AdmissionsList() {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); ((e.key === 'ArrowDown' ? e.currentTarget.nextElementSibling : e.currentTarget.previousElementSibling) as HTMLElement | null)?.focus(); }
   };
   const goPage = (n: number) => { setPage(n); resultRef.current?.scrollIntoView?.({ block: 'start' }); resultRef.current?.focus({ preventScroll: true }); };
+  const pager = <nav className="al-pager" aria-label="전형계획 페이지"><button type="button" className="button-outline" disabled={!current} onClick={() => goPage(current - 1)}>이전</button><span className="t-caption num">{current + 1} / {pages}</span><button type="button" className="button-outline" disabled={current + 1 >= pages} onClick={() => goPage(current + 1)}>다음</button></nav>;
   const chip = (label: string, on: boolean, click: () => void, aria?: string) => <button key={label} type="button" className="filter-chip" aria-pressed={on} aria-label={aria} onClick={click}>{label}</button>;
   const flip = (f: Filters, k: FilterKey, v: string): Filters => ({ ...f, [k]: f[k].includes(v) ? f[k].filter(x => x !== v) : [...f[k], v] });
   const typeChips = ['', ...TYPES].map(t => chip(`${t || '전체'} ${typeCount(t)}`, type === t, () => setType(t)));
@@ -216,7 +220,7 @@ export function AdmissionsList() {
             <SegmentedControl label="보기" value={view} onChange={setView} options={[{ value: 'list', label: '목록' }, { value: 'table', label: '표' }]} />
           </div>}
         </div>
-        <p className="disclaimer-note al-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {catalog.checked_at} · 검수 전 요약은 성적 판정에 쓰지 않아요</span></p>
+        <p className="disclaimer-note al-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {catalog.checked_at} · {sample ? <><br className="al-mobile" />샘플의 대학·숫자는 예시예요</> : '검수 전 요약은 성적 판정에 쓰지 않아요'}</span></p>
         {selectedId && !selected && errorLine('고른 전형을 목록에서 찾지 못했어요. 시행계획이 바뀌었을 수 있어요. 아래 목록에서 다시 골라 주세요.')}
         {(saveError || interests === null) && errorLine('관심 전형을 저장하지 못했어요. 브라우저 설정에서 사이트 저장을 허용한 뒤 다시 눌러 주세요.')}
         {selected && <PlanDetail key={selected.id} plan={selected} onClose={() => update('plan', '')} />}
@@ -226,7 +230,8 @@ export function AdmissionsList() {
               <div className="al-card__head">{univLink(row)}{heart(row)}</div>
               <p className="al-card__program">{row.plan.region} · {programText(row)}{row.program && ` · ${row.unit}`}{sort === '최근 변경순' && <span className="t-caption text-muted num"> · {shortDate(row.date)} 확인</span>}</p>
             </article>
-            <div className="al-card__facts"><span>{facts(row)}</span>{row.program && <span className="data-table al-quota"><Quota program={row.program} /></span>}</div>
+            <div className="al-card__facts"><span>{facts(row)}</span>{row.program && (quotaDelta(row.program.quota, (row.program as PlanProgram & { quota_prev?: string }).quota_prev) === null ? <span className="al-quota-label"><Quota program={row.program} /></span>
+              : <span className="al-quota-wrap"><span className="al-quota-label">모집</span><span className="data-table al-quota"><Quota program={row.program} prefix="" /></span></span>)}</div>
           </div>)}</div>
           <div className={`al-panel al-table-card${view === 'list' ? ' al-table-card--hidden' : ''}`}><table className="data-table al-table">
             <thead><tr>{([['대학', '가나다순'], ['지역', '지역순']] as const).map(([label, s]) => <th key={label} scope="col" aria-sort={sort === s ? 'ascending' : 'none'}><button type="button" className="al-th-sort" onClick={() => setSort(s)}>{label}<Icon name="arrow-up-down" size={16} className={sort === s ? 'al-th-sort--on' : ''} /></button></th>)}
@@ -239,7 +244,7 @@ export function AdmissionsList() {
               <td>{row.type ?? '—'}</td><td>{row.unit}</td><td className="num">{row.program ? <Quota program={row.program} prefix="" /> : '—'}</td>
               <td>{row.minimum ?? '—'}</td><td>{row.program ? row.interview ?? '원문 확인' : '—'}</td><td>{heart(row)}</td></tr>)}</tbody>
           </table></div>
-          <nav className="al-pager" aria-label="전형계획 페이지"><button type="button" className="button-outline" disabled={!current} onClick={() => goPage(current - 1)}>이전</button><span className="t-caption num">{current + 1} / {pages}</span><button type="button" className="button-outline" disabled={current + 1 >= pages} onClick={() => goPage(current + 1)}>다음</button></nav>
+          {pager}
         </>}
       </>}
     {sheet === 'filter' && <Modal label="필터" onClose={() => setSheet('')}>

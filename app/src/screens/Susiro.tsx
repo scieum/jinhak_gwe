@@ -75,7 +75,7 @@ export function Susiro() {
   const [boardId, setBoardId] = useState(''), [sheet, setSheet] = useState<Sheet>(null), [menu, setMenu] = useState(false);
   const [editing, setEditing] = useState<{ boardId: string; slot: BoardSlot } | null>(null), [sharing, setSharing] = useState(false);
   const [deleting, setDeleting] = useState<Board | null>(null), [busy, setBusy] = useState(false), lock = useRef(false);
-  const [error, setError] = useState(''), [message, setMessage] = useState(''), [focus, setFocus] = useState<string[]>([]);
+  const [error, setError] = useState(''), [message, setMessage] = useState(''), [focus, setFocus] = useState<string[] | null>(null);
   const [picked, setPicked] = useState<string | null>(null), [dragId, setDragId] = useState<string | null>(null);
   useEffect(() => { if (!message) return; const t = window.setTimeout(() => setMessage(''), 3000); return () => window.clearTimeout(t); }, [message]);
   if (!state) return <section className="student-screen susiro" data-slug="susiro"><p role="status" className="t-body-sm text-muted">기기에 저장된 기록을 읽고 있어요.</p></section>;
@@ -97,6 +97,8 @@ export function Susiro() {
   const judged = new Map([...board.slots, ...board.exempt].map(s => [s.application_id, judgment(s.application_id)]));
   const verdict = (id: string): Verdict | null => { const j = judged.get(id); return j ? (j.v.boundary ? '경계' : j.v.label) : null; };
   const warnings = boardWarnings(board, name, id => judged.get(id)?.v.label ?? null);
+  // PC 시안 기본 상태(1440): 첫 경고가 선택돼 관련 칸·경고에 1px 잉크 테두리. 경고를 누르거나 칸을 비우면 그 선택을 따라요.
+  const focused = focus ?? (desktop ? warnings[0]?.slots ?? [] : []);
   const filled = board.slots.length + board.exempt.length > 0;
   const anyJudged = board.slots.some(s => judged.get(s.application_id)), allJudged = board.slots.length > 0 && board.slots.every(s => judged.get(s.application_id));
   const typeCount = (t: string) => board.slots.filter(s => typeOf(app(s.application_id)?.program ?? '') === t).length;
@@ -113,7 +115,7 @@ export function Susiro() {
     try { await action(); } catch (e) { setError(e instanceof Error ? e.message : '저장하지 못했어요. 다시 시도해 주세요.'); }
     finally { lock.current = false; setBusy(false); }
   };
-  const select = (id: string) => { setBoardId(id); setFocus([]); setPicked(null); setError(''); setMessage(''); };
+  const select = (id: string) => { setBoardId(id); setFocus(null); setPicked(null); setError(''); setMessage(''); };
   const openPick = () => { setError(''); setSheet('pick'); };
   const add = (a: ApplicationPlan) => run(async () => {
     const next = await studentDb.changeBoard(board.id, { kind: 'add', application_id: a.id }, draft && board.name);
@@ -136,7 +138,7 @@ export function Susiro() {
       : <span className={`judge-badge ${JUDGE[v][0]}`}><span aria-hidden="true">{JUDGE[v][1]}</span> {v}</span>; };
   const slotView = (s: BoardSlot, rank: number | null, index = -1) => { const a = app(s.application_id), title = a?.university ?? '지운 전형';
     const program = a ? [typeOf(a.program) ?? a.program, a.department].filter(Boolean).join(' · ') : '목록에서 지운 전형이에요. 이 칸을 비워 주세요.';
-    const cls = ['susi-slot', rank === null && 'susi-slot--exempt', focus.includes(s.application_id) && 'susi-slot--focus', picked === s.application_id && 'susi-slot--picked', dragId === s.application_id && 'susi-slot--dragging'].filter(Boolean).join(' ');
+    const cls = ['susi-slot', rank === null && 'susi-slot--exempt', focused.includes(s.application_id) && 'susi-slot--focus', picked === s.application_id && 'susi-slot--picked', dragId === s.application_id && 'susi-slot--dragging'].filter(Boolean).join(' ');
     const drag = desktop && rank !== null ? { draggable: !busy, onDragStart: (e: DragEvent) => { setDragId(s.application_id); e.dataTransfer.effectAllowed = 'move'; },
       onDragOver: (e: DragEvent) => e.preventDefault(), onDrop: (e: DragEvent) => { e.preventDefault(); if (dragId && dragId !== s.application_id) moveTo(dragId, index); setDragId(null); }, onDragEnd: () => setDragId(null) } : {};
     return <li key={s.application_id} className={cls} {...drag}>
@@ -154,7 +156,7 @@ export function Susiro() {
           if (delta) { e.preventDefault(); if (index + delta >= 0 && index + delta < board.slots.length) move(s.application_id, delta); }
           if (e.key === 'Escape') setPicked(null); }}><Icon name="grip-vertical" /></button>}</li>; };
 
-  const callouts = (after?: () => void) => warnings.map(w => <button key={w.code + w.title} type="button" className={`warning-callout${w.slots.length && w.slots.every(id => focus.includes(id)) ? ' warning-callout--selected' : ''}`}
+  const callouts = (after?: () => void) => warnings.map(w => <button key={w.code + w.title} type="button" className={`warning-callout${w.slots.length && w.slots.every(id => focused.includes(id)) ? ' warning-callout--selected' : ''}`}
     onClick={() => { setFocus(w.slots); after?.(); }}><Icon name="triangle-alert" size={20} /><span><strong>{w.title}</strong><span>{w.message}</span></span></button>);
   const distView = (row: boolean) => anyJudged && <section className={`susi-dist${row ? ' susi-dist--row' : ''}`} aria-label="판정 분포"><h4 className="t-caption">판정 분포</h4>
     <ul>{dist.map(([v, n]) => <li key={v}>{v === '경계' ? <span className="judge-badge judge-edge">경계</span> : <span className={`judge-badge ${JUDGE[v][0]}`}><span aria-hidden="true">{JUDGE[v][1]}</span> {v}</span>}<strong className="num">{n}</strong></li>)}</ul></section>;

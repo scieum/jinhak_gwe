@@ -5,11 +5,11 @@
 
 /* 수시로 (work/susiro/02-spec.md · Figma 346:131302 / 346:131328). 모서리 0, 판정 색은 judge-badge · 경고에만. */
 .student-screen.susiro { gap: 12px; padding-bottom: 76px; } /* 모바일: 하단 고정 버튼 자리 */
-.susi-asof { white-space: nowrap; }
+.susi-asof { white-space: nowrap; display: inline-flex; align-items: center; height: 24px; padding: 0 8px; line-height: 16.8px; } /* PC 머리 칩 161×24(시안) */
 .susiro .susi-error { display: flex; align-items: flex-start; gap: 8px; padding: var(--spacing-md); background: var(--color-canvas); color: var(--color-ink); }
 .susiro .disclaimer-note { display: flex; align-items: flex-start; gap: 4px; margin: 0; font-size: 12px; line-height: 17px; color: var(--color-text-muted); }
 .susiro .disclaimer-note .icon { margin-top: 1px; }
-.susiro .button-pill-soft { border: 0; font: inherit; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.susiro .button-pill-soft { gap: 8px; border: 0; font: inherit; font-weight: 600; cursor: pointer; white-space: nowrap; }
 .susiro .button-pill-soft:disabled { color: var(--color-text-faint); cursor: default; }
 .susiro .button-outline .icon, .susiro .button-pill-soft .icon { width: 20px; height: 20px; }
 
@@ -19,7 +19,7 @@
 .susiro .warning-callout > span { display: grid; gap: 4px; min-width: 0; }
 .susiro .warning-callout strong { font-size: 16px; font-weight: 600; line-height: 22px; }
 .susiro .warning-callout > .icon { color: var(--color-judge-reach); margin-top: 1px; }
-.susiro .warning-callout > span > span { font-size: 14px; line-height: 20px; }
+.susiro .warning-callout > span > span { font-size: 13px; line-height: 19.5px; }
 .susiro .warning-callout--selected { box-shadow: inset 0 0 0 1px var(--color-ink); }
 .susiro .warning-callout--neutral, .dialog .warning-callout--neutral { background: var(--color-canvas); color: var(--color-ink); cursor: default; }
 .susiro .warning-callout--neutral strong, .susiro .warning-callout--neutral > .icon { color: var(--color-ink); font-size: 14px; }
@@ -43,29 +43,29 @@
 
 /* 6칸: 모바일 세로 목록(칸 77) */
 .susi-board { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); }
-.susi-slot { position: relative; display: flex; align-items: center; min-width: 0; background: var(--color-canvas); border-bottom: 1px solid var(--color-hairline-soft); }
+.susi-slot { position: relative; display: flex; align-items: center; min-width: 0; background: var(--color-canvas); border-bottom: 1px solid var(--color-hairline); }
 .susi-slot--focus { box-shadow: inset 0 0 0 1px var(--color-ink); }
 .susi-slot__open { flex: 1; min-width: 0; display: grid; grid-template-columns: auto 40px minmax(0, 1fr) auto; grid-template-areas: 'rank logo info badges'; align-items: center; gap: 12px;
   min-height: 76px; padding: 12px 0 12px 16px; border: 0; background: none; color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
-.susi-slot__rank { grid-area: rank; min-width: 11px; font-size: 16px; font-weight: 700; }
+.susi-slot__rank { grid-area: rank; min-width: 11px; font-size: 17px; font-weight: 700; line-height: 23px; }
 .susi-slot__exempt { grid-area: ex; }
 .susiro .susi-slot .university-logo { grid-area: logo; width: 40px; height: 40px; flex-basis: 40px; }
 .susi-slot__info { grid-area: info; display: grid; gap: 4px; min-width: 0; }
-.susi-slot__info strong { font-size: 17px; font-weight: 700; line-height: 26px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.susi-slot__info strong { font-size: 19px; font-weight: 700; line-height: 25.65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .susi-slot__program { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px; line-height: 20px; color: var(--color-text-muted); }
 .susi-slot__program > span + span::before { content: ' · '; }
 .susi-slot__memo { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 12px; color: var(--color-text-muted); }
 .susi-slot__badges { grid-area: badges; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-.susiro .judge-badge, .susiro .data-status-badge { display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 8px; font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; }
+.susiro .judge-badge, .susiro .data-status-badge { display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 8px; font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; }
 .susiro .judge-badge > span { font-size: 9px; }
-.susiro .data-status-badge { background: var(--color-canvas-soft); color: var(--color-ink-soft); }
+.susiro .data-status-badge { background: var(--color-canvas-soft); color: var(--color-text-muted); }
 .susiro .judge-edge { color: var(--color-judge-edge); background: var(--color-canvas); outline: 1px dashed var(--color-judge-edge); outline-offset: -1px; }
 .susi-slot__grip { flex: none; display: grid; place-items: center; width: 40px; height: 44px; margin-right: 8px; padding: 0; border: 0; background: none; color: var(--color-ink); cursor: grab; }
 .susi-slot__grip .icon { width: 24px; height: 24px; }
 .susi-slot__grip[aria-pressed='true'] { box-shadow: inset 0 0 0 1px var(--color-ink); }
 .susi-slot--picked { box-shadow: inset 0 0 0 1px var(--color-ink); }
 .susi-slot--dragging { opacity: 0.4; }
-.susi-slot--empty { background: none; border: 1px dashed var(--color-hairline); }
+.susi-slot--empty { background: var(--color-canvas); border: 1px solid var(--color-hairline); }
 .susi-slot--empty > button { flex: 1; min-height: 62px; border: 0; background: none; color: var(--color-text-muted); font: inherit; font-size: 15px; cursor: pointer; }
 .susi-slot--exempt .susi-slot__open { grid-template-columns: 40px minmax(0, 1fr) auto; grid-template-areas: 'logo info ex' 'logo info badges'; row-gap: 4px; padding-right: 16px; min-height: 104px; }
 .susi-slot--exempt .susi-slot__exempt { justify-self: end; }
@@ -112,12 +112,16 @@
 .susi-dist h4 { font-weight: 600; color: var(--color-ink); }
 .susi-dist ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .susi-dist li { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.susi-dist strong { font-size: 20px; font-weight: 700; }
+.susi-dist strong { font-size: 24px; font-weight: 700; line-height: 28.8px; }
 .susi-dist--row ul { display: flex; flex-wrap: wrap; gap: 8px 16px; }
 .susi-dist--row li { justify-content: flex-start; }
 
 @media (max-width: 1023px) {
   .susiro .susi-asof { display: none; }
+  /* 수시로 v2 시안 머리(346:131303): 로고 y 12 · 제목 y 43 · sub-nav y 89 · 경고 바 y 145 — 다른 수시 전략 화면(sub-nav 100)보다 11 낮아요 */
+  .shell:has(.susiro) { --shell-appbar-height: 43px; }
+  .shell:has(.susiro) .appbar-title { min-height: 46px; align-items: flex-start; }
+  .shell:has(.susiro) .shell__content { padding-top: 12px; }
 }
 
 /* PC: 본문(3×2 카드) 744 + 오른쪽 조합 점검 패널 360 */
@@ -127,20 +131,21 @@
   .susi-main { gap: 16px; }
   .susi-top { min-height: 48px; }
   .susi-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-  .susiro .stat-tile { display: grid; align-content: start; gap: 4px; min-height: 117px; padding: 20px; background: var(--color-canvas); }
+  .susiro .stat-tile { display: grid; align-content: start; gap: 4px; min-height: 117px; padding: 20px; background: var(--color-canvas); border: 1px solid var(--color-hairline-soft); }
   .susiro .stat-tile > .t-caption { color: var(--color-text-muted); }
   .susiro .stat-tile > strong { font-size: 24px; font-weight: 700; line-height: 29px; }
   .susi-board { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
   .susi-slot { display: block; min-height: 184px; border: 1px solid var(--color-hairline-soft); }
   .susi-slot__open { width: 100%; height: 100%; min-height: 182px; grid-template-columns: auto 40px minmax(0, 1fr); grid-template-areas: 'rank logo .' 'info info info' 'badges badges badges';
-    grid-template-rows: 40px auto 24px; align-content: start; align-items: center; column-gap: 12px; row-gap: 12px; padding: 20px; }
-  .susi-slot__info { align-self: start; }
+    grid-template-rows: 40px auto 24px; align-content: start; align-items: center; column-gap: 12px; row-gap: 12px; padding: 20px 20px 16px; }
+  .susi-slot__info { align-self: start; margin-bottom: -12px; } /* 시안: 정보 바로 아래 칩 줄(간격 0) */
   .susi-slot__info strong { font-size: 19px; }
   .susi-slot__program { display: grid; white-space: normal; font-size: 13px; }
   .susi-slot__program > span + span::before { content: none; }
-  .susi-slot__badges { flex-direction: row; align-items: center; margin-top: -12px; }
+  .susi-slot__badges { flex-direction: row; align-items: center; align-self: start; gap: 8px; }
+  .susi-slot--focus, .susi-slot--picked { border-color: var(--color-ink); box-shadow: none; }
   .susi-slot__grip { position: absolute; top: 28px; right: 20px; width: 24px; height: 24px; margin: 0; }
-  .susi-slot--empty { min-height: 184px; display: flex; }
+  .susi-slot--empty { min-height: 184px; display: flex; border-color: var(--color-hairline); }
   .susi-slot--empty > button { min-height: 182px; }
   .susi-slot--exempt { min-height: 72px; }
   .susi-slot--exempt .susi-slot__open { min-height: 70px; grid-template-columns: auto 40px minmax(0, 1fr) auto; grid-template-areas: 'ex logo info badges'; grid-template-rows: auto; padding: 0 20px; column-gap: 16px; }
@@ -150,6 +155,8 @@
   .susi-board--exempt { grid-template-columns: minmax(0, 1fr); }
   .susi-panel { display: grid; gap: 16px; padding: 24px; background: var(--color-canvas); }
   .susi-panel .warning-callout { padding: 16px; }
+  .susi-panel > div > p { margin-top: 4px; }
+  .susi-panel .warning-callout--selected { box-shadow: none; border: 1px solid var(--color-ink); }
   .susi-panel .button-primary, .susi-panel .button-outline { width: 100%; }
   .susi-panel > p.t-caption { margin-bottom: -8px; }
   .susi-empty { padding: 32px 0; }

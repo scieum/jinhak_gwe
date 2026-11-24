@@ -37,7 +37,15 @@ CACHE = WORK / "_cache" / "figma"
 SHOTS = WORK / "_cache" / "impl"
 FRAMES = ("390", "1440")
 CACHE_V = 2  # 캐시 형식(필드를 늘리면 올려서 다시 받는다)
-PORT, DIST = 5199, "impl-dist"
+# 여러 에이전트가 동시에 게이트를 돌려도 빌드 폴더·포트가 겹치지 않게 프로세스마다 따로 쓴다
+DIST = f"impl-dist-{os.getpid()}"
+
+def _free_port():
+    import socket
+    with socket.socket() as so:
+        so.bind(("127.0.0.1", 0))
+        return so.getsockname()[1]
+
 
 # ---------------------------------------------------------------- Figma
 
@@ -435,9 +443,10 @@ class App:
     """앱 빌드 스냅샷(work/_cache/impl-dist) + vite preview + Playwright. 다른 세션이 src를 고쳐도 측정 중 화면이 바뀌지 않게
     dev 서버 대신 빌드본을 쓴다. 시드는 한 번, 화면마다 뷰포트별로 잰다."""
 
-    def __init__(self, url=None, port=PORT):
+    def __init__(self, url=None, port=None):
         import subprocess
         self.proc = None
+        port = port or _free_port()
         self.url = url or f"http://localhost:{port}"
         if not url:
             # node로 바로 부른다(cmd·npx를 거치면 한글 경로에서 vite가 죽음). 출력 폴더는 상대 경로.

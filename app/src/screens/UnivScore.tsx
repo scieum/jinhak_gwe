@@ -95,12 +95,12 @@ function TraceRows({ trace, open }: { trace: readonly Trace[]; open: boolean }) 
       {t.subject_id && t === subjects[Math.min(subjects.length, SHOWN_SUBJECTS) - 1] && !all && hidden > 0 && <button type="button" className="button-pill-soft" onClick={() => setAll(true)}>나머지 {hidden}과목 보기</button>}</li>)}</ol>
       : <p className="text-muted">검수된 규칙과 필요한 성적이 준비되면 계산 과정을 보여드려요.</p>}
     {all && subjects.length > SHOWN_SUBJECTS && <button type="button" className="button-pill-soft" onClick={() => setAll(false)}>접기</button>}
-    <Disclaimer />
+    <Disclaimer icon />
   </details>;
 }
 
 function Heart({ row, onRemove }: { row: Row; onRemove: (r: Row) => void }) {
-  return <button type="button" className="interest-heart us-heart" aria-pressed="true" aria-label={`${row.university} 관심에서 빼기`} title={`${row.university} 관심에서 빼기`} onClick={() => onRemove(row)}><Icon name="heart" size={24} /></button>;
+  return <button type="button" className="interest-heart us-heart" aria-pressed="true" aria-label={`${row.university} 관심에서 빼기`} title={`${row.university} 관심에서 빼기`} onClick={() => onRemove(row)}><Icon name="heart" size={20} /></button>;
 }
 
 /** 오른쪽 패널(PC)과 전체 화면 상세(모바일)가 같이 써요. */
@@ -110,7 +110,7 @@ function Detail({ row, single, desktop, onRemove }: { row: Row; single: boolean;
     {desktop && <header className="us-detail__head"><UniversityLogo university={row.university} /><div><h3 className="t-heading-3">{row.university}</h3><p className="t-body-sm text-muted">{row.program}</p></div><Heart row={row} onRemove={onRemove} /></header>}
     {!desktop && <header className="us-detail__head"><UniversityLogo university={row.university} /><div><h3 className="t-heading-3">{row.university}</h3><p className="t-body-sm text-muted">{row.program}</p></div><span className="data-status-badge">시행계획 기준</span></header>}
     {row.kind === 'ready' && v ? <>
-      <div className="us-detail__total"><span className="t-caption text-muted">합계</span><p><strong className="num">{v.total.toFixed(digits)}</strong> <span className="text-muted">/ {v.max.toLocaleString('ko-KR')}</span></p>
+      <div className="us-detail__total"><span className="t-caption text-muted">합계</span><p className="us-detail__value"><strong className="num">{v.total.toFixed(digits)}</strong> <span className="text-muted">/ {v.max.toLocaleString('ko-KR')}</span></p>
         {desktop ? <p className="t-body-sm num">교과 {two(v.grade)} · 출결 {two(v.attendance)}</p>
           : <dl className="us-detail__facts"><div><dt>교과</dt><dd className="num">{two(v.grade)}</dd></div><div><dt>출결</dt><dd className="num">{two(v.attendance)}</dd></div></dl>}
         {v.attendance_deduction > 0 && <p className="t-body-sm">출결 감점 {v.attendance_deduction}점이 있어요.</p>}</div>
@@ -119,7 +119,7 @@ function Detail({ row, single, desktop, onRemove }: { row: Row; single: boolean;
     </> : <div className="us-detail__total"><p>{isAttendance(row.reason) ? '합계는 출결을 입력하면 계산해요' : row.reason}</p>{isAttendance(row.reason) && <p className="t-body-sm text-muted">출결 입력 필요</p>}</div>}
     <TraceRows key={row.id} trace={row.trace} open={desktop && row.kind === 'ready' || row.kind === 'input'} />
     {row.kind === 'input' && <Link className="button-primary" to="/grade-input">{inputAction(row.reason)}</Link>}
-    {row.p?.source.startsWith('https://') && <a className="button-pill-soft us-source" href={row.p.source} target="_blank" rel="noreferrer">원문 보기 ↗</a>}
+    {row.p?.source.startsWith('https://') && <a className="button-pill-soft us-source" href={row.p.source} target="_blank" rel="noreferrer"><Icon name="external-link" size={20} />원문 보기</a>}
   </div>;
 }
 
@@ -195,7 +195,7 @@ export function UniversityScores() {
     return <tr key={r.id} className={on ? 'is-selected' : undefined} onClick={r.kind === 'pending' ? undefined : () => setSelected(r.id)}>
       <td>{name}</td><td className="t-body-sm">{r.program}</td>
       {r.kind === 'ready' && r.value ? <><td className="num">{two(r.value.grade)}</td><td className="num">{two(r.value.attendance)}</td>
-        <td className="num"><span className="us-stack">{r.value.total.toFixed(digits)}<small className="t-caption text-muted">/ {r.value.max.toLocaleString('ko-KR')}</small></span></td>
+        <td className="num"><span className="us-stack"><span>{r.value.total.toFixed(digits)}</span><small className="t-caption text-muted">/ {r.value.max.toLocaleString('ko-KR')}</small></span></td>
         <td className="num"><span className="us-stack">{single ? <span>—</span> : <><strong>{signed(diffOf(r) ?? 0)}</strong><small className="t-caption text-muted">{r.avgRank ?? '—'}위 → {r.ratioRank}위</small></>}</span></td></>
       : r.kind === 'input' ? <><td colSpan={3} className="us-table__note">{isAttendance(r.reason) ? '출결을 입력하면 계산해요' : inputLine(r.reason)} <Link className="us-link" to="/grade-input">입력 ›</Link></td><td className="num">—</td></>
       : grouped ? <><td /><td /><td /><td /></>
@@ -234,7 +234,7 @@ export function UniversityScores() {
               {oneSlot}
             </>)}
           </>}
-        <Disclaimer />
+        <Disclaimer icon />
       </div>
       {desktop && <aside className="us-panel" aria-label="대학별 환산 근거">
         {!data ? <p className="t-body-sm text-muted">대학을 고르면 계산 근거가 여기 보여요</p>
