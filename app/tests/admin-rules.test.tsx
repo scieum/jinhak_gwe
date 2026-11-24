@@ -93,9 +93,11 @@ describe('배포 규칙 → 학생 대학별 환산', () => {
     const t = done.tests[0], { grades, attendance } = testInputs(done.rule, t);
     await studentDb.clearStudentData();
     await studentDb.grades.bulkPut(grades); await studentDb.attendance.bulkPut(attendance);
+    await studentDb.setInterest(done.rule.university, done.rule.program, true); // 대학별 환산은 관심 대학만 계산해요(v2 시안)
     render(<MemoryRouter initialEntries={['/univ-score']}><App /></MemoryRouter>);
-    expect(await screen.findByRole('heading', { name: '가나대학교' })).toBeTruthy();
-    expect(await screen.findByText('98.32 / 100')).toBeTruthy();
+    fireEvent.click(await screen.findByRole('button', { name: `가나대학교 ${done.rule.program} 환산 상세` }));
+    expect(await screen.findByRole('heading', { name: '가나대학교', level: 3 })).toBeTruthy();
+    expect(screen.getAllByText('98.32').length).toBeGreaterThan(0);
   });
 });
 

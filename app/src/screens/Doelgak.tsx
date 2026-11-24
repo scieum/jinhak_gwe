@@ -13,7 +13,7 @@ import { compareBasis } from '../domain/comparison';
 import { pending } from '../engine/types';
 import { judgeRange } from '../engine/judgment';
 import { activeRules } from '../data/sample/rules';
-import { useSampleMode } from '../data/sample/mode';
+import { isSampleMode, useSampleMode } from '../data/sample/mode';
 import { admissionYear, dataAsOf, programs, type ProgramData } from '../data/catalog';
 import { StudentDataScreen } from './Results';
 import '../styles/doelgak.css';
@@ -34,6 +34,8 @@ const THREE = ['전체', '있음', '없음'] as const;
 type Three = typeof THREE[number];
 type Filters = { judge: string; regions: string[]; fields: string[]; keyword: string; minimum: Three; interview: Three };
 const EMPTY: Filters = { judge: '전체', regions: [], fields: [], keyword: '', minimum: '전체', interview: '전체' };
+// 샘플 모드는 v2 시안의 예시 상태(강원·서울 적용)로 열어요. 칩으로 보이고 바로 뺄 수 있어요. 내 데이터에서는 빈 조건.
+const startFilters = (): Filters => isSampleMode() ? { ...EMPTY, regions: ['강원', '서울'] } : EMPTY;
 
 const inRegion = (p: ProgramData, name: string) => {
   const known = Object.values(REGIONS).flat();
@@ -89,7 +91,7 @@ export function Doelgak() {
   useSampleMode(); // 샘플을 켜고 끄면 programs(샘플 전형)·판정 규칙이 바뀌어서 다시 그려요
   const [combo, setCombo] = useState('국수영사과');
   const [track, setTrack] = useState<'교과' | '종합'>('교과'), [view, setView] = useState<'lane' | 'table'>('lane');
-  const [draft, setDraft] = useState(EMPTY), [applied, setApplied] = useState(EMPTY);
+  const [draft, setDraft] = useState(startFilters), [applied, setApplied] = useState(startFilters);
   const [sheet, setSheet] = useState(false), [selected, setSelected] = useState('');
   const apply = (f: Filters) => { setDraft(f); setApplied(f); };
   const actions = <span className="data-status-badge dg-asof">모집요강 반영 · {dataAsOf}</span>;

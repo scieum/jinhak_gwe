@@ -574,7 +574,7 @@ def record(slug, route, errors, notes):
 
 
 # 다른 작업이 지금 다시 구현하는 화면: 전수조사 맨 끝에 돌리고 결과에 표시한다
-IN_PROGRESS = {"doelgak": "재구현 중(2026-11-24 다른 에이전트가 시안대로 다시 구현하는 중)"}
+IN_PROGRESS = {}  # 재구현 중인 화면 표시(slug: 사유). doelgak은 2026-11-24 G5 통과로 뺌
 
 
 def all_slugs():

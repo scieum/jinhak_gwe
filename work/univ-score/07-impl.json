@@ -1,21 +1,10 @@
 {
   "slug": "univ-score",
   "gate": "G5",
-  "pass": false,
-  "errors": [
-    "T 390: 문구 없음 '환산 기준 순위 ▾'",
-    "P 390: 본문 왼쪽 여백(시안) 20 (기준 16±2)",
-    "P 390: disclaimer-note 폭 350 (시안 358±4)",
-    "T 1440: 문구 없음 '같은 성적도 대학마다 반영 방식이 달라서 점수가 달라져요'",
-    "T 1440: 문구 없음 '합계 ▼'",
-    "T 1440: 문구 없음 '순위 차이'",
-    "P 1440: data-table 폭 736 (시안 768±4)",
-    "P 1440: disclaimer-note 폭 736 (시안 768±4)",
-    "P 1440: trace-accordion x 1073 (시안 1104±4)",
-    "P 1440: trace-accordion 폭 335 (시안 312±4)"
-  ],
-  "back_to": "S5",
-  "same_fail_streak": 2,
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
   "route": "/univ-score",
   "allowed": [],
   "notes": []

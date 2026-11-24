@@ -35,8 +35,21 @@ test('검수된 데이터가 있는 5→9 화면은 외측 반올림 범위를 �
 });
 test('대학별 화면은 엔진 결과와 trace 표시', async () => {
   expect(scoringRule().review_status).toBe('verified');
-  at('/univ-score'); expect(await screen.findByText('96.00 / 100')).toBeTruthy();
-  expect(screen.getByText('어떻게 계산했나요?')).toBeTruthy();
+  await studentDb.setInterest('테스트 대학', '가상 교과', true, '가상 학과'); // 대학별 환산은 관심 대학만 계산해요(v2 시안)
+  at('/univ-score');
+  const card = await screen.findByRole('button', { name: '테스트 대학 가상 교과 환산 상세' });
+  expect(within(card).getByText('/ 100')).toBeTruthy();
+  fireEvent.click(card);
+  const detail = await screen.findByRole('dialog', { name: '테스트 대학 환산 상세' });
+  expect(within(detail).getAllByText('96.00').length).toBeGreaterThan(0);
+  expect(within(detail).getByText('어떻게 계산했나요?')).toBeTruthy();
+});
+test('대학별 환산: 관심 대학이 없으면 계산하지 않고 담기 안내만', async () => {
+  await studentDb.interests.clear();
+  at('/univ-score');
+  expect(await screen.findByText('아직 담은 대학이 없어요')).toBeTruthy();
+  expect(screen.getByRole('link', { name: '관심 대학 담기' })).toBeTruthy();
+  expect(screen.queryByText('/ 100')).toBeNull();
 });
 test('교과 판정은 레인 머리에만, 카드는 내 환산·70% 컷 차이·미니 막대·조건 칩', async () => {
   at('/doelgak');

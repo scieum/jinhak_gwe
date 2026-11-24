@@ -1,0 +1,125 @@
+/* 대학별 환산 (work/univ-score/02-spec.md · Figma univ-score/1440 346:131176 · univ-score/390 346:131150).
+   모서리 0, 그림자는 시트·모달·toast에만. Route Blue는 선택 표시·링크 글자에만, 점수·순위 차이는 잉크. */
+.univ-score { display: grid; gap: 0; align-content: start; }
+.univ-score .data-status-badge { display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 var(--spacing-xs); background: var(--color-canvas-soft); color: var(--color-ink-soft); white-space: nowrap; }
+.topbar .us-asof, .us-asof { background: var(--color-canvas); }
+.topbar__heading .us-lead { margin: 4px 0 0; color: var(--color-ink-soft); }
+.univ-score .button-pill-soft { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 var(--spacing-md); border: 0; background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 15px; font-weight: 600; text-decoration: none; cursor: pointer; }
+.univ-score .button-pill-soft:disabled { color: var(--color-text-faint); cursor: default; }
+.univ-score .disclaimer-note { display: flex; align-items: flex-start; gap: 4px; margin: 0; }
+.univ-score .disclaimer-note::before { content: ''; flex: none; width: 16px; height: 16px; margin-top: 1px; background: currentColor; -webkit-mask: url('../assets/icons/info.svg') center / contain no-repeat; mask: url('../assets/icons/info.svg') center / contain no-repeat; }
+.us-link { color: var(--color-accent); font-weight: 600; text-decoration: none; white-space: nowrap; }
+
+.us-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; align-items: start; margin-right: -32px; } /* 패널(360)은 본문 오른쪽 패딩까지 붙여 화면 끝에 닿아요 */
+.us-main { display: grid; gap: var(--spacing-md); align-content: start; min-width: 0; }
+.us-main > p, .us-summary p { margin: 0; }
+.us-summary .button-pill-soft { flex: none; white-space: nowrap; }
+.us-summary { display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-md); }
+.us-summary p { font-size: var(--font-body-size); line-height: var(--font-body-line); }
+.us-summary strong { font-weight: 600; }
+.us-loading { margin: 0; padding: var(--spacing-card); background: var(--color-canvas); }
+.us-error { display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-md); background: var(--color-canvas); color: var(--color-ink); }
+.us-error p { flex: 1; margin: 0; }
+.us-empty { display: grid; justify-items: center; gap: var(--spacing-xs); padding: 64px var(--spacing-md); background: var(--color-canvas); text-align: center; }
+.us-empty h3 { margin-top: var(--spacing-xs); }
+.us-empty p { margin: 0 0 var(--spacing-xs); }
+.us-group { display: flex; align-items: center; gap: var(--spacing-xs); flex-wrap: wrap; }
+.us-slot { display: flex; align-items: center; justify-content: center; gap: var(--spacing-xs); min-height: 64px; border: 1px dashed var(--color-hairline); color: var(--color-ink); font-size: var(--font-body-sm-size); text-decoration: none; }
+
+/* PC 표 */
+.us-table-card { background: var(--color-canvas); }
+.us-table { background: var(--color-canvas); table-layout: fixed; }
+.us-table th, .us-table td { padding: var(--spacing-sm) var(--spacing-md); border-bottom: 1px solid var(--color-hairline-soft); vertical-align: middle; }
+.us-table thead { background: var(--color-canvas); }
+.us-table th:nth-child(1) { width: 200px; } .us-table th:nth-child(2) { width: 180px; } .us-table th:nth-child(3) { width: 96px; }
+.us-table th:nth-child(4) { width: 80px; } .us-table th:nth-child(5) { width: 120px; } .us-table th:nth-child(6) { width: 92px; }
+.us-table .num { text-align: right; }
+.us-table tbody tr:not(.us-table__group) { height: 64px; }
+.us-table tr.is-selected { background: var(--color-accent-soft); }
+.us-table tr.is-selected td:first-child { box-shadow: inset 3px 0 0 var(--color-accent); }
+.us-table tbody tr:not(.us-table__group):has(.us-table__pick) { cursor: pointer; }
+.us-table__univ { display: flex; align-items: center; gap: var(--spacing-xs); min-width: 0; }
+.us-table__univ .university-logo { flex: 0 0 24px; width: 24px; height: 24px; }
+.us-table__pick { min-height: 32px; padding: 0; border: 0; background: none; font: inherit; color: inherit; text-align: left; cursor: pointer; overflow-wrap: anywhere; }
+.us-stack { display: inline-grid; justify-items: end; }
+.us-stack small { font-size: 12px; }
+.us-table__note { color: var(--color-text-muted); }
+.us-table__note { text-align: left; }
+.us-table__note .data-status-badge { margin-left: var(--spacing-lg); }
+.us-table__group td { padding: var(--spacing-xs) var(--spacing-md); background: var(--color-canvas-soft); }
+.us-sort { display: inline-flex; align-items: center; gap: 2px; min-height: 32px; padding: 0; border: 0; background: none; color: inherit; font: inherit; font-weight: 600; white-space: nowrap; cursor: pointer; }
+.us-sort:disabled { cursor: default; }
+.us-sort .icon { color: var(--color-text-muted); }
+
+/* PC 오른쪽 패널 */
+.us-panel { position: sticky; top: 0; align-self: stretch; min-height: calc(100dvh - 150px); max-height: 100dvh; overflow-y: auto; padding: 24px; background: var(--color-canvas); border-left: 1px solid var(--color-hairline-soft); }
+.us-detail { display: grid; gap: var(--spacing-md); align-content: start; min-width: 0; }
+.us-detail p { margin: 0; }
+.us-detail__head { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: var(--spacing-sm); }
+.us-detail__head .university-logo { width: 40px; height: 40px; }
+.us-detail__head h3 { margin: 0; overflow-wrap: anywhere; }
+.us-heart { width: 44px; padding: 0; border-color: transparent; background: transparent; }
+.us-detail__total { display: grid; gap: 4px; }
+.us-detail__total strong { font-size: 24px; line-height: 32px; font-weight: 700; color: var(--color-ink); }
+.us-detail__facts { display: grid; gap: var(--spacing-xs); margin: var(--spacing-xs) 0 0; }
+.us-detail__facts > div { display: flex; justify-content: space-between; }
+.us-detail__facts dt { color: var(--color-text-muted); }
+.us-detail__facts dd { margin: 0; font-weight: 600; }
+.us-detail .button-primary { justify-self: stretch; text-align: center; }
+.us-source { justify-self: start; }
+.us-trace { padding: var(--spacing-md); border: 0; background: var(--color-canvas-soft); }
+.trace-accordion.us-trace summary { display: flex; justify-content: space-between; align-items: center; list-style: none; font-weight: 600; }
+.us-trace summary::-webkit-details-marker { display: none; }
+.us-trace[open] summary .icon { transform: rotate(180deg); }
+.us-trace ol { display: grid; gap: var(--spacing-sm); margin: var(--spacing-xs) 0 var(--spacing-md); padding: 0; list-style: none; font-size: var(--font-body-sm-size); counter-reset: step; }
+.us-trace li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px var(--spacing-sm); overflow-wrap: anywhere; counter-increment: step; }
+.us-trace li > span::before { content: counter(step) '. '; color: var(--color-text-muted); }
+.us-trace li > .button-pill-soft { grid-column: 1 / -1; justify-self: start; }
+.us-trace__total { padding-top: var(--spacing-sm); border-top: 1px solid var(--color-hairline); font-weight: 600; }
+.us-trace > .button-pill-soft { margin-bottom: var(--spacing-sm); }
+
+/* 모바일 카드 · 시트 */
+.us-cards { display: grid; gap: var(--spacing-xs); margin: 0; padding: 0; list-style: none; }
+.us-card { background: var(--color-canvas); }
+.us-card__open { display: grid; gap: var(--spacing-xs); width: 100%; padding: var(--spacing-md); border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.us-card--pending { display: grid; gap: var(--spacing-xs); padding: var(--spacing-md); }
+.us-card__head { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: var(--spacing-sm); }
+.us-card__head .university-logo { width: 40px; height: 40px; }
+.us-card__name { display: grid; min-width: 0; }
+.us-card__name strong { overflow-wrap: anywhere; }
+.us-card__cells { display: grid; grid-template-columns: 104px 80px minmax(0, 1fr); }
+.us-card__cells > span { display: grid; }
+.us-card__cells strong { font-size: 20px; line-height: 28px; font-weight: 700; }
+.us-card p { margin: 0; }
+.us-sort-sheet, .us-confirm { display: grid; gap: var(--spacing-md); }
+.us-sort-sheet__handle { justify-self: center; width: 40px; height: 4px; background: var(--color-hairline); }
+.us-sort-sheet h3, .us-confirm h3, .us-confirm p { margin: 0; }
+.us-sort-sheet ul { display: grid; margin: 0; padding: 0; list-style: none; }
+.us-sort-sheet li button { display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-sm); width: 100%; min-height: 48px; padding: var(--spacing-xs) var(--spacing-md); border: 0; background: var(--color-canvas); font: inherit; color: var(--color-ink); text-align: left; cursor: pointer; }
+.us-sort-sheet li button > span { display: grid; }
+.us-sort-sheet li button[aria-pressed='true'] { background: var(--color-accent-soft); box-shadow: inset 3px 0 0 var(--color-accent); }
+.us-sort-sheet li button .icon { color: var(--color-accent); }
+.us-confirm__actions { display: flex; justify-content: flex-end; gap: var(--spacing-xs); }
+.us-sheet-detail { display: grid; gap: var(--spacing-md); }
+.us-sheet-detail__bar { position: sticky; top: calc(-1 * var(--spacing-lg)); z-index: 1; display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center; min-height: 56px; margin: calc(-1 * var(--spacing-lg)) calc(-1 * var(--spacing-md)) 0; padding: 0 var(--spacing-xs); background: var(--color-canvas); border-bottom: 1px solid var(--color-hairline-soft); }
+.us-sheet-detail__bar h2 { margin: 0; text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.us-icon-button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: none; color: var(--color-ink); cursor: pointer; }
+
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .us-layout { grid-template-columns: minmax(0, 1fr) 320px; }
+}
+@media (max-width: 1023px) {
+  .shell__content:has(.univ-score) { padding-inline: var(--spacing-md); }
+  .univ-score > .screen-heading { display: none; }
+  .us-layout { grid-template-columns: minmax(0, 1fr); margin-right: 0; }
+  .us-main { gap: var(--spacing-xs); }
+  .us-summary p { font-size: var(--font-caption-size); line-height: var(--font-caption-line); color: var(--color-text-muted); }
+  .univ-score .disclaimer-note { margin-top: var(--spacing-xs); }
+  .dialog-backdrop:has(.us-sheet-detail) { padding: 0; }
+  .dialog:has(.us-sheet-detail) { width: 100%; height: 100dvh; max-height: 100dvh; align-content: start; padding: var(--spacing-lg) var(--spacing-md); box-shadow: none; }
+  .dialog-backdrop:has(.us-sort-sheet), .dialog-backdrop:has(.us-confirm) { align-items: flex-end; padding: 0; }
+  .dialog:has(.us-sort-sheet), .dialog:has(.us-confirm) { width: 100%; max-height: 90dvh; padding: var(--spacing-md) 0 var(--spacing-lg); }
+  .us-sort-sheet h3, .us-confirm { padding-inline: var(--spacing-md); }
+  .us-confirm__actions > * { flex: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .us-trace summary .icon { transition: none; } }
