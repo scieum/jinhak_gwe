@@ -3,10 +3,12 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Icon } from '../components/Icon';
 import { BrandLogo } from '../components/BrandLogo';
 import { ModeSwitch } from './ModeSwitch';
-import { MODE_HOME, MORE_PATH, NAV, locate, modeOf, type NavGroup } from './nav';
+import { DETAILS, MODE_HOME, MORE_PATH, NAV, locate, modeOf, type NavGroup } from './nav';
 import { workspaceOf } from './workspace';
 import { TeacherLockButton, TeacherLockGate } from '../components/TeacherLock';
 import { StudentLockButton, StudentLockGate } from '../components/StudentLock';
+import { TeacherBackupButton } from '../components/TeacherBackup';
+import { signOut } from '../io/account';
 import { dataAsOf } from '../data/catalog';
 import { SampleBanner, SampleReshowButton } from './SampleBanner';
 import './shell.css';
@@ -18,7 +20,9 @@ export function AppShell() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const loc = locate(pathname);
-  const { group, item, detail } = loc;
+  const { group, item } = loc;
+  // 소분류이면서 모바일은 상세 화면인 곳(학생 기록)도 상세 앱바로 그려요
+  const detail = loc.detail ?? DETAILS.find((d) => d.path === pathname);
   const mode = workspaceOf(pathname);
   const isMore = pathname === MORE_PATH[mode];
   // 교사 셸은 교사 메뉴만(v2 시안, 2026-11-24 사용자 결정). 학생 화면은 모드 전환으로 간다.
@@ -95,7 +99,9 @@ export function AppShell() {
             );
           })}</div>)}
         </nav>
-        <footer className="sidebar__footer"><p className="t-caption text-muted">데이터 기준일 {dataAsOf}</p>{mode === 'student' && <Link to="/grade-input?backup=1" className="button-pill-soft"><Icon name="download" size={20} />백업</Link>}<SampleReshowButton className="text-button" /></footer>
+        <footer className="sidebar__footer"><p className="t-caption text-muted">데이터 기준일 {dataAsOf}</p>{mode === 'student' && <Link to="/grade-input?backup=1" className="button-pill-soft"><Icon name="download" size={20} />백업</Link>}{mode === 'teacher' && <TeacherBackupButton />}<SampleReshowButton className="text-button" />
+          {/* 교사 셸 맨 아래 로그아웃(v2 시안 · design.md sidebar). 계정 세션이 없어도 로그인 화면으로 보내요. */}
+          {mode === 'teacher' && <button type="button" className="sidebar-item sidebar__logout" onClick={() => void signOut().finally(() => navigate('/login'))}><Icon name="log-out" size={20} /><span>로그아웃</span></button>}</footer>
       </aside>
 
       <div className="shell__main">
@@ -104,7 +110,7 @@ export function AppShell() {
             <p className="t-caption text-muted">{breadcrumb ?? title}</p>
             <h1 className="t-heading-3">{title}</h1>
           </div>
-          <div className="topbar__actions"><div id="topbar-screen-actions" />{mode !== 'admin' && <ModeSwitch mode={mode} />}{modeOf(pathname) === 'teacher' && <TeacherLockButton />}{modeOf(pathname) === 'student' && <StudentLockButton />}</div>
+          <div className="topbar__actions"><div id="topbar-screen-actions" />{mode === 'teacher' && <span className="data-status-badge topbar__asof">데이터 기준일 {dataAsOf}</span>}{mode !== 'admin' && <ModeSwitch mode={mode} />}{modeOf(pathname) === 'teacher' && <TeacherLockButton />}{modeOf(pathname) === 'student' && <StudentLockButton />}</div>
         </header>
 
         <header className="appbar">

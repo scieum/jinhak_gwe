@@ -115,6 +115,8 @@ export const DETAILS: DetailScreen[] = [
   { label: '전형 상세', slug: 'program-detail', path: '/program-detail', mode: 'student', group: '대학 찾기' },
   // 전형 성향 탐색은 메뉴에 없고 홈·전형계획 목록 promo-banner로만 들어간다(design.md App Shell 2026-11-24)
   { label: '전형 성향 탐색', slug: 'admission-style', path: '/admission-style', mode: 'student', group: '대학 찾기' },
+  // 학생 기록은 PC에선 사이드바 소분류, 모바일은 상세 앱바("‹ 학생 기록", sub-nav 없음 · student-record v2 시안)
+  { label: '학생 기록', slug: 'student-record', path: '/teacher/student-record', mode: 'teacher', group: '우리 반' },
 ];
 
 // 셸 밖(로그인 전) 화면

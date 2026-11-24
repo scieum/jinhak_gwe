@@ -35,7 +35,10 @@ test('첫 실행: 빈 기기에 데모 데이터(7번 하늘)를 넣고 샘플 �
   const snap = JSON.parse(JSON.stringify(await studentDb.snapshot()));
   expect(() => parseStudentBackup(snap)).not.toThrow();
   expect(await teacherDb.students.count()).toBe(28);
-  expect(await teacherDb.cards.count()).toBe(21);
+  // 카드 제출 21명 · 7번 하늘은 v1~v3 세 버전(counsel v2 시안 "카드 v3")이라 카드 행은 23개예요.
+  const cards = await teacherDb.cards.toArray();
+  expect(new Set(cards.map(c => c.number)).size).toBe(21);
+  expect(cards.filter(c => c.number === '07')).toHaveLength(3);
   expect(await adminDb.wiki.count()).toBe(6);
   expect(programs.map(p => p.university)).toContain('경희대학교');
   // 2026-11-24 "샘플일 때만": 샘플 전형의 입결·규칙은 모두 sample 표식 + 미검수(draft)예요. 샘플 모드에서만 통과해요.

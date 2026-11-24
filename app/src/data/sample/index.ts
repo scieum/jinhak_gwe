@@ -10,7 +10,7 @@ import { resetUnivWiki } from '../univWiki';
 import { sampleFlag, setSampleFlag } from './mode';
 import { isSampleAttendance, isSampleId, isSampleInterest } from './rows';
 import { sampleApplications, sampleAttendance, sampleBoards, sampleGrades, sampleInterests, sampleTasks } from './student';
-import { SAMPLE_CLASS, sampleCards, sampleLogs, sampleMemos, sampleMocks, sampleOutcomes, sampleSchedules, sampleSchool, sampleStudents, sampleTargets } from './teacher';
+import { SAMPLE_CLASS, sampleCards, sampleClassMocks, sampleLogs, sampleMemos, sampleMocks, sampleOutcomes, sampleSchedules, sampleSchool, sampleStudents, sampleTargets } from './teacher';
 import { sampleFieldDraft, sampleWikiDrafts } from './admin';
 import { samplePrograms } from './public';
 
@@ -52,7 +52,7 @@ async function loadTeacher() {
   await teacherDb.transaction('rw', teacherDb.tables, async () => {
     await teacherDb.createClass(SAMPLE_CLASS, sampleStudents);
     await teacherDb.cards.bulkAdd(sampleCards); await teacherDb.logs.bulkAdd(sampleLogs);
-    await teacherDb.mocks.bulkPut(sampleMocks); await teacherDb.schedules.bulkAdd(sampleSchedules);
+    await teacherDb.mocks.bulkPut([...sampleMocks, ...sampleClassMocks]); await teacherDb.schedules.bulkAdd(sampleSchedules);
     await teacherDb.memos.bulkAdd(sampleMemos); await teacherDb.school.bulkPut(sampleSchool); await teacherDb.targets.bulkPut(sampleTargets);
     await teacherDb.outcomes.bulkAdd(sampleOutcomes);
   });

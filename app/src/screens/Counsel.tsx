@@ -10,6 +10,7 @@ import { UniversityLogo } from '../components/UniversityLogo';
 import { MEMO_AREAS, nextDue, nextState, submissionRows, type CardRecord, type Memo, type MemoArea, type Student } from '../domain/classroom';
 import { examsByRecent } from '../domain/minimum';
 import { schoolAverage } from '../domain/scoreImport';
+import { fiveToNineFor } from '../domain/results';
 import { g5ToPct, pctToG9, verified } from '../engine/fiveToNine';
 import type { ConversionConfig } from '../engine/fiveToNineTypes';
 import fiveToNineConfig from '../data/conversion-config.json';
@@ -21,8 +22,7 @@ import { REPLY_MAX, makeReply } from '../domain/reply';
 import { packExchange } from '../io/exchange';
 import { downloadFile } from '../io/backup';
 import { JudgeMark } from './CardCollect';
-import { judgeStudent } from './MinimumBoard';
-import { WarningBadge, signals } from './TeacherDashboard';
+import { WarningBadge, latestMinimum, signals } from './TeacherDashboard';
 import '../styles/counsel.css';
 
 const today = () => new Date().toLocaleDateString('sv-SE');
@@ -68,13 +68,22 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
 
   const rows = submissionRows(students, cards), rowOf = (n: string) => rows.find(r => r.student.number === n)!;
   const grade = (n: string) => school.find(g => g.number === n);
-  const need = (n: string) => signals(rowOf(n), grade(n)).length > 0;
-  const g9Of = (n: string) => { const g5 = schoolAverage(grade(n)); if (g5 === null || !verified(cfg, 'R-CONV-003')) return null; const pct = g5ToPct(g5, cfg); return { g5, pct, g9: pctToG9(pct, cfg) }; };
   const lastExam = (n: string) => examsByRecent(mocks.filter(m => m.number === n).map(m => m.exam))[0];
-  const minOf = (n: string) => { const exam = lastExam(n); if (!exam) return null; const r = judgeStudent(n, exam, c); return r.target ? { ...r, exam } : null; };
+  const minOf = (n: string) => latestMinimum(n, c);
+  // 상담 필요 = 우리 반 홈과 같은 신호(최저 근접·미충족 · 카드 경고 · 성적 하락)
+  const need = (n: string) => signals(rowOf(n), grade(n), minOf(n)?.judged.verdict).length > 0;
+  /** 환산 9등급: 과목별 성적이 있으면 학생 5 to 9와 같은 엔진 범위(검수된 R-CONV-003·004만), 학기 평균만 있으면 A-1 한 값. */
+  const g9Of = (n: string) => {
+    const records = grade(n)?.records;
+    const r = records?.length ? fiveToNineFor(records, '전 교과') : null;
+    if (r?.display && r.g5 !== null) return { g5: r.g5, range: `약 ${r.display.min.toFixed(1)}~${r.display.max.toFixed(1)}`, sub: `대표 ${r.representative!.toFixed(1)} · 신뢰도 ${r.confidence}`, steps: r.trace.map(t => `${t.label} ${typeof t.value === 'number' ? t.value.toFixed(2) : t.value}`) };
+    const g5 = schoolAverage(grade(n)); if (g5 === null || !verified(cfg, 'R-CONV-003')) return null;
+    const pct = g5ToPct(g5, cfg), g9 = pctToG9(pct, cfg);
+    return { g5, range: `약 ${g9.toFixed(1)}`, sub: 'A-1 평균 기반', steps: [`내신 5등급 평균 ${g5.toFixed(2)} (불러온 학기 평균의 단순 평균)`, `5등급 누적비 약 ${pct.toFixed(1)}% (R-CONV-003)`, `9등급 누적비 구간에서 옮기면 약 ${g9.toFixed(1)} (A-1)`] };
+  };
   const line2 = (s: Student) => {
     const g = g9Of(s.number), m = minOf(s.number), due = upcoming(s.number), k = mine(s.number).length;
-    const parts = [g && `약 ${g.g9.toFixed(1)}`, m && `최저 ${m.judged.verdict}`, due && `상담 ${md(due)}`].filter(Boolean);
+    const parts = [g?.range, m && `최저 ${m.judged.verdict}`, due && `상담 ${md(due)}`].filter(Boolean);
     return parts.length ? parts.join(' · ') : k ? `상담 ${k}회` : '상담 기록 없음';
   };
 
@@ -91,7 +100,8 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
   const myMemos = mine(current.number).sort((a, b) => b.created_at.localeCompare(a.created_at));
   const items: Item[] = [
     ...myMemos.map(m => ({ kind: 'memo' as const, at: m.created_at, memo: m })),
-    ...myCards.map((x, i) => ({ kind: 'system' as const, at: x.received_at, card: x, v: myCards.length - i })),
+    // 카드는 가장 최근 버전 하나만, 바로 전 버전과 달라진 칸을 적어요(counsel v2 시안 "수시로 카드 v3 받음 · 6번 칸 교체 (…)")
+    ...(latest ? [{ kind: 'system' as const, at: latest.received_at, card: latest, v: myCards.length }] : []),
   ].sort((a, b) => b.at.localeCompare(a.at));
   const shown = items.filter(t => historyFilter === 'all' || (historyFilter === '수시로' ? t.kind === 'system' || t.memo.area === '수시로' : t.kind === 'memo' && waiting(t.memo)));
   const visible = desktop || showAll ? shown : shown.slice(0, 3);
@@ -123,10 +133,10 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
   </>;
 
   const statTile = <div className="stat-tile cs-stat"><span className="t-caption text-muted">환산 9등급 (추정)</span>
-    <strong className="num key-number">{g ? `약 ${g.g9.toFixed(1)}` : '–'}</strong>
-    <span className="t-body-sm num">{g ? `A-1 평균 기반 · 내신 5등급 ${g.g5.toFixed(1)}` : '내신 학기 평균을 불러오면 보여요'}</span></div>;
+    <strong className="num key-number">{g ? g.range : '–'}</strong>
+    <span className="t-body-sm num">{g ? `${g.sub} · 내신 5등급 ${g.g5.toFixed(1)}` : '내신 학기 평균을 불러오면 보여요'}</span></div>;
   const trace = <details className="trace-accordion cs-trace"><summary>어떻게 계산했나요?<Icon name="chevron-down" size={20} /></summary>
-    {g ? <ol className="t-body-sm num"><li>내신 5등급 평균 {g.g5.toFixed(2)} (불러온 학기 평균의 단순 평균)</li><li>5등급 누적비 약 {g.pct.toFixed(1)}% (R-CONV-003)</li><li>9등급 누적비 구간에서 옮기면 약 {g.g9.toFixed(1)} (A-1)</li></ol>
+    {g ? <ol className="t-body-sm num">{g.steps.map((x, i) => <li key={i}>{x}</li>)}</ol>
       : <p className="t-body-sm">성적 불러오기에서 내신 학기 평균을 올리면 계산 단계가 여기에 보여요.</p>}</details>;
   const minLine = m && <p className="t-body-sm">수능 최저 {m.judged.verdict} · 1순위 {short(m.target!.university)} 기준</p>;
   const countLine = counts.map(([v, n]) => `${v} ${n}`).join(' · ');
@@ -144,7 +154,7 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
 
   const timeline = items.length === 0 ? <div className="empty-state"><h3 className="t-heading-4">아직 남긴 상담 메모가 없어요</h3><p>위 칸에 첫 상담 내용을 적고 저장하면 여기에 날짜순으로 쌓여요.</p></div>
     : <ol className="counsel-timeline">{visible.map(t => t.kind === 'system'
-      ? <li key={`c${t.card.id ?? t.at}`} className="counsel-timeline__system"><p className="t-caption text-muted num">{t.at.slice(0, 10)}</p><p className="t-body-sm text-muted">수시로 카드 v{t.v} 받음 · {t.card.card.scenario} {t.card.card.slots.length}장</p></li>
+      ? <li key={`c${t.card.id ?? t.at}`} className="counsel-timeline__system"><p className="t-caption text-muted num">{t.at.slice(0, 10)}</p><p className="t-body-sm text-muted">수시로 카드 v{t.v} 받음 · {slotChanges(t.card, myCards[1]).join(' · ') || `${t.card.card.scenario} ${t.card.card.slots.length}장`}</p></li>
       : <TimelineMemo key={t.memo.id} memo={t.memo} />)}
       {!visible.length && <li className="t-body-sm text-muted">이 조건에 맞는 기록이 없어요</li>}</ol>;
 
@@ -208,6 +218,13 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
         <ButtonOutline onClick={() => { setText(''); setNext(''); choose(pending); }}>저장하지 않고 바꾸기</ButtonOutline>
         <ButtonPrimary onClick={async () => { if (await save()) choose(pending); }}>저장하고 바꾸기</ButtonPrimary></div></Modal>}
   </div>;
+}
+
+/** 바로 전 카드와 비교해 바뀐 칸. 전 카드가 없으면 빈 목록. */
+function slotChanges(now: CardRecord, prev?: CardRecord) {
+  if (!prev) return [];
+  const label = (x: CardRecord['card']['slots'][number]) => `${short(x.university)} ${x.department || x.program}`;
+  return now.card.slots.flatMap((s, i) => { const p = prev.card.slots[i]; return !p ? [`${i + 1}번 칸 추가 (${label(s)})`] : label(p) !== label(s) ? [`${i + 1}번 칸 교체 (${label(p)} → ${label(s)})`] : []; });
 }
 
 function TimelineMemo({ memo }: { memo: Memo }) {

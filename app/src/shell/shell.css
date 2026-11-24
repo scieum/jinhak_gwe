@@ -212,7 +212,7 @@
   .sidebar-item {
     padding: 0 var(--spacing-md) 0 calc(var(--spacing-xl) - 3px);
     border-left: 3px solid transparent;
-    color: var(--color-ink-soft);
+    color: var(--color-ink); /* v2 시안 소분류 글자 #141414 */
     font-weight: var(--font-body-weight);
   }
   .sidebar-item--top {
@@ -265,3 +265,9 @@
 @media (min-width: 1024px) { .sample-band { padding: var(--spacing-xs) var(--spacing-xl); } }
 .sidebar__footer .button-pill-soft { justify-self: start; gap: var(--spacing-xs); font-size: var(--font-link-size); }
 .sidebar__footer .text-button { justify-self: start; min-height: 32px; padding: 0; font-size: 14px; text-align: left; }
+
+/* 교사 셸 머리 기준일 배지: 화면이 자기 기준일 배지를 머리에 넣으면(학생 기록 · 결과 집계) 셸 배지는 숨겨요 */
+.topbar__actions:has(#topbar-screen-actions .data-status-badge) > .topbar__asof { display: none; }
+.sidebar__footer .sidebar__logout { padding: 0; border: 0; background: none; font: inherit; color: var(--color-ink); cursor: pointer; }
+.topbar__asof { line-height: 1.4; } /* caption 12/16.8 (v2 시안 page-header 기준일 배지) */
+.sidebar__footer button.button-pill-soft { border: 0; font: inherit; font-size: var(--font-link-size); font-weight: 600; cursor: pointer; }

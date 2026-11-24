@@ -10,17 +10,20 @@ async function derive(password: string, salt: Uint8Array<ArrayBuffer>, usage: Ke
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
   return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 310000, hash: 'SHA-256' }, key, { name: 'AES-GCM', length: 256 }, false, usage);
 }
-export async function encryptBackup(data: StudentBackup, password: string): Promise<string> {
+async function seal(kind: 'student_backup' | 'teacher_backup', data: unknown, password: string, limit = 5_000_000): Promise<string> {
   if (password.length < 8) throw new Error('백업 암호는 8자 이상 입력해 주세요.');
   const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
   const key = await derive(password, salt, ['encrypt']);
-  const payload = new TextEncoder().encode(JSON.stringify(parseStudentBackup(stripSample(data))) /* 샘플 행은 백업에 넣지 않아요 */);
-  const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv, additionalData: new TextEncoder().encode('jnavi:1:student_backup') }, key, payload);
-  const result = JSON.stringify({ format: 'jnavi', version: 1, kind: 'student_backup', cipher: 'AES-GCM', kdf: 'PBKDF2-SHA256',
+  const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv, additionalData: new TextEncoder().encode(`jnavi:1:${kind}`) }, key, new TextEncoder().encode(JSON.stringify(data)));
+  const result = JSON.stringify({ format: 'jnavi', version: 1, kind, cipher: 'AES-GCM', kdf: 'PBKDF2-SHA256',
     iterations: 310000, created_at: new Date().toISOString(), salt: base64(salt), iv: base64(iv), ciphertext: base64(new Uint8Array(encrypted)) });
-  if (result.length > 5_000_000) throw new Error('백업이 5MB를 넘어요. 긴 메모나 불필요한 준비 기록을 정리한 뒤 다시 시도해 주세요.');
+  if (result.length > limit) throw new Error(`백업이 ${limit / 1_000_000}MB를 넘어요. 긴 메모나 불필요한 기록을 정리한 뒤 다시 시도해 주세요.`);
   return result;
 }
+/** 샘플 행은 백업에 넣지 않아요. */
+export const encryptBackup = (data: StudentBackup, password: string) => seal('student_backup', parseStudentBackup(stripSample(data)), password);
+/** 교사 학급 데이터(teacherDb 모든 표) 암호화 백업. shortcut: 복원 화면은 아직 없어요 — 교사 백업 복원을 만들 때 decryptBackup처럼 kind 'teacher_backup'으로 열어요. */
+export const encryptTeacherBackup = (tables: Record<string, unknown[]>, password: string) => seal('teacher_backup', tables, password, 20_000_000);
 export async function decryptBackup(text: string, password: string): Promise<StudentBackup> {
   if (text.length > 5_000_000) throw new Error('백업 파일이 너무 커요.');
   try {

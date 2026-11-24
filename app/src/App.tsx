@@ -73,7 +73,7 @@ export function App() {
         <Route path="/" element={<Navigate to={seenAbout() ? MODE_HOME.student : '/about'} replace />} />
         <Route path="/teacher" element={<Navigate to={MODE_HOME.teacher} replace />} />
         <Route path="/admin" element={<Navigate to={MODE_HOME.admin} replace />} />
-        {[...allItems(), ...DETAILS].map((s) => (
+        {[...allItems(), ...DETAILS.filter((d) => !allItems().some((i) => i.path === d.path))].map((s) => (
           <Route key={s.path} path={s.path} element={implemented[s.slug] ?? <Placeholder title={s.label} slug={s.slug} />} />
         ))}
         {(Object.keys(MORE_PATH) as Mode[]).map((m) => (
@@ -84,4 +84,4 @@ export function App() {
     </Routes>
   );
 }
-
+

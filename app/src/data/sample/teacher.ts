@@ -1,10 +1,11 @@
 // 교사 샘플 = work/_data/demo-dataset.md "학급"(2학년 3반 28명). 실제 학생이 아니에요.
 import type { CardRecord, ClassInfo, CounselPayload, HomeroomLog, Memo, Student } from '../../domain/classroom';
 import type { MockGrades, SchoolGrades } from '../../domain/scoreImport';
+import type { GradeRecord, Semester } from '../../domain/student';
 import type { Target } from '../../domain/minimum';
 import type { ClassSchedule } from '../../domain/classCalendar';
 import type { Outcome } from '../../domain/outcomes';
-import { SAMPLE_STAMP, SAMPLE_UNIVERSITIES, sampleGrades } from './student';
+import { SAMPLE_PREFIX, SAMPLE_STAMP, SAMPLE_UNIVERSITIES, sampleGrades } from './student';
 
 /** 이 학급 코드 + 만든 시각이면 샘플 학급이에요(지우기 기준). */
 export const SAMPLE_CLASS: ClassInfo = { key: 'class', name: '2학년 3반', code: 'SMPL', created_at: SAMPLE_STAMP };
@@ -13,8 +14,8 @@ const no = (n: number) => String(n).padStart(2, '0');
 // 7번 하늘 = 학생 화면의 "나"(demo-dataset: 인문사회 · 희망 전공 정책·행정)
 export const sampleStudents: Student[] = ALIASES.map((alias, i) => ({ number: no(i + 1), alias, ...(i === 6 ? { track: '인문사회', major: '정책·행정' } : {}) }));
 
-// 상담카드 제출 21명 · 미제출 7명. 미제출 번호는 데모에 없어서 경고·상담 학생과 겹치지 않게 골랐어요(보고 대상).
-const UNSUBMITTED = new Set([16, 21, 23, 25, 26, 27, 28]);
+// 상담카드 제출 21명 · 미제출 7명(teacher-dashboard v2 시안 표: 3 노을 · 4 단비 · 11 구름 · 12 가람 · 16 봄비 · 20 버들 · 26 서리).
+const UNSUBMITTED = new Set([3, 4, 11, 12, 16, 20, 26]);
 // 경고: 15 바다 · 5 햇살 2개, 22 은하 · 18 여울 1개
 const WARNINGS: Record<number, number> = { 5: 2, 15: 2, 18: 1, 22: 1 };
 const warning = (i: number) => i === 0
@@ -22,32 +23,50 @@ const warning = (i: number) => i === 0
   : { code: 'R-CARD-004', title: '수능 최저 확인이 필요해요', message: '수능 최저 기준을 아직 확인하지 않은 카드가 있어요.' };
 /** 하늘이 샘플 모드 수시로에서 보던 판정(관심 대학 6곳 순서). tests/sample-judgment.test.ts가 judgeUniversity 결과와 같은지 확인해요. */
 export const SAMPLE_CARD_VERDICTS = ['안정', '안정', '적정', '적정', '소신', '경계'] as const;
-const card = (n: number): CounselPayload => ({
-  scenario: 'A안',
-  // 7번 하늘만 데모의 수시 6장을 실어요. 다른 학생 카드 내용은 데모에 없어서 비워 둬요.
-  slots: n === 7 ? SAMPLE_UNIVERSITIES.map(([university, department, program], i) => ({ priority: i + 1, university, program, department, judgment: SAMPLE_CARD_VERDICTS[i] })) : [],
-  exempt: [], warnings: Array.from({ length: WARNINGS[n] ?? 0 }, (_, i) => warning(i)),
+// 7번 하늘만 데모의 수시 6장을 실어요. 다른 학생 카드 내용은 데모에 없어서 비워 둬요.
+const HANUL_SLOTS = SAMPLE_UNIVERSITIES.map(([university, department, program], i) => ({ priority: i + 1, university, program, department, judgment: SAMPLE_CARD_VERDICTS[i] }));
+// counsel v2 시안 "카드 v3 · 11-10 받음" · "6번 칸 교체 (국민대 행정학과 → 중앙대 공공인재학부)": v1·v2는 6번 칸이 국민대였어요.
+const HANUL_OLD = HANUL_SLOTS.map((s, i) => i === 5 ? { ...s, university: '국민대학교', department: '행정학과', program: '학생부교과' } : s);
+const card = (n: number, slots: CounselPayload['slots'] = n === 7 ? HANUL_SLOTS : []): CounselPayload => ({
+  scenario: 'A안', slots, exempt: [], warnings: Array.from({ length: WARNINGS[n] ?? 0 }, (_, i) => warning(i)),
 });
-// 하늘 카드는 counsel v2 시안대로 11-10에 받았어요. 나머지는 데이터 기준일(11-18).
-const at = (n: number) => n === 7 ? '2026-11-10' : '2026-11-18';
-export const sampleCards: CardRecord[] = sampleStudents.filter((_, i) => !UNSUBMITTED.has(i + 1)).map(s => ({
-  number: s.number, created_at: `${at(Number(s.number))}T09:00:00.000Z`, received_at: `${at(Number(s.number))}T10:00:00.000Z`, seen: true, card: card(Number(s.number)),
-}));
+const record = (number: string, date: string, c: CounselPayload): CardRecord => ({ number, created_at: `${date}T09:00:00.000Z`, received_at: `${date}T10:00:00.000Z`, seen: true, card: c });
+// 하늘 카드 v1 10-13 · v2 10-27 · v3 11-10(시안). 나머지는 데이터 기준일(11-18)에 한 번.
+export const sampleCards: CardRecord[] = [
+  record('07', '2026-10-13', card(7, HANUL_OLD)), record('07', '2026-10-27', card(7, HANUL_OLD)),
+  ...sampleStudents.filter((_, i) => !UNSUBMITTED.has(i + 1)).map(s => record(s.number, s.number === '07' ? '2026-11-10' : '2026-11-18', card(Number(s.number)))),
+];
 
 // 하늘 상담 메모 4회(counsel v2 시안 지난 메모). 11-12 메모의 다음에 볼 것(11-24) = 이번 주 상담 11/24(화).
 type M = [date: string, area: Memo['area'], text: string, next: string, time: string];
 const MEMOS: M[] = [
   ['2026-11-12', '수시로', '6장 가운데 소신은 한양대 정책학과, 경계는 중앙대 공공인재학부예요. 칸은 그대로 두고 최저 근접 과목을 먼저 챙기기로 했어요.', '11-24까지 · 탐구 오답 같이 보기', '07:40'],
-  ['2026-11-03', '성적', '10월 학평 국 3 · 수 2 · 영 2 · 탐 3 · 3이에요. 국어나 탐구가 한 등급 오르면 경희대 최저를 맞춰요.', '', '03:50'],
+  ['2026-11-03', '성적', '10월 모의고사 국 3 · 수 2 · 영 2 · 탐 3 · 3이에요. 탐구 두 과목이 3등급이라 경희대 최저에 근접이에요.', '', '03:50'],
   ['2026-10-20', '진로', '정책·행정 희망은 그대로예요. 행정학과와 정책학과의 차이를 같이 정리했어요.', '', '06:10'],
   ['2026-09-22', '생활', '등교 전 1시간 영어 단어 공부를 시작했다고 해요. 아침 컨디션은 괜찮다고 해요.', '', '04:00'],
 ];
 export const sampleMemos: Memo[] = MEMOS.map(([date, area, text, next, time]) => ({ number: '07', date, area, text, next, next_done: false, created_at: `${date}T${time}:00.000Z` }));
-// 하늘 내신 학기 평균(demo-dataset 학기 평균 1-1 1.7 → 2-2 1.2). 단순 평균 약 1.4.
-export const sampleSchool: SchoolGrades[] = [{ number: '07', semesters: { '1-1': 1.7, '1-2': 1.5, '2-1': 1.3, '2-2': 1.2 }, updated_at: SAMPLE_STAMP, records: sampleGrades }];
-// 하늘 1순위 목표 수능 최저(교사 입력 예시, 실제 경희대 기준 아님). 10월 학평으로 근접(demo-dataset 하늘 = 근접).
-export const sampleTargets: Target[] = [{ number: '07', university: '경희대학교', source: 'teacher', updated_at: SAMPLE_STAMP,
-  criterion: { areas: ['국어', '수학', '영어', '탐구'], count: 3, sum: 6, required: null, history_max: null, tamgu: 'best' } }];
+// 학급 성적(teacher-dashboard v2 시안 "학생 한눈에" 5등급 평균). 16 봄비는 성적 없음, 7 하늘은 아래 demo-dataset 값.
+const G5: Record<number, number> = { 1: 1.5, 2: 1.1, 3: 2.1, 4: 1.8, 5: 1.3, 6: 1.3, 8: 2.0, 9: 1.1, 10: 1.4, 11: 2.2, 12: 1.7, 13: 1.2, 14: 1.5, 15: 2.0,
+  17: 1.3, 18: 1.6, 19: 2.0, 20: 1.4, 21: 1.1, 22: 2.1, 23: 1.6, 24: 1.7, 25: 1.4, 26: 2.2, 27: 1.8, 28: 1.3 };
+const SUBJECTS: [Semester, string[]][] = [['1-1', ['공통국어1', '공통수학1', '공통영어1', '통합사회1', '통합과학1']], ['1-2', ['공통국어2', '공통수학2', '공통영어2', '통합사회2', '통합과학2']],
+  ['2-1', ['문학', '대수', '영어Ⅰ', '세계시민과 지리', '물리학']], ['2-2', ['독서와 작문', '미적분Ⅰ', '영어Ⅱ', '사회와 문화', '화학']]];
+const GROUPS = ['국어', '수학', '영어', '사회', '과학'];
+/** 과목 20개(4학점)를 평균이 G5가 되게 두 등급으로 채워요. 숫자 큰 등급을 앞 학기에 둬서 성적 하락 신호가 생기지 않아요. 환산 범위는 앱 5 to 9 엔진이 이 과목으로 계산해요. */
+function classGrades(n: number, g5: number): SchoolGrades {
+  const base = Math.floor(g5 + 1e-9), worse = Math.round((g5 - base) * 20);
+  const records: GradeRecord[] = SUBJECTS.flatMap(([semester, names], si) => names.map((name, gi) => ({
+    id: `${SAMPLE_PREFIX}t${no(n)}-${semester}-${gi + 1}`, semester, name, subject_group: GROUPS[gi], type: si < 2 ? '공통' as const : '일반선택' as const,
+    credits: 4, rank_grade: base + (si * 5 + gi < worse ? 1 : 0), is_joint: false, division: 'unknown' as const })));
+  const semesters = Object.fromEntries(SUBJECTS.map(([sem]) => { const r = records.filter(x => x.semester === sem); return [sem, r.reduce((a, x) => a + x.rank_grade!, 0) / r.length]; }));
+  return { number: no(n), semesters, updated_at: SAMPLE_STAMP, records };
+}
+// 하늘 내신 학기 평균(demo-dataset 학기 평균 1-1 1.7 → 2-2 1.2). 단순 평균 약 1.4. 하늘이 [0]이에요(tests/student-record).
+export const sampleSchool: SchoolGrades[] = [{ number: '07', semesters: { '1-1': 1.7, '1-2': 1.5, '2-1': 1.3, '2-2': 1.2 }, updated_at: SAMPLE_STAMP, records: sampleGrades },
+  ...Object.entries(G5).map(([n, g]) => classGrades(Number(n), g))];
+// 1순위 목표 수능 최저(교사 입력 예시, 실제 경희대 기준 아님). 3합 6이라 10월 학평으로 demo-dataset 판정이 나와요.
+const CRITERION: Target['criterion'] = { areas: ['국어', '수학', '영어', '탐구'], count: 3, sum: 6, required: null, history_max: null, tamgu: 'best' };
+export const sampleTargets: Target[] = sampleStudents.map(s => ({ number: s.number, university: '경희대학교', source: 'teacher', updated_at: SAMPLE_STAMP, criterion: CRITERION }));
 
 // 누가기록: 이번 달 기록 있음 25명 · 없음 3명(18 여울 · 21 모래 · 28 솔잎)
 export const sampleLogs: HomeroomLog[] = [{
@@ -57,10 +76,16 @@ export const sampleLogs: HomeroomLog[] = [{
 
 // 7번 하늘 모의고사(9등급) 3·6·9·10월: 국어 3·2·3·3 / 수학 3·2·2·2 / 영어 2·2·1·2 / 탐구1 3·3·3·3 / 탐구2 4·3·3·3
 const MOCK = { 국어: [3, 2, 3, 3], 수학: [3, 2, 2, 2], 영어: [2, 2, 1, 2], 탐구1: [3, 3, 3, 3], 탐구2: [4, 3, 3, 3] } as const;
-export const sampleMocks: MockGrades[] = [[3, '학평'], [6, '모평'], [9, '모평'], [10, '학평']].map(([month, kind], i) => ({
+const EXAMS = [[3, '학평'], [6, '모평'], [9, '모평'], [10, '학평']] as const;
+export const sampleMocks: MockGrades[] = EXAMS.map(([month, kind], i) => ({
   number: '07', exam: `2026년 ${month}월 ${kind}`, updated_at: SAMPLE_STAMP,
   grades: Object.fromEntries(Object.entries(MOCK).map(([area, v]) => [area, v[i]])),
 }));
+// 반 학생 모의고사(네 회차 같은 등급). demo-dataset 최저: 미충족 5명(15 · 22 · 3 · 11 · 26) · 근접 3명(7 · 18 · 24) · 자료 부족 1명(16, 영어만) · 충족 19명.
+const MET = { 국어: 2, 수학: 2, 영어: 2, 탐구1: 2, 탐구2: 3 }, NEAR = { 국어: 3, 수학: 2, 영어: 2, 탐구1: 3, 탐구2: 3 }, UNMET = { 국어: 3, 수학: 3, 영어: 3, 탐구1: 4, 탐구2: 4 };
+const mockOf = (n: number) => [3, 11, 15, 22, 26].includes(n) ? UNMET : [18, 24].includes(n) ? NEAR : n === 16 ? { 영어: 3 } : MET;
+export const sampleClassMocks: MockGrades[] = sampleStudents.filter(s => s.number !== '07').flatMap(s => EXAMS.map(([month, kind]) => ({
+  number: s.number, exam: `2026년 ${month}월 ${kind}`, updated_at: SAMPLE_STAMP, grades: mockOf(Number(s.number)) })));
 
 // 우리 반 입시 일정: 하늘의 고사 일정(calendar 상세 예시 E4 · E5 · E7 · E8)과 같은 날
 export const sampleSchedules: ClassSchedule[] = [

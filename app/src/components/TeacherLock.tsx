@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { ButtonPrimary } from './Buttons';
+import { ButtonOutline, ButtonPrimary } from './Buttons';
 import { Icon } from './Icon';
-import { checkPin, isExpired, loadLock, lockNow, touch } from '../domain/teacherLock';
+import { Modal } from './Modal';
+import { LOCK_MINUTES, checkPin, isExpired, loadLock, lockNow, saveLock, touch } from '../domain/teacherLock';
 
 const EVENT = 'jinhak-teacher-lock';
 export const announceLockChange = () => window.dispatchEvent(new Event(EVENT));
@@ -47,9 +48,28 @@ export function TeacherLockGate() {
   </div>;
 }
 
+/** page-header "잠금"(v2 시안 button-outline, 늘 보여요). 번호가 없으면 학생 잠금처럼 먼저 정하고 바로 잠가요. */
 export function TeacherLockButton() {
-  const [on, setOn] = useState(() => !!loadLock());
-  useEffect(() => { const f = () => setOn(!!loadLock()); window.addEventListener(EVENT, f); return () => window.removeEventListener(EVENT, f); }, []);
-  if (!on) return null;
-  return <button type="button" className="button-outline teacher-lock__button" onClick={() => { lockNow(); announceLockChange(); }}><Icon name="lock" size={16} /> 잠금</button>;
+  const [setup, setSetup] = useState(false), [pin, setPin] = useState(''), [confirm, setConfirm] = useState(''), [minutes, setMinutes] = useState(10), [error, setError] = useState(''), [busy, setBusy] = useState(false);
+  const lock = () => { lockNow(); announceLockChange(); };
+  const save = async (e: React.FormEvent) => {
+    e.preventDefault(); setBusy(true);
+    try { if (pin !== confirm) throw new Error('두 번 입력한 잠금 번호가 달라요.'); await saveLock(pin, minutes); setSetup(false); setPin(''); setConfirm(''); setError(''); lock(); }
+    catch (err) { setError(err instanceof Error ? err.message : '저장하지 못했어요.'); }
+    finally { setBusy(false); }
+  };
+  return <>
+    <button type="button" className="button-outline teacher-lock__button" onClick={() => (loadLock() ? lock() : setSetup(true))}>잠금</button>
+    {setup && <Modal label="교사 화면 잠금 번호 정하기" onClose={() => { if (!busy) setSetup(false); }}>
+      <form onSubmit={save} className="form-grid">
+        <h3 className="t-heading-4">잠금 번호를 정해 주세요</h3>
+        <p className="t-caption text-muted">잠그면 이 번호를 넣어야 교사 화면이 다시 열려요. 정한 시간 동안 쓰지 않아도 잠겨요. 번호는 이 기기에만 암호화해서 저장돼요.</p>
+        <label>잠금 번호(숫자 4~8자리)<input autoFocus type="password" inputMode="numeric" autoComplete="new-password" maxLength={8} value={pin} onChange={e => setPin(e.target.value)} /></label>
+        <label>잠금 번호 확인<input type="password" inputMode="numeric" autoComplete="new-password" maxLength={8} value={confirm} onChange={e => setConfirm(e.target.value)} /></label>
+        <label>쓰지 않으면 잠그기까지<select value={minutes} onChange={e => setMinutes(Number(e.target.value))}>{LOCK_MINUTES.map(m => <option key={m} value={m}>{m}분</option>)}</select></label>
+        {error && <p role="alert" className="error-note">{error}</p>}
+        <div className="sample-confirm__actions"><ButtonOutline disabled={busy} onClick={() => setSetup(false)}>취소</ButtonOutline><ButtonPrimary type="submit" disabled={busy || !pin}>정하고 잠그기</ButtonPrimary></div>
+      </form>
+    </Modal>}
+  </>;
 }

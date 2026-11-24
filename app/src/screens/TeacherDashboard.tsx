@@ -8,7 +8,9 @@ import { decline, schoolAverage, type SchoolGrades } from '../domain/scoreImport
 import { g5ToPct, pctToG9, verified } from '../engine/fiveToNine';
 import type { ConversionConfig } from '../engine/fiveToNineTypes';
 import fiveToNineConfig from '../data/conversion-config.json';
-import { teacherDb } from '../store/teacherDb';
+import { teacherDb, type ClassState } from '../store/teacherDb';
+import { examsByRecent, type Verdict } from '../domain/minimum';
+import { judgeStudent } from './MinimumBoard';
 import { announceLockChange } from '../components/TeacherLock';
 import { ServerSync } from '../components/ServerSync';
 import { LOCK_MINUTES, clearLock, loadLock, saveLock } from '../domain/teacherLock';
@@ -24,9 +26,17 @@ export function g9Label(g5: number | null) {
   const cfg = fiveToNineConfig as ConversionConfig;
   return verified(cfg, 'R-CONV-003') ? `약 ${pctToG9(g5ToPct(g5, cfg), cfg).toFixed(1)} (추정)` : '환산 준비 중';
 }
-/** 브리핑 신호(teacher-dashboard 02-spec P4): 카드 위험 경고 · 성적 하락. 최저 근접은 검수된 최저 기준이 생기면 더해요. */
-export function signals(r: SubmissionRow, g?: SchoolGrades) {
+/** 학생의 가장 최근 모의고사로 본 1순위 수능 최저(교사가 넣은 목표 기준). 목표나 모의고사가 없으면 null. */
+export function latestMinimum(n: string, c: Pick<ClassState, 'mocks' | 'targets'>) {
+  const exam = examsByRecent(c.mocks.filter(m => m.number === n).map(m => m.exam))[0];
+  if (!exam) return null;
+  const r = judgeStudent(n, exam, c);
+  return r.target ? { ...r, exam } : null;
+}
+/** 상담 필요 신호(teacher-dashboard 02-spec: 최저 근접·미충족 · 카드 위험 경고 · 성적 하락). 우리 반 홈과 학생 상담이 같이 써요. */
+export function signals(r: SubmissionRow, g?: SchoolGrades, min?: Verdict | null) {
   const out: string[] = [], d = decline(g);
+  if (min === '미충족' || min === '근접') out.push(`수능 최저(1순위) ${min}`);
   if (r.warnings) out.push(`카드 조합 경고 ${r.warnings}개 · ${r.latest!.card.warnings[0].title}`);
   if (d !== null) out.push(`지난 학기보다 5등급 평균이 ${d.toFixed(1)} 내려갔어요`);
   return out;
@@ -34,9 +44,12 @@ export function signals(r: SubmissionRow, g?: SchoolGrades) {
 
 export function TeacherDashboard() {
   const [clearing, setClearing] = useState(false);
-  return <ClassGate slug="teacher-dashboard" title="우리 반 홈" setup>{({ info, students, cards, school }) => {
+  return <ClassGate slug="teacher-dashboard" title="우리 반 홈" setup>{c => {
+    const { info, students, cards, school } = c;
     const rows = submissionRows(students, cards), submitted = rows.filter(r => r.latest).length, grade = (n: string) => school.find(g => g.number === n);
-    const flagged = rows.map(r => ({ ...r, why: signals(r, grade(r.student.number)) })).filter(r => r.why.length);
+    const minOf = (n: string) => latestMinimum(n, c)?.judged.verdict ?? null;
+    const flagged = rows.map(r => ({ ...r, why: signals(r, grade(r.student.number), minOf(r.student.number)) })).filter(r => r.why.length);
+    const unmet = students.filter(s => minOf(s.number) === '미충족').length, near = students.filter(s => minOf(s.number) === '근접').length, judged = students.some(s => minOf(s.number));
     const brief = [...flagged].sort((a, b) => b.why.length - a.why.length || a.student.number.localeCompare(b.student.number)).slice(0, 3);
     const declined = flagged.filter(r => decline(grade(r.student.number)) !== null).length, graded = students.filter(s => schoolAverage(grade(s.number)) !== null).length;
     return <>
@@ -44,12 +57,12 @@ export function TeacherDashboard() {
       <div className="stats">
         <div><span className="t-caption">학생 수</span><strong className="num">{students.length}명</strong><span className="t-caption text-muted">{info.name} · 성적 있음 {graded}명</span></div>
         <div><span className="t-caption">카드 제출</span><strong className="num">{submitted}명</strong><span className="t-caption text-muted">미제출 {students.length - submitted}명 · 상담카드 기준</span></div>
-        <div><span className="judge-badge judge-none">최저 미충족</span><strong className="num">–</strong><span className="t-caption text-muted">검수된 수능 최저 기준이 없어 세지 않아요</span></div>
-        <div><span className="t-caption">상담 필요</span><strong className="num key-number">{flagged.length}명</strong><span className="t-caption text-muted">카드 경고 · 성적 하락 신호가 있는 학생</span></div>
+        <div><span className="judge-badge judge-risk">✕ 최저 미충족</span><strong className="num">{judged ? `${unmet}명` : '–'}</strong><span className="t-caption text-muted">{judged ? `근접 ${near}명은 따로 세요 · 1순위 목표 기준` : '모의고사 성적과 1순위 목표를 넣으면 보여요'}</span></div>
+        <div><span className="t-caption">상담 필요</span><strong className="num key-number">{flagged.length}명</strong><span className="t-caption text-muted">최저 근접·미충족 · 카드 경고 · 성적 하락 신호가 있는 학생</span></div>
       </div>
       <article className="univ-card"><div className="section-row"><h3 className="t-heading-3">우리 반 브리핑</h3><span className="data-status-badge">규칙으로 고름</span></div>
         <p className="t-body">먼저 볼 학생 {brief.length}명 · 카드 위험 경고 {flagged.filter(r => r.warnings).length}명 · 성적 하락 {declined}명</p>
-        <p className="t-caption text-muted">카드 위험 경고 · 성적 하락 신호가 많은 학생부터 골라요. 같으면 번호 순이에요.</p>
+        <p className="t-caption text-muted">최저 · 카드 위험 경고 · 성적 하락 신호가 많은 학생부터 골라요. 같으면 번호 순이에요.</p>
         {!brief.length ? <p className="text-muted">지금 먼저 챙길 학생이 없어요</p> : <ul className="brief-list">{brief.map(r => <li key={r.student.number}>
           <strong className="num">{studentLabel(r.student)}</strong> <WarningBadge count={r.warnings} />{decline(grade(r.student.number)) !== null && <span className="data-status-badge">성적 하락</span>}
           <p className="t-body-sm">{r.why.join(' · ')}</p><Link className="t-link" to={counselPath(r.student.number)}>상담 화면 열기 ›</Link></li>)}</ul>}
