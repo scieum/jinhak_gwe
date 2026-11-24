@@ -61,12 +61,12 @@
 .np-axis { min-height: 24px; }
 .np-axis span { position: absolute; top: 7px; width: 24px; transform: translateX(-50%); text-align: center; font-size: 12px; line-height: 16.8px; }
 .np-pagination { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 12px; line-height: 16.8px; }
-.np-pagination > .button-outline { min-width: 61px; padding: 0 16px; }
+.np-pagination > .button-outline { min-width: 61px; height: 44px; min-height: 44px; padding: 0 16px; } /* 시안 390: 페이지 이동 버튼 44 */
 .np-pagination > .button-outline:disabled { border-color: var(--color-hairline-soft); color: var(--color-text-faint); background: var(--color-canvas); }
 
 .national-placement .np-trace { padding: 0 16px; border: 0; background: var(--color-canvas-soft); }
-.np-trace > summary { display: flex; align-items: center; justify-content: space-between; min-height: 48px; list-style: none; font-size: 16px; font-weight: 600; line-height: 22.4px; }
-.np-trace > summary::-webkit-details-marker { display: none; }
+.national-placement .np-trace > summary { display: flex; align-items: center; justify-content: space-between; min-height: 48px; list-style: none; font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.national-placement .np-trace > summary::-webkit-details-marker { display: none; }
 .np-trace > ol { padding-bottom: 16px; font-size: 13px; }
 .np-note { display: flex; align-items: flex-start; gap: 4px; margin: 0; font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
 .np-note > .icon { flex: none; align-self: center; }

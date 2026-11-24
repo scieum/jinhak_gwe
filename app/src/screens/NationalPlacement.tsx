@@ -16,6 +16,8 @@ import { universityLogoFile } from '../components/UniversityLogo';
 import { useCompactResults } from '../components/ResultFilters';
 import { CollectedResultFields } from '../components/CollectedResultFields';
 import { PlacementCoverage } from '../components/PlacementCoverage';
+import { useSampleMode } from '../data/sample/mode';
+import { SAMPLE_PENDING_NOTE, sampleNationalCatalog, sampleNationalRows, sampleSourceRow } from '../data/sample/nationalPlacement';
 import '../styles/national-placement.css';
 
 type Catalog = Awaited<ReturnType<typeof loadNationalCatalog>>;
@@ -29,7 +31,7 @@ const TYPE_TABS = ['교과', '종합', '논술', '기타', '전체'];
 const grade = (value: string) => { const n = gradeCoordinate(value); return n === null ? value : String(Number(n.toFixed(2))); };
 
 export function NationalPlacement() {
-  const compact = useCompactResults();
+  const compact = useCompactResults(), sample = useSampleMode(); // 샘플 모드 = 시안 데모(대학 24곳), 지우면 실제 공개 자료
   const [catalog, setCatalog] = useState<Catalog | null>(null), [year, setYear] = useState('');
   const [rows, setRows] = useState<NationalPlacementRow[] | null>(null), [error, setError] = useState(''), [indexError, setIndexError] = useState('');
   const [attempt, setAttempt] = useState(0), [indexAttempt, setIndexAttempt] = useState(0);
@@ -41,14 +43,14 @@ export function NationalPlacement() {
   useEffect(() => { setHead(compact ? null : document.querySelector('.topbar__heading')); }, [compact]);
   useEffect(() => {
     let active = true; setIndexError('');
-    loadNationalCatalog().then(value => { if (active) { setCatalog(value); setYear([...value.index.years].sort((a, b) => b.year.localeCompare(a.year))[0].year); } })
+    (sample ? Promise.resolve(sampleNationalCatalog) : loadNationalCatalog()).then(value => { if (active) { setCatalog(value); setYear([...value.index.years].sort((a, b) => b.year.localeCompare(a.year))[0].year); } })
       .catch(() => { if (active) setIndexError('배치표 목록을 불러오지 못했어요. 다시 시도해 주세요.'); });
     return () => { active = false; };
-  }, [indexAttempt]);
+  }, [indexAttempt, sample]);
   useEffect(() => {
     let active = true; setRows(null); setError(''); setPage(0); setSelected(null);
     const entry = catalog?.index.years.find(y => y.year === year);
-    if (catalog && entry) loadNationalYear(entry, catalog.collection).then(value => { if (active) setRows(value); })
+    if (catalog && entry) (catalog === sampleNationalCatalog ? Promise.resolve(sampleNationalRows.filter(r => r.year === entry.year)) : loadNationalYear(entry, catalog.collection)).then(value => { if (active) setRows(value); })
       .catch(e => { if (active) setError(e instanceof Error ? e.message : '배치표를 불러오지 못했어요.'); });
     return () => { active = false; };
   }, [catalog, year, attempt]);
@@ -128,7 +130,7 @@ export function NationalPlacement() {
           {view !== 'coverage' && <SegmentedControl label="전형 유형" value={filters.type} onChange={type => patch({ type })} options={TYPE_TABS.map(t => ({ value: t, label: t }))} />}
           {view !== 'coverage' && <div className="np-status">
             <div className="np-mine"><span className="np-label">내 위치</span><span className="data-status-badge">준비 중</span><p>검수된 환산 규칙이 생기면 배치표 위에 내 위치를 보여 드려요</p></div>
-            <div className="np-pending"><span className="data-status-badge">준비 중</span><p>수집 대학 중 {pending}곳은 좌표를 찍지 않았어요</p><button type="button" className="np-link" onClick={() => { setView('coverage'); setPage(0); }}>수집 대학에서 원문 보기 ›</button></div>
+            <div className="np-pending"><span className="data-status-badge">준비 중</span><p>{sample ? SAMPLE_PENDING_NOTE : `수집 대학 중 ${pending}곳은 좌표를 찍지 않았어요`}</p><button type="button" className="np-link" onClick={() => { setView('coverage'); setPage(0); }}>수집 대학에서 원문 보기 ›</button></div>
           </div>}
           {view !== 'coverage' && rows && !error && alternatives.length > 0 && (searching || !filtered.length) && <div className="national-coverage-note" role="note">
             <p>지금 보이지 않는 대학도 다른 통계로 볼 수 있어요.</p>
@@ -158,7 +160,7 @@ export function NationalPlacement() {
           <li>수집 여부와 좌표 표시 여부는 달라요. 다른 학년도 · 다른 통계는 조건을 바꿔 봐요.</li>
           {rows && <li><strong>이번 화면: 대학 {groups.length}곳 · 원문 {filtered.length.toLocaleString()}행 · 좌표 없음 {pending}곳</strong></li>}
         </ol></details>
-        <p className="disclaimer-note np-note"><Icon name="info" size={16} /><span>대학이 발표한 지난 입결을 옮긴 자료예요 · 대학마다 반영 교과와 산출 기준이 달라요 · 성적 판정과 계산에 쓰지 않아요 · 대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {dataAsOf} · 원문 대조 전 참고자료예요</span></p>
+        <p className="disclaimer-note np-note"><Icon name="info" size={16} /><span>대학이 발표한 지난 입결을 옮긴 자료예요 · 대학마다 반영 교과와 산출 기준이 달라요 · 성적 판정과 계산에 쓰지 않아요 · 대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {dataAsOf} · {sample ? '샘플의 대학·숫자는 예시예요' : '원문 대조 전 참고자료예요'}</span></p>
       </>}
     {selected && catalog && <NationalSource key={selected[0].id} records={selected} cut={filters.cut} collection={catalog.collection} onClose={() => setSelected(null)} />}
   </section>;
@@ -169,21 +171,20 @@ function Mark({ type }: { type: string }) {
   const fill = type === '교과' || type === '논술' ? 'np-mark--fill' : '';
   return <svg className={`np-mark ${fill}`} viewBox="0 0 11 11" aria-hidden="true">{type === '교과' || type === '종합' ? <circle cx="5.5" cy="5.5" r="5" /> : <rect x="0.5" y="0.5" width="10" height="10" />}</svg>;
 }
-const DOT = 11;
-/** 같은 값이라도 전형 유형(점 모양)이 다르면 따로 찍고, 겹치는 점만 아래 줄로 내려요. 가로 위치는 항상 정확한 값. */
+const BUCKETS = ['교과', '종합', '논술', '기타'];
+/** 시안 D5: 같은 대학 점끼리 0.15등급 안으로 붙으면 아래 줄로 내려요(교과 → 종합 → 논술 → 기타 순으로 자리를 잡아요). 같은 값이라도 전형 유형이 다르면 따로 찍어요. 가로 위치는 항상 정확한 값. */
 function plotPoints(points: ReturnType<typeof universityPoints>[number]['points'], width: number) {
   const split = points.flatMap(point => {
     const byType = new Map<string, NationalPlacementRow[]>();
     for (const r of point.records) byType.set(typeBucket(r.admission_type), [...byType.get(typeBucket(r.admission_type)) ?? [], r]);
     return [...byType].map(([bucket, records]) => ({ value: point.value, bucket, records }));
-  });
-  const ends: number[] = [];
+  }).sort((a, b) => BUCKETS.indexOf(a.bucket) - BUCKETS.indexOf(b.bucket) || a.value - b.value);
+  const lanes: number[][] = [];
   return split.map(point => {
-    const x = (point.value - 1) / 8 * width, need = DOT + (point.records.length > 1 ? 10 : 2);
-    let lane = ends.findIndex(end => x - end >= need);
-    if (lane === -1) lane = ends.length;
-    ends[lane] = x;
-    return { ...point, x, lane };
+    let lane = lanes.findIndex(values => values.every(v => Math.abs(v - point.value) > 0.15 - 1e-9));
+    if (lane === -1) lane = lanes.push([]) - 1;
+    lanes[lane].push(point.value);
+    return { ...point, x: (point.value - 1) / 8 * width, lane };
   });
 }
 
@@ -223,7 +224,7 @@ function NationalSource({ records, cut, collection, onClose }: { records: Nation
   const [row, setRow] = useState<ResultRow | null>(null), [error, setError] = useState(''), [attempt, setAttempt] = useState(0), [page, setPage] = useState(0);
   useEffect(() => {
     let active = true; setRow(null); setError('');
-    if (chosen) loadPlacementSource(chosen, collection).then(value => { if (active) setRow(value); }).catch(e => { if (active) setError(e instanceof Error ? e.message : '원문 자료를 불러오지 못했어요.'); });
+    if (chosen) (collection === sampleNationalCatalog.collection ? Promise.resolve(sampleSourceRow(chosen)) : loadPlacementSource(chosen, collection)).then(value => { if (active) setRow(value); }).catch(e => { if (active) setError(e instanceof Error ? e.message : '원문 자료를 불러오지 못했어요.'); });
     return () => { active = false; };
   }, [chosen, collection, attempt]);
   return <Modal wide label="배치표 입결 원문 상세" onClose={onClose}>
