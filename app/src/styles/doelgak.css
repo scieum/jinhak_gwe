@@ -1,0 +1,115 @@
+/* 될각 (work/doelgak/02-spec.md · Figma doelgak/1440 327:549 · doelgak/390 327:490).
+   filter-chip · segmented-control · judge-lane · univ-card v2 · cut-compare-bar 축소형 · data-status-badge. 모서리 0.
+   Route Blue는 선택 표시와 미니 막대의 내 범위 구간에만, 판정 색은 레인 머리 · 표 판정 칸에만 써요. */
+.shell:has(.doelgak) .shell__main, .shell:has(.doelgak) .topbar { background: var(--color-canvas-soft); }
+.shell:has(.doelgak) .topbar { border-bottom: 0; }
+.shell:has(.doelgak) .topbar .segmented-control { gap: 4px; padding: 4px; background: var(--color-canvas); }
+.shell:has(.doelgak) .topbar .segmented-control__option { width: 94px; }
+.topbar .dg-asof, .dg-asof { display: inline-flex; align-items: center; height: 24px; padding: 0 var(--spacing-xs); background: var(--color-canvas); color: var(--color-ink-soft); font-size: var(--font-label-size); font-weight: var(--font-label-weight); white-space: nowrap; }
+.doelgak .segmented-control { display: flex; gap: 4px; padding: 4px; background: var(--color-canvas); }
+.doelgak .segmented-control__option { flex: 1; min-height: 40px; padding: 0 var(--spacing-md); }
+.doelgak .filter-chip { display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 var(--spacing-sm); border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: var(--font-label-size); font-weight: var(--font-label-weight); white-space: nowrap; cursor: pointer; }
+.doelgak .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.doelgak .filter-chip:disabled { color: var(--color-text-faint); cursor: default; }
+.doelgak .data-status-badge { display: inline-flex; align-items: center; height: 24px; padding: 0 var(--spacing-xs); background: var(--color-canvas-soft); color: var(--color-ink-soft); white-space: nowrap; }
+
+.dg-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: var(--spacing-lg); align-items: start; }
+.dg-filters { position: sticky; top: var(--spacing-lg); display: grid; gap: var(--spacing-card); padding: var(--spacing-card); background: var(--color-canvas); }
+.dg-filters fieldset { display: grid; gap: var(--spacing-card); min-width: 0; margin: 0; padding: 0; border: 0; }
+.dg-filters fieldset:disabled .text-input, .dg-filters fieldset:disabled .segmented-control__option { color: var(--color-text-faint); }
+.dg-field { display: grid; gap: var(--spacing-xs); min-width: 0; }
+.dg-chips { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
+.dg-select { position: relative; display: block; }
+.dg-select select { width: 100%; min-height: 40px; padding: 0 44px 0 var(--spacing-md); appearance: none; border: 0; background: var(--color-canvas-soft); font: inherit; font-size: 15px; color: var(--color-ink); }
+.dg-select .icon { position: absolute; right: var(--spacing-md); top: 50%; transform: translateY(-50%); pointer-events: none; }
+.dg-field input.text-input { width: 100%; min-height: 40px; padding: 0 var(--spacing-md); border: 0; background: var(--color-canvas-soft); font: inherit; font-size: 15px; }
+.dg-filter-actions { display: flex; gap: var(--spacing-xs); }
+.dg-filter-actions > :last-child:not(:first-child) { flex: 1; }
+
+.dg-main { display: grid; gap: var(--spacing-md); align-content: start; min-width: 0; }
+.dg-toolbar { display: flex; justify-content: space-between; gap: var(--spacing-md); }
+.dg-toolbar .segmented-control { width: 200px; }
+.dg-summary { display: flex; justify-content: space-between; align-items: baseline; gap: var(--spacing-md); margin: 0; }
+.dg-summary p { margin: 0; }
+.dg-filter-row { display: none; }
+.dg-count { color: var(--color-text-muted); font-size: 15px; font-variant-numeric: tabular-nums; }
+
+.dg-lanes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--spacing-md); align-items: start; }
+.dg-lanes--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.dg-lanes--1 { grid-template-columns: minmax(0, calc((100% - 48px) / 4)); }
+.dg-lane { display: grid; gap: var(--spacing-sm); align-content: start; min-width: 0; }
+.dg-lane > header { display: flex; align-items: center; gap: var(--spacing-xs); min-height: 32px; }
+.dg-lane .judge-badge { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 var(--spacing-sm); font-size: 16px; }
+.dg-lane .judge-badge > span { font-size: 12px; }
+.dg-lane > p { margin: 0; }
+.dg-pending { margin-top: var(--spacing-sm); }
+.dg-pending__cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--spacing-md); }
+
+.doelgak .dg-card { position: relative; display: flex; flex-direction: column; gap: var(--spacing-xs); min-height: 334px; padding: var(--spacing-md); border: 1px solid var(--color-hairline-soft); background: var(--color-canvas); min-width: 0; }
+.dg-card[aria-current='true'] { outline: 1px solid var(--color-ink); outline-offset: -1px; }
+.dg-card > header { display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
+.doelgak .dg-card .university-logo { flex: 0 0 40px; width: 40px; height: 40px; }
+.dg-card .interest-control { position: relative; z-index: 1; }
+.dg-card h3 { margin: 0; font-size: 18px; line-height: 24px; overflow-wrap: anywhere; }
+.dg-card__open { padding: 0; border: 0; background: none; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.dg-card__open::after { content: ''; position: absolute; inset: 0; }
+.dg-card__program { margin: 0; overflow: hidden; color: var(--color-text-muted); font-size: 13px; line-height: 20px; white-space: nowrap; text-overflow: ellipsis; }
+.dg-card__numbers { display: grid; }
+.dg-card__range { display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-xs); }
+.dg-card__range strong { font-size: 20px; line-height: 24px; color: var(--color-ink); }
+.dg-boundary { padding: 0 4px; border: 1px dashed var(--color-ink); font-size: 12px; line-height: 16px; }
+.dg-card__numbers .t-caption { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.dg-bar { margin-top: auto; padding-top: 21px; }
+.dg-bar__track { position: relative; height: 6px; background: var(--color-hairline-soft); }
+.dg-bar__range { position: absolute; top: 0; height: 6px; background: var(--color-accent); }
+.dg-bar__cut { position: absolute; top: -3px; width: 1px; height: 12px; background: var(--color-text-faint); }
+.dg-bar__axis { position: relative; display: flex; justify-content: space-between; margin-top: 7px; color: var(--color-text-muted); font-size: 13px; line-height: 20px; }
+.dg-bar__cut-label { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+.dg-card__chips { display: flex; gap: 4px; min-height: 24px; overflow: hidden; }
+
+.dg-empty { display: grid; justify-items: center; gap: var(--spacing-xs); padding: 96px var(--spacing-md); background: none; text-align: center; }
+.dg-empty h3 { margin-top: var(--spacing-xs); }
+.dg-empty p { margin: 0 0 var(--spacing-xs); }
+.dg-table__univ { display: flex; align-items: center; gap: var(--spacing-xs); white-space: nowrap; }
+.dg-table .university-logo { flex: 0 0 28px; width: 28px; height: 28px; }
+.dg-table { background: var(--color-canvas); }
+
+.dg-sheet { display: grid; gap: var(--spacing-card); }
+.dg-sheet__head { display: flex; justify-content: space-between; align-items: center; }
+.dg-sheet__close { display: grid; place-items: center; width: 44px; height: 44px; margin-right: -12px; border: 0; background: none; color: var(--color-ink); cursor: pointer; }
+.dg-sheet__actions { position: sticky; bottom: calc(-1 * var(--spacing-md)); display: flex; gap: var(--spacing-xs); padding: var(--spacing-xs) 0 var(--spacing-md); background: var(--color-canvas); }
+.dg-sheet__actions .button-primary { flex: 1; }
+
+@media (max-width: 1279px) and (min-width: 1024px) {
+  .dg-lanes, .dg-pending__cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 1023px) {
+  .shell__content:has(.doelgak) { padding-inline: var(--spacing-md); }
+  .doelgak > .screen-heading { display: none; }
+  .dg-layout { grid-template-columns: minmax(0, 1fr); }
+  .dg-filters, .dg-toolbar .segmented-control[aria-label='보기'] { display: none; }
+  .dg-toolbar .segmented-control { width: 100%; }
+  .dg-summary { flex-direction: column; gap: 4px; }
+  .dg-summary .t-body-sm { font-size: 13px; }
+  .dg-filter-row { display: flex; gap: var(--spacing-xs); align-items: center; overflow-x: auto; }
+  .dg-filter-row > * { flex: none; }
+  .dg-filter-row .button-pill-soft { display: inline-flex; align-items: center; gap: var(--spacing-xs); min-height: 44px; padding: 0 var(--spacing-md); border: 0; background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .dg-filter-row .button-pill-soft:disabled { color: var(--color-text-faint); cursor: default; }
+  .dg-lanes, .dg-lanes--3, .dg-lanes--1, .dg-pending__cards { grid-template-columns: minmax(0, 1fr); gap: var(--spacing-xl); }
+  .dg-lanes { margin-top: var(--spacing-md); }
+  .dg-lane--empty { display: none; }
+  .dg-lane { gap: 0; margin-inline: calc(-1 * var(--spacing-md)); }
+  .dg-lane > header { min-height: 40px; padding: 0 var(--spacing-md); }
+  .dg-lane .judge-badge { height: 24px; gap: 4px; padding: 0 var(--spacing-xs); font-size: 12px; }
+  .dg-lane .judge-badge > span { font-size: 8px; }
+  .dg-count { font-size: 13px; }
+  .dg-pending__cards { gap: 0; }
+  .doelgak .dg-card { display: grid; grid-template-columns: 40px minmax(0, 1fr) 44px; align-content: start; gap: 4px var(--spacing-xs); min-height: 258px; padding: var(--spacing-sm) var(--spacing-md); border: 0; border-bottom: 1px solid var(--color-hairline-soft); }
+  .dg-card > header { display: contents; }
+  .dg-card .university-logo { grid-column: 1; grid-row: 1; align-self: center; }
+  .dg-card .interest-control { grid-column: 3; grid-row: 1; }
+  .dg-card h3 { grid-column: 2; grid-row: 1; align-self: center; }
+  .dg-card > :not(header):not(h3) { grid-column: 1 / -1; }
+  .dg-bar { margin-top: 0; align-self: end; }
+  .dg-empty { padding: 64px var(--spacing-md); }
+}

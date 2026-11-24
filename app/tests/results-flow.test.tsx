@@ -1,5 +1,5 @@
 import 'fake-indexeddb/auto';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
 import { subject, scoringRule } from './fixtures';
@@ -38,13 +38,31 @@ test('대학별 화면은 엔진 결과와 trace 표시', async () => {
   at('/univ-score'); expect(await screen.findByText('96.00 / 100')).toBeTruthy();
   expect(screen.getByText('어떻게 계산했나요?')).toBeTruthy();
 });
-test('교과 판정은 실제 환산 결과로 적정, 최저는 별도 확인 상태', async () => {
-  at('/doelgak'); expect(await screen.findByText('◐ 적정')).toBeTruthy();
-  expect(screen.getByText('수능최저 확인 필요')).toBeTruthy();
+test('교과 판정은 레인 머리에만, 카드는 내 환산·70% 컷 차이·미니 막대·조건 칩', async () => {
+  at('/doelgak');
+  const lane = await screen.findByRole('region', { name: '적정 전형' });
+  expect(within(lane).getByRole('button', { name: '테스트 대학' })).toBeTruthy();
+  expect(within(lane).getByText(/^70% 컷 3\.5 · 차이 /)).toBeTruthy();
+  expect(within(lane).getByRole('img', { name: /70% 컷 3\.5/ })).toBeTruthy();
+  expect(within(lane).getByText('수능최저 확인 필요')).toBeTruthy();
+  expect(screen.getByText('판정된 전형 1개 · 판정 안 함 0개')).toBeTruthy();
 });
 test('입결 기준이 없으면 판정 표시를 차단', async () => {
   programs[0].cut_basis = undefined;
   at('/doelgak');
-  expect(await screen.findByText(/— 학년도·등급제·지표·산식/)).toBeTruthy();
-  expect(screen.queryByText('◐ 적정')).toBeNull();
+  const group = await screen.findByRole('region', { name: '비교 자료 확인 필요 전형' });
+  expect(within(group).getByText(/70% 컷 — · 학년도·등급제·지표·산식/)).toBeTruthy();
+  expect(within(screen.getByRole('region', { name: '적정 전형' })).queryByText('테스트 대학')).toBeNull();
+});
+test('판정 필터는 적용하기를 눌러야 바뀌고, 결과 0이면 필터 초기화 안내', async () => {
+  at('/doelgak');
+  await screen.findByRole('region', { name: '적정 전형' });
+  const filters = screen.getByRole('complementary', { name: '판정 조회 조건' });
+  fireEvent.click(within(within(filters).getByRole('group', { name: '판정' })).getByRole('button', { name: '소신' }));
+  expect(screen.getByRole('region', { name: '적정 전형' })).toBeTruthy();
+  fireEvent.click(within(filters).getByRole('button', { name: '적용하기' }));
+  expect(screen.queryByRole('region', { name: '적정 전형' })).toBeNull();
+  expect(screen.getByText('조건에 맞는 전형이 없어요')).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '필터 초기화' }));
+  expect(await screen.findByRole('button', { name: '테스트 대학' })).toBeTruthy();
 });

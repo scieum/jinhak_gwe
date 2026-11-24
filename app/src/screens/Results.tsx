@@ -3,15 +3,10 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Disclaimer, TraceAccordion } from '../components/CalculationDetails';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { useStudent } from '../store/studentDb';
-import { combinations, conversionFor, currentComparisonBasis, fiveToNineFor } from '../domain/results';
+import { combinations, currentComparisonBasis, fiveToNineFor } from '../domain/results';
 import type { MethodResult } from '../engine/fiveToNineTypes';
 import { gradeSummary, validateGrade, type StudentBackup } from '../domain/student';
-import { compareBasis } from '../domain/comparison';
-import { ComparisonDetails } from '../components/ComparisonDetails';
-import { pending } from '../engine/types';
 import { scoreUniversity } from '../engine/scoring';
-import { judgeRange } from '../engine/judgment';
-import { judgmentRule } from '../data/conversion-rules';
 import { admissionYear, programs, type ProgramData } from '../data/catalog';
 import { useReleasedRules } from '../data/releasedRules';
 import type { ScoringRule } from '../engine/scoring';
@@ -21,12 +16,11 @@ import { QuickGradeCalculator } from '../components/QuickGradeCalculator';
 import { HomeDashboard } from '../components/HomeDashboard';
 import { GradeRange } from '../components/GradeRange';
 import { UniversityLogo } from '../components/UniversityLogo';
-import { InterestButton } from '../components/InterestButton';
 import { ScreenActions } from '../components/ScreenActions';
 
-export function StudentDataScreen({ slug, title, children }: { slug: string; title: string; children: (data: StudentBackup) => ReactNode }) {
+export function StudentDataScreen({ slug, title, children, actions, className = '' }: { slug: string; title: string; children: (data: StudentBackup) => ReactNode; actions?: ReactNode; className?: string }) {
   const state = useStudent();
-  return <section data-slug={slug} aria-label={title} className="student-screen"><div className="screen-heading"><h2 className="t-heading-1">{title}</h2><ScreenActions><Link className="button-outline" to="/grade-input">성적 입력·수정</Link></ScreenActions></div>
+  return <section data-slug={slug} aria-label={title} className={`student-screen ${className}`.trim()}><div className="screen-heading"><h2 className="t-heading-1">{title}</h2><ScreenActions>{actions ?? <Link className="button-outline" to="/grade-input">성적 입력·수정</Link>}</ScreenActions></div>
     {!state ? <p role="status">기기에 저장된 성적을 읽고 있어요.</p> : !state.data ? <p role="alert">{state.error}</p> : children(state.data)}
   </section>;
 }
@@ -88,44 +82,6 @@ export function UniversityScores() {
       {rows.length > 0 && <div className="table-scroll"><table className="data-table univ-score-table"><thead><tr><th>대학·전형</th><th className="num">교과</th><th className="num">출결</th><th className="num">합계 / 만점</th><th>환산 순위</th></tr></thead><tbody>{rows.map(({ p, r }) => <tr key={p.id} className={active?.p.id === p.id ? 'is-selected' : ''}><td><button className="text-button univ-score-name" aria-pressed={active?.p.id === p.id} aria-label={`${p.university} ${p.program} 환산 상세`} onClick={() => setSelected(p.id)}><UniversityLogo university={p.university} /><span><strong>{p.university}</strong><small>{[p.program, p.department].filter(Boolean).join(' · ')}</small></span></button></td><td className="num">{r?.status === 'ready' ? r.value.grade.toFixed(2) : '—'}</td><td className="num">{r?.status === 'ready' ? r.value.attendance.toFixed(2) : '—'}</td><td className="num">{r?.status === 'ready' ? `${r.value.total.toFixed(p.rule!.rounding.digits)} / ${r.value.max}` : '준비 중'}</td><td>{r?.status === 'ready' ? `${ratioSorted.findIndex(a => a.id === p.id) + 1}위` : '—'}</td></tr>)}</tbody></table></div>}
       <p className="t-caption text-muted">환산 순위는 대학 만점 대비 점수 비율을 비교한 순서예요. 대학 선호도나 지원 결과를 뜻하지 않아요.</p><Disclaimer /></div>
       <aside className="analysis-aside" aria-label="대학별 환산 근거">{active ? (() => { const { p, r } = active; return <><div className="univ-score-name"><UniversityLogo university={p.university} /><h3 className="t-heading-3">{p.university}</h3></div><p>{[p.program, p.department].filter(Boolean).join(' · ')}</p>{r?.status === 'ready' ? <><div className="univ-score-total"><span>내 환산점수</span><strong>{r.value.total.toFixed(p.rule!.rounding.digits)}</strong><span>/ {r.value.max}점 만점</span></div><dl className="analysis-facts"><div><dt>교과</dt><dd>{r.value.grade.toFixed(2)}</dd></div><div><dt>출결</dt><dd>{r.value.attendance.toFixed(2)}</dd></div></dl><p>만점 대비 {(r.value.total / r.value.max * 100).toFixed(2)}%{r.value.average_rank !== null && ` · 반영 교과 평균 ${r.value.average_rank.toFixed(2)}`}</p>{avgSorted.some(a => a.id === p.id) && <p>반영 교과 평균 기준 {avgSorted.findIndex(a => a.id === p.id) + 1}위 → 만점 대비 환산 기준 {ratioSorted.findIndex(a => a.id === p.id) + 1}위</p>}{r.value.attendance_deduction > 0 && <p className="notice">출결 감점 {r.value.attendance_deduction}점이 있어요.</p>}</> : <p className="notice">{r?.reason ?? '환산 규칙 준비 중'}</p>}<TraceAccordion trace={r?.trace ?? []} />{p.source.startsWith('https://') && <a className="text-button" href={p.source} target="_blank" rel="noreferrer">공식 원문 보기 ↗</a>}</>; })() : <><h3 className="t-heading-3">대학별 환산 근거</h3><p className="text-muted">검수된 전형이 등록되면 대학별 반영 방법과 내 환산점수를 확인할 수 있어요.</p></>}</aside></div>;
-  }}</StudentDataScreen>;
-}
-
-const judgmentClass = { 안정: 'safe', 적정: 'fit', 소신: 'reach', 위험: 'risk' };
-const judgmentIcon = { 안정: '●', 적정: '◐', 소신: '▲', 위험: '■' };
-export function Doelgak() {
-  const [combo, setCombo] = useState('국수영사과');
-  const [filter, setFilter] = useState('전체');
-  const [keyword, setKeyword] = useState(''), [region, setRegion] = useState(''), [field, setField] = useState(''), [minimum, setMinimum] = useState('전체');
-  return <StudentDataScreen slug="doelgak" title="될각 · 교과전형">{data => {
-    const conversion = conversionFor(data.grades, combo);
-    const scope = combinations[combo] ?? [...new Set(data.grades.filter(g => !validateGrade(g).length).map(g => g.subject_group))];
-    const inputBasis = currentComparisonBasis(data.grades, scope, conversion.status === 'ready');
-    const rows = programs.filter(p => p.admission_year === admissionYear).map(p => ({ p,
-      r: conversion.status !== 'ready' ? null : !compareBasis(inputBasis, p.cut_basis).comparable
-        ? pending(compareBasis(inputBasis, p.cut_basis).reasons.join(' '))
-        : p.cut_grade_system !== inputBasis.grade_system ? pending('등급제 확인이 필요해요.') : p.cut_subject_scope.length !== scope.length || !scope.every(g => p.cut_subject_scope.includes(g))
-        ? pending('같은 반영 교과 기준의 입결 자료가 필요해요.')
-        : judgeRange(conversion.value, p.license_status === 'allowed' ? p.cut : null, judgmentRule) }));
-    const visible = rows.filter(({ p }) => (!region || p.region === region) && (!field || p.field === field) && (minimum === '전체' || p.minimum_required === (minimum === '있음')) && `${p.university} ${p.program} ${p.department}`.includes(keyword.trim()));
-    const card = ({ p, r }: typeof rows[number]) => <article className="univ-card doelgak-card" key={p.id}><header><UniversityLogo university={p.university} /><InterestButton university={p.university} program={p.program} department={p.department || undefined} compact /></header><h3 className="t-heading-3">{p.university} · {p.department}</h3><p className="t-caption text-muted">{p.program}</p>
-        {r?.status === 'ready' ? <><span className={`judge-badge judge-${judgmentClass[r.value.label]}`}>{judgmentIcon[r.value.label]} {r.value.label}</span>{r.value.boundary && <p>경계 · 유리한 쪽 기준 {r.value.favorable_label}</p>}</> : <span className="judge-badge judge-none">— {r?.reason ?? '환산 결과 준비 중'}</span>}
-        {r?.status === 'ready' && conversion.status === 'ready' && <div className="doelgak-range"><span className="t-caption text-muted">내 환산</span><strong>{displayRange(conversion.value.min, conversion.value.max)}</strong><p className="t-caption text-muted">70% 컷 {p.cut?.cut70}</p></div>}
-        <p className="t-caption">{p.minimum_required ? '수능최저 확인 필요' : '수능최저 없음'}{p.fill_rate !== undefined && ` · 충원율 ${p.fill_rate}%`}</p><ComparisonDetails input={inputBasis} cut={p.cut_basis} /><TraceAccordion trace={r?.trace ?? []} /></article>;
-    return <div className="doelgak-layout"><aside className="doelgak-filters" aria-label="판정 조회 조건"><h3 className="t-heading-3">필터</h3>
-      <label>반영 교과<select value={combo} onChange={e => setCombo(e.target.value)}>{Object.keys(combinations).map(value => <option key={value}>{value}</option>)}</select></label>
-      <label>지역<select value={region} onChange={e => setRegion(e.target.value)}><option value="">전체</option>{[...new Set(rows.map(({ p }) => p.region).filter((v): v is string => !!v))].sort().map(value => <option key={value}>{value}</option>)}</select></label>
-      <label>계열<select value={field} onChange={e => setField(e.target.value)}><option value="">전체</option>{['인문','사회','자연','공학','의약','예체능'].map(value => <option key={value}>{value}</option>)}</select></label>
-      <label>대학·학과 키워드<input type="search" placeholder="예: 간호, 경영" value={keyword} onChange={e => setKeyword(e.target.value)} /></label>
-      <label>수능최저<select value={minimum} onChange={e => setMinimum(e.target.value)}>{['전체','있음','없음'].map(value => <option key={value}>{value}</option>)}</select></label>
-      <button className="button-outline" onClick={() => { setCombo('국수영사과'); setFilter('전체'); setKeyword(''); setRegion(''); setField(''); setMinimum('전체'); }}>검색 조건 초기화</button>
-    </aside><div className="analysis-main"><p className="text-muted">환산 범위의 불리한 쪽을 기준으로 입결과 비교해요. 수능최저와 충원율은 따로 확인해 주세요.</p>
-      <SegmentedControl label="판정 필터" value={filter} onChange={setFilter} options={['전체', '안정', '적정', '소신', '위험'].map(value => ({ value, label: value }))} />
-      {conversion.status !== 'ready' && <p className="notice">{data.grades.length ? conversion.reason : '성적을 입력하면 검수된 기준으로 비교할 수 있어요.'}</p>}
-      {!rows.length && <div className="empty-state"><h3 className="t-heading-3">검수된 입결 자료를 준비하고 있어요</h3><p>입결과 판정 기준이 모두 준비된 전형만 판정해요.</p></div>}
-      <div className="doelgak-lanes">{(Object.keys(judgmentClass) as (keyof typeof judgmentClass)[]).filter(label => filter === '전체' || filter === label).map(label => { const group = visible.filter(({ r }) => r?.status === 'ready' && r.value.label === label); return <section className="doelgak-lane" key={label} aria-label={`${label} 전형`}><header><h3 className={`judge-badge judge-${judgmentClass[label]}`}>{label}</h3><span className="t-caption text-muted">{group.length}개</span></header>{group.length ? group.map(card) : <p className="doelgak-lane-empty t-caption text-muted">표시할 전형이 없어요</p>}</section>; })}</div>
-      {filter === '전체' && visible.some(({ r }) => r?.status !== 'ready') && <section className="doelgak-pending"><h3 className="t-heading-3">비교 자료 확인 필요</h3><div>{visible.filter(({ r }) => r?.status !== 'ready').map(card)}</div></section>}
-      <TraceAccordion trace={conversion.trace} /><Disclaimer /></div></div>;
   }}</StudentDataScreen>;
 }
 

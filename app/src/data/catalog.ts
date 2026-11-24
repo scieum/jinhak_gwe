@@ -20,6 +20,8 @@ export interface ProgramData {
   cut_basis?: ComparisonBasis;
   fill_rate?: number;
   minimum_required: boolean;
+  /** 면접 여부(검수된 모집요강 값). 없으면 면접 필터 있음·없음 어디에도 들지 않아요. */
+  interview?: boolean;
   /** Explicit catalog metadata; never infer these from university or department names. */
   region?: string;
   field?: '인문' | '사회' | '자연' | '공학' | '의약' | '예체능';
@@ -27,7 +29,8 @@ export interface ProgramData {
 }
 // Reviewed, licensed public data is added here by the data release process.
 // No invented university or previous admission cut is shipped as real data.
-export const programs: readonly ProgramData[] = [];
+// 샘플 모드일 때만 data/sample이 이 배열에 샘플 전형을 넣고 지울 때 빼요(그 밖에는 비어 있어요).
+export const programs: ProgramData[] = [];
 // Inert placeholder schema: no confidence label can be returned before review.
 export const confidenceRule: ConfidenceRule = {
   id: 'R-CONV-008-pending', source: 'docs/prd.md R-CONV-008 (수치 정책 미확정)', review_status: 'draft',
