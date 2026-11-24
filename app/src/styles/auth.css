@@ -2,7 +2,7 @@
    모바일: 회색 알약 머리(로고만) → 테두리 폼 카드 → 카드 밖 "○○ ›" 줄. PC: 상단 바 + 왼쪽 폼(440) + 오른쪽 소개 패널(2×2 카드). */
 .auth { min-height: 100dvh; display: flex; flex-direction: column; background: var(--color-canvas); }
 .auth__header { display: flex; align-items: center; justify-content: space-between; height: 48px; margin: 16px 20px 0; padding: 0 24px; background: var(--color-canvas-soft); }
-.auth__header .brand-logo { width: 92px; }
+.auth__header .brand-logo { width: 76px; } /* 시안: 모바일 76 · PC 96 (사용자 결정 로고 크기) */
 .auth__header .button-outline { display: none; }
 .auth__body { flex: 1; display: flex; }
 .auth__form { flex: 1; display: flex; flex-direction: column; gap: 24px; padding: 24px 20px 32px; }
@@ -34,6 +34,8 @@
 .auth__select-icon { position: absolute; top: 14px; right: 16px; color: var(--color-ink); pointer-events: none; }
 
 .auth__switch { display: flex; justify-content: center; align-items: center; gap: var(--spacing-xs); min-height: 44px; }
+.auth__about { min-height: 0; } /* 시안: 소개 줄은 글자 높이만, 링크는 파랑 */
+.auth__about .t-link { color: var(--color-accent); text-decoration: none; }
 .button-pill-soft { display: inline-flex; align-items: center; gap: var(--spacing-xxs); min-height: 44px; padding: 0 var(--spacing-md); background: var(--color-canvas-soft); color: var(--color-ink); font-weight: 600; text-decoration: none; } /* 공용(다른 화면도 씀) — 원래 규칙 그대로 */
 
 .auth__icon { color: var(--color-accent); flex: none; }
@@ -61,13 +63,14 @@
 
 @media (min-width: 1024px) {
   .auth__header { height: 64px; margin: 0; padding: 0 32px; background: var(--color-canvas); border-bottom: 1px solid var(--color-hairline-soft); }
-  .auth__header .brand-logo { width: 124px; }
+  .auth__header .brand-logo { width: 96px; }
   .auth__header .button-outline { display: inline-flex; }
   .auth__body { display: grid; grid-template-columns: 1fr 1fr; }
   .auth__form { align-items: center; gap: 48px; padding: 64px 0; }
   [data-slug='signup'] .auth__form { gap: 32px; }
   .auth__card-form { width: 440px; border: 0; padding: 0; }
   .auth__switch { width: 440px; }
+  .auth__about { margin-top: -48px; } /* 시안: 회원가입 줄 바로 아래 */
   .auth__card-form > h1 { line-height: 35px; }
   .auth__sub { margin-top: 8px; line-height: 27px; }
   .auth__lead { margin-top: 32px; }

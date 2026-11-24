@@ -224,6 +224,9 @@
     color: var(--color-ink);
     font-weight: var(--font-link-weight);
   }
+  /* v2 시안: 선택 행은 막대 3px만큼 아이콘·글자가 오른쪽으로(소분류 32→35, 홈 16→19) */
+  .sidebar-item[aria-current='page'] { padding-left: var(--spacing-xl); }
+  .sidebar-item--top[aria-current='page'] { padding-left: var(--spacing-md); }
 
   .topbar {
     display: flex;
