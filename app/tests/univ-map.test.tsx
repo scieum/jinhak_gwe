@@ -70,7 +70,7 @@ describe('대학 지도', () => {
 
   it('지역 시트: 17칸 격자, 누르면 바로 닫히고 바뀐다 · 모두 검수 전인 시·도', async () => {
     serve(); open();
-    fireEvent.click(await screen.findByRole('button', { name: '전국 ⌄' }));
+    fireEvent.click(await screen.findByRole('button', { name: /^전국/ }));
     const sheet = screen.getByRole('dialog', { name: '지역 고르기' });
     expect(within(sheet).getByRole('button', { name: /^전국/ }).getAttribute('aria-pressed')).toBe('true');
     expect(within(sheet).getAllByRole('button', { name: /, (대학|위치)/ })).toHaveLength(17);
@@ -78,7 +78,7 @@ describe('대학 지도', () => {
     expect(ulsan.textContent).toBe('울산 확인 중');
     fireEvent.click(ulsan);
     expect(screen.queryByRole('dialog')).toBeNull();
-    expect(screen.getByRole('button', { name: '울산 ⌄' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: '울산' })).toBeTruthy();
     expect(screen.getByText('이 지역 대학 2곳은 위치를 확인하고 있어요')).toBeTruthy();
     expect(screen.getByText('위치 확인 중 2곳 — 검수가 끝나면 지도에 나와요')).toBeTruthy();
   });
@@ -108,14 +108,14 @@ describe('대학 지도', () => {
 
   it('모바일 목록 보기: 시·도 머리 + 카드 링크, 시·도 목록은 정렬을 바꾼다', async () => {
     serve(); open();
-    fireEvent.click(await screen.findByRole('button', { name: '≡ 목록 보기' }));
+    fireEvent.click(await screen.findByRole('button', { name: '목록 보기' }));
     const list = screen.getByRole('region', { name: '목록' });
     expect(within(list).getByText('전국 · 대학 10곳')).toBeTruthy();
     expect(within(list).getByText('세종특별자치시', { exact: false }).textContent).toBe('세종특별자치시 1');
     expect(within(list).getAllByRole('link')[0].getAttribute('href')).toBe(`/univ-detail?u=${encodeURIComponent('고려대학교')}`);
     fireEvent.click(screen.getByRole('button', { name: '지도 보기' }));
     await toGangwon();
-    fireEvent.click(screen.getByRole('button', { name: '≡ 목록 보기' }));
+    fireEvent.click(screen.getByRole('button', { name: '목록 보기' }));
     const names = () => within(screen.getByRole('region', { name: '목록' })).getAllByRole('link').map(a => a.querySelector('.t-heading-4')!.textContent! + a.querySelector('.t-body-sm')!.textContent!.split(' · ')[0]);
     expect(names()[0]).toBe('가톨릭관동대학교강릉캠퍼스');
     fireEvent.click(screen.getByRole('button', { name: '가나다순 ▾' }));
@@ -125,7 +125,7 @@ describe('대학 지도', () => {
 
   it('조건으로 0곳이면 지도 위 한 줄 + 조건 지우기, 설립 조건은 개수를 바꾼다', async () => {
     serve(); open();
-    fireEvent.click(await screen.findByRole('button', { name: '설립 ⌄' }));
+    fireEvent.click(await screen.findByRole('button', { name: /^설립/ }));
     const sheet = screen.getByRole('dialog', { name: '설립' });
     expect(within(sheet).getByText('국립대법인 포함')).toBeTruthy();
     fireEvent.click(within(sheet).getByRole('button', { name: /^공립/ }));
@@ -134,7 +134,7 @@ describe('대학 지도', () => {
     expect(screen.getByText('조건에 맞는 대학이 없어요')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: '조건 지우기' }));
     expect(screen.getByText('대학 10곳')).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: '학교 종류 ⌄' }));
+    fireEvent.click(screen.getByRole('button', { name: /^학교 종류/ }));
     fireEvent.click(within(screen.getByRole('dialog', { name: '학교 종류' })).getByRole('button', { name: '교육대학' }));
     expect(sido(/^강원특별자치도/).getAttribute('aria-label')).toBe('강원특별자치도, 대학 1곳');
   });
@@ -145,7 +145,7 @@ describe('대학 지도', () => {
     fireEvent.change(input, { target: { value: '강원' } });
     const results = screen.getByRole('region', { name: '검색 결과' });
     expect(within(results).getByText('대학 2곳')).toBeTruthy();
-    expect(screen.queryByRole('button', { name: '≡ 목록 보기' })).toBeNull();
+    expect(screen.queryByRole('button', { name: '목록 보기' })).toBeNull();
     fireEvent.click(within(results).getByRole('button', { name: /삼척캠퍼스/ }));
     expect(screen.getByRole('heading', { name: '강원특별자치도' })).toBeTruthy();
     expect(screen.getByRole('article', { name: '강원대학교 삼척캠퍼스' })).toBeTruthy();
@@ -159,6 +159,7 @@ describe('대학 지도', () => {
     serve('ok', false); open();
     const panel = await screen.findByRole('region', { name: '대학 목록' });
     expect(within(panel).getByText('시·도순')).toBeTruthy();
+    fireEvent.click(within(panel).getByRole('button', { name: /목록 더 보기/ })); // 전국 목록은 4곳부터
     fireEvent.click(within(panel).getByRole('button', { name: /^경동대학교/ }));
     expect(screen.getByRole('heading', { name: '강원특별자치도' })).toBeTruthy();
     expect(within(panel).getByRole('button', { name: /^경동대학교/ }).getAttribute('aria-current')).toBe('true');
@@ -178,7 +179,7 @@ describe('대학 지도', () => {
     cleanup();
     serve('down'); open();
     expect(await screen.findByRole('heading', { name: '지도를 불러오지 못했어요' })).toBeTruthy();
-    expect(screen.queryByRole('button', { name: '≡ 목록 보기' })).toBeNull();
+    expect(screen.queryByRole('button', { name: '목록 보기' })).toBeNull();
     expect(screen.getByText(/입결이나 대학 순위와는 관계없어요/)).toBeTruthy();
     vi.stubGlobal('fetch', vi.fn(async () => new Response(JSON.stringify(map))));
     fireEvent.click(screen.getByRole('button', { name: '다시 불러오기' }));

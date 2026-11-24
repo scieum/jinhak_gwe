@@ -89,7 +89,7 @@ test('여러 원문을 임의로 합치지 않고 선택한 원문의 모집인�
   expect(screen.queryByText('999')).toBeNull();
   expect(screen.queryByText('3.800')).toBeNull();
   fireEvent.change(choice, { target: { value: '1' } });
-  expect(await screen.findByText('31')).toBeTruthy();
+  expect(await screen.findByText('31명')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '가온대 일반전형 간호학과 2026학년도 원문 상세' }));
   expect(within(screen.getByRole('dialog')).getByText('99쪽')).toBeTruthy();
   fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: '닫기' }));
@@ -116,7 +116,7 @@ test('추가 통계 로딩 실패를 70%나 평균으로 대체하지 않는다'
   await screen.findByRole('button', { name: '가온대 일반전형 간호학과 2026학년도 원문 상세' });
   fireEvent.change(screen.getByLabelText('컷·통계 기준'), { target: { value: 'cut_75' } });
   await screen.findByRole('button', { name: '자료 다시 불러오기' });
-  expect(screen.getAllByText('통계 파일 연결 실패').length).toBeGreaterThan(0);
+  expect(screen.getAllByText(/통계 파일 연결 실패/).length).toBeGreaterThan(0);
   expect(screen.queryByText('2.400')).toBeNull();
 });
 
@@ -134,4 +134,19 @@ test('비교에서 선택한 학과만 지원 준비로 이어지고 입결 연�
   expect((await studentDb.applications.toArray())[0]).toMatchObject({ university: '가온대', program: '일반전형', department: '간호학과', year: 2029 });
   expect(await studentDb.interests.count()).toBe(2);
   expect(await studentDb.boards.count()).toBe(0);
+});
+
+test('샘플 모드는 시안 데모 3개(가천·강원·경북)를 바로 비교하고, 원문이 여러 건이어도 같은 값만 보여 준다', async () => {
+  const { setSampleFlag } = await import('../src/data/sample/mode');
+  setSampleFlag('on');
+  try {
+    show();
+    expect(await screen.findByRole('button', { name: '경북대학교 학생부교과(교과우수자) 간호학과 비교에서 빼기' })).toBeTruthy();
+    expect(screen.getAllByRole('columnheader')).toHaveLength(4);
+    expect(screen.getByText('18명')).toBeTruthy(); // 2026 원문 2건 모두 18명
+    expect(screen.getByRole('combobox', { name: '경북대학교 학생부교과(교과우수자) 간호학과 2026학년도 원문 선택' })).toBeTruthy();
+    expect(screen.getByText('2024 미기재')).toBeTruthy();
+    expect(screen.getByText(/샘플의 대학·숫자는 예시예요/)).toBeTruthy();
+    expect(loader.loadCollectedIndex).not.toHaveBeenCalled();
+  } finally { setSampleFlag('off'); }
 });
