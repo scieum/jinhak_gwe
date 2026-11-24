@@ -4,6 +4,7 @@ Usage: python -I merge.py   (run from this folder)
 """
 import csv, glob, os, re, sys
 from collections import Counter
+import university_identity
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 COLS = ['university', 'result_year', 'round', 'admission_type', 'program', 'recruit_unit', 'quota',
@@ -82,6 +83,7 @@ def allowed():
 
 def main():
     rows, bad, special_rows = [], [], []
+    degree_excluded = []
     by_region = {}
     excluded = Counter()
     ok = allowed()
@@ -102,12 +104,20 @@ def main():
                 if reason:
                     excluded[reason] += 1
                     continue
+                reason = university_identity.exclusion_reason(r)
+                if reason:
+                    excluded[reason] += 1
+                    preserved = university_identity.normalize(r)
+                    preserved['note'] += '; ' + reason
+                    degree_excluded.append(preserved)
+                    continue
                 if not r['source_url']:
                     bad.append(f'{os.path.basename(path)}:{i} no source_url')
                 if bool(ADIGA_SOURCE.search(r['source_url'])) != is_adiga:
                     bad.append(f'{os.path.basename(path)}:{i} adiga rows belong only in <slug>-adiga.csv')
                 # These source parsers distinguish fill counts from ranks explicitly.
                 r = r if slug in GYEONGGI_FOUR_YEAR | CHUNGCHEONG_FOUR_YEAR | NATIONAL_FOUR_YEAR | DAEGU_GYEONGBUK_FOUR_YEAR | BUSAN_ULSAN_GYEONGNAM_FOUR_YEAR | HONAM_FOUR_YEAR | SPECIAL_SCHOOLS else normalize(r)
+                r = university_identity.normalize(r)
                 rows.append(r)
                 if slug in SPECIAL_SCHOOLS:
                     special_rows.append(r)
@@ -115,7 +125,7 @@ def main():
     # Category view also includes KAIST/NUCH already classified geographically.
     # This does not append those rows to the master a second time.
     by_region['특수'] = special_rows
-    for name, part in [('_all', rows)] + [(f'_all-{k}', v) for k, v in sorted(by_region.items())]:
+    for name, part in [('_all', rows), ('_excluded-degree', degree_excluded)] + [(f'_all-{k}', v) for k, v in sorted(by_region.items())]:
         with open(os.path.join(HERE, f'{name}.csv'), 'w', encoding='utf-8-sig', newline='') as f:
             w = csv.DictWriter(f, COLS)
             w.writeheader()
@@ -124,7 +134,7 @@ def main():
     out = ['| 대학 | 학년도 | 수시 | 정시 |', '|---|---|---|---|']
     for u, y in sorted({(u, y) for u, y, _ in cov}):
         out.append(f"| {u} | {y} | {cov[(u, y, '수시')]} | {cov[(u, y, '정시')]} |")
-    with open(os.path.join(HERE, '_coverage.md'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(HERE, '_coverage.md'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(f'총 {len(rows)}행\n\n' + '\n'.join(out) + '\n')
     print(f'{len(rows)} rows, {len(bad)} problems')
     print('  ' + ', '.join(f'{k} {len(v)}' for k, v in sorted(by_region.items())))

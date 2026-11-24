@@ -7,6 +7,7 @@ import { loadNationalCatalog, loadNationalYear } from '../data/nationalPlacement
 import type { CollectedIndex } from '../domain/collectedResults';
 import type { ResultRow } from '../domain/resultReview';
 import { collectedProgramPath, type Interest } from '../domain/interests';
+import { collectedUniversitySelection } from '../domain/universityIdentity';
 import { chosenComparisonRecord, comparisonRecords, comparisonSelection, comparisonStatistic, differsOrUnknown, MAX_COMPARISON, type ComparisonRecord } from '../domain/interestComparison';
 import { STATISTIC_LABELS, statisticDetail, type CutField, type NationalPlacementRow } from '../domain/nationalPlacement';
 import { SegmentedControl } from '../components/SegmentedControl';
@@ -54,7 +55,8 @@ export function InterestComparison() {
   useEffect(() => {
     let active = true; setPackages({}); setChoices({});
     if (catalog) for (const university of JSON.parse(names) as string[]) {
-      const entry = catalog.universities.find(entry => entry.university === university);
+      const current = collectedUniversitySelection(university, catalog.universities.map(e => e.university));
+      const entry = catalog.universities.find(entry => entry.university === current);
       if (!entry) { setPackages(previous => ({ ...previous, [university]: { rows: [], error: '현재 수집 자료에서 이 대학·캠퍼스를 찾지 못했어요.' } })); continue; }
       loadCollectedRows(entry).then(rows => { if (active) setPackages(previous => ({ ...previous, [university]: { rows, error: '' } })); })
         .catch(error => { if (active) setPackages(previous => ({ ...previous, [university]: { rows: [], error: message(error) } })); });
@@ -97,7 +99,7 @@ export function InterestComparison() {
   const originalButton = (item: Interest, value: string, record: ComparisonRecord) => <button className="text-button" aria-label={`${item.university} ${item.program} ${item.department} ${value}학년도 원문 상세`} onClick={() => setOpened(record.row)}>원문·상세</button>;
   const fact = (item: Interest, field: 'quota' | 'competition_rate' | 'admission_type' | 'basis' | 'grade_system') => readiness(item, year) ? unknown(readiness(item, year)) : cell(picked(item, year)!.row[field]);
   const statistic = (item: Interest, value: string): Cell => {
-    const record = picked(item, value), indexed = record ? statistics[value]?.rows.get(`${item.university}:${record.sourceRow}`) : undefined;
+    const record = picked(item, value), indexed = record ? statistics[value]?.rows.get(`${record.row.university}:${record.sourceRow}`) : undefined;
     const number = comparisonStatistic(record, cut, indexed);
     const status = readiness(item, value) || (record?.row.grade_system !== '9' ? '9등급제 확인 필요' : extra && !statistics[value] ? '통계를 읽고 있어요' : extra && statistics[value]?.error ? statistics[value].error : !number ? '해당 통계 없음 · 원문 확인' : '');
     return { text: number ?? status, known: !!number && !status, content: <div className="comparison-statistic">

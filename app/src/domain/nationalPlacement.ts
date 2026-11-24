@@ -1,5 +1,6 @@
 import type { CollectedIndex } from './collectedResults';
 import { sortNumber } from './tableSort';
+import { matchesUniversityIdentity } from './universityIdentity';
 
 export const PLACEMENT_FIELDS = ['university', 'round', 'admission_type', 'program', 'recruit_unit', 'metric', 'basis', 'cut_50', 'cut_70', 'grade_system'] as const;
 export const STATISTIC_LABELS = { cut_70: '70% 컷', cut_50: '50% 컷', cut_75: '75% 컷', cut_80: '80% 컷', cut_85: '85% 컷', cut_90: '90% 컷', cut_100: '100% 컷', mean: '평균', mean_university: '평균 · 대학 반영/환산', mean_all: '평균 · 전과목', mean_top9: '평균 · 상위 9과목', mean_main: '평균 · 국영수사과' } as const;
@@ -73,8 +74,7 @@ export function matchesPlacementQuery(row: NationalPlacementRow, filters: Placem
 }
 
 export function matchesUniversity(name: string, query: string) {
-  const normalize = (value: string) => value.replace(/대학교/g, '대').replace(/\s/g, '');
-  return normalize(name).includes(normalize(query));
+  return matchesUniversityIdentity(name, query);
 }
 
 /** Account for every collected campus, including those absent from the selected year. */

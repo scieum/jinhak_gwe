@@ -39,6 +39,21 @@ test('중복·삭제·학과 미지정 항목을 제외하고 최대 4개만 비
   expect(differsOrUnknown([{ text: '미기재', known: false }, { text: '미기재', known: false }])).toBe(true);
 });
 
+test('옛 교명으로 저장한 관심 항목은 같은 캠퍼스 원문을 읽고 저장 기록은 보존한다', async () => {
+  const saved = interest('강릉원주대(원주)');
+  const current = '강원대학교(원주)';
+  const currentIndex = { ...index, universities: [{ ...index.universities[0], university: current }, index.universities[0]] };
+  vi.mocked(loader.loadCollectedIndex).mockResolvedValue(currentIndex);
+  const candidates = [row({ university: '강원대학교(강릉)' }), row({ university: current }), row({ university: current, recruit_unit: '다른학과' })];
+  expect(comparisonRecords(saved, candidates, '2026', '수시', '교과등급').map(r => r.sourceRow)).toEqual([1]);
+  const other = interest();
+  await save([saved, other]);
+  show([saved.id, other.id]);
+  await screen.findByRole('button', { name: '강릉원주대(원주) 일반전형 간호학과 2026학년도 원문 상세' });
+  expect(loader.loadCollectedRows).toHaveBeenCalledWith(currentIndex.universities[0]);
+  expect(await studentDb.interests.get(saved.id)).toEqual(saved);
+});
+
 test('관심이 없으면 안내하고 선택 화면에서 입결로 이동한다', async () => {
   show();
   fireEvent.click(await screen.findByRole('button', { name: '관심 전형 선택' }));

@@ -1,4 +1,5 @@
 // Reference-only catalog. Never pass these draft summaries to the scoring engine.
+import { universitySearchLabels } from './universityIdentity';
 export interface PlanDocument {
   id: string; label: string; provider: 'university' | 'adiga'; source_url: string; download_url: string;
   format: 'pdf' | 'hwp' | 'hwpx' | 'zip'; sha256: string; checked_at: string;
@@ -75,7 +76,7 @@ export function parsePlanCatalog(input: unknown): PlanCatalog {
 }
 export function normalizePlanSearch(value: string) { return value.normalize('NFKC').toLowerCase().replace(/대학교/g, '대').replace(/^국립/, '').replace(/\s/g, ''); }
 export function matchesPlan(plan: AdmissionPlan, query: string) {
-  const haystack = normalizePlanSearch([plan.university, plan.campus, plan.region, ...plan.programs.map(p => p.name)].join(' '));
+  const haystack = normalizePlanSearch([...universitySearchLabels(plan.university), plan.campus, plan.region, ...plan.programs.map(p => p.name)].join(' '));
   return query.trim().split(/\s+/).every(term => haystack.includes(normalizePlanSearch(term)));
 }
 export function planPageUrl(doc: PlanDocument, page: number) {

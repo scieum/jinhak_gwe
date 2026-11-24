@@ -1,0 +1,689 @@
+{
+  "date": "2026-11-24",
+  "design_md_sha256": "04b097570645e9ce757343f9fcee6b76c9f82170de62d2e502cc91136538aaf4",
+  "handoff": {
+    "screens": 38,
+    "base_frames": 76,
+    "status": "pass"
+  },
+  "figma": {
+    "date": "2026-11-24",
+    "screens": [
+      {
+        "slug": "admin-fields",
+        "frames": 29,
+        "states": 27,
+        "fontFamilies": [
+          "IBM Plex Sans KR"
+        ],
+        "badSize": [],
+        "oversizedPanels": []
+      },
+      {
+        "slug": "admin-wiki",
+        "frames": 27,
+        "states": 25,
+        "fontFamilies": [
+          "IBM Plex Sans KR"
+        ],
+        "badSize": [],
+        "oversizedPanels": []
+      },
+      {
+        "slug": "calendar",
+        "frames": 29,
+        "states": 27,
+        "fontFamilies": [
+          "IBM Plex Sans KR"
+        ],
+        "badSize": [],
+        "oversizedPanels": []
+      },
+      {
+        "slug": "compare",
+        "frames": 39,
+        "states": 37,
+        "fontFamilies": [
+          "IBM Plex Sans KR"
+        ],
+        "badSize": [],
+        "oversizedPanels": []
+      },
+      {
+        "slug": "application-checklist",
+        "frames": 34,
+        "states": 32,
+        "fontFamilies": [
+          "IBM Plex Sans KR"
+        ],
+        "badSize": [],
+        "oversizedPanels": []
+      },
+      {
+        "slug": "eligibility-check",
+        "frames": 32,
+        "states": 30,
+        "fontFamilies": [
+          "IBM Plex Sans KR"
+        ],
+        "badSize": [],
+        "oversizedPanels": []
+      },
+      {
+        "slug": "counsel-tasks",
+        "frames": 30,
+        "states": 28,
+        "fontFamilies": [
+          "IBM Plex Sans KR"
+        ],
+        "badSize": [],
+        "oversizedPanels": []
+      }
+    ],
+    "textContrast": {
+      "checked": 9879,
+      "additionalCorrections": 0,
+      "remaining": []
+    },
+    "scope": "Seven supplemented draft screens; approved admission-style preserved separately"
+  },
+  "tests": {
+    "numTotalTests": 430,
+    "numPassedTests": 430,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "targeted_after_copy_change": {
+    "tests": 4,
+    "passed": 4
+  },
+  "browser": [
+    {
+      "route": "/home",
+      "width": 390,
+      "url": "/home",
+      "slug": "home",
+      "viewport": 390,
+      "title": "홈",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_home-390.png"
+    },
+    {
+      "route": "/grade-input",
+      "width": 390,
+      "url": "/grade-input",
+      "slug": "grade-input",
+      "viewport": 390,
+      "title": "성적 입력",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_grade-input-390.png"
+    },
+    {
+      "route": "/admissions-list",
+      "width": 390,
+      "url": "/admissions-list",
+      "slug": "admissions-list",
+      "viewport": 390,
+      "title": "전형계획",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_admissions-list-390.png"
+    },
+    {
+      "route": "/admission-results",
+      "width": 390,
+      "url": "/admission-results",
+      "slug": "admission-results",
+      "viewport": 390,
+      "title": "수시 입결",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_admission-results-390.png"
+    },
+    {
+      "route": "/national-placement",
+      "width": 390,
+      "url": "/national-placement",
+      "slug": "national-placement",
+      "viewport": 390,
+      "title": "전국 배치표",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_national-placement-390.png"
+    },
+    {
+      "route": "/univ-detail",
+      "width": 390,
+      "url": "/univ-detail",
+      "slug": "univ-detail",
+      "viewport": 390,
+      "title": "대학 상세",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_univ-detail-390.png"
+    },
+    {
+      "route": "/program-detail",
+      "width": 390,
+      "url": "/program-detail",
+      "slug": "program-detail",
+      "viewport": 390,
+      "title": "전형 상세",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_program-detail-390.png"
+    },
+    {
+      "route": "/compare",
+      "width": 390,
+      "url": "/compare",
+      "slug": "compare",
+      "viewport": 390,
+      "title": "전형 비교",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_compare-390.png"
+    },
+    {
+      "route": "/susiro",
+      "width": 390,
+      "url": "/susiro",
+      "slug": "susiro",
+      "viewport": 390,
+      "title": "수시로",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_susiro-390.png"
+    },
+    {
+      "route": "/application-checklist",
+      "width": 390,
+      "url": "/application-checklist",
+      "slug": "application-checklist",
+      "viewport": 390,
+      "title": "원서·서류 체크리스트",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_application-checklist-390.png"
+    },
+    {
+      "route": "/eligibility-check",
+      "width": 390,
+      "url": "/eligibility-check",
+      "slug": "eligibility-check",
+      "viewport": 390,
+      "title": "지원 자격 확인표",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_eligibility-check-390.png"
+    },
+    {
+      "route": "/calendar",
+      "width": 390,
+      "url": "/calendar",
+      "slug": "calendar",
+      "viewport": 390,
+      "title": "입시 일정",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_calendar-390.png"
+    },
+    {
+      "route": "/counsel-tasks",
+      "width": 390,
+      "url": "/counsel-tasks",
+      "slug": "counsel-tasks",
+      "viewport": 390,
+      "title": "상담 질문·할 일",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_counsel-tasks-390.png"
+    },
+    {
+      "route": "/teacher/teacher-dashboard",
+      "width": 390,
+      "url": "/teacher/teacher-dashboard",
+      "slug": "teacher-dashboard",
+      "viewport": 390,
+      "title": "우리 반 홈",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_teacher-dashboard-390.png"
+    },
+    {
+      "route": "/teacher/student-record",
+      "width": 390,
+      "url": "/teacher/student-record",
+      "slug": "student-record",
+      "viewport": 390,
+      "title": "학생 기록",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_student-record-390.png"
+    },
+    {
+      "route": "/teacher/counsel",
+      "width": 390,
+      "url": "/teacher/counsel",
+      "slug": "counsel",
+      "viewport": 390,
+      "title": "학생 상담",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_counsel-390.png"
+    },
+    {
+      "route": "/teacher/score-import",
+      "width": 390,
+      "url": "/teacher/score-import",
+      "slug": "score-import",
+      "viewport": 390,
+      "title": "성적 불러오기",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_score-import-390.png"
+    },
+    {
+      "route": "/teacher/minimum-board",
+      "width": 390,
+      "url": "/teacher/minimum-board",
+      "slug": "minimum-board",
+      "viewport": 390,
+      "title": "수능 최저 판정",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_minimum-board-390.png"
+    },
+    {
+      "route": "/teacher/card-collect",
+      "width": 390,
+      "url": "/teacher/card-collect",
+      "slug": "card-collect",
+      "viewport": 390,
+      "title": "카드 수합",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_card-collect-390.png"
+    },
+    {
+      "route": "/teacher/result-summary",
+      "width": 390,
+      "url": "/teacher/result-summary",
+      "slug": "result-summary",
+      "viewport": 390,
+      "title": "결과 집계",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_result-summary-390.png"
+    },
+    {
+      "route": "/admin/admin-rules/fields",
+      "width": 390,
+      "url": "/admin/admin-rules/fields",
+      "slug": "admin-rules",
+      "viewport": 390,
+      "title": "계열표",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_admin_admin-rules_fields-390.png"
+    },
+    {
+      "route": "/admin/admin-rules/wiki",
+      "width": 390,
+      "url": "/admin/admin-rules/wiki",
+      "slug": "admin-rules",
+      "viewport": 390,
+      "title": "위키 요약",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_admin_admin-rules_wiki-390.png"
+    },
+    {
+      "route": "/home",
+      "width": 1440,
+      "url": "/home",
+      "slug": "home",
+      "viewport": 1440,
+      "title": "홈",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_home-1440.png"
+    },
+    {
+      "route": "/grade-input",
+      "width": 1440,
+      "url": "/grade-input",
+      "slug": "grade-input",
+      "viewport": 1440,
+      "title": "성적 입력",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_grade-input-1440.png"
+    },
+    {
+      "route": "/admissions-list",
+      "width": 1440,
+      "url": "/admissions-list",
+      "slug": "admissions-list",
+      "viewport": 1440,
+      "title": "전형계획",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_admissions-list-1440.png"
+    },
+    {
+      "route": "/admission-results",
+      "width": 1440,
+      "url": "/admission-results",
+      "slug": "admission-results",
+      "viewport": 1440,
+      "title": "수시 입결",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_admission-results-1440.png"
+    },
+    {
+      "route": "/national-placement",
+      "width": 1440,
+      "url": "/national-placement",
+      "slug": "national-placement",
+      "viewport": 1440,
+      "title": "전국 배치표",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_national-placement-1440.png"
+    },
+    {
+      "route": "/univ-detail",
+      "width": 1440,
+      "url": "/univ-detail",
+      "slug": "univ-detail",
+      "viewport": 1440,
+      "title": "대학 상세",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_univ-detail-1440.png"
+    },
+    {
+      "route": "/program-detail",
+      "width": 1440,
+      "url": "/program-detail",
+      "slug": "program-detail",
+      "viewport": 1440,
+      "title": "전형 상세",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_program-detail-1440.png"
+    },
+    {
+      "route": "/compare",
+      "width": 1440,
+      "url": "/compare",
+      "slug": "compare",
+      "viewport": 1440,
+      "title": "전형 비교",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_compare-1440.png"
+    },
+    {
+      "route": "/susiro",
+      "width": 1440,
+      "url": "/susiro",
+      "slug": "susiro",
+      "viewport": 1440,
+      "title": "수시로",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_susiro-1440.png"
+    },
+    {
+      "route": "/application-checklist",
+      "width": 1440,
+      "url": "/application-checklist",
+      "slug": "application-checklist",
+      "viewport": 1440,
+      "title": "원서·서류 체크리스트",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_application-checklist-1440.png"
+    },
+    {
+      "route": "/eligibility-check",
+      "width": 1440,
+      "url": "/eligibility-check",
+      "slug": "eligibility-check",
+      "viewport": 1440,
+      "title": "지원 자격 확인표",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_eligibility-check-1440.png"
+    },
+    {
+      "route": "/calendar",
+      "width": 1440,
+      "url": "/calendar",
+      "slug": "calendar",
+      "viewport": 1440,
+      "title": "입시 일정",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_calendar-1440.png"
+    },
+    {
+      "route": "/counsel-tasks",
+      "width": 1440,
+      "url": "/counsel-tasks",
+      "slug": "counsel-tasks",
+      "viewport": 1440,
+      "title": "상담 질문·할 일",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_counsel-tasks-1440.png"
+    },
+    {
+      "route": "/teacher/teacher-dashboard",
+      "width": 1440,
+      "url": "/teacher/teacher-dashboard",
+      "slug": "teacher-dashboard",
+      "viewport": 1440,
+      "title": "우리 반 홈",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_teacher-dashboard-1440.png"
+    },
+    {
+      "route": "/teacher/student-record",
+      "width": 1440,
+      "url": "/teacher/student-record",
+      "slug": "student-record",
+      "viewport": 1440,
+      "title": "학생 기록",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_student-record-1440.png"
+    },
+    {
+      "route": "/teacher/counsel",
+      "width": 1440,
+      "url": "/teacher/counsel",
+      "slug": "counsel",
+      "viewport": 1440,
+      "title": "학생 상담",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_counsel-1440.png"
+    },
+    {
+      "route": "/teacher/score-import",
+      "width": 1440,
+      "url": "/teacher/score-import",
+      "slug": "score-import",
+      "viewport": 1440,
+      "title": "성적 불러오기",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_score-import-1440.png"
+    },
+    {
+      "route": "/teacher/minimum-board",
+      "width": 1440,
+      "url": "/teacher/minimum-board",
+      "slug": "minimum-board",
+      "viewport": 1440,
+      "title": "수능 최저 판정",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_minimum-board-1440.png"
+    },
+    {
+      "route": "/teacher/card-collect",
+      "width": 1440,
+      "url": "/teacher/card-collect",
+      "slug": "card-collect",
+      "viewport": 1440,
+      "title": "카드 수합",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_card-collect-1440.png"
+    },
+    {
+      "route": "/teacher/result-summary",
+      "width": 1440,
+      "url": "/teacher/result-summary",
+      "slug": "result-summary",
+      "viewport": 1440,
+      "title": "결과 집계",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_teacher_result-summary-1440.png"
+    },
+    {
+      "route": "/admin/admin-rules/fields",
+      "width": 1440,
+      "url": "/admin/admin-rules/fields",
+      "slug": "admin-rules",
+      "viewport": 1440,
+      "title": "계열표",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_admin_admin-rules_fields-1440.png"
+    },
+    {
+      "route": "/admin/admin-rules/wiki",
+      "width": 1440,
+      "url": "/admin/admin-rules/wiki",
+      "slug": "admin-rules",
+      "viewport": 1440,
+      "title": "위키 요약",
+      "placeholder": false,
+      "alerts": [],
+      "errors": [],
+      "image": "_admin_admin-rules_wiki-1440.png"
+    }
+  ],
+  "student_journey": [
+    {
+      "width": 390,
+      "applicationPersistence": "pass",
+      "independentStep": "pass",
+      "eligibilityEvidence": "pass",
+      "counselCompletionFilter": "pass",
+      "longNameOverflow": "pass"
+    },
+    {
+      "width": 1440,
+      "applicationPersistence": "pass",
+      "independentStep": "pass",
+      "eligibilityEvidence": "pass",
+      "counselCompletionFilter": "pass",
+      "longNameOverflow": "pass"
+    }
+  ],
+  "teacher_journey": [
+    {
+      "width": 390,
+      "classCreation": "pass",
+      "cardImport": "pass",
+      "studentNavigation": "pass",
+      "counselPersistence": "pass",
+      "overflow": "pass"
+    },
+    {
+      "width": 1440,
+      "classCreation": "pass",
+      "cardImport": "pass",
+      "studentNavigation": "pass",
+      "counselPersistence": "pass",
+      "overflow": "pass"
+    }
+  ],
+  "direct_user_approval": {
+    "date": "2026-11-24",
+    "actor": "채팅 사용자",
+    "message": "승인",
+    "screens": [
+      "admin-fields",
+      "admin-wiki",
+      "calendar",
+      "compare",
+      "application-checklist",
+      "eligibility-check",
+      "counsel-tasks"
+    ],
+    "draft_build_refs_match": true,
+    "live_handoff_check": {
+      "status": "pass",
+      "screens": 38,
+      "base_frames": 76,
+      "errors": []
+    },
+    "existing_judge_results_preserved": true,
+    "note": "Prior structural/contrast/test evidence describes the earlier reviewed revision; no new J1–J9 run is claimed by this approval update."
+  }
+}

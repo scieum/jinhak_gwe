@@ -21,6 +21,33 @@ function setup(rows: ResultRow[]) {
   return vi.spyOn(loader, 'loadCollectedRows').mockResolvedValue(rows);
 }
 
+test('정식 이름을 표시해도 선택 값과 불러오는 원본 패키지는 보존한다', async () => {
+  const entry = { ...index.universities[0], university: '한국체대' };
+  vi.spyOn(loader, 'loadCollectedIndex').mockResolvedValue({ ...index, universities: [entry] });
+  const load = vi.spyOn(loader, 'loadCollectedRows').mockResolvedValue([row({ university: '한국체대' })]);
+  render(<CollectedResultBrowser initialUniversity="한국체육대학교" />);
+  await screen.findByText('한국체육대학교 · 1행 / 1행');
+  expect(screen.getByRole('option', { name: '한국체육대학교' })).toHaveProperty('value', '한국체대');
+  expect(screen.getByLabelText('수집 대학')).toHaveProperty('value', '한국체대');
+  expect(load).toHaveBeenCalledWith(entry);
+});
+
+test('구 교명 링크는 현재의 같은 캠퍼스를 열고 구 교명 검색은 해당 캠퍼스만 표시한다', async () => {
+  const names = ['강원대학교(춘천)', '강원대학교(강릉)', '강원대학교(원주)'];
+  vi.spyOn(loader, 'loadCollectedIndex').mockResolvedValue({ ...index, universities: names.map(university => ({ ...index.universities[0], university })) });
+  const load = vi.spyOn(loader, 'loadCollectedRows').mockImplementation(async entry => [row({ university: entry.university })]);
+  render(<CollectedResultBrowser initialUniversity="강릉원주대(원주)" />);
+  await screen.findByText('강원대학교(원주) · 1행 / 1행');
+  expect(load).toHaveBeenLastCalledWith(expect.objectContaining({ university: names[2] }));
+  fireEvent.click(screen.getByRole('button', { name: '대학 검색' }));
+  const dialog = within(screen.getByRole('dialog', { name: '대학 검색·선택' }));
+  fireEvent.change(dialog.getByLabelText('수집 대학 검색'), { target: { value: '강릉원주대' } });
+  expect(dialog.queryByRole('button', { name: names[0] })).toBeNull();
+  expect(dialog.getByRole('button', { name: names[1] })).toBeTruthy();
+  fireEvent.click(dialog.getByRole('button', { name: names[1] }));
+  await screen.findByText('강원대학교(강릉) · 1행 / 1행');
+});
+
 test('수집 자료 탭에 수집본을 표시하고 같은 전형의 서로 다른 원문과 정밀도를 보존한다', async () => {
   setup([row(), row({ source_url: 'https://example.invalid/other.pdf', metric: '환산점수', cut_70: '910.00' })]);
   render(<MemoryRouter initialEntries={['/admission-results?view=collected']}><AdmissionResults /></MemoryRouter>);

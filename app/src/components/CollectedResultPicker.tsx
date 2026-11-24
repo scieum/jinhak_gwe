@@ -3,6 +3,7 @@ import { ButtonOutline, ButtonPrimary } from './Buttons';
 import { loadCollectedIndex, loadCollectedRows } from '../data/collectedResults';
 import type { CollectedIndex } from '../domain/collectedResults';
 import type { ResultRow } from '../domain/resultReview';
+import { currentUniversityName } from '../domain/universityIdentity';
 
 /** Loads only the selected university; collection never grants review or license approval. */
 export function CollectedResultPicker({ busy, onLoad }: {
@@ -33,7 +34,7 @@ export function CollectedResultPicker({ busy, onLoad }: {
     {index && <p className="text-muted">대학·캠퍼스명 {index.universities.length}개 · {index.rows.toLocaleString()}행 · 원문 {index.sources.toLocaleString()}건 · 검수 전</p>}
     <div className="toolbar">
       {index && <label>수집 대학<select value={selected} disabled={busy || loading} onChange={e => setSelected(e.target.value)}>
-        {index.universities.map(e => <option key={e.university} value={e.university}>{e.university} · {e.rows.toLocaleString()}행</option>)}
+        {index.universities.map(e => <option key={e.university} value={e.university}>{currentUniversityName(e.university)} · {e.rows.toLocaleString()}행</option>)}
       </select></label>}
       {index && <ButtonPrimary disabled={busy || loading} onClick={load}>수집본 불러오기</ButtonPrimary>}
       <ButtonOutline disabled={busy || loading} onClick={() => setAttempt(n => n + 1)}>수집 목록 새로고침</ButtonOutline>

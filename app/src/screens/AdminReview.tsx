@@ -16,7 +16,7 @@ function loadName() { try { return localStorage.getItem('jinhak-navi-reviewer') 
 function saveName(v: string) { try { localStorage.setItem('jinhak-navi-reviewer', v); } catch { /* per-viewer convenience only */ } }
 
 export function StatusBadge({ status }: { status: ReviewStatus }) {
-  return status === '검수 완료' ? <span className="judge-badge judge-safe">● 검수 완료</span> : <span className="data-status-badge">{status}</span>;
+  return <span className="data-status-badge">{status}</span>;
 }
 
 export function AdminReview() {

@@ -18,7 +18,7 @@ export function AdmissionStyle() {
   const answered = Object.hasOwn(answers, question.id);
   const mascot = <StyleMascot />;
   const result = step === 'result' ? summarizeStyle(answers) : null;
-  return <section ref={section} className="admission-style" aria-label="대입 전형 성향 탐색">
+  return <section ref={section} className="admission-style" data-slug="admission-style" aria-label="대입 전형 성향 탐색">
     <div className="style-topline"><span>나의 준비 방식 찾기</span><span>체험판 · v0.1</span></div>
     {step === 'intro' && <>
       <div className="style-hero">

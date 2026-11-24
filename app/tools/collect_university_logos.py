@@ -58,13 +58,13 @@ def logo_source(entry, codes):
 
 
 def write_mappings(records):
-    mapping = {r['id']: r['file'] for r in records if 'file' in r}
+    mapping = {r['id']: r['file'] for r in records if 'file' in r and r['id'].startswith('plan-')}
     names = {}
     for record in sorted(records, key=lambda r: r['campus'] != '본교'):
         if 'file' in record:
             names.setdefault(record['university'], record['file'])
     for filename, data in [('universityLogos.json', mapping), ('universityLogoNames.json', names)]:
-        (APP / 'src/data' / filename).write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        (APP / 'src/data' / filename).write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
     return mapping
 
 
@@ -123,6 +123,11 @@ def build():
             if i % 40 == 0:
                 print(json.dumps({'downloaded': i, 'total': len(urls)}), flush=True)
     records = [{**r, **images.get(r.get('source_image'), {})} for r in records]
+    # A portal-only refresh must not discard separately collected official marks.
+    previous_manifest = OUTPUT / 'sources.json'
+    if previous_manifest.exists():
+        previous = json.loads(previous_manifest.read_text(encoding='utf-8'))
+        records.extend(r for r in previous['entries'] if r.get('collection_group') == 'supplemental')
     manifest = {'provider': '대입정보포털 어디가 및 대학 공식 홈페이지', 'checked_at': datetime.now(timezone.utc).isoformat(), 'entries': records}
     (OUTPUT / 'sources.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     mapping = write_mappings(records)

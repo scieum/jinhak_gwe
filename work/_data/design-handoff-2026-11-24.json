@@ -1,0 +1,579 @@
+{
+  "date": "2026-11-24",
+  "status": "pass",
+  "screen_count": 38,
+  "base_frame_count": 76,
+  "errors": [],
+  "screens": [
+    {
+      "slug": "home",
+      "title": "홈",
+      "frames": {
+        "390": "320:4",
+        "1440": "320:49"
+      },
+      "states": 20,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=320-4",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=320-49"
+      }
+    },
+    {
+      "slug": "admissions-list",
+      "title": "전형계획 목록",
+      "frames": {
+        "390": "346:123524",
+        "1440": "346:125015"
+      },
+      "states": 32,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-123524",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-125015"
+      }
+    },
+    {
+      "slug": "univ-detail",
+      "title": "대학 상세",
+      "frames": {
+        "390": "346:143371",
+        "1440": "346:144159"
+      },
+      "states": 28,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-143371",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-144159"
+      }
+    },
+    {
+      "slug": "program-detail",
+      "title": "전형 상세",
+      "frames": {
+        "390": "346:217877",
+        "1440": "346:235058"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-217877",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-235058"
+      }
+    },
+    {
+      "slug": "grade-input",
+      "title": "성적 입력",
+      "frames": {
+        "390": "346:114211",
+        "1440": "346:114289"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-114211",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-114289"
+      }
+    },
+    {
+      "slug": "five-to-nine",
+      "title": "5 to 9",
+      "frames": {
+        "390": "346:131226",
+        "1440": "346:131252"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-131226",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-131252"
+      }
+    },
+    {
+      "slug": "univ-score",
+      "title": "대학별 환산",
+      "frames": {
+        "390": "346:131150",
+        "1440": "346:131176"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-131150",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-131176"
+      }
+    },
+    {
+      "slug": "doelgak",
+      "title": "될각",
+      "frames": {
+        "390": "327:490",
+        "1440": "327:549"
+      },
+      "states": 33,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=327-490",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=327-549"
+      }
+    },
+    {
+      "slug": "susiro",
+      "title": "수시로",
+      "frames": {
+        "390": "346:131302",
+        "1440": "346:131328"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-131302",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-131328"
+      }
+    },
+    {
+      "slug": "saenggibu-ai",
+      "title": "생기부 AI",
+      "frames": {
+        "390": "347:310924",
+        "1440": "347:311136"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=347-310924",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=347-311136"
+      }
+    },
+    {
+      "slug": "mock-score",
+      "title": "모의고사",
+      "frames": {
+        "390": "346:140445",
+        "1440": "346:140564"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-140445",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-140564"
+      }
+    },
+    {
+      "slug": "teacher-dashboard",
+      "title": "교사 학급 대시보드",
+      "frames": {
+        "390": "330:16438",
+        "1440": "330:1766"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=330-16438",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=330-1766"
+      }
+    },
+    {
+      "slug": "counsel",
+      "title": "학생 상담",
+      "frames": {
+        "390": "346:85508",
+        "1440": "346:85559"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-85508",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-85559"
+      }
+    },
+    {
+      "slug": "card-collect",
+      "title": "카드 수합",
+      "frames": {
+        "390": "346:78011",
+        "1440": "346:78062"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-78011",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-78062"
+      }
+    },
+    {
+      "slug": "result-summary",
+      "title": "결과 집계",
+      "frames": {
+        "390": "460:65555",
+        "1440": "459:61275"
+      },
+      "states": 10,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=460-65555",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=459-61275"
+      }
+    },
+    {
+      "slug": "admin-rules",
+      "title": "관리자 규칙 편집기·검수",
+      "frames": {
+        "390": "346:253552",
+        "1440": "346:252770"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-253552",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-252770"
+      }
+    },
+    {
+      "slug": "student-record",
+      "title": "학생 기록 상세",
+      "frames": {
+        "390": "346:64549",
+        "1440": "346:57235"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-64549",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-57235"
+      }
+    },
+    {
+      "slug": "score-import",
+      "title": "성적 불러오기",
+      "frames": {
+        "390": "346:155908",
+        "1440": "346:152228"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-155908",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-152228"
+      }
+    },
+    {
+      "slug": "minimum-board",
+      "title": "수능 최저 판정",
+      "frames": {
+        "390": "346:100406",
+        "1440": "346:100457"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-100406",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-100457"
+      }
+    },
+    {
+      "slug": "score-trend",
+      "title": "내 성적 추이",
+      "frames": {
+        "390": "346:277668",
+        "1440": "346:277682"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-277668",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-277682"
+      }
+    },
+    {
+      "slug": "admission-results",
+      "title": "수시 입결",
+      "frames": {
+        "390": "346:266645",
+        "1440": "346:267881"
+      },
+      "states": 37,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-266645",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-267881"
+      }
+    },
+    {
+      "slug": "login",
+      "title": "로그인",
+      "frames": {
+        "390": "346:262094",
+        "1440": "346:261947"
+      },
+      "states": 1,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-262094",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-261947"
+      }
+    },
+    {
+      "slug": "signup",
+      "title": "회원가입",
+      "frames": {
+        "390": "455:61169",
+        "1440": "455:60949"
+      },
+      "states": 4,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=455-61169",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=455-60949"
+      }
+    },
+    {
+      "slug": "minimum-search",
+      "title": "최저로 찾기",
+      "frames": {
+        "390": "346:131097",
+        "1440": "346:131123"
+      },
+      "states": 0,
+      "approval": "existing-approval",
+      "delivery": "design-only",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-131097",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=346-131123"
+      }
+    },
+    {
+      "slug": "univ-detail-wiki",
+      "title": "대학 상세 위키",
+      "frames": {
+        "390": "365:38085",
+        "1440": "365:38171"
+      },
+      "states": 6,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=365-38085",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=365-38171"
+      }
+    },
+    {
+      "slug": "dept-tier",
+      "title": "학과별 입결 구간표",
+      "frames": {
+        "390": "391:42474",
+        "1440": "395:44331"
+      },
+      "states": 14,
+      "approval": "existing-approval",
+      "delivery": "design-only",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=391-42474",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=395-44331"
+      }
+    },
+    {
+      "slug": "special-tracks",
+      "title": "특수 계열 모아보기",
+      "frames": {
+        "390": "429:50971",
+        "1440": "430:51283"
+      },
+      "states": 15,
+      "approval": "existing-approval",
+      "delivery": "design-only",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=429-50971",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=430-51283"
+      }
+    },
+    {
+      "slug": "admission-style",
+      "title": "전형 성향 탐색",
+      "frames": {
+        "390": "594:163652",
+        "1440": "597:163686"
+      },
+      "states": 30,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=594-163652",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=597-163686"
+      }
+    },
+    {
+      "slug": "national-placement",
+      "title": "전국 배치표",
+      "frames": {
+        "390": "530:85565",
+        "1440": "532:86654"
+      },
+      "states": 41,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=530-85565",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=532-86654"
+      }
+    },
+    {
+      "slug": "eligibility-check",
+      "title": "지원 자격 확인표",
+      "frames": {
+        "390": "682:218325",
+        "1440": "683:218459"
+      },
+      "states": 30,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=682-218325",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=683-218459"
+      }
+    },
+    {
+      "slug": "compare",
+      "title": "전형 비교",
+      "frames": {
+        "390": "657:186568",
+        "1440": "658:187197"
+      },
+      "states": 37,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=657-186568",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=658-187197"
+      }
+    },
+    {
+      "slug": "application-checklist",
+      "title": "원서·서류 체크리스트",
+      "frames": {
+        "390": "668:210274",
+        "1440": "670:210435"
+      },
+      "states": 32,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=668-210274",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=670-210435"
+      }
+    },
+    {
+      "slug": "calendar",
+      "title": "입시 일정",
+      "frames": {
+        "390": "627:168318",
+        "1440": "627:168449"
+      },
+      "states": 27,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=627-168318",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=627-168449"
+      }
+    },
+    {
+      "slug": "counsel-tasks",
+      "title": "상담 질문·할 일",
+      "frames": {
+        "390": "691:223585",
+        "1440": "692:223716"
+      },
+      "states": 28,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=691-223585",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=692-223716"
+      }
+    },
+    {
+      "slug": "admin-fields",
+      "title": "학과 계열표 검수",
+      "frames": {
+        "390": "703:229112",
+        "1440": "702:228572"
+      },
+      "states": 27,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=703-229112",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=702-228572"
+      }
+    },
+    {
+      "slug": "admin-wiki",
+      "title": "대학 위키 요약 검수",
+      "frames": {
+        "390": "714:243965",
+        "1440": "713:242969"
+      },
+      "states": 25,
+      "approval": "existing-approval",
+      "delivery": "app-route",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=714-243965",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=713-242969"
+      }
+    },
+    {
+      "slug": "univ-map",
+      "title": "대학 지도",
+      "frames": {
+        "390": "504:81770",
+        "1440": "506:82015"
+      },
+      "states": 17,
+      "approval": "existing-approval",
+      "delivery": "design-only",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=504-81770",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=506-82015"
+      }
+    },
+    {
+      "slug": "class-calendar",
+      "title": "우리 반 입시 일정",
+      "frames": {
+        "390": "489:68749",
+        "1440": "487:68233"
+      },
+      "states": 36,
+      "approval": "existing-approval",
+      "delivery": "design-only",
+      "figma": {
+        "390": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=489-68749",
+        "1440": "https://www.figma.com/design/AqkVdYZ4hvPYuAlewoBs4W?node-id=487-68233"
+      }
+    }
+  ]
+}

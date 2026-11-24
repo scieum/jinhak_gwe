@@ -11,6 +11,7 @@ import { rowIssues, type ResultRow } from '../domain/resultReview';
 import { CollectedResultFields } from './CollectedResultFields';
 import { InterestButton } from './InterestButton';
 import { interestId } from '../domain/interests';
+import { collectedUniversitySelection, matchesUniversityIdentity, currentUniversityName } from '../domain/universityIdentity';
 
 const PAGE = 50;
 
@@ -29,7 +30,7 @@ export function CollectedResultBrowser({ tabs, initialUniversity = '', initialPr
     let live = true; setIndexError('');
     loadCollectedIndex().then(value => {
       if (!live) return;
-      setIndex(value); setUniversity(value.universities.some(e => e.university === initialUniversity) ? initialUniversity : value.universities[0].university);
+      setIndex(value); setUniversity(collectedUniversitySelection(initialUniversity, value.universities.map(e => e.university)) ?? value.universities[0].university);
     }).catch(e => { if (live) setIndexError(e instanceof Error ? e.message : '수집 자료 목록을 읽지 못했어요.'); });
     return () => { live = false; };
   }, [indexAttempt, initialUniversity]);
@@ -46,7 +47,7 @@ export function CollectedResultBrowser({ tabs, initialUniversity = '', initialPr
   const sorted = useMemo(() => sortTableRows(filtered, sort, (r, key) => r[key], key => ['result_year', 'quota', 'competition_rate', 'cut_50', 'cut_70'].includes(key)), [filtered, sort]);
   const sortBy = (key: keyof ResultRow) => { setSort(current => nextTableSort(current, key)); setPage(0); };
   const header = (key: keyof ResultRow, label: string) => <SortableHeader column={key} label={label} sort={sort} onSort={sortBy} />;
-  const names = index?.universities.filter(e => e.university.includes(nameQuery.trim())) ?? [];
+  const names = index?.universities.filter(e => matchesUniversityIdentity(e.university, nameQuery)) ?? [];
   const updateFilters = (next: ResultFilters) => { setFilters(next); setPage(0); };
   const selectUniversity = (name: string) => { setUniversity(name); setSelectedInterest(null); setSort(null); updateFilters({ ...emptyResultFilters, round: '수시' }); setChoosing(false); };
   const resetFilters = () => { setSelectedInterest(null); updateFilters(emptyResultFilters); };
@@ -59,7 +60,7 @@ export function CollectedResultBrowser({ tabs, initialUniversity = '', initialPr
         : !index ? <p role="status">수집 자료 목록을 읽고 있어요.</p> : <>
           <div className="collection-fields-shell"><div className="collection-filters">
             <div className="university-field"><div className="section-row"><label htmlFor="collected-university">수집 대학</label><button className="text-button" onClick={() => { setNameQuery(''); setChoosing(true); }}>대학 검색</button></div>
-              <select id="collected-university" value={university} onChange={e => selectUniversity(e.target.value)}>{index.universities.map(e => <option key={e.university}>{e.university}</option>)}</select>
+              <select id="collected-university" value={university} onChange={e => selectUniversity(e.target.value)}>{index.universities.map(e => <option key={e.university} value={e.university}>{currentUniversityName(e.university)}</option>)}</select>
             </div>
             {compact ? <ButtonOutline disabled={!rows} onClick={() => setDraft({ ...filters })}>조건 <Icon name="chevron-down" size={16} /></ButtonOutline>
               : <><ResultFilterFields rows={rows ?? []} value={filters} onChange={updateFilters} /><ButtonOutline aria-label="검색 조건 초기화" onClick={resetFilters}>초기화</ButtonOutline></>}
@@ -67,12 +68,13 @@ export function CollectedResultBrowser({ tabs, initialUniversity = '', initialPr
           {compact && <p className="t-caption text-muted">{filters.year === '전체' ? '전체 학년도' : filters.year} · {filters.round} · {filters.type === '전체' ? '전체 전형' : filters.type}</p>}</div>
         </>}
     </section>
-    {index && initialUniversity && !index.universities.some(e => e.university === initialUniversity) && <p className="notice">저장한 대학 ‘{initialUniversity}’을 현재 수집 목록에서 찾지 못했어요. 대학 이름을 검색해 확인해 주세요.</p>}
+    {index && initialUniversity && !collectedUniversitySelection(initialUniversity, index.universities.map(e => e.university)) && <p className="notice">저장한 대학 ‘{initialUniversity}’을 현재 수집 목록에서 찾지 못했어요. 대학 이름을 검색해 확인해 주세요.</p>}
     {index && <section className="result-panel collection-output" aria-label="수집 입결 조회 결과" aria-busy={!rows && !dataError}>
       <div className="collection-result-heading">
-        <div><div className="toolbar"><h3 className="t-heading-2">{university}</h3><span className="data-status-badge">검수 전 참고자료</span></div>
-          {rows && <p role="status">{university} · {filtered.length.toLocaleString()}행 / {rows.length.toLocaleString()}행</p>}
+        <div><div className="toolbar"><h3 className="t-heading-2">{currentUniversityName(university)}</h3><span className="data-status-badge">검수 전 참고자료</span></div>
+          {rows && <p role="status">{currentUniversityName(university)} · {filtered.length.toLocaleString()}행 / {rows.length.toLocaleString()}행</p>}
           <p className="t-caption text-muted">검수 전 참고자료 · 원문 대조와 이용 조건 확인이 끝나지 않았어요. 성적 판정에는 사용하지 않아요.</p>
+          <p className="t-caption text-muted">현재 대학명 기준 · 통합 전 이름으로도 검색할 수 있어요. 과거 대학명과 캠퍼스 확인 근거는 원문·상세에 표시해요.</p>
           {selectedInterest && <div className="toolbar"><span className="data-status-badge">{selectedInterest.department} · {selectedInterest.program}만 보기</span><button className="text-button" onClick={resetFilters}>학과 선택 해제</button></div>}
         </div>
         {!compact && <label>전형·모집단위 검색<input type="search" value={filters.query} onChange={e => updateFilters({ ...filters, query: e.target.value })} placeholder="전형명 또는 학과명" /></label>}
@@ -101,7 +103,7 @@ export function CollectedResultBrowser({ tabs, initialUniversity = '', initialPr
       <div className="section-row"><h3 className="t-heading-3">대학 검색·선택</h3><ButtonOutline onClick={() => setChoosing(false)}>닫기</ButtonOutline></div>
       <label>수집 대학 검색<input type="search" value={nameQuery} onChange={e => setNameQuery(e.target.value)} placeholder="대학 이름으로 찾기" /></label>
       <p role="status" className="t-caption text-muted">{names.length ? `${names.length}개 대학·캠퍼스` : '검색한 대학이 없어요. 현재 선택한 대학은 유지돼요.'}</p>
-      <div className="university-options">{names.map(e => <button className="button-outline" key={e.university} aria-pressed={e.university === university} onClick={() => selectUniversity(e.university)}>{e.university}</button>)}</div>
+      <div className="university-options">{names.map(e => <button className="button-outline" key={e.university} aria-pressed={e.university === university} onClick={() => selectUniversity(e.university)}>{currentUniversityName(e.university)}</button>)}</div>
     </Modal>}
     {draft && <Modal label="입결 조회 조건" onClose={() => setDraft(null)}>
       <div className="section-row"><h3 className="t-heading-3">조회 조건</h3><ButtonOutline onClick={() => setDraft(null)}>닫기</ButtonOutline></div>

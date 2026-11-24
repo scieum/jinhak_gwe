@@ -1,0 +1,5192 @@
+[
+  {
+    "id": "320:3",
+    "name": "홈 · home · v2",
+    "frames": [
+      {
+        "id": "320:4",
+        "name": "home/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "320:49",
+        "name": "home/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "726:256490",
+        "name": "home/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "726:256713",
+        "name": "home/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "726:256939",
+        "name": "home/390-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "726:257169",
+        "name": "home/390-not-ready",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "726:257393",
+        "name": "home/390-low-confidence",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "726:257607",
+        "name": "home/390-banner-closed",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "726:257823",
+        "name": "home/390-scrolled",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "726:258037",
+        "name": "home/390-empty-scrolled",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "726:258185",
+        "name": "home/390-dday-today",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "726:258399",
+        "name": "home/390-dday-passed",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "727:257846",
+        "name": "home/1440-loading",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "727:258387",
+        "name": "home/1440-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "727:258931",
+        "name": "home/1440-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "727:259483",
+        "name": "home/1440-not-ready",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "727:260031",
+        "name": "home/1440-low-confidence",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "727:260563",
+        "name": "home/1440-banner-closed",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "727:261097",
+        "name": "home/1440-banner-focus",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "727:261631",
+        "name": "home/1440-interest-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "727:262163",
+        "name": "home/1440-interest-pending",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "727:262699",
+        "name": "home/1440-sidebar-open",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "327:489",
+    "name": "될각 · doelgak · v2",
+    "frames": [
+      {
+        "id": "327:490",
+        "name": "doelgak/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "327:549",
+        "name": "doelgak/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "777:57",
+        "name": "doelgak/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "777:348",
+        "name": "doelgak/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "777:555",
+        "name": "doelgak/390-no-grades",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "777:781",
+        "name": "doelgak/390-no-cuts",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "777:992",
+        "name": "doelgak/390-filter-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "777:1276",
+        "name": "doelgak/390-keyword-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "778:2",
+        "name": "doelgak/390-filter",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "778:448",
+        "name": "doelgak/390-combo",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "778:609",
+        "name": "doelgak/390-heart-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "778:1675",
+        "name": "doelgak/390-heart-confirm",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "778:1782",
+        "name": "doelgak/390-heart-off-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "778:2706",
+        "name": "doelgak/390-reset-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "778:2768",
+        "name": "doelgak/390-heart-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "779:2",
+        "name": "doelgak/390-bottom",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "779:74",
+        "name": "doelgak/390-trace-open",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "779:824",
+        "name": "doelgak/390-detail",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "779:1222",
+        "name": "doelgak/390-detail-pending",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "779:9606",
+        "name": "doelgak/390-comprehensive",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "780:2",
+        "name": "doelgak/1440-loading",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "780:2215",
+        "name": "doelgak/1440-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "780:3877",
+        "name": "doelgak/1440-no-grades",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "780:5832",
+        "name": "doelgak/1440-no-cuts",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "780:7500",
+        "name": "doelgak/1440-filter-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "780:9215",
+        "name": "doelgak/1440-judge-filter",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "780:10895",
+        "name": "doelgak/1440-lane-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "780:12560",
+        "name": "doelgak/1440-heart-toast",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "780:14215",
+        "name": "doelgak/1440-heart-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "780:15876",
+        "name": "doelgak/1440-bottom",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "781:2",
+        "name": "doelgak/1440-combo",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "781:2244",
+        "name": "doelgak/1440-table",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "781:12542",
+        "name": "doelgak/1440-detail",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "781:14608",
+        "name": "doelgak/1440-heart-confirm",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "781:14737",
+        "name": "doelgak/1440-comprehensive",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "330:1765",
+    "name": "교사 대시보드 · teacher-dashboard · v2",
+    "frames": [
+      {
+        "id": "330:1766",
+        "name": "teacher-dashboard/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "330:16438",
+        "name": "teacher-dashboard/390",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  {
+    "id": "346:57234",
+    "name": "학생 기록 상세 · student-record · v2",
+    "frames": [
+      {
+        "id": "346:57235",
+        "name": "student-record/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "346:64549",
+        "name": "student-record/390",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  {
+    "id": "346:78010",
+    "name": "카드 수합 · card-collect · v2",
+    "frames": [
+      {
+        "id": "346:78011",
+        "name": "card-collect/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:78062",
+        "name": "card-collect/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:85507",
+    "name": "학생 상담 · counsel · v2",
+    "frames": [
+      {
+        "id": "346:85508",
+        "name": "counsel/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:85559",
+        "name": "counsel/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:100405",
+    "name": "수능 최저 판정 · minimum-board · v2",
+    "frames": [
+      {
+        "id": "346:100406",
+        "name": "minimum-board/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:100457",
+        "name": "minimum-board/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:114210",
+    "name": "성적 입력 · grade-input · v2",
+    "frames": [
+      {
+        "id": "346:114211",
+        "name": "grade-input/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:114289",
+        "name": "grade-input/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:123523",
+    "name": "전형계획 목록 · admissions-list",
+    "frames": [
+      {
+        "id": "346:123524",
+        "name": "admissions-list/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:125015",
+        "name": "admissions-list/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "736:259987",
+        "name": "admissions-list/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:260072",
+        "name": "admissions-list/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:260157",
+        "name": "admissions-list/390-plan-missing",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:260242",
+        "name": "admissions-list/390-search-result",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:260327",
+        "name": "admissions-list/390-search-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:260412",
+        "name": "admissions-list/390-filter-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:260497",
+        "name": "admissions-list/390-filter-applied",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:260582",
+        "name": "admissions-list/390-filter-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:260667",
+        "name": "admissions-list/390-sort-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:260752",
+        "name": "admissions-list/390-sort-recent",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:260837",
+        "name": "admissions-list/390-interest-added",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:260922",
+        "name": "admissions-list/390-interest-removed",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:261007",
+        "name": "admissions-list/390-interest-only",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:261092",
+        "name": "admissions-list/390-interest-only-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:261177",
+        "name": "admissions-list/390-interest-remove-confirm",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:261262",
+        "name": "admissions-list/390-interest-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "736:261347",
+        "name": "admissions-list/390-page-end",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "740:264323",
+        "name": "admissions-list/1440-loading",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:264386",
+        "name": "admissions-list/1440-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:264449",
+        "name": "admissions-list/1440-plan-missing",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:264512",
+        "name": "admissions-list/1440-search-result",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:264575",
+        "name": "admissions-list/1440-search-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:264638",
+        "name": "admissions-list/1440-filtered",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:264701",
+        "name": "admissions-list/1440-filter-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:264764",
+        "name": "admissions-list/1440-sort-dropdown",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:264827",
+        "name": "admissions-list/1440-sort-recent",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:264890",
+        "name": "admissions-list/1440-list-view",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:264953",
+        "name": "admissions-list/1440-interest-added",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:265016",
+        "name": "admissions-list/1440-interest-only",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:265079",
+        "name": "admissions-list/1440-interest-remove-confirm",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:265142",
+        "name": "admissions-list/1440-interest-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "740:265205",
+        "name": "admissions-list/1440-page-end",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:131096",
+    "name": "최저로 찾기 · minimum-search · v2",
+    "frames": [
+      {
+        "id": "346:131097",
+        "name": "minimum-search/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:131123",
+        "name": "minimum-search/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:131149",
+    "name": "대학별 환산 · univ-score · v2",
+    "frames": [
+      {
+        "id": "346:131150",
+        "name": "univ-score/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:131176",
+        "name": "univ-score/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:131225",
+    "name": "5 to 9 · five-to-nine · v2",
+    "frames": [
+      {
+        "id": "346:131226",
+        "name": "five-to-nine/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:131252",
+        "name": "five-to-nine/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:131301",
+    "name": "수시로 · susiro · v2",
+    "frames": [
+      {
+        "id": "346:131302",
+        "name": "susiro/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:131328",
+        "name": "susiro/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:140444",
+    "name": "모의고사 · mock-score · v2",
+    "frames": [
+      {
+        "id": "346:140445",
+        "name": "mock-score/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:140564",
+        "name": "mock-score/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:143370",
+    "name": "대학 상세 · univ-detail · v2",
+    "frames": [
+      {
+        "id": "346:143371",
+        "name": "univ-detail/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:144159",
+        "name": "univ-detail/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "792:317366",
+        "name": "univ-detail/390-scroll-mid",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "792:317743",
+        "name": "univ-detail/390-scroll-end",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "792:318083",
+        "name": "univ-detail/390-changes-none",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "792:318423",
+        "name": "univ-detail/390-changes-pending",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "792:318767",
+        "name": "univ-detail/390-badge-guide",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "792:319107",
+        "name": "univ-detail/390-long-name",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "792:319460",
+        "name": "univ-detail/390-filter-type",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "792:319829",
+        "name": "univ-detail/390-filter-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "793:318733",
+        "name": "univ-detail/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "793:319074",
+        "name": "univ-detail/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "793:319426",
+        "name": "univ-detail/390-missing",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "793:319783",
+        "name": "univ-detail/390-heart-saved",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "793:320127",
+        "name": "univ-detail/390-heart-removed",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "793:320252",
+        "name": "univ-detail/390-heart-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "796:318929",
+        "name": "univ-detail/1440-changes-none",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "796:335092",
+        "name": "univ-detail/1440-changes-pending",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "796:345830",
+        "name": "univ-detail/1440-badge-guide",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "796:356562",
+        "name": "univ-detail/1440-long-name",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "796:367307",
+        "name": "univ-detail/1440-filter-type",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "796:378051",
+        "name": "univ-detail/1440-filter-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "796:388824",
+        "name": "univ-detail/1440-panel-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "797:325408",
+        "name": "univ-detail/1440-row-selected",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "797:342263",
+        "name": "univ-detail/1440-row-focus",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "797:352996",
+        "name": "univ-detail/1440-sort",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "797:364341",
+        "name": "univ-detail/1440-loading",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "797:375074",
+        "name": "univ-detail/1440-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "797:385817",
+        "name": "univ-detail/1440-missing",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "797:396566",
+        "name": "univ-detail/1440-heart-saved",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:152227",
+    "name": "성적 불러오기 · score-import · v2",
+    "frames": [
+      {
+        "id": "346:152228",
+        "name": "score-import/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "346:155908",
+        "name": "score-import/390",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  {
+    "id": "346:217876",
+    "name": "전형 상세 · program-detail · v2",
+    "frames": [
+      {
+        "id": "346:217877",
+        "name": "program-detail/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:235058",
+        "name": "program-detail/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:252769",
+    "name": "관리자 규칙 편집기·검수 · admin-rules · v2",
+    "frames": [
+      {
+        "id": "346:252770",
+        "name": "admin-rules/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "346:253552",
+        "name": "admin-rules/390",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  {
+    "id": "346:261946",
+    "name": "로그인 · login · v2",
+    "frames": [
+      {
+        "id": "346:261947",
+        "name": "login/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "346:262094",
+        "name": "login/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "468:729",
+        "name": "login/1440-error",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:266644",
+    "name": "수시 입결 · admission-results",
+    "frames": [
+      {
+        "id": "346:266645",
+        "name": "admission-results/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:267881",
+        "name": "admission-results/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "759:277757",
+        "name": "admission-results/390-table",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "759:287483",
+        "name": "admission-results/1440-table",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "760:294749",
+        "name": "admission-results/390-dot-tooltip",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "762:281963",
+        "name": "admission-results/390-compare-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "762:282739",
+        "name": "admission-results/1440-compare",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "763:283300",
+        "name": "admission-results/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "763:284048",
+        "name": "admission-results/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "763:284801",
+        "name": "admission-results/1440-loading",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "763:291468",
+        "name": "admission-results/1440-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "764:283974",
+        "name": "admission-results/390-partial",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "764:286090",
+        "name": "admission-results/390-no-plot",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "764:286865",
+        "name": "admission-results/390-no-position",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "764:287607",
+        "name": "admission-results/390-conditions-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "764:288802",
+        "name": "admission-results/1440-no-position",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "764:295471",
+        "name": "admission-results/1440-conditions-modal",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "765:287220",
+        "name": "admission-results/390-univ-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "765:287985",
+        "name": "admission-results/390-program-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "765:289191",
+        "name": "admission-results/390-filter-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "765:289671",
+        "name": "admission-results/390-search",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "765:290675",
+        "name": "admission-results/390-search-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "765:291454",
+        "name": "admission-results/390-type-none",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "765:292218",
+        "name": "admission-results/1440-univ-dropdown",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "765:299174",
+        "name": "admission-results/1440-search-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "766:290539",
+        "name": "admission-results/390-detail-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "766:291068",
+        "name": "admission-results/1440-detail-modal",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "766:298311",
+        "name": "admission-results/390-prepare-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "766:298895",
+        "name": "admission-results/1440-prepare-modal",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "766:299085",
+        "name": "admission-results/390-prepare-leave-confirm",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "766:299599",
+        "name": "admission-results/1440-prepare-leave-confirm",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "767:296407",
+        "name": "admission-results/390-compare",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "767:298783",
+        "name": "admission-results/390-compare-add-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "767:299344",
+        "name": "admission-results/390-compare-full",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "767:299936",
+        "name": "admission-results/390-toast-removed",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "767:301905",
+        "name": "admission-results/390-heart-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "767:302831",
+        "name": "admission-results/1440-compare-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "767:309525",
+        "name": "admission-results/1440-compare-add-modal",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "767:309881",
+        "name": "admission-results/1440-toast-removed",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "346:277667",
+    "name": "내 성적 추이 · score-trend · v2",
+    "frames": [
+      {
+        "id": "346:277668",
+        "name": "score-trend/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "346:277682",
+        "name": "score-trend/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "347:310923",
+    "name": "생기부 AI · saenggibu-ai · v2",
+    "frames": [
+      {
+        "id": "347:310924",
+        "name": "saenggibu-ai/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "347:311136",
+        "name": "saenggibu-ai/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "365:38084",
+    "name": "대학 상세 위키 · univ-detail-wiki",
+    "frames": [
+      {
+        "id": "365:38085",
+        "name": "univ-detail-wiki/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "365:38171",
+        "name": "univ-detail-wiki/1440",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "391:42473",
+    "name": "학과별 입결 구간표 · dept-tier",
+    "frames": [
+      {
+        "id": "391:42474",
+        "name": "dept-tier/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "391:43187",
+        "name": "dept-tier/390-trace",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "391:43967",
+        "name": "dept-tier/390-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "391:46795",
+        "name": "dept-tier/390-changed",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "391:47258",
+        "name": "dept-tier/390-short",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "391:47488",
+        "name": "dept-tier/390-pending",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "391:47619",
+        "name": "dept-tier/390-mine",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "395:44331",
+        "name": "dept-tier/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "395:45232",
+        "name": "dept-tier/1440-modal",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "395:46623",
+        "name": "dept-tier/1440-trace",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "395:47578",
+        "name": "dept-tier/1440-mine",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "401:45992",
+        "name": "dept-tier/390-width",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "405:46710",
+        "name": "dept-tier/390-custom",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "405:46945",
+        "name": "dept-tier/390-custom-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "401:47362",
+        "name": "dept-tier/1440-width",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "405:47143",
+        "name": "dept-tier/1440-custom",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "429:50970",
+    "name": "특수 계열 모아보기 · special-tracks",
+    "frames": [
+      {
+        "id": "429:50971",
+        "name": "special-tracks/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "430:51283",
+        "name": "special-tracks/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "431:56656",
+        "name": "special-tracks/390-sub",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "431:57130",
+        "name": "special-tracks/390-switch",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "431:57625",
+        "name": "special-tracks/390-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "431:58050",
+        "name": "special-tracks/390-pending",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "432:53012",
+        "name": "special-tracks/390-sport",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "432:53597",
+        "name": "special-tracks/390-arts",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "432:54128",
+        "name": "special-tracks/390-trace",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "432:54755",
+        "name": "special-tracks/390-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "433:54183",
+        "name": "special-tracks/390-detail",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "433:54327",
+        "name": "special-tracks/390-sport-detail",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "436:55267",
+        "name": "special-tracks/1440-contract",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "436:60991",
+        "name": "special-tracks/1440-switch",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "436:64773",
+        "name": "special-tracks/1440-sport-detail",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "436:68596",
+        "name": "special-tracks/1440-trace",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "437:59142",
+        "name": "special-tracks/1440-detail",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "455:60948",
+    "name": "회원가입 · signup",
+    "frames": [
+      {
+        "id": "455:60949",
+        "name": "signup/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "455:61169",
+        "name": "signup/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "468:2",
+        "name": "signup/1440-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "468:217",
+        "name": "signup/1440-id-taken",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "468:413",
+        "name": "signup/1440-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "468:582",
+        "name": "signup/390-terms",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  {
+    "id": "459:61274",
+    "name": "결과 집계 · result-summary",
+    "frames": [
+      {
+        "id": "459:61275",
+        "name": "result-summary/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "460:65555",
+        "name": "result-summary/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "462:63481",
+        "name": "result-summary/1440-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "462:67827",
+        "name": "result-summary/1440-filter-zero",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "462:71984",
+        "name": "result-summary/1440-save-menu",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "462:76143",
+        "name": "result-summary/1440-toast",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "463:67905",
+        "name": "result-summary/1440-result-input",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "463:73031",
+        "name": "result-summary/1440-mock",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "464:69598",
+        "name": "result-summary/390-save-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "464:69706",
+        "name": "result-summary/390-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "464:69748",
+        "name": "result-summary/390-mock",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "464:70074",
+        "name": "result-summary/390-empty",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  {
+    "id": "487:68232",
+    "name": "우리 반 입시 일정 · class-calendar",
+    "frames": [
+      {
+        "id": "487:68233",
+        "name": "class-calendar/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "489:68749",
+        "name": "class-calendar/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "490:69075",
+        "name": "class-calendar/390-result-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "490:69779",
+        "name": "class-calendar/390-result-done",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "490:70317",
+        "name": "class-calendar/390-save-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "490:70900",
+        "name": "class-calendar/390-save-done",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "491:71033",
+        "name": "class-calendar/1440-result-dropdown",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "491:71671",
+        "name": "class-calendar/1440-result-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "491:72294",
+        "name": "class-calendar/1440-period",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "491:72902",
+        "name": "class-calendar/1440-save-list",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "491:73514",
+        "name": "class-calendar/1440-save-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "494:72217",
+        "name": "class-calendar/390-schedule-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "494:72985",
+        "name": "class-calendar/390-schedule-edit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "494:73619",
+        "name": "class-calendar/390-schedule-date",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "494:74551",
+        "name": "class-calendar/390-schedule-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "494:75112",
+        "name": "class-calendar/390-schedule-leave",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "496:74543",
+        "name": "class-calendar/390-schedule-date-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "496:75504",
+        "name": "class-calendar/1440-schedule-modal",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "496:76024",
+        "name": "class-calendar/1440-schedule-edit",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "496:76251",
+        "name": "class-calendar/1440-schedule-delete",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "496:76403",
+        "name": "class-calendar/1440-schedule-leave",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "496:76555",
+        "name": "class-calendar/1440-schedule-saved",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "497:76711",
+        "name": "class-calendar/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "497:77306",
+        "name": "class-calendar/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "497:77845",
+        "name": "class-calendar/390-no-cards",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "497:78394",
+        "name": "class-calendar/390-no-schedule",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "497:78936",
+        "name": "class-calendar/390-day-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "497:79471",
+        "name": "class-calendar/390-filter-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "497:80013",
+        "name": "class-calendar/390-period",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "498:78138",
+        "name": "class-calendar/390-list",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "498:78754",
+        "name": "class-calendar/390-student-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "498:79402",
+        "name": "class-calendar/390-month-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "498:80018",
+        "name": "class-calendar/1440-student-dropdown",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "498:80665",
+        "name": "class-calendar/1440-month-picker",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "498:81328",
+        "name": "class-calendar/1440-no-cards",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "498:81948",
+        "name": "class-calendar/1440-no-schedule",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "499:80168",
+        "name": "class-calendar/1440-week",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "499:82164",
+        "name": "class-calendar/1440-list",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "504:81769",
+    "name": "대학 지도 · univ-map",
+    "frames": [
+      {
+        "id": "504:81770",
+        "name": "univ-map/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "506:82015",
+        "name": "univ-map/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "508:82407",
+        "name": "univ-map/390-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "508:82532",
+        "name": "univ-map/390-region",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "508:82803",
+        "name": "univ-map/390-pin",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "508:83090",
+        "name": "univ-map/390-cluster",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "509:82976",
+        "name": "univ-map/390-list",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "509:83299",
+        "name": "univ-map/390-filter",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "509:83590",
+        "name": "univ-map/390-filter-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "509:83840",
+        "name": "univ-map/390-search",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "509:84097",
+        "name": "univ-map/390-search-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "509:84337",
+        "name": "univ-map/390-pending",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "509:84579",
+        "name": "univ-map/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "509:84792",
+        "name": "univ-map/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "509:85021",
+        "name": "univ-map/390-bottom",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "510:83933",
+        "name": "univ-map/1440-region",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "510:84578",
+        "name": "univ-map/1440-dropdown",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "510:85080",
+        "name": "univ-map/1440-search-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "510:85572",
+        "name": "univ-map/1440-error",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "530:85564",
+    "name": "전국 배치표 · national-placement",
+    "frames": [
+      {
+        "id": "530:85565",
+        "name": "national-placement/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "532:86654",
+        "name": "national-placement/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "533:86582",
+        "name": "national-placement/390-list",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "533:87832",
+        "name": "national-placement/390-coverage",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "533:95017",
+        "name": "national-placement/390-trace",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "533:96006",
+        "name": "national-placement/390-type",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "534:88047",
+        "name": "national-placement/390-coverage-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "534:94691",
+        "name": "national-placement/390-filter-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "534:94914",
+        "name": "national-placement/390-chip-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "534:95035",
+        "name": "national-placement/390-text-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "534:95147",
+        "name": "national-placement/390-range-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "534:95287",
+        "name": "national-placement/390-range-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "536:91556",
+        "name": "national-placement/390-source",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "536:98174",
+        "name": "national-placement/390-source-pick",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "536:98291",
+        "name": "national-placement/390-source-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "536:98383",
+        "name": "national-placement/390-bubble",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "536:99225",
+        "name": "national-placement/390-chips-on",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "537:93428",
+        "name": "national-placement/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "537:94546",
+        "name": "national-placement/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "537:95399",
+        "name": "national-placement/390-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "537:96277",
+        "name": "national-placement/390-pending-all",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "537:97128",
+        "name": "national-placement/390-mine",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "537:97965",
+        "name": "national-placement/390-mine-nograde",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "539:94650",
+        "name": "national-placement/1440-collapsed",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "539:96036",
+        "name": "national-placement/1440-other-stat",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "539:97157",
+        "name": "national-placement/1440-search-sources",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "539:98275",
+        "name": "national-placement/1440-trace",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "539:99521",
+        "name": "national-placement/1440-range-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "539:100651",
+        "name": "national-placement/1440-loading",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "539:101754",
+        "name": "national-placement/1440-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "539:102876",
+        "name": "national-placement/1440-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "539:104004",
+        "name": "national-placement/1440-pending-all",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "539:105112",
+        "name": "national-placement/1440-mine",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "540:98298",
+        "name": "national-placement/1440-bubble",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "540:99688",
+        "name": "national-placement/1440-source",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "540:106258",
+        "name": "national-placement/1440-source-pick",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "540:106449",
+        "name": "national-placement/1440-source-multi",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "540:109842",
+        "name": "national-placement/1440-source-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "541:101571",
+        "name": "national-placement/1440-list",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "541:109808",
+        "name": "national-placement/1440-coverage",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "541:115256",
+        "name": "national-placement/1440-coverage-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "542:104492",
+        "name": "national-placement/390-board",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "542:105937",
+        "name": "national-placement/1440-board",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "566:120989",
+    "name": "옛 관리자 계열표 · admin-fields · 검수용",
+    "frames": [
+      {
+        "id": "566:120990",
+        "name": "admin-fields/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "566:121049",
+        "name": "admin-fields/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:172381",
+        "name": "admin-fields/1440-wait",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:172438",
+        "name": "admin-fields/1440-problem",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:172495",
+        "name": "admin-fields/1440-mine",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:172552",
+        "name": "admin-fields/1440-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:172609",
+        "name": "admin-fields/1440-edited",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:172666",
+        "name": "admin-fields/1440-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:172723",
+        "name": "admin-fields/1440-search0",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:172780",
+        "name": "admin-fields/1440-bottom",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:172837",
+        "name": "admin-fields/1440-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:172894",
+        "name": "admin-fields/1440-message",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:172951",
+        "name": "admin-fields/1440-m1",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:173008",
+        "name": "admin-fields/1440-m2",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:173065",
+        "name": "admin-fields/390-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:173092",
+        "name": "admin-fields/390-problem",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:173119",
+        "name": "admin-fields/390-done",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:173146",
+        "name": "admin-fields/390-m1",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:173173",
+        "name": "admin-fields/390-m2",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:173200",
+        "name": "admin-fields/1440-x1-delete",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:173257",
+        "name": "admin-fields/1440-x2-edit",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:173314",
+        "name": "admin-fields/1440-x3-approve",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:173371",
+        "name": "admin-fields/1440-x5-toast",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:173428",
+        "name": "admin-fields/1440-x7-filter",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:173485",
+        "name": "admin-fields/1440-x8-export",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:173542",
+        "name": "admin-fields/1440-x9-major",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:173599",
+        "name": "admin-fields/390-x1-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:173626",
+        "name": "admin-fields/390-x5-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:173653",
+        "name": "admin-fields/390-x10-sheet",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  {
+    "id": "568:121267",
+    "name": "옛 대학 위키 요약 · admin-wiki · 검수용",
+    "frames": [
+      {
+        "id": "568:121268",
+        "name": "admin-wiki/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "568:121346",
+        "name": "admin-wiki/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:173453",
+        "name": "admin-wiki/1440-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:173513",
+        "name": "admin-wiki/1440-filter-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:173573",
+        "name": "admin-wiki/1440-import-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:173633",
+        "name": "admin-wiki/1440-import-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:173693",
+        "name": "admin-wiki/1440-export-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:173753",
+        "name": "admin-wiki/1440-export-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:173813",
+        "name": "admin-wiki/1440-conflict",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:173873",
+        "name": "admin-wiki/1440-editor-new",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:173933",
+        "name": "admin-wiki/1440-editor-problems",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:173993",
+        "name": "admin-wiki/1440-editor-unsaved",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:174053",
+        "name": "admin-wiki/1440-editor-ready",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:174113",
+        "name": "admin-wiki/1440-editor-mine",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:174173",
+        "name": "admin-wiki/1440-editor-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:174233",
+        "name": "admin-wiki/1440-editor-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:174293",
+        "name": "admin-wiki/1440-editor-noname",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:174353",
+        "name": "admin-wiki/390-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "624:174377",
+        "name": "admin-wiki/390-editor",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "624:174401",
+        "name": "admin-wiki/390-editor-problems",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "624:174425",
+        "name": "admin-wiki/390-conflict",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "624:174449",
+        "name": "admin-wiki/1440-confirm-delete",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:174509",
+        "name": "admin-wiki/1440-confirm-close",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:174569",
+        "name": "admin-wiki/1440-confirm-reset",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:174629",
+        "name": "admin-wiki/1440-confirm-export",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:174689",
+        "name": "admin-wiki/1440-source-link",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "624:174749",
+        "name": "admin-wiki/1440-reviewer-account",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "570:122335",
+    "name": "옛 입시 일정 · calendar · 검수용",
+    "frames": [
+      {
+        "id": "570:122336",
+        "name": "calendar/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "570:122656",
+        "name": "calendar/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:179186",
+        "name": "calendar/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:179256",
+        "name": "calendar/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:179326",
+        "name": "calendar/390-no-plans",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:179396",
+        "name": "calendar/390-month-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:179466",
+        "name": "calendar/390-day",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:179536",
+        "name": "calendar/390-day-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:179606",
+        "name": "calendar/390-list",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:179676",
+        "name": "calendar/390-undated",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:179746",
+        "name": "calendar/390-completed",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:179816",
+        "name": "calendar/390-plan-filtered",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:179886",
+        "name": "calendar/390-plan-missing",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:179956",
+        "name": "calendar/390-export-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:180026",
+        "name": "calendar/390-detail",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:180096",
+        "name": "calendar/390-plan-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:180166",
+        "name": "calendar/1440-day",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:180244",
+        "name": "calendar/1440-list",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:180322",
+        "name": "calendar/1440-detail",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:180400",
+        "name": "calendar/1440-plan-dropdown",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:180478",
+        "name": "calendar/1440-no-plans",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:180556",
+        "name": "calendar/390-overlap",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:180626",
+        "name": "calendar/1440-overlap",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:180704",
+        "name": "calendar/390-month-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:180774",
+        "name": "calendar/1440-month-picker",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:180852",
+        "name": "calendar/390-export-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:180922",
+        "name": "calendar/390-export-done",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:180992",
+        "name": "calendar/1440-export-modal",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:181070",
+        "name": "calendar/1440-export-done",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "574:122118",
+    "name": "옛 전형 비교 · compare · 검수용",
+    "frames": [
+      {
+        "id": "574:122119",
+        "name": "compare/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "574:122301",
+        "name": "compare/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:185340",
+        "name": "compare/390-load-saved",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:185482",
+        "name": "compare/390-load-catalog",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:185624",
+        "name": "compare/390-err-saved",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:185766",
+        "name": "compare/390-err-catalog",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:185908",
+        "name": "compare/390-empty0",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:186050",
+        "name": "compare/390-empty1",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:186192",
+        "name": "compare/390-scroll",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:186334",
+        "name": "compare/390-diff",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:186476",
+        "name": "compare/390-4col",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:186618",
+        "name": "compare/390-partial",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:186760",
+        "name": "compare/390-cells",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:186902",
+        "name": "compare/390-pick",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:187044",
+        "name": "compare/390-conditions",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:187186",
+        "name": "compare/390-select",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:187328",
+        "name": "compare/390-select-one",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:187470",
+        "name": "compare/390-select-full",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:187612",
+        "name": "compare/390-select-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:187754",
+        "name": "compare/390-select-noresult",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:187896",
+        "name": "compare/390-source",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:188038",
+        "name": "compare/390-prepare",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:188180",
+        "name": "compare/390-prepare-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:188322",
+        "name": "compare/390-prepare-duplicate",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:188464",
+        "name": "compare/390-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:188606",
+        "name": "compare/390-slots",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:188748",
+        "name": "compare/390-detail-link",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:188890",
+        "name": "compare/390-sections",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:189032",
+        "name": "compare/390-share",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:189174",
+        "name": "compare/1440-diff",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:189326",
+        "name": "compare/1440-4col",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:189478",
+        "name": "compare/1440-empty0",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:189630",
+        "name": "compare/1440-partial",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:189782",
+        "name": "compare/1440-pick",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:189934",
+        "name": "compare/1440-select",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:190086",
+        "name": "compare/1440-source",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:190238",
+        "name": "compare/1440-prepare-saving",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:190390",
+        "name": "compare/1440-slots",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:190542",
+        "name": "compare/1440-delta",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "576:125599",
+    "name": "옛 원서·서류 체크리스트 · application-checklist · 검수용",
+    "frames": [
+      {
+        "id": "576:125600",
+        "name": "application-checklist/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "576:125711",
+        "name": "application-checklist/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:193375",
+        "name": "application-checklist/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193396",
+        "name": "application-checklist/390-read-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193417",
+        "name": "application-checklist/390-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193438",
+        "name": "application-checklist/390-select",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193459",
+        "name": "application-checklist/390-other",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193480",
+        "name": "application-checklist/390-deadline",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193501",
+        "name": "application-checklist/390-bottom",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193522",
+        "name": "application-checklist/390-all-done",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193543",
+        "name": "application-checklist/390-limit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193564",
+        "name": "application-checklist/390-app-add",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193585",
+        "name": "application-checklist/390-app-pick",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193606",
+        "name": "application-checklist/390-app-duplicate",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193627",
+        "name": "application-checklist/390-app-edit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193648",
+        "name": "application-checklist/390-app-edit-warn",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193669",
+        "name": "application-checklist/390-app-saving",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193690",
+        "name": "application-checklist/390-item-edit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193711",
+        "name": "application-checklist/390-item-new",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193732",
+        "name": "application-checklist/390-item-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193753",
+        "name": "application-checklist/390-app-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193774",
+        "name": "application-checklist/390-item-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193795",
+        "name": "application-checklist/390-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:193816",
+        "name": "application-checklist/1440-loading",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:193877",
+        "name": "application-checklist/1440-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:193938",
+        "name": "application-checklist/1440-select",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:193999",
+        "name": "application-checklist/1440-app-add",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:194060",
+        "name": "application-checklist/1440-app-edit-warn",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:194121",
+        "name": "application-checklist/1440-item-edit",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:194182",
+        "name": "application-checklist/1440-delete",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:194243",
+        "name": "application-checklist/390-confirm-quickdone",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:194264",
+        "name": "application-checklist/390-confirm-progress",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:194285",
+        "name": "application-checklist/390-confirm-filter",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:194306",
+        "name": "application-checklist/390-confirm-datesheet",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  {
+    "id": "576:126719",
+    "name": "옛 지원 자격 확인표 · eligibility-check · 검수용",
+    "frames": [
+      {
+        "id": "576:126720",
+        "name": "eligibility-check/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "576:126810",
+        "name": "eligibility-check/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:200579",
+        "name": "eligibility-check/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:200597",
+        "name": "eligibility-check/390-load-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:200615",
+        "name": "eligibility-check/390-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:200633",
+        "name": "eligibility-check/1440-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:200679",
+        "name": "eligibility-check/390-new",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:200697",
+        "name": "eligibility-check/390-complete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:200715",
+        "name": "eligibility-check/390-no-items",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:200733",
+        "name": "eligibility-check/390-limit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:200751",
+        "name": "eligibility-check/390-plan-picker",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:200769",
+        "name": "eligibility-check/1440-plan-picker",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:200815",
+        "name": "eligibility-check/390-plan-add",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:200833",
+        "name": "eligibility-check/1440-plan-add",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:200879",
+        "name": "eligibility-check/390-plan-edit-warning",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:200897",
+        "name": "eligibility-check/390-plan-duplicate",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:200915",
+        "name": "eligibility-check/1440-plan-saving",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:200961",
+        "name": "eligibility-check/1440-plan-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:201007",
+        "name": "eligibility-check/390-item-edit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:201025",
+        "name": "eligibility-check/1440-item-edit",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:201071",
+        "name": "eligibility-check/390-item-add",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:201089",
+        "name": "eligibility-check/390-item-rename",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:201107",
+        "name": "eligibility-check/390-busy",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:201125",
+        "name": "eligibility-check/390-save-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:201143",
+        "name": "eligibility-check/390-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:201161",
+        "name": "eligibility-check/390-plan-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:201179",
+        "name": "eligibility-check/1440-plan-delete",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:201225",
+        "name": "eligibility-check/390-item-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:201243",
+        "name": "eligibility-check/1440-item-delete",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:201289",
+        "name": "eligibility-check/390-deleted",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:201307",
+        "name": "eligibility-check/390-plan-deleted",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:201325",
+        "name": "eligibility-check/390-scroll",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  {
+    "id": "576:127461",
+    "name": "옛 상담 질문·할 일 · counsel-tasks · 검수용",
+    "frames": [
+      {
+        "id": "576:127462",
+        "name": "counsel-tasks/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "576:127559",
+        "name": "counsel-tasks/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:206588",
+        "name": "counsel-tasks/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206607",
+        "name": "counsel-tasks/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206626",
+        "name": "counsel-tasks/390-empty-first",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206645",
+        "name": "counsel-tasks/390-empty-filter",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206664",
+        "name": "counsel-tasks/390-done",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206683",
+        "name": "counsel-tasks/390-plan",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206702",
+        "name": "counsel-tasks/390-busy",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206721",
+        "name": "counsel-tasks/390-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206740",
+        "name": "counsel-tasks/390-save-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206759",
+        "name": "counsel-tasks/390-sheet-kind",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206778",
+        "name": "counsel-tasks/390-sheet-plan",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206797",
+        "name": "counsel-tasks/390-add",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206816",
+        "name": "counsel-tasks/390-add-plan",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206835",
+        "name": "counsel-tasks/390-add-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206854",
+        "name": "counsel-tasks/390-edit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206873",
+        "name": "counsel-tasks/390-saving",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206892",
+        "name": "counsel-tasks/390-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206911",
+        "name": "counsel-tasks/390-delete-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:206930",
+        "name": "counsel-tasks/1440-empty-first",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:206981",
+        "name": "counsel-tasks/1440-add",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:207032",
+        "name": "counsel-tasks/1440-edit",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:207083",
+        "name": "counsel-tasks/1440-add-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:207134",
+        "name": "counsel-tasks/1440-delete",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:207185",
+        "name": "counsel-tasks/1440-toast",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:207236",
+        "name": "counsel-tasks/390-share-pick",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:207255",
+        "name": "counsel-tasks/390-share",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "626:207274",
+        "name": "counsel-tasks/1440-share-pick",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "626:207325",
+        "name": "counsel-tasks/1440-share",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "591:115532",
+    "name": "전형 성향 탐색 · admission-style · 2026-11-24 배너 진입 · 길콩",
+    "frames": [
+      {
+        "id": "594:163652",
+        "name": "admission-style/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "597:163686",
+        "name": "admission-style/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "599:163807",
+        "name": "admission-style/390-intro-scroll",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "599:163876",
+        "name": "admission-style/390-q1",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "599:164022",
+        "name": "admission-style/390-q-selected",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "599:164167",
+        "name": "admission-style/390-q15",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "599:164312",
+        "name": "admission-style/390-review-q1",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "600:164078",
+        "name": "admission-style/390-result-focused",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "600:164443",
+        "name": "admission-style/390-result-mixed",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "600:164739",
+        "name": "admission-style/390-result-open",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "600:165060",
+        "name": "admission-style/390-result-insufficient",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "600:165397",
+        "name": "admission-style/390-result-trace",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "602:164478",
+        "name": "admission-style/1440-quiz",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "602:164694",
+        "name": "admission-style/1440-result-mixed",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "604:165187",
+        "name": "admission-style/1440-result-trace",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "604:165832",
+        "name": "admission-style/390-restart-confirm",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "604:165953",
+        "name": "admission-style/390-restart-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "604:166016",
+        "name": "admission-style/390-leave-confirm",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "606:169244",
+        "name": "admission-style/390-style-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "606:169374",
+        "name": "admission-style/390-answers-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "606:169520",
+        "name": "admission-style/390-share",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "607:169582",
+        "name": "admission-style/1440-restart-confirm",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "607:169691",
+        "name": "admission-style/1440-restart-toast",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "607:169744",
+        "name": "admission-style/1440-leave-confirm",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "609:170028",
+        "name": "admission-style/1440-style-modal",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "609:170144",
+        "name": "admission-style/1440-answers-modal",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "609:170308",
+        "name": "admission-style/1440-share",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "611:170587",
+        "name": "admission-style/390-banner-home",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "611:170678",
+        "name": "admission-style/390-banner-dismissed",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "611:170738",
+        "name": "admission-style/390-banner-list",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "611:170798",
+        "name": "admission-style/1440-banner-home",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "611:170941",
+        "name": "admission-style/1440-banner-list",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "627:168317",
+    "name": "입시 일정 · calendar",
+    "frames": [
+      {
+        "id": "627:168318",
+        "name": "calendar/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "627:168449",
+        "name": "calendar/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "638:2504",
+        "name": "calendar/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "638:3964",
+        "name": "calendar/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "638:5429",
+        "name": "calendar/390-no-plans",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "638:6927",
+        "name": "calendar/390-month-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "638:8437",
+        "name": "calendar/390-day",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "640:2",
+        "name": "calendar/390-day-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "640:2645",
+        "name": "calendar/390-completed",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "640:4128",
+        "name": "calendar/390-plan-filtered",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "640:5600",
+        "name": "calendar/390-plan-missing",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "640:7092",
+        "name": "calendar/390-overlap",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "642:2",
+        "name": "calendar/390-list",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "642:2639",
+        "name": "calendar/390-undated",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "642:4122",
+        "name": "calendar/390-export-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "644:2",
+        "name": "calendar/390-detail",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "644:222",
+        "name": "calendar/390-plan-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "644:374",
+        "name": "calendar/390-month-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "644:723",
+        "name": "calendar/390-export-sheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "644:877",
+        "name": "calendar/390-export-done",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "646:2",
+        "name": "calendar/1440-day",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "646:2912",
+        "name": "calendar/1440-overlap",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "646:4530",
+        "name": "calendar/1440-no-plans",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "646:6150",
+        "name": "calendar/1440-plan-dropdown",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "646:9344",
+        "name": "calendar/1440-export-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "647:2",
+        "name": "calendar/1440-detail",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "647:480",
+        "name": "calendar/1440-month-picker",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "647:5128",
+        "name": "calendar/1440-export-modal",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "647:6911",
+        "name": "calendar/1440-list",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "657:186567",
+    "name": "전형 비교 · compare",
+    "frames": [
+      {
+        "id": "657:186568",
+        "name": "compare/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "658:187197",
+        "name": "compare/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "659:188078",
+        "name": "compare/390-load-saved",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "659:188286",
+        "name": "compare/390-load-catalog",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "659:188494",
+        "name": "compare/390-err-saved",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "659:188725",
+        "name": "compare/390-err-catalog",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "659:188943",
+        "name": "compare/390-empty0",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "659:189169",
+        "name": "compare/390-empty1",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "659:189394",
+        "name": "compare/390-scroll",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "659:189680",
+        "name": "compare/390-diff",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "659:189918",
+        "name": "compare/390-4col",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "659:190574",
+        "name": "compare/390-partial",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "659:190911",
+        "name": "compare/390-cells",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "660:191726",
+        "name": "compare/390-pick",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "660:191955",
+        "name": "compare/390-conditions",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "660:192249",
+        "name": "compare/390-select",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "660:192530",
+        "name": "compare/390-select-one",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "660:192812",
+        "name": "compare/390-select-full",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "660:193090",
+        "name": "compare/390-select-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "660:193320",
+        "name": "compare/390-select-noresult",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "660:193570",
+        "name": "compare/390-source",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "660:194743",
+        "name": "compare/390-prepare",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "660:195092",
+        "name": "compare/390-prepare-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "660:195447",
+        "name": "compare/390-prepare-duplicate",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "661:199417",
+        "name": "compare/390-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "661:199649",
+        "name": "compare/390-slots",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "661:199915",
+        "name": "compare/390-detail-link",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "661:200722",
+        "name": "compare/390-sections",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "661:200960",
+        "name": "compare/390-share",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "662:202015",
+        "name": "compare/1440-diff",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "662:202495",
+        "name": "compare/1440-4col",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "662:204810",
+        "name": "compare/1440-empty0",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "662:205126",
+        "name": "compare/1440-partial",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "662:205680",
+        "name": "compare/1440-pick",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "662:206145",
+        "name": "compare/1440-select",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "662:206419",
+        "name": "compare/1440-source",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "662:207466",
+        "name": "compare/1440-prepare-saving",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "662:207800",
+        "name": "compare/1440-slots",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "662:208940",
+        "name": "compare/1440-delta",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "668:210273",
+    "name": "원서·서류 체크리스트 · application-checklist",
+    "frames": [
+      {
+        "id": "668:210274",
+        "name": "application-checklist/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "670:210435",
+        "name": "application-checklist/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "674:210888",
+        "name": "application-checklist/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "674:211080",
+        "name": "application-checklist/390-read-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "674:211277",
+        "name": "application-checklist/390-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "674:211493",
+        "name": "application-checklist/390-other",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "674:211785",
+        "name": "application-checklist/390-deadline",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "674:211986",
+        "name": "application-checklist/390-bottom",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "674:212177",
+        "name": "application-checklist/390-all-done",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "674:212441",
+        "name": "application-checklist/390-limit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "674:212730",
+        "name": "application-checklist/390-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "674:212897",
+        "name": "application-checklist/390-confirm-quickdone",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "674:213144",
+        "name": "application-checklist/390-confirm-progress",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "674:213352",
+        "name": "application-checklist/390-confirm-filter",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:212527",
+        "name": "application-checklist/390-select",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:212748",
+        "name": "application-checklist/390-app-add",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:213040",
+        "name": "application-checklist/390-app-pick",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:213281",
+        "name": "application-checklist/390-app-duplicate",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:213593",
+        "name": "application-checklist/390-app-edit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:213880",
+        "name": "application-checklist/390-app-edit-warn",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:214176",
+        "name": "application-checklist/390-app-saving",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:214476",
+        "name": "application-checklist/390-item-edit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:214760",
+        "name": "application-checklist/390-item-new",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:215037",
+        "name": "application-checklist/390-item-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:215489",
+        "name": "application-checklist/390-app-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:215698",
+        "name": "application-checklist/390-item-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "675:215907",
+        "name": "application-checklist/390-confirm-datesheet",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "676:215292",
+        "name": "application-checklist/1440-loading",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "676:215585",
+        "name": "application-checklist/1440-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "676:215904",
+        "name": "application-checklist/1440-select",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "676:216208",
+        "name": "application-checklist/1440-app-add",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "676:216666",
+        "name": "application-checklist/1440-app-edit-warn",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "676:217109",
+        "name": "application-checklist/1440-item-edit",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "676:217403",
+        "name": "application-checklist/1440-delete",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "682:218324",
+    "name": "지원 자격 확인표 · eligibility-check",
+    "frames": [
+      {
+        "id": "682:218325",
+        "name": "eligibility-check/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "683:218459",
+        "name": "eligibility-check/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "684:218660",
+        "name": "eligibility-check/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "684:218923",
+        "name": "eligibility-check/390-load-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "684:219187",
+        "name": "eligibility-check/390-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "684:219467",
+        "name": "eligibility-check/390-new",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "684:219736",
+        "name": "eligibility-check/390-complete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "684:219996",
+        "name": "eligibility-check/390-no-items",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "685:219303",
+        "name": "eligibility-check/390-scroll",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "685:219561",
+        "name": "eligibility-check/390-limit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "685:219826",
+        "name": "eligibility-check/390-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "685:220087",
+        "name": "eligibility-check/390-deleted",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "685:220349",
+        "name": "eligibility-check/390-plan-deleted",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "686:219972",
+        "name": "eligibility-check/390-item-edit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "686:220253",
+        "name": "eligibility-check/390-item-add",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "686:220532",
+        "name": "eligibility-check/390-item-rename",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "686:220811",
+        "name": "eligibility-check/390-busy",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "686:221092",
+        "name": "eligibility-check/390-save-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "686:221385",
+        "name": "eligibility-check/390-plan-picker",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "687:220971",
+        "name": "eligibility-check/390-plan-add",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "687:221269",
+        "name": "eligibility-check/390-plan-edit-warning",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "687:221556",
+        "name": "eligibility-check/390-plan-duplicate",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "687:221859",
+        "name": "eligibility-check/390-plan-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "687:222061",
+        "name": "eligibility-check/390-item-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "688:222225",
+        "name": "eligibility-check/1440-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "688:222651",
+        "name": "eligibility-check/1440-plan-picker",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "688:223079",
+        "name": "eligibility-check/1440-plan-add",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "688:223400",
+        "name": "eligibility-check/1440-plan-saving",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "688:223721",
+        "name": "eligibility-check/1440-plan-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "688:224054",
+        "name": "eligibility-check/1440-item-edit",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "688:224350",
+        "name": "eligibility-check/1440-plan-delete",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "688:224571",
+        "name": "eligibility-check/1440-item-delete",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "691:223584",
+    "name": "상담 질문·할 일 · counsel-tasks",
+    "frames": [
+      {
+        "id": "691:223585",
+        "name": "counsel-tasks/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "692:223716",
+        "name": "counsel-tasks/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "693:223930",
+        "name": "counsel-tasks/390-loading",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "693:224056",
+        "name": "counsel-tasks/390-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "693:224193",
+        "name": "counsel-tasks/390-empty-first",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "693:224328",
+        "name": "counsel-tasks/390-empty-filter",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "693:224514",
+        "name": "counsel-tasks/390-done",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "693:224686",
+        "name": "counsel-tasks/390-plan",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "693:224834",
+        "name": "counsel-tasks/390-busy",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "693:225107",
+        "name": "counsel-tasks/390-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "693:225252",
+        "name": "counsel-tasks/390-save-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "694:224796",
+        "name": "counsel-tasks/390-sheet-kind",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "694:224931",
+        "name": "counsel-tasks/390-sheet-plan",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "694:225080",
+        "name": "counsel-tasks/390-share-pick",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "694:225229",
+        "name": "counsel-tasks/390-share",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "694:225361",
+        "name": "counsel-tasks/390-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "694:225491",
+        "name": "counsel-tasks/390-delete-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "695:225620",
+        "name": "counsel-tasks/390-add",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "695:225845",
+        "name": "counsel-tasks/390-add-plan",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "695:226083",
+        "name": "counsel-tasks/390-add-error",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "695:226329",
+        "name": "counsel-tasks/390-edit",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "695:226565",
+        "name": "counsel-tasks/390-saving",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "696:226633",
+        "name": "counsel-tasks/1440-empty-first",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "696:226869",
+        "name": "counsel-tasks/1440-add",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "696:227124",
+        "name": "counsel-tasks/1440-edit",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "696:227391",
+        "name": "counsel-tasks/1440-add-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "696:227667",
+        "name": "counsel-tasks/1440-delete",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "696:227810",
+        "name": "counsel-tasks/1440-toast",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "696:228082",
+        "name": "counsel-tasks/1440-share-pick",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "696:228246",
+        "name": "counsel-tasks/1440-share",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  {
+    "id": "702:228571",
+    "name": "학과 계열표 검수 · admin-fields",
+    "frames": [
+      {
+        "id": "702:228572",
+        "name": "admin-fields/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "703:229112",
+        "name": "admin-fields/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "705:229508",
+        "name": "admin-fields/1440-wait",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "705:230538",
+        "name": "admin-fields/1440-problem",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "705:231576",
+        "name": "admin-fields/1440-mine",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "705:232585",
+        "name": "admin-fields/1440-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "705:233588",
+        "name": "admin-fields/1440-edited",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "705:234604",
+        "name": "admin-fields/1440-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "705:235631",
+        "name": "admin-fields/1440-search0",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "705:236649",
+        "name": "admin-fields/1440-bottom",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "705:237652",
+        "name": "admin-fields/1440-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "705:238658",
+        "name": "admin-fields/1440-message",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "706:234130",
+        "name": "admin-fields/1440-m1",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "706:235866",
+        "name": "admin-fields/1440-m2",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "706:236028",
+        "name": "admin-fields/1440-x1-delete",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "706:236190",
+        "name": "admin-fields/1440-x2-edit",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "706:237271",
+        "name": "admin-fields/1440-x3-approve",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "706:237443",
+        "name": "admin-fields/1440-x5-toast",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "706:237565",
+        "name": "admin-fields/1440-x8-export",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "706:240976",
+        "name": "admin-fields/1440-x7-filter",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "706:242279",
+        "name": "admin-fields/1440-x9-major",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "707:240068",
+        "name": "admin-fields/390-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "707:240854",
+        "name": "admin-fields/390-problem",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "707:241620",
+        "name": "admin-fields/390-done",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "707:242373",
+        "name": "admin-fields/390-m1",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "707:244067",
+        "name": "admin-fields/390-m2",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "707:244215",
+        "name": "admin-fields/390-x1-delete",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "707:244363",
+        "name": "admin-fields/390-x5-toast",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "707:244467",
+        "name": "admin-fields/390-x10-sheet",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  {
+    "id": "713:242968",
+    "name": "대학 위키 요약 검수 · admin-wiki",
+    "frames": [
+      {
+        "id": "713:242969",
+        "name": "admin-wiki/1440",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "714:243965",
+        "name": "admin-wiki/390",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "716:243691",
+        "name": "admin-wiki/1440-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "716:244788",
+        "name": "admin-wiki/1440-filter-empty",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "716:245842",
+        "name": "admin-wiki/1440-import-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "716:246871",
+        "name": "admin-wiki/1440-import-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "716:247904",
+        "name": "admin-wiki/1440-export-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "716:247979",
+        "name": "admin-wiki/1440-export-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "716:249012",
+        "name": "admin-wiki/1440-conflict",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "717:249416",
+        "name": "admin-wiki/1440-editor-new",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "717:250745",
+        "name": "admin-wiki/1440-editor-problems",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "717:252137",
+        "name": "admin-wiki/1440-editor-unsaved",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "717:253517",
+        "name": "admin-wiki/1440-editor-ready",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "717:254888",
+        "name": "admin-wiki/1440-editor-mine",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "717:256335",
+        "name": "admin-wiki/1440-editor-done",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "717:257782",
+        "name": "admin-wiki/1440-editor-error",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "717:259159",
+        "name": "admin-wiki/1440-editor-noname",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "718:258118",
+        "name": "admin-wiki/1440-confirm-delete",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "718:258281",
+        "name": "admin-wiki/1440-confirm-close",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "718:258447",
+        "name": "admin-wiki/1440-confirm-reset",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "718:258635",
+        "name": "admin-wiki/1440-confirm-export",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "718:258740",
+        "name": "admin-wiki/1440-source-link",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "718:259957",
+        "name": "admin-wiki/1440-reviewer-account",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "id": "719:255721",
+        "name": "admin-wiki/390-empty",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "719:256034",
+        "name": "admin-wiki/390-editor",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "719:256263",
+        "name": "admin-wiki/390-editor-problems",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "id": "719:256436",
+        "name": "admin-wiki/390-conflict",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  }
+]

@@ -16,6 +16,10 @@ def encode(value):
 
 
 def write_atomic(path, content):
+    # Content-addressed packages are immutable; avoid replacing identical files
+    # held open by readers or the Windows sync client during an incremental import.
+    if path.exists() and path.read_bytes() == content:
+        return
     temp = path.with_suffix(path.suffix + '.tmp')
     temp.write_bytes(content)
     temp.replace(path)

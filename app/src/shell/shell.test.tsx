@@ -52,31 +52,42 @@ test('상세 화면은 sub-nav 없이 뒤로가기', () => {
   expect(screen.queryByRole('navigation', { name: '대학 찾기 소분류' })).toBeNull();
 });
 
-test('rules screens의 모든 slug에 화면 자리가 있다', () => {
+test('설계 화면은 실제 앱 경로 또는 명시된 Figma 전용 화면으로 연결된다', () => {
   const rules = JSON.parse(
     readFileSync(resolve(process.cwd(), '../rules/design-rules.json'), 'utf8'),
   ) as { screens: Record<string, string> };
   const all = [...allItems(), ...DETAILS, ...OUTSIDE];
-  // 위키는 대학 상세를 늘린 것이라(02-spec 배치 결정) 대학 상세 화면 자리를 쓴다
-  const host: Record<string, string> = { 'univ-detail-wiki': 'univ-detail' };
-  for (const slug of Object.values(rules.screens).map((x) => host[x] ?? x)) {
+  const delivery = JSON.parse(readFileSync(resolve(process.cwd(), '../work/_data/screen-delivery.json'), 'utf8')) as {
+    design_only: string[]; host_routes: Record<string, {slug: string; path: string}>;
+  };
+  for (const name of delivery.design_only) expect(Object.values(rules.screens)).toContain(name);
+  for (const designSlug of Object.values(rules.screens)) {
+    if (delivery.design_only.includes(designSlug)) {
+      expect(all.some(s => s.slug === designSlug), `${designSlug}: 구현 후 전용 목록에서 제거`).toBe(false);
+      const draft = JSON.parse(readFileSync(resolve(process.cwd(), `../work/${designSlug}/03-draft.json`), 'utf8'));
+      expect(draft.frames['390'], designSlug).toMatch(/^\d+:\d+$/);
+      expect(draft.frames['1440'], designSlug).toMatch(/^\d+:\d+$/);
+      continue;
+    }
+    const host = delivery.host_routes[designSlug];
+    const slug = host?.slug ?? designSlug;
     const s = all.find((x) => x.slug === slug);
     expect(s, slug).toBeDefined();
-    const { container, unmount } = renderAt(s!.path);
+    const { container, unmount } = renderAt(host?.path ?? s!.path);
     expect(container.querySelector(`[data-slug="${slug}"]`), slug).not.toBeNull();
     unmount();
   }
 });
 
-test('교사 모드는 학생 기능도 함께 보이고, 학생 화면을 열어도 교사 셸을 유지한다', () => {
+test('교사 모드 사이드바는 교사 메뉴만 보이고(2026-11-24 사용자 결정), 학생 화면을 열어도 교사 셸을 유지한다', () => {
   const { unmount } = renderAt('/teacher/teacher-dashboard');
   const sidebar = screen.getByRole('navigation', { name: '주 메뉴' });
-  for (const label of ['학생', '교사', '홈', '성적', '대학 찾기', '수시 전략', '우리 반']) expect(within(sidebar).getAllByText(label).length).toBeGreaterThan(0);
+  for (const label of ['우리 반', '성적 관리', '수합·집계']) expect(within(sidebar).getAllByText(label).length).toBeGreaterThan(0);
+  for (const label of ['대학 찾기', '수시 전략']) expect(within(sidebar).queryByText(label)).toBeNull();
   unmount();
   renderAt('/grade-input');
   const again = screen.getByRole('navigation', { name: '주 메뉴' });
   expect(within(again).getByText('우리 반')).toBeTruthy();
-  expect(within(again).getByText('성적 입력').closest('a')?.getAttribute('aria-current')).toBe('page');
   expect(within(screen.getByRole('navigation', { name: '하단 탭' })).getAllByRole('link').map(a => a.textContent?.trim())).toEqual(['우리 반', '성적 관리', '수합·집계', '더보기']);
   sessionStorage.clear();
 });

@@ -6,6 +6,7 @@ import type { ResultRow } from '../domain/resultReview';
 import { axisRange, TYPE_TABS, type TypeTab } from '../domain/resultBrowse';
 import { gradeCut, noPlotReason, universityPlot, yearTone } from '../domain/universityResultPlot';
 import { collectedProgramPath } from '../domain/interests';
+import { collectedUniversitySelection, matchesUniversityIdentity, currentUniversityName } from '../domain/universityIdentity';
 import { fiveToNineFor } from '../domain/results';
 import { useStudent } from '../store/studentDb';
 import { UniversityLogo } from './UniversityLogo';
@@ -24,7 +25,7 @@ export function UniversityResultOverview() {
   const [choosing, setChoosing] = useState(false), [search, setSearch] = useState(''), [departmentSearch, setDepartmentSearch] = useState('');
   const [opened, setOpened] = useState<ResultRow | null>(null), [conditions, setConditions] = useState(false), [page, setPage] = useState(0);
   const requested = query.get('gu') ?? '';
-  const university = index?.universities.find(e => e.university === requested)?.university ?? index?.universities[0]?.university ?? '';
+  const university = collectedUniversitySelection(requested, index?.universities.map(e => e.university) ?? []) ?? index?.universities[0]?.university ?? '';
   const tab = TYPE_TABS.includes(query.get('gt') as TypeTab) ? query.get('gt') as TypeTab : '교과';
   const rows = loaded?.university === university ? loaded.rows : null;
   const model = useMemo(() => universityPlot(rows ?? [], tab, query.get('gp') ?? ''), [rows, tab, query]);
@@ -67,7 +68,7 @@ export function UniversityResultOverview() {
   if (!index) return <p role="status">대학별 입결 목록을 읽고 있어요.</p>;
   return <section className="university-overview" aria-label="대학별 최근 3년 입결">
     <header className="university-overview-heading">
-      <div className="university-overview-title"><UniversityLogo university={university} /><h3 className="t-heading-2">{university}</h3><button className="button-outline" onClick={() => { setSearch(''); setChoosing(true); }}>바꾸기</button></div>
+      <div className="university-overview-title"><UniversityLogo university={university} /><h3 className="t-heading-2">{currentUniversityName(university)}</h3><button className="button-outline" onClick={() => { setSearch(''); setChoosing(true); }}>바꾸기</button></div>
     </header>
     <div className="university-overview-filters">
       <SegmentedControl label="대학별 전형 유형" value={tab} onChange={value => update({ gt: value, gp: null })} options={TYPE_TABS.map(value => ({ value, label: value }))} />
@@ -115,7 +116,7 @@ export function UniversityResultOverview() {
       </>}
     </section><ComparisonPanel years={model.years} rows={model.rows} cutLabel={plottable ? model.cutLabel : '그래프용 컷 없음'} onDetails={() => setConditions(true)} /></div>
     <p className="university-overview-footnote t-caption text-muted">대학별·연도별 산출 기준이 달라요. 검수 전 자료는 성적 판정에 사용하지 않으며, 대학 공식 자료가 최종 기준이에요.</p>
-    {choosing && <Modal label="그래프 대학 바꾸기" onClose={() => setChoosing(false)}><div className="section-row"><h3 className="t-heading-3">대학 바꾸기</h3><button className="button-outline" onClick={() => setChoosing(false)}>닫기</button></div><label>대학 검색<input type="search" value={search} onChange={e => setSearch(e.target.value)} /></label><p role="status">{index.universities.filter(e => e.university.includes(search.trim())).length}개 대학·캠퍼스</p><div className="university-options">{index.universities.filter(e => e.university.includes(search.trim())).map(e => <button className="button-outline" key={e.university} aria-pressed={university === e.university} onClick={() => { update({ gu: e.university, gp: null, gt: null }); setChoosing(false); }}>{e.university}</button>)}</div></Modal>}
+    {choosing && <Modal label="그래프 대학 바꾸기" onClose={() => setChoosing(false)}><div className="section-row"><h3 className="t-heading-3">대학 바꾸기</h3><button className="button-outline" onClick={() => setChoosing(false)}>닫기</button></div><label>대학 검색<input type="search" value={search} onChange={e => setSearch(e.target.value)} /></label><p role="status">{index.universities.filter(e => matchesUniversityIdentity(e.university, search)).length}개 대학·캠퍼스</p><div className="university-options">{index.universities.filter(e => matchesUniversityIdentity(e.university, search)).map(e => <button className="button-outline" key={e.university} aria-pressed={university === e.university} onClick={() => { update({ gu: e.university, gp: null, gt: null }); setChoosing(false); }}>{currentUniversityName(e.university)}</button>)}</div></Modal>}
     {opened && <Modal wide label="그래프 입결 원문 상세" onClose={() => setOpened(null)}><div className="section-row"><h3 className="t-heading-3">{opened.recruit_unit} · {opened.result_year}학년도</h3><button className="button-outline" onClick={() => setOpened(null)}>닫기</button></div><CollectedResultFields row={opened} /></Modal>}
     {conditions && <Modal wide label="비교 조건 자세히" onClose={() => setConditions(false)}><div className="section-row"><h3 className="t-heading-3">비교 조건 확인 필요</h3><button className="button-outline" onClick={() => setConditions(false)}>닫기</button></div><p>입결은 {model.years.join('·')}학년도 대학 발표 자료이며, 내 성적의 5 to 9 환산 범위와 학년도·반영 교과·산식이 같다고 확인되지 않았어요. 점수 차이와 판정을 표시하지 않아요.</p><p>현재 전형에 기록된 원문 산출 기준이에요. 과거 연도의 학과·전형 이름이 달라진 경우 자동으로 합치지 않아요.</p><ul>{[...new Set(model.rows.map(r => `${r.result_year}학년도 · ${r.metric || '지표 미기재'} · ${r.grade_system || '미기재'}등급제 · ${r.basis || '산출 기준 미기재'}`))].map(text => <li key={text}>{text}</li>)}</ul><Link className="button-outline" to="/five-to-nine">내 성적 환산 근거 보기</Link></Modal>}
   </section>;

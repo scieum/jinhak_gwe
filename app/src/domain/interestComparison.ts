@@ -2,6 +2,7 @@ import type { Interest } from './interests';
 import type { ResultRow } from './resultReview';
 import { gradeCoordinate, statisticValue, type CutField, type NationalPlacementRow } from './nationalPlacement';
 import { sortNumber } from './tableSort';
+import { currentUniversityName } from './universityIdentity';
 
 export const MAX_COMPARISON = 4;
 export const comparisonPath = (ids: string[] = []) => {
@@ -16,7 +17,7 @@ export function comparisonSelection(items: readonly Interest[], ids: readonly st
 export interface ComparisonRecord { sourceRow: number; row: ResultRow }
 export function comparisonRecords(interest: Interest, rows: readonly ResultRow[], year: string, round: string, metric: string): ComparisonRecord[] {
   if (!interest.department?.trim()) return [];
-  return rows.flatMap((row, sourceRow) => row.university.trim() === interest.university.trim()
+  return rows.flatMap((row, sourceRow) => currentUniversityName(row.university.trim()) === currentUniversityName(interest.university.trim())
     && row.program.trim() === interest.program.trim() && row.recruit_unit.trim() === interest.department!.trim()
     && row.result_year === year && row.round === round && row.metric === metric ? [{ sourceRow, row }] : []);
 }

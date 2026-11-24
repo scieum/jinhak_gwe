@@ -1,0 +1,398 @@
+{
+  "bases": {
+    "admin-fields": {
+      "390": "703:229112",
+      "1440": "702:228572",
+      "section": "702:228571"
+    },
+    "admin-wiki": {
+      "390": "714:243965",
+      "1440": "713:242969",
+      "section": "713:242968"
+    },
+    "calendar": {
+      "390": "627:168318",
+      "1440": "627:168449",
+      "section": "627:168317"
+    },
+    "compare": {
+      "390": "657:186568",
+      "1440": "658:187197",
+      "section": "657:186567"
+    },
+    "application-checklist": {
+      "390": "668:210274",
+      "1440": "670:210435",
+      "section": "668:210273"
+    },
+    "eligibility-check": {
+      "390": "682:218325",
+      "1440": "683:218459",
+      "section": "682:218324"
+    },
+    "counsel-tasks": {
+      "390": "691:223585",
+      "1440": "692:223716",
+      "section": "691:223584"
+    },
+    "admission-style": {
+      "390": "594:163652",
+      "1440": "597:163686",
+      "section": "591:115532"
+    }
+  },
+  "states": {
+    "admin-fields": {
+      "1440-wait": "705:229508",
+      "1440-problem": "705:230538",
+      "1440-mine": "705:231576",
+      "1440-done": "705:232585",
+      "1440-edited": "705:233588",
+      "1440-empty": "705:234604",
+      "1440-search0": "705:235631",
+      "1440-bottom": "705:236649",
+      "1440-error": "705:237652",
+      "1440-message": "705:238658",
+      "1440-m1": "706:234130",
+      "1440-m2": "706:235866",
+      "390-empty": "707:240068",
+      "390-problem": "707:240854",
+      "390-done": "707:241620",
+      "390-m1": "707:242373",
+      "390-m2": "707:244067",
+      "1440-x1-delete": "706:236028",
+      "1440-x2-edit": "706:236190",
+      "1440-x3-approve": "706:237271",
+      "1440-x5-toast": "706:237443",
+      "1440-x7-filter": "706:240976",
+      "1440-x8-export": "706:237565",
+      "1440-x9-major": "706:242279",
+      "390-x1-delete": "707:244215",
+      "390-x5-toast": "707:244363",
+      "390-x10-sheet": "707:244467"
+    },
+    "admin-wiki": {
+      "1440-empty": "716:243691",
+      "1440-filter-empty": "716:244788",
+      "1440-import-done": "716:245842",
+      "1440-import-error": "716:246871",
+      "1440-export-done": "716:247904",
+      "1440-export-error": "716:247979",
+      "1440-conflict": "716:249012",
+      "1440-editor-new": "717:249416",
+      "1440-editor-problems": "717:250745",
+      "1440-editor-unsaved": "717:252137",
+      "1440-editor-ready": "717:253517",
+      "1440-editor-mine": "717:254888",
+      "1440-editor-done": "717:256335",
+      "1440-editor-error": "717:257782",
+      "1440-editor-noname": "717:259159",
+      "390-empty": "719:255721",
+      "390-editor": "719:256034",
+      "390-editor-problems": "719:256263",
+      "390-conflict": "719:256436",
+      "1440-confirm-delete": "718:258118",
+      "1440-confirm-close": "718:258281",
+      "1440-confirm-reset": "718:258447",
+      "1440-confirm-export": "718:258635",
+      "1440-source-link": "718:258740",
+      "1440-reviewer-account": "718:259957"
+    },
+    "calendar": {
+      "390-loading": "638:2504",
+      "390-error": "638:3964",
+      "390-no-plans": "638:5429",
+      "390-month-empty": "638:6927",
+      "390-day": "638:8437",
+      "390-day-empty": "640:2",
+      "390-list": "642:2",
+      "390-undated": "642:2639",
+      "390-completed": "640:2645",
+      "390-plan-filtered": "640:4128",
+      "390-plan-missing": "640:5600",
+      "390-export-error": "642:4122",
+      "390-detail": "644:2",
+      "390-plan-sheet": "644:222",
+      "1440-day": "646:2",
+      "1440-list": "647:6911",
+      "1440-detail": "647:2",
+      "1440-plan-dropdown": "646:6150",
+      "1440-no-plans": "646:4530",
+      "390-overlap": "640:7092",
+      "1440-overlap": "646:2912",
+      "390-month-sheet": "644:374",
+      "1440-month-picker": "647:480",
+      "390-export-sheet": "644:723",
+      "390-export-done": "644:877",
+      "1440-export-modal": "647:5128",
+      "1440-export-done": "646:9344"
+    },
+    "compare": {
+      "390-load-saved": "659:188078",
+      "390-load-catalog": "659:188286",
+      "390-err-saved": "659:188494",
+      "390-err-catalog": "659:188725",
+      "390-empty0": "659:188943",
+      "390-empty1": "659:189169",
+      "390-scroll": "659:189394",
+      "390-diff": "659:189680",
+      "390-4col": "659:189918",
+      "390-partial": "659:190574",
+      "390-cells": "659:190911",
+      "390-pick": "660:191726",
+      "390-conditions": "660:191955",
+      "390-select": "660:192249",
+      "390-select-one": "660:192530",
+      "390-select-full": "660:192812",
+      "390-select-empty": "660:193090",
+      "390-select-noresult": "660:193320",
+      "390-source": "660:193570",
+      "390-prepare": "660:194743",
+      "390-prepare-error": "660:195092",
+      "390-prepare-duplicate": "660:195447",
+      "390-toast": "661:199417",
+      "390-slots": "661:199649",
+      "390-detail-link": "661:199915",
+      "390-sections": "661:200722",
+      "390-share": "661:200960",
+      "1440-diff": "662:202015",
+      "1440-4col": "662:202495",
+      "1440-empty0": "662:204810",
+      "1440-partial": "662:205126",
+      "1440-pick": "662:205680",
+      "1440-select": "662:206145",
+      "1440-source": "662:206419",
+      "1440-prepare-saving": "662:207466",
+      "1440-slots": "662:207800",
+      "1440-delta": "662:208940"
+    },
+    "application-checklist": {
+      "390-loading": "674:210888",
+      "390-read-error": "674:211080",
+      "390-empty": "674:211277",
+      "390-select": "675:212527",
+      "390-other": "674:211493",
+      "390-deadline": "674:211785",
+      "390-bottom": "674:211986",
+      "390-all-done": "674:212177",
+      "390-limit": "674:212441",
+      "390-app-add": "675:212748",
+      "390-app-pick": "675:213040",
+      "390-app-duplicate": "675:213281",
+      "390-app-edit": "675:213593",
+      "390-app-edit-warn": "675:213880",
+      "390-app-saving": "675:214176",
+      "390-item-edit": "675:214476",
+      "390-item-new": "675:214760",
+      "390-item-error": "675:215037",
+      "390-app-delete": "675:215489",
+      "390-item-delete": "675:215698",
+      "390-toast": "674:212730",
+      "1440-loading": "676:215292",
+      "1440-empty": "676:215585",
+      "1440-select": "676:215904",
+      "1440-app-add": "676:216208",
+      "1440-app-edit-warn": "676:216666",
+      "1440-item-edit": "676:217109",
+      "1440-delete": "676:217403",
+      "390-confirm-quickdone": "674:212897",
+      "390-confirm-progress": "674:213144",
+      "390-confirm-filter": "674:213352",
+      "390-confirm-datesheet": "675:215907"
+    },
+    "eligibility-check": {
+      "390-loading": "684:218660",
+      "390-load-error": "684:218923",
+      "390-empty": "684:219187",
+      "1440-empty": "688:222225",
+      "390-new": "684:219467",
+      "390-complete": "684:219736",
+      "390-no-items": "684:219996",
+      "390-limit": "685:219561",
+      "390-plan-picker": "686:221385",
+      "1440-plan-picker": "688:222651",
+      "390-plan-add": "687:220971",
+      "1440-plan-add": "688:223079",
+      "390-plan-edit-warning": "687:221269",
+      "390-plan-duplicate": "687:221556",
+      "1440-plan-saving": "688:223400",
+      "1440-plan-error": "688:223721",
+      "390-item-edit": "686:219972",
+      "1440-item-edit": "688:224054",
+      "390-item-add": "686:220253",
+      "390-item-rename": "686:220532",
+      "390-busy": "686:220811",
+      "390-save-error": "686:221092",
+      "390-toast": "685:219826",
+      "390-plan-delete": "687:221859",
+      "1440-plan-delete": "688:224350",
+      "390-item-delete": "687:222061",
+      "1440-item-delete": "688:224571",
+      "390-deleted": "685:220087",
+      "390-plan-deleted": "685:220349",
+      "390-scroll": "685:219303"
+    },
+    "counsel-tasks": {
+      "390-loading": "693:223930",
+      "390-error": "693:224056",
+      "390-empty-first": "693:224193",
+      "390-empty-filter": "693:224328",
+      "390-done": "693:224514",
+      "390-plan": "693:224686",
+      "390-busy": "693:224834",
+      "390-toast": "693:225107",
+      "390-save-error": "693:225252",
+      "390-sheet-kind": "694:224796",
+      "390-sheet-plan": "694:224931",
+      "390-add": "695:225620",
+      "390-add-plan": "695:225845",
+      "390-add-error": "695:226083",
+      "390-edit": "695:226329",
+      "390-saving": "695:226565",
+      "390-delete": "694:225361",
+      "390-delete-error": "694:225491",
+      "390-share-pick": "694:225080",
+      "390-share": "694:225229",
+      "1440-empty-first": "696:226633",
+      "1440-add": "696:226869",
+      "1440-edit": "696:227124",
+      "1440-add-error": "696:227391",
+      "1440-delete": "696:227667",
+      "1440-toast": "696:227810",
+      "1440-share-pick": "696:228082",
+      "1440-share": "696:228246"
+    },
+    "admission-style": [
+      {
+        "name": "admission-style/390-intro-scroll",
+        "id": "599:163807"
+      },
+      {
+        "name": "admission-style/390-q1",
+        "id": "599:163876"
+      },
+      {
+        "name": "admission-style/390-q-selected",
+        "id": "599:164022"
+      },
+      {
+        "name": "admission-style/390-q15",
+        "id": "599:164167"
+      },
+      {
+        "name": "admission-style/390-review-q1",
+        "id": "599:164312"
+      },
+      {
+        "name": "admission-style/390-result-focused",
+        "id": "600:164078"
+      },
+      {
+        "name": "admission-style/390-result-mixed",
+        "id": "600:164443"
+      },
+      {
+        "name": "admission-style/390-result-open",
+        "id": "600:164739"
+      },
+      {
+        "name": "admission-style/390-result-insufficient",
+        "id": "600:165060"
+      },
+      {
+        "name": "admission-style/390-result-trace",
+        "id": "600:165397"
+      },
+      {
+        "name": "admission-style/1440-quiz",
+        "id": "602:164478"
+      },
+      {
+        "name": "admission-style/1440-result-mixed",
+        "id": "602:164694"
+      },
+      {
+        "name": "admission-style/1440-result-trace",
+        "id": "604:165187"
+      },
+      {
+        "name": "admission-style/390-restart-confirm",
+        "id": "604:165832"
+      },
+      {
+        "name": "admission-style/390-restart-toast",
+        "id": "604:165953"
+      },
+      {
+        "name": "admission-style/390-leave-confirm",
+        "id": "604:166016"
+      },
+      {
+        "name": "admission-style/390-style-sheet",
+        "id": "606:169244"
+      },
+      {
+        "name": "admission-style/390-answers-sheet",
+        "id": "606:169374"
+      },
+      {
+        "name": "admission-style/390-share",
+        "id": "606:169520"
+      },
+      {
+        "name": "admission-style/1440-restart-confirm",
+        "id": "607:169582"
+      },
+      {
+        "name": "admission-style/1440-restart-toast",
+        "id": "607:169691"
+      },
+      {
+        "name": "admission-style/1440-leave-confirm",
+        "id": "607:169744"
+      },
+      {
+        "name": "admission-style/1440-style-modal",
+        "id": "609:170028"
+      },
+      {
+        "name": "admission-style/1440-answers-modal",
+        "id": "609:170144"
+      },
+      {
+        "name": "admission-style/1440-share",
+        "id": "609:170308"
+      },
+      {
+        "name": "admission-style/390-banner-home",
+        "id": "611:170587"
+      },
+      {
+        "name": "admission-style/390-banner-dismissed",
+        "id": "611:170678"
+      },
+      {
+        "name": "admission-style/390-banner-list",
+        "id": "611:170738"
+      },
+      {
+        "name": "admission-style/1440-banner-home",
+        "id": "611:170798"
+      },
+      {
+        "name": "admission-style/1440-banner-list",
+        "id": "611:170941"
+      }
+    ]
+  },
+  "origins": {
+    "admission-style": "existing-approved; preserved",
+    "admin-fields": "latest-final; direct-user-approval-2026-11-24",
+    "admin-wiki": "latest-final; direct-user-approval-2026-11-24",
+    "calendar": "latest-final; direct-user-approval-2026-11-24",
+    "compare": "latest-final; direct-user-approval-2026-11-24",
+    "application-checklist": "latest-final; direct-user-approval-2026-11-24",
+    "eligibility-check": "latest-final; direct-user-approval-2026-11-24",
+    "counsel-tasks": "latest-final; direct-user-approval-2026-11-24"
+  }
+}
