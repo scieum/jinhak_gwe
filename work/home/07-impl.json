@@ -1,20 +1,10 @@
 {
   "slug": "home",
   "gate": "G5",
-  "pass": false,
-  "errors": [
-    "S 390: 블록 없음 page-header",
-    "S 390: 블록 없음 stat-tile",
-    "P 390: 본문 왼쪽 여백(시안) 16 (기준 20±2)",
-    "P 390: promo-banner 폭 358 (시안 350±4)",
-    "P 390: range-bar-5to9 폭 318 (시안 310±4)",
-    "P 390: disclaimer-note 폭 358 (시안 350±4)",
-    "S 1440: 블록 없음 stat-tile",
-    "S 1440: 블록 없음 univ-card",
-    "P 1440: page-header 글자→첫 블록 간격(시안) 109 (기준 48±2)"
-  ],
-  "back_to": "S5",
-  "same_fail_streak": 1,
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
   "route": "/home",
   "allowed": [],
   "notes": []

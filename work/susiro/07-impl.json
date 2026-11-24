@@ -1,0 +1,23 @@
+{
+  "slug": "susiro",
+  "gate": "G5",
+  "pass": false,
+  "errors": [
+    "T 390: 문구 없음 'B안'",
+    "T 390: 문구 없음 'C안'",
+    "S 390: 블록 없음 stat-tile",
+    "P 390: susi-slot 폭 350 (시안 342±4)",
+    "T 1440: 문구 없음 '잠금'",
+    "T 1440: 문구 없음 'B안'",
+    "T 1440: 문구 없음 'C안'",
+    "T 1440: 문구 없음 'PDF로 내보내기'",
+    "T 1440: 문구 없음 'QR'",
+    "S 1440: 블록 없음 stat-tile",
+    "P 1440: susi-slot 폭 229 (시안 237±4)"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 3,
+  "route": "/susiro",
+  "allowed": [],
+  "notes": []
+}

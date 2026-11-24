@@ -17,7 +17,6 @@
     "T 1440: 문구 없음 '학생이 보낸 카드와 직접 입력한 일정 · 결과예요 · 대학 공식 발표가 최종 기준이에요 · 학생은 번호·별칭으로만 보여요 · 시안의 대학·날짜는 예시예요'",
     "S 1440: 블록 없음 text-input",
     "S 1440: 블록 순서 다름 시안 [page-header > filter-chip > segmented-control > stat-tile > data-table > disclaimer-note] / 앱 [page-header > stat-tile > filter-chip > segmented-control > data-table > disclaimer-note]",
-    "P 1440: page-header 글자→첫 블록 간격(시안) 109 (기준 48±2)",
     "P 1440: segmented-control x 280 (시안 1071±4)",
     "P 1440: segmented-control 폭 1128 (시안 240±4)",
     "P 1440: stat-tile 폭 120 (시안 370±4)",

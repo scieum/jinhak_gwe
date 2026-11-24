@@ -17,7 +17,6 @@
     "S 1440: 블록 없음 filter-chip",
     "S 1440: 블록 없음 disclaimer-note",
     "S 1440: 블록 없음 stat-tile",
-    "P 1440: page-header 글자→첫 블록 간격(시안) 110 (기준 48±2)",
     "P 1440: segmented-control x 1292 (시안 1248±4)",
     "P 1440: segmented-control 폭 116 (시안 160±4)",
     "P 1440: data-table x 280 (시안 300±4)",

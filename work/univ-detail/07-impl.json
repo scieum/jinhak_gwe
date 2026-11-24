@@ -17,7 +17,6 @@
     "T 1440: 문구 없음 '전형 상세 보기'",
     "S 1440: 블록 없음 stat-tile",
     "S 1440: 블록 없음 data-table",
-    "P 1440: page-header 글자→첫 블록 간격(시안) 110 (기준 48±2)",
     "P 1440: segmented-control x 280 (시안 304±4)",
     "P 1440: segmented-control 폭 1128 (시안 480±4)"
   ],

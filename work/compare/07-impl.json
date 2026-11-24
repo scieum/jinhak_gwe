@@ -11,13 +11,13 @@
     "P 390: text-input 폭 167 (시안 117±4)",
     "T 1440: 문구 없음 '지원 준비에 추가'",
     "S 1440: 블록 없음 data-table",
-    "P 1440: page-header 글자→첫 블록 간격(시안) 109 (기준 24±2)",
+    "P 1440: page-header 글자→첫 블록 간격(시안) 47 (기준 24±2)",
     "P 1440: segmented-control 폭 300 (시안 220±4)",
     "P 1440: text-input x 280 (시안 524±4)",
     "P 1440: text-input 폭 270 (시안 140±4)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 1,
   "route": "/compare",
   "allowed": [],
   "notes": []

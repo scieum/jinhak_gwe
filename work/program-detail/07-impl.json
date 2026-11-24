@@ -53,8 +53,7 @@
     "T 1440: 문구 없음 '한국사'",
     "S 1440: 블록 없음 stat-tile",
     "S 1440: 블록 없음 data-table",
-    "S 1440: 블록 없음 disclaimer-note",
-    "P 1440: page-header 글자→첫 블록 간격(시안) 110 (기준 48±2)"
+    "S 1440: 블록 없음 disclaimer-note"
   ],
   "back_to": "S5",
   "same_fail_streak": 2,

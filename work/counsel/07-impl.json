@@ -23,7 +23,6 @@
     "S 1440: 블록 없음 filter-chip",
     "S 1440: 블록 없음 stat-tile",
     "S 1440: 블록 없음 trace-accordion",
-    "P 1440: page-header 글자→첫 블록 간격(시안) 109 (기준 48±2)",
     "P 1440: text-input x 280 (시안 300±4)",
     "P 1440: text-input 폭 224 (시안 232±4)",
     "P 1440: segmented-control x 280 (시안 588±4)",

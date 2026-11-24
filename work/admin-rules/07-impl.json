@@ -44,12 +44,12 @@
     "S 1440: 블록 없음 text-input",
     "S 1440: 블록 없음 segmented-control",
     "S 1440: 블록 없음 trace-accordion",
-    "P 1440: page-header 글자→첫 블록 간격(시안) 110 (기준 24±2)",
+    "P 1440: page-header 글자→첫 블록 간격(시안) 48 (기준 24±2)",
     "P 1440: disclaimer-note x 280 (시안 1088±4)",
     "P 1440: disclaimer-note 폭 1128 (시안 296±4)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 1,
   "route": "/admin/admin-rules",
   "allowed": [],
   "notes": []

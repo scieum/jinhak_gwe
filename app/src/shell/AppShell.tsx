@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Icon } from '../components/Icon';
 import { BrandLogo } from '../components/BrandLogo';
@@ -20,12 +20,14 @@ export function AppShell() {
   const { group, item, detail } = loc;
   const mode = workspaceOf(pathname);
   const isMore = pathname === MORE_PATH[mode];
-  // 교사 셸은 학생 메뉴 전체 + 교사 메뉴(teacher-dashboard 02-spec P1)
-  const sections: [string | null, NavGroup[]][] = mode === 'teacher' ? [['학생', NAV.student], ['교사', NAV.teacher]] : [[null, NAV[mode]]];
+  // 교사 셸: 교사 대분류가 맨 위(v2 시안 · teacher-dashboard 02-spec P1), 그 아래 캡션 "학생" + 학생 메뉴
+  const sections: [string | null, NavGroup[]][] = mode === 'teacher' ? [[null, NAV.teacher], ['학생', NAV.student]] : [[null, NAV[mode]]];
   const title = item?.label ?? detail?.label ?? (isMore ? '더보기' : 'U:NAVI');
   const breadcrumb = group && !isSingle(group) ? `${group.label} › ${title}` : null;
   const groups = NAV[mode];
-  const isHome = mode !== 'admin' && pathname === groups[0].items[0].path;
+  // 모바일 머리(v2 시안 · design.md page-header/brand-logo): 상세 = app-bar 뒤로가기 + 화면 제목,
+  // 그 밖 = app-bar brand-logo → 대분류 제목 heading-1 → sub-nav (소분류 없는 홈은 제목 줄 없음)
+  const mobileTitle = detail ? null : isMore ? '더보기' : group && !isSingle(group) ? group.label : null;
 
   // 지금 대분류는 항상 펼침, 나머지는 눌러서 펼친다
   const [opened, setOpened] = useState<Set<string>>(new Set());
@@ -36,6 +38,13 @@ export function AppShell() {
       else next.add(label);
       return next;
     });
+
+  // 넘치는 sub-nav는 고른 탭이 보이게 가로로 민다(v2 시안: 선택 탭이 화면 안)
+  const subNav = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const n = subNav.current, t = n?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (n && t && t.offsetLeft + t.offsetWidth > n.clientWidth) n.scrollLeft = t.offsetLeft + t.offsetWidth - n.clientWidth + t.offsetWidth / 2;
+  }, [pathname]);
 
   const current = (path: string) => (path === pathname ? 'page' : undefined);
   const tabs = [
@@ -85,7 +94,7 @@ export function AppShell() {
             );
           })}</div>)}
         </nav>
-        <footer className="sidebar__footer"><p className="t-caption text-muted">데이터 기준일 {dataAsOf}</p>{mode === 'student' && <Link to="/grade-input?backup=1"><Icon name="download" size={20} />백업</Link>}<SampleReshowButton className="text-button" /></footer>
+        <footer className="sidebar__footer"><p className="t-caption text-muted">데이터 기준일 {dataAsOf}</p>{mode === 'student' && <Link to="/grade-input?backup=1" className="button-pill-soft"><Icon name="download" size={20} />백업</Link>}<SampleReshowButton className="text-button" /></footer>
       </aside>
 
       <div className="shell__main">
@@ -98,19 +107,24 @@ export function AppShell() {
         </header>
 
         <header className="appbar">
-          {detail && (
-            <button type="button" className="appbar__back" aria-label="뒤로" onClick={() => navigate(-1)}>
-              <Icon name="chevron-left" />
-            </button>
+          {detail ? (
+            <>
+              <button type="button" className="appbar__back" aria-label="뒤로" onClick={() => navigate(-1)}>
+                <Icon name="chevron-left" />
+              </button>
+              <h1 className="t-heading-4">{title}</h1>
+            </>
+          ) : (
+            <Link to={MODE_HOME[mode]} className="appbar__logo" aria-label="U:NAVI 홈"><BrandLogo /></Link>
           )}
-          <h1 className="t-heading-4">{isHome ? <BrandLogo /> : title}</h1>
           {/* 화면별 앱바 보조 동작 1개(design.md app-bar). 화면이 createPortal로 채워요. */}
           <div id="appbar-actions" className="appbar__actions" />
         </header>
+        {mobileTitle && <h1 className="appbar-title">{mobileTitle}</h1>}
         <SampleBanner />
 
         {group && !detail && !isSingle(group) && (
-          <nav className="sub-nav" aria-label={`${group.label} 소분류`}>
+          <nav ref={subNav} className="sub-nav" aria-label={`${group.label} 소분류`}>
             {group.items.map((i) => (
               <Link key={i.path} to={i.path} className="sub-nav__tab" aria-current={current(i.path)}>
                 {i.label}

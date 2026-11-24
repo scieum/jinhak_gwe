@@ -1,10 +1,6 @@
 /* 될각 (work/doelgak/02-spec.md · Figma doelgak/1440 327:549 · doelgak/390 327:490).
    filter-chip · segmented-control · judge-lane · univ-card v2 · cut-compare-bar 축소형 · data-status-badge. 모서리 0.
    Route Blue는 선택 표시와 미니 막대의 내 범위 구간에만, 판정 색은 레인 머리 · 표 판정 칸에만 써요. */
-.shell:has(.doelgak) .shell__main, .shell:has(.doelgak) .topbar { background: var(--color-canvas-soft); }
-.shell:has(.doelgak) .topbar { border-bottom: 0; }
-.shell:has(.doelgak) .topbar .segmented-control { gap: 4px; padding: 4px; background: var(--color-canvas); }
-.shell:has(.doelgak) .topbar .segmented-control__option { width: 94px; }
 .topbar .dg-asof, .dg-asof { display: inline-flex; align-items: center; height: 24px; padding: 0 var(--spacing-xs); background: var(--color-canvas); color: var(--color-ink-soft); font-size: var(--font-label-size); font-weight: var(--font-label-weight); white-space: nowrap; }
 .doelgak .segmented-control { display: flex; gap: 4px; padding: 4px; background: var(--color-canvas); }
 .doelgak .segmented-control__option { flex: 1; min-height: 40px; padding: 0 var(--spacing-md); }

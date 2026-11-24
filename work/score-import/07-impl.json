@@ -22,7 +22,6 @@
     "S 1440: 블록 없음 warning-callout",
     "S 1440: 블록 없음 data-table",
     "S 1440: 블록 순서 다름 시안 [page-header > text-input > segmented-control] / 앱 [page-header > segmented-control > text-input]",
-    "P 1440: page-header 글자→첫 블록 간격(시안) 110 (기준 48±2)",
     "P 1440: text-input x 297 (시안 334±4)",
     "P 1440: text-input 폭 539 (시안 88±4)",
     "P 1440: segmented-control x 297 (시안 554±4)",

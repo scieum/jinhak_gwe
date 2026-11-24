@@ -47,8 +47,22 @@
   align-items: center;
   gap: var(--spacing-xxs);
   height: var(--shell-appbar-height);
-  padding: 0 var(--spacing-md);
+  padding: 0 var(--spacing-card); /* v2 시안 실측: 로고 x 20 */
   background: var(--color-canvas);
+}
+.appbar__logo { display: inline-flex; align-items: center; min-height: 44px; }
+/* 대분류 제목 줄(v2 시안: app-bar 아래 heading-1, 높이 44 → sub-nav). 스크롤하면 올라가고 sub-nav만 붙는다 */
+.appbar-title {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 var(--spacing-card);
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-size: var(--font-heading-1-size);
+  font-weight: var(--font-heading-1-weight);
+  line-height: var(--font-heading-1-line);
 }
 .appbar__actions { margin-left: auto; display: flex; }
 .appbar__actions button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer; }
@@ -100,7 +114,8 @@
   z-index: 3;
   display: flex;
   height: var(--shell-tabbar-height);
-  background: var(--color-canvas-soft);
+  background: var(--color-canvas); /* design.md tab-bar-pill v2: canvas + 1px hairline, 아래 16 띄워 떠 있음 */
+  border: 1px solid var(--color-hairline);
 }
 .tab-bar-pill__tab {
   flex: 1;
@@ -137,6 +152,7 @@
     grid-template-columns: var(--shell-sidebar-width) 1fr;
   }
   .appbar,
+  .appbar-title,
   .sub-nav,
   .tab-bar-pill {
     display: none;
@@ -148,13 +164,19 @@
     top: 0;
     height: 100vh;
     overflow-y: auto;
-    background: var(--color-canvas-soft);
+    background: var(--color-canvas); /* design.md sidebar v2: canvas + 오른쪽 1px hairline-soft */
+    border-right: 1px solid var(--color-hairline-soft);
   }
+  /* 로고 위 32·폭 96은 사용자 지정. 메뉴 시작 y 104는 v2 시안 실측 */
   .sidebar__wordmark {
     display: flex;
-    align-items: center;
-    padding: 32px var(--spacing-md) 24px; /* page-header 위 32와 맞춤 */
+    align-items: flex-start;
+    box-sizing: border-box;
+    height: 104px;
+    padding: 32px var(--spacing-md) 0;
   }
+  /* 대분류 행 사이 4(v2 시안 groups 간격). 펼친 대분류 안 소분류 행은 붙어 있다 */
+  .sidebar nav > div { display: grid; gap: var(--spacing-xxs); }
 
   .sidebar-group,
   .sidebar-item {
@@ -211,8 +233,13 @@
     gap: var(--spacing-md);
     min-height: var(--shell-topbar-height);
     padding: 32px var(--spacing-xl) 24px; /* design.md page-header: 위 32 · 아래 24 */
-    border-bottom: 1px solid var(--color-hairline);
+    background: transparent; /* v2 시안: 머리도 Page 바탕 · 아래 선 없음 */
   }
+  .topbar__heading h1 { margin-top: 4px; font-size: var(--font-heading-1-size); line-height: 42px; } /* pc/heading-1 32/42 */
+  /* Page 바탕 위 canvas-soft 채움 요소는 canvas로(design.md 234): mode-switch 트랙 4 패딩 · 칸 94(시안 200×48) · 기준일 배지 */
+  .topbar .segmented-control { gap: var(--spacing-xxs); padding: var(--spacing-xxs); background: var(--color-canvas); }
+  .topbar .segmented-control__option { width: 94px; }
+  .topbar .data-status-badge { background: var(--color-canvas); }
 
   .shell__content {
     padding: var(--spacing-xl);
@@ -236,4 +263,5 @@
 .sample-band strong { color: var(--color-ink); }
 .sample-confirm__actions { display: flex; justify-content: flex-end; gap: var(--spacing-sm); }
 @media (min-width: 1024px) { .sample-band { padding: var(--spacing-xs) var(--spacing-xl); } }
+.sidebar__footer .button-pill-soft { justify-self: start; gap: var(--spacing-xs); font-size: var(--font-link-size); }
 .sidebar__footer .text-button { justify-self: start; min-height: 32px; padding: 0; font-size: 14px; text-align: left; }

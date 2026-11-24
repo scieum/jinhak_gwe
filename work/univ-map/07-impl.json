@@ -5,8 +5,7 @@
   "errors": [
     "P 390: region-map x 36 (시안 20±4)",
     "P 390: region-map 폭 318 (시안 350±4)",
-    "S 1440: 블록 없음 univ-card",
-    "P 1440: page-header 글자→첫 블록 간격(시안) 109 (기준 48±2)"
+    "S 1440: 블록 없음 univ-card"
   ],
   "back_to": "S5",
   "same_fail_streak": 2,

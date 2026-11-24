@@ -1,7 +1,6 @@
 /* Approved admission-results layout: introduction → filters → data.
    Shared surfaces use the existing design tokens; overlays retain their own styles. */
 .shell__main { min-width: 0; min-height: 100dvh; background: var(--color-canvas-soft); }
-.topbar { background: var(--color-canvas); }
 .shell__content { min-width: 0; }
 .student-screen > *, .form-grid > *, .section-row > *, .screen-heading > * { min-width: 0; }
 .filter-panel, .result-panel { display: grid; gap: var(--spacing-md); min-width: 0; padding: var(--spacing-card); border: 1px solid var(--color-hairline); background: var(--color-canvas); }

@@ -5,10 +5,7 @@
   "errors": [
     "T 390: 문구 없음 '강원'",
     "T 390: 문구 없음 '서울'",
-    "S 390: 블록 없음 filter-chip",
-    "S 390: 블록 없음 univ-card",
-    "S 1440: 블록 없음 univ-card",
-    "P 1440: page-header 글자→첫 블록 간격(시안) 109 (기준 48±2)"
+    "S 390: 블록 없음 filter-chip"
   ],
   "back_to": "S5",
   "same_fail_streak": 2,
