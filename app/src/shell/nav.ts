@@ -39,7 +39,7 @@ export const NAV: Record<Mode, NavGroup[]> = {
       icon: 'chart-column',
       items: [
         student('성적 입력', 'grade-input', 'chart-column'),
-        student('성적 추이', 'score-trend', 'calendar'),
+        student('성적 추이', 'score-trend', 'trending-up'),
         student('5 to 9', 'five-to-nine', 'sliders-horizontal'),
         student('대학별 환산', 'univ-score', 'arrow-up-down'),
         student('모의고사', 'mock-score', 'check'),
@@ -49,23 +49,22 @@ export const NAV: Record<Mode, NavGroup[]> = {
       label: '대학 찾기',
       icon: 'search',
       items: [
-        student('전형 성향 탐색', 'admission-style', 'sparkles'),
         student('전형계획', 'admissions-list', 'file-text'),
         student('대학 지도', 'univ-map', 'map'),
         student('수시 입결', 'admission-results', 'chart-column'),
-        student('전국 배치표', 'national-placement', 'layout-grid'),
+        student('전국 배치표', 'national-placement', 'chart-scatter'),
         student('학과별 구간', 'dept-tier', 'layers'),
         student('계열 모아보기', 'special-tracks', 'folder'),
         student('될각', 'doelgak', 'target'),
         student('최저로 찾기', 'minimum-search', 'book-open'),
-        student('지원 자격 확인표', 'eligibility-check', 'check'),
-        student('전형 비교', 'compare', 'arrow-up-down'),
+        student('지원 자격 확인표', 'eligibility-check', 'clipboard-check'),
+        student('전형 비교', 'compare', 'columns-2'),
       ],
     },
     {
       label: '수시 전략',
       icon: 'layout-grid',
-      items: [student('수시로', 'susiro', 'layout-grid'), student('원서·서류 체크리스트', 'application-checklist', 'check'), student('입시 일정', 'calendar', 'calendar'), student('상담 질문·할 일', 'counsel-tasks', 'message-square'), student('생기부 AI', 'saenggibu-ai', 'sparkles')],
+      items: [student('수시로', 'susiro', 'layout-grid'), student('원서·서류 체크리스트', 'application-checklist', 'list-checks'), student('입시 일정', 'calendar', 'calendar'), student('상담 질문·할 일', 'counsel-tasks', 'message-square'), student('생기부 AI', 'saenggibu-ai', 'sparkles')],
     },
   ],
   teacher: [
@@ -103,7 +102,7 @@ export const NAV: Record<Mode, NavGroup[]> = {
         { label: '규칙 편집기', slug: 'admin-rules', path: '/admin/admin-rules', icon: 'file-text' },
         { label: '검수', slug: 'admin-rules', path: '/admin/admin-rules/review', icon: 'check' },
         { label: '계열표', slug: 'admin-rules', path: '/admin/admin-rules/fields', icon: 'layout-grid' },
-        { label: '위키 요약', slug: 'admin-rules', path: '/admin/admin-rules/wiki', icon: 'file-text' },
+        { label: '위키 요약', slug: 'admin-rules', path: '/admin/admin-rules/wiki', icon: 'book-open' },
       ],
     },
   ],
@@ -113,6 +112,8 @@ export const NAV: Record<Mode, NavGroup[]> = {
 export const DETAILS: DetailScreen[] = [
   { label: '대학 상세', slug: 'univ-detail', path: '/univ-detail', mode: 'student', group: '대학 찾기' },
   { label: '전형 상세', slug: 'program-detail', path: '/program-detail', mode: 'student', group: '대학 찾기' },
+  // 전형 성향 탐색은 메뉴에 없고 홈·전형계획 목록 promo-banner로만 들어간다(design.md App Shell 2026-11-24)
+  { label: '전형 성향 탐색', slug: 'admission-style', path: '/admission-style', mode: 'student', group: '대학 찾기' },
 ];
 
 // 셸 밖(로그인 전) 화면

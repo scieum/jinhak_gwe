@@ -4,7 +4,7 @@ import { afterEach, expect, test, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { parsePlanCatalog, matchesPlan, planPageUrl } from '../src/domain/admissionPlans';
-import { AdmissionsList } from '../src/screens/AdmissionsList';
+import { AdmissionsList, quotaDelta } from '../src/screens/AdmissionsList';
 import { loadAdmissionPlans } from '../src/data/admissionPlans';
 
 const raw = () => JSON.parse(readFileSync('public/data/admission-plans.json', 'utf8'));
@@ -136,4 +136,14 @@ test('전형 요약은 면접 여부와 각 항목의 PDF 근거를 바로 제�
   const detail = await screen.findByRole('region', { name: '가천대학교 본교 전형계획 상세' });
   expect(within(detail).getAllByText('있음. 2단계에서 50% 반영.')).toHaveLength(2);
   expect(within(detail).getByRole('link', { name: '지원자격 근거 PDF 9쪽 ↗' }).getAttribute('href')).toContain('#page=9');
+});
+
+test('모집인원 증감은 전년 값이 있을 때만 계산하고, 배너는 닫기 없이 전형 성향 탐색으로 간다', async () => {
+  expect(quotaDelta('426명', '388명')).toBe(38);
+  expect(quotaDelta('1,054명', '1,060')).toBe(-6);
+  expect(quotaDelta('426명', undefined)).toBeNull();
+  expect(quotaDelta('모집단위별 원문 확인', '10명')).toBeNull();
+  serve(); at();
+  expect(screen.getByRole('link', { name: /나의 준비 방식 찾기/ }).getAttribute('href')).toBe('/admission-style');
+  expect(screen.queryByRole('button', { name: /배너 닫기|다시 보지 않기/ })).toBeNull();
 });

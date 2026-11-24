@@ -41,3 +41,18 @@ test('홈 상세 링크는 간편 계산 대신 저장한 내 성적 분석을 �
   expect(await screen.findByRole('complementary', { name: '환산 신뢰도와 근거' })).toBeTruthy();
   expect(screen.getByRole('button', { name: '내 성적 분석' }).getAttribute('aria-pressed')).toBe('true');
 });
+
+test('전형 성향 탐색 배너: 링크 하나, ✕는 이번만 숨기고 다시 보지 않기는 이 기기에 기억한다', async () => {
+  localStorage.clear();
+  const first = home();
+  const link = await screen.findByRole('link', { name: /나의 준비 방식 찾기/ });
+  expect(link.getAttribute('href')).toBe('/admission-style');
+  fireEvent.click(screen.getByRole('button', { name: '다시 보지 않기' }));
+  expect(screen.getByRole('status').textContent).toBe('전형계획 목록에서 다시 볼 수 있어요');
+  expect(screen.queryByRole('link', { name: /나의 준비 방식 찾기/ })).toBeNull();
+  expect(localStorage.getItem('unavi.home-style-banner.hidden')).toBe('1');
+  first.unmount();
+  home();
+  await screen.findByText('아직 입력한 성적이 없어요');
+  expect(screen.queryByRole('link', { name: /나의 준비 방식 찾기/ })).toBeNull();
+});

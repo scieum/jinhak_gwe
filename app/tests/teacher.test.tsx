@@ -7,7 +7,7 @@ import { packExchange, readExchange } from '../src/io/exchange';
 import { nextState, parseRoster, receiveCards, submissionRows, type CardRecord, type CounselPayload } from '../src/domain/classroom';
 import { teacherDb } from '../src/store/teacherDb';
 import { checkCriterion, describe as describeCriterion, judgeMinimum, type Criterion } from '../src/domain/minimum';
-import { normalizeResult, parseOutcomeRows } from '../src/domain/outcomes';
+import { normalizeResult } from '../src/domain/outcomes';
 import { applicable, autoMap, checkRows, decline, schoolAverage } from '../src/domain/scoreImport';
 
 const card = (scenario = 'A안', warnings = 0): CounselPayload => ({ scenario, slots: [{ university: '가온대', program: '교과', judgment: null }, { university: '누리대', judgment: null }], exempt: [],
@@ -156,26 +156,31 @@ describe('수능 최저 판정 (minimum-board 1절 예시)', () => {
 
 describe('결과 집계 · 최저 판정 · 학생 기록 화면', () => {
   beforeEach(async () => { await teacherDb.createClass({ key: 'class', name: '3학년 2반', code: '7Q4K', created_at: '2026-11-20' }, students); });
-  it('나이스 양식 열을 이름으로 찾고 결과를 정리한다(실명 열은 읽지 않음)', () => {
-    const { items, skipped } = parseOutcomeRows([['제공현황'], ['번호', '성명', '대학명', '전형유형', '전형명', '모집단위', '1단계결과', '최종결과'],
-      ['7', '홍길동', '강원대학교', '학생부교과', '지역인재', '간호학과', '', '추가합격'], ['15', '김', '한림대학교', '학생부종합', '학교생활우수', '간호', '불합격', ''], ['40', '박', '가온대', '교과', '', '', '', '합격']], students);
-    expect(items).toEqual([
-      { number: '07', university: '강원대학교', program: '지역인재 · 간호학과', type: '교과', stage1: null, result: '충원 합격' },
-      { number: '15', university: '한림대학교', program: '학교생활우수 · 간호', type: '종합', stage1: false, result: '미입력' }]);
-    expect(skipped[0].reason).toContain('40');
-    expect(JSON.stringify(items)).not.toContain('홍길동');
+  it('결과 값을 기록 이름으로 정리한다', () => {
     expect(normalizeResult('1단계 불합격')).toBe('1단계 불합격');
+    expect(normalizeResult('추가합격')).toBe('충원 합격');
+    expect(normalizeResult('')).toBe('미입력');
   });
-  it('CSV를 불러와 대학별 합계를 보고, 학생별 보기에서 결과를 고친다', async () => {
+  it('받은 학생 카드로 지원 목록을 만들고, 학생별 보기에서 결과를 고친 뒤 xlsx로 저장한다', async () => {
+    await teacherDb.cards.bulkAdd([
+      { number: '07', created_at: '2026-11-10', received_at: '2026-11-10', seen: true, card: card() },
+      { number: '15', created_at: '2026-11-10', received_at: '2026-11-10', seen: true, card: card() }]);
     render(<MemoryRouter initialEntries={['/teacher/result-summary']}><App /></MemoryRouter>);
-    const csv = '번호,대학,전형유형,전형명,최종결과\n7,강원대,교과,지역인재,합격\n15,강원대,교과,지역인재,\n3,한림대,종합,우수자,불합격';
-    fireEvent.change(await screen.findByLabelText('결과 파일 고르기'), { target: { files: [new File([csv], 'neis.csv')] } });
-    expect(await screen.findByText(/3건을 불러왔어요/)).toBeTruthy();
+    expect(screen.queryByText(/나이스/)).toBeNull();
+    fireEvent.click(await screen.findByRole('button', { name: '받은 학생 카드로 목록 만들기' }));
     expect(await screen.findByText('전체 합계')).toBeTruthy();
+    expect(screen.getByText(/학생이 보낸 카드와 직접 입력한 결과를 모았어요/)).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: '저장' }));
+    expect(screen.getByRole('button', { name: /한글 \(hwpx\)/ })).toHaveProperty('disabled', true);
+    expect(screen.getByRole('button', { name: /PDF \(pdf\)/ })).toHaveProperty('disabled', true);
+    expect(screen.getByText(/파일을 학교 밖으로 보내지 말고/)).toBeTruthy();
+    URL.createObjectURL = () => 'blob:x'; URL.revokeObjectURL = () => undefined;
+    fireEvent.click(screen.getByRole('button', { name: /엑셀 \(xlsx\)/ }));
+    expect(await screen.findByText('xlsx 파일을 저장했어요', {}, { timeout: 8000 })).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: '학생별' }));
-    fireEvent.change(screen.getByLabelText('15 · 바다 강원대 결과'), { target: { value: '충원 합격' } });
+    fireEvent.change(screen.getByLabelText('15 · 바다 가온대 결과'), { target: { value: '충원 합격' } });
     await waitFor(async () => expect((await teacherDb.outcomes.where('number').equals('15').first())!.result).toBe('충원 합격'));
-  });
+  }, 20000); // exceljs 동적 import가 전체 실행 중에는 느려요
   it('모의고사 수합: 학생 파일을 받고 다른 반 파일은 이유를 붙인다', async () => {
     render(<MemoryRouter initialEntries={['/teacher/result-summary/mock']}><App /></MemoryRouter>);
     const good = await packExchange('mock_score', sender, { exam: '2027학년도 수능', raw: { 국어: 87 }, cut_table: null });

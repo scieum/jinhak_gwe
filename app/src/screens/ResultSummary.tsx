@@ -1,18 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ButtonOutline, ButtonPrimary } from '../components/Buttons';
 import { ClassGate } from '../components/ClassGate';
+import { Icon } from '../components/Icon';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { QrScanner } from '../components/QrScanner';
 import { studentLabel } from '../domain/classroom';
 import { AREAS } from '../domain/mock';
 import { examsByRecent } from '../domain/minimum';
-import { RESULTS, byUniversity, outcomesFromCards, parseOutcomeRows, receiveMock, totals, type Outcome, type Result } from '../domain/outcomes';
+import { RESULTS, byUniversity, outcomesFromCards, receiveMock, totals, type Outcome, type Result } from '../domain/outcomes';
 import { downloadFile } from '../io/backup';
-import { readSheetRows, xlsxOf } from '../io/grades';
+import { xlsxOf } from '../io/grades';
 import { teacherDb, type ClassState } from '../store/teacherDb';
 
 const XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+const SOURCE_NOTE = '학생이 보낸 카드와 직접 입력한 결과를 모았어요 · 대학 공식 발표가 최종 기준이에요';
+const PRIVACY_NOTE = '학생 번호·별칭과 결과가 들어 있어요. 파일을 학교 밖으로 보내지 말고, 다 쓴 파일은 지워 주세요.';
+// 02-spec 8절: hwpx·pdf는 아직 만들지 않아 목록에만 보이고 고를 수 없어요
+const FORMATS = [
+  { key: 'xlsx', name: '엑셀 (xlsx)', note: '표를 고쳐 쓸 수 있어요', ready: true },
+  { key: 'hwpx', name: '한글 (hwpx)', note: '준비 중', ready: false },
+  { key: 'pdf', name: 'PDF (pdf)', note: '준비 중', ready: false },
+] as const;
 type Ready = ClassState & { info: NonNullable<ClassState['info']> };
 
 export function ResultSummary() {
@@ -24,36 +33,48 @@ export function ResultSummary() {
 }
 
 function ResultsTab({ info, students, outcomes, cards }: Ready) {
+  const navigate = useNavigate();
   const [view, setView] = useState<'univ' | 'student'>('univ'), [query, setQuery] = useState(''), [onlyMissing, setOnlyMissing] = useState(false);
   const [message, setMessage] = useState(''), [error, setError] = useState('');
+  const [saveOpen, setSaveOpen] = useState(false), [toast, setToast] = useState<{ title: string; body?: string } | null>(null);
+  useEffect(() => { if (!toast) return; const t = window.setTimeout(() => setToast(null), 3000); return () => window.clearTimeout(t); }, [toast]);
   const t = totals(outcomes), mine = (n: string) => outcomes.filter(o => o.number === n);
   const replace = async (items: Outcome[], note: string) => {
     await teacherDb.transaction('rw', teacherDb.outcomes, async () => { await teacherDb.outcomes.clear(); await teacherDb.outcomes.bulkAdd(items); });
     setMessage(note); setError('');
   };
-  const importFile = async (file?: File) => {
-    if (!file) return;
-    try {
-      const { items, skipped } = parseOutcomeRows(await readSheetRows(file), students);
-      if (!items.length) throw new Error('우리 반 학생 행을 찾지 못했어요. 번호 열을 확인해 주세요.');
-      await replace(items, `${file.name} · ${items.length}건을 불러왔어요${skipped.length ? ` · ${skipped.length}행 건너뜀(${skipped.slice(0, 2).map(s => `${s.line}행 ${s.reason}`).join(', ')}${skipped.length > 2 ? ' 등' : ''})` : ''}`);
-    } catch (e) { setError(e instanceof Error ? e.message : '파일을 읽지 못했어요.'); }
-  };
   const fromCards = () => { const items = outcomesFromCards(cards); if (!items.length) { setError('받은 상담카드가 없어요. 카드 수합에서 먼저 받아 주세요.'); return; } replace(items, `상담카드 ${new Set(items.map(i => i.number)).size}명 · ${items.length}건으로 지원 목록을 만들었어요. 결과는 학생별 보기에서 넣어요.`); };
   const groups = byUniversity(outcomes.filter(o => !query.trim() || `${o.university} ${o.program}`.includes(query.trim())));
   const shownStudents = students.filter(s => mine(s.number).length && (!onlyMissing || mine(s.number).some(o => o.result === '미입력')) && (!query.trim() || studentLabel(s).includes(query.trim()) || mine(s.number).some(o => o.university.includes(query.trim()))))
     .sort((a, b) => Number(mine(b.number).some(o => o.result === '미입력')) - Number(mine(a.number).some(o => o.result === '미입력')) || a.number.localeCompare(b.number));
-  const exportXlsx = async () => downloadFile(view === 'univ'
-    ? await xlsxOf('대학별', ['전형 유형', '대학', '전형', '지원', '1단계 통과', ...RESULTS], groups.flatMap(g => g.rows.map(r => [r.type, r.university, r.program, r.applied, r.stage1, ...RESULTS.map(x => r.counts[x])])))
-    : await xlsxOf('학생별', ['학생', '최종 합격', ...[1, 2, 3, 4, 5, 6].map(i => `지원 ${i}`)], shownStudents.map(s => [studentLabel(s), mine(s.number).filter(o => o.result === '합격' || o.result === '충원 합격').length, ...mine(s.number).slice(0, 6).map(o => `${o.university} ${o.program} · ${o.result}`)])),
-    `결과집계_${info.name}_${view === 'univ' ? '대학별' : '학생별'}.xlsx`, XLSX);
-  const fileButton = <label className="button-outline file-button">나이스 엑셀 불러오기<input type="file" accept=".xlsx,.csv" className="sr-only" aria-label="결과 파일 고르기" onChange={e => { importFile(e.target.files?.[0]); e.target.value = ''; }} /></label>;
+  const viewName = view === 'univ' ? '대학별' : '학생별';
+  // 02-spec 8절: 머리 · 개인정보 줄 · 화면 표 · 고지. 내 기기 저장이라 확인 창 없이 바로 저장해요(design.md 예외)
+  const saveXlsx = async () => {
+    setSaveOpen(false);
+    const file = `결과집계_${info.name.replace(/\s/g, '')}_${viewName}.xlsx`;
+    try {
+      const [headers, rows] = view === 'univ'
+        ? [['전형 유형', '대학', '전형', '지원', '1단계 통과', ...RESULTS], groups.flatMap(g => g.rows.map(r => [r.type, r.university, r.program, r.applied, r.stage1, ...RESULTS.map(x => r.counts[x])]))]
+        : [['학생', '최종 합격', ...[1, 2, 3, 4, 5, 6].map(i => `지원 ${i}`)], shownStudents.map(s => [studentLabel(s), mine(s.number).filter(o => o.result === '합격' || o.result === '충원 합격').length, ...mine(s.number).slice(0, 6).map(o => `${o.university} ${o.program} · ${o.result}`)])];
+      downloadFile(await xlsxOf(viewName, [`결과 집계 · ${info.name} · ${viewName} 보기 · 저장일 ${new Date().toISOString().slice(0, 10)}`],
+        [['학생 개인정보가 들어 있어요 · 학교 밖으로 보내지 마세요'], [], headers, ...rows, [], [SOURCE_NOTE]]), file, XLSX);
+      setToast({ title: 'xlsx 파일을 저장했어요', body: `${file} · 학생은 번호·별칭으로 들어가요` });
+    } catch { setToast({ title: '파일을 저장하지 못했어요. 다시 저장해 주세요.' }); }
+  };
+  const saveMenu = <div className="save-menu" onKeyDown={e => { if (e.key === 'Escape') setSaveOpen(false); }}>
+    <ButtonOutline aria-expanded={saveOpen} aria-controls="result-save-list" onClick={() => setSaveOpen(!saveOpen)}><Icon name="download" size={16} /> 저장 <Icon name="chevron-down" size={16} /></ButtonOutline>
+    {saveOpen && <div id="result-save-list" className="save-menu-list" role="group" aria-label="저장할 형식">
+      <p className="save-menu-head"><span className="t-caption text-muted">저장할 내용</span><span className="t-body-sm">{info.name} · {viewName} 보기{query.trim() || onlyMissing ? ' · 필터 적용' : ''}</span></p>
+      {FORMATS.map(f => <button key={f.key} type="button" className="save-menu-item" disabled={!f.ready} onClick={f.ready ? saveXlsx : undefined}>
+        <span className="t-body">{f.name}</span><span className="t-caption text-muted">{f.note}</span></button>)}
+      <p className="save-menu-note t-caption">ⓘ {PRIVACY_NOTE}</p></div>}
+  </div>;
 
   return <>
     {error && <p role="alert" className="error-note">{error}</p>}{message && <p role="status" className="notice">{message}</p>}
-    {!outcomes.length ? <div className="empty-state"><h3 className="t-heading-3">아직 불러온 수시 결과가 없어요</h3>
-      <p>나이스 '대입전형자료 제공현황' 엑셀을 불러오거나, 받은 상담카드로 지원 목록을 만든 뒤 결과를 넣어요. 실명 열은 읽지 않고 번호로만 맞춰요.</p>
-      <div className="toolbar">{fileButton}<ButtonPrimary onClick={fromCards}>받은 상담카드로 목록 만들기</ButtonPrimary></div></div> : <>
+    {!outcomes.length ? <div className="empty-state"><h3 className="t-heading-3">아직 모은 결과가 없어요</h3>
+      <p>카드 수합에서 학생 카드를 받으면 지원 목록이 생기고, 결과는 학생별 보기에서 직접 입력해요. 학생은 번호·별칭으로만 보여요.</p>
+      <div className="toolbar">{cards.length ? <ButtonPrimary onClick={fromCards}>받은 학생 카드로 목록 만들기</ButtonPrimary> : <ButtonPrimary onClick={() => navigate('/teacher/card-collect')}>카드 수합으로 가기</ButtonPrimary>}</div></div> : <>
       <div className="stats">
         <div><span className="t-caption">지원</span><strong className="num">{t.applied}건</strong><span className="t-caption text-muted">{new Set(outcomes.map(o => o.number)).size}명</span></div>
         <div><span className="t-caption">최종 합격</span><strong className="num key-number">{t.final}건</strong><span className="t-caption text-muted">합격 {t.counts['합격']} · 충원 합격 {t.counts['충원 합격']}</span></div>
@@ -61,7 +82,7 @@ function ResultsTab({ info, students, outcomes, cards }: Ready) {
         <div><span className="t-caption">결과 미입력</span><strong className="num">{t.counts['미입력']}건</strong></div>
       </div>
       <div className="section-row"><SegmentedControl label="보기" value={view} onChange={setView} options={[{ value: 'univ', label: '대학별' }, { value: 'student', label: '학생별' }]} />
-        <div className="toolbar">{fileButton}<ButtonOutline onClick={fromCards}>상담카드로 다시 만들기</ButtonOutline><ButtonOutline onClick={exportXlsx}>xlsx 내보내기</ButtonOutline></div></div>
+        <div className="toolbar"><ButtonOutline onClick={fromCards}>학생 카드로 다시 만들기</ButtonOutline>{saveMenu}</div></div>
       <div className="section-row"><input type="search" aria-label="학생·대학 검색" placeholder="학생·대학 검색" value={query} onChange={e => setQuery(e.target.value)} />
         {view === 'student' && <button className="filter-chip" aria-pressed={onlyMissing} onClick={() => setOnlyMissing(!onlyMissing)}>미입력 있음 {students.filter(s => mine(s.number).some(o => o.result === '미입력')).length}</button>}</div>
       {view === 'univ' ? <div className="table-scroll"><table className="data-table"><thead><tr><th>전형 유형</th><th>대학 · 전형</th><th className="num">지원</th><th className="num">1단계 통과</th>{RESULTS.map(r => <th key={r} className="num">{r}</th>)}</tr></thead>
@@ -75,7 +96,8 @@ function ResultsTab({ info, students, outcomes, cards }: Ready) {
           {Array.from({ length: 6 }, (_, i) => { const o = list[i]; return <td key={i}>{o ? <><span className="t-body-sm">{o.university} {o.program}</span><br />
             <select aria-label={`${studentLabel(s)} ${o.university} 결과`} value={o.result} className={o.result === '미입력' ? 'text-muted' : ''} onChange={e => teacherDb.outcomes.update(o.id!, { result: e.target.value as Result })}>{RESULTS.map(r => <option key={r}>{r}</option>)}</select></> : <span className="text-muted">–</span>}</td>; })}</tr>; })}</tbody></table></div>}
     </>}
-    <p className="disclaimer-note">ⓘ 불러온 자료와 직접 넣은 결과 그대로예요 · 학생은 번호·별칭으로만 저장해요 · 학급 데이터는 이 기기에만 저장돼요</p>
+    {outcomes.length > 0 && <p className="disclaimer-note">ⓘ {SOURCE_NOTE} · 학급 데이터는 이 기기에만 저장돼요</p>}
+    {toast && <div role="status" className="toast"><strong>{toast.body && <Icon name="check" size={16} />} {toast.title}</strong>{toast.body && <span className="t-body-sm">{toast.body}</span>}</div>}
   </>;
 }
 

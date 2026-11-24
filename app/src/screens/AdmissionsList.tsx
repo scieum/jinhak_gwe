@@ -2,8 +2,22 @@ import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { loadAdmissionPlans } from '../data/admissionPlans';
 import { UniversityLogo } from '../components/UniversityLogo';
-import { matchesPlan, planPageUrl, type AdmissionPlan, type PlanCatalog, type PlanDocument } from '../domain/admissionPlans';
+import { PromoBanner } from '../components/PromoBanner';
+import { matchesPlan, planPageUrl, type AdmissionPlan, type PlanCatalog, type PlanDocument, type PlanProgram } from '../domain/admissionPlans';
 import '../styles/admission-plans.css';
+
+// 전년 모집인원(quota_prev)은 자료에 있을 때만 ▲/▼ + 차이값(사용자 결정 2026-11-24). 없거나 숫자로 못 읽으면 null → 숫자만.
+// shortcut: quota_prev는 PlanProgram 타입 밖 선택 필드로 읽어요, 자료 수집에 전년 값이 들어오면 타입에 올려요
+const count = (v?: string) => { const m = v?.replace(/,/g, '').match(/^\s*(\d+)\s*명?\s*$/); return m ? Number(m[1]) : null; };
+export function quotaDelta(quota: string, prev?: string) {
+  const now = count(quota), before = count(prev);
+  return now === null || before === null ? null : now - before;
+}
+function Quota({ program }: { program: PlanProgram & { quota_prev?: string } }) {
+  const delta = quotaDelta(program.quota, program.quota_prev);
+  if (delta === null) return <>모집 {program.quota}</>;
+  return <>모집 <strong className="num">{program.quota}</strong>{delta !== 0 && <span className={`num ${delta > 0 ? 'delta-up' : 'delta-down'}`}> {delta > 0 ? '▲' : '▼'}{Math.abs(delta)}<span className="sr-only"> 전년보다 {Math.abs(delta)}명 {delta > 0 ? '늘었어요' : '줄었어요'}</span></span>}</>;
+}
 
 function SourceLink({ href, children }: { href: string; children: React.ReactNode }) {
   return <a className="t-link" href={href} target="_blank" rel="noreferrer">{children} ↗</a>;
@@ -36,7 +50,7 @@ function PlanDetail({ plan, onClose }: { plan: AdmissionPlan; onClose: () => voi
     {!plan.programs.length ? <p className="notice">전형별 요약은 아직 없어요. 위 공식 원문에서 모집인원·지원자격·전형방법·수능최저를 확인해 주세요.</p>
       : <><p className="notice">원문에서 확인한 일부 전형만 정리했어요. 전체 전형과 모집단위별 예외는 원문을 확인해 주세요. 검수 전 요약은 성적 판정에 사용하지 않아요.</p>
         {plan.programs.map(p => { const doc = plan.documents.find(d => d.id === p.document_id)!;
-          return <article className="univ-card" key={p.name}><h5 className="t-heading-3">{p.name}</h5><p>{p.round} · {p.type} · 모집 {p.quota}</p>
+          return <article className="univ-card" key={p.name}><h5 className="t-heading-3">{p.name}</h5><p>{p.round} · {p.type} · <Quota program={p} /></p>
             {p.scope && <p className="t-caption text-muted">요약 범위: {p.scope}</p>}
             <dl className="plan-facts">{([['eligibility', '지원자격'], ['method', '전형방법'], ['minimum', '수능최저'], ['interview', '면접']] as const).map(([key, label]) => <div className="plan-fact-row" key={key}><dt>{label}</dt><dd>{p[key] || '면접 여부는 원문 확인 필요'}{p.field_pages?.[key] && <span className="plan-field-sources">{p.field_pages[key].map(page => <SourceLink key={page} href={planPageUrl(doc, page)}>{label} 근거 PDF {page}쪽</SourceLink>)}</span>}</dd></div>)}</dl>
             <div className="toolbar">근거: {p.pages.map(page => <SourceLink key={page} href={planPageUrl(doc, page)}>PDF {page}쪽</SourceLink>)}</div>
@@ -61,6 +75,7 @@ export function AdmissionsList() {
   const selected = catalog?.entries.find(p => p.id === selectedId);
   return <section className="student-screen" data-slug="admissions-list" aria-label="전형계획">
     <div className="screen-heading"><div><h2 className="t-heading-1">2028학년도 전형계획</h2><p className="t-caption text-muted">대학별 공식 시행계획과 입학처 공지를 찾아보세요.</p></div></div>
+    <PromoBanner />
     {error ? <div role="alert"><p>{error}</p><button className="button-outline" onClick={() => setAttempt(n => n + 1)}>자료 다시 불러오기</button></div>
       : !catalog ? <p role="status">전형계획을 불러오고 있어요.</p> : <>
         <section className="filter-panel" aria-label="전형계획 조회 조건">

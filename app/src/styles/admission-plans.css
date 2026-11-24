@@ -30,3 +30,6 @@
 }
 .plan-facts > .plan-fact-row { display: contents; }
 .plan-field-sources { display: flex; flex-wrap: wrap; gap: var(--spacing-sm); margin-top: var(--spacing-xs); font-size: var(--font-caption-size); }
+/* 모집인원 전년 대비 증감(▲ delta-up · ▼ delta-down, 전년 값이 있을 때만) */
+.plan-detail .delta-up { color: var(--color-delta-up); }
+.plan-detail .delta-down { color: var(--color-delta-down); }

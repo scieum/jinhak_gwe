@@ -1,4 +1,4 @@
-import { ExchangeError, normalizeNumber, readExchange } from '../io/exchange';
+import { ExchangeError, readExchange } from '../io/exchange';
 import type { CardRecord, Student } from './classroom';
 import { parseMocks, type MockScore } from './mock';
 
@@ -7,6 +7,7 @@ export const RESULTS = ['합격', '충원 합격', '불합격', '1단계 불합�
 export type Result = typeof RESULTS[number];
 export const TYPES = ['교과', '종합', '논술', '기타'] as const;
 export type AdmissionType = typeof TYPES[number];
+// stage1: 1단계 통과 여부. 지금은 채우는 경로가 없어 null이지만(나이스 불러오기 삭제, 02-spec 2026-11-23) 집계 열·저장 구조는 그대로 둬요
 export interface Outcome { id?: number; number: string; university: string; program: string; type: AdmissionType; stage1: boolean | null; result: Result }
 
 export function normalizeResult(v: unknown): Result {
@@ -20,30 +21,6 @@ export function normalizeResult(v: unknown): Result {
   return '미입력';
 }
 export const typeOf = (v: unknown): AdmissionType => { const t = String(v ?? ''); return t.includes('교과') ? '교과' : t.includes('종합') ? '종합' : t.includes('논술') ? '논술' : '기타'; };
-
-/** 나이스 대입전형자료 제공현황 등: 머리글 이름으로 열을 찾아요. 머리글 행은 '대학'이 들어간 첫 줄. */
-export function parseOutcomeRows(rows: readonly unknown[][], students: readonly Student[]) {
-  const headerAt = rows.findIndex(r => r.some(c => String(c ?? '').includes('대학')));
-  if (headerAt < 0) throw new Error("'대학' 열이 있는 머리글을 찾지 못했어요. 첫 시트에 머리글이 있는지 확인해 주세요.");
-  const h = rows[headerAt].map(c => String(c ?? '').replace(/\s/g, ''));
-  // 앞 낱말부터 찾고, 다른 열 이름(유형·1단계)이 섞인 머리글은 건너뛰어요
-  const col = (keys: string[], not: string[] = []) => { for (const k of keys) { const i = h.findIndex(n => n.includes(k) && !not.some(x => n.includes(x))); if (i >= 0) return i; } return -1; };
-  const c = { number: col(['번호']), university: col(['대학']), program: col(['전형명', '전형'], ['유형']), unit: col(['모집단위', '학과']),
-    type: col(['전형유형', '유형', '구분']), stage1: col(['1단계']), result: col(['최종', '합격여부', '결과'], ['1단계']) };
-  if (c.number < 0) throw new Error("'번호' 열을 찾지 못했어요. 학생은 번호로만 맞춰요.");
-  const items: Outcome[] = [], skipped: { line: number; reason: string }[] = [];
-  rows.slice(headerAt + 1).forEach((r, i) => {
-    const line = headerAt + i + 2, get = (k: number) => k < 0 ? '' : String(r[k] ?? '').trim();
-    if (!r.some(v => String(v ?? '').trim())) return;
-    const number = normalizeNumber(get(c.number));
-    if (!number || !students.some(s => s.number === number)) { skipped.push({ line, reason: `우리 반 명단에 ${get(c.number) || '빈'} 번호가 없어요` }); return; }
-    if (!get(c.university)) { skipped.push({ line, reason: '대학 이름이 비어 있어요' }); return; }
-    const stage = get(c.stage1);
-    items.push({ number, university: get(c.university).slice(0, 60), program: [get(c.program), get(c.unit)].filter(Boolean).join(' · ').slice(0, 80),
-      type: typeOf(get(c.type) || get(c.program)), stage1: !stage ? null : !/불|탈락/.test(stage), result: normalizeResult(get(c.result)) });
-  });
-  return { items, skipped };
-}
 
 /** 받은 상담카드 6칸으로 지원 목록을 미리 채워요(결과는 미입력). */
 export const outcomesFromCards = (cards: readonly CardRecord[]): Outcome[] => {
