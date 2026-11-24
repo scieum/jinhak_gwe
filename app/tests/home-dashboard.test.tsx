@@ -1,5 +1,5 @@
 import 'fake-indexeddb/auto';
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test } from 'vitest';
 import { HomeDashboard } from '../src/components/HomeDashboard';
@@ -15,24 +15,25 @@ test('빈 홈에서는 예시 성적 없이 성적 입력과 관심 목록으로
   home();
   expect(await screen.findByText('아직 입력한 성적이 없어요')).toBeTruthy();
   expect(within(screen.getByRole('region', { name: '내 성적 요약' })).getByRole('link', { name: '성적 입력하기' }).getAttribute('href')).toBe('/grade-input');
-  expect(screen.queryByRole('img', { name: /9등급 환산 범위/ })).toBeNull();
+  expect(screen.queryByRole('img', { name: /환산 9등급/ })).toBeNull();
+  expect(screen.queryByRole('link', { name: /성적 입력·수정/ })).toBeNull(); // 시안 821:890: 빈 홈 바로가기는 3개
+  expect(screen.getByText('관심 대학을 담으면 여기에서 될각 판정을 볼 수 있어요.')).toBeTruthy();
 });
 
-test('실제 성적과 관심 학과를 요약하고 하트 해제는 해당 학과에만 적용된다', async () => {
+test('성적이 있으면 범위 막대와 관심 대학 될각(검수 입결 없으면 판정 없음)을 보여 준다', async () => {
   await studentDb.grades.put(subject());
   await studentDb.setInterest('가천대학교', '가천의약학', true, '약학과');
   await studentDb.setInterest('가천대학교', '가천의약학', true, '의예과');
   home();
-  const summary = await screen.findByRole('region', { name: '내 성적 요약' });
-  expect(within(summary).getByRole('img', { name: /9등급 환산 범위/ })).toBeTruthy();
+  const range = await screen.findByRole('region', { name: '5 to 9 내 위치' });
+  expect(within(range).getByRole('img', { name: /환산 9등급 약/ })).toBeTruthy();
   expect(screen.getByRole('link', { name: '5 to 9 자세히 보기' }).getAttribute('href')).toBe('/five-to-nine?view=mine');
-  const link = screen.getByRole('link', { name: /가천대학교.*약학과/ });
+  const judge = screen.getByRole('region', { name: '관심 대학 될각' });
+  expect(within(judge).getByText('관심 대학 1곳 중 0곳 · 교과전형 입결과 비교했어요')).toBeTruthy(); // 같은 대학은 한 줄
+  const link = within(judge).getByRole('link', { name: /가천대학교.*약학과/ });
   expect(new URLSearchParams(link.getAttribute('href')!.split('?')[1]).get('cd')).toBe('약학과');
-  const heart = await screen.findByRole('button', { name: '가천대학교 가천의약학 약학과 관심에서 빼기' });
-  await waitFor(() => expect((heart as HTMLButtonElement).disabled).toBe(false));
-  fireEvent.click(heart);
-  await waitFor(() => expect(screen.queryByRole('link', { name: /가천대학교.*약학과/ })).toBeNull());
-  expect((await studentDb.interests.toArray()).map(i => i.department)).toEqual(['의예과']);
+  expect(within(judge).getByText('자료 준비 중')).toBeTruthy();
+  expect(within(judge).queryByText(/안정|적정|소신|위험/)).toBeNull(); // NEVER-1: 검수 입결 없이 판정하지 않아요
 });
 
 test('홈 상세 링크는 간편 계산 대신 저장한 내 성적 분석을 바로 연다', async () => {

@@ -1,0 +1,109 @@
+/* 홈 (Figma "홈 · UI Bowl 상세 시안 · 11.24": home/1440 817:2 · home/390 817:43 · 첫 방문 821:890 · 821:914).
+   카드 = 흰 채움 · 테두리 없음 · 모서리 0. Route Blue는 내 환산 범위 숫자와 막대의 내 위치에만. 판정 색은 판정 배지 안에만. */
+.home-dashboard { display: grid; gap: var(--spacing-lg); }
+.shell:has(.home-dashboard) .shell__main { background: var(--color-canvas-soft); } /* Page */
+.home-dashboard h1, .home-dashboard h2, .home-dashboard p, .home-heading h1, .home-heading h2, .home-heading p { margin: 0; }
+.home-heading h1, .home-heading h2 { font-size: var(--font-heading-1-size); font-weight: 700; line-height: 1.3; color: var(--color-ink); }
+div.home-heading > p { margin-top: 4px; font-size: var(--font-body-lg-size); font-weight: 300; line-height: 1.5; color: var(--color-ink); }
+.home-pc { display: none; }
+/* 모바일 page-header(.screen-heading): 공용 화면 머리 규칙(가로 배치 · 제목 숨김)을 홈에서는 쓰지 않아요 */
+.home-dashboard.student-screen > .home-heading.screen-heading { display: block; }
+.home-dashboard.student-screen > .home-heading.screen-heading > h2 { display: block; }
+
+.home-columns { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: var(--spacing-lg); align-items: start; }
+.home-left, .home-right { display: grid; gap: var(--spacing-lg); min-width: 0; }
+.home-card { padding: var(--spacing-lg); background: var(--color-canvas); }
+
+/* 내 요약(stat-tile 홈 핵심 숫자) */
+.home-hero { display: grid; gap: var(--spacing-md); }
+.home-stat { display: grid; gap: 4px; }
+.home-stat > span { font-size: 12px; line-height: 17px; color: var(--color-text-muted); }
+.home-stat > strong { font-size: var(--font-display-size); font-weight: 700; line-height: 1.3; color: var(--color-accent); }
+.home-stat > p { font-size: 15px; line-height: 1.5; color: var(--color-ink); }
+.home-chips { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 14px; line-height: 21px; color: var(--color-text-muted); }
+.home-chips > span:not(:first-child) { margin-left: 16px; }
+.grade-chip { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: var(--color-canvas); color: var(--color-ink); font-size: 12px; font-weight: 600; line-height: 17px; }
+.grade-chip--9 { box-shadow: inset 0 0 0 1px var(--color-ink); }
+.grade-chip sub { margin-left: 1px; font-size: 12px; font-weight: 400; vertical-align: baseline; color: var(--color-text-muted); }
+
+/* 배너(promo-banner) 아래 "다시 보지 않기"는 배너 오른쪽 끝에 맞춰요 */
+.home-dashboard .promo-banner-never { min-height: 44px; padding: 0; }
+.home-dashboard .promo-banner { min-height: 74px; } /* 시안 프레임 실측 74(마스코트 60 + 위아래 6 + 테두리) */
+
+/* 5 to 9 내 위치 */
+.home-range { display: grid; gap: var(--spacing-md); }
+.home-range h2, .home-shortcuts h2 { font-size: 16px; font-weight: 600; line-height: 22px; }
+.home-range__bar { display: grid; gap: 12px; }
+.home-dashboard .data-status-badge, .home-asof { display: inline-flex; align-items: center; justify-self: start; height: 24px; padding: 0 8px; background: var(--color-canvas-soft); color: var(--color-text-muted); font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; }
+.home-range__note { font-size: 14px; line-height: 21px; color: var(--color-text-muted); }
+.home-dashboard .button-pill-soft { justify-self: start; min-height: 44px; font-size: 15px; line-height: 22px; }
+
+/* D-day */
+.home-dday { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); }
+.home-tile { display: grid; gap: 4px; padding: 20px; background: var(--color-canvas); border: 1px solid var(--color-hairline-soft); }
+.home-tile > span { font-size: 12px; line-height: 17px; color: var(--color-text-muted); }
+.home-tile > strong { font-size: 24px; font-weight: 700; line-height: 29px; color: var(--color-ink); }
+.home-tile > small { font-size: 14px; line-height: 21px; color: var(--color-text-muted); }
+
+/* 관심 대학 될각 */
+.home-judge { display: grid; gap: 12px; }
+.home-judge h2 { font-size: 21px; font-weight: 700; line-height: 28px; }
+.home-judge h2 + p { margin-top: 4px; font-size: 12px; line-height: 17px; color: var(--color-text-muted); }
+.home-judge ul { margin: 0; padding: 0; list-style: none; }
+.home-judge li { display: flex; align-items: flex-start; gap: 12px; padding: 16px 8px 16px 20px; border: 0; border-bottom: 1px solid var(--color-hairline); }
+.home-judge .university-logo { flex: 0 0 40px; width: 40px; height: 40px; }
+.home-judge li > a { flex: 1; display: grid; gap: 2px; min-width: 0; color: var(--color-ink); text-decoration: none; }
+.home-judge li > a strong { font-size: 19px; font-weight: 700; line-height: 26px; }
+.home-judge li > a span { font-size: 13px; line-height: 20px; color: var(--color-text-muted); }
+.home-judge .judge-badge { display: inline-flex; align-items: center; gap: 4px; flex: none; height: 24px; padding: 0 8px; font-size: 12px; font-weight: 600; line-height: 17px; }
+.home-judge .judge-badge > span { font-size: 9px; }
+.home-judge .judge-edge { color: var(--color-judge-edge); background: var(--color-canvas); outline: 1px dashed var(--color-judge-edge); outline-offset: -1px; }
+
+/* 이어서 준비해요(PC) · 바로가기(모바일) */
+.home-shortcuts { display: grid; gap: 12px; padding: 20px var(--spacing-lg); background: var(--color-canvas); }
+.home-shortcuts__list { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--spacing-lg); }
+.home-shortcuts__list a { display: flex; align-items: center; gap: 12px; min-height: 56px; color: var(--color-ink); font-size: 15px; font-weight: 600; line-height: 22px; text-decoration: none; }
+.home-shortcuts__list a > span:not(.icon) { flex: 1; min-width: 0; }
+
+.home-note { display: flex; align-items: center; gap: 4px; margin: 0; font-size: 12px; line-height: 17px; color: var(--color-text-muted); }
+.home-note .icon { flex: none; }
+
+/* 첫 방문: 성적 없음 */
+.home-empty .empty-state { display: grid; justify-items: center; gap: var(--spacing-md); padding: 32px 0; background: none; text-align: center; }
+.home-empty h2 { font-size: 17px; font-weight: 700; line-height: 23px; }
+.home-empty h2 + p { margin-top: -12px; font-size: 13px; line-height: 20px; color: var(--color-text-muted); }
+.home-empty .button-primary { min-height: 52px; padding: 0 var(--spacing-md); }
+
+@media (min-width: 1024px) {
+  .home-pc { display: inline; }
+  .home-mobile { display: none; }
+  /* 홈 page-header: 셸 머리에 인사 제목 · 리드를 그리고, 바탕은 Page(canvas-soft) · 아래 선 없음 */
+  .topbar__heading .home-heading h1 { margin-top: 0; font-size: 32px; line-height: 42px; } /* 셸 h1 28px 규칙보다 시안 우선 */
+  .shell:has(.home-dashboard) .topbar { background: var(--color-canvas-soft); border-bottom: 0; }
+  .shell:has(.home-dashboard) .topbar__heading > :not(.home-heading) { display: none; }
+  .shell:has(.home-dashboard) .topbar .segmented-control { gap: 4px; padding: 4px; background: var(--color-canvas); }
+  .shell:has(.home-dashboard) .topbar .segmented-control__option { width: 94px; }
+  .topbar .home-asof { background: var(--color-canvas); }
+}
+
+@media (max-width: 1023px) {
+  .shell__content:has(.home-dashboard) { padding-top: 8px; padding-inline: 16px; }
+  .home-heading h2 { line-height: 34px; }
+  .appbar .home-asof { align-self: center; }
+  .home-dashboard > .home-heading { margin-bottom: -8px; }
+  div.home-heading > p { margin-top: 4px; }
+  .home-columns, .home-left, .home-right { display: contents; }
+  .home-judge, .home-chips__count { display: none; }
+  .home-card { padding: 20px; }
+  .home-stat > strong { font-size: 32px; line-height: 42px; }
+  .home-chips { font-size: 13px; line-height: 20px; }
+  .home-range__note { font-size: 13px; line-height: 20px; }
+  .home-dday { gap: 12px; }
+  .home-tile > strong { font-size: 20px; line-height: 24px; }
+  .home-tile > small { font-size: 13px; line-height: 20px; }
+  .home-shortcuts { padding: 0; background: none; }
+  .home-shortcuts h2 { font-size: 22px; font-weight: 700; line-height: 30px; }
+  .home-shortcuts__list { grid-auto-flow: row; gap: 0; padding: 0 20px; background: var(--color-canvas); }
+  .home-note { align-items: center; }
+}
+.home-empty .icon svg { stroke-width: 1; } /* 48px에서도 선 굵기 2px(시안) */

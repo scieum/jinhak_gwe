@@ -2,41 +2,20 @@
    The newer collected-results/plans/interest panels keep their approved surfaces. */
 .shell__main { background: var(--color-canvas); }
 .shell:has(.collected-results, .interest-list, .national-placement) .shell__main, .shell[data-screen='admissions-list'] .shell__main { background: var(--color-canvas-soft); }
-.home-greeting { display: grid; gap: 8px; }
-.home-columns { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
-.home-summary { display: grid; gap: 24px; padding: 24px; border: 1px solid var(--color-hairline-soft); min-width: 0; }
-.home-summary > .button-pill-soft { justify-self: start; }
 #topbar-screen-actions { display: flex; align-items: center; gap: 12px; }
 #topbar-screen-actions:empty { display: none; }
-.home-stat-row { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 24px; }
-.home-stat-row > div, .home-preparation-stats > a { display: grid; align-content: start; gap: 4px; min-width: 0; }
-.home-stat-row span, .home-stat-row small, .home-preparation-stats span, .home-preparation-stats small { color: var(--color-text-muted); font-size: 12px; }
-.home-stat-row > div:first-child strong { color: var(--color-accent); }
-.home-stat-row strong { white-space: nowrap; font-variant-numeric: tabular-nums; }
-.home-stat-row > .home-mobile-representative, .susi-mobile-summary { display: none; }
-.home-summary-details { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; }
-.home-summary-details > section, .home-right { display: grid; gap: 16px; min-width: 0; align-content: start; }
-.home-combos { font-size: 13px; }
-.home-combos th, .home-combos td { padding: 10px 6px; white-space: nowrap; }
-.home-combos td:last-child { text-align: right; }
-.home-action-list { display: grid; }
-.home-action-list a { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 12px 0; border-bottom: 1px solid var(--color-hairline-soft); font-size: 14px; }
-.home-action-list a > .icon:last-child { margin-left: auto; flex: none; }
-.home-preparation-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.home-preparation-stats > a { padding: 20px; border: 1px solid var(--color-hairline-soft); }
-.home-interests { display: grid; gap: 12px; padding: 20px; border: 1px solid var(--color-hairline-soft); }
-.home-interests ul { list-style: none; padding: 0; margin: 0; }
-.home-interests li { display: flex; gap: 12px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--color-hairline-soft); }
-.home-interests li > a { display: grid; gap: 4px; flex: 1; min-width: 0; }
-.home-interests li > a span { overflow-wrap: anywhere; }
-.home-empty { display: grid; justify-items: center; align-content: center; gap: 16px; min-height: 300px; text-align: center; }
-.home-shortcuts { display: none; }
-.grade-range { position: relative; margin: 8px 8px 0; padding-top: 12px; }
-.grade-range-colors { display: flex; height: 12px; }
-.grade-range-colors span { flex: 1; }
-.grade-range-bracket { position: absolute; height: 9px; top: 0; border: 1px solid var(--color-ink); border-bottom: 0; }
-.grade-range-marker { position: absolute; top: 10px; width: 16px; height: 16px; transform: translateX(-50%); }
-.grade-range-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--color-text-muted); margin-top: 8px; }
+.susi-mobile-summary { display: none; }
+/* range-bar-5to9 (GradeRange) — Figma 821:787. 높이 72: 말풍선 22 · 트랙 36~48 · 눈금 54 */
+.grade-range { position: relative; height: 72px; }
+.grade-range-colors { position: absolute; top: 36px; left: 20px; right: 20px; display: flex; height: 12px; }
+.grade-range-colors span { flex-basis: 0; }
+.grade-range-bracket { position: absolute; top: 26px; height: 8px; border: 1px solid var(--color-ink); border-bottom: 0; }
+.grade-range-marker { position: absolute; top: 0; width: 40px; height: 62px; margin-left: -20px;
+  background: linear-gradient(var(--color-accent), var(--color-accent)) center 22px / 1px 10px no-repeat, linear-gradient(var(--color-ink), var(--color-ink)) center 22px / 2px 40px no-repeat; }
+.grade-range-marker > span { display: block; height: 22px; background: var(--color-accent); color: var(--color-on-primary); font-size: 12px; font-weight: 600; line-height: 22px; text-align: center; }
+.grade-range-marker svg { position: absolute; top: 32px; left: 10px; } /* 원은 SVG: 전역 모서리 0 규칙이 border-radius를 막아요 */
+.grade-range-labels { position: absolute; top: 54px; left: 0; right: 0; height: 17px; }
+.grade-range-labels span { position: absolute; transform: translateX(-50%); font-size: 12px; line-height: 17px; color: var(--color-ink); }
 .analysis-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; align-items: start; min-width: 0; }
 .analysis-main, .analysis-aside { display: grid; align-content: start; gap: 24px; min-width: 0; }
 .analysis-aside { padding-left: 24px; border-left: 1px solid var(--color-hairline-soft); }
@@ -121,7 +100,6 @@
   .shell__content { padding-top: 24px; }
   .student-screen > .screen-heading > h2:only-child { display: none; }
   .student-screen > .screen-heading:has(> h2:only-child) { display: none; }
-  .home-dashboard { padding-top: 8px; }
   .student-screen:not(.grade-input) > .screen-heading > h2 { display: none; }
   .student-screen:not(.grade-input) > .screen-heading:has(> h2) { justify-content: flex-end; }
   .student-screen > .screen-heading.admission-results-intro:has(> h2) { justify-content: flex-start; }
@@ -130,8 +108,6 @@
   .doelgak-layout { grid-template-columns: 180px minmax(0, 1fr); }
   .doelgak-lanes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .analysis-layout { grid-template-columns: minmax(0, 1fr) 288px; gap: 24px; }
-  .home-columns { grid-template-columns: minmax(0, 1fr) 300px; }
-  .home-summary-details { grid-template-columns: 1fr; }
   .susiro .susi-board { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .analysis-stat-tiles { gap: 12px; }
   .analysis-stat-tiles > div { padding: 12px; }
@@ -145,7 +121,7 @@
   .doelgak-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .doelgak-filters > h3 { grid-column: 1 / -1; }
   .doelgak-lanes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .analysis-layout, .home-columns { grid-template-columns: minmax(0, 1fr); }
+  .analysis-layout { grid-template-columns: minmax(0, 1fr); }
   .analysis-aside { border-left: 0; border-top: 1px solid var(--color-hairline); padding: 24px 0 0; }
   .tab-bar-pill { left: 0; right: 0; bottom: 0; height: calc(var(--shell-tabbar-height) + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); border-top: 1px solid var(--color-hairline-soft); }
 }
@@ -156,25 +132,6 @@
   .student-screen:not(.grade-input) > .screen-heading > h2 { display: none; }
   .student-screen:not(.grade-input) > .screen-heading:has(> h2:only-child), .susiro > .screen-heading { display: none; }
   .doelgak-lanes, .doelgak-pending > div { grid-template-columns: minmax(0, 1fr); }
-  .home-greeting { gap: 4px; }
-  .home-greeting h2 { font-size: 24px; }
-  .home-summary { padding: 20px 16px; gap: 20px; }
-  .home-stat-row { grid-template-columns: 1fr 1fr; gap: 20px 16px; }
-  .home-stat-row > div:first-child { grid-column: 1 / -1; }
-  .home-stat-row > div:nth-child(2), .home-stat-row > .home-mobile-representative { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .home-stat-row > div:nth-child(2) strong, .home-mobile-representative strong { font-size: 14px; padding: 2px 8px; background: var(--color-canvas-soft); }
-  .home-stat-row > div:nth-child(2) small, .home-stat-row > div:nth-child(3), .home-summary-details { display: none; }
-  .home-columns, .home-right { display: contents; }
-  .home-summary { order: 1; }
-  .home-preparation-stats { order: 2; }
-  .home-shortcuts { order: 3; }
-  .home-interests { order: 4; }
-  .home-dashboard > .disclaimer-note { order: 5; }
-  .home-summary-details { grid-template-columns: minmax(0, 1fr); }
-  .home-shortcuts { display: grid; gap: 12px; }
-  .home-preparation-stats > a { padding: 16px; }
-  .home-combos { font-size: 12px; }
-  .home-combos th, .home-combos td { padding-inline: 2px; }
   .analysis-stat-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .analysis-stat-tiles > div { padding: 16px; }
   .analysis-stat-tiles > div:last-child { grid-column: 1 / -1; }

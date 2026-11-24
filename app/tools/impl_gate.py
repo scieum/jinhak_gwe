@@ -440,6 +440,8 @@ class App:
             last = now
             if same >= 4:
                 break
+        # 샘플 데이터 띠는 시안에 없는, 사용자가 요청한 앱 전용 요소라 재기 전에 빼고 본다(2026-11-24 사용자 결정)
+        p.evaluate("document.querySelectorAll('.sample-band').forEach(e => e.remove())")
         return p.evaluate(MEASURE_JS, BLOCKS)
 
     def close(self):
