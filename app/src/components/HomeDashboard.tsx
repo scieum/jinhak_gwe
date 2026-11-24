@@ -103,6 +103,6 @@ export function HomeDashboard() {
       <h2 id="home-shortcuts-title"><span className="home-pc">이어서 준비해요</span><span className="home-mobile">바로가기</span></h2>
       <div className="home-shortcuts__list">{shortcuts.map(([label, route, icon]) => <Link to={`/${route}`} key={route}><Icon name={icon} /><span>{label}</span><Icon name="chevron-right" /></Link>)}</div>
     </section>
-    <p className="disclaimer-note home-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {dataAsOf}{sample && <> · <br className="home-mobile" />시안의 대학·숫자는 예시예요</>}</span></p>
+    <p className="disclaimer-note home-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {dataAsOf}{sample && <> · <br className="home-mobile" />샘플의 대학·숫자는 예시예요</>}</span></p>
   </section>;
 }

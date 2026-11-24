@@ -20,7 +20,7 @@ import '../styles/result-summary.css';
 
 // v2 시안 result-summary/1440 · 390(459:61275 · 460:65555)과 상태 프레임(05-build.json states)
 const XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-const SOURCE_NOTE = '학생이 보낸 카드와 직접 입력한 결과를 모았어요 · 대학 공식 발표가 최종 기준이에요 · 시안의 대학·숫자는 예시예요';
+const SOURCE_NOTE = '학생이 보낸 카드와 직접 입력한 결과를 모았어요 · 대학 공식 발표가 최종 기준이에요 · 샘플의 대학·숫자는 예시예요';
 const MOCK_NOTE = '학생이 낸 가채점 원점수를 모았어요 · 등급컷이 검수되면 추정 등급과 최저 충족을 보여 줘요 · 성적 통지표와 대학 모집요강이 최종 기준이에요';
 // 02-spec 8절 · 기존 결정: hwpx·pdf는 아직 만들지 않아 목록에만 보이고 고를 수 없어요
 const FORMATS = [

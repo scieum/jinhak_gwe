@@ -5,12 +5,12 @@
 
 .brand-logo {
   display: block;
-  width: 124px; /* v2 시안 전 화면: 사이드바 124 · 앱바 92(2026-11-24 시안 절대 우선, 앞선 96/76 축소를 되돌림) */
+  width: 96px; /* 사용자 결정(2026-11-24): 로고는 작게 96 · 앱바 76. 시안도 같은 크기로 맞춤 */
   height: auto;
 }
 
 .appbar .brand-logo {
-  width: 92px;
+  width: 76px;
   height: auto;
 }
 
@@ -167,13 +167,13 @@
     background: var(--color-canvas); /* design.md sidebar v2: canvas + 오른쪽 1px hairline-soft */
     border-right: 1px solid var(--color-hairline-soft);
   }
-  /* 로고 위 42·폭 124 · 메뉴 시작 y 104는 v2 시안 실측 */
+  /* 로고 위 32·폭 96(사용자 결정) · 메뉴 시작 y 104 */
   .sidebar__wordmark {
     display: flex;
     align-items: flex-start;
     box-sizing: border-box;
     height: 104px;
-    padding: 42px var(--spacing-md) 0; /* v2 시안 실측 로고 y 42 */
+    padding: 32px var(--spacing-md) 0; /* page-header 위 32와 맞춤 */
   }
   /* 대분류 행 사이 4(v2 시안 groups 간격). 펼친 대분류 안 소분류 행은 붙어 있다 */
   .sidebar nav > div { display: grid; gap: var(--spacing-xxs); }

@@ -63,7 +63,7 @@ export function Login() {
     catch (x) { setError(x instanceof Error ? x.message : '서버에 연결하지 못했어요. 잠시 후 다시 시도하세요.'); }
     finally { setBusy(false); }
   };
-  return <AuthShell slug="login" label="로그인" other={{ to: '/signup', label: '회원가입' }} switchRow={<SwitchRow question="아직 회원이 아니신가요?" to="/signup" label="회원가입" />}>
+  return <AuthShell slug="login" label="로그인" other={{ to: '/signup', label: '회원가입' }} switchRow={<><SwitchRow question="아직 회원이 아니신가요?" to="/signup" label="회원가입" /><p className="auth__switch auth__about"><span className="t-body-sm text-muted">U:NAVI가 처음이라면</span><Link className="t-link" to="/about">서비스 소개 보기 ›</Link></p></>}>
     <form className="auth__card-form" onSubmit={submit} noValidate>
       <h1 className="t-heading-2">로그인</h1>
       <p className="auth__sub t-body-lg text-muted">아이디로 로그인하세요</p>
