@@ -2,7 +2,7 @@
 
 후속 추가: 우선순위 높음 N01·N03·N04·N06 구현. `/application-checklist`, `/eligibility-check`, `/counsel-tasks`, `/admission-results` 및 될각 비교 조건 차단. 준비 기록은 IndexedDB v2와 기존 암호화 백업에 포함. 범위·검증은 `../work/_ref/priority-features-implementation.md` 참고.
 
-기준: docs/prd.md(10장 세로 슬라이스, 9장 R-CONV·R-JDG·R-PRIV·R-AI 규칙, 13장 스택), docs/design.md(토큰·컴포넌트), Figma `전체 시안` 페이지(파일 AqkVdYZ4hvPYuAlewoBs4W), work/<slug>/02-spec.md(화면 설계), work/design-system.json(컴포넌트 이름·속성).
+기준: docs/prd.md(10장 세로 슬라이스, 9장 R-CONV·R-JDG·R-PRIV·R-AI 규칙, 13장 스택), docs/design.md(토큰·컴포넌트), Figma `v2 시안` 페이지(파일 AqkVdYZ4hvPYuAlewoBs4W), work/<slug>/02-spec.md(화면 설계), work/design-system.json(컴포넌트 이름·속성).
 
 ## 스택 (PRD 13장 기본값)
 - React + Vite + TypeScript, PWA(나중에 vite-plugin-pwa)
