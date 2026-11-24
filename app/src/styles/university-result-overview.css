@@ -1,46 +1,125 @@
-.university-overview { min-width: 0; background: var(--color-canvas); border: 1px solid var(--color-hairline); }
-.university-overview-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--spacing-md); padding: var(--spacing-card); border-bottom: 2px solid var(--color-hairline); }
-.university-overview-title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-sm); min-width: 0; }
-.university-overview-title h3 { overflow-wrap: anywhere; }
-.university-overview-filters { display: grid; gap: var(--spacing-md); padding: var(--spacing-card); border-bottom: 1px solid var(--color-hairline); }
-.university-overview-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-md); max-width: 900px; }
-.university-overview-fields label { min-width: 0; }
-.university-overview-fields input, .university-overview-fields select { width: 100%; }
-.university-overview-content { display: grid; grid-template-columns: minmax(0, 1fr) 320px; align-items: start; }
-.university-history { display: grid; min-width: 0; gap: var(--spacing-md); padding: var(--spacing-card); }
-.university-history-heading { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-sm); }
-.university-history-legend { display: flex; flex-wrap: wrap; gap: var(--spacing-md); font-size: var(--font-caption-size); }
-.history-dot { display: inline-block; width: 8px; height: 8px; margin-right: var(--spacing-xs); fill: var(--color-ink); }
-.history-dot.prev, .university-history-point.prev svg { fill: var(--color-year-prev); }
-.history-dot.old, .university-history-point.old svg { fill: var(--color-year-old); }
-.history-dot.empty { fill: var(--color-canvas); stroke: var(--color-year-old); stroke-width: 1.5px; overflow: visible; }
-.university-history-plot { overflow-x: auto; padding: var(--spacing-sm) var(--spacing-md); border: 1px solid var(--color-hairline); }
-.university-history-row, .university-history-axis { display: grid; grid-template-columns: minmax(140px, 200px) minmax(320px, 1fr); min-width: 480px; gap: var(--spacing-md); align-items: center; }
-.university-history-row { border-bottom: 1px solid var(--color-hairline-soft); }
-.university-history-department { display: flex; align-items: center; gap: var(--spacing-xxs); font-size: var(--font-body-sm-size); padding-block: var(--spacing-xs); overflow-wrap: anywhere; }
-.university-history-department > button { flex-shrink: 0; }
-.university-history-track { position: relative; margin-inline: 12px; }
-.university-history-grid { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--color-hairline-soft); }
-.university-history-point { position: absolute; transform: translate(-50%, -50%); display: grid; place-items: center; width: 16px; height: 16px; min-height: 0; padding: 0; border: 0; background: transparent; cursor: pointer; }
-.university-history-point svg { width: 8px; height: 8px; fill: var(--color-ink); }
-.university-history-point:hover svg, .university-history-point:focus-visible svg { outline: 1px solid var(--color-ink); outline-offset: 2px; }
-.university-history-missing { position: absolute; top: 50%; left: var(--spacing-xs); transform: translateY(-50%); background: var(--color-canvas); }
-.university-history-axis { min-height: 40px; font-size: var(--font-caption-size); }
-.university-history-axis > div { position: relative; height: 24px; margin-inline: 12px; }
-.university-history-axis > div > span { position: absolute; transform: translateX(-50%); }
-.university-comparison { display: grid; gap: var(--spacing-md); padding: var(--spacing-card); border-left: 1px solid var(--color-hairline); }
-.university-comparison section { display: grid; gap: var(--spacing-xs); padding-block: var(--spacing-card); border-bottom: 1px solid var(--color-hairline); }
-.university-comparison-notice { display: grid; gap: var(--spacing-xs); padding: var(--spacing-md); background: var(--color-canvas-soft); border-left: 3px solid var(--color-ink); }
-.university-comparison > button { height: auto; min-height: 44px; padding: var(--spacing-xs); }
-.university-overview-footnote { padding: var(--spacing-card); border-top: 1px solid var(--color-hairline); }
-@media (max-width: 1199px) {
-  .university-overview-content { grid-template-columns: minmax(0, 1fr); }
-  .university-comparison { border-left: 0; border-top: 1px solid var(--color-hairline); }
+/* 수시 입결 · 대학별 (admission-results 346:267881 · 346:266645). 모서리 0, 판정 색 없음. Route Blue(accent)는 내 환산 범위에만. */
+.ar { display: grid; gap: 24px; min-width: 0; }
+.ar-columns { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; align-items: start; }
+.ar-center, .ar-side { display: grid; gap: 24px; min-width: 0; }
+.ar-mobile { display: none; }
+.ar-muted { margin: 0; color: var(--color-text-muted); font-size: 14px; line-height: 21px; }
+.ar .segmented-control { display: flex; gap: 4px; padding: 4px; background: var(--color-canvas); overflow: visible; }
+.ar .segmented-control__option { flex: 1 1 0; min-height: 40px; padding: 0 8px; font-size: 15px; font-weight: 600; line-height: 22.5px; }
+
+/* 보기 범위 + 대학 */
+.ar-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 0; }
+.ar-top > .segmented-control { flex: none; width: 240px; }
+.ar-univ { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ar-univ .university-logo { flex-basis: 32px; width: 32px; height: 32px; }
+.ar-univ h3 { margin: 0; font-size: 21px; font-weight: 700; line-height: 28.35px; overflow-wrap: anywhere; }
+.ar-univ__change { min-height: 0; padding: 0; border: 0; background: none; color: var(--color-accent); font: inherit; font-size: 15px; font-weight: 600; line-height: 22.5px; white-space: nowrap; cursor: pointer; }
+.ar-univ__meta { display: none; }
+
+/* 전형 유형 · 좌표/표 · 칩 */
+.ar-controls { display: grid; grid-template-columns: 400px minmax(0, 1fr) 160px; grid-template-areas: 'type . view' 'chips chips chips'; gap: 24px 0; }
+.ar-type { grid-area: type; } .ar-view { grid-area: view; } .ar-chips { grid-area: chips; }
+.ar-chips { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ar .filter-chip { position: relative; display: inline-flex; align-items: center; gap: 4px; height: 36px; padding: 0 12px; border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; }
+/* 보이는 글자는 span, 고르기는 칩 전체를 덮는 투명 select(칩 폭이 가장 긴 선택지에 끌려가지 않게) */
+.ar .filter-chip select { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; margin: 0; padding: 0; border: 0; opacity: 0; font-size: 16px; cursor: pointer; }
+.ar .filter-chip .icon { pointer-events: none; }
+.ar .filter-chip:focus-within { outline: 2px solid var(--color-ink); outline-offset: 1px; }
+
+/* 그래프 카드 */
+.ar-card { display: grid; gap: 12px; min-width: 0; padding: 24px; background: var(--color-canvas); }
+.ar-program select { width: 100%; min-height: 40px; }
+.ar-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+.ar-lead { flex: 0 1 330px; margin: 0; color: var(--color-text-muted); font-size: 14px; line-height: 21px; }
+.ar-legend { flex: none; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 12px; font-size: 12px; line-height: 16.8px; }
+.ar-legend > span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.ar .ar-dot { display: inline-block; flex: none; width: 11px; height: 11px; overflow: visible; fill: var(--color-ink); }
+.ar .ar-dot.prev { fill: var(--color-year-prev); } .ar .ar-dot.old { fill: var(--color-year-old); }
+.ar .ar-dot.empty { fill: var(--color-canvas); stroke: var(--color-year-old); stroke-width: 1.5px; }
+.ar-swatch { display: inline-block; width: 8px; height: 12px; background: var(--color-accent-soft); box-shadow: inset 0 0 0 1px var(--color-accent); }
+.ar-basis-link { justify-self: end; color: var(--color-accent); font-size: 12px; line-height: 16.8px; text-decoration: none; }
+
+/* cut-dot-plot: 행 머리 220 · 그래프(오른쪽 12 여백) · 행 44 */
+.ar .ar-plot { --head: 220px; --row: 44px; position: relative; display: block; overflow: visible; }
+.ar-plot__bubble-row { height: 27px; padding-left: var(--head); padding-right: 12px; }
+.ar-plot__bubble-row > div { position: relative; height: 100%; }
+.ar-plot__bubble { position: absolute; top: 0; transform: translateX(-50%); padding: 2px 4px; background: var(--color-accent); color: var(--color-on-primary); font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; }
+.ar-plot__bubble::after { content: ''; position: absolute; left: calc(50% - 1px); top: 100%; width: 2px; height: 6px; background: var(--color-accent); }
+.ar-plot__body { position: relative; }
+.ar-plot__layer { position: absolute; top: 0; bottom: 0; left: var(--head); right: 12px; pointer-events: none; }
+.ar-plot__layer > i { position: absolute; top: 0; }
+.ar-plot__grid { bottom: 0; width: 1px; background: var(--color-hairline); }
+.ar-plot__band { bottom: 24px; background: var(--color-accent-soft); }
+.ar-plot__mine { bottom: 24px; width: 2px; margin-left: -1px; background: var(--color-accent); }
+.ar-plot__guide { bottom: 24px; width: 1px; background: var(--color-ink); }
+.ar-plot__row { position: relative; display: grid; grid-template-columns: var(--head) minmax(0, 1fr); height: var(--row); }
+.ar-plot__name { min-height: 0; padding: 0 8px 0 0; border: 0; background: none; color: var(--color-ink); font: inherit; font-size: 13px; line-height: 19.5px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.ar-plot__track { position: relative; margin-right: 12px; }
+.ar-plot__link { position: absolute; top: 50%; height: 1px; background: var(--color-text-muted); }
+.ar-plot__point { position: absolute; top: 50%; display: grid; place-items: center; width: 17px; height: 17px; min-height: 0; padding: 0; border: 0; border-radius: 50%; background: transparent; transform: translate(-50%, -50%); cursor: pointer; }
+.ar-plot__point svg { width: 17px; height: 17px; overflow: visible; fill: var(--color-ink); }
+.ar-plot__point.prev svg { fill: var(--color-year-prev); } .ar-plot__point.old svg { fill: var(--color-year-old); }
+.ar-plot__point .ring { fill: none; stroke: none; }
+.ar-plot__point.is-selected .ring { fill: var(--color-canvas); stroke: var(--color-ink); stroke-width: 2px; }
+.ar-plot__point:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 1px; }
+.ar-plot__tip { position: absolute; z-index: 3; top: calc(50% + 18px); display: grid; width: max-content; max-width: 260px; padding: 8px 12px; border: 1px solid var(--color-hairline); background: var(--color-canvas); font-size: 12px; line-height: 16.8px; pointer-events: none; }
+.ar-plot__tip strong { font-weight: 600; }
+.ar-plot__tip span { color: var(--color-text-muted); }
+.ar-plot__axis { display: grid; grid-template-columns: var(--head) minmax(0, 1fr); height: 24px; }
+.ar-plot__axis > div { grid-column: 2; position: relative; margin-right: 12px; }
+.ar-plot__axis span { position: absolute; top: 7px; transform: translateX(-50%); color: var(--color-ink); font-size: 12px; line-height: 16.8px; font-variant-numeric: tabular-nums; }
+.ar-others { justify-self: start; min-height: 0; padding: 0; border: 0; background: none; color: var(--color-ink); font: inherit; font-size: 14px; line-height: 21px; text-align: left; cursor: pointer; }
+.ar-source { margin: 0; color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; text-align: right; }
+.ar-error p { display: flex; align-items: center; gap: 8px; }
+.ar-table tbody tr { cursor: pointer; }
+.ar-table tr[aria-selected='true'] { background: var(--color-accent-soft); box-shadow: inset 3px 0 0 var(--color-accent); }
+.ar-table th button { min-height: 0; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
+
+/* 오른쪽 패널 */
+.ar-panel { display: grid; min-width: 0; padding: 24px; background: var(--color-canvas); }
+.ar-detail { display: grid; gap: 12px; min-width: 0; }
+.ar-detail > .ar-caption { font-size: 12px; line-height: 16.8px; }
+.ar-detail__head { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+.ar-detail__head .university-logo, .ar-compare .university-logo { flex-basis: 20px; width: 20px; height: 20px; }
+.ar-detail__head h4 { flex: 1; margin: 0; font-size: 18px; font-weight: 700; line-height: 24.3px; }
+.ar-detail__head .interest-control--compact .interest-heart { width: 44px; height: 44px; }
+.ar .ar-detail__table { table-layout: fixed; font-size: 14px; }
+.ar .ar-detail__table th, .ar .ar-detail__table td { height: 33px; padding: 0 16px; border-bottom: 1px solid var(--color-hairline); font-size: 14px; font-weight: 400; line-height: 19.6px; text-align: right; white-space: nowrap; }
+.ar .ar-detail__table th:first-child { width: 84px; text-align: left; }
+.ar .ar-detail__table thead th { height: 32px; background: var(--color-canvas-soft); border-bottom: 0; color: var(--color-ink-soft); font-size: 12px; font-weight: 600; line-height: 16.8px; }
+.ar .ar-detail__table td.is-latest { font-weight: 700; }
+.ar-detail__links { display: flex; flex-wrap: wrap; gap: 16px; }
+.ar-detail__links > * { min-height: 0; padding: 0; border: 0; background: none; color: var(--color-accent); font: inherit; font-size: 15px; font-weight: 600; line-height: 22.5px; text-decoration: none; cursor: pointer; }
+.ar-detail .button-outline { width: 100%; height: 44px; }
+.ar-compare { gap: 8px; }
+.ar-compare h4 { margin: 0; font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.ar-compare ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.ar-compare li { display: flex; align-items: center; gap: 8px; height: 36px; font-size: 14px; line-height: 19.6px; }
+.ar-compare a { color: var(--color-accent); font-size: 15px; font-weight: 600; line-height: 22.5px; text-decoration: none; }
+.ar-doelgak { font-size: 13px; line-height: 19.5px; color: var(--color-ink); text-decoration: none; }
+.ar .ar-note { display: flex; align-items: center; gap: 4px; margin: 0; color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; }
+.ar-note > .icon { flex: none; }
+
+@media (max-width: 1023px) {
+  .ar { gap: 12px; }
+  .ar-desktop, .ar-side { display: none; }
+  .ar-mobile { display: inline; }
+  .ar-doelgak.ar-mobile { display: block; }
+  .ar-columns, .ar-center { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .shell__content:has(.ar) { padding-inline: 16px; padding-top: 16px; }
+  .ar-top { display: grid; justify-content: stretch; gap: 12px; }
+  .ar-top > .segmented-control { width: 100%; }
+  .ar-univ { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 2px 8px; }
+  .ar-univ h3 { font-size: 19px; line-height: 25.65px; }
+  .ar-univ__meta { display: block; grid-column: 1 / -1; margin: 0; color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; }
+  .ar-controls { grid-template-columns: 120px minmax(0, 1fr); grid-template-areas: 'type type' 'view chips'; gap: 12px 0; }
+  .ar-chips { justify-content: flex-end; }
+  .ar-card { padding: 16px; }
+  .ar-head { display: grid; gap: 12px; }
+  .ar-lead { font-size: 13px; line-height: 20px; }
+  .ar-legend { flex: auto; justify-content: flex-start; }
+  .ar .ar-plot { --head: 140px; --row: 40px; }
+  .ar-plot__guide.is-default, .ar-plot__tip.is-default { display: none; }
+  .ar-plot__point.is-default .ring { fill: none; stroke: none; }
+  .ar-others { font-size: 13px; line-height: 20px; }
 }
-@media (max-width: 767px) {
-  .university-overview-fields { grid-template-columns: minmax(0, 1fr); }
-  .university-overview-heading, .university-overview-filters, .university-history, .university-comparison, .university-overview-footnote { padding: var(--spacing-md); }
-}
-.university-overview-fields .search-field { position: relative; display: block; }
-.university-overview-fields .search-field > .icon { position: absolute; left: var(--spacing-sm); top: 50%; transform: translateY(-50%); color: var(--color-ink); pointer-events: none; }
-.university-overview-fields .search-field input { padding-left: calc(var(--spacing-sm) + 28px); }

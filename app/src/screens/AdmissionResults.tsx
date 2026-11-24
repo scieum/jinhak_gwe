@@ -25,10 +25,10 @@ export function AdmissionResults() {
   // Figma admission-results: 탭은 대학별 · 내 비교 두 개. 수집 자료·검수 완료 표는 '표로 보기' 링크와 기존 주소(cu/u/view)로 열려요.
   const tabs = <SegmentedControl label="대학별과 내 비교" value={view} onChange={value => { const next = new URLSearchParams(query); next.set('view', value); for (const key of ['u', 'cu', 'cp', 'cd']) next.delete(key); setQuery(next); }} options={[{ value: 'university', label: '대학별' }, { value: 'interests', label: `내 비교${interestCount ? ` ${interestCount}` : ''}` }]} />;
   return <section data-slug="admission-results" aria-label="수시 입결" className="student-screen">
-    <div className="screen-heading admission-results-intro"><h2 className="t-heading-1">수시 입결</h2><p className="text-muted">대학이 발표한 지난 입결을 찾아보세요.</p></div>
+    {view !== 'university' && <div className="screen-heading admission-results-intro"><h2 className="t-heading-1">수시 입결</h2><p className="text-muted">대학이 발표한 지난 입결을 찾아보세요.</p></div>}
 
-    {view !== 'collected' && <div className={view === 'university' ? 'university-view-tabs' : 'filter-panel'}>{tabs}</div>}
-    {view === 'university' ? <UniversityResultOverview /> : view === 'collected' ? <CollectedResultBrowser key={JSON.stringify([query.get('cu'), query.get('cp'), query.get('cd')])} tabs={tabs} initialUniversity={query.get('cu') ?? ''} initialProgram={query.get('cp') ?? ''} initialDepartment={query.get('cd') ?? ''} /> : view === 'interests' ? <InterestList units={units} /> : !units ? <p role="status">공개 입결 자료를 읽고 있어요.</p> : <ResultBrowser units={units} initialUniversity={query.get('u') ?? undefined} />}
+    {view !== 'collected' && view !== 'university' && <div className="filter-panel">{tabs}</div>}
+    {view === 'university' ? <UniversityResultOverview tabs={tabs} /> : view === 'collected' ? <CollectedResultBrowser key={JSON.stringify([query.get('cu'), query.get('cp'), query.get('cd')])} tabs={tabs} initialUniversity={query.get('cu') ?? ''} initialProgram={query.get('cp') ?? ''} initialDepartment={query.get('cd') ?? ''} /> : view === 'interests' ? <InterestList units={units} /> : !units ? <p role="status">공개 입결 자료를 읽고 있어요.</p> : <ResultBrowser units={units} initialUniversity={query.get('u') ?? undefined} />}
     {view !== 'collected' && view !== 'university' && <><p className="disclaimer-note">{RESULT_NOTICE}</p>
     <details><summary>내 성적과 비교하는 조건</summary><ComparisonConditions /></details></>}
   </section>;

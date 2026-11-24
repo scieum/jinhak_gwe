@@ -60,23 +60,6 @@
 .doelgak-range > strong { color: var(--color-accent); font-size: 20px; }
 .doelgak-lane-empty { min-height: 128px; padding: 20px 12px; border: 1px dashed var(--color-hairline); }
 .doelgak-pending > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.university-overview { border: 0; }
-.university-overview-heading { padding: 0 0 24px; border: 0; }
-.university-overview-title h3 { font-size: 20px; }
-.university-overview-filters { padding: 0 0 24px; border: 0; grid-template-columns: minmax(0, 1fr); min-width: 0; }
-.university-overview-filters > .segmented-control { justify-self: start; width: fit-content; max-width: 100%; }
-.university-overview-fields { max-width: 744px; }
-.university-overview-content { gap: 24px; }
-.university-history { padding: 0; gap: 12px; }
-.university-history-row { border: 0; }
-.university-history-row, .university-history-axis { grid-template-columns: minmax(140px, 185px) minmax(260px, 1fr); min-width: 440px; gap: 12px; }
-@media (max-width: 480px) { .university-history-row, .university-history-axis { grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr); min-width: 0; gap: 8px; } }
-.university-history-department { padding-block: 0; font-size: 13px; }
-.university-comparison { padding: 0; border: 0; }
-.university-comparison section { min-height: 100px; padding-block: 12px; border-color: var(--color-hairline-soft); }
-.university-comparison-notice { border: 0; background: var(--color-judge-reach-bg); }
-.university-comparison-notice strong { color: var(--color-judge-reach); }
-.university-overview-footnote { padding: 20px 0 0; border: 0; }
 @media (min-width: 1024px) {
   .sidebar { display: flex; flex-direction: column; }
   .sidebar__wordmark { flex-shrink: 0; }
@@ -106,9 +89,6 @@
   .doelgak-lanes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .analysis-layout { grid-template-columns: minmax(0, 1fr); }
   .analysis-aside { border-left: 0; border-top: 1px solid var(--color-hairline); padding: 24px 0 0; }
-}
-@media (max-width: 1199px) {
-  .university-comparison { border-top: 1px solid var(--color-hairline-soft); padding-top: 24px; }
 }
 @media (max-width: 767px) {
   .student-screen:not(.grade-input) > .screen-heading > h2 { display: none; }
