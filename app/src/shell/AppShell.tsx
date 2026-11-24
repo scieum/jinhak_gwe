@@ -7,6 +7,7 @@ import { MODE_HOME, MORE_PATH, NAV, locate, modeOf, type NavGroup } from './nav'
 import { workspaceOf } from './workspace';
 import { TeacherLockButton, TeacherLockGate } from '../components/TeacherLock';
 import { dataAsOf } from '../data/catalog';
+import { SampleBanner, SampleReshowButton } from './SampleBanner';
 import './shell.css';
 
 // 소분류가 없는 대분류(학생 "홈")는 그룹 행 없이 바로 선택하는 메뉴 하나로 그린다
@@ -84,7 +85,7 @@ export function AppShell() {
             );
           })}</div>)}
         </nav>
-        <footer className="sidebar__footer"><p className="t-caption text-muted">데이터 기준일 {dataAsOf}</p>{mode === 'student' && <Link to="/grade-input?backup=1"><Icon name="download" size={20} />백업</Link>}</footer>
+        <footer className="sidebar__footer"><p className="t-caption text-muted">데이터 기준일 {dataAsOf}</p>{mode === 'student' && <Link to="/grade-input?backup=1"><Icon name="download" size={20} />백업</Link>}<SampleReshowButton className="text-button" /></footer>
       </aside>
 
       <div className="shell__main">
@@ -106,6 +107,7 @@ export function AppShell() {
           {/* 화면별 앱바 보조 동작 1개(design.md app-bar). 화면이 createPortal로 채워요. */}
           <div id="appbar-actions" className="appbar__actions" />
         </header>
+        <SampleBanner />
 
         {group && !detail && !isSingle(group) && (
           <nav className="sub-nav" aria-label={`${group.label} 소분류`}>

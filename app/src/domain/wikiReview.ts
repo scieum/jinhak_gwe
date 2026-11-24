@@ -3,7 +3,7 @@ import { REQUIRED_APPROVALS, type Approval } from './resultReview';
 import { forbiddenIn, https, WIKI_SECTIONS, type WikiItem, type WikiSectionKey } from './univWiki';
 import type { FieldStatus } from './fieldReview';
 
-export interface WikiDraft { key: string; university: string; section: WikiSectionKey; items: WikiItem[]; approvals: Approval[]; updated_at: string }
+export interface WikiDraft { key: string; university: string; section: WikiSectionKey; items: WikiItem[]; approvals: Approval[]; updated_at: string; sample?: true }
 
 export const wikiKey = (university: string, section: WikiSectionKey) => `${university.trim()}|${section}`;
 export const sectionTitle = (k: WikiSectionKey) => WIKI_SECTIONS.find(s => s.key === k)!.title;
@@ -69,7 +69,8 @@ export function mergeWikiRecords(local: ReadonlyMap<string, WikiDraft>, incoming
 /** 지금 공개 파일의 계열표와 다른 대학 요약은 그대로 두고, 검수 완료된 섹션만 덮어쓴다.
  *  검수 중인(고친 뒤 재승인 전) 섹션은 이전에 공개된 내용이 그대로 남는다. */
 export function buildWikiEntries(current: unknown, drafts: readonly WikiDraft[]) {
-  const done = drafts.filter(d => wikiStatus(d) === '검수 완료' && !itemProblems(d.items).length);
+  // 샘플 초안(sample: true)은 검수 완료여도 공개 파일에 절대 넣지 않아요.
+  const done = drafts.filter(d => !d.sample && wikiStatus(d) === '검수 완료' && !itemProblems(d.items).length);
   if (!done.length) throw new Error(`검수자 ${REQUIRED_APPROVALS}명이 승인한 요약이 아직 없어요.`);
   const c = current as { format?: string; fields?: unknown; entries?: unknown };
   const ok = c?.format === 'jinhak-navi-univ-wiki';

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { ButtonOutline, ButtonPrimary } from '../components/Buttons';
 import { Modal } from '../components/Modal';
 import { studentDb } from '../store/studentDb';
+import { SampleReshowButton } from '../shell/SampleBanner';
 
 // 모바일 "더보기": 모드 전환·로그인 진입. 설정·잠금은 아직 없다.
 export function More({ mode }: { mode: Mode }) {
@@ -17,6 +18,7 @@ export function More({ mode }: { mode: Mode }) {
         교사·관리자 로그인
       </Link>
       {mode === 'student' && <><Link to="/grade-input?backup=1" className="button-outline">학생 기록 백업·복원</Link><ButtonOutline onClick={() => setConfirm(true)}>이 기기의 학생 데이터 지우기</ButtonOutline><p role="status">{message}</p></>}
+      <SampleReshowButton />
       {mode === 'teacher' && <nav className="more-features" aria-label="학생 기능"><h2 className="t-heading-3">학생 기능</h2>
         <p className="t-caption text-muted">교사 모드에서도 학생 화면을 모두 쓸 수 있어요. 여기 기록은 이 기기의 학생 저장소에 남아요.</p>
         {NAV.student.map(g => <div key={g.label}><h3 className="t-heading-4">{g.label}</h3><ul>{g.items.map(i => <li key={i.path}><Link to={i.path}>{i.label}</Link></li>)}</ul></div>)}</nav>}

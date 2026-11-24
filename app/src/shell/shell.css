@@ -228,3 +228,12 @@
 .teacher-lock__box { width: 100%; max-width: 360px; display: grid; gap: var(--spacing-md); justify-items: start; }
 .teacher-lock__box label { display: grid; gap: var(--spacing-xxs); width: 100%; }
 .teacher-lock__box input { min-height: 48px; width: 100%; font: inherit; background: var(--color-field); border: 0; padding: 0 var(--spacing-md); }
+
+/* 샘플 모드 띠: 머리(page-header · app-bar) 바로 아래 한 줄. canvas-soft 위 글자는 ink-soft(text-muted는 대비 부족, promo-banner 규칙). 판정 색 · Route Blue 없음 */
+.sample-band { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-sm); flex-wrap: wrap;
+  padding: var(--spacing-xs) var(--spacing-md); background: var(--color-canvas-soft); border-bottom: 1px solid var(--color-hairline); color: var(--color-ink-soft); }
+.sample-band p { margin: 0; font-size: var(--font-body-sm-size); line-height: var(--font-body-sm-line); }
+.sample-band strong { color: var(--color-ink); }
+.sample-confirm__actions { display: flex; justify-content: flex-end; gap: var(--spacing-sm); }
+@media (min-width: 1024px) { .sample-band { padding: var(--spacing-xs) var(--spacing-xl); } }
+.sidebar__footer .text-button { justify-self: start; min-height: 32px; padding: 0; font-size: 14px; text-align: left; }

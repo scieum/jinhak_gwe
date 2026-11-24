@@ -3,7 +3,7 @@ import { parseCsv } from '../io/grades';
 import { REQUIRED_APPROVALS, type Approval, type ReleasedUnit } from './resultReview';
 import { departmentsOf, type FieldRow } from './univWiki';
 
-export interface FieldDraft { key: 'current'; rows: FieldRow[]; approvals: Approval[]; updated_at: string }
+export interface FieldDraft { key: 'current'; rows: FieldRow[]; approvals: Approval[]; updated_at: string; sample?: true }
 export type FieldStatus = '검수 대기' | '1인 승인' | '검수 완료';
 
 export const emptyFieldDraft = (): FieldDraft => ({ key: 'current', rows: [], approvals: [], updated_at: '' });
@@ -90,6 +90,7 @@ export const fieldRecordFile = (d: FieldDraft) => ({ format: 'jinhak-navi-field-
 
 /** 지금 공개 파일(univ-wiki.json)의 위키 본문은 그대로 두고 fields만 바꾼다. */
 export function buildWikiFile(current: unknown, d: FieldDraft) {
+  if (d.sample) throw new Error('샘플 계열표는 공개 파일로 내보낼 수 없어요. 샘플 데이터를 지운 뒤 계열표를 다시 올려 주세요.');
   if (fieldStatus(d) !== '검수 완료') throw new Error(`검수자 ${REQUIRED_APPROVALS}명이 승인해야 내보낼 수 있어요.`);
   const problems = fieldProblems(d.rows);
   if (problems.length) throw new Error(problems[0]);

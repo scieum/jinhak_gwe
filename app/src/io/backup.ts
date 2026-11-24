@@ -1,4 +1,5 @@
 import { parseStudentBackup, type StudentBackup } from '../domain/student';
+import { stripSample } from '../data/sample/rows';
 
 const bytes = (s: string) => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 const base64 = (data: Uint8Array) => {
@@ -13,7 +14,7 @@ export async function encryptBackup(data: StudentBackup, password: string): Prom
   if (password.length < 8) throw new Error('백업 암호는 8자 이상 입력해 주세요.');
   const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
   const key = await derive(password, salt, ['encrypt']);
-  const payload = new TextEncoder().encode(JSON.stringify(parseStudentBackup(data)));
+  const payload = new TextEncoder().encode(JSON.stringify(parseStudentBackup(stripSample(data))) /* 샘플 행은 백업에 넣지 않아요 */);
   const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv, additionalData: new TextEncoder().encode('jnavi:1:student_backup') }, key, payload);
   const result = JSON.stringify({ format: 'jnavi', version: 1, kind: 'student_backup', cipher: 'AES-GCM', kdf: 'PBKDF2-SHA256',
     iterations: 310000, created_at: new Date().toISOString(), salt: base64(salt), iv: base64(iv), ciphertext: base64(new Uint8Array(encrypted)) });
