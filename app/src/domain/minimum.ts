@@ -85,7 +85,7 @@ export const minimumSum = (g: MockGrades, c: Criterion) => bestSum(coreValues(g.
 /** 원점수 → 판정용 등급. 검수된 등급컷으로 읽은 범위의 큰 숫자(불리한 쪽, D4). 읽은 영역이 없으면 null. */
 export function gradesForMinimum(mock: MockScore, table: CutTable | undefined): MockGrades | null {
   const pick = (a: Area) => { const r = readGrade(mock.raw[a], a, table); return r.status === 'ready' ? r.max : undefined; };
-  const grades: MockGrades['grades'] = { 국어: pick('국어'), 수학: pick('수학'), 영어: pick('영어'), 한국사: pick('한국사'), 탐구1: pick('통합사회'), 탐구2: pick('통합과학') };
+  const grades: MockGrades['grades'] = { 국어: pick('국어'), 수학: pick('수학'), 영어: pick('영어'), 한국사: pick('한국사'), 탐구1: pick('탐구1') ?? pick('통합사회'), 탐구2: pick('탐구2') ?? pick('통합과학') };
   for (const k of Object.keys(grades)) if (grades[k] === undefined) delete grades[k];
   return Object.keys(grades).length ? { number: '', exam: mock.exam, grades, updated_at: mock.updated_at } : null;
 }

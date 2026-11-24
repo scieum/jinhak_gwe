@@ -1,0 +1,170 @@
+/* 모의고사 (work/mock-score/02-spec.md · Figma mock-score/390 346:140445 · mock-score/1440 346:140564).
+   모서리 0, 그림자는 시트·모달·떠 있는 목록·toast에만. Route Blue는 선택 표시·링크 글자에만, 등급·판정 숫자는 잉크. */
+.mock-score { display: block; margin: -12px 0 0; } /* 시안: sub-nav 아래 8 */
+.mock-score p { margin: 0; }
+.topbar__heading .ms-lead { margin: 4px 0 0; color: var(--color-ink); font-size: 18px; font-weight: 300; line-height: 27px; }
+.topbar .ms-asof { display: inline-flex; align-items: center; height: 24px; padding: 0 var(--spacing-xs); background: var(--color-canvas); color: var(--color-text-muted); font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; }
+.mock-score .disclaimer-note { display: flex; align-items: center; gap: 4px; color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; }
+.mock-score .disclaimer-note .icon { flex: none; }
+.ms-badge { display: inline-flex; align-items: center; flex: none; gap: 4px; height: 24px; padding: 0 var(--spacing-xs); background: var(--color-canvas-soft); color: var(--color-text-muted); font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; }
+.ms-badge--safe { background: var(--color-judge-safe-bg); color: var(--color-judge-safe); }
+.ms-badge--fit { background: var(--color-judge-fit-bg); color: var(--color-judge-fit); }
+.ms-badge--risk { background: var(--color-judge-risk-bg); color: var(--color-judge-risk); }
+.ms-mark { display: inline-block; flex: none; width: 8px; height: 8px; background: currentColor; }
+.ms-mark--safe { border-radius: 50%; }
+.ms-mark--fit { width: 9px; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.ms-mark--risk { clip-path: polygon(0 12%, 12% 0, 50% 38%, 88% 0, 100% 12%, 62% 50%, 100% 88%, 88% 100%, 50% 62%, 12% 100%, 0 88%, 38% 50%); }
+.mock-score .button-pill-soft { display: inline-flex; align-items: center; gap: var(--spacing-xs); min-height: 44px; padding: 0 var(--spacing-md); border: 0; background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 15px; font-weight: 600; line-height: 22.5px; white-space: nowrap; cursor: pointer; }
+
+/* 공통 블록 */
+.ms-layout { display: grid; gap: 24px; }
+.ms-main { display: grid; gap: 24px; align-content: start; min-width: 0; }
+.ms-exam { display: flex; align-items: center; gap: var(--spacing-sm); }
+.ms-exam__name { flex: 1; display: grid; gap: 2px; min-width: 0; justify-items: start; }
+.ms-exam__title { margin: 0; font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.ms-exam__pick { position: relative; flex: none; }
+.ms-exam__send { display: flex; align-items: center; gap: var(--spacing-sm); }
+.ms-tile { display: grid; gap: 4px; }
+.ms-tile__label { color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; }
+.ms-tile__value { font-size: 32px; font-weight: 700; line-height: 42px; }
+.ms-tile__sub { font-size: 15px; line-height: 22.5px; }
+.ms-scores, .ms-panel { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; min-width: 0; background: var(--color-canvas); }
+.ms-scores { gap: 8px; padding: 20px; }
+.ms-scores__head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-xs); }
+.ms-scores__title, .ms-panel__title { margin: 0; font-size: 17px; font-weight: 700; line-height: 23px; }
+.ms-input { width: 100%; height: 48px; min-height: 0 !important; padding: 0 0 0 16px !important; border: 0 !important; background: var(--color-field) !important; font-size: 15px; line-height: 22.5px; }
+.ms-input:focus { outline: 2px solid var(--color-ink); outline-offset: -2px; }
+.ms-input[aria-invalid='true'] { outline: 2px solid var(--color-judge-risk); outline-offset: -2px; }
+.ms-input::placeholder { color: var(--color-text-faint); }
+.ms-field-error { display: flex; align-items: center; gap: 4px; color: var(--color-judge-risk); font-size: 12px; line-height: 16.8px; }
+.ms-error { display: flex; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-md); background: var(--color-canvas); color: var(--color-ink); }
+.ms-error p { flex: 1; }
+.ms-loading { padding: var(--spacing-card); background: var(--color-canvas); }
+.ms-nocut { color: var(--color-ink); }
+
+/* 모바일 영역 목록 */
+.ms-cols { display: grid; grid-template-columns: 88px 104px 1fr; gap: 12px; align-items: center; height: 24px; }
+.ms-cols span:last-child { text-align: right; }
+.ms-rows { display: grid; margin: 0; padding: 0; list-style: none; }
+.ms-rows li { display: grid; grid-template-columns: 88px 104px 1fr; gap: 12px; align-items: center; height: 52px; border-bottom: 1px solid var(--color-hairline); }
+.ms-rows li:last-child { border-bottom: 0; }
+.ms-rows__name { font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.ms-field { position: relative; display: block; height: 48px; margin-top: 4px; align-self: start; }
+.ms-field__suffix { position: absolute; top: 13px; right: 16px; color: var(--color-text-muted); font-size: 15px; line-height: 22.5px; pointer-events: none; }
+.ms-grade { display: grid; justify-items: end; font-size: 13px; line-height: 19.5px; text-align: right; }
+.ms-grade__line { display: inline-flex; align-items: flex-end; gap: 2px; }
+.ms-grade__approx { color: var(--color-text-muted); }
+.ms-grade strong { font-size: 20px; font-weight: 700; line-height: 24px; }
+.ms-grade__note { color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; }
+.ms-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-xs); min-height: 32px; }
+.ms-scores > .ms-foot .t-caption { flex: 1; }
+
+/* 수능 최저 패널 */
+.ms-panel { gap: 12px; padding: 20px; }
+.ms-panel__head { display: grid; gap: 4px; }
+.ms-panel__summary { font-size: 15px; line-height: 23px; }
+.ms-cards { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-hairline); }
+.ms-card { display: grid; gap: 6px; padding: 16px 0; border-bottom: 1px solid var(--color-hairline); }
+.ms-card__l3 { height: 24px; }
+.ms-card__l1, .ms-card__l2, .ms-card__l3 { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-xs); }
+.ms-card__l1 { justify-content: flex-start; }
+.ms-card__l1 .university-logo { flex: 0 0 32px; width: 32px; height: 32px; }
+.ms-card__title { flex: 1; min-width: 0; font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.ms-card__criteria { flex: 1; color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; white-space: pre-line; }
+.ms-card__sum { display: inline-flex; align-items: baseline; gap: 4px; font-size: 14px; line-height: 19.6px; }
+.ms-card__std { color: var(--color-text-muted); font-size: 13px; line-height: 19.5px; }
+.ms-card__l4 { font-size: 13px; line-height: 20px; }
+.mock-score .ms-judge { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; gap: 4px; font-size: 12px; font-weight: 600; line-height: 16.8px; }
+.mock-score .ms-trace { min-width: 0; margin: 0; padding: 0; border: 0; background: var(--color-canvas-soft); }
+.mock-score .ms-trace summary { display: flex; align-items: center; gap: var(--spacing-xs); height: 48px; min-height: 48px; padding: 0 var(--spacing-md); list-style: none; font-size: 16px; font-weight: 600; line-height: 22.4px; cursor: pointer; }
+.ms-trace summary::-webkit-details-marker { display: none; }
+.ms-trace summary > span { flex: 1; }
+.mock-score .ms-trace ol { display: grid; gap: 8px; margin: 0; padding: 0 var(--spacing-md); list-style: none; }
+.ms-trace li { display: flex; gap: 8px; }
+.ms-trace__label { flex: none; color: var(--color-text-muted); font-size: 13px; line-height: 19.5px; }
+.ms-trace__value { flex: 1; min-height: 40px; font-size: 14px; line-height: 19.6px; white-space: pre-line; word-break: keep-all; }
+.ms-trace__final { padding-top: 8px; border-top: 1px solid var(--color-hairline); font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.ms-trace__final > span:first-child { flex: none; }
+.ms-trace__final > span:last-child { flex: 1; word-break: keep-all; }
+.ms-trace__empty { padding: 0 var(--spacing-md) var(--spacing-md); }
+.ms-trace__note { margin: 8px var(--spacing-md) 0 !important; padding-bottom: 16px; white-space: nowrap; }
+.ms-panel__msg { font-size: 15px; line-height: 22.5px; }
+
+/* 고정 버튼(모바일): 탭바(64 + 아래 16) 위 8 */
+.ms-cta { position: fixed; left: 0; right: 0; bottom: calc(88px + env(safe-area-inset-bottom)); z-index: 2; display: grid; gap: 4px; padding: 13px 20px 11px; border-top: 1px solid var(--color-hairline-soft); }
+.ms-cta .button-primary { width: 100%; }
+.ms-cta .t-caption { text-align: center; }
+.mock-score .ms-layout { padding-bottom: 92px; }
+
+.ms-empty { display: grid; justify-items: center; gap: var(--spacing-xs); padding: 64px var(--spacing-md); background: var(--color-canvas); text-align: center; }
+.ms-empty h3 { margin: var(--spacing-xs) 0 0; }
+.ms-empty p { margin: 0 0 var(--spacing-xs); }
+
+/* 시험 고르기 */
+.ms-exams { margin: 0; padding: 0; list-style: none; }
+.ms-exams button { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-sm); width: 100%; min-height: 48px; padding: 4px var(--spacing-md); border: 0; background: none; color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
+.ms-exams button span { display: grid; }
+.ms-exams button strong { font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.ms-exams button:hover { background: var(--color-canvas-soft); }
+.ms-exams button[aria-selected='true'] { background: var(--color-accent-soft); box-shadow: inset 3px 0 0 var(--color-accent); }
+.ms-exams button[aria-selected='true'] .icon { color: var(--color-accent); }
+.ms-exams__backdrop { position: fixed; inset: 0; z-index: 9; }
+.ms-exams__pop { position: absolute; top: calc(100% + 4px); left: 0; z-index: 10; width: 360px; border: 1px solid var(--color-hairline); background: var(--color-canvas); box-shadow: var(--shadow-overlay); }
+.ms-sheet { display: grid; gap: var(--spacing-sm); }
+.ms-sheet__handle { justify-self: center; width: 40px; height: 4px; background: var(--color-hairline); }
+.ms-confirm { display: grid; gap: var(--spacing-md); }
+.ms-confirm__actions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xs); }
+.ms-send-summary { display: grid; gap: 4px; margin: 0; font-size: 13px; line-height: 19.5px; }
+.ms-send-summary div { display: flex; justify-content: space-between; gap: var(--spacing-md); }
+.ms-send-summary dt { color: var(--color-text-muted); }
+.ms-send-summary dd { margin: 0; text-align: right; }
+
+/* ── PC 1440: 본문 744 + 보조 패널 360 ── */
+@media (min-width: 1024px) {
+  .mock-score { margin: 0; }
+  .ms-layout { grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; padding-bottom: 0 !important; }
+  .ms-exam { align-items: flex-start; }
+  .ms-exam__name { gap: 2px; }
+  .ms-exam__title { font-size: 21px; font-weight: 700; line-height: 28.4px; }
+  .ms-exam__pick, .ms-exam__send { margin-top: 2px; }
+  .ms-exam__send .button-primary { min-height: 44px; }
+  .ms-tile__value { font-size: 44px; line-height: 57.2px; }
+  .ms-scores { gap: 0; padding: 24px; }
+  .ms-scores__title { font-size: 18px; line-height: 24.3px; }
+  .ms-scores__head { margin-bottom: 16px; }
+  .ms-table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; border: 1px solid var(--color-hairline); }
+  .ms-table th, .ms-table td { height: 37px; padding: 0 8px; border-bottom: 1px solid var(--color-hairline); font-size: 14px; font-weight: 400; line-height: 19.6px; text-align: right; }
+  .ms-table thead th { height: 41px; background: var(--color-canvas-soft); color: var(--color-ink-soft); font-size: 12px; font-weight: 600; line-height: 16.8px; text-align: center; }
+  .ms-table th:first-child { width: 184px; padding-left: 12px; text-align: left; }
+  .ms-table th:nth-child(2) { width: 88px; } .ms-table th:nth-child(3) { width: 64px; } .ms-table th:nth-child(4) { width: 120px; }
+  .ms-table .ms-input { height: 28px; padding: 0 !important; background: transparent !important; font-size: 14px; line-height: 19.6px; text-align: right; }
+  .ms-table + .ms-field-error { margin-top: 8px; }
+  .ms-pending { display: flex; align-items: center; gap: 8px; margin-top: 16px; }
+  .ms-scores > .disclaimer-note, .ms-scores > .ms-nocut { margin-top: 16px; }
+
+  .ms-panel { gap: 0; padding: 24px; }
+  .ms-panel__title { font-size: 21px; line-height: 28.4px; }
+  .ms-panel__head { margin-bottom: 20px; }
+  .ms-cards { padding: 1px 0; border: 0; box-shadow: inset 0 0 0 1px var(--color-hairline); }
+  .ms-card { gap: 4px; padding: 12px 8px; }
+  .ms-card:last-child { border-bottom: 0; }
+  .ms-card.is-selected { border: 1px solid var(--color-ink); }
+  .ms-card[class*='ms-card']:has(.ms-judge) { cursor: pointer; }
+  .ms-card__l1 .university-logo { flex: 0 0 24px; width: 24px; height: 24px; }
+  .ms-card__std { font-size: 14px; line-height: 21px; }
+  .ms-card__l4 { font-size: 14px; line-height: 21px; }
+  .ms-panel > .ms-trace { margin-top: 20px; }
+  .ms-panel > .button-outline { margin-top: 12px; justify-self: start; }
+  .ms-trace .ms-trace__note { white-space: nowrap; }
+}
+.ms-nowrap { white-space: nowrap; }
+/* 이 화면 시안(346:140564)만 사이드바 '홈'이 600이에요(다른 시안은 400). 셸은 그대로 두고 이 화면에서만 맞춰요. */
+@media (min-width: 1024px) {
+  body:has([data-slug='mock-score']) .sidebar-item--top { font-weight: 600; }
+  body:has([data-slug='mock-score']) .topbar__actions { gap: 12px; } /* 시안 page-header 동작 사이 12 */
+}
+@media (max-width: 1023px) { .ms-scores > .disclaimer-note { line-height: 17px; } }
+/* 시안 390: 첫 탭이 다 가려질 만큼 sub-nav를 밀 수 있게 끝 여백(이 화면만) */
+@media (max-width: 1023px) {
+  body:has([data-slug='mock-score']) .sub-nav { padding-right: 64px; }
+}

@@ -8,7 +8,8 @@ import { programs } from '../catalog';
 import { resetReleasedResults } from '../releasedResults';
 import { resetUnivWiki } from '../univWiki';
 import { sampleFlag, setSampleFlag } from './mode';
-import { isSampleAttendance, isSampleId, isSampleInterest } from './rows';
+import { isSampleAttendance, isSampleId, isSampleInterest, isSampleMock } from './rows';
+import { sampleMockScores } from './mockScore';
 import { sampleApplications, sampleAttendance, sampleBoards, sampleGrades, sampleInterests, sampleTasks } from './student';
 import { SAMPLE_CLASS, sampleCards, sampleClassMocks, sampleLogs, sampleMemos, sampleMocks, sampleOutcomes, sampleSchedules, sampleSchool, sampleStudents, sampleTargets } from './teacher';
 import { sampleFieldDraft, sampleWikiDrafts } from './admin';
@@ -43,6 +44,7 @@ async function loadStudent() {
     await addMissing(db.interests, sampleInterests, r => r.id);
     await addMissing(db.applications, apps, r => r.id);
     await addMissing(db.tasks, sampleTasks.filter(t => linked(t.application_id)), r => r.id);
+    await addMissing(db.mocks, sampleMockScores, r => r.exam);
     await addMissing(db.boards, sampleBoards.map(b => ({ ...b, slots: b.slots.filter(s => ids.has(s.application_id)) })), r => r.id);
   });
 }
@@ -92,10 +94,11 @@ export async function clearSample() {
   const db = studentDb;
   // 샘플 전형을 지울 때 사용자 할 일·수시로 카드의 연결은 기존 삭제 규칙(deleteApplication)대로 정리돼요.
   for (const a of await db.applications.toArray()) if (isSampleId(a.id)) await db.deleteApplication(a.id);
-  await db.transaction('rw', [db.grades, db.attendance, db.tasks, db.boards, db.interests], async () => {
+  await db.transaction('rw', [db.grades, db.attendance, db.tasks, db.boards, db.interests, db.mocks], async () => {
     for (const t of [db.grades, db.tasks, db.boards] as Table<{ id: string }, string>[]) await t.filter(r => isSampleId(r.id)).delete();
     await db.attendance.filter(isSampleAttendance).delete();
     await db.interests.filter(isSampleInterest).delete();
+    await db.mocks.filter(isSampleMock).delete();
   });
   const info = await teacherDb.meta.get('class');
   if (info?.code === SAMPLE_CLASS.code && info.created_at === SAMPLE_CLASS.created_at) await teacherDb.clearClass();
