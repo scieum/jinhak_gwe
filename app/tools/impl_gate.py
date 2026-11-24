@@ -1,12 +1,26 @@
-"""G5 시안↔코드 구현 일치 게이트: Figma 최종 화면(05-build.json 기본 프레임 390·1440)과 앱 렌더를 비교한다.
+"""G5 시안↔코드 구현 일치 게이트(엄격): Figma 최종 화면(05-build.json 기본 프레임 390·1440)과 앱 렌더를 비교한다.
 
 사용: python app/tools/impl_gate.py <slug> | --all [--refresh]
-종료코드 0 = 통과. 결과는 work/<slug>/07-impl.json(same_fail_streak 포함).
+종료코드 0 = 통과. 결과는 work/<slug>/07-impl.json(same_fail_streak · 비교 이미지 경로 포함).
+앱은 샘플 데이터 모드(시안과 같은 데모 데이터)로 시드하고, 뷰포트는 시안 프레임 크기(폭 × 높이) 그대로 잰다.
 
-검사 3가지(데이터 값은 비교하지 않는다 — 시안은 데모 데이터, 앱은 실제/시드 데이터):
+검사 8가지. 오류 문자열 = "<분류> <뷰포트>[ #<시안 노드 id>]: <내용> <실제값> (시안 <기대값>±<허용>)".
   T 문구: 시안 고정 UI 문구가 앱 화면 글자(innerText·placeholder·aria-label)에 있어야 한다. 규칙은 is_fixed_text().
   S 구조: 시안 위→아래 주요 블록(BLOCKS) 첫 등장 순서가 앱과 같고, 시안 블록이 앱에 있어야 한다.
-  P 간격: design.md 셸 수치(SHELL) ±2px, 시안 주요 블록 x·폭 ±4px.
+  P 셸 간격: design.md 셸 수치(SHELL) ±2px, 본문 왼쪽 여백(시안) ±2px.
+  F 타이포: 시안 TEXT ↔ 앱 글자 요소(정규화한 글자가 같은 것 중 가장 가까운 것, 데이터 글자 포함)의
+     font-size ±0.5 · font-weight 정확히 · line-height ±1 · 글자 색(hex ±1/채널, 투명도 ±0.02). 글꼴 패밀리는 보지 않는다.
+  C 색·테두리: 시안 블록 인스턴스 ↔ 앱 블록 요소(같은 이름 n번째)의 배경색 · 변별 테두리 두께(±0.5)·색 · 모서리(시안과 같아야, 시안은 0).
+  Z 크기·위치: 같은 쌍의 x·y·w·h ±2(세로 HUG 블록 높이 · 가로 HUG 블록 폭은 ±4).
+  V 픽셀: 시안 PNG(/v1/images scale=1) ↔ 앱 스크린샷(같은 뷰포트, 샘플 띠 제거) — 흐림(글꼴 차이 완화) 뒤 SSIM ≥ V_SSIM,
+     채널 차이 > V_DIFF인 픽셀이 V_CELL 칸의 V_FRAC 이상인 칸을 이어 붙인 사각형(V_MIN_CELLS 칸 이상)을 차이 영역으로 낸다.
+     비교 이미지(시안 | 앱 | 차이, 빨간 사각형) = work/_cache/impl/<slug>-<뷰포트>.png.
+  I 아이콘: 시안 icon/* 인스턴스 ↔ 앱 .icon 요소, 왼쪽 위 ±4로 짝짓고 없는 것 · 남는 것을 낸다.
+
+상태 프레임(선택): work/<slug>/impl-states.json 이 있으면 그 상태도 같은 8가지로 잰다.
+  {"<05-build.json states 키, 예: 390-scroll>": {"route": "/path?view=x"(생략하면 화면 기본 경로),
+                                               "actions": ["클릭할 CSS 선택자", ...](차례로 누름)}}
+  뷰포트 폭은 키 앞 숫자(390-… → 390), 높이는 그 상태 프레임 높이. 오류의 뷰포트 자리에 키가 그대로 들어간다.
 화면별 예외는 work/<slug>/impl-allow.json {"allow": [{"error": "<오류 문자열 앞부분>", "reason": "..."}]}(사유 필수)로만.
 FIGMA_TOKEN 값은 어디에도 쓰지 않는다.
 """
@@ -20,58 +34,99 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 WORK = ROOT / "work"
 CACHE = WORK / "_cache" / "figma"
+SHOTS = WORK / "_cache" / "impl"
 FRAMES = ("390", "1440")
+CACHE_V = 2  # 캐시 형식(필드를 늘리면 올려서 다시 받는다)
+PORT, DIST = 5199, "impl-dist"
 
 # ---------------------------------------------------------------- Figma
 
 
-def fetch_figma(slug, refresh=False):
-    """05-build.json 기본 프레임 두 장의 노드 트리. work/_cache/figma/<slug>.json에 캐시한다."""
-    build = json.loads((WORK / slug / "05-build.json").read_text(encoding="utf-8"))
-    ids = [build["frames"][k] for k in FRAMES]
-    path = CACHE / f"{slug}.json"
-    if path.exists() and not refresh:
-        cached = json.loads(path.read_text(encoding="utf-8"))
-        if cached.get("_ids") == ids:
-            return cached, ids
+def _get(url, token):
+    req = urllib.request.Request(url, headers={"X-Figma-Token": token})
+    with urllib.request.urlopen(req, timeout=180) as r:
+        return r.read()
+
+
+def _token():
     token = os.environ.get("FIGMA_TOKEN")
     if not token:
         sys.exit("FIGMA_TOKEN 환경변수가 없어요.")
-    url = f"https://api.figma.com/v1/files/{build['file_key']}/nodes?ids={','.join(ids)}"
-    req = urllib.request.Request(url, headers={"X-Figma-Token": token})
-    with urllib.request.urlopen(req, timeout=180) as r:
-        data = json.load(r)
-    # 캐시는 판정에 쓰는 필드만 남겨 작게 둔다
-    slim = {"_ids": ids, "nodes": {}}
-    for nid, entry in data["nodes"].items():
-        styles = {k: v["name"] for k, v in entry.get("styles", {}).items()}
-        comps = {k: v["name"] for k, v in entry.get("components", {}).items()}
-        sets = {k: v["name"] for k, v in entry.get("componentSets", {}).items()}
-        comp_set = {k: v.get("componentSetId") for k, v in entry.get("components", {}).items()}
-        slim["nodes"][nid] = {"document": _slim(entry["document"]), "styles": styles,
-                              "components": comps, "componentSets": sets, "componentSet": comp_set}
-    CACHE.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(slim, ensure_ascii=False), encoding="utf-8")
-    return slim, ids
+    return token
+
+
+def frame_ids(slug):
+    """(뷰포트 이름, 노드 id, 재현 방법) 목록: 기본 프레임 두 장 + impl-states.json에 적힌 상태 프레임."""
+    build = json.loads((WORK / slug / "05-build.json").read_text(encoding="utf-8"))
+    out = [(k, build["frames"][k], None) for k in FRAMES]
+    sp = WORK / slug / "impl-states.json"
+    if sp.exists():
+        for key, how in json.loads(sp.read_text(encoding="utf-8")).items():
+            nid = (build.get("states") or {}).get(key)
+            if not nid:
+                raise ValueError(f"impl-states.json '{key}': 05-build.json states에 없는 키예요")
+            out.append((key, nid, how))
+    return build, out
+
+
+def fetch_figma(slug, refresh=False):
+    """프레임 노드 트리 + PNG. work/_cache/figma/<slug>.json · <slug>-<id>.png에 캐시한다."""
+    build, frames = frame_ids(slug)
+    ids = [nid for _, nid, _ in frames]
+    path = CACHE / f"{slug}.json"
+    slim = None
+    if path.exists() and not refresh:
+        cached = json.loads(path.read_text(encoding="utf-8"))
+        if cached.get("_ids") == ids and cached.get("_v") == CACHE_V:
+            slim = cached
+    if slim is None:
+        data = json.loads(_get(f"https://api.figma.com/v1/files/{build['file_key']}/nodes?ids={','.join(ids)}", _token()))
+        # 캐시는 판정에 쓰는 필드만 남겨 작게 둔다
+        slim = {"_ids": ids, "_v": CACHE_V, "nodes": {}}
+        for nid, entry in data["nodes"].items():
+            styles = {k: v["name"] for k, v in entry.get("styles", {}).items()}
+            comps = {k: v["name"] for k, v in entry.get("components", {}).items()}
+            sets = {k: v["name"] for k, v in entry.get("componentSets", {}).items()}
+            comp_set = {k: v.get("componentSetId") for k, v in entry.get("components", {}).items()}
+            slim["nodes"][nid] = {"document": _slim(entry["document"]), "styles": styles,
+                                  "components": comps, "componentSets": sets, "componentSet": comp_set}
+        CACHE.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(slim, ensure_ascii=False), encoding="utf-8")
+    pngs = {nid: CACHE / f"{slug}-{nid.replace(':', '-')}.png" for nid in ids}
+    need = [nid for nid, p in pngs.items() if refresh or not p.exists()]
+    if need:
+        urls = json.loads(_get(f"https://api.figma.com/v1/images/{build['file_key']}?ids={','.join(need)}&scale=1&format=png", _token()))["images"]
+        for nid in need:
+            if urls.get(nid):
+                pngs[nid].write_bytes(urllib.request.urlopen(urls[nid], timeout=180).read())
+    return slim, frames, pngs
 
 
 KEEP = ("id", "name", "type", "visible", "characters", "componentId", "layoutMode",
-        "layoutSizingHorizontal", "absoluteBoundingBox", "styles")
+        "layoutSizingHorizontal", "layoutSizingVertical", "absoluteBoundingBox", "styles",
+        "fills", "strokes", "strokeWeight", "individualStrokeWeights", "cornerRadius", "rectangleCornerRadii",
+        "style", "opacity", "characterStyleOverrides", "styleOverrideTable")
 
 
 def _slim(n):
     out = {k: n[k] for k in KEEP if k in n}
+    for k in ("fills", "strokes"):
+        if k in out:
+            out[k] = [{f: p[f] for f in ("type", "visible", "color", "opacity") if f in p} for p in out[k]]
     if n.get("children"):
         out["children"] = [_slim(c) for c in n["children"]]
     return out
 
 
-def comp_base(entry, node):
-    """인스턴스의 컴포넌트 이름 앞부분(univ-card/v2-row → univ-card)."""
+def comp_name(entry, node):
     cid = node.get("componentId")
     sid = entry["componentSet"].get(cid)
-    name = entry["componentSets"].get(sid) if sid else entry["components"].get(cid)
-    return re.split(r"[/ ,]", name or node.get("name", ""))[0]
+    return (entry["componentSets"].get(sid) if sid else entry["components"].get(cid)) or node.get("name", "")
+
+
+def comp_base(entry, node):
+    """인스턴스의 컴포넌트 이름 앞부분(univ-card/v2-row → univ-card)."""
+    return re.split(r"[/ ,]", comp_name(entry, node))[0]
 
 
 # 구조 비교 대상 블록과 앱 표식(클래스 매핑 표). 앱에 고유 클래스가 없으면 None → 구조 미검사(notes).
@@ -138,32 +193,93 @@ def is_fixed_text(chars, style, comps):
     return bool(set(comps) & FIXED_COMPONENTS) or bool(HEADING_STYLES.match(style or ""))
 
 
+def solid(paints, opacity=1.0):
+    """맨 위 보이는 SOLID 칠 → (r, g, b, a) 0~255 · 0~1. 없으면 None. 그라디언트·이미지는 비교하지 않는다(None)."""
+    vis = [p for p in paints or [] if p.get("visible") is not False]
+    if not vis or vis[-1].get("type") != "SOLID":
+        return None
+    p = vis[-1]
+    c = p["color"]
+    return (round(c["r"] * 255), round(c["g"] * 255), round(c["b"] * 255), round(c.get("a", 1) * p.get("opacity", 1) * opacity, 3))
+
+
+def text_style(n):
+    """TEXT 노드의 (size, weight, line-height px, 색). 글자마다 스타일이 섞이면 None(F 미검사)."""
+    st = dict(n.get("style") or {})
+    fills = n.get("fills")
+    ov = n.get("characterStyleOverrides") or []
+    if ov:
+        ids = set(ov) | ({0} if len(ov) < len(n.get("characters", "")) else set())
+        if len(ids) > 1:
+            return None
+        o = (n.get("styleOverrideTable") or {}).get(str(ov[0]), {})
+        st.update({k: v for k, v in o.items() if k != "fills"})
+        fills = o.get("fills", fills)
+    if "fontSize" not in st:
+        return None
+    return {"fs": st["fontSize"], "fw": st.get("fontWeight"), "lh": st.get("lineHeightPx"), "color": solid(fills, n.get("opacity", 1))}
+
+
+def block_style(n, bg=None):
+    """상자의 보이는 배경(제 칠이 없으면 바깥 칠 = bg) · 변별 테두리(위·오른·아래·왼) · 모서리."""
+    stroke = solid(n.get("strokes"))
+    if stroke:
+        isw = n.get("individualStrokeWeights")
+        w = [isw[k] for k in ("top", "right", "bottom", "left")] if isw else [n.get("strokeWeight", 1)] * 4
+    else:
+        w = [0, 0, 0, 0]
+    radius = max(n.get("rectangleCornerRadii") or [n.get("cornerRadius", 0)])
+    return {"bg": solid(n.get("fills"), n.get("opacity", 1)) or bg, "bw": w, "bc": stroke, "radius": radius}
+
+
+BOX_TYPES = {"FRAME", "INSTANCE", "RECTANGLE", "COMPONENT", "GROUP"}
+
+
+def block_candidates(n, box, bg, depth=2):
+    """블록 인스턴스와 얕은 자손(2단) 상자 후보. 앱 요소가 시안 겉상자(라벨+칸) 대신 안쪽 칸일 수 있어서 가장 많이 겹치는 것과 짝짓는다."""
+    st = block_style(n, bg)
+    out = [{"id": n["id"], **box(n), **st}]
+    if depth:
+        for c in n.get("children", []):
+            if c.get("visible") is not False and c["type"] in BOX_TYPES:
+                out += block_candidates(c, box, st["bg"], depth - 1)
+    return out
+
+
 def figma_frame(entry):
-    """한 프레임에서 글자·블록·간격 측정값을 뽑는다. 좌표는 프레임 왼쪽 위 기준."""
+    """한 프레임에서 글자·블록·아이콘·간격 측정값을 뽑는다. 좌표는 프레임 왼쪽 위 기준."""
     doc = entry["document"]
     ox, oy = doc["absoluteBoundingBox"]["x"], doc["absoluteBoundingBox"]["y"]
-    texts, blocks, shell = [], [], {}
+    texts, blocks, icons, shell = [], [], [], {}
 
     def box(n):
         b = n.get("absoluteBoundingBox") or {"x": ox, "y": oy, "width": 0, "height": 0}
         return {"x": b["x"] - ox, "y": b["y"] - oy, "w": b["width"], "h": b["height"]}
 
-    def walk(n, comps, in_block):
+    def walk(n, comps, in_block, bg=None):
         if n.get("visible") is False:
             return
+        if n["type"] in BOX_TYPES:
+            bg = solid(n.get("fills"), n.get("opacity", 1)) or bg
         if n["type"] == "INSTANCE":
-            base = comp_base(entry, n)
+            full = comp_name(entry, n)
+            base = re.split(r"[/ ,]", full)[0]
             comps = comps + (base,)
             if base in SHELL:
                 shell.setdefault(base, box(n))
+            if base == "icon":
+                icons.append({"id": n["id"], "name": full, **box(n)})
             if not in_block and base in BLOCKS:
-                blocks.append({"name": base, **box(n), "hug": n.get("layoutSizingHorizontal") == "HUG"})
+                blocks.append({"name": base, "id": n["id"], **box(n), "hug": n.get("layoutSizingHorizontal") == "HUG",
+                               "hug_v": n.get("layoutSizingVertical") == "HUG", **block_style(n, bg),
+                               "cands": block_candidates(n, box, bg)})
                 in_block = True
             elif not in_block and base in SHELL:
                 in_block = True  # 셸 안은 구조에서 뺀다
         if n["type"] == "TEXT":
             style = entry["styles"].get((n.get("styles") or {}).get("text"), "")
-            texts.append({"chars": n.get("characters", ""), "style": style, "comps": comps, **box(n)})
+            texts.append({"id": n["id"], "chars": n.get("characters", ""), "style": style, "comps": comps,
+                          "ts": text_style(n), **box(n)})
         kids = [c for c in n.get("children", []) if c.get("visible") is not False]
         if not n.get("layoutMode"):  # 자유 배치 프레임은 위→아래, 왼→오른 순
             kids = sorted(kids, key=lambda c: ((c.get("absoluteBoundingBox") or {}).get("y", 0),
@@ -173,7 +289,7 @@ def figma_frame(entry):
                 bottom = max((y + h for _, y, _, h in _desc_boxes(c, ox, oy)), default=None)
                 if bottom is not None and i + 1 < len(kids):
                     metrics["header_gap"] = box(kids[i + 1])["y"] - bottom
-            walk(c, comps, in_block)
+            walk(c, comps, in_block, bg)
 
     metrics = {}
     walk(doc, (), False)
@@ -189,7 +305,8 @@ def figma_frame(entry):
     sub = next((b for b in blocks if b["name"] == "sub-nav"), None)
     if sub:
         metrics["subnav_h"] = sub["h"]
-    return {"texts": texts, "blocks": blocks, "metrics": metrics}
+    size = (round(doc["absoluteBoundingBox"]["width"]), round(doc["absoluteBoundingBox"]["height"]))
+    return {"texts": texts, "blocks": blocks, "icons": icons, "metrics": metrics, "size": size}
 
 
 def _iter(n):
@@ -250,7 +367,7 @@ def route_of(slug):
     return f"/{slug}" + q
 
 
-# 앱 측정: 글자 모음 · 블록(문서 순, 가장 바깥 것만) · 간격
+# 앱 측정: 글자 모음 · 블록(문서 순, 가장 바깥 것만, 계산 스타일 포함) · 글자 요소(F) · 아이콘(I) · 간격
 MEASURE_JS = """(sel) => {
   const vis = e => { const r = e.getBoundingClientRect(), s = getComputedStyle(e); return r.width > 0 && r.height > 0 && s.visibility !== 'hidden' && s.display !== 'none' && s.opacity !== '0'; };
   const skip = e => e.closest('.sidebar, .tab-bar-pill, .appbar, [role=dialog]');
@@ -263,7 +380,18 @@ MEASURE_JS = """(sel) => {
   const matched = new Set(all.map(([, e]) => e));
   const top = all.filter(([, e]) => { for (let p = e.parentElement; p; p = p.parentElement) if (matched.has(p)) return false; return true; });
   top.sort((a, b) => a[1] === b[1] ? 0 : (a[1].compareDocumentPosition(b[1]) & 4 ? -1 : 1));
-  const blocks = top.map(([k, e]) => ({ name: k, ...R(e) }));
+  const px = v => parseFloat(v) || 0;
+  const paint = e => { for (let p = e; p; p = p.parentElement) { const c = getComputedStyle(p).backgroundColor; if (c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent') return c; } return 'rgb(255, 255, 255)'; };
+  const blocks = top.map(([k, e]) => { const s = getComputedStyle(e); return { name: k, ...R(e), bg: paint(e),
+    bw: [px(s.borderTopWidth), px(s.borderRightWidth), px(s.borderBottomWidth), px(s.borderLeftWidth)],
+    bc: [s.borderTopColor, s.borderRightColor, s.borderBottomColor, s.borderLeftColor],
+    radius: Math.max(px(s.borderTopLeftRadius), px(s.borderTopRightRadius), px(s.borderBottomRightRadius), px(s.borderBottomLeftRadius)) }; });
+  // 글자 요소: 바로 아래에 글자가 있는 보이는 요소. innerText는 같은 줄 안쪽 글자까지(시안 TEXT 하나 = 앱 요소 하나로 본다)
+  const els = new Set(); const w0 = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  for (let n; (n = w0.nextNode());) if (n.textContent.trim() && n.parentElement) els.add(n.parentElement);
+  const texts = [...els].filter(vis).map(e => { const s = getComputedStyle(e); return { t: e.innerText, ...R(e), fs: px(s.fontSize),
+    fw: parseInt(s.fontWeight), lh: s.lineHeight === 'normal' ? null : px(s.lineHeight), color: s.color }; });
+  const icons = [...document.querySelectorAll('.icon')].filter(vis).map(R);
   const textBoxes = root => { const out = []; if (!root) return out; const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     for (let n; (n = w.nextNode());) { const el = n.parentElement; if (!n.textContent.trim() || !vis(el) || skip(el)) continue;
       const rg = document.createRange(); rg.selectNodeContents(n); for (const r of rg.getClientRects()) if (r.width > 0) out.push({ x: r.left, y: r.top + sy }); } return out; };
@@ -283,7 +411,7 @@ MEASURE_JS = """(sel) => {
     const tops = [...content.querySelectorAll('*')].filter(e => vis(e) && !skip(e) && getComputedStyle(e).position !== 'fixed').map(e => e.getBoundingClientRect().top + sy);
     m.header_gap = tops.length ? Math.min(...tops) - bottom : null;
   }
-  return { text, blocks, metrics: m };
+  return { text, blocks, texts, icons, metrics: m };
 }"""
 
 
@@ -305,16 +433,16 @@ def seed_app(page, url):
 
 class App:
     """앱 빌드 스냅샷(work/_cache/impl-dist) + vite preview + Playwright. 다른 세션이 src를 고쳐도 측정 중 화면이 바뀌지 않게
-    dev 서버 대신 빌드본을 쓴다. 시드는 한 번, 화면마다 두 뷰포트로 잰다."""
+    dev 서버 대신 빌드본을 쓴다. 시드는 한 번, 화면마다 뷰포트별로 잰다."""
 
-    def __init__(self, url=None, port=5199):
+    def __init__(self, url=None, port=PORT):
         import subprocess
         self.proc = None
         self.url = url or f"http://localhost:{port}"
         if not url:
             # node로 바로 부른다(cmd·npx를 거치면 한글 경로에서 vite가 죽음). 출력 폴더는 상대 경로.
             vite = ["node", "node_modules/vite/bin/vite.js"]
-            dist = ["--outDir", "../work/_cache/impl-dist"]
+            dist = ["--outDir", f"../work/_cache/{DIST}"]
             r = subprocess.run(vite + ["build", *dist, "--emptyOutDir", "--logLevel", "error"], cwd=os.path.relpath(ROOT / "app"), capture_output=True)
             if r.returncode:
                 raise RuntimeError("앱 빌드 실패: " + r.stderr.decode("utf-8", "replace")[-500:])
@@ -338,14 +466,9 @@ class App:
                 time.sleep(1)
         raise RuntimeError("vite preview 서버가 뜨지 않았어요.")
 
-    def measure(self, route, width):
-        p = self.page
-        p.set_viewport_size({"width": width, "height": 844 if width < 1000 else 900})
-        # 교사 화면을 한 번 열면 학생 화면도 교사 셸로 남는다(workspace.ts). 시안은 화면마다 제 셸이라 매번 지운다.
-        p.evaluate("sessionStorage.clear()")
-        p.goto(self.url + route, wait_until="networkidle", timeout=120_000)
+    def _settle(self):
         # 자료를 비동기로 읽는 화면이 많아서, 글자가 1.2초 동안 그대로일 때까지(최대 15초) 기다린다
-        last, same = None, 0
+        p, last, same = self.page, None, 0
         for _ in range(50):
             p.wait_for_timeout(300)
             now = p.evaluate("document.body.innerText.length + ':' + document.querySelectorAll('*').length")
@@ -353,9 +476,25 @@ class App:
             last = now
             if same >= 4:
                 break
+
+    def measure(self, route, size, actions=()):
+        """(측정값, 스크린샷 PNG 바이트). size = 시안 프레임 (폭, 높이). 화면 한 장 크기 프레임이면 뷰포트 = 프레임,
+        긴(스크롤) 프레임이면 뷰포트 = 기기 높이 + 전체 페이지 스크린샷(고정 탭바가 폰처럼 첫 화면 아래에 있게)."""
+        p = self.page
+        vh = viewport_h(size)
+        p.set_viewport_size({"width": size[0], "height": vh})
+        # 교사 화면을 한 번 열면 학생 화면도 교사 셸로 남는다(workspace.ts). 시안은 화면마다 제 셸이라 매번 지운다.
+        p.evaluate("sessionStorage.clear()")
+        p.goto(self.url + route, wait_until="networkidle", timeout=120_000)
+        self._settle()
+        for sel in actions:
+            p.click(sel, timeout=10_000)
+            self._settle()
         # 샘플 데이터 띠는 시안에 없는, 사용자가 요청한 앱 전용 요소라 재기 전에 빼고 본다(2026-11-24 사용자 결정)
-        p.evaluate("document.querySelectorAll('.sample-band').forEach(e => e.remove())")
-        return p.evaluate(MEASURE_JS, BLOCKS)
+        p.evaluate("document.querySelectorAll('.sample-band').forEach(e => e.remove()); window.scrollTo(0, 0)")
+        p.wait_for_timeout(200)
+        shot = p.screenshot(animations="disabled", caret="hide", full_page=size[1] > vh)
+        return p.evaluate(MEASURE_JS, BLOCKS), shot
 
     def close(self):
         import subprocess
@@ -367,7 +506,13 @@ class App:
 
 # ---------------------------------------------------------------- 비교
 
-TOL_SHELL, TOL_BLOCK = 2, 4
+TOL_SHELL = 2
+TOL_FS, TOL_LH, TOL_RGB, TOL_A = 0.5, 1, 1, 0.02
+TOL_Z, TOL_Z_HUG, TOL_ICON, TOL_BW = 2, 4, 4, 0.5
+SHORT_TEXT_REACH = 120
+DEVICE_H = {390: 844, 1440: 900}  # 시안 프레임이 이보다 많이 길면(스크롤 화면) 뷰포트는 기기 높이, 스크린샷은 전체 페이지
+# V 기준(근거: 2026-11-24 G5 통과 6화면 home·doelgak·univ-score·susiro·login·signup 실측 — impl-audit-2026-11-24.md "엄격 게이트 재검사")
+V_BLUR, V_SSIM, V_DIFF, V_CELL, V_FRAC, V_MIN_CELLS = 1.5, 0.88, 48, 8, 0.2, 6
 
 
 def has_text(lines, chars):
@@ -385,8 +530,9 @@ def text_errors(fig, app_text, v):
     return [f"T {v}: 문구 없음 '{s}'" for s in missing]
 
 
-def spacing_errors(fig, app, width):
-    v, errs = f"{width}", []
+def spacing_errors(fig, app, width, v=None):
+    """P: 셸 수치 + 본문 왼쪽 여백. 블록 x·폭은 Z(±2)가 본다."""
+    v, errs = v or f"{width}", []
     fm, am = fig["metrics"], app["metrics"]
     names = {b["name"] for b in fig["blocks"]}
 
@@ -409,34 +555,283 @@ def spacing_errors(fig, app, width):
         if "subnav_h" in fm:
             need("subnav_h", 44, TOL_SHELL, "sub-nav 높이")
     need("text_left", fm.get("text_left"), TOL_SHELL, "본문 왼쪽 여백(시안)")
-
-    afirst = {}
-    for b in app["blocks"]:
-        afirst.setdefault(b["name"], b)
-    done = {"page-header", "sub-nav"}  # 셸은 위 수치로 본다
-    for b in fig["blocks"]:
-        a = afirst.get(b["name"])
-        if not a or b["name"] in done:
-            continue
-        done.add(b["name"])
-        if not within(a["x"], b["x"], TOL_BLOCK):
-            errs.append(f"P {v}: {b['name']} x {_r(a['x'])} (시안 {_r(b['x'])}±{TOL_BLOCK})")
-        if not b["hug"] and not within(a["w"], b["w"], TOL_BLOCK):
-            errs.append(f"P {v}: {b['name']} 폭 {_r(a['w'])} (시안 {_r(b['w'])}±{TOL_BLOCK})")
     return errs
 
 
-def compare(fig, app, width):
-    """한 뷰포트 비교 → 오류 문자열 목록. fig = figma_frame(), app = MEASURE_JS 결과."""
+def css_rgba(s):
+    """'rgb(1, 2, 3)' · 'rgba(1, 2, 3, 0.5)' → (r, g, b, a). 투명은 None."""
+    m = re.match(r"rgba?\(([^)]+)\)", s or "")
+    if not m:
+        return None
+    p = [float(x) for x in re.split(r"[,\s/]+", m.group(1).strip()) if x]
+    rgba = (round(p[0]), round(p[1]), round(p[2]), round(p[3] if len(p) > 3 else 1.0, 3))
+    return None if rgba[3] == 0 else rgba
+
+
+def hexa(c):
+    if c is None:
+        return "없음"
+    h = "#%02x%02x%02x" % c[:3]
+    return h if c[3] >= 0.995 else f"{h}/{c[3]:.2f}"
+
+
+def same_color(a, b):
+    if a is None or b is None:
+        return a is None and b is None
+    return all(abs(x - y) <= TOL_RGB for x, y in zip(a[:3], b[:3])) and abs(a[3] - b[3]) <= TOL_A
+
+
+def _short(s, n=24):
+    s = " ".join((s or "").split())
+    return s if len(s) <= n else s[:n] + "…"
+
+
+def match_texts(fig_texts, app_texts):
+    """시안 TEXT ↔ 앱 글자 요소: 정규화 글자가 같은 것끼리, 왼쪽 위가 가까운 쌍부터 하나씩(겹쳐 쓰지 않음)."""
+    by = {}
+    for i, a in enumerate(app_texts):
+        k = norm(a["t"])
+        if k:
+            by.setdefault(k, []).append(i)
+    pairs = []
+    for fi, f in enumerate(fig_texts):
+        for ai in by.get(norm(f["chars"]), []) if norm(f["chars"]) else []:
+            a = app_texts[ai]
+            d = abs(a["x"] - f["x"]) + abs(a["y"] - f["y"])
+            if len(norm(f["chars"])) >= 3 or d <= SHORT_TEXT_REACH:  # 숫자 하나 같은 짧은 글자는 먼 곳의 같은 글자와 짝짓지 않는다
+                pairs.append((d, fi, ai))
+    used_f, used_a, out = set(), set(), []
+    for _, fi, ai in sorted(pairs):
+        if fi not in used_f and ai not in used_a:
+            used_f.add(fi), used_a.add(ai)
+            out.append((fig_texts[fi], app_texts[ai]))
+    return out
+
+
+def typo_errors(fig, app, v):
+    """F: 짝지은 글자마다 크기 · 굵기 · 줄높이 · 색."""
+    errs = []
+    for f, a in match_texts([t for t in fig["texts"] if t.get("ts") and t["w"] > 0], app.get("texts", [])):
+        ts, bad = f["ts"], []
+        if not within(a["fs"], ts["fs"], TOL_FS):
+            bad.append(f"font-size {a['fs']:g} (시안 {ts['fs']:g}±{TOL_FS})")
+        if ts["fw"] is not None and a["fw"] != ts["fw"]:
+            bad.append(f"font-weight {a['fw']} (시안 {ts['fw']})")
+        if ts["lh"] is not None and not within(a["lh"], ts["lh"], TOL_LH):
+            bad.append(f"line-height {'normal' if a['lh'] is None else round(a['lh'], 1)} (시안 {round(ts['lh'], 1)}±{TOL_LH})")
+        if ts["color"] is not None and not same_color(css_rgba(a["color"]), ts["color"]):
+            bad.append(f"색 {hexa(css_rgba(a['color']))} (시안 {hexa(ts['color'])})")
+        if bad:
+            errs.append(f"F {v} #{f['id']}: '{_short(f['chars'])}' " + " · ".join(bad))
+    return errs
+
+
+def pair_blocks(fig, app):
+    """같은 이름 블록을 나온 순서대로 n번째끼리 짝짓는다(앱 블록은 문서 순)."""
+    seen, pairs = {}, []
+    abyname = {}
+    for b in app["blocks"]:
+        abyname.setdefault(b["name"], []).append(b)
+    for b in fig["blocks"]:
+        if not BLOCKS.get(b["name"]):
+            continue
+        k = seen.get(b["name"], 0)
+        seen[b["name"]] = k + 1
+        if k < len(abyname.get(b["name"], [])):
+            a = abyname[b["name"]][k]
+            cands = b.get("cands") or [b]
+            # 가장 많이 겹치는 상자, 같으면 안쪽(뒤) 것 — 겉상자와 같은 크기의 안쪽 "field" 프레임이 칠을 가진 경우
+            i = max(range(len(cands)), key=lambda j: (round(iou(cands[j], a), 2), j))
+            if iou(cands[i], a) == 0:  # 겹치는 게 없으면(위치가 크게 어긋남) 블록 겉상자 그대로
+                i = 0
+            f = b if i == 0 else {**b, **cands[i]}
+            if i:  # 안쪽 상자와 짝지으면 HUG 여부는 모른다 → ±2
+                f = {**f, "hug": False, "hug_v": False}
+            pairs.append((f, a, k + 1))
+    return pairs
+
+
+def iou(p, q):
+    ix = max(0, min(p["x"] + p["w"], q["x"] + q["w"]) - max(p["x"], q["x"]))
+    iy = max(0, min(p["y"] + p["h"], q["y"] + q["h"]) - max(p["y"], q["y"]))
+    inter = ix * iy
+    union = p["w"] * p["h"] + q["w"] * q["h"] - inter
+    return inter / union if union > 0 else 0
+
+
+def color_errors(fig, app, v):
+    """C: 블록 배경 · 변별 테두리 · 모서리."""
+    errs, sides = [], ("위", "오른", "아래", "왼")
+    for f, a, k in pair_blocks(fig, app):
+        bad = []
+        if not same_color(css_rgba(a["bg"]), f["bg"]):
+            bad.append(f"배경 {hexa(css_rgba(a['bg']))} (시안 {hexa(f['bg'])})")
+        for i, side in enumerate(sides):
+            fw, aw = f["bw"][i], a["bw"][i]
+            if abs(fw - aw) > TOL_BW:
+                bad.append(f"테두리 {side} {aw:g}px (시안 {fw:g}px)")
+            elif fw > 0 and not same_color(css_rgba(a["bc"][i]), f["bc"]):
+                bad.append(f"테두리 {side} 색 {hexa(css_rgba(a['bc'][i]))} (시안 {hexa(f['bc'])})")
+        if abs(a["radius"] - f["radius"]) > TOL_BW:
+            bad.append(f"모서리 {a['radius']:g} (시안 {f['radius']:g})")
+        if bad:
+            errs.append(f"C {v} #{f['id']}: {f['name']}[{k}] " + " · ".join(bad))
+    return errs
+
+
+def size_errors(fig, app, v, width=390):
+    """Z: 블록 x · y · w · h ±2(HUG 쪽 크기는 ±4). PC page-header는 .topbar 상자가 패딩을 품어서 P(글자 위치)로 본다."""
+    errs = []
+    for f, a, k in pair_blocks(fig, app):
+        if width >= 1000 and f["name"] == "page-header":
+            continue
+        bad = []
+        for key, tol in (("x", TOL_Z), ("y", TOL_Z), ("w", TOL_Z_HUG if f["hug"] else TOL_Z), ("h", TOL_Z_HUG if f.get("hug_v") else TOL_Z)):
+            if not within(a[key], f[key], tol):
+                bad.append(f"{key} {_r(a[key])} (시안 {_r(f[key])}±{tol})")
+        if bad:
+            errs.append(f"Z {v} #{f['id']}: {f['name']}[{k}] " + " · ".join(bad))
+    return errs
+
+
+def icon_errors(fig, app, v):
+    """I: 시안 아이콘마다 왼쪽 위 ±4 안의 앱 .icon 하나(가까운 것부터), 남는 앱 아이콘도 낸다."""
+    app_icons = list(app.get("icons", []))
+    pairs = sorted((abs(a["x"] - f["x"]) + abs(a["y"] - f["y"]), fi, ai)
+                   for fi, f in enumerate(fig["icons"]) for ai, a in enumerate(app_icons)
+                   if abs(a["x"] - f["x"]) <= TOL_ICON and abs(a["y"] - f["y"]) <= TOL_ICON)
+    used_f, used_a = set(), set()
+    for _, fi, ai in pairs:
+        if fi not in used_f and ai not in used_a:
+            used_f.add(fi), used_a.add(ai)
+    errs = []
+    if len(app_icons) != len(fig["icons"]):
+        errs.append(f"I {v}: 아이콘 개수 {len(app_icons)} (시안 {len(fig['icons'])})")
+    for fi, f in enumerate(fig["icons"]):
+        if fi not in used_f:
+            errs.append(f"I {v} #{f['id']}: 아이콘 없음 {f['name']} x {_r(f['x'])} y {_r(f['y'])} {_r(f['w'])}×{_r(f['h'])} (±{TOL_ICON})")
+    for ai, a in enumerate(app_icons):
+        if ai not in used_a:
+            errs.append(f"I {v}: 시안에 없는 아이콘 x {_r(a['x'])} y {_r(a['y'])} {_r(a['w'])}×{_r(a['h'])}")
+    return errs
+
+
+# ---- V 픽셀 비교(numpy · Pillow)
+
+
+def _box_mean(a, k):
+    """k×k 창 평균(valid). 적분 영상으로 계산한다."""
+    import numpy as np
+    c = np.pad(a, ((1, 0), (1, 0))).cumsum(0).cumsum(1)
+    return (c[k:, k:] - c[:-k, k:] - c[k:, :-k] + c[:-k, :-k]) / (k * k)
+
+
+def ssim(x, y, k=7):
+    """회색조 두 장(같은 크기 float 0~255)의 평균 SSIM."""
+    c1, c2 = (0.01 * 255) ** 2, (0.03 * 255) ** 2
+    mx, my = _box_mean(x, k), _box_mean(y, k)
+    vx, vy = _box_mean(x * x, k) - mx * mx, _box_mean(y * y, k) - my * my
+    cxy = _box_mean(x * y, k) - mx * my
+    return float((((2 * mx * my + c1) * (2 * cxy + c2)) / ((mx * mx + my * my + c1) * (vx + vy + c2))).mean())
+
+
+def diff_regions(a, b, thr=V_DIFF, cell=V_CELL, frac=V_FRAC, min_cells=V_MIN_CELLS):
+    """RGB 두 장(H×W×3 float) → 차이 영역 사각형 [(x, y, w, h)] 넓은 것부터. 칸(cell) 단위로 이어 붙인다."""
+    import numpy as np
+    d = (np.abs(a - b).max(axis=2) > thr).astype(float)
+    gh, gw = d.shape[0] // cell, d.shape[1] // cell
+    grid = d[:gh * cell, :gw * cell].reshape(gh, cell, gw, cell).mean(axis=(1, 3)) > frac
+    seen, out = np.zeros_like(grid), []
+    for sy, sx in zip(*np.nonzero(grid)):
+        if seen[sy, sx]:
+            continue
+        stack, cells = [(sy, sx)], []
+        seen[sy, sx] = True
+        while stack:
+            y, x = stack.pop()
+            cells.append((y, x))
+            for ny, nx in ((y + 1, x), (y - 1, x), (y, x + 1), (y, x - 1)):
+                if 0 <= ny < gh and 0 <= nx < gw and grid[ny, nx] and not seen[ny, nx]:
+                    seen[ny, nx] = True
+                    stack.append((ny, nx))
+        if len(cells) >= min_cells:
+            ys, xs = [c[0] for c in cells], [c[1] for c in cells]
+            out.append((min(xs) * cell, min(ys) * cell, (max(xs) - min(xs) + 1) * cell, (max(ys) - min(ys) + 1) * cell))
+    return sorted(out, key=lambda r: -r[2] * r[3])
+
+
+def pixel_compare(fig_png, app_png, size):
+    """(SSIM, 차이 영역, 시안 RGB, 앱 RGB). 시안 PNG는 프레임 크기로 자르거나 흰 바탕으로 채운다."""
+    import io
+    import numpy as np
+    from PIL import Image, ImageFilter
+
+    def load(raw):
+        im = Image.open(io.BytesIO(raw)).convert("RGB")
+        if im.size != size:
+            canvas = Image.new("RGB", size, "white")
+            canvas.paste(im.crop((0, 0, min(im.width, size[0]), min(im.height, size[1]))))
+            im = canvas
+        return im
+
+    fi, ai = load(fig_png), load(app_png)
+    fb, ab = (np.asarray(im.filter(ImageFilter.GaussianBlur(V_BLUR)), dtype=float) for im in (fi, ai))
+    gray = lambda x: x @ np.array([0.299, 0.587, 0.114])
+    return ssim(gray(fb), gray(ab)), diff_regions(fb, ab), fi, ai
+
+
+def save_compare(fi, ai, rects, path):
+    """시안 | 앱 | 차이(밝을수록 다름) 세 칸, 차이 영역은 앱 · 차이 칸에 빨간 사각형."""
+    import numpy as np
+    from PIL import Image, ImageDraw
+    w, h, gap = fi.width, fi.height, 8
+    diff = np.abs(np.asarray(fi, dtype=int) - np.asarray(ai, dtype=int)).max(axis=2)
+    heat = Image.fromarray((255 - np.clip(diff * 3, 0, 255)).astype("uint8")).convert("RGB")
+    out = Image.new("RGB", (w * 3 + gap * 2, h), (255, 0, 255))
+    for i, im in enumerate((fi, ai, heat)):
+        out.paste(im, (i * (w + gap), 0))
+    dr = ImageDraw.Draw(out)
+    for x, y, rw, rh in rects:
+        for col in (1, 2):
+            ox = col * (w + gap)
+            dr.rectangle((ox + x, y, ox + x + rw - 1, y + rh - 1), outline=(230, 0, 0), width=2)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    out.save(path)
+
+
+def pixel_errors(fig_png, app_png, size, v, img_path):
+    if not fig_png:
+        return [f"V {v}: 시안 PNG를 받지 못해 픽셀 비교를 못 했어요"], None
+    score, rects, fi, ai = pixel_compare(fig_png, app_png, size)
+    save_compare(fi, ai, rects, img_path)
+    errs = [] if score >= V_SSIM else [f"V {v}: 화면 SSIM {score:.3f} (기준 ≥{V_SSIM})"]
+    errs += [f"V {v}: 차이 영역 x {x} y {y} {w}×{h}" for x, y, w, h in rects[:12]]
+    if len(rects) > 12:
+        errs.append(f"V {v}: 차이 영역 외 {len(rects) - 12}곳")
+    return errs, round(score, 4)
+
+
+def compare(fig, app, width, v=None):
+    """한 뷰포트 비교(V 제외) → 오류 문자열 목록. fig = figma_frame(), app = MEASURE_JS 결과."""
+    v = v or f"{width}"
     fseq = [b["name"] for b in fig["blocks"] if BLOCKS.get(b["name"])]
     aseq = [b["name"] for b in app["blocks"]]
-    return (text_errors(fig, app["text"], width)
-            + [f"S {width}: {e}" for e in order_errors(fseq, aseq)]
-            + spacing_errors(fig, app, width))
+    return (text_errors(fig, app["text"], v)
+            + [f"S {v}: {e}" for e in order_errors(fseq, aseq)]
+            + spacing_errors(fig, app, width, v)
+            + typo_errors(fig, app, v)
+            + color_errors(fig, app, v)
+            + size_errors(fig, app, v, width)
+            + icon_errors(fig, app, v))
 
 
 def _r(x):
     return None if x is None else round(x)
+
+
+def viewport_h(size):
+    dev = DEVICE_H.get(size[0], 900)
+    return size[1] if size[1] <= dev * 1.35 else dev
 
 
 def apply_allow(slug, errors):
@@ -458,19 +853,37 @@ def apply_allow(slug, errors):
 
 
 def check(slug, app, refresh=False):
-    data, ids = fetch_figma(slug, refresh)
+    data, frames, pngs = fetch_figma(slug, refresh)
     route = route_of(slug)
-    errors, notes = [], []
-    for key, nid in zip(FRAMES, ids):
+    errors, notes, extra = [], [], {"images": {}, "ssim": {}}
+    for key, nid, how in frames:
         fig = figma_frame(data["nodes"][nid])
-        unmapped = sorted({b["name"] for b in fig["blocks"] if not BLOCKS.get(b["name"])})
-        if unmapped:
-            notes.append(f"{key}: 앱 표식 없는 블록(구조 미검사) {', '.join(unmapped)}")
-        errors += compare(fig, app.measure(route, int(key)), int(key))
-    return route, errors, notes
+        width = int(re.match(r"\d+", key).group())
+        if how is None:
+            unmapped = sorted({b["name"] for b in fig["blocks"] if not BLOCKS.get(b["name"])})
+            if unmapped:
+                notes.append(f"{key}: 앱 표식 없는 블록(구조 미검사) {', '.join(unmapped)}")
+        try:
+            args = ((how or {}).get("route") or route, (width, fig["size"][1]), (how or {}).get("actions", []))
+            measured, shot = app.measure(*args)
+            if not measured["text"].strip():  # 가끔 빈 화면으로 찍힌다(렌더 늦음) — 한 번 더 잰다
+                measured, shot = app.measure(*args)
+        except Exception as e:  # 상태 재현(클릭) 실패는 그 상태만 실패로
+            errors.append(f"S {key}: 상태 재현 실패 {str(e).splitlines()[0][:120]}")
+            continue
+        errors += compare(fig, measured, width, key)
+        img = SHOTS / f"{slug}-{key}.png"
+        png = pngs[nid].read_bytes() if pngs[nid].exists() else None
+        verrs, score = pixel_errors(png, shot, (width, fig["size"][1]), key, img)
+        errors += verrs
+        extra["images"][key] = img.relative_to(ROOT).as_posix() if img.exists() else None
+        extra["ssim"][key] = score
+        matched = len(match_texts([t for t in fig["texts"] if t.get("ts") and t["w"] > 0], measured.get("texts", [])))
+        notes.append(f"{key}: F 글자 짝 {matched}/{sum(1 for t in fig['texts'] if t['w'] > 0)} (짝 없는 글자는 T만 본다)")
+    return route, errors, notes, extra
 
 
-def record(slug, route, errors, notes):
+def record(slug, route, errors, notes, extra=None):
     errors, allowed = apply_allow(slug, errors)
     out_path = WORK / slug / "07-impl.json"
     passed = not errors
@@ -479,7 +892,7 @@ def record(slug, route, errors, notes):
         prev = json.loads(out_path.read_text(encoding="utf-8")) if out_path.exists() else {}
         streak = prev.get("same_fail_streak", 0) + 1 if sorted(prev.get("errors", [])) == sorted(errors) else 1
     result = {"slug": slug, "gate": "G5", "pass": passed, "errors": errors, "back_to": None if passed else "S5",
-              "same_fail_streak": streak, "route": route, "allowed": allowed, "notes": notes}
+              "same_fail_streak": streak, "route": route, "allowed": allowed, "notes": notes, **(extra or {})}
     if slug in IN_PROGRESS:
         result["status"] = IN_PROGRESS[slug]
     out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
