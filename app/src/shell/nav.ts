@@ -97,12 +97,13 @@ export const NAV: Record<Mode, NavGroup[]> = {
     {
       label: '규칙 관리',
       icon: 'sliders-horizontal',
-      // slug admin-rules 하나가 "규칙 편집기·검수·계열표·위키 요약"를 함께 맡는다
+      // slug admin-rules 하나가 "규칙 편집기·검수·계열표·위키 요약·대학 위치"를 함께 맡는다
       items: [
         { label: '규칙 편집기', slug: 'admin-rules', path: '/admin/admin-rules', icon: 'file-text' },
         { label: '검수', slug: 'admin-rules', path: '/admin/admin-rules/review', icon: 'check' },
         { label: '계열표', slug: 'admin-rules', path: '/admin/admin-rules/fields', icon: 'layout-grid' },
         { label: '위키 요약', slug: 'admin-rules', path: '/admin/admin-rules/wiki', icon: 'book-open' },
+        { label: '대학 위치', slug: 'admin-rules', path: '/admin/admin-rules/map', icon: 'map' },
       ],
     },
   ],

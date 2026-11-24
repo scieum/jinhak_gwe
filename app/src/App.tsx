@@ -18,6 +18,7 @@ import { Doelgak, FiveToNine, ScoreTrend, StudentHome, UniversityScores } from '
 import { AdminReview } from './screens/AdminReview';
 import { AdminFields } from './screens/AdminFields';
 import { AdminWiki } from './screens/AdminWiki';
+import { AdminMap } from './screens/AdminMap';
 import { ProgramDetail, UnivDetail } from './screens/UnivDetail';
 import { Susiro } from './screens/Susiro';
 import { MockScore } from './screens/MockScore';
@@ -38,7 +39,7 @@ import './styles/workspace-layout.css';
 import './styles/figma-alignment.css';
 
 // slug admin-rules covers both the rule editor and review paths (nav.ts).
-function AdminRules() { const p = useLocation().pathname; return p.endsWith('/review') ? <AdminReview /> : p.endsWith('/fields') ? <AdminFields /> : p.endsWith('/wiki') ? <AdminWiki /> : <RuleEditorScreen />; }
+function AdminRules() { const p = useLocation().pathname; return p.endsWith('/review') ? <AdminReview /> : p.endsWith('/fields') ? <AdminFields /> : p.endsWith('/wiki') ? <AdminWiki /> : p.endsWith('/map') ? <AdminMap /> : <RuleEditorScreen />; }
 
 const implemented: Record<string, React.ReactNode> = {
   'national-placement': <NationalPlacement />,
