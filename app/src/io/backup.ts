@@ -22,20 +22,37 @@ async function seal(kind: 'student_backup' | 'teacher_backup', data: unknown, pa
 }
 /** 샘플 행은 백업에 넣지 않아요. */
 export const encryptBackup = (data: StudentBackup, password: string) => seal('student_backup', parseStudentBackup(stripSample(data)), password);
-/** 교사 학급 데이터(teacherDb 모든 표) 암호화 백업. shortcut: 복원 화면은 아직 없어요 — 교사 백업 복원을 만들 때 decryptBackup처럼 kind 'teacher_backup'으로 열어요. */
+/** 교사 학급 데이터(teacherDb 모든 표) 암호화 백업. 되살리기는 decryptTeacherBackup → teacherDb.restore. */
 export const encryptTeacherBackup = (tables: Record<string, unknown[]>, password: string) => seal('teacher_backup', tables, password, 20_000_000);
-export async function decryptBackup(text: string, password: string): Promise<StudentBackup> {
-  if (text.length > 5_000_000) throw new Error('백업 파일이 너무 커요.');
+async function unseal(kind: 'student_backup' | 'teacher_backup', text: string, password: string, limit: number, fail: string): Promise<unknown> {
+  if (text.length > limit) throw new Error('백업 파일이 너무 커요.');
   try {
     const e = JSON.parse(text);
-    if (e.format !== 'jnavi' || e.version !== 1 || e.kind !== 'student_backup' || e.cipher !== 'AES-GCM'
+    if (e.format !== 'jnavi' || e.version !== 1 || e.kind !== kind || e.cipher !== 'AES-GCM'
       || e.kdf !== 'PBKDF2-SHA256' || e.iterations !== 310000 || typeof e.ciphertext !== 'string') throw new Error();
     const salt = bytes(e.salt), iv = bytes(e.iv);
     if (salt.length !== 16 || iv.length !== 12) throw new Error();
     const key = await derive(password, salt, ['decrypt']);
-    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv, additionalData: new TextEncoder().encode('jnavi:1:student_backup') }, key, bytes(e.ciphertext));
-    return parseStudentBackup(JSON.parse(new TextDecoder().decode(plain)));
-  } catch { throw new Error('암호가 다르거나 파일이 손상됐어요. 지원하는 학생 백업인지 확인해 주세요.'); }
+    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv, additionalData: new TextEncoder().encode(`jnavi:1:${kind}`) }, key, bytes(e.ciphertext));
+    return JSON.parse(new TextDecoder().decode(plain));
+  } catch { throw new Error(fail); }
+}
+export async function decryptBackup(text: string, password: string): Promise<StudentBackup> {
+  const fail = '암호가 다르거나 파일이 손상됐어요. 지원하는 학생 백업인지 확인해 주세요.';
+  const data = await unseal('student_backup', text, password, 5_000_000, fail);
+  try { return parseStudentBackup(data); } catch { throw new Error(fail); }
+}
+/** 교사 학급 백업 열기. 학생 백업·손상·틀린 암호는 오류로 막고, 표 이름·행 모양까지 확인해요(쓰기 전에 걸러야 기존 학급을 지키니까요). */
+export async function decryptTeacherBackup(text: string, password: string, tableNames: readonly string[]): Promise<Record<string, Record<string, unknown>[]>> {
+  try { if (JSON.parse(text)?.kind === 'student_backup') throw new Error('student'); }
+  catch (e) { if (e instanceof Error && e.message === 'student') throw new Error('학생 백업 파일이에요. 학급 백업 파일을 골라 주세요.'); }
+  const fail = '암호가 다르거나 파일이 손상됐어요. 학급 백업 파일인지 확인해 주세요.';
+  const data = await unseal('teacher_backup', text, password, 20_000_000, fail);
+  const ok = !!data && typeof data === 'object' && !Array.isArray(data) && Object.entries(data).every(([k, rows]) =>
+    tableNames.includes(k) && Array.isArray(rows) && rows.every(r => !!r && typeof r === 'object' && !Array.isArray(r)));
+  const tables = data as Record<string, Record<string, unknown>[]>;
+  if (!ok || !tables.meta?.some(r => r.key === 'class' && typeof r.name === 'string')) throw new Error(fail);
+  return tables;
 }
 export function downloadFile(content: BlobPart, filename: string, type: string) {
   const url = URL.createObjectURL(new Blob([content], { type }));

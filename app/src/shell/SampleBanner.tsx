@@ -3,7 +3,7 @@ import { ButtonOutline, ButtonPrimary } from '../components/Buttons';
 import { Modal } from '../components/Modal';
 import { clearSample, showSample, useSampleMode } from '../data/sample';
 
-function useToast() {
+export function useToast() {
   const [toast, setToast] = useState('');
   useEffect(() => { if (!toast) return; const t = window.setTimeout(() => setToast(''), 3000); return () => window.clearTimeout(t); }, [toast]);
   return [toast ? <p role="status" className="toast">{toast}</p> : null, setToast] as const;

@@ -34,6 +34,12 @@ export class TeacherDatabase extends Dexie {
     await this.transaction('rw', [this.meta, this.students], async () => { await this.meta.put(info); await this.students.clear(); await this.students.bulkPut([...students]); });
   }
   async clearClass() { await Promise.all(this.tables.map(t => t.clear())); }
+  /** 백업으로 모든 표를 바꿔요. 한 트랜잭션이라 중간에 실패하면 기존 학급이 그대로 남아요. 백업에 없는 표(옛 백업)는 비워요. */
+  async restore(tables: Record<string, readonly unknown[]>) {
+    await this.transaction('rw', this.tables, async () => {
+      for (const t of this.tables) { await t.clear(); if (tables[t.name]?.length) await t.bulkAdd([...tables[t.name]] as never[]); }
+    });
+  }
 }
 export const teacherDb = new TeacherDatabase();
 
