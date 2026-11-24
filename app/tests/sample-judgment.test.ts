@@ -8,6 +8,7 @@ import { clearSample, initSample } from '../src/data/sample';
 import { setSampleFlag } from '../src/data/sample/mode';
 import { samplePrograms } from '../src/data/sample/public';
 import { sampleRules } from '../src/data/sample/rules';
+import { SAMPLE_CARD_VERDICTS } from '../src/data/sample/teacher';
 import { programs } from '../src/data/catalog';
 import { baseConversionRule, judgmentRule } from '../src/data/conversion-rules';
 import { loadReleasedResults, resetReleasedResults } from '../src/data/releasedResults';
@@ -33,6 +34,14 @@ test('샘플 모드: 관심 대학 6곳 판정이 demo-dataset과 같고 대학�
   expect(SIX.map(u => verdict(grades, u))).toEqual(['안정', '안정', '적정', '적정', '소신', '경계']);
   expect(judgeUniversity(grades, '중앙대학교')!.v).toMatchObject({ label: '위험', favorable_label: '소신', boundary: true });
   expect(programs.map(p => scoreUniversity(grades, attendance, p.rule!).status)).toEqual(Array(6).fill('ready'));
+});
+
+test('샘플 상담카드(7번 하늘) 판정 = 샘플 모드 judgeUniversity 판정(counsel 학생 요약)', async () => {
+  await initSample();
+  const grades = await studentDb.grades.toArray(), card = (await teacherDb.cards.where('number').equals('07').first())!;
+  expect(card.card.slots.map(s => s.judgment)).toEqual([...SAMPLE_CARD_VERDICTS]);
+  expect(SIX.map(u => verdict(grades, u))).toEqual([...SAMPLE_CARD_VERDICTS]);
+  expect(await teacherDb.memos.where('number').equals('07').count()).toBe(4);
 });
 
 test('샘플을 끄면(지우기) 판정·환산이 사라져요', async () => {

@@ -13,9 +13,10 @@ import { teacherDb } from '../store/teacherDb';
 import { WarningBadge, counselPath } from './TeacherDashboard';
 
 type Filter = 'all' | 'submitted' | 'missing' | 'warning';
-const JUDGE: Record<string, string> = { 안정: 'judge-safe', 적정: 'judge-fit', 소신: 'judge-reach', 위험: 'judge-risk' };
+const JUDGE: Record<string, string> = { 안정: 'judge-safe', 적정: 'judge-fit', 소신: 'judge-reach', 위험: 'judge-risk', 경계: 'judge-edge' };
 const ICON: Record<string, string> = { 안정: '●', 적정: '◐', 소신: '▲', 위험: '■' };
-export const JudgeMark = ({ value }: { value?: string | null }) => value && JUDGE[value] ? <span className={`judge-badge ${JUDGE[value]}`}>{ICON[value]} {value}</span> : null;
+// 경계는 아이콘 없이 점선 테두리 + 이름(design.md judge-badge 경계)
+export const JudgeMark = ({ value }: { value?: string | null }) => value && JUDGE[value] ? <span className={`judge-badge ${JUDGE[value]}`}>{ICON[value] ? `${ICON[value]} ` : ''}{value}</span> : null;
 
 export function CardCollect() {
   const [filter, setFilter] = useState<Filter>('all'), [receiving, setReceiving] = useState(false), [message, setMessage] = useState('');
