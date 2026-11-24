@@ -31,6 +31,8 @@ export const outcomesFromCards = (cards: readonly CardRecord[]): Outcome[] => {
 
 export interface UnivRow { type: AdmissionType; key: string; university: string; program: string; applied: number; stage1: number | null; counts: Record<Result, number> }
 const zero = () => Object.fromEntries(RESULTS.map(r => [r, 0])) as Record<Result, number>;
+// 최종 합격이 많은 대학 · 전형부터(v2 시안 순서), 같으면 지원이 많은 순
+const final = (r: UnivRow) => r.counts['합격'] + r.counts['충원 합격'];
 export function byUniversity(items: readonly Outcome[]) {
   const map = new Map<string, UnivRow>();
   for (const o of items) {
@@ -40,7 +42,7 @@ export function byUniversity(items: readonly Outcome[]) {
     if (o.stage1 !== null) row.stage1 = (row.stage1 ?? 0) + Number(o.stage1);
     map.set(key, row);
   }
-  return TYPES.map(t => ({ type: t, rows: [...map.values()].filter(r => r.type === t).sort((a, b) => b.applied - a.applied || a.university.localeCompare(b.university)) })).filter(g => g.rows.length);
+  return TYPES.map(t => ({ type: t, rows: [...map.values()].filter(r => r.type === t).sort((a, b) => final(b) - final(a) || b.applied - a.applied || a.university.localeCompare(b.university)) })).filter(g => g.rows.length);
 }
 export function totals(items: readonly Outcome[]) {
   const counts = zero(); for (const o of items) counts[o.result]++;

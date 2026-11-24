@@ -147,7 +147,7 @@ describe('우리 반 입시 일정 화면', () => {
     unmount();
     render(<MemoryRouter initialEntries={['/teacher/result-summary']}><App /></MemoryRouter>);
     const row = (await screen.findByText(`${YONSEI.university} · ${YONSEI.program}`)).closest('tr')!;
-    expect([...row.querySelectorAll('td')].map(td => td.textContent)).toEqual(['기타', `${YONSEI.university} · ${YONSEI.program}`, '1', '0', '0', '0', '0', '1', '0', '0']);
+    expect([...row.querySelectorAll('td')].map(td => td.textContent)).toEqual(['논술·기타', `${YONSEI.university} · ${YONSEI.program}`, '1', '0', '0', '0', '1', '0', '0']);
   });
 
   it('대학 일정을 한 번 넣으면 지원한 학생 모두에게 들어가고, 연필로 고치기 · 지우기', async () => {
