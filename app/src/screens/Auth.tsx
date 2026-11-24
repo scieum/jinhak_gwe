@@ -67,6 +67,7 @@ export function Login() {
       <ButtonPrimary type="submit" disabled={busy || !id || !password}>로그인</ButtonPrimary>
       <p className="auth__center t-caption text-muted">비밀번호를 잊으면 관리자에게 초기화를 요청해 주세요.</p>
       <p className="auth__center t-body-sm text-muted">아직 회원이 아니신가요? <Link className="button-pill-soft" to="/signup">회원가입 <Icon name="chevron-right" size={16} className="auth__icon" /></Link></p>
+      <p className="auth__center t-body-sm text-muted">U:NAVI가 처음이라면 <Link className="t-link" to="/about">서비스 소개 보기 ›</Link></p>
     </form>
   </AuthShell>;
 }

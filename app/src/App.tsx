@@ -14,7 +14,8 @@ import { SpecialTracks } from './screens/SpecialTracks';
 import { UnivMap } from './screens/UnivMap';
 import { InterestComparison } from './screens/InterestComparison';
 import { ApplicationCalendar } from './screens/ApplicationCalendar';
-import { Doelgak, FiveToNine, ScoreTrend, StudentHome, UniversityScores } from './screens/Results';
+import { FiveToNine, ScoreTrend, StudentHome, UniversityScores } from './screens/Results';
+import { Doelgak } from './screens/Doelgak';
 import { AdminReview } from './screens/AdminReview';
 import { AdminFields } from './screens/AdminFields';
 import { AdminWiki } from './screens/AdminWiki';
@@ -33,6 +34,9 @@ import { StudentRecord } from './screens/StudentRecord';
 import { ResultSummary } from './screens/ResultSummary';
 import { ClassCalendar } from './screens/ClassCalendar';
 import { Login, Signup } from './screens/Auth';
+import { About } from './screens/About';
+// 처음 온 사람(소개를 본 적 없는 기기)은 루트에서 서비스 소개로 보냄. 저장소가 막히면 소개를 다시 보여줘도 무해.
+function seenAbout() { try { return localStorage.getItem('jinhak-navi-seen-about') === '1'; } catch { return false; } }
 import { AdminRules as RuleEditorScreen } from './screens/AdminRules';
 import './styles/student.css';
 import './styles/workspace-layout.css';
@@ -63,8 +67,9 @@ export function App() {
       {OUTSIDE.map((o) => (
         <Route key={o.path} path={o.path} element={o.slug === 'login' ? <Login /> : <Signup />} />
       ))}
+      <Route path="/about" element={<About />} />
       <Route element={<AppShell />}>
-        <Route path="/" element={<Navigate to={MODE_HOME.student} replace />} />
+        <Route path="/" element={<Navigate to={seenAbout() ? MODE_HOME.student : '/about'} replace />} />
         <Route path="/teacher" element={<Navigate to={MODE_HOME.teacher} replace />} />
         <Route path="/admin" element={<Navigate to={MODE_HOME.admin} replace />} />
         {[...allItems(), ...DETAILS].map((s) => (
@@ -78,3 +83,4 @@ export function App() {
     </Routes>
   );
 }
+

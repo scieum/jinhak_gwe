@@ -1,0 +1,185 @@
+/* 서비스 소개 상세페이지 — Figma 844:271(Mobile 390) 기본, ≥1024는 844:12(PC 1440). 값은 시안 그대로, 모서리 0·그림자 없음. */
+.about { background: var(--color-canvas); color: var(--color-ink-soft); min-height: 100dvh; }
+.about p, .about h1, .about h2, .about h3, .about ul, .about ol { margin: 0; padding: 0; }
+.about ul, .about ol { list-style: none; }
+.about p, .about h1, .about h2, .about h3 { white-space: pre-wrap; }
+
+/* 글자 */
+.about__eyebrow { font-size: 12px; font-weight: 600; line-height: 18px; letter-spacing: .08em; color: var(--color-accent); white-space: pre !important; }
+.about__eyebrow--ink { color: var(--color-ink-soft); }
+.about__display { font-size: 34px; font-weight: 700; line-height: 46px; letter-spacing: -.03em; color: var(--color-ink); text-align: center; }
+.about__h2 { font-size: 26px; font-weight: 700; line-height: 34px; color: var(--color-ink); }
+.about__h3 { font-size: 32px; font-weight: 700; line-height: 42px; color: var(--color-ink); }
+.about__h3s { font-size: 26px; font-weight: 700; line-height: 34px; color: var(--color-ink); }
+.about__lead, .about__body { font-size: 15px; font-weight: 400; line-height: 23px; }
+.about__title { font-size: 16px; font-weight: 600; line-height: 22px; color: var(--color-ink); }
+.about__small { font-size: 13px; font-weight: 400; line-height: 20px; }
+.about__ink { color: var(--color-ink); }
+.about__accent { color: var(--color-accent) !important; }
+.about__center { text-align: center; }
+.about__pc-only { display: none; }
+
+/* 버튼 */
+.about__cta { display: inline-flex; align-items: center; justify-content: center; align-self: stretch; height: 52px; padding: 0 16px; background: var(--color-accent); color: var(--color-on-primary); font-size: 15px; font-weight: 600; line-height: 22px; text-decoration: none; }
+.about__cta--nav { align-self: auto; width: 100px; height: 44px; }
+
+/* 01 내비게이션 */
+.about__nav { display: flex; align-items: center; justify-content: space-between; gap: 32px; height: 84px; padding: 20px 24px; background: var(--color-canvas); box-sizing: border-box; }
+.about__nav .brand-logo { display: block; width: auto; height: 23px; }
+.about__links { display: none; }
+
+/* 섹션 */
+.about__sec { display: flex; flex-direction: column; gap: 24px; padding: 64px 24px; }
+.about__soft { background: var(--color-accent-soft); }
+.about__muted { background: var(--color-canvas-soft); }
+.about__stack { display: flex; flex-direction: column; gap: 16px; }
+.about__mascot { display: block; width: var(--size); height: var(--size); object-fit: contain; flex: none; }
+
+/* 02 히어로 */
+.about__hero { align-items: center; padding-bottom: 48px; }
+.about__hero > .about__eyebrow, .about__hero > .about__display, .about__hero > .about__lead { align-self: stretch; }
+.about__hero-row { display: flex; align-items: center; justify-content: center; gap: 32px; padding-top: 16px; }
+.about__hero-mascot { --size: 220px !important; }
+
+/* 03 소개 */
+.about__split { display: flex; flex-direction: column; gap: 32px; }
+.about__split--intro { align-items: center; }
+.about__split--intro > .about__stack { align-self: stretch; }
+.about__intro-mascot { order: 2; --size: 220px !important; }
+
+/* 04 핵심 기능 */
+.about__sec--features { gap: 32px; }
+.about__features { display: grid; gap: 24px; }
+.about__feature { display: flex; flex-direction: column; gap: 16px; padding: 24px; background: var(--color-canvas); }
+
+/* 05 대상 · 11 시작 순서 */
+.about__sec--audience { gap: 48px; }
+.about__pair { display: grid; gap: 24px; }
+.about__audience { display: flex; flex-direction: column; gap: 24px; padding: 32px; background: var(--color-accent-soft); }
+.about__steps { display: grid; gap: 48px; }
+
+/* 06 내 위치 예시 */
+.about__example { display: flex; flex-direction: column; }
+.about__example--position { gap: 24px; align-items: center; background: var(--color-canvas); }
+.about__example--position > .about__small { align-self: stretch; }
+.about-preview { display: flex; flex-direction: column; gap: 20px; align-self: stretch; padding: 24px 16px; background: var(--color-canvas); border: 1px solid var(--color-hairline); }
+.about-preview__label { font-size: 12px; line-height: 17px; white-space: pre !important; }
+.about-preview__stat { display: flex; flex-direction: column; gap: 4px; }
+.about-preview__value { font-size: 32px; font-weight: 700; line-height: 42px; color: var(--color-accent); font-variant-numeric: tabular-nums; }
+.about-preview__secondary { display: flex; align-items: center; gap: 8px; height: 24px; }
+.about-preview__chip { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: var(--color-canvas); color: var(--color-ink); font-size: 12px; font-weight: 600; line-height: 17px; }
+.about-preview__chip--boxed { gap: 1px; box-shadow: inset 0 0 0 1px var(--color-ink); }
+.about-preview__chip small { font-size: 12px; font-weight: 400; color: var(--color-ink-soft); }
+.about-preview__gap { width: 16px; }
+.about-preview__range { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.about-preview__chart { position: relative; width: 310px; height: 72px; flex: none; }
+.about-preview__track { position: absolute; left: 20px; top: 36px; width: 270px; height: 12px; display: flex; }
+.about-preview__track span { flex: 1; }
+.about-preview__bracket { position: absolute; left: 61px; top: 26px; width: 20px; height: 8px; border: 2px solid var(--color-ink); border-bottom: 0; box-sizing: border-box; }
+.about-preview__line { position: absolute; left: 70px; top: 22px; width: 2px; height: 40px; background: var(--color-ink); }
+.about-preview__bubble { position: absolute; left: 51px; top: 0; width: 40px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--color-accent); color: var(--color-on-primary); font-size: 12px; font-weight: 600; line-height: 17px; }
+.about-preview__stem { position: absolute; left: 71px; top: 22px; width: 1px; height: 10px; background: var(--color-accent); }
+.about-preview__dot { position: absolute; left: 61px; top: 32px; width: 20px; height: 20px; }
+.about-preview__ticks { position: absolute; left: 12px; top: 54px; width: 286px; display: flex; justify-content: space-between; }
+.about-preview__ticks span { width: 16px; text-align: center; font-size: 12px; line-height: 17px; color: var(--color-ink); }
+.about-preview__badge { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: var(--color-canvas-soft); font-size: 12px; font-weight: 600; line-height: 17px; }
+
+/* 07 대학 탐색 */
+.about__sec--explore { padding-top: 48px; }
+.about__split--explore > .about__text-col { order: -1; }
+.about__example--explore { gap: 20px; padding: 32px 24px; background: var(--color-canvas-soft); }
+.about__univ { display: flex; align-items: center; gap: 16px; padding: 16px 24px; background: var(--color-canvas); }
+.about__univ > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.about__univ .icon { color: var(--color-ink); flex: none; }
+.about__mascot-row { display: flex; align-items: center; gap: 32px; }
+.about__mascot-row > p { flex: 1; }
+.about__explore-mascot { --size: 120px !important; }
+
+/* 08 수시 6장 · 09 상담 */
+.about__split--plan, .about__split--counsel { gap: 48px; }
+.about__split--counsel > .about__story { order: -1; }
+.about__story { display: flex; flex-direction: column; gap: 24px; }
+.about__board { display: flex; flex-direction: column; gap: 16px; padding: 24px 16px; background: var(--color-accent-soft); }
+.about__board-head { display: flex; align-items: center; gap: 24px; }
+.about__board-head > p { flex: 1; min-width: 0; }
+.about__board-head > p:last-child { text-align: right; }
+.about__plan-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; }
+.about__plan-card { display: flex; flex-direction: column; gap: 12px; padding: 16px; background: var(--color-canvas); min-width: 0; }
+.about__check { display: flex; flex-direction: column; gap: 8px; padding: 24px; background: var(--color-canvas); }
+.about__example--counsel { gap: 16px; padding: 24px 16px; background: var(--color-canvas-soft); }
+.about__student { display: flex; flex-direction: column; gap: 8px; padding: 24px; background: var(--color-canvas); }
+.about__mascot-row--counsel { gap: 24px; }
+
+/* 12 FAQ */
+.about__sec--faq { gap: 32px; }
+.about__faq li { display: flex; gap: 16px; padding: 24px 0; border-bottom: 1px solid var(--color-hairline); }
+.about__faq li > div { display: flex; flex-direction: column; gap: 12px; padding-top: 8px; flex: 1; min-width: 0; }
+.about__badge { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: none; background: var(--color-accent-soft); color: var(--color-accent); font-size: 16px; font-weight: 600; line-height: 22px; font-variant-numeric: tabular-nums; }
+
+/* 13 시작하기 */
+.about__final { align-items: center; padding-bottom: 48px; }
+.about__final > .about__display, .about__final > .about__body { align-self: stretch; }
+.about__final-mascot { --size: 160px !important; }
+.about__footer { align-self: stretch; display: flex; flex-direction: column; gap: 8px; padding-top: 48px; }
+.about__footer .about__title { color: var(--color-ink-soft); }
+
+@media (min-width: 1024px) {
+  .about__pc-only { display: inline; }
+  p.about__pc-only { display: block; }
+  .about__mo-only { display: none; }
+  .about__display { font-size: 64px; line-height: 83px; }
+  .about__h2 { font-size: 44px; line-height: 57px; }
+  .about__lead { font-size: 18px; font-weight: 300; line-height: 27px; }
+
+  .about__nav { padding: 20px 80px; }
+  .about__nav .brand-logo { height: 29px; }
+  .about__links { flex: 1; display: flex; justify-content: center; gap: 30px; }
+  .about__links a { font-size: 13px; line-height: 20px; color: var(--color-ink-soft); text-decoration: none; }
+
+  .about__sec { padding: 80px max(80px, calc((100% - 1104px) / 2)); }
+  .about__cta { align-self: center; width: 208px; }
+  .about__cta--nav { align-self: auto; width: 100px; }
+
+  .about__hero { padding-bottom: 64px; }
+  .about__sec--explore { padding-top: 48px; }
+  .about__final { padding-bottom: 48px; }
+  .about__hero-row { align-self: stretch; padding-top: 32px; }
+  .about__hero-row > p { flex: 1; }
+  .about__hero-row > p:first-child { text-align: right; }
+  .about__hero-mascot { --size: 300px !important; }
+
+  .about__split { flex-direction: row; align-items: center; gap: 48px; }
+  .about__split--intro { gap: 96px; }
+  .about__split--intro > .about__stack { flex: 1; align-self: auto; }
+  .about__intro-mascot { order: 0; --size: 340px !important; }
+  .about__text-col { flex: 1; min-width: 0; }
+
+  .about__sec--features { gap: 48px; }
+  .about__features { grid-template-columns: repeat(3, 1fr); }
+  .about__sec--audience { gap: 64px; }
+  .about__pair { grid-template-columns: 1fr 1fr; }
+  .about__steps { grid-template-columns: repeat(3, 1fr); }
+
+  .about__example--position { width: 536px; flex: none; padding: 48px; background: var(--color-canvas-soft); box-sizing: border-box; }
+  .about__example--position > .about__small { align-self: center; width: 440px; }
+  .about-preview { align-self: center; width: 358px; padding: 24px 20px; border: 0; box-sizing: border-box; }
+
+  .about__split--explore > .about__text-col { order: 0; }
+  .about__example--explore { width: 536px; flex: none; padding: 32px; box-sizing: border-box; }
+  .about__explore-mascot { --size: 160px !important; }
+
+  .about__split--counsel > .about__story { order: 0; }
+  .about__story { flex: 1; min-width: 0; }
+  .about__board { width: 560px; flex: none; padding: 24px; box-sizing: border-box; }
+  .about__plan-cards { gap: 16px; }
+  .about__plan-card { padding: 24px; }
+  .about__example--counsel { width: 560px; flex: none; padding: 24px; box-sizing: border-box; }
+
+  .about__sec--faq { gap: 48px; }
+  .about__faq li { gap: 24px; }
+
+  .about__final-mascot { --size: 200px !important; }
+  .about__footer { flex-direction: row; }
+  .about__footer > p { flex: 1; }
+  .about__footer > p:last-child { text-align: right; }
+}
