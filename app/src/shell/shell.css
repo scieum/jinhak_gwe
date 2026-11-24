@@ -209,8 +209,8 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--spacing-md);
-    height: var(--shell-topbar-height);
-    padding: 0 var(--spacing-xl);
+    min-height: var(--shell-topbar-height);
+    padding: 32px var(--spacing-xl) 24px; /* design.md page-header: 위 32 · 아래 24 */
     border-bottom: 1px solid var(--color-hairline);
   }
 
