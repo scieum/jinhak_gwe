@@ -64,7 +64,7 @@ describe('특수 계열 모아보기', () => {
     serve(); open();
     const table = await screen.findByRole('table');
     expect(chip(/메디컬/).getAttribute('aria-checked')).toBe('true');
-    expect(screen.getByText('대학 2곳 · 모집단위 2개', { selector: '.t-title' })).toBeTruthy();
+    expect(screen.getByText('대학 2곳 · 모집단위 2개', { selector: '.st-head__total' })).toBeTruthy();
     expect(screen.getByText('준비 중 모집단위 4개 — 검수가 끝나면 채워져요')).toBeTruthy();
     const rows = within(table).getAllByRole('row').slice(1).map(r => r.textContent);
     expect(rows[0]).toContain('가천대학교약학과'); expect(rows[0]).toContain('미공개');

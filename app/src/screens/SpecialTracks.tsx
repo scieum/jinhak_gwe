@@ -1,15 +1,19 @@
 // 특수 계열 모아보기(work/special-tracks/02-spec.md · 05-build.json). "특수 계열" 필터를 미리 걸어 둔 허브: 공개 숫자를 옮기고 거르기만 한다.
 // 판정 · 판정 색 · 순번 · 컷 순 정렬 · 내 위치 · 실기 점수 계산 없음(D10 · D21, NEVER-1).
-import { useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { useReleasedResults } from '../data/releasedResults';
 import { useSpecialTracks } from '../data/specialTracks';
+import { useSampleMode } from '../data/sample/mode';
+import { sampleTrackUnits } from '../data/sample/specialTracks';
 import {
   cellText, defaultType, PLAN_YEAR, PRACTICAL_TRACKS, planSummary, RESULT_YEAR, subCount, TRACK_RULE, trackOf, TRACKS, trackView, universitiesIn,
   type Practical, type ResultType, type SortKey, type TrackId, type TracksData, type ViewRow,
 } from '../domain/specialTracks';
 import { SegmentedControl } from '../components/SegmentedControl';
-import { UniversityLogo } from '../components/UniversityLogo';
+import { UniversityLogo, universityLogoFile } from '../components/UniversityLogo';
+import { ScreenActions } from '../components/ScreenActions';
 import { InterestButton } from '../components/InterestButton';
 import { Modal } from '../components/Modal';
 import { Icon } from '../components/Icon';
@@ -25,11 +29,15 @@ const q = encodeURIComponent;
 const eun = (w: string) => { const c = w.charCodeAt(w.length - 1) - 0xac00; return `${w}${c >= 0 && c < 11172 && c % 28 ? '은' : '는'}`; };
 
 export function SpecialTracks() {
-  const units = useReleasedResults(), data = useSpecialTracks(), compact = useCompactResults();
+  const released = useReleasedResults(), data = useSpecialTracks(), compact = useCompactResults(), sample = useSampleMode();
+  // 샘플 모드: 이 화면 샘플 입결을 더해요(다른 화면이 보는 공개 로더는 그대로)
+  const units = useMemo(() => released && sample ? [...released, ...sampleTrackUnits] : released, [released, sample]);
   const [track, setTrack] = useState<TrackId>('메디컬'), [sub, setSub] = useState<string | null>(null);
   const [type, setType] = useState<ResultType>('교과'), [sort, setSort] = useState<SortKey>('가나다');
   const [sheet, setSheet] = useState(false), [open, setOpen] = useState<ViewRow | null>(null), [announce, setAnnounce] = useState('');
   const chips = useRef<(HTMLButtonElement | null)[]>([]);
+  const [head, setHead] = useState<Element | null>(null);
+  useEffect(() => { setHead(compact ? null : document.querySelector('.topbar__heading')); }, [compact]);
 
   const view = data && units ? trackView(data, units, track, sub, type, sort) : null;
   const ready = view && view.status !== 'pending' ? view : null;
@@ -50,10 +58,14 @@ export function SpecialTracks() {
     e.preventDefault(); pickTrack(TRACKS[(i + d + TRACKS.length) % TRACKS.length].id, true);
   };
 
+  const typeSeg = <SegmentedControl label="전형 유형" value={type} onChange={setType} options={[{ value: '교과', label: '교과' }, { value: '종합', label: '종합' }]} />;
+  const asof = data?.base_date ? <span className="data-status-badge st-asof">데이터 기준일 {data.base_date}</span> : null;
+  const pendingBadge = ready && ready.pending > 0 && <span className="data-status-badge st-pending-count">준비 중 모집단위 {ready.pending}개 — 검수가 끝나면 채워져요</span>;
+  const yearNote = `전형계획은 ${PLAN_YEAR}학년도, 입결은 공개된 ${RESULT_YEAR}학년도예요 · 그사이 모집단위 · 인원이 바뀌었을 수 있어요`;
+  const basisNote = `수시 ${typeName} · 70% 컷 · 9등급 · 관리자가 검수한 입결만 · 등급은 숫자가 작을수록 상위예요`;
   return <section data-slug="special-tracks" aria-label="특수 계열 모아보기" className="student-screen special-tracks">
-    <header className="screen-heading"><div>{!compact && <p className="t-caption text-muted">대학 찾기 › 계열 모아보기</p>}<h2 className="t-heading-1">특수 계열 모아보기</h2>
-      {!compact && <p className="t-body-lg text-muted">메디컬 · 교육 · 과기원처럼 따로 찾는 계열을 묶어 {PLAN_YEAR} 전형계획과 공개 입결을 한 표로 보여 드려요</p>}</div>
-      {data?.base_date && !compact && <span className="data-status-badge">데이터 기준일 {data.base_date}</span>}</header>
+    {head && createPortal(<><h1 className="st-title">특수 계열 모아보기</h1><p className="st-lead">메디컬 · 교육 · 과기원처럼 따로 찾는 계열을 묶어 {PLAN_YEAR} 전형계획과 공개 입결을 한 표로 보여 드려요</p></>, head)}
+    {compact ? <h2 className="st-mtitle">특수 계열 모아보기</h2> : asof && <ScreenActions>{asof}</ScreenActions>}
 
     <section className="st-controls" aria-label="계열 고르기">
       <div className="st-row"><span className="t-label text-muted" id="st-track-label">계열</span>
@@ -67,7 +79,7 @@ export function SpecialTracks() {
           <div className="st-chips" role="group" aria-label="세부">
             {[null, ...info.subs].map(s => <button key={s ?? '전체'} type="button" className="filter-chip" aria-pressed={s === sub} onClick={() => setSub(s)}>{s ?? '전체'}</button>)}
           </div></>}
-        <SegmentedControl label="전형 유형" value={type} onChange={setType} options={[{ value: '교과', label: '교과' }, { value: '종합', label: '종합' }]} />
+        {typeSeg}
       </div>}
     </section>
     <p role="status" className="sr-only">{announce}</p>
@@ -77,27 +89,27 @@ export function SpecialTracks() {
         <p className="t-body-sm text-muted">{track === '특수목적대' ? '사관학교 · 경찰대학 등의 자료는 아직 검수 중이에요' : '이 묶음의 자료는 아직 검수 중이에요 · 검수가 끝나면 채워져요'}</p></div>
       : <>
         <div className="st-head">
-          <div><h3 className="t-heading-3">{track}</h3><p className="t-body-sm text-muted">{info.desc}</p>
-            <p className="t-title">대학 {ready.universities}곳 · 모집단위 {ready.rows.length}개</p>
-            {compact && data.base_date && <span className="data-status-badge">데이터 기준일 {data.base_date}</span>}
-            <p className="t-caption text-muted">전형계획은 {PLAN_YEAR}학년도, 입결은 공개된 {RESULT_YEAR}학년도예요 · 그사이 모집단위 · 인원이 바뀌었을 수 있어요</p></div>
-          {!compact && ready.pending > 0 && <span className="data-status-badge">준비 중 모집단위 {ready.pending}개 — 검수가 끝나면 채워져요</span>}
+          <div className="st-head__text"><div className="st-head__name"><h3>{track}</h3><p className="text-muted">{info.desc}</p></div>
+            <p className="st-head__total">대학 {ready.universities}곳 · 모집단위 {ready.rows.length}개</p>
+            {compact && asof}
+            <p className="st-head__note text-muted">{yearNote}{compact ? '' : ` · 입결 = ${basisNote}`}</p></div>
+          {!compact && pendingBadge}
         </div>
-        {compact && <div className="st-row st-pick">
-          <SegmentedControl label="전형 유형" value={type} onChange={setType} options={[{ value: '교과', label: '교과' }, { value: '종합', label: '종합' }]} />
-          <button type="button" className="button-pill-soft" aria-haspopup="dialog" onClick={() => setSheet(true)}>{info.subs.length ? `세부 ${sub ?? '전체'} · ` : ''}{SORT_LABEL[sort]} ▾</button>
+        {compact && <div className="st-pick">
+          <div className="st-pick__row">{typeSeg}
+            <button type="button" className="button-pill-soft" aria-haspopup="dialog" onClick={() => setSheet(true)}>{info.subs.length ? `세부 ${sub ?? '전체'} · ` : ''}{SORT_LABEL[sort]} ▾</button></div>
+          <p className="st-head__note text-muted">입결 = {RESULT_YEAR}학년도 {basisNote}</p>
+          {pendingBadge}
         </div>}
-        <p className="t-caption text-muted">입결 = {RESULT_YEAR}학년도 수시 {typeName} · 70% 컷 · 9등급 · 관리자가 검수한 입결만 · 등급은 숫자가 작을수록 상위예요</p>
-        {compact && ready.pending > 0 && <span className="data-status-badge">준비 중 모집단위 {ready.pending}개 — 검수가 끝나면 채워져요</span>}
 
         {ready.status === 'empty' ? <div className="empty-state"><Icon name="folder" />
           <h3 className="t-heading-4">{eun(track)} 공개된 {type} 전형 입결이 없어요</h3>
           <p>{ready.typeInPlan ? `검수가 끝난 ${RESULT_YEAR}학년도 ${type} 입결이 아직 없어요` : `${track} ${ready.universities}곳은 ${PLAN_YEAR}에 ${type} 전형으로 뽑지 않아요`}</p>
           <button type="button" className="button-primary" onClick={() => setType(other(type))}>{other(type)} 입결로 보기</button></div>
-          : compact ? <ul className="st-cards">{ready.rows.map(v => <li key={`${v.row.university}|${v.row.unit}`}><Card v={v} track={track} type={type} onOpen={() => setOpen(v)} /></li>)}</ul>
-          : <Table rows={ready.rows} track={track} type={type} sort={sort} onSort={setSort} onOpen={setOpen} />}
+          : compact ? <CardList key={`${track}|${sub}|${type}|${sort}`} rows={ready.rows} track={track} type={type} onOpen={setOpen} />
+          : <Table key={`${track}|${sub}|${type}|${sort}`} rows={ready.rows} track={track} type={type} sort={sort} onSort={setSort} onOpen={setOpen} />}
 
-        <details className="trace-accordion"><summary>어떻게 묶었나요?</summary>
+        <details className="trace-accordion"><summary><span>어떻게 묶었나요?</span><Icon name="chevron-down" size={20} /></summary>
           <ol>
             <li>묶음 기준 → 모집단위 → 묶음 매핑표(관리자 2명 검수{data.mapping_reviewed_at ? `, 검수일 ${data.mapping_reviewed_at}` : ''})</li>
             <li>{track}에 넣는 것 → {TRACK_RULE[track]}</li>
@@ -111,7 +123,7 @@ export function SpecialTracks() {
           <p className="disclaimer-note t-caption text-muted">공개된 숫자를 옮기고 거르기만 했어요{data.base_date ? ` · 데이터 기준일 ${data.base_date}` : ''}</p>
         </details>
       </>}
-    <p className="disclaimer-note t-caption text-muted">ⓘ 공개된 {PLAN_YEAR} 전형계획과 {RESULT_YEAR}학년도 수시 입결을 계열별로 모은 표예요 · 대학이나 학과의 순위 · 추천이 아니에요 · 목록 순서는 가나다순일 뿐이에요 · 대학 공식 모집요강이 최종 기준이에요{data?.base_date ? ` · 데이터 기준일 ${data.base_date}` : ''}</p>
+    <p className="disclaimer-note st-note"><Icon name="info" size={16} /><span>공개된 {PLAN_YEAR} 전형계획과 {RESULT_YEAR}학년도 수시 입결을 계열별로 모은 표예요 · 대학이나 학과의 순위 · 추천이 아니에요 · 목록 순서는 가나다순일 뿐이에요 · 대학 공식 모집요강이 최종 기준이에요{sample ? ' · 샘플의 대학·숫자는 예시예요' : ''}{data?.base_date ? ` · 데이터 기준일 ${data.base_date}` : ''}</span></p>
     {sheet && data && <SubSheet data={data} track={track} sub={sub} sort={sort} onSub={s => { setSub(s); setSheet(false); }} onSort={s => { setSort(s); setSheet(false); }} onClose={() => setSheet(false)} />}
     {open && <Detail v={open} track={track} type={type} onClose={() => setOpen(null)} />}
   </section>;
@@ -119,8 +131,8 @@ export function SpecialTracks() {
 
 function ResultValue({ v, type }: { v: ViewRow; type: ResultType }) {
   const t = cellText(v.cell);
-  return 'cut' in v.cell ? <span className="t-numeric num">{t}</span>
-    : <span className="t-body-sm text-muted" aria-label={BLANK_SR[t] ? (t === '—' ? `${type} ${BLANK_SR[t]}` : BLANK_SR[t]) : undefined}>{t}</span>;
+  return 'cut' in v.cell ? <span className="st-card__value num">{t}</span>
+    : <span className="st-blank text-muted" aria-label={BLANK_SR[t] ? (t === '—' ? `${type} ${BLANK_SR[t]}` : BLANK_SR[t]) : undefined}>{t}</span>;
 }
 const practicalNote = (v: ViewRow, track: TrackId, pc: boolean) => !PRACTICAL_TRACKS.includes(track) ? null
   : <p className="t-caption text-muted">{v.practical.length ? `실기 ${v.practical[0].subjects.length}종목 · ${pc ? '채점 기준 있어요' : '상세에서 채점 기준을 봐요'}` : '실기 기준 준비 중'}</p>;
@@ -129,44 +141,67 @@ const practicalOnly = (v: ViewRow) => 'text' in v.cell && v.cell.text === '실�
 const othersNote = (v: ViewRow) => v.others.length > 0 && <p className="t-caption text-muted">· {v.others.join(' · ')} 묶음에도 있어요</p>;
 const interestProgram = (v: ViewRow, type: ResultType) => (v.cell.row?.program || v.row.plan.find(p => p.type === type)?.name || v.row.plan[0].name);
 
+/** univ-logo, 로고 파일이 없으면 univ-monogram(첫 글자) */
+const Logo = ({ university }: { university: string }) => universityLogoFile(university) ? <UniversityLogo university={university} /> : <span className="st-mono" aria-hidden="true" data-ch={university.slice(0, 1)} />;
+
 function Card({ v, track, type, onOpen }: { v: ViewRow; track: TrackId; type: ResultType; onOpen: () => void }) {
   const r = v.row, cut = cellText(v.cell);
   const label = `${r.university} ${r.unit}, ${PLAN_YEAR} 모집 ${v.total}명 ${planSummary(r)}, ${RESULT_YEAR}학년도 ${type} 70% 컷 ${'cut' in v.cell ? cut : BLANK_SR[cut] ?? cut}${v.cell.row?.competition_rate ? `, 경쟁률 ${v.cell.row.competition_rate} 대 1` : ''}, 상세 보기`;
   return <article className="univ-card st-card">
-    <header><UniversityLogo university={r.university} /><span className="t-heading-3">{r.university}</span>
+    <header><Logo university={r.university} /><span className="st-card__name">{r.university}</span>
       <InterestButton compact university={r.university} program={interestProgram(v, type)} department={r.unit} /></header>
     <button type="button" className="st-card__open" aria-label={label} onClick={onOpen}>
-      <span className="t-title">{r.unit}</span>
+      <span className="st-card__unit">{r.unit}</span>
       {r.tag && <span className="data-status-badge data-status-badge--fact">{r.tag}</span>}
       {othersNote(v)}
-      <span className="t-body-sm text-muted">{PLAN_YEAR} · {planSummary(r)} · 모집 {v.total}</span>
-      <span className="st-card__kv"><span><span className="t-caption text-muted">{type} 70% 컷 </span><ResultValue v={v} type={type} /></span>
-        {v.cell.row && <span><span className="t-caption text-muted">경쟁률 </span><span className="t-numeric num">{v.cell.row.competition_rate ? `${v.cell.row.competition_rate}:1` : '—'}</span></span>}</span>
+      <span className="st-card__plan">{PLAN_YEAR} · {planSummary(r)} · 모집 {v.total}</span>
       {practicalOnly(v)}
       {practicalNote(v, track, false)}
-      <span className="st-card__go" aria-hidden="true">›</span>
+      <span className="st-card__kv"><span className="st-card__pairs"><span><span className="st-card__label">{type} 70% 컷</span><ResultValue v={v} type={type} /></span>
+        {v.cell.row && <span><span className="st-card__label">경쟁률</span><span className="st-card__value num">{v.cell.row.competition_rate ? `${v.cell.row.competition_rate}:1` : '—'}</span></span>}</span>
+        <Icon name="chevron-right" size={20} /></span>
     </button>
   </article>;
 }
 
+/** 시안: 목록 · 표는 앞 8개 높이로 보여 주고 나머지는 그 안에서 스크롤해요. 처음엔 8개만 그리고(나머지 자리는 빈 높이)
+ *  안에서 스크롤 · 포커스하거나 "모두 보기"를 누르면 나머지를 그려요. */
+const FIRST = 8;
+function useFirstRows(rows: ViewRow[]) {
+  const [all, setAll] = useState(rows.length <= FIRST);
+  const more = () => setAll(true);
+  return { shown: all ? rows : rows.slice(0, FIRST), rest: all ? 0 : rows.length - FIRST, more,
+    moreButton: !all && <button type="button" className="sr-only" onClick={more}>나머지 {rows.length - FIRST}개 모두 보기</button> };
+}
+
+function CardList({ rows, track, type, onOpen }: { rows: ViewRow[]; track: TrackId; type: ResultType; onOpen: (v: ViewRow) => void }) {
+  const { shown, rest, more, moreButton } = useFirstRows(rows);
+  return <><ul className="st-cards" tabIndex={0} aria-label={`${track} 모집단위 ${rows.length}개, 넘겨서 더 보기`} onScroll={more} onFocus={more}>
+    {shown.map(v => <li key={`${v.row.university}|${v.row.unit}`}><Card v={v} track={track} type={type} onOpen={() => onOpen(v)} /></li>)}
+    {rest > 0 && <li aria-hidden="true" style={{ height: rest * 171 - 12 }} />}</ul>{moreButton}</>;
+}
+
 function Table({ rows, track, type, sort, onSort, onOpen }: { rows: ViewRow[]; track: TrackId; type: ResultType; sort: SortKey; onSort: (s: SortKey) => void; onOpen: (v: ViewRow) => void }) {
-  const sortHead = (key: SortKey, label: string) => <th scope="col" aria-sort={sort === key ? (key === '가나다' ? 'ascending' : 'descending') : 'none'}>
-    <button type="button" className="sort-header-button" onClick={() => onSort(key)} aria-label={`${label}, ${SORT_LABEL[key]}으로 정렬`}>{label} <span aria-hidden="true">{sort === key ? (key === '가나다' ? '↑' : '↓') : '↕'}</span></button></th>;
-  return <div className="st-table-card"><table className="data-table st-table">
+  const { shown, rest, more, moreButton } = useFirstRows(rows);
+  const sortHead = (key: SortKey, label: string, className?: string) => <th scope="col" className={className} aria-sort={sort === key ? (key === '가나다' ? 'ascending' : 'descending') : 'none'}>
+    <button type="button" className="sort-header-button" onClick={() => onSort(key)} aria-label={`${label}, ${SORT_LABEL[key]}으로 정렬`}>{label}<Icon name="arrow-up-down" size={16} /></button></th>;
+  // 시안: 표 카드는 머리 + 8행 높이, 나머지 행은 카드 안에서 스크롤(머리 고정)
+  return <div className="st-table-card" tabIndex={0} aria-label={`${track} 모집단위 표, 넘겨서 더 보기`} onScroll={more} onFocus={more}><table className="data-table st-table">
     <caption className="sr-only">{track} 모집단위 · {PLAN_YEAR} 전형계획과 {RESULT_YEAR}학년도 {type} 입결</caption>
-    <thead><tr>{sortHead('가나다', '대학')}<th scope="col">모집단위</th><th scope="col">{PLAN_YEAR} 전형</th>{sortHead('모집', '모집')}
+    <colgroup><col style={{ width: 212 }} /><col style={{ width: 180 }} /><col style={{ width: 216 }} /><col style={{ width: 80 }} /><col style={{ width: 110 }} /><col style={{ width: 96 }} /><col style={{ width: 80 }} /><col style={{ width: 54 }} /><col style={{ width: 52 }} /></colgroup>
+    <thead><tr>{sortHead('가나다', '대학')}<th scope="col">모집단위</th><th scope="col">{PLAN_YEAR} 전형</th>{sortHead('모집', '모집', 'num')}
       <th scope="col" className="num">{RESULT_YEAR} {type} 70% 컷</th><th scope="col" className="num">경쟁률</th><th scope="col" className="num">충원율</th><th scope="col">기준</th><th scope="col"><span className="sr-only">상세</span></th></tr></thead>
-    <tbody>{rows.map(v => { const r = v.row, row = v.cell.row; return <tr key={`${r.university}|${r.unit}`}>
-      <td><span className="st-univ"><UniversityLogo university={r.university} />{r.university}</span></td>
+    <tbody>{shown.map(v => { const r = v.row, row = v.cell.row; return <tr key={`${r.university}|${r.unit}`}>
+      <td><span className="st-univ"><Logo university={r.university} />{r.university}</span></td>
       <td>{r.unit}{r.tag && <><br /><span className="data-status-badge data-status-badge--fact">{r.tag}</span></>}{othersNote(v)}{practicalOnly(v)}{practicalNote(v, track, true)}</td>
       <td>{planSummary(r)}</td><td className="num">{v.total}</td>
       <td className="num"><ResultValue v={v} type={type} /></td>
-      <td className="num">{row?.competition_rate ? `${row.competition_rate}:1` : '—'}</td>
-      <td className="num">{row ? (row.fill_rate ? `${row.fill_rate}%` : '미공개') : '—'}</td>
-      <td>{row?.basis ? <span className="st-basis" tabIndex={0} title={`70% 컷 · ${row.basis}`} aria-label={`기준: 70% 컷 · ${row.basis}`}>ⓘ</span> : '—'}</td>
-      <td><button type="button" className="st-row-open" aria-label={`${r.university} ${r.unit} 상세 보기`} onClick={() => onOpen(v)}>›</button></td>
+      <td className="num">{row?.competition_rate ? `${row.competition_rate}:1` : <span className="text-muted">—</span>}</td>
+      <td className="num">{row ? (row.fill_rate ? `${row.fill_rate}%` : <span className="text-muted">미공개</span>) : <span className="text-muted">—</span>}</td>
+      <td>{row?.basis ? <span className="st-basis" tabIndex={0} title={`70% 컷 · ${row.basis}`} aria-label={`기준: 70% 컷 · ${row.basis}`}><Icon name="info" size={20} /></span> : <span className="text-muted">—</span>}</td>
+      <td><button type="button" className="st-row-open" aria-label={`${r.university} ${r.unit} 상세 보기`} onClick={() => onOpen(v)}><Icon name="chevron-right" size={20} /></button></td>
     </tr>; })}</tbody>
-  </table></div>;
+  </table>{rest > 0 && <div aria-hidden="true" style={{ height: rest * 49 }} />}{moreButton}</div>;
 }
 
 function SubSheet({ data, track, sub, sort, onSub, onSort, onClose }: { data: TracksData; track: TrackId; sub: string | null; sort: SortKey; onSub: (s: string | null) => void; onSort: (s: SortKey) => void; onClose: () => void }) {

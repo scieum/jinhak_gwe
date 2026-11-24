@@ -79,7 +79,7 @@ describe('학과별 입결 구간표', () => {
     serve(); open();
     await screen.findByText('1.5~2.0');
     expect(screen.getByRole('heading', { name: '내 위치' })).toBeTruthy();
-    expect(screen.getByText('검수된 환산 규칙이 생기면 이 표 위에 내 위치를 보여 드려요')).toBeTruthy();
+    expect(screen.getByText(/검수된 환산 규칙이 생기면 (이 표 위에|왼쪽 축에) 내 위치를 보여 드려요/)).toBeTruthy(); // 시안: 모바일 "이 표 위에" · PC "왼쪽 축에"
     const text = document.body.textContent ?? '';
     for (const word of ['안정', '적정', '소신', '상향', '위험', '티어', '1위', '합격'])
       expect(text, word).not.toContain(word);

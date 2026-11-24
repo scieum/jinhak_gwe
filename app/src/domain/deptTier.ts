@@ -55,7 +55,8 @@ export const tierFields = (fields: readonly FieldRow[]) => fields.filter(f => MA
 export function groupsOf(fields: readonly FieldRow[]): TierGroup[] {
   const seen = new Map<string, TierGroup>();
   for (const f of tierFields(fields)) seen.set(`${f.major}|${f.mid}|${f.small}`, { major: f.major as Major, mid: f.mid, small: f.small });
-  return [...seen.values()].sort((a, b) => a.major.localeCompare(b.major, 'ko') || a.mid.localeCompare(b.mid, 'ko') || a.small.localeCompare(b.small, 'ko'));
+  // 대계열만 인문 → 자연, 중계열 · 소계열은 계열표(관리자 검수표)에 적힌 순서 그대로(시안 칩 순서)
+  return [...seen.values()].sort((a, b) => a.major.localeCompare(b.major, 'ko'));
 }
 export const sameGroup = (a: TierGroup, b: TierGroup) => a.major === b.major && a.mid === b.mid && a.small === b.small;
 

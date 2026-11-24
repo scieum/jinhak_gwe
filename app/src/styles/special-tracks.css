@@ -1,30 +1,84 @@
-/* 특수 계열 모아보기 (design.md filter-chip · univ-card 목록 변형 · data-table 변형 expand · data-status-badge 변형 fact). 모서리 0, 판정 색 없음. Route Blue는 컨트롤 선택 · 링크에만. */
-.st-controls, .st-pending, .st-table-card { display: grid; gap: var(--spacing-sm); padding: var(--spacing-lg); background: var(--color-canvas); }
-.st-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-xs); }
-.st-row > .t-label { min-width: 40px; }
-.st-row--sub .segmented-control { margin-left: auto; }
-.st-chips { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
-.special-tracks .filter-chip { min-height: 32px; padding: 0 var(--spacing-sm); border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: var(--font-body-sm-size); white-space: nowrap; cursor: pointer; }
+/* 특수 계열 모아보기 (design.md filter-chip · univ-card 목록 변형 · data-table 변형 expand · data-status-badge 변형 fact · Figma 430:51283 · 429:50971). 모서리 0, 판정 색 없음. Route Blue는 컨트롤 선택 · 링크에만. */
+.special-tracks .data-status-badge { display: inline-flex; align-items: center; justify-self: start; height: 24px; padding: 0 var(--spacing-xs); line-height: 16.8px; white-space: nowrap; }
+.st-asof, .st-pending-count, .topbar__actions .st-asof { background: var(--color-canvas); }
+.topbar__actions .st-asof { display: inline-flex; align-items: center; height: 24px; padding: 0 var(--spacing-xs); line-height: 16.8px; white-space: nowrap; }
+.st-controls { display: grid; gap: var(--spacing-md); min-width: 0; }
+.st-pending, .st-table-card { display: grid; gap: var(--spacing-sm); padding: var(--spacing-lg); background: var(--color-canvas); }
+.st-row { display: flex; align-items: center; gap: var(--spacing-xs); min-width: 0; }
+.st-row > .t-label { flex: none; width: 40px; font-size: 12px; line-height: 17px; }
+.st-row--sub .segmented-control { flex: none; width: 160px; margin-left: auto; }
+.st-chips { display: flex; gap: var(--spacing-xs); min-width: 0; }
+.special-tracks .filter-chip { flex: none; height: 36px; min-height: 36px; padding: 0 12.25px; /* Figma 글자 폭이 칩당 약 0.5px 넓어요 */ border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; cursor: pointer; }
 .special-tracks .filter-chip[aria-checked='true'], .special-tracks .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.special-tracks .segmented-control { gap: var(--spacing-xxs); height: 48px; padding: var(--spacing-xxs); overflow: visible; }
+.special-tracks .segmented-control__option { flex: 1; min-width: 0; min-height: 40px; padding: 0; font-size: 15px; line-height: 23px; }
 .special-tracks .num { font-variant-numeric: tabular-nums; }
-.st-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--spacing-md); }
-.st-head > div { display: grid; gap: var(--spacing-xxs); }
+.st-mtitle { margin: 0; font-size: 26px; font-weight: 700; line-height: 34px; }
+.st-head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--spacing-md); }
+.st-head__text { display: grid; gap: 6px; min-width: 0; }
+.st-head__name { display: grid; gap: 6px; }
+.st-head__name h3 { margin: 0; font-size: 19px; font-weight: 700; line-height: 26px; }
+.st-head__name p { margin: 0; font-size: 13px; line-height: 20px; }
+.st-head__total { margin: 0; font-size: 16px; font-weight: 600; line-height: 22px; }
+.st-head__note { margin: 0; font-size: 12px; line-height: 17px; }
 .data-status-badge--fact { padding: 0 var(--spacing-xs); line-height: 20px; background: var(--color-canvas); border: 1px solid var(--color-hairline); color: var(--color-ink-soft); }
-.st-table { table-layout: auto; }
-.st-table td { vertical-align: top; }
+.st-mono { display: grid; place-items: center; flex: none; width: 32px; height: 32px; background: var(--color-canvas-soft); color: var(--color-ink); font-size: 17px; font-weight: 700; line-height: 23px; }
+.st-mono::before { content: attr(data-ch); }
+
+/* 요약 표(PC) — 머리 + 8행 높이 카드, 나머지는 카드 안 스크롤 */
+.st-table-card { display: block; max-height: 452px; overflow: auto; padding: var(--spacing-xs) var(--spacing-lg); }
+.st-table { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0; }
+.special-tracks .st-table thead th { position: sticky; top: calc(-1 * var(--spacing-xs)); z-index: 1; height: 44px; padding: 0 var(--spacing-md); background: var(--color-canvas-soft); color: var(--color-ink-soft); font-size: 12px; font-weight: 600; line-height: 16.8px; text-align: left; }
+.st-table thead th.num { text-align: right; }
+/* 시안 머리글 칸 경계가 본문 칸과 조금 달라요(머리 202 · 180 · 216 · 80 · 128 · 96 · 80 · 54 · 44 / 본문 212 · 180 · 216 · 80 · 110 · 96 · 80 · 54 · 52) — 글자 자리를 시안 머리글에 맞춰요 */
+.special-tracks .st-table thead th:nth-child(2), .special-tracks .st-table thead th:nth-child(3) { padding-left: 6px; }
+.special-tracks .st-table thead th:nth-child(4) { padding: 0 0 0 8px; text-align: left; }
+.special-tracks .st-table thead th:nth-child(5) { padding-left: 6px; text-align: left; }
+.special-tracks .st-table thead th:nth-child(6), .special-tracks .st-table thead th:nth-child(7) { padding-right: 8px; }
+.special-tracks .st-table thead th:nth-child(8) { padding-left: 24px; }
+.st-table thead .sort-header-button { gap: var(--spacing-xs); min-height: 0; font-weight: 600; }
+.st-table thead .sort-header-button .icon { color: var(--color-ink); }
+.special-tracks .st-table td { height: 49px; padding: 0 var(--spacing-md); border-bottom: 1px solid var(--color-hairline); font-size: 14px; font-weight: 400; line-height: 19.6px; vertical-align: middle; }
+.st-table td.num { text-align: right; }
+.st-table .st-card__value, .st-table .st-blank { font-size: 14px; font-weight: 400; line-height: 19.6px; }
 .st-table tbody tr:hover { box-shadow: inset 0 0 0 1px var(--color-ink); }
 .st-univ { display: inline-flex; align-items: center; gap: var(--spacing-xs); word-break: keep-all; }
-.st-univ .university-logo img, .st-detail-title .university-logo img { width: 20px; height: 20px; object-fit: contain; }
-.st-basis { cursor: help; }
+.st-univ .st-mono, .st-univ .university-logo, .st-univ .university-logo img { width: 24px; height: 24px; object-fit: contain; }
+.st-detail-title .university-logo img { width: 20px; height: 20px; object-fit: contain; }
+.st-basis { display: inline-flex; cursor: help; }
 .st-row-open, .st-expand { min-width: 44px; min-height: 44px; border: 0; background: none; color: var(--color-ink); font: inherit; cursor: pointer; }
-.st-cards { display: grid; gap: var(--spacing-sm); list-style: none; margin: 0; padding: 0; }
-.st-card { display: grid; gap: var(--spacing-xs); padding: var(--spacing-md); background: var(--color-canvas); border: 0; }
-.st-card header { display: flex; align-items: center; gap: var(--spacing-xs); }
-.st-card header .t-heading-3 { flex: 1; word-break: keep-all; }
-.st-card .university-logo img { width: 32px; height: 32px; object-fit: contain; }
-.st-card__open { position: relative; display: grid; gap: var(--spacing-xxs); justify-items: start; padding: 0 var(--spacing-lg) 0 0; border: 0; background: none; color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
-.st-card__kv { display: flex; gap: var(--spacing-md); width: 100%; margin-top: var(--spacing-xxs); padding-top: var(--spacing-xs); border-top: 1px solid var(--color-hairline-soft); }
-.st-card__go { position: absolute; right: 0; bottom: 0; color: var(--color-text-muted); }
+.st-table .st-row-open { display: inline-flex; align-items: center; min-width: 20px; min-height: 44px; padding: 0; }
+
+/* 요약 카드(모바일) — 시안: 8장 높이 목록, 나머지는 목록 안 스크롤 */
+.st-cards { display: grid; gap: var(--spacing-sm); max-height: 1357px; overflow-y: auto; list-style: none; margin: 0; padding: 0; }
+.special-tracks .univ-card.st-card { display: grid; gap: 0; padding: var(--spacing-md); background: var(--color-canvas); border: 0; }
+.st-card header { display: flex; align-items: center; gap: var(--spacing-xs); min-height: 44px; }
+.st-card__name { flex: 1; font-size: 19px; font-weight: 700; line-height: 26px; word-break: keep-all; }
+.st-card .university-logo, .st-card .university-logo img { width: 32px; height: 32px; object-fit: contain; }
+.st-card .interest-heart { width: 44px; height: 44px; min-height: 44px; margin: 0; padding: 0; justify-content: center; border: 0; background: none; }
+.st-card__open { display: grid; justify-items: start; padding: 0; margin-top: var(--spacing-xxs); border: 0; background: none; color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
+.st-card__unit { font-size: 16px; font-weight: 600; line-height: 22px; }
+.st-card__plan { margin-top: var(--spacing-xxs); color: var(--color-text-muted); font-size: 13px; line-height: 20px; }
+.st-card__kv { display: flex; align-items: center; justify-content: space-between; width: 100%; padding-top: var(--spacing-xs); border-top: 1px solid var(--color-hairline-soft); }
+.st-card__pairs { display: flex; gap: 20px; }
+.st-card__pairs > span { display: inline-flex; align-items: baseline; gap: 6px; }
+.st-card__label { color: var(--color-text-muted); font-size: 12px; line-height: 17px; }
+.st-card__value { color: var(--color-ink); font-size: 20px; font-weight: 700; line-height: 24px; }
+.st-card .st-blank { font-size: 13px; line-height: 19.5px; }
+.st-pick { display: grid; gap: var(--spacing-xs); }
+.st-pick__row { display: flex; align-items: center; gap: var(--spacing-xs); }
+.st-pick__row > .segmented-control { flex: none; width: 140px; background: var(--color-canvas); }
+.st-pick__row > .button-pill-soft { flex: 1; justify-content: center; min-height: 44px; border: 0; background: var(--color-canvas); font-size: 15px; line-height: 23px; }
+
+/* trace-accordion v2 · disclaimer-note v2 */
+.special-tracks .trace-accordion { padding: 0; border: 0; background: var(--color-canvas-soft); }
+.special-tracks .trace-accordion summary { display: flex; align-items: center; gap: var(--spacing-xs); min-height: 48px; padding: 0 var(--spacing-md); list-style: none; font-size: 16px; font-weight: 600; line-height: 22.4px; cursor: pointer; }
+.special-tracks .trace-accordion summary::-webkit-details-marker { display: none; }
+.special-tracks .trace-accordion summary > span:first-child { flex: 1; }
+.special-tracks .trace-accordion > :not(summary) { margin: 0 var(--spacing-md) var(--spacing-md); }
+.special-tracks .st-note { display: flex; align-items: center; gap: var(--spacing-xxs); margin: 0; color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; }
+.st-note .icon { flex: none; }
+
 .st-total { margin-top: var(--spacing-sm); padding-top: var(--spacing-sm); border-top: 1px solid var(--color-hairline); font-weight: 600; }
 .special-tracks .empty-state { display: grid; justify-items: center; text-align: center; gap: var(--spacing-xs); background: var(--color-canvas); }
 .st-sheet { display: grid; gap: var(--spacing-xxs); }
@@ -41,14 +95,21 @@
 .st-criteria .data-table thead { background: var(--color-canvas); }
 .st-criteria .data-table td, .st-criteria .data-table th { padding-block: var(--spacing-xxs); }
 
-@media (max-width: 767px) {
-  .st-controls { padding: 0; background: none; }
-  .st-chips { flex-wrap: nowrap; overflow-x: auto; margin-right: calc(-1 * var(--spacing-card)); scrollbar-width: none; }
+@media (max-width: 1023px) {
+  .st-chips { overflow-x: auto; margin-right: calc(-1 * var(--spacing-card)); scrollbar-width: none; }
   .st-controls .st-row > .t-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
-  .special-tracks .filter-chip { min-height: 44px; }
-  .st-pick .segmented-control { flex: 1 1 140px; }
-  .st-pick .button-pill-soft { min-height: 44px; }
   .st-detail--wide { grid-template-columns: 1fr; }
+}
+@media (min-width: 1024px) {
+  .shell:has(.special-tracks) .topbar__heading > h1:not(.st-title) { display: none; }
+  .shell:has(.special-tracks) .topbar__actions > :not(#topbar-screen-actions) { display: none; }
+  .topbar__heading .st-title { margin-top: 4px; font-size: 32px; line-height: 42px; font-weight: 700; }
+  .topbar__heading .st-lead { margin-top: 4px; font-size: 18px; line-height: 27px; font-weight: 300; color: var(--color-ink); }
+  .st-controls { padding: var(--spacing-lg); background: var(--color-canvas); }
+  .st-head__name { display: flex; align-items: baseline; gap: var(--spacing-sm); }
+  .st-head__name h3 { font-size: 21px; line-height: 28px; }
+  .st-head__name p { font-size: 14px; line-height: 21px; }
+  .st-head__text { max-width: 859px; }
 }
 @media (prefers-reduced-motion: no-preference) { .st-cards, .st-table-card, .st-criteria { animation: st-fade 150ms ease-out; } }
 @keyframes st-fade { from { opacity: 0; } to { opacity: 1; } }
