@@ -6,14 +6,13 @@
     "P 390: 본문 왼쪽 여백(시안) 20 (기준 16±2)",
     "P 390: segmented-control x 37 (시안 16±4)",
     "P 390: segmented-control 폭 316 (시안 358±4)",
-    "T 1440: 문구 없음 '잠금'",
     "P 1440: page-header 글자→첫 블록 간격(시안) 48 (기준 24±2)",
     "P 1440: segmented-control x 297 (시안 280±4)",
     "P 1440: segmented-control 폭 517 (시안 620±4)",
     "P 1440: text-input x 1273 (시안 1312±4)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 1,
   "route": "/grade-input",
   "allowed": [],
   "notes": []

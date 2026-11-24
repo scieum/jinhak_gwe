@@ -6,6 +6,7 @@ import { ModeSwitch } from './ModeSwitch';
 import { MODE_HOME, MORE_PATH, NAV, locate, modeOf, type NavGroup } from './nav';
 import { workspaceOf } from './workspace';
 import { TeacherLockButton, TeacherLockGate } from '../components/TeacherLock';
+import { StudentLockButton, StudentLockGate } from '../components/StudentLock';
 import { dataAsOf } from '../data/catalog';
 import { SampleBanner, SampleReshowButton } from './SampleBanner';
 import './shell.css';
@@ -103,7 +104,7 @@ export function AppShell() {
             <p className="t-caption text-muted">{breadcrumb ?? title}</p>
             <h1 className="t-heading-3">{title}</h1>
           </div>
-          <div className="topbar__actions"><div id="topbar-screen-actions" />{mode !== 'admin' && <ModeSwitch mode={mode} />}{modeOf(pathname) === 'teacher' && <TeacherLockButton />}</div>
+          <div className="topbar__actions"><div id="topbar-screen-actions" />{mode !== 'admin' && <ModeSwitch mode={mode} />}{modeOf(pathname) === 'teacher' && <TeacherLockButton />}{modeOf(pathname) === 'student' && <StudentLockButton />}</div>
         </header>
 
         <header className="appbar">
@@ -137,6 +138,7 @@ export function AppShell() {
           <Outlet />
         </main>
         {modeOf(pathname) === 'teacher' && <TeacherLockGate />}
+        {modeOf(pathname) === 'student' && <StudentLockGate />}
       </div>
 
       <nav className="tab-bar-pill" aria-label="하단 탭">

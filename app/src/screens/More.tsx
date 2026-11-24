@@ -6,8 +6,9 @@ import { ButtonOutline, ButtonPrimary } from '../components/Buttons';
 import { Modal } from '../components/Modal';
 import { studentDb } from '../store/studentDb';
 import { SampleReshowButton } from '../shell/SampleBanner';
+import { StudentLockButton } from '../components/StudentLock';
 
-// 모바일 "더보기": 모드 전환·로그인 진입. 설정·잠금은 아직 없다.
+// 모바일 "더보기": 모드 전환·로그인 진입·학생 화면 잠금(design.md 탭바 "더보기(교사 모드·설정·잠금)").
 export function More({ mode }: { mode: Mode }) {
   const [confirm, setConfirm] = useState(false), [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
@@ -17,7 +18,7 @@ export function More({ mode }: { mode: Mode }) {
       <Link className="t-link more-link" to="/login">
         교사·관리자 로그인
       </Link>
-      {mode === 'student' && <><Link to="/grade-input?backup=1" className="button-outline">학생 기록 백업·복원</Link><ButtonOutline onClick={() => setConfirm(true)}>이 기기의 학생 데이터 지우기</ButtonOutline><p role="status">{message}</p></>}
+      {mode === 'student' && <><StudentLockButton className="button-outline" /><Link to="/grade-input?backup=1" className="button-outline">학생 기록 백업·복원</Link><ButtonOutline onClick={() => setConfirm(true)}>이 기기의 학생 데이터 지우기</ButtonOutline><p role="status">{message}</p></>}
       <SampleReshowButton />
       {mode === 'teacher' && <nav className="more-features" aria-label="학생 기능"><h2 className="t-heading-3">학생 기능</h2>
         <p className="t-caption text-muted">교사 모드에서도 학생 화면을 모두 쓸 수 있어요. 여기 기록은 이 기기의 학생 저장소에 남아요.</p>
