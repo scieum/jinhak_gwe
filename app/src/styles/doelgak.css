@@ -63,11 +63,12 @@
 .dg-card__range strong { font-size: 20px; line-height: 24px; color: var(--color-ink); }
 .dg-boundary { padding: 0 4px; border: 1px dashed var(--color-ink); font-size: 12px; line-height: 16px; }
 .dg-card__numbers .t-caption { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.dg-bar { margin-top: auto; padding-top: 21px; }
+.dg-bar { margin-top: auto; padding-top: 24px; } /* 시안 cut-compare-bar: 위 24에 트랙 */
 .dg-bar__track { position: relative; height: 6px; background: var(--color-hairline-soft); }
 .dg-bar__range { position: absolute; top: 0; height: 6px; background: var(--color-accent); }
 .dg-bar__cut { position: absolute; top: -3px; width: 1px; height: 12px; background: var(--color-text-faint); }
 .dg-bar__axis { position: relative; display: flex; justify-content: space-between; margin-top: 7px; color: var(--color-text-muted); font-size: 13px; line-height: 20px; }
+.dg-bar__axis { margin-bottom: -3px; } /* 시안 막대 묶음 높이 54(축 글자가 3 넘쳐요) — 카드 아래 칩 줄 위치는 그대로 */
 .dg-bar__cut-label { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
 .dg-card__chips { display: flex; gap: 4px; min-height: 24px; overflow: hidden; }
 
@@ -77,6 +78,9 @@
 .dg-table__univ { display: flex; align-items: center; gap: var(--spacing-xs); white-space: nowrap; }
 .dg-table .university-logo { flex: 0 0 28px; width: 28px; height: 28px; }
 .dg-table { background: var(--color-canvas); }
+
+/* 될각 v2 page-header actions = 기준일 배지 + mode-switch만(잠금은 시안에 없어요 — 홈과 같이 더보기에서 써요) */
+.shell:has(.doelgak) .topbar__actions > .teacher-lock__button { display: none; }
 
 .dg-sheet { display: grid; gap: var(--spacing-card); }
 .dg-sheet__head { display: flex; justify-content: space-between; align-items: center; }
@@ -115,8 +119,11 @@
   .dg-card .interest-control { grid-column: 3; grid-row: 1; }
   .dg-card h3 { grid-column: 2; grid-row: 1; align-self: center; font-size: 17px; line-height: 23px; }
   .dg-card > :not(header):not(h3) { grid-column: 1 / -1; }
-  .dg-bar { margin-top: 0; align-self: end; }
+  .dg-bar { margin-top: 0; padding-top: 38px; align-self: end; }
+  .dg-bar__axis { margin-bottom: 0; } /* 시안: 숫자 줄 아래 막대 트랙 위까지 41 */
+  .dg-card .university-logo, .dg-card h3 { align-self: start; } /* 시안 head: 로고·이름 위 맞춤 */
+  .shell:has(.doelgak) .appbar-title { padding-left: var(--spacing-md); } /* 될각 시안 제목 x16 */
+  .dg-toolbar { margin-top: -4px; } /* 시안: sub-nav 아래 16 */
+  .dg-main > .trace-accordion { margin-top: var(--spacing-md); } /* 시안: 마지막 카드 아래 32 */
   .dg-empty { padding: 64px var(--spacing-md); }
-  /* 될각 v2 시안(327:490)의 tab-bar-pill은 화면 아래 붙은 전폭 막대예요(다른 화면 시안은 떠 있는 막대) */
-  body:has(.doelgak) .tab-bar-pill { left: 0; right: 0; bottom: 0; }
 }

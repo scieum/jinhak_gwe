@@ -7,8 +7,8 @@
 .student-screen.susiro { gap: 12px; padding-bottom: 76px; } /* 모바일: 하단 고정 버튼 자리 */
 .susi-asof { white-space: nowrap; display: inline-flex; align-items: center; height: 24px; padding: 0 8px; line-height: 16.8px; } /* PC 머리 칩 161×24(시안) */
 .susiro .susi-error { display: flex; align-items: flex-start; gap: 8px; padding: var(--spacing-md); background: var(--color-canvas); color: var(--color-ink); }
-.susiro .disclaimer-note { display: flex; align-items: flex-start; gap: 4px; margin: 0; font-size: 12px; line-height: 17px; color: var(--color-text-muted); }
-.susiro .disclaimer-note .icon { margin-top: 1px; }
+.susiro .disclaimer-note { display: flex; align-items: center; gap: 4px; margin: 0; font-size: 12px; line-height: 17px; color: var(--color-text-muted); }
+.susiro .disclaimer-note .icon { flex: none; }
 .susiro .button-pill-soft { gap: 8px; border: 0; font: inherit; font-weight: 600; cursor: pointer; white-space: nowrap; }
 .susiro .button-pill-soft:disabled { color: var(--color-text-faint); cursor: default; }
 .susiro .button-outline .icon, .susiro .button-pill-soft .icon { width: 20px; height: 20px; }
@@ -34,7 +34,7 @@
 .susiro .susi-scenarios .segmented-control { gap: 4px; padding: 4px; background: transparent; }
 .susiro .susi-scenarios .segmented-control__option { width: 75px; min-height: 40px; padding: 0; }
 .susi-count-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.susi-count { margin-left: auto; font-size: 16px; font-weight: 600; white-space: nowrap; }
+.susi-count { margin-left: auto; font-size: 16px; font-weight: 600; line-height: 22.4px; white-space: nowrap; }
 .susi-menu { position: relative; }
 .susi-menu__list { position: absolute; z-index: 5; top: calc(100% + 4px); left: 0; display: grid; width: 200px; background: var(--color-canvas); border: 1px solid var(--color-hairline); box-shadow: var(--shadow-overlay); }
 .susi-menu__list button { min-height: 40px; padding: 0 16px; border: 0; background: none; text-align: left; font: inherit; color: var(--color-ink); cursor: pointer; }
@@ -121,6 +121,7 @@
   /* 수시로 v2 시안 머리(346:131303): 로고 y 12 · 제목 y 43 · sub-nav y 89 · 경고 바 y 145 — 다른 수시 전략 화면(sub-nav 100)보다 11 낮아요 */
   .shell:has(.susiro) { --shell-appbar-height: 43px; }
   .shell:has(.susiro) .appbar-title { min-height: 46px; align-items: flex-start; }
+  .susi-slot__badges { margin-right: 4px; } /* 시안: 판정·날짜 칩 오른쪽 끝 318(grip 칸 앞 12) */
   .shell:has(.susiro) .shell__content { padding-top: 12px; }
 }
 
@@ -159,6 +160,7 @@
   .susi-panel .warning-callout--selected { box-shadow: none; border: 1px solid var(--color-ink); }
   .susi-panel .button-primary, .susi-panel .button-outline { width: 100%; }
   .susi-panel > p.t-caption { margin-bottom: -8px; }
+  .susi-panel .warning-callout--selected { min-height: 120px; } .susi-panel .susi-dist { min-height: 202px; } /* 시안 글자 상자 높이(줄 반올림)에 맞춰 아래 줄이 2px 위로 붙지 않게 */
   .susi-empty { padding: 32px 0; }
   .susi-confirm-actions { flex-direction: row; justify-content: flex-end; }
   .susi-confirm-actions > * { width: auto; }

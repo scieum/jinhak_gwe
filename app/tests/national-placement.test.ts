@@ -100,3 +100,9 @@ test('넓어진 그래프는 실제 트랙 너비로 좌표와 겹침을 다시 
   expect(wide[1].x).toBeCloseTo(16 + (2.4 - 1) / 8 * (1440 - 32));
   expect(wide[3].x).toBe(1440 - 16);
 });
+
+test('전형 유형 탭 기타는 교과·종합·논술이 아닌 유형(실기 등)을 묶는다', () => {
+  const rows = [row(), row({ id: 'b', admission_type: '실기' }), row({ id: 'c', admission_type: '논술' })];
+  expect(filterNationalRows(rows, { ...defaultPlacementFilters, type: '기타' }).map(r => r.id)).toEqual(['b']);
+  expect(filterNationalRows(rows, { ...defaultPlacementFilters, type: '논술' }).map(r => r.id)).toEqual(['c']);
+});

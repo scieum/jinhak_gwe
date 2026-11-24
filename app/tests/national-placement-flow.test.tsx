@@ -37,7 +37,7 @@ test('같은 좌표의 원문을 선택하고 실제 원문 필드를 조회하�
   vi.spyOn(loader, 'loadNationalYear').mockResolvedValue([row('가학과'), row('나학과'), row('다학과', '3.500')]);
   vi.spyOn(loader, 'loadPlacementSource').mockImplementation(async r => ({ ...(Object.fromEntries(RESULT_COLUMNS.map(c => [c, ''])) as ResultRow), ...r, result_year: '2026', grade_system: '9', source_url: 'https://example.invalid/original.pdf', source_page: '12쪽 표3' }));
   renderBoard();
-  fireEvent.click(await screen.findByRole('button', { name: '가상대 70% 컷 2.4등급, 원문 2행 상세' }));
+  fireEvent.click(await screen.findByRole('button', { name: '가상대 70% 컷 2.4등급, 교과, 원문 2행 상세' }));
   let dialog = screen.getByRole('dialog');
   fireEvent.click(within(dialog).getByRole('button', { name: /나학과 · 교과전형/ }));
   await within(dialog).findByText('12쪽 표3');
@@ -66,7 +66,7 @@ test('학년도를 바꾼 뒤 늦게 도착한 이전 결과를 표시하지 않
     .mockRejectedValueOnce(new Error('자료 연결 실패')).mockResolvedValueOnce([{ ...row('새학과'), year: '2025' }]);
   renderBoard();
   await waitFor(() => expect(load).toHaveBeenCalledTimes(1));
-  fireEvent.change(screen.getByLabelText('입결 학년도'), { target: { value: '2025' } });
+  fireEvent.click(within(screen.getByRole('group', { name: '입결 학년도' })).getByRole('button', { name: '2025' }));
   await screen.findByText('자료 연결 실패');
   fireEvent.click(screen.getByRole('button', { name: '자료 다시 불러오기' }));
   await screen.findByRole('button', { name: /가상대 70% 컷/ });
@@ -88,8 +88,8 @@ test('좌표가 없는 대학도 모두 보이며 추가 통계 선택과 해당
   expect(screen.getByRole('link', { name: '자료없는대학교 수집 원문' })).toBeTruthy();
   expect(screen.getByText('선택 학년도 수집 자료 없음')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '한라대학교 75% 컷 1행 보기' }));
-  expect((screen.getByLabelText('컷·통계 기준') as HTMLSelectElement).value).toBe('cut_75');
-  fireEvent.click(await screen.findByRole('button', { name: '한라대학교 75% 컷 5.43등급, 원문 1행 상세' }));
+  expect(within(screen.getByRole('group', { name: '컷·통계 기준' })).getByRole('button', { name: '75% 컷' }).getAttribute('aria-pressed')).toBe('true');
+  fireEvent.click(await screen.findByRole('button', { name: '한라대학교 75% 컷 5.43등급, 교과, 원문 1행 상세' }));
   await within(screen.getByRole('dialog')).findByText('원문 1쪽');
   expect(within(screen.getByRole('dialog')).getByText('75% 컷 · 5.43등급')).toBeTruthy();
 });

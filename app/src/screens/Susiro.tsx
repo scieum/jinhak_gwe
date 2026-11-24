@@ -12,7 +12,7 @@ import { boardWarnings, csatStates, examKinds, isExempt, LIMIT, newBoard, SCENAR
 import type { ApplicationPlan } from '../domain/planner';
 import { judgeUniversity } from '../domain/results';
 import { dataAsOf } from '../data/catalog';
-import { useSampleMode } from '../data/sample/mode';
+import { isSampleMode, useSampleMode } from '../data/sample/mode';
 import '../styles/susiro.css';
 
 /** .jnavi counsel_card payload. 판정은 검수된 판정이 생기기 전까지 null(NEVER-1). */
@@ -82,7 +82,7 @@ export function Susiro() {
   if (!state.data) return <section className="student-screen susiro" data-slug="susiro">
     <div role="alert" className="susi-error"><Icon name="triangle-alert" size={20} /><p>기기에 저장된 기록을 읽지 못했어요. 브라우저 저장 권한을 확인해 주세요.</p></div>
     <ButtonOutline onClick={() => window.location.reload()}>다시 읽기</ButtonOutline>
-    <p className="disclaimer-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 6회 제외 기관은 과학기술원·사관학교·경찰대 목록으로 나눠요</span></p></section>;
+    <p className="disclaimer-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 6회 제외 기관은 과학기술원·사관학교·경찰대 목록으로 나눠요{isSampleMode() && ' · 샘플의 대학·숫자는 예시예요'}</span></p></section>;
 
   const data = state.data, apps = data.planning?.applications ?? [], boards = data.boards ?? [];
   const saved = [...boards].sort(byName);
@@ -161,7 +161,7 @@ export function Susiro() {
   const distView = (row: boolean) => anyJudged && <section className={`susi-dist${row ? ' susi-dist--row' : ''}`} aria-label="판정 분포"><h4 className="t-caption">판정 분포</h4>
     <ul>{dist.map(([v, n]) => <li key={v}>{v === '경계' ? <span className="judge-badge judge-edge">경계</span> : <span className={`judge-badge ${JUDGE[v][0]}`}><span aria-hidden="true">{JUDGE[v][1]}</span> {v}</span>}<strong className="num">{n}</strong></li>)}</ul></section>;
   const noWarning = <p className="t-body-sm text-muted">등록한 일정과 카드에서 확인할 항목이 없어요. 미정인 일정은 대학 발표 후 입력해 주세요.</p>;
-  const disclaimer = <p className="disclaimer-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 6회 제외 기관은 과학기술원·사관학교·경찰대 목록으로 나눠요</span></p>;
+  const disclaimer = <p className="disclaimer-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 6회 제외 기관은 과학기술원·사관학교·경찰대 목록으로 나눠요{isSampleMode() && ' · 샘플의 대학·숫자는 예시예요'}</span></p>;
   const Send = query.has('plan') && requested ? ButtonOutline : ButtonPrimary; // 지원 준비 카드가 있는 동안은 그 카드 버튼이 주요 버튼
   const send = <>{!filled && <p className="t-caption text-muted">1장 이상 담아야 보낼 수 있어요</p>}<Send disabled={busy || !filled} onClick={() => setSharing(true)}>상담카드 보내기</Send></>;
   const scenarioTabs = <SegmentedControl label="시나리오" value={board.id} onChange={select} options={tabs.map(b => ({ value: b.id, label: b.name }))} />;
@@ -204,7 +204,8 @@ export function Susiro() {
       {picked && <p className="t-caption text-muted">Space로 놓고 방향키로 옮겨요.</p>}
       <ol className="susi-board">{board.slots.map((s, i) => slotView(s, i + 1, i))}
         {Array.from({ length: LIMIT - board.slots.length }, (_, i) => <li key={`empty-${i}`} className="susi-slot susi-slot--empty"><button type="button" disabled={busy} onClick={openPick}>+ 대학 담기</button></li>)}</ol>
-      {board.slots.length === LIMIT && <ButtonOutline disabled={busy} onClick={openPick}>6회 제외 전형 담기</ButtonOutline>}
+      {/* 6장이 차면 6회 제외 전형만 담을 수 있어서, 담을 제외 전형이 있을 때만 보여요 */}
+      {board.slots.length === LIMIT && pickable.some(a => isExempt(a.university)) && <ButtonOutline disabled={busy} onClick={openPick}>6회 제외 전형 담기</ButtonOutline>}
       {board.exempt.length > 0 && <div className="susi-exempt"><p className="t-caption text-muted">6회 제외 {board.exempt.length}장</p><ul className="susi-board susi-board--exempt">{board.exempt.map(s => slotView(s, null))}</ul></div>}
       {!desktop && disclaimer}
     </div>

@@ -8,9 +8,10 @@ import { ScreenActions } from '../components/ScreenActions';
 import { UniversityLogo } from '../components/UniversityLogo';
 import { admissionYear, dataAsOf, programs, type ProgramData } from '../data/catalog';
 import { useReleasedRulesState } from '../data/releasedRules';
-import { useSampleMode } from '../data/sample/mode';
+import { isSampleMode, useSampleMode } from '../data/sample/mode';
 import { scoreUniversity } from '../engine/scoring';
 import type { Trace } from '../engine/types';
+import type { AttendanceRecord, GradeRecord } from '../domain/student';
 import { studentDb, useStudent } from '../store/studentDb';
 import { withReleasedRules } from './Results';
 import '../styles/univ-score.css';
@@ -95,7 +96,67 @@ function TraceRows({ trace, open }: { trace: readonly Trace[]; open: boolean }) 
       {t.subject_id && t === subjects[Math.min(subjects.length, SHOWN_SUBJECTS) - 1] && !all && hidden > 0 && <button type="button" className="button-pill-soft" onClick={() => setAll(true)}>나머지 {hidden}과목 보기</button>}</li>)}</ol>
       : <p className="text-muted">검수된 규칙과 필요한 성적이 준비되면 계산 과정을 보여드려요.</p>}
     {all && subjects.length > SHOWN_SUBJECTS && <button type="button" className="button-pill-soft" onClick={() => setAll(false)}>접기</button>}
-    <Disclaimer icon />
+    <Disclaimer icon sample={isSampleMode()} />
+  </details>;
+}
+
+/* v2 시안 trace-accordion: 번호 단계(이름 80 · 값) + 최종 합계. 단순한 규칙 모양(전 과목 · 성취도 미반영 · 학년 가중 없음 · 기본점 0)일 때만
+   엔진 trace·성적에서 그대로 다시 세어 보여 주고, 다른 모양은 엔진 trace 목록(TraceRows)을 그대로 보여요(지어낸 단계 값 없음). */
+const ORDINAL = ['첫째', '둘째', '셋째', '넷째', '다섯째', '여섯째', '일곱째'];
+const num = (v: number, digits = 6) => v.toLocaleString('ko-KR', { maximumFractionDigits: digits });
+function stepsOf(row: Row, grades: readonly GradeRecord[], attendance: readonly AttendanceRecord[]) {
+  const rule = row.p?.rule, v = row.value;
+  if (!rule || !v || row.kind !== 'ready' || rule.selection.mode !== 'all' || rule.achievement_blend.mode !== 'none' || rule.year_weights
+    || rule.no_rank_subject_policy !== 'exclude' || rule.base_score !== 0) return null;
+  const byId = new Map(grades.map((g, i) => [g.id, { g, i }]));
+  const subjects = row.trace.filter(t => t.subject_id && byId.has(t.subject_id));
+  const chosen = subjects.filter(t => t.value !== undefined).map(t => byId.get(t.subject_id!)!).sort((a, b) => a.i - b.i).map(x => x.g);
+  const excluded = subjects.filter(t => t.value === undefined).map(t => ({ g: byId.get(t.subject_id!)!.g, why: t.detail.split('제외: ')[1] }));
+  if (!chosen.length || chosen.some(g => g.rank_grade === null)) return null;
+  const rankMax = Math.max(...Object.values(rule.rank_grade_points));
+  const weight = (g: GradeRecord) => rule.credit_weighted ? g.credits : 1;
+  const points = (g: GradeRecord) => rule.rank_grade_points[g.rank_grade!];
+  const credits = chosen.reduce((n, g) => n + weight(g), 0), sum = chosen.reduce((n, g) => n + points(g) * weight(g), 0), avg = (sum / credits).toFixed(3);
+  const types = [...new Set(excluded.map(x => x.g.type))].map(t => { const xs = excluded.filter(x => x.g.type === t);
+    return `${t} ${xs.length}과목\n${xs.every(x => x.g.rank_grade === null) ? '석차등급 미산출\n→ 규칙상 제외' : xs.map(x => x.why ?? '규칙상 제외').join('\n')}`; });
+  const subject = (g: GradeRecord) => `${g.name} ${g.rank_grade}등급\n→ ${points(g)}점${rule.credit_weighted ? ` × ${g.credits}학점` : ''}`;
+  const steps: [string, string][] = [
+    ['적용 규칙', `${rule.university} ${rule.admission_year}\n${rule.program} 규칙 v${rule.version}\n${rule.review_status === 'verified' ? '검수 완료' : '샘플 규칙(가상)'}`],
+    ['반영 학기', `${rule.semesters[0]} ~ ${rule.semesters[rule.semesters.length - 1]}, ${rule.semesters.length}개 학기\n학년 가중 없음`],
+    ['반영 과목', `${rule.subject_groups.join('·')}\n${chosen.length}과목, 학점 합 ${credits}`],
+    ['제외한 과목', types.join('\n') || '없음'],
+    ['과목별 적용\n점수 (예)', ''],
+    ['석차등급\n점수 학점\n가중 평균', `${num(sum)} ÷ ${credits} = ${avg}`],
+    ['성취도 점수\n학점 가중 평균', '이 규칙은 성취도를\n반영하지 않아요'],
+    ['등급·성취도\n반영', `석차등급 점수만\n= ${avg}`],
+    [`교과 환산\n(만점 ${num(rule.grade_max_score)})`, `${avg} × ${num(rule.grade_max_score / rankMax)} = ${two(v.grade)}`],
+  ];
+  const a = rule.attendance_rule;
+  if (a) {
+    const records = attendance.filter(r => a.years.includes(r.year));
+    const absence = records.reduce((n, r) => n + r.absence.unexcused, 0), tardyOnly = records.reduce((n, r) => n + r.tardy.unexcused, 0);
+    const tardy = records.reduce((n, r) => n + r.tardy.unexcused + r.early_leave.unexcused + r.class_absence.unexcused, 0), equivalent = absence + Math.floor(tardy / a.tardy_to_absence);
+    const lines = [absence ? `미인정 결석 ${absence}일` : '', tardy ? `미인정 ${tardy === tardyOnly ? '지각' : '지각·조퇴·결과'} ${tardy}회` : '', !absence && !tardy ? '미인정 결석·지각 없음' : '',
+      tardy ? `→ ${a.tardy_to_absence}회 ${tardy < a.tardy_to_absence ? '미만이라' : '마다 1일,'} 결석 ${equivalent}일` : '',
+      v.attendance_deduction ? `감점 ${num(v.attendance_deduction)}점` : '감점 없음', `→ ${num(a.max_score)} − ${num(v.attendance_deduction)} = ${two(v.attendance)}`];
+    steps.push(['출결', lines.filter(Boolean).join('\n')]);
+  }
+  const digits = rule.rounding.digits, mode = { round: '반올림', floor: '버림', ceil: '올림' }[rule.rounding.mode];
+  const final = `${two(v.grade)}${a ? ` + ${two(v.attendance)}` : ''}\n= ${v.total.toFixed(digits)} / ${num(v.max)}\n소수 ${ORDINAL[digits] ?? `${digits + 1}번째`} 자리에서\n${mode}`;
+  return { steps, chosen: chosen.map(subject), final };
+}
+
+function StepRows({ row, grades, attendance, open }: { row: Row; grades: readonly GradeRecord[]; attendance: readonly AttendanceRecord[]; open: boolean }) {
+  const [all, setAll] = useState(false);
+  const built = stepsOf(row, grades, attendance);
+  if (!built) return <TraceRows trace={row.trace} open={open} />;
+  const shown = all ? built.chosen : built.chosen.slice(0, SHOWN_SUBJECTS), hidden = built.chosen.length - shown.length;
+  return <details className="trace-accordion us-trace us-steps" open={open || undefined}><summary><span>어떻게 계산했나요?</span><Icon name="chevron-down" size={20} /></summary>
+    <ol>{built.steps.map(([label, value], i) => <li key={label}><span className="us-steps__label">{i + 1}. {label}</span>
+      <span className="us-steps__value num">{i === 4 ? shown.join('\n') : value}</span>
+      {i === 4 && (hidden > 0 || all) && built.chosen.length > SHOWN_SUBJECTS && <button type="button" className="button-pill-soft" onClick={() => setAll(!all)}>{all ? '접기' : `나머지 ${hidden}과목 보기`}</button>}</li>)}
+      <li className="us-steps__final"><span>최종 합계</span><span className="num">{built.final}</span></li></ol>
+    <Disclaimer icon sample={isSampleMode()} />
   </details>;
 }
 
@@ -104,7 +165,7 @@ function Heart({ row, onRemove }: { row: Row; onRemove: (r: Row) => void }) {
 }
 
 /** 오른쪽 패널(PC)과 전체 화면 상세(모바일)가 같이 써요. */
-function Detail({ row, single, desktop, onRemove }: { row: Row; single: boolean; desktop: boolean; onRemove: (r: Row) => void }) {
+function Detail({ row, single, desktop, onRemove, grades, attendance }: { row: Row; single: boolean; desktop: boolean; onRemove: (r: Row) => void; grades: readonly GradeRecord[]; attendance: readonly AttendanceRecord[] }) {
   const v = row.value, digits = row.p?.rule?.rounding.digits ?? 2;
   return <div className="us-detail">
     {desktop && <header className="us-detail__head"><UniversityLogo university={row.university} /><div><h3 className="t-heading-3">{row.university}</h3><p className="t-body-sm text-muted">{row.program}</p></div><Heart row={row} onRemove={onRemove} /></header>}
@@ -117,7 +178,7 @@ function Detail({ row, single, desktop, onRemove }: { row: Row; single: boolean;
       <p className="us-detail__rank">{single ? ONE_NOTE : rankLine(row)}</p>
       {!desktop && !single && <p className="t-caption text-muted">환산 기준 순위는 대학 만점 대비 내 합계 비율로 줄 세운 순서예요. 대학 선호도나 지원 결과를 뜻하지 않아요.</p>}
     </> : <div className="us-detail__total"><p>{isAttendance(row.reason) ? '합계는 출결을 입력하면 계산해요' : row.reason}</p>{isAttendance(row.reason) && <p className="t-body-sm text-muted">출결 입력 필요</p>}</div>}
-    <TraceRows key={row.id} trace={row.trace} open={desktop && row.kind === 'ready' || row.kind === 'input'} />
+    <StepRows key={row.id} row={row} grades={grades} attendance={attendance} open={desktop && row.kind === 'ready' || row.kind === 'input'} />
     {row.kind === 'input' && <Link className="button-primary" to="/grade-input">{inputAction(row.reason)}</Link>}
     {row.p?.source.startsWith('https://') && <a className="button-pill-soft us-source" href={row.p.source} target="_blank" rel="noreferrer"><Icon name="external-link" size={20} />원문 보기</a>}
   </div>;
@@ -215,7 +276,7 @@ export function UniversityScores() {
           : !data ? <ErrorLine message={state.error} onRetry={() => window.location.reload()} />
           : <>
             {universities > 0 && <div className="us-summary"><p className="num">{summary.join(' · ').split(/(\d+)/).map((t, k) => k % 2 ? <strong key={k}>{t}</strong> : t)}</p>
-              {!desktop && hasGrades && <button type="button" className="button-pill-soft" onClick={() => setSheet(true)} disabled={!ready.length}>{sortName} ▾</button>}</div>}
+              {!desktop && hasGrades && <button type="button" className="button-pill-soft" onClick={() => setSheet(true)} disabled={!ready.length}>{sortName} <span className="us-caret">▾</span></button>}</div>}
             {desktop && universities > 0 && hasGrades && <p className="t-caption text-muted">{RANK_NOTE}</p>}
             {released.failed && <ErrorLine message="새로 검수된 환산 규칙을 불러오지 못했어요. 지금 보이는 대학은 이미 받은 규칙으로 계산했어요." onRetry={released.retry} />}
             {empty ?? (desktop ? <>
@@ -234,19 +295,19 @@ export function UniversityScores() {
               {oneSlot}
             </>)}
           </>}
-        <Disclaimer icon />
+        <Disclaimer icon sample={isSampleMode()} />
       </div>
       {desktop && <aside className="us-panel" aria-label="대학별 환산 근거">
         {!data ? <p className="t-body-sm text-muted">대학을 고르면 계산 근거가 여기 보여요</p>
           : empty ? <p className="t-body-sm text-muted">대학을 담으면 계산 근거가 여기 보여요</p>
-          : active ? <Detail row={active} single={single} desktop onRemove={setConfirm} />
+          : active ? <Detail row={active} single={single} desktop onRemove={setConfirm} grades={data.grades} attendance={data.attendance} />
           : <div className="us-detail"><h3 className="t-heading-4">계산할 수 있는 대학이 아직 없어요</h3><p className="t-body-sm text-muted">{PENDING_NOTE}</p><TraceRows trace={[]} open={false} /></div>}
       </aside>}
     </div>
 
     {mobileDetail && !confirm && <Modal label={`${mobileDetail.university} 환산 상세`} onClose={() => setDetail('')}>
       <div className="us-sheet-detail"><header className="us-sheet-detail__bar"><button type="button" className="us-icon-button" aria-label="뒤로" onClick={() => setDetail('')}><Icon name="chevron-left" /></button><h2 className="t-heading-4">{mobileDetail.university}</h2><Heart row={mobileDetail} onRemove={setConfirm} /></header>
-        <Detail row={mobileDetail} single={single} desktop={false} onRemove={setConfirm} /></div>
+        <Detail row={mobileDetail} single={single} desktop={false} onRemove={setConfirm} grades={data?.grades ?? []} attendance={data?.attendance ?? []} /></div>
     </Modal>}
     {sheet && <Modal label="정렬" onClose={() => setSheet(false)}>
       <div className="us-sort-sheet"><span className="us-sort-sheet__handle" aria-hidden="true" /><h3 className="t-heading-4">정렬</h3>

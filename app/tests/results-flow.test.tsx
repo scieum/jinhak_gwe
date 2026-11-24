@@ -57,8 +57,8 @@ test('교과 판정은 레인 머리에만, 카드는 내 환산·70% 컷 차이
   expect(within(lane).getByRole('button', { name: '테스트 대학' })).toBeTruthy();
   expect(within(lane).getByText(/^70% 컷 3\.5 · 차이 /)).toBeTruthy();
   expect(within(lane).getByRole('img', { name: /70% 컷 3\.5/ })).toBeTruthy();
-  expect(within(lane).getByText('수능최저 확인 필요')).toBeTruthy();
-  expect(screen.getByText('판정된 전형 1개 · 판정 안 함 0개')).toBeTruthy();
+  expect(within(lane).getByText('수능최저 있음')).toBeTruthy();
+  expect(screen.getByText('판정된 전형 1개')).toBeTruthy();
 });
 test('입결 기준이 없으면 판정 표시를 차단', async () => {
   programs[0].cut_basis = undefined;

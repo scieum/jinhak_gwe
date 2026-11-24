@@ -61,13 +61,17 @@ const pendingName = (r: { status: string; reason?: string } | null) => r?.reason
 const toggle = (list: string[], v: string) => list.includes(v) ? list.filter(x => x !== v) : [...list, v];
 const fmt = (v: number) => (Math.round(v * 10) / 10).toFixed(1);
 const signed = (v: number) => { const t = fmt(Math.abs(v)); return t === '0.0' ? '0.0' : `${v < 0 ? '−' : '+'}${t}`; };
-const rangeText = (min: number, max: number) => `약 ${(Math.floor(min * 10 + 1e-9) / 10).toFixed(1)}~${(Math.ceil(max * 10 - 1e-9) / 10).toFixed(1)}`;
+const lower = (min: number) => Math.floor(min * 10 + 1e-9) / 10, upper = (max: number) => Math.ceil(max * 10 - 1e-9) / 10;
+const rangeText = (min: number, max: number) => `약 ${lower(min).toFixed(1)}~${upper(max).toFixed(1)}`;
+// 차이 = 불리한 쪽 값 − 70% 컷. 보이는 범위 끝값(올림)으로 적어서 화면 숫자끼리 맞아요(판정은 원래 값 그대로).
+const diffText = (max: number, cut: number) => signed(upper(max) - cut);
 // cut-compare-bar 축소형: 모든 카드가 같은 눈금 1.0~4.0을 써요(왼쪽 = 1등급 쪽).
 const AXIS = [1, 4] as const;
 const pos = (v: number) => Math.min(100, Math.max(0, (v - AXIS[0]) / (AXIS[1] - AXIS[0]) * 100));
 
 function MiniBar({ min, max, cut }: { min: number; max: number; cut?: number }) {
-  const label = `내 환산 9등급 약 ${fmt(min)}에서 ${fmt(max)} 사이${cut === undefined ? '' : `, 70% 컷 ${fmt(cut)}, 차이 ${signed(max - cut)}`}`;
+  min = lower(min); max = upper(max); // 글자 범위(약 2.3~2.6)와 같은 구간을 그려요
+  const label = `내 환산 9등급 약 ${fmt(min)}에서 ${fmt(max)} 사이${cut === undefined ? '' : `, 70% 컷 ${fmt(cut)}, 차이 ${diffText(max, cut)}`}`;
   return <div className="dg-bar" role="img" aria-label={label}>
     <div className="dg-bar__track"><span className="dg-bar__range" style={{ left: `${pos(min)}%`, width: `${Math.max(pos(max) - pos(min), 2)}%` }} />{cut !== undefined && <span className="dg-bar__cut" style={{ left: `${pos(cut)}%` }} />}</div>
     <div className="dg-bar__axis"><span>{AXIS[0]}</span>{cut !== undefined && <span className="dg-bar__cut-label" style={{ left: `${pos(cut)}%` }}>70% 컷</span>}<span>{AXIS[1]}</span></div>
@@ -124,7 +128,7 @@ export function Doelgak() {
 
     const card = ({ p, r }: Row) => {
       const ok = r?.status === 'ready' ? r.value : null, range = conversion.status === 'ready' ? conversion.value : null;
-      const conditions = [...(!ok && r ? [pendingName(r)] : []), p.minimum_required ? '수능최저 확인 필요' : '수능최저 없음'];
+      const conditions = [...(!ok && r ? [pendingName(r)] : []), p.minimum_required ? '수능최저 있음' : '수능최저 없음'];
       return <article className="univ-card dg-card" key={p.id} aria-current={p.id === selected || undefined}>
         <header><UniversityLogo university={p.university} /><InterestButton university={p.university} program={p.program} department={p.department || undefined} compact /></header>
         <h3 className="t-heading-4"><button type="button" className="dg-card__open" onClick={() => setSelected(p.id === selected ? '' : p.id)} aria-pressed={p.id === selected}>{p.university}</button></h3>
@@ -132,7 +136,7 @@ export function Doelgak() {
         <div className="dg-card__numbers"><span className="t-caption text-muted">내 환산</span>
           <div className="dg-card__range"><strong className="num">{range ? rangeText(range.min, range.max) : '—'}</strong>{ok?.boundary && <span className="dg-boundary">경계</span>}</div>
           {p.fill_rate !== undefined && <span className="t-caption text-muted">충원율 약 {p.fill_rate}%</span>}
-          <span className="t-caption text-muted num">{ok && p.cut ? `70% 컷 ${fmt(p.cut.cut70)} · 차이 ${signed(ok.difference)}` : `70% 컷 — · ${r?.status === 'ready' ? '' : r?.reason ?? '환산 결과 준비 중'}`}</span></div>
+          <span className="t-caption text-muted num">{ok && p.cut ? `70% 컷 ${fmt(p.cut.cut70)} · 차이 ${diffText(range!.max, p.cut.cut70)}` : `70% 컷 — · ${r?.status === 'ready' ? '' : r?.reason ?? '환산 결과 준비 중'}`}</span></div>
         {range && <MiniBar min={range.min} max={range.max} cut={ok && p.cut ? p.cut.cut70 : undefined} />}
         <div className="dg-card__chips">{conditions.map(c => <span key={c} className="data-status-badge">{c}</span>)}</div>
       </article>;
@@ -149,14 +153,14 @@ export function Doelgak() {
         <div className="dg-main">
           <div className="dg-toolbar"><SegmentedControl label="전형" value={track} onChange={setTrack} options={[{ value: '교과', label: '교과' }, { value: '종합', label: '종합' }]} />
             <SegmentedControl label="보기" value={view} onChange={setView} options={[{ value: 'lane', label: '레인 보기' }, { value: 'table', label: '표 보기' }]} /></div>
-          <div className="dg-summary"><p className="t-body-sm num">{applied.judge !== '전체' && track === '교과' ? `판정된 전형 ${judged.length}개 · ${applied.judge}만 보는 중` : `판정된 전형 ${judged.length}개 · 판정 안 함 ${waiting.length}개`}</p>
+          <div className="dg-summary"><p className="t-body-sm num">{applied.judge !== '전체' && track === '교과' ? `판정된 전형 ${judged.length}개 · ${applied.judge}만 보는 중` : `판정된 전형 ${judged.length}개${waiting.length ? ` · 판정 안 함 ${waiting.length}개` : ''}`}</p>
             <p className="t-caption text-muted num">관심 {data.interests?.length ?? 0} · 수시로 6칸 중 {board?.slots.length ?? 0}칸</p></div>
           <div className="dg-filter-row"><button type="button" className="button-pill-soft" onClick={() => { setDraft(applied); setSheet(true); }} disabled={noGrades}><Icon name="sliders-horizontal" size={20} />필터{chips.length ? ` ${chips.length}` : ''}</button>
             {chips.map(c => <button key={c.label} type="button" className="filter-chip" aria-pressed="true" aria-label={`${c.label} 조건 빼기`} onClick={() => apply(c.clear(applied))}>{c.label}<Icon name="x" size={16} /></button>)}</div>
           {view === 'table' && !empty ? <div className="table-scroll"><table className="data-table dg-table"><thead><tr><th>대학</th><th>학과 · 전형</th><th className="num">내 환산 9등급</th><th className="num">70% 컷</th><th className="num">차이</th><th>판정</th><th>관심</th></tr></thead>
             <tbody>{[...lanes.flatMap(l => judged.filter(({ r }) => laneOf(r) === l.key)), ...waiting].map(({ p, r }) => { const ok = r?.status === 'ready' ? r.value : null, l = lanes.find(x => x.key === ok?.label); return <tr key={p.id}>
               <td><span className="dg-table__univ"><UniversityLogo university={p.university} />{p.university}</span></td><td>{[p.department, p.program].filter(Boolean).join(' · ')}</td>
-              <td className="num">{conversion.status === 'ready' ? rangeText(conversion.value.min, conversion.value.max) : '—'}</td><td className="num">{ok && p.cut ? fmt(p.cut.cut70) : '—'}</td><td className="num">{ok ? signed(ok.difference) : '—'}</td>
+              <td className="num">{conversion.status === 'ready' ? rangeText(conversion.value.min, conversion.value.max) : '—'}</td><td className="num">{ok && p.cut ? fmt(p.cut.cut70) : '—'}</td><td className="num">{ok && p.cut && conversion.status === 'ready' ? diffText(conversion.value.max, p.cut.cut70) : '—'}</td>
               <td>{l ? <span className={`judge-badge judge-${l.tone}`}><span aria-hidden="true">{l.icon}</span> {l.label}</span> : <span className="data-status-badge">{pendingName(r)}</span>}</td>
               <td><InterestButton university={p.university} program={p.program} department={p.department || undefined} compact /></td></tr>; })}</tbody></table></div>
           : <>
@@ -167,7 +171,7 @@ export function Doelgak() {
           {empty && <div className="empty-state dg-empty"><Icon name={empty.icon} size={40} /><h3 className="t-heading-4">{empty.title}</h3><p className="t-body-sm">{empty.body}</p>{empty.action}</div>}
           <TraceAccordion trace={[...conversion.trace, ...(active?.r?.trace ?? [])]} />
           {active && <ComparisonDetails input={inputBasis} cut={active.p.cut_basis} />}
-          <Disclaimer icon />
+          <Disclaimer icon lead="대학 공식 자료가 최종 기준이에요" sample={isSampleMode()} />
         </div>
       </div>
       {sheet && <Modal label="필터" onClose={() => setSheet(false)}>

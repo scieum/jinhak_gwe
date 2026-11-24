@@ -3,8 +3,9 @@ import { dataAsOf } from '../data/catalog';
 import { Icon } from './Icon';
 
 /** icon: v2 disclaimer-note의 info 아이콘(16). 아이콘을 CSS로 그리는 화면이 있어서 켜는 화면만 넘겨요. */
-export function Disclaimer({ icon }: { icon?: boolean }) {
-  return <p className="disclaimer-note t-caption text-muted">{icon && <Icon name="info" size={16} />}대학 공식 계산기·모집요강이 최종 기준이에요 · 데이터 기준일 {dataAsOf}</p>;
+/** lead: 앞 문장(화면마다 시안 문구가 달라요) · sample: 샘플 모드 고지 문구를 붙여요(넘기는 화면만). */
+export function Disclaimer({ icon, lead = '대학 공식 계산기·모집요강이 최종 기준이에요', sample }: { icon?: boolean; lead?: string; sample?: boolean }) {
+  return <p className="disclaimer-note t-caption text-muted">{icon && <Icon name="info" size={16} />}{lead} · 데이터 기준일 {dataAsOf}{sample && ' · 샘플의 대학·숫자는 예시예요'}</p>;
 }
 export function TraceAccordion({ trace, open, note }: { trace: readonly Trace[]; open?: boolean; note?: string }) {
   return <details className="trace-accordion" open={open}><summary><span>어떻게 계산했나요?</span><Icon name="chevron-down" size={20} /></summary>

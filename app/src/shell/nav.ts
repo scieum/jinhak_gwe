@@ -38,8 +38,8 @@ export const NAV: Record<Mode, NavGroup[]> = {
       label: '성적',
       icon: 'chart-column',
       items: [
-        student('성적 입력', 'grade-input', 'chart-column'),
-        student('성적 추이', 'score-trend', 'trending-up'),
+        student('성적 입력', 'grade-input', 'plus'),
+        student('성적 추이', 'score-trend', 'calendar'),
         student('5 to 9', 'five-to-nine', 'sliders-horizontal'),
         student('대학별 환산', 'univ-score', 'arrow-up-down'),
         student('모의고사', 'mock-score', 'check'),
@@ -64,7 +64,7 @@ export const NAV: Record<Mode, NavGroup[]> = {
     {
       label: '수시 전략',
       icon: 'layout-grid',
-      items: [student('수시로', 'susiro', 'layout-grid'), student('원서·서류 체크리스트', 'application-checklist', 'list-checks'), student('입시 일정', 'calendar', 'calendar'), student('상담 질문·할 일', 'counsel-tasks', 'message-square'), student('생기부 AI', 'saenggibu-ai', 'sparkles')],
+      items: [student('수시로', 'susiro', 'grip-vertical'), student('원서·서류 체크리스트', 'application-checklist', 'list-checks'), student('입시 일정', 'calendar', 'calendar'), student('상담 질문·할 일', 'counsel-tasks', 'message-square'), student('생기부 AI', 'saenggibu-ai', 'sparkles')],
     },
   ],
   teacher: [

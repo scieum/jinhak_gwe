@@ -133,7 +133,6 @@
   .us-main { gap: var(--spacing-xs); }
   .shell__content:has(.univ-score) { padding-top: var(--spacing-xs); } /* 시안 390: sub-nav 아래 8에서 요약 줄 */
   .us-summary p { font-size: var(--font-caption-size); line-height: var(--font-caption-line); color: var(--color-text-muted); }
-  .univ-score .disclaimer-note { margin-top: var(--spacing-xs); }
   .dialog-backdrop:has(.us-sheet-detail) { padding: 0; }
   .dialog:has(.us-sheet-detail) { width: 100%; height: 100dvh; max-height: 100dvh; align-content: start; padding: var(--spacing-lg) var(--spacing-md); box-shadow: none; }
   .dialog-backdrop:has(.us-sort-sheet), .dialog-backdrop:has(.us-confirm) { align-items: flex-end; padding: 0; }
@@ -142,3 +141,24 @@
   .us-confirm__actions > * { flex: 1; }
 }
 @media (prefers-reduced-motion: reduce) { .us-trace summary .icon { transition: none; } }
+
+/* 대학별 환산 v2 page-header actions = 기준일 배지 · mode-switch · 성적 입력·수정(잠금은 시안에 없어요 — 홈과 같이 더보기에서 써요) */
+.shell:has(.univ-score) .topbar__actions { gap: 12px; }
+.shell:has(.univ-score) .topbar__actions > .teacher-lock__button { display: none; }
+.shell:has(.univ-score) #topbar-screen-actions { display: contents; }
+.shell:has(.univ-score) #topbar-screen-actions > .button-outline { order: 1; }
+
+/* ▾는 대체 글꼴로 그려져 폭이 14라서 시안 폭(약 6)에 맞춰 양옆을 줄여요 */
+.us-caret { margin-inline: -4px; }
+/* 시안 sub-nav 탭 폭은 글자 폭을 올림한 값이라 탭마다 1px 넓어요(대학별 환산 탭이 3px 밀려 보여서 맞춰요) */
+.shell:has(.univ-score) .sub-nav__tab { padding-inline: 12.5px; }
+
+/* v2 trace-accordion 단계(시안 878:356022): 이름 80(13 muted) · 값(14 ink) 간격 8, 단계 사이 8, 최종 합계 16/600 위 hairline */
+.us-trace.us-steps ol { gap: var(--spacing-xs); margin: 0; padding: 0; font-size: 14px; }
+.us-steps li { grid-template-columns: 80px minmax(0, 1fr); gap: var(--spacing-xs); margin: 0; padding: 0; }
+.us-steps li > span::before { content: none; }
+.us-steps__label { color: var(--color-text-muted); font-size: 13px; line-height: 20px; white-space: pre-line; } /* 시안 글자 상자는 줄마다 20 */
+.us-steps__value { line-height: 20px; white-space: pre-line; }
+.us-steps li > .button-pill-soft { margin: 0; background: transparent; }
+.us-steps li.us-steps__final { grid-template-columns: 148px minmax(0, 1fr); padding-top: var(--spacing-xs); border-top: 1px solid var(--color-hairline); font-size: 16px; font-weight: 600; line-height: 22.4px; white-space: pre-line; }
+.us-steps > .disclaimer-note { margin: var(--spacing-xs) 0 var(--spacing-md); }

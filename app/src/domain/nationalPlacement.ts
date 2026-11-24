@@ -67,8 +67,11 @@ export function statisticDetail(row: NationalPlacementRow, cut: CutField) {
   return cut === 'cut_50' || cut === 'cut_70' ? row.basis : row.statistics?.[cut] ? `${row.statistics[cut]!.population} · ${row.statistics[cut]!.evidence}` : '';
 }
 
+/** 시안 전형 유형 탭(교과 · 종합 · 논술 · 기타): 실기 등 나머지 유형은 '기타'로 묶어요. */
+export const PLACEMENT_TYPES = ['교과', '종합', '논술', '기타'] as const;
+export const typeBucket = (type: string) => (PLACEMENT_TYPES as readonly string[]).includes(type) ? type : '기타';
 export function matchesPlacementQuery(row: NationalPlacementRow, filters: PlacementFilters) {
-  return (filters.round === '전체' || row.round === filters.round) && (filters.type === '전체' || row.admission_type === filters.type)
+  return (filters.round === '전체' || row.round === filters.round) && (filters.type === '전체' || typeBucket(row.admission_type) === filters.type)
     && matchesUniversity(row.university, filters.university)
     && (!filters.query.trim() || `${row.program} ${row.recruit_unit}`.includes(filters.query.trim()));
 }
