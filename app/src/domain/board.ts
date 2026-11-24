@@ -17,7 +17,8 @@ export type BoardChange =
   | { kind: 'add'; application_id: string }
   | { kind: 'remove'; application_id: string }
   | { kind: 'move'; application_id: string; delta: -1 | 1 }
-  | { kind: 'update'; slot: BoardSlot };
+  | { kind: 'update'; slot: BoardSlot }
+  | { kind: 'order'; ids: string[] };
 export interface CardWarning { code: string; title: string; message: string; slots: string[] }
 
 export const newBoard = (name: string): Board => ({ id: crypto.randomUUID(), name, slots: [], exempt: [], updated_at: new Date().toISOString() });
@@ -40,6 +41,12 @@ export function moveSlot(board: Board, index: number, delta: -1 | 1): Board {
   const slots = [...board.slots];
   [slots[index], slots[to]] = [slots[to], slots[index]];
   return { ...board, slots, updated_at: new Date().toISOString() };
+}
+/** 순서 변경 시트의 "적용하기": 6회 제한 칸을 ids 순서로 다시 놓아요. 칸 구성이 달라졌으면(다른 곳에서 바뀜) 거절해요. */
+export function reorderSlots(board: Board, ids: readonly string[]): Board {
+  if (ids.length !== board.slots.length || new Set(ids).size !== ids.length || !board.slots.every(s => ids.includes(s.application_id)))
+    throw new Error('그 사이 칸이 바뀌었어요. 순서 변경을 다시 열어 주세요.');
+  return { ...board, slots: ids.map(id => board.slots.find(s => s.application_id === id)!), updated_at: new Date().toISOString() };
 }
 export function updateSlot(board: Board, slot: BoardSlot): Board {
   const map = (list: BoardSlot[]) => list.map(s => s.application_id === slot.application_id ? slot : s);

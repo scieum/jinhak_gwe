@@ -1,6 +1,5 @@
 #topbar-screen-actions { display: flex; align-items: center; gap: 12px; }
 #topbar-screen-actions:empty { display: none; }
-.susi-mobile-summary { display: none; }
 /* range-bar-5to9 (GradeRange) — Figma 821:787. 높이 72: 말풍선 22 · 트랙 36~48 · 눈금 54 */
 .grade-range { position: relative; height: 72px; }
 .grade-range-colors { position: absolute; top: 36px; left: 20px; right: 20px; display: flex; height: 12px; }
@@ -42,15 +41,6 @@
 .univ-score-table .text-button { padding: 0; text-align: left; }
 .univ-score-total { display: grid; gap: 8px; }
 .univ-score-total > strong { color: var(--color-accent); font-size: 40px; }
-.susiro .susi-board { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-.susiro .susi-slot { position: relative; min-height: 184px; grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 20px; }
-.susiro .susi-slot__rank { position: absolute; right: 12px; top: 12px; color: var(--color-text-muted); font-size: 12px; }
-.susiro .susi-slot__body > .university-logo { margin-bottom: 4px; }
-.susiro .susi-slot__body > strong { padding-right: 18px; }
-.susiro .susi-slot__chips { gap: 4px; }
-.susiro .susi-slot__actions { display: flex; justify-content: flex-end; align-self: end; }
-.susiro .susi-scenarios { padding: 0; border: 0; }
-.susi-summary-send { display: grid; gap: 8px; padding-top: 24px; border-top: 1px solid var(--color-hairline-soft); }
 .teacher-screen > .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; border: 0; padding: 0; }
 .teacher-screen > .stats > * { padding: 20px; border: 1px solid var(--color-hairline-soft); min-width: 0; }
 .teacher-screen .brief-list li { border-color: var(--color-hairline-soft); }
@@ -102,7 +92,6 @@
   .doelgak-layout { grid-template-columns: 180px minmax(0, 1fr); }
   .doelgak-lanes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .analysis-layout { grid-template-columns: minmax(0, 1fr) 288px; gap: 24px; }
-  .susiro .susi-board { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .analysis-stat-tiles { gap: 12px; }
   .analysis-stat-tiles > div { padding: 12px; }
 }
@@ -123,27 +112,11 @@
 }
 @media (max-width: 767px) {
   .student-screen:not(.grade-input) > .screen-heading > h2 { display: none; }
-  .student-screen:not(.grade-input) > .screen-heading:has(> h2:only-child), .susiro > .screen-heading { display: none; }
+  .student-screen:not(.grade-input) > .screen-heading:has(> h2:only-child) { display: none; }
   .doelgak-lanes, .doelgak-pending > div { grid-template-columns: minmax(0, 1fr); }
   .analysis-stat-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .analysis-stat-tiles > div { padding: 16px; }
   .analysis-stat-tiles > div:last-child { grid-column: 1 / -1; }
-  .susiro .susi-board { grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .susiro .susi-slot { min-height: 96px; padding: 12px 0; border: 0; border-bottom: 1px solid var(--color-hairline); grid-template-columns: 24px minmax(0, 1fr) 44px; align-items: center; gap: 8px; }
-  .susiro .susi-slot__rank { position: static; font-size: 16px; color: var(--color-ink); }
-  .susiro .susi-slot__body { grid-template-columns: 32px minmax(0, 1fr); gap: 4px 8px; align-items: center; }
-  .susiro .susi-slot__body > .university-logo { grid-column: 1; grid-row: 1 / 3; margin: 0; width: 32px; height: 32px; flex-basis: 32px; }
-  .susiro .susi-slot__body > :not(.university-logo) { grid-column: 2; }
-  .susiro .susi-slot__body > strong { padding: 0; }
-  .susiro .susi-slot__body > .t-caption { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-  .susiro .susi-slot__body > .susi-slot__chips { grid-column: 1 / -1; }
-  .susiro .susi-slot__actions { display: grid; gap: 0; }
-  .susiro .susi-slot--empty { grid-template-columns: 1fr; border: 1px dashed var(--color-hairline); margin-top: 12px; min-height: 72px; }
-  .susiro .susi-slot__actions .text-button { min-width: 44px; padding: 0; white-space: nowrap; }
-  .susiro .susi-scenarios { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
-  .susiro .susi-scenarios > * { flex: none; }
-  .susi-mobile-summary { display: flex; justify-content: space-between; padding: 12px 16px; background: var(--color-judge-reach-bg); font-size: 14px; }
-  #susi-check { scroll-margin-top: 116px; }
   .teacher-screen > .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .teacher-screen > .stats > * { padding: 16px; }
   .conversion-overview { gap: 16px; }

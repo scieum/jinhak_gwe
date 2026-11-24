@@ -1,7 +1,7 @@
 import Dexie, { type Table } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { parseStudentBackup, type GradeRecord, type AttendanceRecord, type StudentBackup } from '../domain/student';
-import { addToBoard, moveSlot, newBoard, nextBoardName, parseBoards, removeFromBoard, updateSlot, type Board, type BoardChange } from '../domain/board';
+import { addToBoard, moveSlot, newBoard, nextBoardName, parseBoards, removeFromBoard, reorderSlots, updateSlot, type Board, type BoardChange } from '../domain/board';
 import { parseMocks, type MockScore, type Area } from '../domain/mock';
 import { interestId, parseInterests, type Interest } from '../domain/interests';
 import { parsePlannerData, emptyPlanner, sameApplication, type ApplicationPlan, type CounselTask, type PlannerData } from '../domain/planner';
@@ -80,12 +80,14 @@ export class StudentDatabase extends Dexie {
       return clean;
     });
   }
-  async changeBoard(id: string, change: BoardChange, create = false): Promise<Board> {
+  /** create: 아직 저장하지 않은 안에 처음 담을 때 true 또는 그 안 이름(비어 있으면 그 이름으로 만들어요). */
+  async changeBoard(id: string, change: BoardChange, create: boolean | string = false): Promise<Board> {
     return this.transaction('rw', [this.applications, this.boards], async () => {
       let board = await this.boards.get(id);
       if (!board) {
         if (!create || change.kind !== 'add') throw new Error('이 안이 삭제됐어요. 다른 안을 선택해 주세요.');
-        board = { ...newBoard(nextBoardName(await this.boards.toArray())), id };
+        const all = await this.boards.toArray(), fallback = nextBoardName(all);
+        board = { ...newBoard(typeof create === 'string' && !all.some(b => b.name === create) ? create : fallback), id };
       }
       const apps = await this.applications.toArray();
       let next: Board;
@@ -94,6 +96,8 @@ export class StudentDatabase extends Dexie {
         if (!app) throw new Error('지원 준비에서 삭제된 전형이에요. 목록을 다시 확인해 주세요.');
         if ([...board.slots, ...board.exempt].some(slot => apps.find(item => item.id === slot.application_id)?.year !== app.year)) throw new Error('같은 지원 학년도의 전형만 한 안에 담을 수 있어요. 다른 안을 선택하거나 새 안을 만들어 주세요.');
         next = addToBoard(board, app.id, app.university);
+      } else if (change.kind === 'order') {
+        next = reorderSlots(board, change.ids);
       } else {
         const applicationId = change.kind === 'update' ? change.slot.application_id : change.application_id;
         if (![...board.slots, ...board.exempt].some(s => s.application_id === applicationId)) throw new Error('이 카드는 이미 안에서 빠졌어요. 목록을 다시 확인해 주세요.');

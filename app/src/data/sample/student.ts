@@ -44,15 +44,17 @@ export const sampleAttendance: AttendanceRecord[] = [
   { year: 2, school_days: 190, absence: { ...zero, illness: 2 }, tardy: { ...zero, unexcused: 1 }, early_leave: { ...zero, illness: 1 }, class_absence: { ...zero } },
 ];
 
-// 관심 대학 6곳(수시 6장), 모든 화면에서 같은 순서. 전형 이름은 데모 데이터처럼 "학생부종합"만 써요.
+// 관심 대학 6곳(수시 6장), 모든 화면에서 같은 순서. 지원 전형은 샘플 판정에 쓰는 교과 전형(public.ts 입결)과 같아요
+// (2026-11-24 사용자 결정: 수시로·홈·될각 하트가 같은 전형을 가리키게).
 export const SAMPLE_UNIVERSITIES = [
-  ['경희대학교', '행정학과'], ['건국대학교', '행정학과'], ['성균관대학교', '행정학과'],
-  ['동국대학교', '행정학과'], ['한양대학교', '정책학과'], ['중앙대학교', '공공인재학부'],
+  ['경희대학교', '행정학과', '학생부교과(지역균형)'], ['건국대학교', '행정학과', '학생부교과'], ['성균관대학교', '행정학과', '학생부교과'],
+  ['동국대학교', '행정학과', '학생부교과'], ['한양대학교', '정책학과', '학생부교과'], ['중앙대학교', '공공인재학부', '학생부교과'],
 ] as const;
-const PROGRAM = '학생부종합';
-export const sampleInterests: Interest[] = SAMPLE_UNIVERSITIES.map(([university, department], i) => ({
-  id: interestId(university, PROGRAM, department), university, program: PROGRAM, department, created_at: `2026-11-10T00:00:0${i}.000Z`,
+export const sampleInterests: Interest[] = SAMPLE_UNIVERSITIES.map(([university, department, program], i) => ({
+  id: interestId(university, program, department), university, program, department, created_at: `2026-11-10T00:00:0${i}.000Z`,
 }));
+/** 2026-11-24 전에 넣은 샘플 관심 전형 id("학생부종합"). 지우기·백업에서 여전히 샘플로 봐요. */
+export const legacySampleInterestIds = SAMPLE_UNIVERSITIES.map(([university, department]) => interestId(university, '학생부종합', department));
 
 const appId = (i: number) => `${SAMPLE_PREFIX}app-${i + 1}`;
 const step = (a: number, n: number, title: string, status: ChecklistStep['status'], due: string | null, checked: string | null, note = '', source_url = ''): ChecklistStep =>
@@ -88,8 +90,8 @@ const ELIGIBILITY: Record<number, EligibilityItem[]> = {
     elig(0, 4, '학교장추천 필요 여부', 'unknown', null),
     elig(0, 5, '사회 진로선택 이수 과목 수', 'unmet', '2026-11-19T21:05', '지금 2과목 이수 · 모집요강 3과목 이상 · 3학년 수강 계획을 담임 선생님께 문의', LINK)],
 };
-export const sampleApplications: ApplicationPlan[] = SAMPLE_UNIVERSITIES.map(([university, department], i) => ({
-  id: appId(i), year: 2028, university, program: PROGRAM, department, source_url: i === 0 ? LINK : '',
+export const sampleApplications: ApplicationPlan[] = SAMPLE_UNIVERSITIES.map(([university, department, program], i) => ({
+  id: appId(i), year: 2028, university, program, department, source_url: i === 0 ? LINK : '',
   steps: STEPS[i] ?? defaultSteps(i), eligibility: ELIGIBILITY[i] ?? defaultElig(i), created_at: SAMPLE_STAMP, updated_at: SAMPLE_STAMP,
 }));
 

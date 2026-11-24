@@ -46,8 +46,13 @@ export function HomeDashboard() {
 
   // 관심 대학 될각: 될각 화면과 같은 조건(검수된 입결 · 같은 비교 기준)일 때만 판정해요. 그 밖은 판정 없음(NEVER-1).
   const judged = (university: string) => judgeUniversity(data.grades, university, COMBO);
-  const universities = (data.interests ?? []).filter((i, k, all) => all.findIndex(x => x.university === i.university) === k); // 대학마다 첫 관심 하나
+  // 담은 순서(저장소는 id 순이라 created_at으로 다시 정렬) · 대학마다 첫 관심 하나
+  const universities = [...(data.interests ?? [])].sort((a, b) => a.created_at.localeCompare(b.created_at)).filter((i, k, all) => all.findIndex(x => x.university === i.university) === k);
   const rows = universities.map(i => ({ i, j: judged(i.university) }));
+  // 4곳만 보일 때는 판정이 다른 대학을 먼저 골라 담은 순서대로 보여요(demo-dataset: 6곳 중 1·3·5·6).
+  const verdict = (j: typeof rows[number]['j']) => j ? (j.v.boundary ? '경계' : j.v.label) : '';
+  const firsts = rows.filter((r, k) => rows.findIndex(x => verdict(x.j) === verdict(r.j)) === k).slice(0, 4);
+  const shown = rows.filter(r => firsts.includes(r) || rows.filter(x => !firsts.includes(x)).indexOf(r) < 4 - firsts.length);
   const judgedCount = rows.filter(r => r.j).length;
 
   const Title = desktop ? 'h1' : 'h2'; // 모바일은 앱바 로고가 h1이에요
@@ -79,7 +84,7 @@ export function HomeDashboard() {
         <div className="home-dday">{DDAYS.map(([label, date]) => <div className="stat-tile home-tile" key={label}><span>{label}</span><strong className="num">{dday(date)}</strong><small className="num">{date} 예정</small></div>)}</div>
         <section className="home-card home-judge" aria-label="관심 대학 될각">
           <div><h2>관심 대학 될각</h2><p>{rows.length ? `관심 대학 ${rows.length}곳 중 ${judgedCount}곳 · 교과전형 입결과 비교했어요` : '관심 대학을 담으면 여기에서 될각 판정을 볼 수 있어요.'}</p></div>
-          {rows.length > 0 && <ul>{rows.slice(0, 4).map(({ i, j }) => {
+          {rows.length > 0 && <ul>{shown.map(({ i, j }) => {
             const badge = !j ? <span className="judge-badge judge-none">{has ? '자료 준비 중' : '성적 입력 후 보여요'}</span>
               : j.v.boundary ? <span className="judge-badge judge-edge">경계</span>
               : <span className={`judge-badge ${JUDGE[j.v.label][0]}`}><span aria-hidden="true">{JUDGE[j.v.label][1]}</span> {j.v.label}</span>;

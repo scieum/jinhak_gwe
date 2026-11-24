@@ -1,17 +1,172 @@
-.susi-board { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--spacing-sm); grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
-.susi-slot { display: grid; grid-template-columns: auto 1fr auto; gap: var(--spacing-sm); align-items: start; padding: var(--spacing-md); background: var(--color-canvas); border: 1px solid var(--color-hairline-soft); min-height: 60px; }
-.susi-slot--focus { border-color: var(--color-ink); }
-.susi-slot--empty { display: grid; place-items: center; grid-template-columns: 1fr; border-style: dashed; border-color: var(--color-hairline); color: var(--color-text-muted); }
-.susi-slot__rank { font-weight: 700; min-width: 2ch; }
-.susi-slot__body { display: grid; gap: var(--spacing-xs); min-width: 0; }
-.susi-slot__chips { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
-.susi-slot__actions { display: grid; gap: var(--spacing-xs); }
-.susi-slot__actions .text-button { min-width: 44px; min-height: 32px; }
+/* 공용 warning-callout(다른 화면도 씀): 소신 색 쌍 + ▲. 수시로 전용 모양은 아래 .susiro 안에서만 바꿔요. */
 .warning-list { display: grid; gap: var(--spacing-sm); }
 .warning-callout { display: grid; gap: var(--spacing-xs); text-align: left; padding: var(--spacing-md); border: 0; background: var(--color-judge-reach-bg); color: var(--color-ink); cursor: pointer; font: inherit; }
 .warning-callout strong { color: var(--color-judge-reach); }
-.susi-pick { display: grid; gap: var(--spacing-xs); width: 100%; text-align: left; cursor: pointer; font: inherit; }
-.susi-scenarios { border: 0; padding: 0; margin: 0; min-width: 0; }
 
-/* 경계 판정: ink 글자 + canvas + 1px 점선 ink (home.css와 같은 모양) */
-.susi-slot .judge-edge { color: var(--color-judge-edge); background: var(--color-canvas); outline: 1px dashed var(--color-judge-edge); outline-offset: -1px; }
+/* 수시로 (work/susiro/02-spec.md · Figma 346:131302 / 346:131328). 모서리 0, 판정 색은 judge-badge · 경고에만. */
+.student-screen.susiro { gap: 12px; padding-bottom: 76px; } /* 모바일: 하단 고정 버튼 자리 */
+.susi-asof { white-space: nowrap; }
+.susiro .susi-error { display: flex; align-items: flex-start; gap: 8px; padding: var(--spacing-md); background: var(--color-canvas); color: var(--color-ink); }
+.susiro .disclaimer-note { display: flex; align-items: flex-start; gap: 4px; margin: 0; font-size: 12px; line-height: 17px; color: var(--color-text-muted); }
+.susiro .disclaimer-note .icon { margin-top: 1px; }
+.susiro .button-pill-soft { border: 0; font: inherit; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.susiro .button-pill-soft:disabled { color: var(--color-text-faint); cursor: default; }
+.susiro .button-outline .icon, .susiro .button-pill-soft .icon { width: 20px; height: 20px; }
+
+/* 경고 요약 바(모바일) */
+.susi-check-bar { display: grid; gap: 6px; }
+.susiro .warning-callout { grid-template-columns: 20px minmax(0, 1fr); align-items: start; column-gap: 8px; }
+.susiro .warning-callout > span { display: grid; gap: 4px; min-width: 0; }
+.susiro .warning-callout strong { font-size: 16px; font-weight: 600; line-height: 22px; }
+.susiro .warning-callout > .icon { color: var(--color-judge-reach); margin-top: 1px; }
+.susiro .warning-callout > span > span { font-size: 14px; line-height: 20px; }
+.susiro .warning-callout--selected { box-shadow: inset 0 0 0 1px var(--color-ink); }
+.susiro .warning-callout--neutral, .dialog .warning-callout--neutral { background: var(--color-canvas); color: var(--color-ink); cursor: default; }
+.susiro .warning-callout--neutral strong, .susiro .warning-callout--neutral > .icon { color: var(--color-ink); font-size: 14px; }
+.dialog .warning-callout--neutral { display: block; padding: 12px 16px; border: 1px solid var(--color-hairline); font-size: 14px; }
+.susiro .susi-check-bar__button { grid-template-columns: 20px minmax(0, 1fr) 20px; align-items: center; min-height: 46px; padding: 12px 16px; width: 100%; }
+.susi-check-bar__button.warning-callout--neutral { cursor: pointer; }
+.susi-count-row .button-pill-soft, .susi-menu > .button-pill-soft { background: var(--color-canvas); }
+
+/* 시나리오 탭 · 개수 줄 */
+.susi-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.susiro .susi-scenarios { display: flex; align-items: center; gap: 8px; margin: 0; padding: 0; border: 0; min-width: 0; }
+.susiro .susi-scenarios .segmented-control { gap: 4px; padding: 4px; background: transparent; }
+.susiro .susi-scenarios .segmented-control__option { width: 75px; min-height: 40px; padding: 0; }
+.susi-count-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.susi-count { margin-left: auto; font-size: 16px; font-weight: 600; white-space: nowrap; }
+.susi-menu { position: relative; }
+.susi-menu__list { position: absolute; z-index: 5; top: calc(100% + 4px); left: 0; display: grid; width: 200px; background: var(--color-canvas); border: 1px solid var(--color-hairline); box-shadow: var(--shadow-overlay); }
+.susi-menu__list button { min-height: 40px; padding: 0 16px; border: 0; background: none; text-align: left; font: inherit; color: var(--color-ink); cursor: pointer; }
+.susi-menu__list button:hover:not(:disabled) { background: var(--color-canvas-soft); }
+.susi-menu__list button:disabled { color: var(--color-text-faint); cursor: default; }
+
+/* 6칸: 모바일 세로 목록(칸 77) */
+.susi-board { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); }
+.susi-slot { position: relative; display: flex; align-items: center; min-width: 0; background: var(--color-canvas); border-bottom: 1px solid var(--color-hairline-soft); }
+.susi-slot--focus { box-shadow: inset 0 0 0 1px var(--color-ink); }
+.susi-slot__open { flex: 1; min-width: 0; display: grid; grid-template-columns: auto 40px minmax(0, 1fr) auto; grid-template-areas: 'rank logo info badges'; align-items: center; gap: 12px;
+  min-height: 76px; padding: 12px 0 12px 16px; border: 0; background: none; color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
+.susi-slot__rank { grid-area: rank; min-width: 11px; font-size: 16px; font-weight: 700; }
+.susi-slot__exempt { grid-area: ex; }
+.susiro .susi-slot .university-logo { grid-area: logo; width: 40px; height: 40px; flex-basis: 40px; }
+.susi-slot__info { grid-area: info; display: grid; gap: 4px; min-width: 0; }
+.susi-slot__info strong { font-size: 17px; font-weight: 700; line-height: 26px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.susi-slot__program { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px; line-height: 20px; color: var(--color-text-muted); }
+.susi-slot__program > span + span::before { content: ' · '; }
+.susi-slot__memo { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 12px; color: var(--color-text-muted); }
+.susi-slot__badges { grid-area: badges; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.susiro .judge-badge, .susiro .data-status-badge { display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 8px; font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; }
+.susiro .judge-badge > span { font-size: 9px; }
+.susiro .data-status-badge { background: var(--color-canvas-soft); color: var(--color-ink-soft); }
+.susiro .judge-edge { color: var(--color-judge-edge); background: var(--color-canvas); outline: 1px dashed var(--color-judge-edge); outline-offset: -1px; }
+.susi-slot__grip { flex: none; display: grid; place-items: center; width: 40px; height: 44px; margin-right: 8px; padding: 0; border: 0; background: none; color: var(--color-ink); cursor: grab; }
+.susi-slot__grip .icon { width: 24px; height: 24px; }
+.susi-slot__grip[aria-pressed='true'] { box-shadow: inset 0 0 0 1px var(--color-ink); }
+.susi-slot--picked { box-shadow: inset 0 0 0 1px var(--color-ink); }
+.susi-slot--dragging { opacity: 0.4; }
+.susi-slot--empty { background: none; border: 1px dashed var(--color-hairline); }
+.susi-slot--empty > button { flex: 1; min-height: 62px; border: 0; background: none; color: var(--color-text-muted); font: inherit; font-size: 15px; cursor: pointer; }
+.susi-slot--exempt .susi-slot__open { grid-template-columns: 40px minmax(0, 1fr) auto; grid-template-areas: 'logo info ex' 'logo info badges'; row-gap: 4px; padding-right: 16px; min-height: 104px; }
+.susi-slot--exempt .susi-slot__exempt { justify-self: end; }
+.susi-exempt { display: grid; gap: 8px; }
+.susi-empty { display: grid; justify-items: center; gap: 8px; padding: 24px 0; background: none; text-align: center; }
+.susi-empty p { margin: 0; font-size: 13px; }
+.susi-empty .button-primary { margin-top: 8px; }
+.susi-main { display: grid; gap: 12px; min-width: 0; }
+.susi-layout { min-width: 0; }
+
+/* 하단 고정 주요 버튼(모바일, 탭바 위) */
+.susi-send-bar { position: fixed; left: 0; right: 0; bottom: calc(80px + env(safe-area-inset-bottom)); z-index: 2; display: grid; gap: 8px; padding: 12px 20px; background: var(--color-canvas-soft); }
+.susi-send-bar .button-primary, .susi-send-bar .button-outline { width: 100%; }
+
+/* 시트(모바일 bottom-sheet · PC modal) */
+.susi-sheet__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.susi-sheet__head p { margin-top: 4px; }
+.susi-sheet__close { display: grid; place-items: center; width: 44px; height: 44px; margin: -10px -10px 0 0; padding: 0; border: 0; background: none; color: var(--color-ink); cursor: pointer; }
+.susi-pick-list, .susi-actions, .susi-reorder { list-style: none; margin: 0; padding: 0; }
+.susi-pick-list li, .susi-actions li { border-bottom: 1px solid var(--color-hairline-soft); }
+.susi-pick { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 56px; padding: 12px 0; border: 0; background: none; color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
+.susi-pick > span:first-child { display: grid; gap: 2px; }
+.susi-pick strong { font-size: 16px; font-weight: 600; }
+.susi-pick:disabled, .susi-pick:disabled .text-muted { color: var(--color-text-faint); cursor: default; }
+.susi-pick .data-status-badge { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; font-size: 12px; }
+.susi-actions button { width: 100%; min-height: 48px; padding: 0; border: 0; background: none; color: var(--color-ink); font: inherit; font-size: 15px; text-align: left; cursor: pointer; }
+.susi-actions button:disabled { color: var(--color-text-faint); cursor: default; }
+.susi-reorder li { display: grid; grid-template-columns: 20px minmax(0, 1fr) 44px 44px 24px; align-items: center; gap: 8px; min-height: 56px; padding: 0 4px; border-bottom: 1px solid var(--color-hairline-soft); }
+.susi-reorder li.is-moved { box-shadow: inset 0 0 0 1px var(--color-ink); }
+.susi-reorder .num { font-size: 18px; font-weight: 700; }
+.susi-reorder .button-outline { width: 44px; height: 44px; padding: 0; }
+.susi-reorder .icon { width: 24px; height: 24px; }
+.susi-confirm-actions { display: flex; flex-direction: column-reverse; gap: 8px; }
+.susi-confirm-actions > * { width: 100%; }
+.susi-confirm-actions--row { flex-direction: row; }
+.susi-confirm-actions--row > * { width: auto; flex: 1; }
+.susi-confirm-actions--grow > .button-primary, .susi-editor__actions > .button-primary { flex: 2; }
+.susi-editor__actions > .button-outline { flex: none; white-space: nowrap; }
+.dialog .susi-editor { display: grid; gap: 16px; padding: 0; border: 0; }
+.dialog .susi-editor label { font-weight: 600; }
+.susi-editor select, .susi-editor input, .susi-editor textarea { width: 100%; }
+.susi-editor > p { margin: -12px 0 0; }
+.susi-dist { display: grid; gap: 8px; }
+.susi-dist h4 { font-weight: 600; color: var(--color-ink); }
+.susi-dist ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.susi-dist li { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.susi-dist strong { font-size: 20px; font-weight: 700; }
+.susi-dist--row ul { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.susi-dist--row li { justify-content: flex-start; }
+
+@media (max-width: 1023px) {
+  .susiro .susi-asof { display: none; }
+}
+
+/* PC: 본문(3×2 카드) 744 + 오른쪽 조합 점검 패널 360 */
+@media (min-width: 1024px) {
+  .student-screen.susiro { gap: 16px; padding-bottom: 0; }
+  .susi-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+  .susi-main { gap: 16px; }
+  .susi-top { min-height: 48px; }
+  .susi-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .susiro .stat-tile { display: grid; align-content: start; gap: 4px; min-height: 117px; padding: 20px; background: var(--color-canvas); }
+  .susiro .stat-tile > .t-caption { color: var(--color-text-muted); }
+  .susiro .stat-tile > strong { font-size: 24px; font-weight: 700; line-height: 29px; }
+  .susi-board { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .susi-slot { display: block; min-height: 184px; border: 1px solid var(--color-hairline-soft); }
+  .susi-slot__open { width: 100%; height: 100%; min-height: 182px; grid-template-columns: auto 40px minmax(0, 1fr); grid-template-areas: 'rank logo .' 'info info info' 'badges badges badges';
+    grid-template-rows: 40px auto 24px; align-content: start; align-items: center; column-gap: 12px; row-gap: 12px; padding: 20px; }
+  .susi-slot__info { align-self: start; }
+  .susi-slot__info strong { font-size: 19px; }
+  .susi-slot__program { display: grid; white-space: normal; font-size: 13px; }
+  .susi-slot__program > span + span::before { content: none; }
+  .susi-slot__badges { flex-direction: row; align-items: center; margin-top: -12px; }
+  .susi-slot__grip { position: absolute; top: 28px; right: 20px; width: 24px; height: 24px; margin: 0; }
+  .susi-slot--empty { min-height: 184px; display: flex; }
+  .susi-slot--empty > button { min-height: 182px; }
+  .susi-slot--exempt { min-height: 72px; }
+  .susi-slot--exempt .susi-slot__open { min-height: 70px; grid-template-columns: auto 40px minmax(0, 1fr) auto; grid-template-areas: 'ex logo info badges'; grid-template-rows: auto; padding: 0 20px; column-gap: 16px; }
+  .susi-slot--exempt .susi-slot__program { display: block; white-space: nowrap; }
+  .susi-slot--exempt .susi-slot__program > span + span::before { content: ' · '; }
+  .susi-slot--exempt .susi-slot__badges { flex-direction: row-reverse; gap: 16px; margin-top: 0; }
+  .susi-board--exempt { grid-template-columns: minmax(0, 1fr); }
+  .susi-panel { display: grid; gap: 16px; padding: 24px; background: var(--color-canvas); }
+  .susi-panel .warning-callout { padding: 16px; }
+  .susi-panel .button-primary, .susi-panel .button-outline { width: 100%; }
+  .susi-panel > p.t-caption { margin-bottom: -8px; }
+  .susi-empty { padding: 32px 0; }
+  .susi-confirm-actions { flex-direction: row; justify-content: flex-end; }
+  .susi-confirm-actions > * { width: auto; }
+  .susi-confirm-actions--row > * { flex: none; }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .susi-layout { grid-template-columns: minmax(0, 1fr) 300px; }
+  .susi-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .susi-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .susi-top { flex-wrap: wrap; }
+}
+
+/* PDF로 내보내기: 브라우저 인쇄(PDF로 저장)로 지금 안의 보드와 점검만 남겨요 */
+@media print {
+  body:has(.susiro) :is(.sidebar, .topbar, .appbar, .appbar-title, .sub-nav, .tab-bar-pill, .sample-band, .toast) { display: none !important; }
+  .susiro :is(.susi-top button, .susi-menu, .susi-slot__grip, .susi-send-bar, .susi-panel button:not(.warning-callout), .susi-check-bar) { display: none !important; }
+  .susiro .susi-layout { grid-template-columns: minmax(0, 1fr); }
+}

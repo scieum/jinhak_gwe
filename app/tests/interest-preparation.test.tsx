@@ -88,7 +88,7 @@ test('interest → review year and department → checklist → select in Susiro
   fireEvent.click((await screen.findAllByRole('button', { name: '+ 대학 담기' }))[0]);
   fireEvent.click(within(screen.getByRole('dialog', { name: '대학 담기' })).getByRole('button', { name: `${university} · 2029학년도 · ${program} · 화학교육과` }));
   await waitFor(async () => expect((await studentDb.boards.toArray())[0].slots[0].application_id).toBe(saved.id));
-  expect(await screen.findByText('6회 제한 1/6장')).toBeTruthy();
+  expect(await screen.findByText('6회 제한 1/6장 · 6회 제외 0장')).toBeTruthy();
 });
 
 test('cancel leaves the saved interest and writes no preparation data, returning focus', async () => {

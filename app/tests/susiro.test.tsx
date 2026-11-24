@@ -51,8 +51,10 @@ describe('수시로 화면', () => {
       await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
       await screen.findByText(n);
     }
-    expect(screen.getByText('6회 제한 2/6장')).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: '1순위 아래로' }));
+    expect(screen.getByText('6회 제한 2/6장 · 6회 제외 0장')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: '순서 변경' }));
+    fireEvent.click(within(screen.getByRole('dialog', { name: '순서 변경' })).getByRole('button', { name: '1순위 아래로' }));
+    fireEvent.click(screen.getByRole('button', { name: '적용하기' }));
     await waitFor(async () => expect((await studentDb.boards.toArray())[0].slots.map(s => s.application_id)).toEqual([c.id, a.id]));
     await studentDb.deleteApplication(c.id);
     await waitFor(async () => expect((await studentDb.boards.toArray())[0].slots.map(s => s.application_id)).toEqual([a.id]));

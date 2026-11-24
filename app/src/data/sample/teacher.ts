@@ -20,7 +20,7 @@ const warning = (i: number) => i === 0
 const card = (n: number): CounselPayload => ({
   scenario: 'A안',
   // 7번 하늘만 데모의 수시 6장을 실어요(판정 표시 없음). 다른 학생 카드 내용은 데모에 없어서 비워 둬요.
-  slots: n === 7 ? SAMPLE_UNIVERSITIES.map(([university, department], i) => ({ priority: i + 1, university, program: '학생부종합', department, judgment: null })) : [],
+  slots: n === 7 ? SAMPLE_UNIVERSITIES.map(([university, department, program], i) => ({ priority: i + 1, university, program, department, judgment: null })) : [],
   exempt: [], warnings: Array.from({ length: WARNINGS[n] ?? 0 }, (_, i) => warning(i)),
 });
 export const sampleCards: CardRecord[] = sampleStudents.filter((_, i) => !UNSUBMITTED.has(i + 1)).map(s => ({
@@ -42,8 +42,8 @@ export const sampleMocks: MockGrades[] = [[3, '학평'], [6, '모평'], [9, '모
 
 // 우리 반 입시 일정: 하늘의 고사 일정(calendar 상세 예시 E4 · E5 · E7 · E8)과 같은 날
 export const sampleSchedules: ClassSchedule[] = [
-  { university: '경희대학교', program: '학생부종합', kind: '면접·실기', date: '2026-11-21' },
-  { university: '건국대학교', program: '학생부종합', kind: '면접·실기', date: '2026-11-21' },
-  { university: '중앙대학교', program: '학생부종합', kind: '서류 제출', date: '2026-11-27', time: '17:00' },
-  { university: '동국대학교', program: '학생부종합', kind: '면접·실기', date: '2026-12-05' },
+  { university: '경희대학교', program: '학생부교과(지역균형)', kind: '면접·실기', date: '2026-11-21' },
+  { university: '건국대학교', program: '학생부교과', kind: '면접·실기', date: '2026-11-21' },
+  { university: '중앙대학교', program: '학생부교과', kind: '서류 제출', date: '2026-11-27', time: '17:00' },
+  { university: '동국대학교', program: '학생부교과', kind: '면접·실기', date: '2026-12-05' },
 ];

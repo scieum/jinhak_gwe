@@ -11,7 +11,6 @@
 .grade-input__pick.filter-panel { display: flex; }
 .grade-input .empty-state--plain { background: var(--color-canvas); padding-inline: var(--spacing-md); }
 .grade-mobile .subject-card { padding: var(--spacing-md); border: 1px solid var(--color-hairline); }
-.susiro > .susi-scenarios { background: var(--color-canvas); padding: var(--spacing-md); border: 1px solid var(--color-hairline); }
 .student-screen textarea { max-width: 100%; min-width: 0; font: inherit; color: var(--color-ink); padding: var(--spacing-sm); border: 1px solid var(--color-hairline); background: var(--color-field); }
 .score-trend-card { background: var(--color-canvas); border-color: var(--color-hairline); }
 .more-features > div { padding: var(--spacing-md); background: var(--color-canvas); border: 1px solid var(--color-hairline); }
