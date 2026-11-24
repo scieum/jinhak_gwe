@@ -5,12 +5,12 @@
 
 .brand-logo {
   display: block;
-  width: 124px;
+  width: 96px;
   height: auto;
 }
 
 .appbar .brand-logo {
-  width: 92px;
+  width: 76px;
   height: auto;
 }
 
@@ -153,7 +153,7 @@
   .sidebar__wordmark {
     display: flex;
     align-items: center;
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: 32px var(--spacing-md) 24px; /* page-header 위 32와 맞춤 */
   }
 
   .sidebar-group,
