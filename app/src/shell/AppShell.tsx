@@ -105,6 +105,8 @@ export function AppShell() {
       </aside>
 
       <div className="shell__main">
+        {/* 샘플 띠는 맨 위 얇은 줄 — 머리·본문 간격(시안 48)을 차지하지 않게(2026-11-24 "답답함" 피드백) */}
+        <SampleBanner />
         <header className="topbar">
           <div className="topbar__heading">
             <p className="t-caption text-muted">{breadcrumb ?? title}</p>
@@ -128,7 +130,6 @@ export function AppShell() {
           <div id="appbar-actions" className="appbar__actions" />
         </header>
         {mobileTitle && <h1 className="appbar-title">{mobileTitle}</h1>}
-        <SampleBanner />
 
         {group && !detail && !isSingle(group) && (
           <nav ref={subNav} className="sub-nav" aria-label={`${group.label} 소분류`}>
