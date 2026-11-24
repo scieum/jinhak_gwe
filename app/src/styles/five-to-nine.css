@@ -1,33 +1,55 @@
 /* 5 to 9 (work/five-to-nine/02-spec.md · Figma five-to-nine/390 346:131226 · five-to-nine/1440 346:131252).
    모서리 0, 그림자 없음. Route Blue는 선택 표시와 내 환산 범위 숫자에만. */
-.topbar__heading .f2n-lead { margin: 4px 0 0; color: var(--color-ink-soft); }
-.topbar .f2n-asof { background: var(--color-canvas); color: var(--color-ink-soft); }
+.topbar__heading .f2n-lead { margin: 4px 0 0; color: var(--color-ink); }
+.topbar .f2n-asof { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: var(--color-canvas); color: var(--color-text-muted); font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; }
+.shell:has(.f2n) .topbar__actions { gap: 12px; } /* 시안 actions: 배지 · 모드 · 잠금 사이 12 */
 
 .f2n .segmented-control { display: flex; width: 100%; gap: 4px; padding: 4px; background: var(--color-canvas); overflow-x: auto; }
-.f2n .segmented-control__option { flex: 1 0 auto; min-height: 40px; }
+.f2n .segmented-control__option { flex: 1 1 0; min-width: 0; min-height: 40px; padding-inline: 0; white-space: nowrap; } /* 시안: 칸 폭 같게 */
 .f2n-layout, .f2n-main, .f2n-aside { display: grid; align-content: start; gap: 32px; min-width: 0; }
-.f2n-card { display: grid; gap: 16px; padding: 20px; background: var(--color-canvas); min-width: 0; }
-.f2n-card .data-status-badge { justify-self: start; }
-.f2n-tile { display: grid; gap: 4px; }
-.f2n-tile p { margin: 0; }
-.f2n-range { color: var(--color-accent); font-size: 32px; line-height: 1.25; }
+.f2n-card { display: grid; gap: 12px; padding: 20px; background: var(--color-canvas); min-width: 0; }
+.f2n-card h3 { margin: 0; }
+.f2n-card .grade-range { margin-top: 4px; } /* 시안: 제목 → 막대 16, 막대 → 배지 12 */
+.f2n-card .data-status-badge { display: inline-flex; align-items: center; justify-self: start; height: 24px; padding: 0 8px; background: var(--color-canvas-soft); font-size: 12px; font-weight: 600; line-height: 16.8px; }
+.f2n-tile { display: grid; gap: 4px; min-height: 90px; } /* 시안 글자 상자 17 · 42 · 23 */
+.f2n-tile p { margin: 0; font-size: 15px; line-height: 22.5px; }
+.f2n-range { color: var(--color-accent); font-size: 32px; line-height: 1.3; }
 .f2n-summary { margin: -12px 0 0; }
-.f2n-entry { display: grid; gap: 12px; }
+.f2n-entry { display: grid; gap: 16px; margin-top: 4px; }
 .f2n-entry .button-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; }
 .f2n-entry p { margin: 0; }
-.f2n-methods th[scope='row'] { font-weight: 600; }
-.f2n-methods th[scope='row'] > span { display: block; margin-top: 2px; font-weight: 400; }
+
+/* data-table v2: 머리 44 · 12/600 ink-soft canvas-soft, 행 14/19.6 + 아래 hairline, 좌우 16 */
+.f2n .f2n-methods, .f2n .f2n-reasons { table-layout: fixed; }
+.f2n .f2n-methods th, .f2n .f2n-methods td, .f2n .f2n-reasons th, .f2n .f2n-reasons td { padding: 12px 16px; border-bottom: 1px solid var(--color-hairline); vertical-align: middle; font-size: 14px; font-weight: 400; line-height: 19.6px; color: var(--color-ink); }
+.f2n .f2n-methods thead th { height: 44px; padding-block: 0; border-bottom: 0; background: var(--color-canvas-soft); color: var(--color-ink-soft); font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: normal; }
+.f2n .f2n-methods thead th:first-child { width: 214px; }
+.f2n-methods th[scope='row'] > span { display: block; margin-top: 2px; overflow: hidden; font-size: 12px; line-height: 16.8px; white-space: nowrap; text-overflow: ellipsis; } /* 시안: 한 줄 말줄임 */
+.f2n-methods tbody tr { height: 64px; }
 .f2n-methods td { white-space: pre-line; }
-.f2n-value { font-weight: 700; white-space: nowrap; }
-.f2n .f2n-reasons th { width: 40%; background: var(--color-canvas-soft); font-size: var(--font-label-size); font-weight: 600; }
+.f2n .f2n-methods .f2n-value { font-weight: 700; white-space: nowrap; }
+.f2n .f2n-reasons th { width: 124px; white-space: nowrap; background: var(--color-canvas-soft); color: var(--color-ink-soft); font-size: 12px; font-weight: 600; line-height: 16.8px; padding-block: 14px; }
 .f2n .f2n-reasons td { text-align: right; font-weight: 700; }
-.f2n .trace-accordion { padding: 12px 16px; }
-.f2n .trace-accordion summary { display: flex; align-items: center; }
-.f2n .trace-accordion ol { padding-left: 0; list-style: none; }
-.f2n .trace-accordion li { display: flex; justify-content: space-between; gap: 12px; font-size: var(--font-body-sm-size); }
-.f2n .trace-accordion li small { display: none; } /* 시안: 단계 이름 + 값만(규칙 번호는 계산 엔진 trace에 남아요) */
-.f2n-note, .f2n .trace-accordion .disclaimer-note { display: flex; align-items: flex-start; gap: 4px; margin: 0; }
-.f2n-note::before, .f2n .trace-accordion .disclaimer-note::before { content: ''; flex: none; width: 16px; height: 16px; margin-top: 1px; background: currentColor; -webkit-mask: url('../assets/icons/info.svg') center / contain no-repeat; mask: url('../assets/icons/info.svg') center / contain no-repeat; }
+.f2n .f2n-reasons th, .f2n .f2n-reasons td { height: 45px; padding-block: 0; } /* 행 45(아래 선 포함) */
+.f2n-card > p { margin: 0; line-height: 20px; } /* 시안 3줄 60 */
+
+/* trace-accordion v2: canvas-soft, 테두리 없음, 머리 48(좌우 16) · 16/600, 오른쪽 chevron 20 */
+.f2n .trace-accordion { padding: 0; border: 0; background: var(--color-canvas-soft); }
+.f2n .trace-accordion summary { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 16px; list-style: none; font-size: 16px; line-height: 22.4px; }
+.f2n .trace-accordion summary::-webkit-details-marker { display: none; }
+.f2n .trace-accordion summary > span:first-child { flex: 1; }
+.f2n .trace-accordion:not([open]) > :not(summary) { display: none; } /* 닫힌 단계는 자리도 차지하지 않게 */
+.f2n .trace-accordion .f2n-steps { display: grid; gap: 8px; margin: 0; padding: 0 16px; list-style: none; }
+.f2n-steps li { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.f2n-steps li > span:first-child { color: var(--color-text-muted); font-size: 13px; line-height: 20px; white-space: pre-line; } /* 시안 글자 상자는 줄마다 20 */
+.f2n-steps li > span:last-child { color: var(--color-ink); font-size: 14px; line-height: 20px; white-space: nowrap; }
+.f2n-steps li.f2n-steps__final { align-items: center; padding-top: 8px; border-top: 1px solid var(--color-hairline); }
+.f2n-steps li.f2n-steps__final > span { color: var(--color-ink); font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.f2n .trace-accordion .disclaimer-note { margin: 8px 16px 16px; }
+.f2n .disclaimer-note { display: flex; align-items: center; gap: 4px; margin: 0; font-size: 12px; line-height: 16.8px; }
+.f2n .disclaimer-note .icon { flex: none; }
+/* 시안: 화면 맨 아래 고지는 한 줄(390에서는 옆으로 밀어 봐요) */
+.f2n-note { white-space: nowrap; overflow-x: auto; }
 .f2n-error { grid-template-columns: auto 1fr; align-items: center; }
 .f2n-error .button-outline { grid-column: 1 / -1; justify-self: start; }
 .f2n .empty-state { display: grid; justify-items: center; gap: 8px; text-align: center; background: var(--color-canvas); }
@@ -35,11 +57,18 @@
 @media (min-width: 1024px) {
   .f2n-layout { grid-template-columns: minmax(0, 1fr) 360px; column-gap: 24px; row-gap: 24px; }
   .f2n-main, .f2n-aside { gap: 24px; }
-  .f2n-note { grid-column: 1; justify-self: start; }
+  .f2n-note { grid-column: 1 / -1; justify-self: start; overflow: visible; }
   .f2n .segmented-control[aria-label='5 to 9 보기'] { width: 280px; }
   .f2n .segmented-control[aria-label='반영 교과'] { width: 420px; }
   .f2n-card { padding: 24px; }
+  .f2n-tile { height: 65px; min-height: 0; }
   .f2n-range { font-size: 44px; }
-  .f2n-entry { grid-template-columns: auto 1fr; align-items: center; gap: 16px; }
+  .f2n-entry { grid-template-columns: auto 1fr; align-items: center; gap: 16px; padding-top: 8px; }
   .f2n-entry .button-outline { min-height: 44px; }
+  .f2n-entry p { font-size: 14px; line-height: 21px; }
+  .f2n .f2n-methods thead th:first-child { width: 152px; }
+  /* 시안 머리 2·3칸은 본문 칸보다 42 왼쪽(430·566)에서 시작해요(시안 머리 칸 폭 110·136·178) */
+  .f2n .f2n-methods thead th:nth-child(2), .f2n .f2n-methods thead th:nth-child(3) { text-indent: -42px; white-space: nowrap; }
+  .f2n-methods tbody tr { height: 45px; }
+  .f2n-card > p { font-size: 14px; line-height: 21px; }
 }

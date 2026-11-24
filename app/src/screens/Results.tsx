@@ -5,7 +5,9 @@ import { TraceAccordion } from '../components/CalculationDetails';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { useStudent } from '../store/studentDb';
 import { combinations, currentComparisonBasis, fiveToNineFor } from '../domain/results';
-import type { MethodResult } from '../engine/fiveToNineTypes';
+import type { ConversionConfig, MethodResult } from '../engine/fiveToNineTypes';
+import { g5ToPct, pctToG9 } from '../engine/fiveToNine';
+import fiveToNineConfig from '../data/conversion-config.json';
 import { gradeSummary, validateGrade, type StudentBackup } from '../domain/student';
 import type { ProgramData } from '../data/catalog';
 import type { ScoringRule } from '../engine/scoring';
@@ -64,7 +66,7 @@ function SavedGradeConversion({ viewTabs, desktop }: { viewTabs: ReactNode; desk
   const comboTabs = <SegmentedControl label="반영 교과" value={combo} onChange={setCombo} options={Object.keys(combinations).map(value => ({ value, label: value }))} />;
   const entry = <div className="f2n-entry"><button type="button" className="button-outline" onClick={() => setPlacementOpen(true)}><Icon name="chart-column" size={20} />이 등급대 입결 보기</button>
     <p className={desktop ? 't-body-sm text-muted' : 't-caption text-muted'}>작년 입결 70% 컷 기준으로 내 위치 주변 학과를 배치표 · 표 · 점 그래프로 보여줘요</p></div>;
-  const note = <p className="disclaimer-note t-caption text-muted f2n-note">{NOTE}</p>;
+  const note = <p className="disclaimer-note t-caption text-muted f2n-note"><Icon name="info" size={16} /><span>{NOTE}</span></p>;
   const placement = placementOpen && data && <PlacementExplorer onClose={() => setPlacementOpen(false)} combination={combo} average={avg!.average}
     range={ok ? { min: r!.min!, max: r!.max! } : undefined} inputBasis={currentComparisonBasis(data.grades, combinations[combo] ?? [...new Set(data.grades.filter(g => !validateGrade(g).length).map(g => g.subject_group))], ok)} />;
   if (!state) return <>{viewTabs}<p role="status" className="t-body-sm text-muted f2n-status">기기에 저장된 성적을 읽고 있어요.</p></>;
@@ -88,28 +90,61 @@ function SavedGradeConversion({ viewTabs, desktop }: { viewTabs: ReactNode; desk
     <GradeRange min={res.min!} max={res.max!} representative={res.representative ?? undefined} digits={2} />
     <span className="data-status-badge">신뢰도 {conf}</span>{entry}</section>;
   const input = (k: string) => k === 'a2' ? '과목별 등급·학점·수강자수' : k === 'a3' ? '원점수·성취도별\n분포비율 (검수 전)' : `학점 가중\n5등급 평균 ${g5}`;
-  const bSource = res.bTable?.source ?? (res.b.status === 'ok' ? '교육청 실측표' : res.b.reason);
-  const source = (k: string) => k === 'b' ? bSource : k === 'a3' && res.a3.status !== 'ok' ? 'U:NAVI 계산식\n· 검수 전' : 'U:NAVI 계산식';
+  // 시안: 출처 이름 + 연도·표본. 실측표를 못 쓰면 표본 대신 그 이유를 적어요(NEVER-1)
+  const bSource = (sep: string) => res.bTable?.source ?? (res.b.status === 'ok' ? '교육청 실측표' : `교육청 실측표${sep}${res.b.reason}`);
+  const source = (k: string) => k === 'b' ? bSource('\n') : k === 'a3' && res.a3.status !== 'ok' ? 'U:NAVI 계산식\n· 검수 전' : 'U:NAVI 계산식';
   const reason = (k: string) => k === 'a1' ? `학점 가중 5등급 평균 ${g5}을 누적비로 바꿨어요` : k === 'a2' ? '과목별 등급 구간에 수강자수를 보정한 학점 가중 평균'
-    : k === 'a3' ? `원점수·성취도별 분포비율${res.a3.status === 'ok' ? '' : ' · 검수 전이라 범위에서 제외'}` : bSource;
+    : k === 'a3' ? `원점수·성취도별 분포비율${res.a3.status === 'ok' ? '' : ' · 검수 전이라 범위에서 제외'}` : bSource(' · ');
+  // 실측표(B)를 못 쓰면 시안의 A-1·B 비교 대신 검수된 A-1·A-2 차이를 같은 자리에 써요(NEVER-1)
+  const diff2 = diff === null && res.a1.status === 'ok' && res.a2.status === 'ok' ? res.a1.value - res.a2.value : null;
+  const diff2Text = diff2 === null ? '' : `약 ${two(Math.abs(diff2))}등급 ${diff2 >= 0 ? '높게(불리하게)' : '낮게(유리하게)'}`;
   const explain = desktop
-    ? [diff !== null && `A-1은 앱 공식이라 교육청 실측표보다 ${diffText} 나와요.`, '등급은 숫자가 작을수록 상위예요.', res.a3.status !== 'ok' && 'A-3은 준비 중이라 범위에 넣지 않았어요.'].filter(Boolean).join(' ')
-    : [diff !== null && `A-1은 교육청 실측표보다 ${diffText} 나와요`, '등급은 숫자가 작을수록 상위예요', '세 방법 모두 추정이라 범위로 봐 주세요'].filter(Boolean).join(' · ');
+    ? [diff !== null && `A-1은 앱 공식이라 교육청 실측표보다 ${diffText} 나와요.`, diff2 !== null && `A-1은 5등급 평균 하나로, A-2는 과목마다 옮겨서 A-1이 A-2보다 ${diff2Text} 나와요.`,
+      '등급은 숫자가 작을수록 상위예요.', res.a3.status !== 'ok' && 'A-3은 준비 중이라 범위에 넣지 않았어요.', res.b.status !== 'ok' && `B는 범위에 넣지 않았어요(${res.b.reason}).`, diff2 !== null && '모든 방법이 추정이라 범위로 봐 주세요.'].filter(Boolean).join(' ')
+    : [diff !== null && `A-1은 교육청 실측표보다 ${diffText} 나와요`, diff2 !== null && `A-1은 A-2보다 ${diff2Text} 나와요`, '등급은 숫자가 작을수록 상위예요', '세 방법 모두 추정이라 범위로 봐 주세요'].filter(Boolean).join(' · ');
   const methodCard = <section className="f2n-card" aria-label={desktop ? '방법 비교' : '방법별 환산값'}><h3 className="t-heading-4">{desktop ? '방법 비교' : '방법별 환산값'}</h3>
     {desktop ? <table className="data-table f2n-methods"><thead><tr><th scope="col">기준</th>{METHODS.map(([k, l]) => <th scope="col" key={k}>{l}</th>)}</tr></thead>
       <tbody><tr><th scope="row">환산 9등급</th>{METHODS.map(([k]) => <td key={k} className="num f2n-value">{methodValue(res[k])}</td>)}</tr>
         <tr><th scope="row">사용한 입력</th>{METHODS.map(([k]) => <td key={k}>{input(k)}</td>)}</tr>
         <tr><th scope="row">출처·연도·표본</th>{METHODS.map(([k]) => <td key={k}>{source(k)}</td>)}</tr></tbody></table>
       : <table className="data-table f2n-methods"><thead><tr><th scope="col">방법</th><th scope="col">환산 9등급</th></tr></thead>
-        <tbody>{METHODS.map(([k, l]) => <tr key={k}><th scope="row">{l}<span className="t-caption text-muted">{reason(k)}</span></th><td className="num f2n-value">{methodValue(res[k])}</td></tr>)}</tbody></table>}
+        <tbody>{METHODS.map(([k, l]) => <tr key={k}><th scope="row">{l}<span className="t-caption text-muted" title={reason(k)}>{reason(k)}</span></th><td className="num f2n-value">{methodValue(res[k])}</td></tr>)}</tbody></table>}
     <p className="t-body-sm text-muted">{explain}</p></section>;
   // 제목의 신뢰도 값(높음·보통·낮음)은 데이터예요. 시안 예시는 "보통"
   const reasonCard = <section className="f2n-card" aria-label="신뢰도 근거"><h3 className="t-heading-4">신뢰도 {conf}인 이유</h3>
     <table className="data-table f2n-reasons"><tbody><tr><th scope="row">석차등급 산출 과목</th><td className="num">{res.stats.rankedCount}개</td></tr>
       <tr><th scope="row">소수 수강 과목</th><td className="num">{Math.round(res.stats.smallRatio * 100)}%</td></tr>
       <tr><th scope="row">방법 간 차이</th><td className="num">{res.spread === null ? '—' : `${one(res.spread)}등급`}</td></tr></tbody></table></section>;
-  const trace = <TraceAccordion key={String(desktop)} open={desktop} trace={res.trace.map(t => ({ rule: t.rule ?? '', detail: t.note ? `${t.label} · ${t.note}` : t.label, value: typeof t.value === 'number' ? t.value : undefined }))}
-    note={`${res.a3.status === 'ok' ? '' : 'A-3 분포비율 보정은 검수 전이라 계산하지 않았어요 · '}중간 단계는 반올림하지 않아요 · 대학 공식 자료가 최종 기준이에요`} />;
+  // 시안 단계(①~⑧): 엔진 값을 시안 형식으로 보여줘요. 검수 전 방법(수강자수 보정·B 실측표)은 값 대신 이유를 써요(NEVER-1)
+  const cfg = fiveToNineConfig as ConversionConfig, pct = res.g5 === null ? null : g5ToPct(res.g5, cfg);
+  const between = (x: number, xs: number[]) => { const i = Math.min(xs.length - 2, Math.max(0, xs.filter(v => v <= x).length - 1)); return `(${i + 1}등급 ${xs[i]}% ~ ${i + 2}등급 ${xs[i + 1]}%)`; };
+  // 엔진과 같은 과목 집합(석차등급 있음 · 수강자 6명 이상 · 반영 교과)의 등급별 학점
+  const credits = data.grades.filter(g => !validateGrade(g).length && g.rank_grade != null && (!combinations[combo] || combinations[combo]!.includes(g.subject_group)) && !(g.enrolled_count != null && g.enrolled_count <= 5))
+    .reduce<Record<number, number>>((acc, g) => ({ ...acc, [g.rank_grade!]: (acc[g.rank_grade!] ?? 0) + g.credits }), {});
+  const total = Object.values(credits).reduce((a, b) => a + b, 0), gradesSeen = Object.keys(credits).map(Number).sort((a, b) => a - b);
+  const creditShare = gradesSeen.map(g => `${g}등급 ${Math.round((credits[g] / total) * 100)}%`).join(' · ');
+  const steps: [string, string][] = [
+    ['① 학점 가중 5등급 평균', g5],
+    ...(res.a1.status === 'ok' && pct !== null ? [
+      [`② 5등급 누적비로 바꾸기
+     ${between(res.g5!, cfg.centers5)}`, `약 ${two(pct)}%`],
+      [`③ 9등급 누적비 구간에 넣기
+     ${between(pct, cfg.centers9)}`, two(res.a1.value)],
+    ] as [string, string][] : []),
+    ['④ A-1 평균 기반', methodValue(res.a1)],
+    [`⑤ 과목마다 환산
+     ${gradesSeen.map(g => `${g}등급 → ${two(pctToG9(cfg.centers5[g - 1], cfg))}`).join(' · ')}
+     수강자수 보정은 검수 전이에요`, '—'],
+    [`⑥ A-2 학점 가중 평균
+     (${creditShare})`, methodValue(res.a2)],
+    [`⑦ B 교육청 실측표 보간
+     (${res.b.status === 'ok' ? bSource('') : res.b.reason})`, methodValue(res.b)],
+  ];
+  const trace = <TraceAccordion key={String(desktop)} open={desktop} trace={[]}
+    note={`${res.a3.status === 'ok' ? '' : 'A-3 분포비율 보정은 검수 전이라 계산하지 않았어요 · '}중간 단계는 반올림하지 않아요 · 대학 공식 자료가 최종 기준이에요`}>
+    <ol className="f2n-steps">{steps.map(([label, value]) => <li key={label}><span>{label}</span><span className="num">{value}</span></li>)}
+      <li className="f2n-steps__final"><span>⑧ 환산 범위 · 대표값</span><span className="num">약 {res.display!.min.toFixed(1)}~{res.display!.max.toFixed(1)} · 약 {two(res.representative!)}</span></li></ol>
+  </TraceAccordion>;
   return desktop
     ? <div className="f2n-layout"><div className="f2n-main">{viewTabs}{comboTabs}{tile}<p className="num f2n-summary">방법 {okCount}가지로 본 범위 · 신뢰도 {conf} · 석차등급 산출 과목 {res.stats.rankedCount}개</p>{rangeCard}{methodCard}</div>
       <aside className="f2n-aside" aria-label="환산 신뢰도와 근거">{reasonCard}{trace}</aside>{note}{placement}</div>
