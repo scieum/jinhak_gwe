@@ -34,13 +34,13 @@ test('v2 모바일 머리: 홈은 제목 줄 없이 로고만, 상세는 뒤로�
   expect(detail.container.querySelector('.appbar-title')).toBeNull();
 });
 
-test('v2 교사 사이드바: 교사 대분류가 맨 위, 그 아래 캡션 "학생" + 학생 메뉴', () => {
+test('v2 교사 사이드바: 교사 메뉴만 보인다(학생 메뉴 없음, 2026-11-24 사용자 결정)', () => {
   renderAt('/teacher/teacher-dashboard');
   const sidebar = screen.getByRole('navigation', { name: '주 메뉴' });
   const labels = [...sidebar.querySelectorAll('.sidebar-group__label, .sidebar-item, .sidebar__caption')].map((e) => e.textContent?.trim());
-  expect(labels.indexOf('우리 반')).toBeLessThan(labels.indexOf('학생'));
-  expect(labels.indexOf('학생')).toBeLessThan(labels.indexOf('홈'));
-  expect(within(sidebar).queryByText('교사')).toBeNull();
+  expect(labels).toContain('우리 반');
+  expect(labels).not.toContain('학생');
+  expect(labels).not.toContain('홈');
 });
 
 test('v2 사이드바 아래: 백업은 button-pill-soft', () => {

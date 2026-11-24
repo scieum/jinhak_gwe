@@ -20,8 +20,8 @@ export function AppShell() {
   const { group, item, detail } = loc;
   const mode = workspaceOf(pathname);
   const isMore = pathname === MORE_PATH[mode];
-  // 교사 셸: 교사 대분류가 맨 위(v2 시안 · teacher-dashboard 02-spec P1), 그 아래 캡션 "학생" + 학생 메뉴
-  const sections: [string | null, NavGroup[]][] = mode === 'teacher' ? [[null, NAV.teacher], ['학생', NAV.student]] : [[null, NAV[mode]]];
+  // 교사 셸은 교사 메뉴만(v2 시안, 2026-11-24 사용자 결정). 학생 화면은 모드 전환으로 간다.
+  const sections: [string | null, NavGroup[]][] = [[null, NAV[mode]]];
   const title = item?.label ?? detail?.label ?? (isMore ? '더보기' : 'U:NAVI');
   const breadcrumb = group && !isSingle(group) ? `${group.label} › ${title}` : null;
   const groups = NAV[mode];
