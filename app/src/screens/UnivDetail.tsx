@@ -1,59 +1,134 @@
-import { useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useSearchParams } from 'react-router-dom';
-import { SegmentedControl } from '../components/SegmentedControl';
 import { InterestButton } from '../components/InterestButton';
 import { PrepareProgram } from '../components/PrepareProgram';
+import { Icon } from '../components/Icon';
+import { ScreenActions } from '../components/ScreenActions';
+import { SegmentedControl } from '../components/SegmentedControl';
+import { UniversityLogo } from '../components/UniversityLogo';
+import { useCompactResults } from '../components/ResultFilters';
 import { interestId, programPath } from '../domain/interests';
 import { useReleasedResults } from '../data/releasedResults';
-import { programLines, programSummaries, yearsOf } from '../domain/resultBrowse';
+import { loadAdmissionPlans } from '../data/admissionPlans';
+import { useSampleMode } from '../data/sample/mode';
+import { sampleUnivDetail } from '../data/sample/univDetail';
+import { programLine, planView, type UdChange, type UdProgram, type UdView } from '../domain/univDetail';
+import { programLines, yearsOf } from '../domain/resultBrowse';
 import { RESULT_NOTICE } from './AdmissionResults';
-import { useUnivWiki } from '../data/univWiki';
-import { AnchorNav, SimilarSection, WikiSectionView } from '../components/UnivWiki';
 import '../styles/result-browser.css';
+import '../styles/univ-detail.css';
 
 function PlanLink({ name }: { name: string }) {
   return <p className="notice"><Link className="t-link" to={`/admissions-list?q=${encodeURIComponent(name)}`}>2028학년도 전형계획 확인하기</Link> · 시행계획·모집요강 자료는 변경될 수 있으므로 최종 모집요강을 확인해 주세요.</p>;
 }
-const TABS = ['전체', '교과', '종합', '논술', '기타', '정시'] as const;
 
 function Missing({ what }: { what: string }) {
   return <div className="empty-state"><h3 className="t-heading-3">{what}을 찾지 못했어요</h3><p>공개된 입결 자료에 있는 대학·전형만 볼 수 있어요.</p>
     <Link className="button-outline" to="/admission-results">수시 입결에서 찾기</Link></div>;
 }
 
+// 대학 상세(v2 시안 346:144159 · 346:143371). 샘플 모드 = 시안 데모(경희대학교), 지우면 2028 시행계획 목록의 그 대학.
+const TABS = ['전체', '교과', '종합', '논술', '기타', '정시'] as const;
+type Tab = (typeof TABS)[number];
+type Sort = 'desc' | 'asc' | null;
+type Loaded = { view: UdView | null; error: string } | null;
+
+const Delta = ({ d }: { d?: number }) => d ? <span className={`ud-delta ud-delta--${d < 0 ? 'down' : 'up'}`}><span>{d < 0 ? '▼' : '▲'}</span><span>{Math.abs(d)}</span></span> : null;
+const Next = ({ c }: { c: UdChange }) => <><strong>{c.next}</strong><Delta d={c.delta} /></>;
+const Pending = ({ children }: { children: ReactNode }) => <div className="ud-pending"><span className="data-status-badge">준비 중</span><p>{children}</p></div>;
+
 export function UnivDetail() {
-  const units = useReleasedResults(), wiki = useUnivWiki(), [query, setQuery] = useSearchParams(), name = query.get('u') ?? '';
-  const [tab, setTab] = useState<(typeof TABS)[number]>('전체');
-  const pickDept = (d: string) => setQuery(q => { q.set('d', d); return q; }, { replace: true });
-  if (!units) return <section className="student-screen" data-slug="univ-detail"><p role="status">공개 입결 자료를 읽고 있어요.</p></section>;
-  const mine = units.filter(u => u.university === name);
-  if (!mine.length) return <section className="student-screen" data-slug="univ-detail"><Missing what="대학" /></section>;
-  const all = programSummaries(units, name), shown = all.filter(p => tab === '전체' || p.type === tab);
-  return <section className="student-screen" data-slug="univ-detail" aria-label="대학 상세">
-    <AnchorNav />
-    <div id="wiki-overview" className="wiki-anchor" />
-    <div className="screen-heading"><div><h2 className="t-heading-1">{name}</h2>
-      <p className="t-caption text-muted">공개 입결 원문 {mine.length}건 · {[...new Set(mine.map(u => u.year))].sort().join('·')}학년도</p></div>
-      <Link className="button-outline" to={`/admission-results?u=${encodeURIComponent(name)}`}>수시 입결 보기</Link></div>
-    <PlanLink name={name} />
-    <h3 className="t-heading-2">입결이 공개된 전형 <span className="t-caption text-muted">{all.length}개</span></h3>
-    <SegmentedControl label="전형 유형" value={tab} onChange={setTab} options={TABS.map(t => ({ value: t, label: t }))} />
-    {!shown.length ? <div className="empty-state"><h3 className="t-heading-3">이 유형의 공개 입결은 없어요</h3><p>다른 유형을 골라 보세요.</p></div>
-      : <ul className="program-list">{shown.map(p => <li className="interest-row" key={programPath(name, p.program)}><Link className="interest-row__info" to={programPath(name, p.program)}>
-        <strong>{p.program}</strong>
-        <span className="t-body-sm text-muted">{p.type} · {p.year}학년도 입결 · 모집단위 {p.units}개{p.quota !== null && ` · 모집 ${p.quota}명`}</span><span aria-hidden="true">›</span></Link><Link className="button-outline" aria-label={`${name} ${p.program} 관심 학과 선택`} to={programPath(name, p.program)}>관심 학과 선택</Link></li>)}</ul>}
-    <Link className="button-outline" to="/admission-results?view=interests">관심 전형 모아보기</Link>
-    <section id="wiki-notes" className="wiki-anchor">
-      <WikiSectionView wiki={wiki} university={name} section="notes" />
-      <WikiSectionView wiki={wiki} university={name} section="changes" />
-      <WikiSectionView wiki={wiki} university={name} section="programs" />
+  const [query] = useSearchParams(), name = query.get('u') ?? '';
+  const sample = useSampleMode(), compact = useCompactResults();
+  const demo = sample && (!name || name === sampleUnivDetail.university);
+  const [loaded, setLoaded] = useState<Loaded>(null), [attempt, setAttempt] = useState(0);
+  const [tab, setTab] = useState<Tab>('전체'), [sort, setSort] = useState<Sort>(null), [picked, setPicked] = useState<string | null>(null);
+  const [head, setHead] = useState<Element | null>(null), [bar, setBar] = useState<Element | null>(null);
+  useEffect(() => { setHead(compact ? null : document.querySelector('.topbar__heading')); setBar(compact ? document.getElementById('appbar-actions') : null); }, [compact]);
+  useEffect(() => {
+    if (demo) return;
+    let live = true; setLoaded(null);
+    loadAdmissionPlans().then(c => { const plan = c.entries.find(e => e.university === name); if (live) setLoaded({ view: plan ? planView(plan) : null, error: '' }); })
+      .catch(e => { if (live) setLoaded({ view: null, error: e instanceof Error ? e.message : '대학 자료를 읽지 못했어요.' }); });
+    return () => { live = false; };
+  }, [demo, name, attempt]);
+  const view = demo ? sampleUnivDetail : loaded?.view;
+  const screen = (children: ReactNode) => <section className="student-screen ud" data-slug="univ-detail" aria-label="대학 상세">{children}</section>;
+  if (!view) return screen(!loaded ? <p role="status" className="ud-status">대학 자료를 읽고 있어요.</p>
+    : loaded.error ? <div className="ud-card ud-error" role="alert"><Icon name="triangle-alert" size={20} /><p>대학 자료를 읽지 못했어요. 연결을 확인하고 다시 읽어 주세요.</p><button type="button" className="button-outline" onClick={() => setAttempt(a => a + 1)}>다시 읽기</button></div>
+      : <div className="empty-state"><Icon name="search" /><h3 className="t-heading-4">대학을 찾지 못했어요</h3><p>공개된 자료에 있는 대학만 볼 수 있어요.</p><Link className="button-primary" to="/admissions-list">전형계획에서 찾기</Link></div>);
+
+  const { programs, changes } = view, total = programs.length;
+  const shown = programs.filter(p => tab === '전체' || p.type === tab);
+  const ordered = sort ? [...shown].sort((a, b) => ((a.quota ?? -1) - (b.quota ?? -1)) * (sort === 'asc' ? 1 : -1)) : shown;
+  const selected = programs.find(p => p.name === (picked ?? programs[0]?.name)), panel = selected && shown.includes(selected) ? selected : undefined;
+  const count = (list: UdProgram[]) => `수시 ${list.filter(p => p.round === '수시').length} · 정시 ${list.filter(p => p.round === '정시').length}`;
+  const note = <p className="disclaimer-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {view.checked}{sample ? ' · 샘플의 대학·숫자는 예시예요' : ''}</span></p>;
+  const heart = (p?: UdProgram) => p && <InterestButton key={interestId(view.university, p.name)} university={view.university} program={p.name} compact />;
+  const source = view.source && <div className="ud-source"><a className="button-pill-soft" href={view.source.url} target="_blank" rel="noreferrer">원문 보기 ↗</a><span>{compact ? view.source.short : view.source.label}</span></div>;
+  const lead = !changes ? '전년 대비 비교는 2027학년도 자료가 모이면 보여요' : !changes.length ? '2027학년도와 비교해 바뀐 점이 없어요' : view.headline?.[compact ? 'mobile' : 'pc'] ?? '';
+  const hero = <div className="stat-tile ud-tile">
+    <p className="ud-tile__caption">{compact ? '2028학년도 · ' : `${view.university} · 2028학년도 `}{changes ? '전년 대비' : '시행계획'}</p>
+    <p className="ud-tile__value">{changes ? `바뀐 점 ${changes.length}건` : `전형 ${total}개`}</p>
+    <p className="ud-tile__lead">{lead}</p></div>;
+  const empty = <div className="empty-state"><Icon name="search" /><h3 className="t-heading-4">이 유형의 2028 전형은 없어요</h3><p>다른 유형을 골라 보세요.</p><button type="button" className="button-pill-soft" onClick={() => setTab('전체')}>전체 보기</button></div>;
+  const rows = (list: UdProgram[]) => <ul className="ud-rows">{list.map(p => <li key={p.name}><Link to={p.path}><span><strong>{p.name}</strong><span>{programLine(p)}</span></span><Icon name="chevron-right" /></Link></li>)}</ul>;
+
+  if (compact) return screen(<>
+    {bar && createPortal(<span className="data-status-badge ud-asof">{view.status}</span>, bar)}
+    <div className="ud-name"><UniversityLogo university={view.university} /><div><h2>{view.university}</h2><p>{view.place}</p></div>{heart(programs[0])}</div>
+    {hero}
+    <section className="ud-card ud-changes" aria-label="전년 대비 바뀐 점">
+      {!changes ? <Pending>2027학년도 자료가 아직 없어서 비교하지 않았어요</Pending> : changes.length > 0 && <ul className="ud-change-list">{changes.map(c => <li key={c.program + c.item}>
+        <p>{c.program} · {c.item}</p><div className="ud-change-value"><span>{c.prev} →</span><span className="data-table ud-cell"><Next c={c} /></span></div></li>)}</ul>}
+      {changes && source}
     </section>
-    <section id="wiki-method" className="wiki-anchor"><WikiSectionView wiki={wiki} university={name} section="method" /></section>
-    <section id="wiki-minimum" className="wiki-anchor"><WikiSectionView wiki={wiki} university={name} section="minimum" /></section>
-    <section id="wiki-elements" className="wiki-anchor"><WikiSectionView wiki={wiki} university={name} section="elements" /></section>
-    <section id="wiki-similar" className="wiki-anchor"><SimilarSection units={units} wiki={wiki} university={name} selected={query.get('d')} onSelect={pickDept} /></section>
-    <p className="disclaimer-note">{RESULT_NOTICE}</p>
-  </section>;
+    <section className="ud-card ud-list">
+      <div className="ud-title"><h2>2028 전형 목록</h2><span>{shown.length}개</span></div>
+      <div className="ud-chips" role="group" aria-label="전형 유형">{TABS.map(t => <button key={t} type="button" className="filter-chip" aria-pressed={t === tab} onClick={() => setTab(t)}>{t}</button>)}</div>
+      {shown.length ? <><p className="ud-caption">{shown.length}개 모두 {view.status}이에요</p>
+        {(['수시', '정시'] as const).map(r => { const list = shown.filter(p => p.round === r); return list.length > 0 && <div key={r} className="ud-group"><h3>{r} {list.length}개</h3>{rows(list)}</div>; })}</> : empty}
+    </section>
+    {note}
+  </>);
+
+  const changed = panel && changes?.filter(c => c.program === panel.name);
+  return screen(<>
+    {head && createPortal(<div className="ud-head"><p className="t-caption text-muted">대학 찾기 › 전형계획</p><h1>{view.university}</h1><p className="ud-lead">{view.place} · 2028학년도 전형 {total}개</p></div>, head)}
+    <ScreenActions><span className="data-status-badge ud-asof">{view.status} · {view.checked}</span>{view.homepage && <a className="button-outline" href={view.homepage} target="_blank" rel="noreferrer">홈페이지 ↗</a>}</ScreenActions>
+    <div className="ud-hero"><UniversityLogo university={view.university} />{hero}{heart(panel ?? programs[0])}</div>
+    <section className="ud-card ud-changes"><h2 className="ud-h2">전년 대비 바뀐 점</h2>
+      {!changes ? <Pending>2027학년도 자료가 아직 없어서 비교하지 않았어요</Pending> : changes.length > 0 && <table className="data-table ud-table ud-table--changes">
+        <colgroup><col /><col style={{ width: 128 }} /><col style={{ width: 136 }} /><col style={{ width: 184 }} /></colgroup>
+        <thead><tr><th scope="col">전형</th><th scope="col">항목</th><th scope="col" className="num">2027</th><th scope="col" className="num">2028</th></tr></thead>
+        <tbody>{changes.map(c => <tr key={c.program + c.item}><td>{c.program}</td><td>{c.item}</td><td className="num">{c.prev}</td><td className="num"><Next c={c} /></td></tr>)}</tbody></table>}
+      {changes && source}
+    </section>
+    <div className="ud-columns">
+      <section className="ud-card ud-list">
+        <div className="ud-title"><h2 className="ud-h2">2028 전형 목록</h2><span>{shown.length}개</span></div>
+        <div className="ud-filter"><SegmentedControl label="전형 유형" value={tab} onChange={setTab} options={TABS.map(t => ({ value: t, label: t }))} /><span>{count(shown)}</span></div>
+        {shown.length ? <><p className="ud-caption">{shown.length}개 모두 {view.status}이에요</p>
+          <table className="data-table ud-table ud-table--programs">
+            <colgroup><col /><col style={{ width: 64 }} /><col style={{ width: 88 }} /><col style={{ width: 100 }} /><col style={{ width: 92 }} /><col style={{ width: 73 }} /></colgroup>
+            <thead><tr><th scope="col">전형명</th><th scope="col">유형</th><th scope="col">세부 유형</th>
+              <th scope="col" aria-sort={sort === 'desc' ? 'descending' : sort === 'asc' ? 'ascending' : 'none'}><button type="button" className="ud-sort" data-on={sort ?? undefined} onClick={() => setSort(s => s === null ? 'desc' : s === 'desc' ? 'asc' : null)}>모집인원<Icon name="arrow-up-down" size={16} /></button></th>
+              <th scope="col">수능최저</th><th scope="col">면접</th></tr></thead>
+            <tbody>{ordered.map(p => <tr key={p.name} tabIndex={0} aria-selected={p === panel} onClick={() => setPicked(p.name)} onKeyDown={e => { if (e.key === 'Enter') setPicked(p.name); }}>
+              <td>{p.name}</td><td>{p.type}</td><td>{p.sub}</td><td className="num">{p.quota ?? '—'}</td><td>{p.minimum}</td><td>{p.interview}</td></tr>)}</tbody></table></> : empty}
+      </section>
+      <aside className="ud-card ud-panel" aria-label="선택한 전형 요약">{!panel ? <div className="ud-panel-empty"><Icon name="search" /><p>표에서 전형을 고르면 여기에 요약이 보여요.</p></div> : <>
+        <div className="ud-panel__title"><h3>{panel.name}</h3><p>{panel.type} · {panel.sub} · {panel.round}</p></div>
+        <table className="data-table ud-table ud-table--facts"><tbody>{panel.facts.map(([k, v]) => <tr key={k}><th scope="row">{k}</th><td>{v}</td></tr>)}</tbody></table>
+        <div className="ud-panel__changes"><h4>이 전형에서 바뀐 점</h4>{!changed ? <span className="data-status-badge">준비 중</span> : !changed.length ? <p className="ud-muted">바뀐 점이 없어요</p>
+          : changed.map(c => <div key={c.item} className="ud-compare"><p>{c.item}</p><p>{c.prev} → <Next c={c} /></p></div>)}</div>
+        <div className="ud-panel__actions"><Link className="button-outline" to={panel.path}>전형 상세 보기</Link>{panel.source && <a className="button-pill-soft" href={panel.source} target="_blank" rel="noreferrer">원문 보기 ↗</a>}</div>
+        <div className="ud-panel__status"><span className="data-status-badge">{view.status}</span><span>모집요강이 나오면 갱신돼요</span></div></>}
+      </aside>
+    </div>
+    {note}
+  </>);
 }
 
 export function ProgramDetail() {

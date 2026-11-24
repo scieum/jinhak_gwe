@@ -97,9 +97,8 @@ test('save limit allows existing entries and removal while rejecting new ones', 
   expect(await studentDb.interests.count()).toBe(500);
 });
 
-test('save from university detail, view from admission results after remount, open detail and remove', async () => {
-  at(`/univ-detail?u=${encodeURIComponent(university)}`);
-  fireEvent.click(await screen.findByRole('link', { name: `${university} ${program} 관심 학과 선택` }));
+test('save from program detail, view from admission results after remount, open detail and remove', async () => {
+  at(programPath(university, program));
   const add = await screen.findByRole('button', { name: `${university} ${program} 검증학과 관심에 담기` });
   await waitFor(() => expect((add as HTMLButtonElement).disabled).toBe(false));
   fireEvent.click(add);
