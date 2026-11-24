@@ -2,7 +2,8 @@ import { CLASS_CODE, ExchangeError, normalizeNumber, readExchange } from '../io/
 
 /** 학급 데이터(교사 기기 안). 학생은 번호·별칭만(R-PRIV-003). */
 export interface ClassInfo { key: 'class'; name: string; code: string; created_at: string }
-export interface Student { number: string; alias: string; locked?: boolean }
+/** track = 계열, major = 희망 전공(있을 때만 학생 기록 머리에 보여요). */
+export interface Student { number: string; alias: string; locked?: boolean; track?: string; major?: string }
 export interface CardSlot { priority?: number; university: string; program?: string; department?: string; exam_kind?: string; exam_date?: string | null; csat?: string; memo?: string; judgment?: string | null }
 export interface CounselPayload { scenario: string; slots: CardSlot[]; exempt: CardSlot[]; warnings: { code: string; title: string; message: string }[] }
 export interface CardRecord { id?: number; number: string; created_at: string; received_at: string; seen: boolean; card: CounselPayload }

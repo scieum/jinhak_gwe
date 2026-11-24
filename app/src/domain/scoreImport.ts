@@ -1,5 +1,6 @@
 import { normalizeNumber } from '../io/exchange';
 import type { Student } from './classroom';
+import type { GradeRecord } from './student';
 
 /** score-import 02-spec: 파일 → 열 맞추기 → 검증 → 반영. 모의고사 등급 또는 내신 학기 평균(5등급). */
 export type ImportKind = 'mock' | 'school';
@@ -10,7 +11,8 @@ export const EXAM_KINDS = ['학평', '모평', '수능'] as const;
 export const examName = (year: number, month: number, kind: string) => `${year}년 ${month}월 ${kind}`;
 
 export interface MockGrades { number: string; exam: string; grades: Partial<Record<string, number | null>>; updated_at: string }
-export interface SchoolGrades { number: string; semesters: Partial<Record<string, number>>; updated_at: string }
+/** records = 과목 원자료(있을 때만, 학생 기록 상세의 과목군 추이·입력 과목 수·5 to 9). 성적 불러오기는 학기 평균만 넣어요. */
+export interface SchoolGrades { number: string; semesters: Partial<Record<string, number>>; updated_at: string; records?: GradeRecord[] }
 
 export type ColumnMap = Record<string, number>; // 필드 → 열 번호(-1 = 없음)
 const clean = (v: unknown) => String(v ?? '').replace(/\s/g, '');
