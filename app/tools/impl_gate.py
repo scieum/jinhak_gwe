@@ -412,7 +412,12 @@ MEASURE_JS = """(sel) => {
   if (side) m.sidebar_w = side.width; if (app) m.appbar_h = app.height; if (sub) m.subnav_h = sub.height;
   if (showTop) {
     const tt = textBoxes(topbar);
-    m.header_top = tt.length ? Math.min(...tt.map(t => t.y)) : null;
+    // Figma TEXT 상자 = 줄 상자. 글자 영역(range rect)에서 반쪽 행간을 빼 줄 상자 위끝으로 잰다(경로 글자 없는 화면의 3px 오탐 방지)
+    const lineTops = [...topbar.querySelectorAll('*')].filter(e => vis(e) && [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())).map(e => {
+      const s = getComputedStyle(e), r = e.getBoundingClientRect();
+      // 글자를 직접 가진 블록의 내용 상자 위끝 = 첫 줄 상자 위끝. 인라인이면 줄 상자를 알 수 없어 글자 영역 위끝을 쓴다
+      return (s.display === 'inline' ? r.top : r.top + px(s.paddingTop) + px(s.borderTopWidth)) + sy; });
+    m.header_top = lineTops.length ? Math.min(...lineTops) : (tt.length ? Math.min(...tt.map(t => t.y)) : null);
     m.header_left = tt.length ? Math.min(...tt.map(t => t.x)) : null;
     const bottom = Math.max(...[...topbar.querySelectorAll('*')].filter(vis).map(e => e.getBoundingClientRect().bottom + sy));
     m.header_pad = topbar.getBoundingClientRect().bottom + sy - parseFloat(getComputedStyle(topbar).borderBottomWidth) - bottom;
