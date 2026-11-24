@@ -73,7 +73,7 @@
   --color-grade-9: #e8b4b0;
 
   /* Typography — 모바일(태블릿 포함) 값. PC(≥1024)는 아래 미디어 쿼리에서 덮어쓴다 */
-  --font-family: "Pretendard Variable", "Pretendard", "IBM Plex Sans KR", -apple-system, BlinkMacSystemFont,
+  --font-family: "IBM Plex Sans KR", "Pretendard Variable", "Pretendard", /* 시안(Figma)과 같은 글꼴 — 2026-11-24 사용자 결정 */ -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
 
   --font-display-size: 32px;
