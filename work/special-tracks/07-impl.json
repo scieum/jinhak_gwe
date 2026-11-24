@@ -25,7 +25,7 @@
     "P 1440: filter-chip x 304 (시안 352±4)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 3,
   "route": "/special-tracks",
   "allowed": [],
   "notes": []

@@ -39,7 +39,7 @@
     "P 1440: segmented-control 폭 201 (시안 280±4)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 3,
   "route": "/teacher/result-summary",
   "allowed": [],
   "notes": [

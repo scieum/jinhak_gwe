@@ -9,7 +9,6 @@
     "S 390: 블록 없음 stat-tile",
     "S 390: 블록 없음 filter-chip",
     "S 390: 블록 없음 disclaimer-note",
-    "P 390: segmented-control x 20 (시안 230±4)",
     "P 390: segmented-control 폭 231 (시안 140±4)",
     "T 1440: 문구 없음 '전형: 전체'",
     "T 1440: 문구 없음 '완료 포함'",
@@ -23,7 +22,7 @@
     "P 1440: data-table 폭 1128 (시안 704±4)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 1,
   "route": "/calendar",
   "allowed": [],
   "notes": []

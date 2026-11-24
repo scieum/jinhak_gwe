@@ -22,7 +22,7 @@
     "P 1440: data-table x 281 (시안 304±4)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 1,
+  "same_fail_streak": 2,
   "route": "/admin/admin-rules/fields",
   "allowed": [],
   "notes": []

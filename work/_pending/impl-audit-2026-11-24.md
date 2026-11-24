@@ -1,5 +1,63 @@
 # G5 시안↔앱 구현 일치 전수조사 (2026-11-24)
 
+## 재검사(샘플 모드 시드) — 2026-11-24
+
+게이트: `python app/tools/impl_gate.py --all --refresh` (Figma 캐시를 지금 시안으로 다시 받음).
+시드: `seed_app()`을 앱 **샘플 데이터 모드**로 바꿨다. 새 브라우저 저장소를 비운 뒤(localStorage·sessionStorage·IndexedDB) `jinhak-navi-seen-about`='1'만 두고 앱을 열면, 앱의 `initSample()`이 빈 저장소에 학생·교사·관리자 샘플(app/src/data/sample/*)을 넣고 `jinhak-navi-sample`='on'으로 바꾼다. 게이트는 그 'on'을 기다린 뒤 잰다. 확인한 적재량: 학생 전형 6·성적 24·출결 2·관심 6·할 일 8·수시로 보드 1, 교사 학급 1·학생 28·카드 21·모의 4·일정 4, 관리자 위키 6·계열 1. 샘플 띠(`.sample-band`)는 측정 전에 지우는 것 그대로.
+(주의: 플래그를 미리 'on'으로 두면 `initSample()`이 적재를 건너뛰므로 비워 두고 앱이 켜게 했다.)
+
+결과: **통과 6 / 실패 31 / 건너뜀 1** (38화면). 위반 합계 T 346 · S 138 · P 125. 앱 코드는 고치지 않았다.
+
+| 화면 | 결과 | T | S | P | 이전(결과 T/S/P) | 대표 위반(앞 3개) |
+|---|---|---|---|---|---|---|
+| home | 통과 | 0 | 0 | 0 | 실패 0/4/2 | — |
+| admissions-list | 실패 | 30 | 7 | 7 | 실패 30/7/7 | T 390: 문구 없음 '대학 이름으로 찾기' · T 390: 문구 없음 '필터' · S 390: 블록 없음 filter-chip |
+| univ-detail | 실패 | 9 | 5 | 2 | 실패 9/5/3 | S 390: 블록 없음 stat-tile · S 390: 블록 없음 data-table · S 390: 블록 없음 filter-chip |
+| program-detail | 실패 | 44 | 6 | 1 | 실패 44/6/2 | T 390: 문구 없음 '학생부교과(학교장추천)' · T 390: 문구 없음 '전형요소와 비율' · T 390: 문구 없음 '단계' |
+| grade-input | 실패 | 1 | 0 | 7 | 건너뜀 –/–/– | P 390: 본문 왼쪽 여백(시안) 20 (기준 16±2) · P 390: segmented-control x 37 (시안 16±4) · P 390: segmented-control 폭 316 (시안 358±4) |
+| five-to-nine | 실패 | 20 | 10 | 1 | 실패 20/10/2 | T 390: 문구 없음 '전 교과' · T 390: 문구 없음 '국수영사과' · T 390: 문구 없음 '국수영사' |
+| univ-score | 통과 | 0 | 0 | 0 | 실패 5/0/6 | — |
+| doelgak | 통과 | 0 | 0 | 0 | 실패 2/3/1 | — |
+| susiro | 통과 | 0 | 0 | 0 | 건너뜀 –/–/– | — |
+| saenggibu-ai | 실패 | 15 | 5 | 1 | 실패 15/5/1 | T 390: 문구 없음 '새로 분석' · T 390: 문구 없음 '내 기록을 역량별로 나눴어요' · T 390: 문구 없음 '보낸 원문' |
+| mock-score | 실패 | 4 | 3 | 9 | 실패 4/3/9 | T 390: 문구 없음 '시험 바꾸기' · S 390: 블록 없음 trace-accordion · S 390: 블록 순서 다름 시안 [sub-nav > stat-tile > text-input > disclaimer-note] / 앱 [sub-nav > text-input > stat-tile > disclaimer-note] |
+| teacher-dashboard | 실패 | 8 | 3 | 0 | 실패 8/3/1 | T 390: 문구 없음 '오늘 할 일' · S 390: 블록 없음 page-header · S 390: 블록 없음 filter-chip |
+| counsel | 실패 | 7 | 7 | 15 | 실패 7/7/16 | T 390: 문구 없음 '학생 바꾸기' · T 390: 문구 없음 '지난 메모' · S 390: 블록 없음 page-header |
+| card-collect | 실패 | 5 | 3 | 0 | 실패 5/3/1 | T 390: 문구 없음 '오늘 할 일' · S 390: 블록 없음 page-header · S 390: 블록 없음 filter-chip |
+| result-summary | 실패 | 22 | 9 | 3 | 실패 22/9/4 | T 390: 문구 없음 '가채점 수합' · T 390: 문구 없음 '저장' · T 390: 문구 없음 '학생별 결과' |
+| admin-rules | 실패 | 36 | 5 | 3 | 실패 36/5/3 | T 390: 문구 없음 '최근 처리' · T 390: 문구 없음 '검수 완료 규칙만 배포 버전에 들어가요 검수 전 규칙은 학생 화면에서 계산하지 않아요' · S 390: 블록 없음 stat-tile |
+| student-record | 실패 | 25 | 6 | 2 | 실패 25/6/3 | T 390: 문구 없음 '내신 학기별 평균 등급' · T 390: 문구 없음 '전 교과' · T 390: 문구 없음 '국어' |
+| score-import | 실패 | 10 | 7 | 6 | 실패 10/7/7 | S 390: 블록 없음 page-header · S 390: 블록 없음 stat-tile · S 390: 블록 없음 warning-callout |
+| minimum-board | 실패 | 6 | 0 | 4 | 실패 6/1/5 | T 390: 문구 없음 '먼저 볼 학생' · T 390: 문구 없음 '대학 공식 모집요강이 최종 기준이에요 · '미검수'는 교사 입력 기준이라 참고로만 봐 주세요 · 시안의 대학·숫자는 예시예요' · P 390: filter-chip x 297 (시안 20±4) |
+| score-trend | 건너뜀 | 0 | 0 | 0 | 실패 15/4/7 | 05-build.json 없음(최종 시안 없음) |
+| admission-results | 실패 | 5 | 7 | 3 | 실패 5/7/4 | T 390: 문구 없음 '좌표' · T 390: 문구 없음 '계열 전체' · S 390: 블록 없음 filter-chip |
+| login | 통과 | 0 | 0 | 0 | 통과 0/0/0 | — |
+| signup | 통과 | 0 | 0 | 0 | 통과 0/0/0 | — |
+| minimum-search | 실패 | 8 | 6 | 0 | 실패 8/6/1 | S 390: 블록 없음 stat-tile · S 390: 블록 없음 trace-accordion · T 1440: 문구 없음 '잠금' |
+| univ-detail-wiki | 실패 | 14 | 7 | 6 | 실패 14/7/7 | S 390: 블록 없음 stat-tile · S 390: 블록 없음 data-table · S 390: 블록 없음 univ-card |
+| dept-tier | 실패 | 14 | 5 | 2 | 실패 14/5/3 | T 390: 문구 없음 '사회과학 › 행정·정책 ▾' · S 390: 블록 없음 placement-board · S 390: 블록 없음 trace-accordion |
+| special-tracks | 실패 | 13 | 6 | 1 | 실패 13/6/2 | T 390: 문구 없음 '교과' · T 390: 문구 없음 '종합' · T 390: 문구 없음 '세부 전체 · 가나다순 ▾' |
+| admission-style | 실패 | 4 | 0 | 0 | 실패 4/0/1 | T 390: 문구 없음 '나의 준비 방식을 살펴봐요' · T 390: 문구 없음 '직접 만든 자기탐색 질문이에요 · MBTI나 표준화된 심리검사가 아니에요 · 답변만으로 지원 자격이나 입학 결과를 판단하지 않아요' · T 1440: 문구 없음 '나의 준비 방식을 살펴봐요' |
+| national-placement | 실패 | 11 | 8 | 8 | 실패 11/8/9 | T 390: 문구 없음 '대학 검색 (예: 강원, 경북)' · T 390: 문구 없음 '전체 조건' · T 390: 문구 없음 '종합' |
+| eligibility-check | 실패 | 0 | 2 | 7 | 실패 2/2/7 | S 390: 블록 없음 disclaimer-note · P 390: stat-tile x 41 (시안 20±4) · P 390: stat-tile 폭 130 (시안 214±4) |
+| compare | 실패 | 2 | 3 | 7 | 실패 2/3/7 | T 390: 문구 없음 '지원 준비에 추가' · S 390: 블록 없음 filter-chip · S 390: 블록 없음 data-table |
+| application-checklist | 실패 | 2 | 3 | 1 | 실패 2/3/1 | S 390: 블록 없음 disclaimer-note · T 1440: 문구 없음 '진행 상태' · T 1440: 문구 없음 '동작' |
+| calendar | 실패 | 6 | 6 | 5 | 실패 6/6/7 | T 390: 문구 없음 '전형: 전체' · T 390: 문구 없음 '완료 포함' · T 390: 문구 없음 '날짜는 내가 저장한 기록이에요. 대학 공식 모집요강에서 최종 확인해 주세요. 날짜 미정 항목은 내보내지 않으며 자동 알림은 전송하지 않아요. 수정한 일정은 다시 내보내 주세요. · 시안의 날짜는 시험용 예시예요' |
+| counsel-tasks | 실패 | 4 | 2 | 1 | 실패 4/2/1 | T 390: 문구 없음 '상담카드에 담기' · T 390: 문구 없음 '물어봤어요' · S 390: 블록 없음 filter-chip |
+| admin-fields | 실패 | 11 | 0 | 6 | 실패 11/0/6 | T 390: 문구 없음 '모집단위마다 소계열·중계열을 정해요. ‘입결이 비슷한 대학’이 이 표로 같은 계열·관련 계열을 골라요.' · T 390: 문구 없음 'CSV 파일 고르기' · T 390: 문구 없음 '기록 파일 고르기' |
+| admin-wiki | 실패 | 5 | 2 | 7 | 실패 5/2/7 | T 390: 문구 없음 '검수 목록' · T 390: 문구 없음 '대학 공식 발표 자료만 요약해요 · 사설 사이트 내용은 받지 않아요 · 시안의 내용은 시험용 예시예요' · S 390: 블록 없음 filter-chip |
+| univ-map | 실패 | 0 | 1 | 2 | 실패 0/1/3 | P 390: region-map x 36 (시안 20±4) · P 390: region-map 폭 318 (시안 350±4) · S 1440: 블록 없음 univ-card |
+| class-calendar | 실패 | 5 | 4 | 8 | 실패 5/5/9 | T 390: 문구 없음 '학생이 보낸 카드와 직접 입력한 일정 · 결과예요 · 대학 공식 발표가 최종 기준이에요 · 학생은 번호·별칭으로만 보여요 · 시안의 대학·날짜는 예시예요' · S 390: 블록 없음 text-input · S 390: 블록 순서 다름 시안 [sub-nav > segmented-control > stat-tile > filter-chip > data-table > disclaimer-note] / 앱 [sub-nav > stat-tile > filter-chip > segmented-control > data-table > disclaimer-note] |
+
+### 재검사 읽을 때 주의
+- **Figma 시안이 고치는 중**: 다른 designer 에이전트가 시안(PC 머리 간격 48, 모바일 머리 A)을 고치는 중에 `--refresh`로 받았다. 그래서 일부 화면은 중간 상태가 섞였다 — 예) `P 1440: page-header 글자→첫 블록 간격(시안) 48 (기준 24±2)`가 10화면(admissions-list·saenggibu-ai·mock-score·admin-rules·eligibility-check·compare·application-checklist·counsel-tasks·admin-fields·admin-wiki)에 새로 생겼다. 앱은 48인데 해당 시안 프레임이 아직 24인 상태로 보인다. 시안 작업이 끝나면 다시 돌려야 한다.
+- 전보다 줄어든 위반 68건·새로 생긴 위반 12건(이전 전수조사 대비). 줄어든 것 대부분은 이 시드 변경만의 효과가 아니다: 샘플 띠 제외로 `page-header 글자→첫 블록 간격(시안) 109~110` 32건이 사라졌고, home·univ-score·doelgak·susiro는 그 사이 v2 재구현으로 통과.
+- 시드 변경으로 사라진 오탐: eligibility-check `T 문구 없음 '사회 진로선택 이수 과목 수'`(390·1440) — 샘플 성적이 들어와 문구가 나온다. susiro는 이제 샘플 전형 6개로 판정·조합 점검이 채워진 상태로 검사된다(예전 시드는 샘플 전형을 지우고 학생부종합 3개만 넣어 판정이 없었다).
+- **susiro allow**: `'소신·위험 쪽으로 쏠렸어요'` 항목은 남겼다. 샘플 A안 판정이 안정 2·적정 2·소신 1·경계 1이라 쏠림 경고(R-CARD-003) 조건이 아니고, 앱은 면접 일정 겹침 경고만 낸다. 사유를 이 내용으로 고쳐 적었다.
+- grade-input은 05-build.json이 생겨 처음 검사됐고(실패 8), score-trend는 지금 05-build.json이 없어 건너뜀.
+
+## 이전 결과 (데모 데이터 직접 시드, 보존)
+
 게이트: `python app/tools/impl_gate.py --all` (Figma 05-build 기본 프레임 390·1440 ↔ 앱 빌드 스냅샷 렌더, 데모 데이터 시드).
 결과: **통과 2 / 실패 34 / 건너뜀 2** (38화면). 이번 단계에서는 앱 코드를 고치지 않았다(보고만).
 화면별 원본: `work/<slug>/07-impl.json`. `impl-allow.json` 예외는 하나도 만들지 않았다.

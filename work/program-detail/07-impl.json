@@ -56,7 +56,7 @@
     "S 1440: 블록 없음 disclaimer-note"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 3,
   "route": "/program-detail?u=경희대학교&p=학생부종합",
   "allowed": [],
   "notes": []

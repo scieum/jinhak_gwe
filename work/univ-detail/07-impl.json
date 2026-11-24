@@ -21,7 +21,7 @@
     "P 1440: segmented-control 폭 1128 (시안 480±4)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 3,
   "route": "/univ-detail?u=경희대학교",
   "allowed": [],
   "notes": []

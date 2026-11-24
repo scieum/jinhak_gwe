@@ -250,99 +250,6 @@ def route_of(slug):
     return f"/{slug}" + q
 
 
-# 시드: work/_data/demo-dataset.md "7번 하늘" 값. 앱 저장소 API(restore·createClass)를 그대로 써서 앱 검증을 거친다.
-def _g(i, name, grp, sem, cr, rank, typ="공통", **kw):
-    return {"id": f"g{i}", "name": name, "subject_group": grp, "semester": sem, "type": typ, "credits": cr,
-            "rank_grade": rank, "is_joint": False, **kw}
-
-
-SEED_GRADES = [
-    _g(1, "공통국어1", "국어", "1-1", 4, 2), _g(2, "공통수학1", "수학", "1-1", 4, 2), _g(3, "공통영어1", "영어", "1-1", 4, 1),
-    _g(4, "통합사회1", "사회", "1-1", 4, 2), _g(5, "한국사1", "사회", "1-1", 3, 1), _g(6, "통합과학1", "과학", "1-1", 4, 2),
-    _g(7, "공통국어2", "국어", "1-2", 4, 2), _g(8, "공통수학2", "수학", "1-2", 4, 1), _g(9, "공통영어2", "영어", "1-2", 4, 1),
-    _g(10, "통합사회2", "사회", "1-2", 4, 2), _g(11, "한국사2", "사회", "1-2", 3, 2), _g(12, "통합과학2", "과학", "1-2", 4, 1),
-    _g(13, "문학", "국어", "2-1", 4, 1, "일반선택", raw_score=94, subject_mean=71.4, achievement="A", enrolled_count=132),
-    _g(14, "대수", "수학", "2-1", 4, 1, "일반선택", raw_score=95, subject_mean=64.8, achievement="A", enrolled_count=132),
-    _g(15, "영어Ⅰ", "영어", "2-1", 4, 2, "일반선택", raw_score=89, subject_mean=73.2, achievement="B", enrolled_count=132),
-    _g(16, "여행지리", "사회", "2-1", 2, None, "융합선택", raw_score=92, subject_mean=80.3, achievement="A", enrolled_count=26),
-    _g(17, "물리학", "과학", "2-1", 3, 1, "일반선택", raw_score=93, subject_mean=68.5, achievement="A", enrolled_count=58),
-    _g(18, "운동과 건강", "체육", "2-1", 2, None, "체육예술", achievement="A"),
-    _g(19, "독서와 작문", "국어", "2-2", 4, 1, "일반선택", raw_score=93, subject_mean=70.2, achievement="A", enrolled_count=131),
-    _g(20, "미적분Ⅰ", "수학", "2-2", 4, 1, "일반선택", raw_score=96, subject_mean=61.7, achievement="A", enrolled_count=131),
-    _g(21, "영어Ⅱ", "영어", "2-2", 4, 1, "일반선택", raw_score=94, subject_mean=72.6, achievement="A", enrolled_count=131),
-    _g(22, "사회와 문화", "사회", "2-2", 3, 1, "일반선택", raw_score=92, subject_mean=69.8, achievement="A", enrolled_count=74),
-    _g(23, "화학", "과학", "2-2", 3, 2, "일반선택", raw_score=85, subject_mean=66.4, achievement="B", enrolled_count=61),
-    _g(24, "진로와 직업", "교양", "2-2", 2, None, "교양", achievement="P"),
-]
-_ZERO = {"illness": 0, "unexcused": 0, "other": 0}
-SEED_ATTENDANCE = [
-    {"year": 1, "school_days": 191, "absence": {**_ZERO, "illness": 1}, "tardy": _ZERO, "early_leave": _ZERO, "class_absence": _ZERO},
-    {"year": 2, "school_days": 190, "absence": {**_ZERO, "illness": 2}, "tardy": {**_ZERO, "unexcused": 1},
-     "early_leave": {**_ZERO, "illness": 1}, "class_absence": _ZERO},
-]
-SEED_INTERESTS = [["경희대학교", "행정학과"], ["건국대학교", "행정학과"], ["성균관대학교", "행정학과"],
-                  ["동국대학교", "행정학과"], ["한양대학교", "정책학과"], ["중앙대학교", "공공인재학부"]]
-CHECKLIST_DEFAULT = [(t, "pending") for t in ["원서 작성", "전형료 결제", "접수 완료 확인", "제출서류 준비·제출", "서류 도착 확인"]]
-# demo-dataset.md application-checklist 전형 A 체크 항목 8개(이름 · 진행 상태)
-CHECKLIST_A = [("모집요강 읽기", "done"), ("학교생활기록부 사본 확인", "progress"), ("담임 선생님 상담 신청", "pending"),
-               ("원서 작성", "pending"), ("전형료 결제", "pending"), ("접수 완료 확인", "pending"),
-               ("제출서류 준비·제출", "na"), ("서류 도착 확인", "na")]
-
-
-def _apps(now):
-    """planner.newApplication(2028)과 같은 모양(앱이 다시 검증하지 않으므로 그대로 맞춘다)."""
-    out = []
-    for i, (u, d) in enumerate([("경희대학교", "행정학과"), ("성균관대학교", "행정학과"), ("한양대학교", "")]):
-        aid = f"seed-app-{i}"
-        out.append({"id": aid, "year": 2028, "university": u, "program": "학생부종합", "department": d, "source_url": "",
-                    "created_at": now, "updated_at": now,
-                    "steps": [{"id": f"{aid}-s{j}", "title": t, "status": st, "due_at": None, "note": "", "source_url": "", "checked_at": None}
-                              for j, (t, st) in enumerate(CHECKLIST_A if i == 0 else CHECKLIST_DEFAULT)],
-                    "eligibility": [{"id": f"{aid}-e{j}", "title": t, "status": "unknown", "note": "", "source_url": "", "checked_at": None}
-                                    for j, t in enumerate(["전형별 지원 자격", "졸업연도·재학 조건", "지역·학교 조건", "학교장추천 필요 여부"])]})
-    return out
-
-
-_NOW = "2026-11-20T04:00:00.000Z"
-# demo-dataset.md counsel-tasks T1~T8 (구분 · 상담일 · 기한 · 제목 · 완료)
-SEED_TASKS = [("action", "2026-11-17", "2026-11-19", "면접 예상 질문 10개 적어 오기", False),
-              ("action", "2026-11-17", "2026-11-20", "학교장추천 필요 여부 모집요강에서 확인하기", False),
-              ("question", "2026-11-24", "2026-11-24", "교과 전형 수능 최저 기준은 어디서 확인하나요?", False),
-              ("action", "2026-11-17", "2026-11-27", "2028 전형계획에서 모집인원 찾아 적기", False),
-              ("question", "2026-11-24", None, "종합 전형 준비로 겨울방학에 무엇부터 할까요?", False),
-              ("question", "2026-11-24", None, "6장 지원 순서는 어떤 기준으로 정하면 좋을까요?", False),
-              ("action", "2026-11-10", "2026-11-14", "2028 교과 전형 모집인원 찾아보기", True),
-              ("question", "2026-11-10", None, "내신과 모의고사 중 지금 어디에 시간을 더 쓸까요?", True)]
-_APPS = _apps(_NOW)
-SEED = {
-    "jinhak-navi-student-v1": {
-        "grades": SEED_GRADES, "attendance": SEED_ATTENDANCE, "applications": _APPS,
-        "tasks": [{"id": f"seed-task-{i}", "application_id": None, "kind": k, "title": t, "note": "", "session_date": sd,
-                   "due_date": due, "done": done, "completed_at": _NOW if done else None, "created_at": _NOW, "updated_at": _NOW}
-                  for i, (k, sd, due, t, done) in enumerate(SEED_TASKS)],
-        "interests": [{"id": json.dumps([u, "학생부종합", d], ensure_ascii=False, separators=(",", ":")), "university": u,
-                       "program": "학생부종합", "department": d, "created_at": _NOW} for u, d in SEED_INTERESTS]},
-    "jinhak-navi-teacher-v1": {
-        "meta": [{"key": "class", "name": "2학년 3반", "code": "HNL7", "created_at": _NOW}],
-        "students": [{"number": f"{i:02d}", "alias": n} for i, n in enumerate(
-            "새벽 들꽃 노을 단비 햇살 바람 하늘 이슬 소나무 별빛 구름 가람 달빛 시내 바다 봄비 윤슬 여울 너울 버들 "
-            "모래 은하 안개 파도 꽃잎 서리 샘물 솔잎".split(), 1)]},
-}
-# 앱이 만든 Dexie 저장소(이름·테이블 그대로)에 바로 넣는다. 빌드본이라 /src 모듈을 불러올 수 없어서.
-SEED_JS = """async (seed) => {
-  const have = (await indexedDB.databases()).map(d => d.name);
-  for (const name of Object.keys(seed)) if (!have.includes(name)) throw new Error(name + ' 저장소를 앱이 아직 만들지 않았어요');  // 빈 DB를 대신 만들지 않게
-  for (const [name, stores] of Object.entries(seed)) await new Promise((res, rej) => {
-    const r = indexedDB.open(name);
-    r.onerror = () => rej(r.error);
-    r.onsuccess = () => { const db = r.result, names = Object.keys(stores).filter(s => db.objectStoreNames.contains(s));
-      if (names.length !== Object.keys(stores).length) { db.close(); rej(new Error(name + ' 저장소 테이블이 달라요')); return; }
-      const tx = db.transaction(names, 'readwrite');
-      for (const s of names) { const os = tx.objectStore(s); os.clear(); stores[s].forEach(x => os.put(x)); }
-      tx.oncomplete = () => { db.close(); res(); }; tx.onerror = () => rej(tx.error); };
-  });
-}"""
-
 # 앱 측정: 글자 모음 · 블록(문서 순, 가장 바깥 것만) · 간격
 MEASURE_JS = """(sel) => {
   const vis = e => { const r = e.getBoundingClientRect(), s = getComputedStyle(e); return r.width > 0 && r.height > 0 && s.visibility !== 'hidden' && s.display !== 'none' && s.opacity !== '0'; };
@@ -380,14 +287,20 @@ MEASURE_JS = """(sel) => {
 }"""
 
 
+# 앱 샘플 모드(app/src/data/sample, initSample): 플래그가 비어 있고 저장소가 비면 학생·교사·관리자 샘플을 넣고 'on'으로 바꾼다.
+# 'on'을 미리 넣으면 initSample이 적재를 건너뛰므로 플래그는 비워 두고 앱이 켜게 한다. seen-about은 /about 보내기를 막는다.
+SAMPLE_INIT_JS = "localStorage.setItem('jinhak-navi-seen-about', '1')"
+
+
 def seed_app(page, url):
-    """게이트의 유일한 시드 지점. 시안(데이터 있음)과 비교하려고 브라우저 저장소에 demo-dataset 값을 넣는다.
-    shortcut: 앱 '샘플 데이터 모드'(첫 실행 시 demo-dataset 자동 적재 + 공개 로더 샘플 반환)가 들어오면
-    이 함수 몸통만 그 모드를 켜는 코드(예: 쿼리 파라미터·localStorage 플래그 후 새로고침)로 바꾼다. 그 전엔 아래 직접 적재."""
-    for path in ("/grade-input", "/teacher/teacher-dashboard"):  # 두 저장소를 앱이 먼저 만들게 연다(각 저장소를 바로 읽는 화면)
-        page.goto(url + path, wait_until="networkidle", timeout=180_000)
-        page.wait_for_timeout(1000)
-    page.evaluate(SEED_JS, SEED)
+    """게이트의 유일한 시드 지점. 저장소를 비우고 앱을 열어 첫 실행 샘플 적재(localStorage jinhak-navi-sample = 'on')를 기다린다."""
+    page.goto(url + "/about", wait_until="networkidle", timeout=180_000)  # 같은 출처에서 저장소를 비우려고 먼저 연다
+    page.wait_for_function("localStorage.getItem('jinhak-navi-sample') !== null", timeout=60_000)  # 이 첫 적재가 끝난 뒤 비워야 섞이지 않는다
+    page.evaluate("""async () => { localStorage.clear(); sessionStorage.clear();
+      await Promise.all((await indexedDB.databases()).map(d => new Promise(r => { const q = indexedDB.deleteDatabase(d.name); q.onsuccess = q.onerror = q.onblocked = r; }))); }""")
+    page.context.add_init_script(SAMPLE_INIT_JS)
+    page.goto(url + "/", wait_until="networkidle", timeout=180_000)
+    page.wait_for_function("localStorage.getItem('jinhak-navi-sample') === 'on'", timeout=60_000)
 
 
 class App:

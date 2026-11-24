@@ -16,7 +16,7 @@
     "S 1440: 블록 없음 filter-chip"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 3,
   "route": "/teacher/teacher-dashboard",
   "allowed": [],
   "notes": [

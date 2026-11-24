@@ -13,7 +13,7 @@
     "P 1440: text-input x 1273 (시안 1312±4)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 1,
+  "same_fail_streak": 2,
   "route": "/grade-input",
   "allowed": [],
   "notes": []

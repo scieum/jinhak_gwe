@@ -8,7 +8,7 @@
     "S 1440: 블록 없음 univ-card"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 3,
   "route": "/univ-map",
   "allowed": [],
   "notes": []

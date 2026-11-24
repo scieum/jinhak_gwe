@@ -12,7 +12,7 @@
     "P 1440: page-header 글자→첫 블록 간격(시안) 48 (기준 24±2)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 1,
+  "same_fail_streak": 2,
   "route": "/counsel-tasks",
   "allowed": [],
   "notes": []

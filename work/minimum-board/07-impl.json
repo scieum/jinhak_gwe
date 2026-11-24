@@ -5,7 +5,6 @@
   "errors": [
     "T 390: 문구 없음 '먼저 볼 학생'",
     "T 390: 문구 없음 '대학 공식 모집요강이 최종 기준이에요 · '미검수'는 교사 입력 기준이라 참고로만 봐 주세요 · 시안의 대학·숫자는 예시예요'",
-    "S 390: 블록 없음 page-header",
     "P 390: filter-chip x 297 (시안 20±4)",
     "P 390: disclaimer-note 폭 558 (시안 350±4)",
     "T 1440: 문구 없음 '백업'",
@@ -16,7 +15,7 @@
     "P 1440: data-table 폭 784 (시안 772±4)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 1,
   "route": "/teacher/minimum-board",
   "allowed": [],
   "notes": [

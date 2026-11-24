@@ -9,7 +9,7 @@
     "T 1440: 문구 없음 '직접 만든 자기탐색 질문이에요 · MBTI나 표준화된 심리검사가 아니에요 · 답변만으로 지원 자격이나 입학 결과를 판단하지 않아요'"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 3,
   "route": "/admission-style",
   "allowed": [],
   "notes": []

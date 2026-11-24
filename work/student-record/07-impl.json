@@ -38,7 +38,7 @@
     "P 1440: stat-tile 폭 264 (시안 320±4)"
   ],
   "back_to": "S5",
-  "same_fail_streak": 2,
+  "same_fail_streak": 3,
   "route": "/teacher/student-record",
   "allowed": [],
   "notes": []
