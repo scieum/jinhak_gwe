@@ -10,6 +10,13 @@ export const emptyFieldDraft = (): FieldDraft => ({ key: 'current', rows: [], ap
 export const fieldStatus = (d: FieldDraft): FieldStatus =>
   d.approvals.length >= REQUIRED_APPROVALS ? '검수 완료' : d.approvals.length === 1 ? '1인 승인' : '검수 대기';
 const rowKey = (r: Pick<FieldRow, 'university' | 'unit'>) => `${r.university.trim()}|${r.unit.trim()}`;
+// 대계열(dept-tier spec D3): 인문|자연, 빈칸이면 학과별 구간표에 나오지 않는다
+const MAJORS = ['인문', '자연'];
+/** major는 값이 있을 때만 싣는다(4열 표와 같은 모양 유지). */
+const withMajor = (r: FieldRow, major: unknown): FieldRow => {
+  const m = String(major ?? '').trim();
+  return m ? { ...r, major: m } : r;
+};
 const sortRows = (rows: FieldRow[]) => rows.sort((a, b) => a.university.localeCompare(b.university, 'ko') || a.unit.localeCompare(b.unit, 'ko'));
 
 /** 승인을 막는 문제. 빈 칸·중복 학과가 하나라도 있으면 승인할 수 없다. */
@@ -19,6 +26,7 @@ export function fieldProblems(rows: readonly FieldRow[]): string[] {
   rows.forEach((r, i) => {
     const empty = (['university', 'unit', 'small', 'mid'] as const).filter(k => !r[k].trim());
     if (empty.length) out.push(`${i + 1}행 ${r.university || '대학 없음'} ${r.unit}: 빈 칸이 있어요`);
+    if (r.major?.trim() && !MAJORS.includes(r.major.trim())) out.push(`${i + 1}행 ${r.university} ${r.unit}: 대계열은 인문·자연 중 하나이거나 비워 둬요`);
     if (seen.has(rowKey(r))) out.push(`${i + 1}행 ${r.university} ${r.unit}: 같은 학과가 두 번 있어요`);
     seen.add(rowKey(r));
   });
@@ -51,14 +59,15 @@ export function missingRows(units: readonly ReleasedUnit[], rows: readonly Field
   return sortRows([...out.values()]);
 }
 
-/** CSV 머리글: 대학,모집단위,소계열,중계열 */
+/** CSV 머리글: 대학,모집단위,소계열,중계열(,대계열 — 없어도 읽는다) */
 export function parseFieldCsv(text: string): FieldRow[] {
   const [head, ...body] = parseCsv(text.replace(/^﻿/, ''));
   const col = ['대학', '모집단위', '소계열', '중계열'].map(h => head?.findIndex(c => c.trim() === h) ?? -1);
   if (col.some(i => i < 0)) throw new Error('CSV 첫 줄에 대학,모집단위,소계열,중계열이 있어야 해요.');
+  const majorCol = head.findIndex(c => c.trim() === '대계열');
   return sortRows(body.filter(r => r.some(c => c.trim())).map(r => {
     const [university, unit, small, mid] = col.map(i => (r[i] ?? '').trim());
-    return { university, unit, small, mid };
+    return withMajor({ university, unit, small, mid }, majorCol < 0 ? '' : r[majorCol]);
   }));
 }
 
@@ -68,7 +77,7 @@ const sameRows = (a: readonly FieldRow[], b: readonly FieldRow[]) => JSON.string
 export function mergeFieldDraft(local: FieldDraft, incoming: unknown): FieldDraft | null {
   const d = incoming as FieldDraft & { format?: string };
   if (d?.format !== 'jinhak-navi-field-review' || !Array.isArray(d.rows) || !Array.isArray(d.approvals)) throw new Error('계열표 검수 기록 파일이 아니에요.');
-  const rows = d.rows.map(r => ({ university: String(r?.university ?? ''), unit: String(r?.unit ?? ''), small: String(r?.small ?? ''), mid: String(r?.mid ?? '') }));
+  const rows = d.rows.map(r => withMajor({ university: String(r?.university ?? ''), unit: String(r?.unit ?? ''), small: String(r?.small ?? ''), mid: String(r?.mid ?? '') }, r?.major));
   const approvals = d.approvals.filter(a => typeof a?.reviewer === 'string' && a.reviewer.trim() && typeof a?.at === 'string').map(a => ({ reviewer: a.reviewer, at: a.at }));
   const next: FieldDraft = { key: 'current', rows, approvals, updated_at: String(d.updated_at ?? '') };
   if (!local.rows.length) return next;
@@ -87,5 +96,5 @@ export function buildWikiFile(current: unknown, d: FieldDraft) {
   const c = current as { format?: string; entries?: unknown };
   const entries = c?.format === 'jinhak-navi-univ-wiki' && Array.isArray(c.entries) ? c.entries : [];
   const reviewed_at = new Date(d.approvals.map(a => a.at).sort().pop()!).toLocaleDateString('sv-SE'); // 마지막 승인일(이 기기 날짜)
-  return { format: 'jinhak-navi-univ-wiki', version: 1, fields: { reviewed_at, approvals: d.approvals, rows: d.rows.map(r => ({ university: r.university.trim(), unit: r.unit.trim(), small: r.small.trim(), mid: r.mid.trim() })) }, entries };
+  return { format: 'jinhak-navi-univ-wiki', version: 1, fields: { reviewed_at, approvals: d.approvals, rows: d.rows.map(r => withMajor({ university: r.university.trim(), unit: r.unit.trim(), small: r.small.trim(), mid: r.mid.trim() }, r.major)) }, entries };
 }

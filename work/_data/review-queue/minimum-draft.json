@@ -1,0 +1,7364 @@
+{
+ "format": "jinhak-navi-minimum-draft",
+ "version": 1,
+ "review_status": "draft",
+ "draft_note": "검수 전 초안. 판정에 쓰지 않아요(NEVER-1). 검수 도구가 아직 없어요.",
+ "rows": [
+  {
+   "university": "경희대학교",
+   "campus": "본교(서울·국제)",
+   "source": "structured/universities/plan-0000066.json#minimum_rules[8].source_wording",
+   "program_ids": [
+    "flex-e"
+   ],
+   "unit_ids": [
+    "unit-22",
+    "unit-29",
+    "unit-30",
+    "unit-54"
+   ],
+   "sentence": "최저학력기준: 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "경희대학교",
+   "campus": "본교(서울·국제)",
+   "source": "structured/universities/plan-0000066.json#minimum_rules[9].source_wording",
+   "program_ids": [
+    "s-m"
+   ],
+   "unit_ids": [
+    "unit-1",
+    "unit-2",
+    "unit-3",
+    "unit-4",
+    "unit-5",
+    "unit-6",
+    "unit-7",
+    "unit-8",
+    "unit-9",
+    "unit-10",
+    "unit-11",
+    "unit-12",
+    "unit-13",
+    "unit-14",
+    "unit-15",
+    "unit-16",
+    "unit-17",
+    "unit-18",
+    "unit-19",
+    "unit-20",
+    "unit-21",
+    "unit-23",
+    "unit-24",
+    "unit-25",
+    "unit-26",
+    "unit-27",
+    "unit-28",
+    "unit-31",
+    "unit-32",
+    "unit-33",
+    "unit-34",
+    "unit-35",
+    "unit-36",
+    "unit-37",
+    "unit-38",
+    "unit-39",
+    "unit-40",
+    "unit-41",
+    "unit-42",
+    "unit-43",
+    "unit-44",
+    "unit-45",
+    "unit-46",
+    "unit-47",
+    "unit-48",
+    "unit-49",
+    "unit-50",
+    "unit-51",
+    "unit-52",
+    "unit-53",
+    "unit-55",
+    "unit-56",
+    "unit-57",
+    "unit-58",
+    "unit-59",
+    "unit-60",
+    "unit-61",
+    "unit-62",
+    "unit-63",
+    "unit-64",
+    "unit-65",
+    "unit-66",
+    "unit-67",
+    "unit-68",
+    "unit-69",
+    "unit-70",
+    "unit-71",
+    "unit-72",
+    "unit-73",
+    "unit-83",
+    "unit-84",
+    "unit-85",
+    "unit-86",
+    "unit-87",
+    "unit-88",
+    "unit-89",
+    "unit-91",
+    "unit-93",
+    "unit-94",
+    "unit-95",
+    "unit-97"
+   ],
+   "sentence": "최저학력기준: 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "경희대학교",
+   "campus": "본교(서울·국제)",
+   "source": "structured/universities/plan-0000066.json#minimum_rules[10].source_wording",
+   "program_ids": [
+    "s-g"
+   ],
+   "unit_ids": [
+    "unit-1",
+    "unit-3",
+    "unit-4",
+    "unit-5",
+    "unit-6",
+    "unit-7",
+    "unit-8",
+    "unit-9",
+    "unit-10",
+    "unit-11",
+    "unit-12",
+    "unit-13",
+    "unit-14",
+    "unit-15",
+    "unit-16",
+    "unit-17",
+    "unit-18",
+    "unit-19",
+    "unit-20",
+    "unit-21",
+    "unit-23",
+    "unit-25",
+    "unit-26",
+    "unit-27",
+    "unit-31",
+    "unit-32",
+    "unit-33",
+    "unit-34",
+    "unit-36",
+    "unit-37",
+    "unit-38",
+    "unit-39",
+    "unit-40",
+    "unit-41",
+    "unit-42",
+    "unit-43",
+    "unit-44",
+    "unit-46",
+    "unit-47",
+    "unit-48",
+    "unit-49",
+    "unit-50",
+    "unit-51",
+    "unit-52",
+    "unit-55",
+    "unit-56",
+    "unit-58",
+    "unit-59",
+    "unit-61",
+    "unit-63",
+    "unit-64",
+    "unit-71",
+    "unit-72",
+    "unit-73",
+    "unit-83",
+    "unit-84",
+    "unit-85",
+    "unit-86",
+    "unit-87",
+    "unit-88",
+    "unit-93",
+    "unit-94",
+    "unit-97"
+   ],
+   "sentence": "최저학력기준: 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "경희대학교",
+   "campus": "본교(서울·국제)",
+   "source": "structured/universities/plan-0000066.json#minimum_rules[11].source_wording",
+   "program_ids": [
+    "s-h"
+   ],
+   "unit_ids": [
+    "unit-3",
+    "unit-4",
+    "unit-5",
+    "unit-6",
+    "unit-7",
+    "unit-16",
+    "unit-17",
+    "unit-18",
+    "unit-19",
+    "unit-20",
+    "unit-21",
+    "unit-23",
+    "unit-24",
+    "unit-25",
+    "unit-26",
+    "unit-27",
+    "unit-28",
+    "unit-31",
+    "unit-32",
+    "unit-33",
+    "unit-34",
+    "unit-36",
+    "unit-37",
+    "unit-38",
+    "unit-39",
+    "unit-40",
+    "unit-41",
+    "unit-42",
+    "unit-52",
+    "unit-53",
+    "unit-55",
+    "unit-63",
+    "unit-64",
+    "unit-65",
+    "unit-66",
+    "unit-83",
+    "unit-84",
+    "unit-85",
+    "unit-86",
+    "unit-87"
+   ],
+   "sentence": "최저학력기준: 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "경희대학교",
+   "campus": "본교(서울·국제)",
+   "source": "structured/universities/plan-0000066.json#minimum_rules[12].source_wording",
+   "program_ids": [
+    "s-q"
+   ],
+   "unit_ids": [
+    "unit-1",
+    "unit-3",
+    "unit-4",
+    "unit-5",
+    "unit-6",
+    "unit-14",
+    "unit-15",
+    "unit-16",
+    "unit-17",
+    "unit-18",
+    "unit-19",
+    "unit-20",
+    "unit-21",
+    "unit-23",
+    "unit-25",
+    "unit-27",
+    "unit-31",
+    "unit-32",
+    "unit-37",
+    "unit-39",
+    "unit-40",
+    "unit-41",
+    "unit-42",
+    "unit-43",
+    "unit-44",
+    "unit-46",
+    "unit-47",
+    "unit-48",
+    "unit-49",
+    "unit-52",
+    "unit-56",
+    "unit-58",
+    "unit-63",
+    "unit-72",
+    "unit-73",
+    "unit-93",
+    "unit-97"
+   ],
+   "sentence": "최저학력기준: 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "광운대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000074.json#minimum_rules[4].source_text",
+   "program_ids": [
+    "s-regional"
+   ],
+   "unit_ids": [
+    "unit-1",
+    "unit-2"
+   ],
+   "sentence": "- 16 -\n 3. 학생부교과전형 수능 최저학력기준\n대상전형\n모집단위\n수능 최저학력기준\n학생부교과【지역균형전형】\n자율전공학부(자연)\n자율전공학부(인문)\n국어, 수학, 영어, 탐구(사회 또는 과학) 중 \n2개 영역 합 6등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "탐구 반영 방식(상위 1과목·평균)이 문장에 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[0].source_text",
+   "program_ids": [
+    "s-open"
+   ],
+   "unit_ids": [
+    "skhu-01",
+    "skhu-02",
+    "skhu-03",
+    "skhu-04",
+    "skhu-05",
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[1].source_text",
+   "program_ids": [
+    "s-alternative"
+   ],
+   "unit_ids": [
+    "skhu-03",
+    "skhu-04"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[2].source_text",
+   "program_ids": [
+    "s-grade"
+   ],
+   "unit_ids": [
+    "skhu-01",
+    "skhu-02",
+    "skhu-03",
+    "skhu-04",
+    "skhu-05",
+    "skhu-06",
+    "skhu-07"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[3].source_text",
+   "program_ids": [
+    "s-veteran"
+   ],
+   "unit_ids": [
+    "skhu-01",
+    "skhu-02",
+    "skhu-03",
+    "skhu-04",
+    "skhu-05",
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[4].source_text",
+   "program_ids": [
+    "s-social"
+   ],
+   "unit_ids": [
+    "skhu-01",
+    "skhu-02",
+    "skhu-03",
+    "skhu-04",
+    "skhu-05",
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[5].source_text",
+   "program_ids": [
+    "s-voc-grade"
+   ],
+   "unit_ids": [
+    "skhu-04",
+    "skhu-05",
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[6].source_text",
+   "program_ids": [
+    "s-lowincome"
+   ],
+   "unit_ids": [
+    "skhu-01",
+    "skhu-02",
+    "skhu-03",
+    "skhu-04",
+    "skhu-05",
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[7].source_text",
+   "program_ids": [
+    "s-rural"
+   ],
+   "unit_ids": [
+    "skhu-01",
+    "skhu-02",
+    "skhu-03",
+    "skhu-04",
+    "skhu-05",
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[8].source_text",
+   "program_ids": [
+    "s-voc"
+   ],
+   "unit_ids": [
+    "skhu-04",
+    "skhu-05",
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[9].source_text",
+   "program_ids": [
+    "s-north"
+   ],
+   "unit_ids": [
+    "skhu-01",
+    "skhu-02",
+    "skhu-03",
+    "skhu-04",
+    "skhu-05",
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[10].source_text",
+   "program_ids": [
+    "j-ga"
+   ],
+   "unit_ids": [
+    "skhu-07"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[11].source_text",
+   "program_ids": [
+    "j-na"
+   ],
+   "unit_ids": [
+    "skhu-01",
+    "skhu-04",
+    "skhu-05"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[12].source_text",
+   "program_ids": [
+    "j-da"
+   ],
+   "unit_ids": [
+    "skhu-02",
+    "skhu-03",
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[13].source_text",
+   "program_ids": [
+    "j-na-rural"
+   ],
+   "unit_ids": [
+    "skhu-01",
+    "skhu-04",
+    "skhu-05"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[14].source_text",
+   "program_ids": [
+    "j-na-lowincome"
+   ],
+   "unit_ids": [
+    "skhu-01",
+    "skhu-04",
+    "skhu-05"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[15].source_text",
+   "program_ids": [
+    "j-na-voc"
+   ],
+   "unit_ids": [
+    "skhu-04",
+    "skhu-05"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[16].source_text",
+   "program_ids": [
+    "j-da-rural"
+   ],
+   "unit_ids": [
+    "skhu-02",
+    "skhu-03",
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[17].source_text",
+   "program_ids": [
+    "j-da-lowincome"
+   ],
+   "unit_ids": [
+    "skhu-02",
+    "skhu-03",
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[18].source_text",
+   "program_ids": [
+    "j-da-voc"
+   ],
+   "unit_ids": [
+    "skhu-06"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[19].source_text",
+   "program_ids": [
+    "s-overseas"
+   ],
+   "unit_ids": [
+    "skhu-overseas-scope"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[20].source_text",
+   "program_ids": [
+    "foreign-3"
+   ],
+   "unit_ids": [
+    "skhu-flex-scope"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[21].source_text",
+   "program_ids": [
+    "foreign-9"
+   ],
+   "unit_ids": [
+    "skhu-flex-scope"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[22].source_text",
+   "program_ids": [
+    "allabroad-3"
+   ],
+   "unit_ids": [
+    "skhu-flex-scope"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성공회대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000132.json#minimum_rules[23].source_text",
+   "program_ids": [
+    "allabroad-9"
+   ],
+   "unit_ids": [
+    "skhu-flex-scope"
+   ],
+   "sentence": "없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[11].source_text",
+   "program_ids": [
+    "s-talent"
+   ],
+   "unit_ids": [
+    "skku-56"
+   ],
+   "sentence": "아래 ①, ②, ③, ④ 기준 중 하나를 충족하는 자\n① 국내 고등학교 졸업(예정)자인 경우 다음 두 가지 기준 중 하나를 충족하는 자\n- ‌\u0007원점수, 평균이 제공되는 과목의 각 원점수가 각 해당 과목 평균의 50% 이상인 학점(이수단위) 합이 모든 이수과목(원점수, 평균 제공) 학점(이수단위)\n합의 25% 이상\n- ‌\u0007교과등급 4등급 이내, 성취도 D(5단계 평가) 이상, 성취도 B(3단계 평가) 혹은 보통 이상인 학점(이수단위) 합이 해당 이수과목 학점(이수단위) 합의\n25% 이상\n② 해외고교를 졸업하거나 졸업예정인 경우 다음 세 가지 기준 중 하나를 충족하는 자\n- ‌\u0007고교 성적 중 C+ 이상인 과목 5개 이상\n- ‌\u0007고교 성적 중 B+ 이상인 과목 3개 이상\n- ‌\u0007위 두 가지 기준에 상응하는 등급 혹은 점수의 과목 이수\n③ 검정고시 출신자: 검정고시 합격자는 최저학력기준 충족으로 간주\n④ 2028학년도 대학수학능력시험에 응시하고 국어, 수학, 영어, 사회탐구, 과학탐구, 한국사 중 상위등급 2개 과목의 평균등급이 7 이내인 자\n※ ‌\u00071) 국내고와 해외고를 중복하여 이수한 경우 위 ①, ②의 기준을 종합하여 충족여부 판단\n2) 졸업자 등 9등급제 내신체제 이수자는 우리대학 2027학년도 입학전형 시행계획의 최저학력기준(실기/실적(예체능특기자)전형 스포츠과학과)을 적용함",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "등급 합 기준을 찾지 못함"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[12].source_text",
+   "program_ids": [
+    "s-talent"
+   ],
+   "unit_ids": [
+    "skku-23"
+   ],
+   "sentence": "예체능특기자 중 스포츠과학과만 최저 적용, 영상학과 미적용",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "등급 합 기준을 찾지 못함"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[13].source_text",
+   "program_ids": [
+    "allabroad-march"
+   ],
+   "unit_ids": [
+    "skku-02",
+    "skku-03",
+    "skku-04",
+    "skku-05",
+    "skku-06",
+    "skku-07",
+    "skku-23",
+    "skku-24",
+    "skku-25",
+    "skku-26",
+    "skku-27",
+    "skku-28",
+    "skku-37",
+    "skku-38",
+    "skku-39",
+    "skku-47",
+    "skku-56"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[14].source_text",
+   "program_ids": [
+    "allabroad-september"
+   ],
+   "unit_ids": [
+    "skku-02",
+    "skku-03",
+    "skku-04",
+    "skku-05",
+    "skku-23",
+    "skku-24",
+    "skku-25",
+    "skku-26",
+    "skku-27",
+    "skku-28",
+    "skku-37",
+    "skku-47",
+    "skku-56"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[15].source_text",
+   "program_ids": [
+    "j-da-disability"
+   ],
+   "unit_ids": [
+    "skku-08",
+    "skku-09",
+    "skku-40",
+    "skku-41"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[16].source_text",
+   "program_ids": [
+    "j-da-general"
+   ],
+   "unit_ids": [
+    "skku-06",
+    "skku-07",
+    "skku-31",
+    "skku-32",
+    "skku-33",
+    "skku-34",
+    "skku-35",
+    "skku-37",
+    "skku-46"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[17].source_text",
+   "program_ids": [
+    "j-da-neighbor"
+   ],
+   "unit_ids": [
+    "skku-33",
+    "skku-34",
+    "skku-35"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[18].source_text",
+   "program_ids": [
+    "j-da-rural"
+   ],
+   "unit_ids": [
+    "skku-33",
+    "skku-34",
+    "skku-35"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[19].source_text",
+   "program_ids": [
+    "j-da-worker"
+   ],
+   "unit_ids": [
+    "skku-57",
+    "skku-58"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[20].source_text",
+   "program_ids": [
+    "j-ga-disability"
+   ],
+   "unit_ids": [
+    "skku-03",
+    "skku-25"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[21].source_text",
+   "program_ids": [
+    "j-ga-general"
+   ],
+   "unit_ids": [
+    "skku-01",
+    "skku-03",
+    "skku-24",
+    "skku-25",
+    "skku-29",
+    "skku-38",
+    "skku-39",
+    "skku-47",
+    "skku-53",
+    "skku-54",
+    "skku-55",
+    "skku-56"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[22].source_text",
+   "program_ids": [
+    "j-ga-neighbor"
+   ],
+   "unit_ids": [
+    "skku-03",
+    "skku-25",
+    "skku-38"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[23].source_text",
+   "program_ids": [
+    "j-ga-rural"
+   ],
+   "unit_ids": [
+    "skku-03",
+    "skku-25",
+    "skku-38"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[24].source_text",
+   "program_ids": [
+    "j-ga-specialized"
+   ],
+   "unit_ids": [
+    "skku-03",
+    "skku-25"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[25].source_text",
+   "program_ids": [
+    "j-ga-voc"
+   ],
+   "unit_ids": [
+    "skku-03",
+    "skku-25"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[26].source_text",
+   "program_ids": [
+    "j-na-disability"
+   ],
+   "unit_ids": [
+    "skku-02",
+    "skku-04",
+    "skku-26",
+    "skku-27",
+    "skku-28"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[27].source_text",
+   "program_ids": [
+    "j-na-general"
+   ],
+   "unit_ids": [
+    "skku-02",
+    "skku-04",
+    "skku-05",
+    "skku-23",
+    "skku-26",
+    "skku-27",
+    "skku-28",
+    "skku-30",
+    "skku-36"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[28].source_text",
+   "program_ids": [
+    "j-na-neighbor"
+   ],
+   "unit_ids": [
+    "skku-02",
+    "skku-04",
+    "skku-26",
+    "skku-27",
+    "skku-28",
+    "skku-36"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[29].source_text",
+   "program_ids": [
+    "j-na-rural"
+   ],
+   "unit_ids": [
+    "skku-02",
+    "skku-04",
+    "skku-26",
+    "skku-27",
+    "skku-28",
+    "skku-36"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[30].source_text",
+   "program_ids": [
+    "j-na-specialized"
+   ],
+   "unit_ids": [
+    "skku-02",
+    "skku-27"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[31].source_text",
+   "program_ids": [
+    "j-na-voc"
+   ],
+   "unit_ids": [
+    "skku-02",
+    "skku-04",
+    "skku-26",
+    "skku-27",
+    "skku-28"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[32].source_text",
+   "program_ids": [
+    "north"
+   ],
+   "unit_ids": [
+    "skku-02",
+    "skku-03",
+    "skku-04",
+    "skku-05",
+    "skku-06",
+    "skku-07",
+    "skku-23",
+    "skku-24",
+    "skku-25",
+    "skku-26",
+    "skku-27",
+    "skku-28",
+    "skku-37",
+    "skku-47",
+    "skku-56"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[33].source_text",
+   "program_ids": [
+    "overseas-3year"
+   ],
+   "unit_ids": [
+    "skku-02",
+    "skku-03",
+    "skku-04",
+    "skku-05",
+    "skku-06",
+    "skku-07",
+    "skku-23",
+    "skku-24",
+    "skku-25",
+    "skku-26",
+    "skku-27",
+    "skku-28",
+    "skku-33",
+    "skku-34",
+    "skku-35",
+    "skku-36",
+    "skku-37",
+    "skku-38",
+    "skku-39",
+    "skku-47",
+    "skku-56"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[34].source_text",
+   "program_ids": [
+    "s-equity"
+   ],
+   "unit_ids": [
+    "skku-02",
+    "skku-03",
+    "skku-25",
+    "skku-27"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[35].source_text",
+   "program_ids": [
+    "s-inquiry"
+   ],
+   "unit_ids": [
+    "skku-01",
+    "skku-02",
+    "skku-03",
+    "skku-04",
+    "skku-05",
+    "skku-06",
+    "skku-07",
+    "skku-10",
+    "skku-11",
+    "skku-12",
+    "skku-13",
+    "skku-14",
+    "skku-15",
+    "skku-16",
+    "skku-17",
+    "skku-18",
+    "skku-19",
+    "skku-20",
+    "skku-21",
+    "skku-22",
+    "skku-23",
+    "skku-24",
+    "skku-25",
+    "skku-26",
+    "skku-27",
+    "skku-28",
+    "skku-29",
+    "skku-30",
+    "skku-31",
+    "skku-32",
+    "skku-33",
+    "skku-34",
+    "skku-35",
+    "skku-36",
+    "skku-37",
+    "skku-38",
+    "skku-42",
+    "skku-43",
+    "skku-44",
+    "skku-45",
+    "skku-46"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[36].source_text",
+   "program_ids": [
+    "s-practical"
+   ],
+   "unit_ids": [
+    "skku-48",
+    "skku-50",
+    "skku-51",
+    "skku-52",
+    "skku-56"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[37].source_text",
+   "program_ids": [
+    "s-regional"
+   ],
+   "unit_ids": [
+    "skku-39"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[38].source_text",
+   "program_ids": [
+    "s-science"
+   ],
+   "unit_ids": [
+    "skku-25",
+    "skku-26",
+    "skku-27",
+    "skku-28",
+    "skku-29",
+    "skku-30",
+    "skku-31",
+    "skku-32",
+    "skku-33",
+    "skku-34",
+    "skku-35",
+    "skku-36"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[39].source_text",
+   "program_ids": [
+    "s-skku"
+   ],
+   "unit_ids": [
+    "skku-01",
+    "skku-03",
+    "skku-08",
+    "skku-09",
+    "skku-27",
+    "skku-39",
+    "skku-40",
+    "skku-41",
+    "skku-47",
+    "skku-49",
+    "skku-56"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성균관대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000133.json#minimum_rules[40].source_text",
+   "program_ids": [
+    "s-worker"
+   ],
+   "unit_ids": [
+    "skku-57",
+    "skku-58"
+   ],
+   "sentence": "선발개요 최저학력기준 ×",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성신여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000136.json#minimum_rules[0].source_statement",
+   "program_ids": [
+    "s-self"
+   ],
+   "unit_ids": [
+    "sungshin-01",
+    "sungshin-02",
+    "sungshin-03",
+    "sungshin-04",
+    "sungshin-05",
+    "sungshin-06",
+    "sungshin-07",
+    "sungshin-08",
+    "sungshin-12",
+    "sungshin-13",
+    "sungshin-14",
+    "sungshin-15",
+    "sungshin-16",
+    "sungshin-17",
+    "sungshin-18",
+    "sungshin-19",
+    "sungshin-20",
+    "sungshin-21",
+    "sungshin-22",
+    "sungshin-23",
+    "sungshin-24",
+    "sungshin-25",
+    "sungshin-26",
+    "sungshin-27",
+    "sungshin-28",
+    "sungshin-29",
+    "sungshin-30",
+    "sungshin-31",
+    "sungshin-32",
+    "sungshin-33",
+    "sungshin-34",
+    "sungshin-35",
+    "sungshin-38",
+    "sungshin-39",
+    "sungshin-40",
+    "sungshin-41",
+    "sungshin-42"
+   ],
+   "sentence": "수능 최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성신여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000136.json#minimum_rules[1].source_statement",
+   "program_ids": [
+    "s-equity1"
+   ],
+   "unit_ids": [
+    "sungshin-01",
+    "sungshin-02",
+    "sungshin-03",
+    "sungshin-04",
+    "sungshin-05",
+    "sungshin-06",
+    "sungshin-07",
+    "sungshin-08",
+    "sungshin-12",
+    "sungshin-13",
+    "sungshin-14",
+    "sungshin-15",
+    "sungshin-16",
+    "sungshin-17",
+    "sungshin-18",
+    "sungshin-19",
+    "sungshin-20",
+    "sungshin-21",
+    "sungshin-22",
+    "sungshin-23",
+    "sungshin-24",
+    "sungshin-25",
+    "sungshin-26",
+    "sungshin-27",
+    "sungshin-28",
+    "sungshin-29",
+    "sungshin-30",
+    "sungshin-31",
+    "sungshin-32",
+    "sungshin-33",
+    "sungshin-34"
+   ],
+   "sentence": "수능 최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성신여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000136.json#minimum_rules[2].source_text",
+   "program_ids": [
+    "s-regional1"
+   ],
+   "unit_ids": [
+    "sungshin-01",
+    "sungshin-02",
+    "sungshin-03",
+    "sungshin-04",
+    "sungshin-05",
+    "sungshin-06",
+    "sungshin-07",
+    "sungshin-08",
+    "sungshin-12",
+    "sungshin-13",
+    "sungshin-14",
+    "sungshin-15",
+    "sungshin-16",
+    "sungshin-17",
+    "sungshin-18",
+    "sungshin-19",
+    "sungshin-20",
+    "sungshin-21",
+    "sungshin-22",
+    "sungshin-23",
+    "sungshin-24",
+    "sungshin-25",
+    "sungshin-26",
+    "sungshin-27",
+    "sungshin-28",
+    "sungshin-29",
+    "sungshin-30",
+    "sungshin-31",
+    "sungshin-32",
+    "sungshin-33",
+    "sungshin-34",
+    "sungshin-38",
+    "sungshin-39",
+    "sungshin-40",
+    "sungshin-41",
+    "sungshin-42",
+    "sungshin-51",
+    "sungshin-52"
+   ],
+   "sentence": "3. \n: 수능 지정영역 개국어영어수학 및 사회과학직업 중 상위 과목\n중 개 영역 합이 등급 이내\n4\n(\n, \n, \n/\n/\n1\n) \n2\n7\n제외국어한문으로 탐구영역 대체할 수 없음\n   \n2\n/\n※ \n 4",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "성신여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000136.json#minimum_rules[3].source_text",
+   "program_ids": [
+    "s-regional2"
+   ],
+   "unit_ids": [
+    "sungshin-51",
+    "sungshin-52"
+   ],
+   "sentence": "3. \n: 수능 지정영역 개국어영어수학 및 사회과학직업 중 상위 과목\n중 개 영역 합이 등급 이내\n4\n(\n, \n, \n/\n/\n1\n) \n2\n7\n제외국어한문으로 탐구영역 대체할 수 없음\n   \n2\n/\n※ \n 4",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "성신여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000136.json#minimum_rules[4].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "sungshin-01",
+    "sungshin-02",
+    "sungshin-03",
+    "sungshin-04",
+    "sungshin-05",
+    "sungshin-06",
+    "sungshin-07",
+    "sungshin-08",
+    "sungshin-12",
+    "sungshin-13",
+    "sungshin-14",
+    "sungshin-15",
+    "sungshin-16",
+    "sungshin-17",
+    "sungshin-18",
+    "sungshin-19",
+    "sungshin-20",
+    "sungshin-21",
+    "sungshin-22",
+    "sungshin-23",
+    "sungshin-24",
+    "sungshin-25",
+    "sungshin-26",
+    "sungshin-27",
+    "sungshin-28",
+    "sungshin-29",
+    "sungshin-30",
+    "sungshin-31",
+    "sungshin-32",
+    "sungshin-33",
+    "sungshin-34"
+   ],
+   "sentence": "3. \n: 수능 지정영역 개국어영어수학 및 사회과학직업 중 상위 과목\n중 개 영역 합이 등급 이내\n4\n(\n, \n, \n/\n/\n1\n) \n2\n7\n제외국어한문으로 탐구영역 대체할 수 없음\n   \n2\n/\n※ \n 4",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "성신여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000136.json#minimum_rules[5].source_statement",
+   "program_ids": [
+    "s-practical"
+   ],
+   "unit_ids": [
+    "sungshin-09",
+    "sungshin-10",
+    "sungshin-11",
+    "sungshin-35",
+    "sungshin-43",
+    "sungshin-44",
+    "sungshin-45",
+    "sungshin-46",
+    "sungshin-47",
+    "sungshin-48",
+    "sungshin-49",
+    "sungshin-50"
+   ],
+   "sentence": "수능 최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성신여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000136.json#minimum_rules[6].source_statement",
+   "program_ids": [
+    "s-worker"
+   ],
+   "unit_ids": [
+    "sungshin-53",
+    "sungshin-54"
+   ],
+   "sentence": "수능 최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성신여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000136.json#minimum_rules[7].source_statement",
+   "program_ids": [
+    "s-disability"
+   ],
+   "unit_ids": [
+    "sungshin-01",
+    "sungshin-02",
+    "sungshin-03",
+    "sungshin-04",
+    "sungshin-05",
+    "sungshin-06",
+    "sungshin-07",
+    "sungshin-08",
+    "sungshin-12",
+    "sungshin-13",
+    "sungshin-14",
+    "sungshin-15",
+    "sungshin-16",
+    "sungshin-17",
+    "sungshin-18",
+    "sungshin-19",
+    "sungshin-34",
+    "sungshin-38",
+    "sungshin-39",
+    "sungshin-41",
+    "sungshin-42"
+   ],
+   "sentence": "수능 최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "성신여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000136.json#minimum_rules[8].source_statement",
+   "program_ids": [
+    "j-na-worker"
+   ],
+   "unit_ids": [
+    "sungshin-53",
+    "sungshin-54"
+   ],
+   "sentence": "수능 최저학력기준 없음 (18쪽에서 수시전형방법 동일 명시)",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[0].source_statement",
+   "program_ids": [
+    "s-regional"
+   ],
+   "unit_ids": [
+    "sejong-01",
+    "sejong-03",
+    "sejong-04",
+    "sejong-06",
+    "sejong-07",
+    "sejong-09",
+    "sejong-11",
+    "sejong-12",
+    "sejong-13",
+    "sejong-17",
+    "sejong-18",
+    "sejong-19",
+    "sejong-20",
+    "sejong-21",
+    "sejong-23",
+    "sejong-24",
+    "sejong-25",
+    "sejong-27",
+    "sejong-33",
+    "sejong-34",
+    "sejong-35",
+    "sejong-36",
+    "sejong-38",
+    "sejong-39",
+    "sejong-40",
+    "sejong-41",
+    "sejong-42",
+    "sejong-43",
+    "sejong-44",
+    "sejong-45",
+    "sejong-47"
+   ],
+   "sentence": "국어,수학,영어,탐구(사회/과학 중 1개 영역) 중 2개 영역 등급 합 5 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "탐구 반영 방식(상위 1과목·평균)이 문장에 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[1].source_statement",
+   "program_ids": [
+    "s-air"
+   ],
+   "unit_ids": [
+    "sejong-46"
+   ],
+   "sentence": "국어,수학,영어,탐구(사회/과학 중 1개 영역) 중 3개 영역 등급 합 10 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "탐구 반영 방식(상위 1과목·평균)이 문장에 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[2].source_statement",
+   "program_ids": [
+    "s-interview"
+   ],
+   "unit_ids": [
+    "sejong-03",
+    "sejong-04",
+    "sejong-05",
+    "sejong-06",
+    "sejong-08",
+    "sejong-09",
+    "sejong-11",
+    "sejong-13",
+    "sejong-17",
+    "sejong-18",
+    "sejong-19",
+    "sejong-20",
+    "sejong-21",
+    "sejong-23",
+    "sejong-24",
+    "sejong-25",
+    "sejong-26",
+    "sejong-27",
+    "sejong-28",
+    "sejong-29",
+    "sejong-33",
+    "sejong-34",
+    "sejong-35",
+    "sejong-36",
+    "sejong-38",
+    "sejong-39",
+    "sejong-40",
+    "sejong-41",
+    "sejong-42",
+    "sejong-43",
+    "sejong-44",
+    "sejong-45",
+    "sejong-47",
+    "sejong-48"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[3].source_statement",
+   "program_ids": [
+    "s-document"
+   ],
+   "unit_ids": [
+    "sejong-02",
+    "sejong-10",
+    "sejong-16",
+    "sejong-22",
+    "sejong-27",
+    "sejong-32",
+    "sejong-37",
+    "sejong-45"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[4].source_statement",
+   "program_ids": [
+    "s-equity"
+   ],
+   "unit_ids": [
+    "sejong-02",
+    "sejong-10",
+    "sejong-16",
+    "sejong-22",
+    "sejong-27",
+    "sejong-32",
+    "sejong-37",
+    "sejong-45"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[5].source_statement",
+   "program_ids": [
+    "s-social"
+   ],
+   "unit_ids": [
+    "sejong-02",
+    "sejong-10",
+    "sejong-16",
+    "sejong-22",
+    "sejong-32",
+    "sejong-37"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[6].source_statement",
+   "program_ids": [
+    "s-islands"
+   ],
+   "unit_ids": [
+    "sejong-11",
+    "sejong-25",
+    "sejong-34"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[7].source_statement",
+   "program_ids": [
+    "s-worker"
+   ],
+   "unit_ids": [
+    "sejong-14",
+    "sejong-15"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[8].source_statement",
+   "program_ids": [
+    "s-cyber"
+   ],
+   "unit_ids": [
+    "sejong-30"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[9].source_statement",
+   "program_ids": [
+    "s-navy"
+   ],
+   "unit_ids": [
+    "sejong-49"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[10].source_statement",
+   "program_ids": [
+    "s-marine"
+   ],
+   "unit_ids": [
+    "sejong-31"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[11].source_statement",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "sejong-01",
+    "sejong-03",
+    "sejong-04",
+    "sejong-05",
+    "sejong-06",
+    "sejong-07",
+    "sejong-08",
+    "sejong-11",
+    "sejong-12",
+    "sejong-13",
+    "sejong-17",
+    "sejong-18",
+    "sejong-19",
+    "sejong-20",
+    "sejong-21",
+    "sejong-23",
+    "sejong-24",
+    "sejong-25",
+    "sejong-27",
+    "sejong-33",
+    "sejong-34",
+    "sejong-35",
+    "sejong-36",
+    "sejong-38",
+    "sejong-39",
+    "sejong-40",
+    "sejong-41",
+    "sejong-42",
+    "sejong-43",
+    "sejong-44",
+    "sejong-45",
+    "sejong-47"
+   ],
+   "sentence": "국어,수학,영어,탐구(사회/과학 중 1개 영역) 중 2개 영역 등급 합 5 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "탐구 반영 방식(상위 1과목·평균)이 문장에 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[12].source_statement",
+   "program_ids": [
+    "s-practical"
+   ],
+   "unit_ids": [
+    "sejong-52",
+    "sejong-54",
+    "sejong-55"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[13].source_statement",
+   "program_ids": [
+    "s-specialist"
+   ],
+   "unit_ids": [
+    "sejong-53"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[14].source_statement",
+   "program_ids": [
+    "overseas-2pct"
+   ],
+   "unit_ids": [
+    "sejong-56"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[15].source_statement",
+   "program_ids": [
+    "overseas-unrestricted"
+   ],
+   "unit_ids": [
+    "sejong-57"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[16].source_statement",
+   "program_ids": [
+    "j-ga-csat"
+   ],
+   "unit_ids": [
+    "sejong-10",
+    "sejong-22"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[17].source_statement",
+   "program_ids": [
+    "j-ga-fusion"
+   ],
+   "unit_ids": [
+    "sejong-03",
+    "sejong-05",
+    "sejong-06",
+    "sejong-07",
+    "sejong-08",
+    "sejong-09",
+    "sejong-17",
+    "sejong-18",
+    "sejong-19",
+    "sejong-20",
+    "sejong-23",
+    "sejong-34",
+    "sejong-35",
+    "sejong-38",
+    "sejong-40",
+    "sejong-41",
+    "sejong-42",
+    "sejong-43",
+    "sejong-44",
+    "sejong-45",
+    "sejong-48"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[18].source_statement",
+   "program_ids": [
+    "j-ga-air"
+   ],
+   "unit_ids": [
+    "sejong-46"
+   ],
+   "sentence": "국어,수학,영어,탐구(사회/과학 중 1개 영역) 중 3개 영역 등급 합 10 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "탐구 반영 방식(상위 1과목·평균)이 문장에 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[19].source_statement",
+   "program_ids": [
+    "j-ga-cyber"
+   ],
+   "unit_ids": [
+    "sejong-30"
+   ],
+   "sentence": "국어,수학,영어,탐구(사회/과학 중 1개 영역) 중 3개 영역 등급 합 10 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "탐구 반영 방식(상위 1과목·평균)이 문장에 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[20].source_statement",
+   "program_ids": [
+    "j-ga-navy"
+   ],
+   "unit_ids": [
+    "sejong-49"
+   ],
+   "sentence": "국어,수학,영어,탐구(사회/과학 중 1개 영역) 중 3개 영역 등급 합 11 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "탐구 반영 방식(상위 1과목·평균)이 문장에 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[21].source_statement",
+   "program_ids": [
+    "j-ga-marine"
+   ],
+   "unit_ids": [
+    "sejong-31"
+   ],
+   "sentence": "국어,수학,영어,탐구(사회/과학 중 1개 영역) 중 3개 영역 등급 합 11 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "탐구 반영 방식(상위 1과목·평균)이 문장에 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[22].source_statement",
+   "program_ids": [
+    "j-ga-rural"
+   ],
+   "unit_ids": [
+    "sejong-10",
+    "sejong-22",
+    "sejong-45"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[23].source_statement",
+   "program_ids": [
+    "j-ga-voc"
+   ],
+   "unit_ids": [
+    "sejong-10",
+    "sejong-22"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[24].source_statement",
+   "program_ids": [
+    "j-ga-specialist"
+   ],
+   "unit_ids": [
+    "sejong-54",
+    "sejong-55"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[25].source_statement",
+   "program_ids": [
+    "j-na-csat"
+   ],
+   "unit_ids": [
+    "sejong-02",
+    "sejong-16",
+    "sejong-37"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[26].source_statement",
+   "program_ids": [
+    "j-na-fusion"
+   ],
+   "unit_ids": [
+    "sejong-04",
+    "sejong-12",
+    "sejong-13",
+    "sejong-21",
+    "sejong-24",
+    "sejong-25",
+    "sejong-26",
+    "sejong-27",
+    "sejong-33",
+    "sejong-39",
+    "sejong-47",
+    "sejong-52",
+    "sejong-53"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[27].source_statement",
+   "program_ids": [
+    "j-na-rural"
+   ],
+   "unit_ids": [
+    "sejong-02",
+    "sejong-04",
+    "sejong-13",
+    "sejong-16",
+    "sejong-25",
+    "sejong-27",
+    "sejong-37"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[28].source_statement",
+   "program_ids": [
+    "j-na-voc"
+   ],
+   "unit_ids": [
+    "sejong-02",
+    "sejong-16",
+    "sejong-37"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[29].source_statement",
+   "program_ids": [
+    "j-na-practical"
+   ],
+   "unit_ids": [
+    "sejong-50",
+    "sejong-51"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[30].source_statement",
+   "program_ids": [
+    "j-da-csat"
+   ],
+   "unit_ids": [
+    "sejong-01",
+    "sejong-28",
+    "sejong-29",
+    "sejong-32"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[31].source_statement",
+   "program_ids": [
+    "j-da-fusion"
+   ],
+   "unit_ids": [
+    "sejong-11",
+    "sejong-36"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[32].source_statement",
+   "program_ids": [
+    "j-da-rural"
+   ],
+   "unit_ids": [
+    "sejong-32"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[33].source_statement",
+   "program_ids": [
+    "j-da-voc"
+   ],
+   "unit_ids": [
+    "sejong-32"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "세종대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000138.json#minimum_rules[34].source_statement",
+   "program_ids": [
+    "j-worker"
+   ],
+   "unit_ids": [
+    "sejong-14",
+    "sejong-15"
+   ],
+   "sentence": "4쪽전형요약 수능최저 X",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "수원가톨릭대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000139.json#minimum_rules[0].source_text",
+   "program_ids": [
+    "p001"
+   ],
+   "unit_ids": [
+    "u001"
+   ],
+   "sentence": "- 수능 필수반영 5개 영역 모두 2등급 이내\n- 탐구영역은 2개 과목(사탐/과탐)",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "등급 합 기준을 찾지 못함"
+  },
+  {
+   "university": "수원가톨릭대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000139.json#minimum_rules[1].source_text",
+   "program_ids": [
+    "p006"
+   ],
+   "unit_ids": [
+    "u001"
+   ],
+   "sentence": "- 국어, 영어, 한국사 3개 영역 평균 5등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "등급 합 기준을 찾지 못함"
+  },
+  {
+   "university": "수원가톨릭대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000139.json#minimum_rules[2].source_text",
+   "program_ids": [
+    "p007"
+   ],
+   "unit_ids": [
+    "u001"
+   ],
+   "sentence": "- 해당없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "수원가톨릭대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000139.json#minimum_rules[3].source_text",
+   "program_ids": [
+    "p012"
+   ],
+   "unit_ids": [
+    "u001"
+   ],
+   "sentence": "- 수능 필수반영 5개 영역 모두 2등급 이내\n- 탐구영역 중 2개 과목",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "등급 합 기준을 찾지 못함"
+  },
+  {
+   "university": "숙명여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000141.json#minimum_rules[0].source_statement",
+   "program_ids": [
+    "s-interview"
+   ],
+   "unit_ids": [
+    "sookmyung-01",
+    "sookmyung-02",
+    "sookmyung-03",
+    "sookmyung-04",
+    "sookmyung-05",
+    "sookmyung-06",
+    "sookmyung-07",
+    "sookmyung-08",
+    "sookmyung-09",
+    "sookmyung-10",
+    "sookmyung-11",
+    "sookmyung-12",
+    "sookmyung-13",
+    "sookmyung-14",
+    "sookmyung-15",
+    "sookmyung-16",
+    "sookmyung-17",
+    "sookmyung-18",
+    "sookmyung-19",
+    "sookmyung-20",
+    "sookmyung-21",
+    "sookmyung-22",
+    "sookmyung-23",
+    "sookmyung-24",
+    "sookmyung-25",
+    "sookmyung-26",
+    "sookmyung-27",
+    "sookmyung-28",
+    "sookmyung-29",
+    "sookmyung-30",
+    "sookmyung-32",
+    "sookmyung-33",
+    "sookmyung-36",
+    "sookmyung-38",
+    "sookmyung-39",
+    "sookmyung-40"
+   ],
+   "sentence": "수시 전형방법 수능최저 X; 지역균형은 약학부 제외",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "숙명여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000141.json#minimum_rules[1].source_statement",
+   "program_ids": [
+    "s-software"
+   ],
+   "unit_ids": [
+    "sookmyung-31",
+    "sookmyung-34",
+    "sookmyung-35"
+   ],
+   "sentence": "수시 전형방법 수능최저 X; 지역균형은 약학부 제외",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "숙명여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000141.json#minimum_rules[2].source_statement",
+   "program_ids": [
+    "s-equity"
+   ],
+   "unit_ids": [
+    "sookmyung-01",
+    "sookmyung-02",
+    "sookmyung-03",
+    "sookmyung-04",
+    "sookmyung-05",
+    "sookmyung-06",
+    "sookmyung-07",
+    "sookmyung-08",
+    "sookmyung-09",
+    "sookmyung-10",
+    "sookmyung-11",
+    "sookmyung-12",
+    "sookmyung-13",
+    "sookmyung-14",
+    "sookmyung-15",
+    "sookmyung-16",
+    "sookmyung-17",
+    "sookmyung-18",
+    "sookmyung-19",
+    "sookmyung-20",
+    "sookmyung-21",
+    "sookmyung-22",
+    "sookmyung-23",
+    "sookmyung-24",
+    "sookmyung-25",
+    "sookmyung-26",
+    "sookmyung-27",
+    "sookmyung-28",
+    "sookmyung-29",
+    "sookmyung-30",
+    "sookmyung-31",
+    "sookmyung-32",
+    "sookmyung-33",
+    "sookmyung-34",
+    "sookmyung-35",
+    "sookmyung-36",
+    "sookmyung-38",
+    "sookmyung-39"
+   ],
+   "sentence": "수시 전형방법 수능최저 X; 지역균형은 약학부 제외",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "숙명여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000141.json#minimum_rules[3].source_statement",
+   "program_ids": [
+    "s-regional"
+   ],
+   "unit_ids": [
+    "sookmyung-01",
+    "sookmyung-02",
+    "sookmyung-03",
+    "sookmyung-04",
+    "sookmyung-05",
+    "sookmyung-06",
+    "sookmyung-07",
+    "sookmyung-08",
+    "sookmyung-09",
+    "sookmyung-10",
+    "sookmyung-11",
+    "sookmyung-12",
+    "sookmyung-13",
+    "sookmyung-14",
+    "sookmyung-15",
+    "sookmyung-16",
+    "sookmyung-17",
+    "sookmyung-18",
+    "sookmyung-19",
+    "sookmyung-20",
+    "sookmyung-23",
+    "sookmyung-24",
+    "sookmyung-25",
+    "sookmyung-26",
+    "sookmyung-27",
+    "sookmyung-28",
+    "sookmyung-29",
+    "sookmyung-30",
+    "sookmyung-31",
+    "sookmyung-32",
+    "sookmyung-33",
+    "sookmyung-34",
+    "sookmyung-35",
+    "sookmyung-36",
+    "sookmyung-37",
+    "sookmyung-38",
+    "sookmyung-39",
+    "sookmyung-41"
+   ],
+   "sentence": "수시 전형방법 수능최저 X; 지역균형은 약학부 제외",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "숙명여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000141.json#minimum_rules[7].source_statement",
+   "program_ids": [
+    "s-art"
+   ],
+   "unit_ids": [
+    "sookmyung-42",
+    "sookmyung-43",
+    "sookmyung-44",
+    "sookmyung-45",
+    "sookmyung-47",
+    "sookmyung-49",
+    "sookmyung-50",
+    "sookmyung-51",
+    "sookmyung-52",
+    "sookmyung-53",
+    "sookmyung-54",
+    "sookmyung-55"
+   ],
+   "sentence": "수시 전형방법 수능최저 X; 지역균형은 약학부 제외",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "숙명여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000141.json#minimum_rules[8].source_statement",
+   "program_ids": [
+    "s-rural"
+   ],
+   "unit_ids": [
+    "sookmyung-01",
+    "sookmyung-02",
+    "sookmyung-03",
+    "sookmyung-04",
+    "sookmyung-05",
+    "sookmyung-06",
+    "sookmyung-07",
+    "sookmyung-08",
+    "sookmyung-10",
+    "sookmyung-11",
+    "sookmyung-12",
+    "sookmyung-13",
+    "sookmyung-14",
+    "sookmyung-15",
+    "sookmyung-16",
+    "sookmyung-17",
+    "sookmyung-18",
+    "sookmyung-19",
+    "sookmyung-20",
+    "sookmyung-23",
+    "sookmyung-26",
+    "sookmyung-27",
+    "sookmyung-28",
+    "sookmyung-29",
+    "sookmyung-31",
+    "sookmyung-34",
+    "sookmyung-38",
+    "sookmyung-39"
+   ],
+   "sentence": "수시 전형방법 수능최저 X; 지역균형은 약학부 제외",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "숙명여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000141.json#minimum_rules[9].source_statement",
+   "program_ids": [
+    "s-voc"
+   ],
+   "unit_ids": [
+    "sookmyung-08",
+    "sookmyung-11",
+    "sookmyung-12",
+    "sookmyung-15",
+    "sookmyung-16",
+    "sookmyung-19",
+    "sookmyung-20",
+    "sookmyung-25",
+    "sookmyung-31",
+    "sookmyung-34",
+    "sookmyung-38",
+    "sookmyung-39"
+   ],
+   "sentence": "수시 전형방법 수능최저 X; 지역균형은 약학부 제외",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "숙명여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000141.json#minimum_rules[10].source_statement",
+   "program_ids": [
+    "s-worker"
+   ],
+   "unit_ids": [
+    "sookmyung-07",
+    "sookmyung-16",
+    "sookmyung-20",
+    "sookmyung-22"
+   ],
+   "sentence": "수시 전형방법 수능최저 X; 지역균형은 약학부 제외",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "숙명여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000141.json#minimum_rules[11].source_statement",
+   "program_ids": [
+    "s-disability"
+   ],
+   "unit_ids": [
+    "sookmyung-01",
+    "sookmyung-02",
+    "sookmyung-03",
+    "sookmyung-04",
+    "sookmyung-05",
+    "sookmyung-06",
+    "sookmyung-07",
+    "sookmyung-08",
+    "sookmyung-10",
+    "sookmyung-11",
+    "sookmyung-12",
+    "sookmyung-13",
+    "sookmyung-14",
+    "sookmyung-15",
+    "sookmyung-16",
+    "sookmyung-17",
+    "sookmyung-18",
+    "sookmyung-19",
+    "sookmyung-20",
+    "sookmyung-23",
+    "sookmyung-25",
+    "sookmyung-26",
+    "sookmyung-27",
+    "sookmyung-28",
+    "sookmyung-29",
+    "sookmyung-30",
+    "sookmyung-31",
+    "sookmyung-32",
+    "sookmyung-33",
+    "sookmyung-34",
+    "sookmyung-35",
+    "sookmyung-36",
+    "sookmyung-38",
+    "sookmyung-39",
+    "sookmyung-42",
+    "sookmyung-43",
+    "sookmyung-44",
+    "sookmyung-45",
+    "sookmyung-46",
+    "sookmyung-47",
+    "sookmyung-48",
+    "sookmyung-49",
+    "sookmyung-50",
+    "sookmyung-51",
+    "sookmyung-52",
+    "sookmyung-53",
+    "sookmyung-54",
+    "sookmyung-55"
+   ],
+   "sentence": "수시 전형방법 수능최저 X; 지역균형은 약학부 제외",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[0].source_statement",
+   "program_ids": [
+    "s-interview"
+   ],
+   "unit_ids": [
+    "soongsil-01",
+    "soongsil-02",
+    "soongsil-03",
+    "soongsil-04",
+    "soongsil-05",
+    "soongsil-06",
+    "soongsil-07",
+    "soongsil-08",
+    "soongsil-09",
+    "soongsil-10",
+    "soongsil-13",
+    "soongsil-14",
+    "soongsil-15",
+    "soongsil-16",
+    "soongsil-17",
+    "soongsil-18",
+    "soongsil-19",
+    "soongsil-20",
+    "soongsil-21",
+    "soongsil-22",
+    "soongsil-25",
+    "soongsil-26",
+    "soongsil-27",
+    "soongsil-28",
+    "soongsil-29",
+    "soongsil-30",
+    "soongsil-31",
+    "soongsil-32",
+    "soongsil-33",
+    "soongsil-34",
+    "soongsil-35",
+    "soongsil-36",
+    "soongsil-37",
+    "soongsil-38",
+    "soongsil-39",
+    "soongsil-40",
+    "soongsil-41",
+    "soongsil-42",
+    "soongsil-43",
+    "soongsil-45",
+    "soongsil-46"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[1].source_statement",
+   "program_ids": [
+    "s-document"
+   ],
+   "unit_ids": [
+    "soongsil-13",
+    "soongsil-14",
+    "soongsil-15",
+    "soongsil-16",
+    "soongsil-17",
+    "soongsil-18",
+    "soongsil-19",
+    "soongsil-20",
+    "soongsil-21",
+    "soongsil-22",
+    "soongsil-25",
+    "soongsil-26",
+    "soongsil-27",
+    "soongsil-28",
+    "soongsil-29",
+    "soongsil-30",
+    "soongsil-31",
+    "soongsil-32",
+    "soongsil-33",
+    "soongsil-34",
+    "soongsil-35",
+    "soongsil-36",
+    "soongsil-37",
+    "soongsil-38",
+    "soongsil-39",
+    "soongsil-40",
+    "soongsil-41",
+    "soongsil-42",
+    "soongsil-43",
+    "soongsil-45",
+    "soongsil-47",
+    "soongsil-48"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[2].source_statement",
+   "program_ids": [
+    "s-equity"
+   ],
+   "unit_ids": [
+    "soongsil-01",
+    "soongsil-02",
+    "soongsil-03",
+    "soongsil-04",
+    "soongsil-05",
+    "soongsil-06",
+    "soongsil-07",
+    "soongsil-08",
+    "soongsil-09",
+    "soongsil-13",
+    "soongsil-14",
+    "soongsil-15",
+    "soongsil-16",
+    "soongsil-17",
+    "soongsil-18",
+    "soongsil-20",
+    "soongsil-21",
+    "soongsil-22",
+    "soongsil-25",
+    "soongsil-26",
+    "soongsil-27",
+    "soongsil-28",
+    "soongsil-29",
+    "soongsil-30",
+    "soongsil-31",
+    "soongsil-33",
+    "soongsil-34",
+    "soongsil-35",
+    "soongsil-36",
+    "soongsil-37",
+    "soongsil-38",
+    "soongsil-39",
+    "soongsil-40",
+    "soongsil-41",
+    "soongsil-42",
+    "soongsil-43",
+    "soongsil-45"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[3].source_statement",
+   "program_ids": [
+    "s-ai"
+   ],
+   "unit_ids": [
+    "soongsil-41",
+    "soongsil-43",
+    "soongsil-45"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[4].source_statement",
+   "program_ids": [
+    "s-disability"
+   ],
+   "unit_ids": [
+    "soongsil-01",
+    "soongsil-02",
+    "soongsil-03",
+    "soongsil-04",
+    "soongsil-05",
+    "soongsil-06",
+    "soongsil-07",
+    "soongsil-08",
+    "soongsil-09",
+    "soongsil-13",
+    "soongsil-14",
+    "soongsil-15",
+    "soongsil-16",
+    "soongsil-17",
+    "soongsil-18",
+    "soongsil-19",
+    "soongsil-20",
+    "soongsil-21",
+    "soongsil-22",
+    "soongsil-25",
+    "soongsil-26",
+    "soongsil-27"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[5].source_statement",
+   "program_ids": [
+    "s-school"
+   ],
+   "unit_ids": [
+    "soongsil-02",
+    "soongsil-03",
+    "soongsil-04",
+    "soongsil-05",
+    "soongsil-06",
+    "soongsil-07",
+    "soongsil-08",
+    "soongsil-09",
+    "soongsil-13",
+    "soongsil-14",
+    "soongsil-15",
+    "soongsil-16",
+    "soongsil-17",
+    "soongsil-18",
+    "soongsil-19",
+    "soongsil-20",
+    "soongsil-21",
+    "soongsil-22",
+    "soongsil-25",
+    "soongsil-26",
+    "soongsil-27",
+    "soongsil-28",
+    "soongsil-29",
+    "soongsil-30",
+    "soongsil-31",
+    "soongsil-32",
+    "soongsil-33",
+    "soongsil-34",
+    "soongsil-35",
+    "soongsil-36",
+    "soongsil-37",
+    "soongsil-38",
+    "soongsil-39",
+    "soongsil-40",
+    "soongsil-41",
+    "soongsil-42",
+    "soongsil-43",
+    "soongsil-45",
+    "soongsil-47",
+    "soongsil-48"
+   ],
+   "sentence": "국어 수학 영어 탐구(사회/과학 중 상위1과목) 중2개영역등급합6이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[6].source_statement",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "soongsil-02",
+    "soongsil-03",
+    "soongsil-04",
+    "soongsil-05",
+    "soongsil-06",
+    "soongsil-07",
+    "soongsil-08",
+    "soongsil-09",
+    "soongsil-13",
+    "soongsil-14",
+    "soongsil-15",
+    "soongsil-16",
+    "soongsil-17",
+    "soongsil-18",
+    "soongsil-19",
+    "soongsil-20",
+    "soongsil-21",
+    "soongsil-22",
+    "soongsil-25",
+    "soongsil-26",
+    "soongsil-27",
+    "soongsil-28",
+    "soongsil-29",
+    "soongsil-30",
+    "soongsil-31",
+    "soongsil-32",
+    "soongsil-33",
+    "soongsil-34",
+    "soongsil-35",
+    "soongsil-36",
+    "soongsil-37",
+    "soongsil-38",
+    "soongsil-39",
+    "soongsil-41",
+    "soongsil-42",
+    "soongsil-43",
+    "soongsil-45"
+   ],
+   "sentence": "국어 수학 영어 탐구(사회/과학 중 상위1과목) 중2개영역등급합6이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[7].source_statement",
+   "program_ids": [
+    "s-soccer"
+   ],
+   "unit_ids": [
+    "soongsil-12"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[8].source_statement",
+   "program_ids": [
+    "s-billiard"
+   ],
+   "unit_ids": [
+    "soongsil-12"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[9].source_statement",
+   "program_ids": [
+    "s-directing"
+   ],
+   "unit_ids": [
+    "soongsil-11"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[10].source_statement",
+   "program_ids": [
+    "s-acting"
+   ],
+   "unit_ids": [
+    "soongsil-11"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[11].source_statement",
+   "program_ids": [
+    "s-worker"
+   ],
+   "unit_ids": [
+    "soongsil-23",
+    "soongsil-24",
+    "soongsil-44"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[12].source_statement",
+   "program_ids": [
+    "overseas"
+   ],
+   "unit_ids": [
+    "soongsil-49"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[13].source_statement",
+   "program_ids": [
+    "allabroad"
+   ],
+   "unit_ids": [
+    "soongsil-49"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[14].source_statement",
+   "program_ids": [
+    "north"
+   ],
+   "unit_ids": [
+    "soongsil-49"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "숭실대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000143.json#minimum_rules[15].source_statement",
+   "program_ids": [
+    "foreign"
+   ],
+   "unit_ids": [
+    "soongsil-50",
+    "soongsil-11"
+   ],
+   "sentence": "수능최저학력기준 없음",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "연세대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000149.json#minimum_rules[7].source_statement",
+   "program_ids": [
+    "s-comprehensive"
+   ],
+   "unit_ids": [
+    "yonsei-54",
+    "yonsei-55"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "연세대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000149.json#minimum_rules[10].source_statement",
+   "program_ids": [
+    "s-inquiry"
+   ],
+   "unit_ids": [
+    "yonsei-01",
+    "yonsei-02",
+    "yonsei-03",
+    "yonsei-10",
+    "yonsei-12",
+    "yonsei-13",
+    "yonsei-15",
+    "yonsei-16",
+    "yonsei-17",
+    "yonsei-18",
+    "yonsei-19",
+    "yonsei-20",
+    "yonsei-21",
+    "yonsei-22",
+    "yonsei-23",
+    "yonsei-24",
+    "yonsei-25",
+    "yonsei-26",
+    "yonsei-27",
+    "yonsei-28",
+    "yonsei-29",
+    "yonsei-30",
+    "yonsei-34",
+    "yonsei-35",
+    "yonsei-40",
+    "yonsei-41",
+    "yonsei-60",
+    "yonsei-61",
+    "yonsei-62",
+    "yonsei-63",
+    "yonsei-64",
+    "yonsei-65"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "연세대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000149.json#minimum_rules[11].source_statement",
+   "program_ids": [
+    "s-international"
+   ],
+   "unit_ids": [
+    "yonsei-54",
+    "yonsei-55",
+    "yonsei-57",
+    "yonsei-58",
+    "yonsei-59"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "연세대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000149.json#minimum_rules[12].source_statement",
+   "program_ids": [
+    "s-equity"
+   ],
+   "unit_ids": [
+    "yonsei-01",
+    "yonsei-02",
+    "yonsei-03",
+    "yonsei-04",
+    "yonsei-05",
+    "yonsei-06",
+    "yonsei-07",
+    "yonsei-08",
+    "yonsei-09",
+    "yonsei-10",
+    "yonsei-12",
+    "yonsei-13",
+    "yonsei-14",
+    "yonsei-15",
+    "yonsei-16",
+    "yonsei-17",
+    "yonsei-18",
+    "yonsei-19",
+    "yonsei-20",
+    "yonsei-21",
+    "yonsei-22",
+    "yonsei-23",
+    "yonsei-24",
+    "yonsei-25",
+    "yonsei-26",
+    "yonsei-27",
+    "yonsei-28",
+    "yonsei-29",
+    "yonsei-32",
+    "yonsei-33",
+    "yonsei-34",
+    "yonsei-35",
+    "yonsei-37",
+    "yonsei-38",
+    "yonsei-39",
+    "yonsei-40",
+    "yonsei-41",
+    "yonsei-42",
+    "yonsei-43",
+    "yonsei-44",
+    "yonsei-45",
+    "yonsei-46",
+    "yonsei-47",
+    "yonsei-48",
+    "yonsei-49",
+    "yonsei-50",
+    "yonsei-51",
+    "yonsei-60",
+    "yonsei-61",
+    "yonsei-62",
+    "yonsei-63"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "연세대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000149.json#minimum_rules[15].source_statement",
+   "program_ids": [
+    "s-sports"
+   ],
+   "unit_ids": [
+    "yonsei-52",
+    "yonsei-53"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "연세대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000149.json#minimum_rules[16].source_statement",
+   "program_ids": [
+    "s-disability"
+   ],
+   "unit_ids": [
+    "yonsei-01",
+    "yonsei-02",
+    "yonsei-03",
+    "yonsei-04",
+    "yonsei-05",
+    "yonsei-06",
+    "yonsei-07",
+    "yonsei-08",
+    "yonsei-09",
+    "yonsei-10",
+    "yonsei-12",
+    "yonsei-13",
+    "yonsei-14",
+    "yonsei-15",
+    "yonsei-16",
+    "yonsei-17",
+    "yonsei-18",
+    "yonsei-19",
+    "yonsei-20",
+    "yonsei-21",
+    "yonsei-22",
+    "yonsei-23",
+    "yonsei-24",
+    "yonsei-25",
+    "yonsei-26",
+    "yonsei-27",
+    "yonsei-28",
+    "yonsei-32",
+    "yonsei-33",
+    "yonsei-34",
+    "yonsei-35",
+    "yonsei-36",
+    "yonsei-37",
+    "yonsei-38",
+    "yonsei-39",
+    "yonsei-40",
+    "yonsei-41",
+    "yonsei-42",
+    "yonsei-43",
+    "yonsei-44",
+    "yonsei-45",
+    "yonsei-46",
+    "yonsei-47",
+    "yonsei-48",
+    "yonsei-49",
+    "yonsei-50",
+    "yonsei-51",
+    "yonsei-60",
+    "yonsei-61",
+    "yonsei-62",
+    "yonsei-63"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[6].source_statement",
+   "program_ids": [
+    "s-interview"
+   ],
+   "unit_ids": [
+    "ewha-01",
+    "ewha-02",
+    "ewha-03",
+    "ewha-04",
+    "ewha-05",
+    "ewha-06",
+    "ewha-07",
+    "ewha-08",
+    "ewha-11",
+    "ewha-15",
+    "ewha-17",
+    "ewha-21",
+    "ewha-22",
+    "ewha-30",
+    "ewha-33",
+    "ewha-34",
+    "ewha-44",
+    "ewha-45",
+    "ewha-50",
+    "ewha-52",
+    "ewha-53",
+    "ewha-54",
+    "ewha-55",
+    "ewha-56",
+    "ewha-58"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[7].source_statement",
+   "program_ids": [
+    "s-equity"
+   ],
+   "unit_ids": [
+    "ewha-01",
+    "ewha-02",
+    "ewha-03",
+    "ewha-04",
+    "ewha-05",
+    "ewha-06",
+    "ewha-07",
+    "ewha-08",
+    "ewha-09",
+    "ewha-10",
+    "ewha-11",
+    "ewha-12",
+    "ewha-13",
+    "ewha-14",
+    "ewha-15",
+    "ewha-16",
+    "ewha-17",
+    "ewha-18",
+    "ewha-19",
+    "ewha-20",
+    "ewha-21",
+    "ewha-22",
+    "ewha-23",
+    "ewha-24",
+    "ewha-25",
+    "ewha-26",
+    "ewha-27",
+    "ewha-28",
+    "ewha-29",
+    "ewha-30",
+    "ewha-31",
+    "ewha-32",
+    "ewha-33",
+    "ewha-34",
+    "ewha-35",
+    "ewha-36",
+    "ewha-37",
+    "ewha-38",
+    "ewha-39",
+    "ewha-40",
+    "ewha-41",
+    "ewha-42",
+    "ewha-43",
+    "ewha-44",
+    "ewha-45",
+    "ewha-46",
+    "ewha-47",
+    "ewha-48",
+    "ewha-49",
+    "ewha-50",
+    "ewha-51",
+    "ewha-53",
+    "ewha-54",
+    "ewha-59"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[8].source_statement",
+   "program_ids": [
+    "s-social"
+   ],
+   "unit_ids": [
+    "ewha-01",
+    "ewha-02",
+    "ewha-08",
+    "ewha-11",
+    "ewha-17",
+    "ewha-21",
+    "ewha-22",
+    "ewha-24",
+    "ewha-29",
+    "ewha-30",
+    "ewha-36",
+    "ewha-39",
+    "ewha-50",
+    "ewha-53",
+    "ewha-59"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[13].source_statement",
+   "program_ids": [
+    "j-na-csat"
+   ],
+   "unit_ids": [
+    "ewha-38",
+    "ewha-39",
+    "ewha-52",
+    "ewha-57",
+    "ewha-74"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[14].source_statement",
+   "program_ids": [
+    "j-na-record"
+   ],
+   "unit_ids": [
+    "ewha-40",
+    "ewha-41",
+    "ewha-42",
+    "ewha-43",
+    "ewha-44",
+    "ewha-45",
+    "ewha-49",
+    "ewha-50",
+    "ewha-51",
+    "ewha-52",
+    "ewha-74",
+    "ewha-75"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[15].source_statement",
+   "program_ids": [
+    "j-da-csat"
+   ],
+   "unit_ids": [
+    "ewha-53",
+    "ewha-58",
+    "ewha-59"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[16].source_statement",
+   "program_ids": [
+    "j-ga-csat"
+   ],
+   "unit_ids": [
+    "ewha-54",
+    "ewha-55"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[17].source_statement",
+   "program_ids": [
+    "j-ga-record"
+   ],
+   "unit_ids": [
+    "ewha-54"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[18].source_statement",
+   "program_ids": [
+    "j-na-practical"
+   ],
+   "unit_ids": [
+    "ewha-60",
+    "ewha-61",
+    "ewha-62",
+    "ewha-63"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[19].source_statement",
+   "program_ids": [
+    "s-practical"
+   ],
+   "unit_ids": [
+    "ewha-64",
+    "ewha-65"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[20].source_statement",
+   "program_ids": [
+    "j-ga-csat-practical"
+   ],
+   "unit_ids": [
+    "ewha-66",
+    "ewha-67",
+    "ewha-68",
+    "ewha-69",
+    "ewha-70",
+    "ewha-71",
+    "ewha-72"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[22].source_statement",
+   "program_ids": [
+    "j-ga-practical"
+   ],
+   "unit_ids": [
+    "ewha-72"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[23].source_statement",
+   "program_ids": [
+    "j-na-csat-practical"
+   ],
+   "unit_ids": [
+    "ewha-73"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[24].source_statement",
+   "program_ids": [
+    "j-na-rural-csat"
+   ],
+   "unit_ids": [
+    "ewha-01",
+    "ewha-02",
+    "ewha-03",
+    "ewha-04",
+    "ewha-05",
+    "ewha-06",
+    "ewha-07",
+    "ewha-08",
+    "ewha-09",
+    "ewha-10",
+    "ewha-11",
+    "ewha-12",
+    "ewha-13",
+    "ewha-14",
+    "ewha-15",
+    "ewha-16",
+    "ewha-17",
+    "ewha-18",
+    "ewha-19",
+    "ewha-20",
+    "ewha-21",
+    "ewha-22",
+    "ewha-23",
+    "ewha-24",
+    "ewha-25",
+    "ewha-26",
+    "ewha-27",
+    "ewha-28",
+    "ewha-29",
+    "ewha-30",
+    "ewha-31",
+    "ewha-32",
+    "ewha-33",
+    "ewha-34",
+    "ewha-35",
+    "ewha-36",
+    "ewha-37",
+    "ewha-38",
+    "ewha-39"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[25].source_statement",
+   "program_ids": [
+    "j-da-rural-csat"
+   ],
+   "unit_ids": [
+    "ewha-53",
+    "ewha-59"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[26].source_statement",
+   "program_ids": [
+    "j-na-rural-record"
+   ],
+   "unit_ids": [
+    "ewha-40",
+    "ewha-41",
+    "ewha-42",
+    "ewha-43",
+    "ewha-44",
+    "ewha-45",
+    "ewha-75",
+    "ewha-49",
+    "ewha-50",
+    "ewha-51"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[27].source_statement",
+   "program_ids": [
+    "j-na-rural-practical"
+   ],
+   "unit_ids": [
+    "ewha-60",
+    "ewha-61",
+    "ewha-62",
+    "ewha-63"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[28].source_statement",
+   "program_ids": [
+    "j-ga-rural-csat-practical"
+   ],
+   "unit_ids": [
+    "ewha-66",
+    "ewha-67",
+    "ewha-68",
+    "ewha-69",
+    "ewha-70",
+    "ewha-71",
+    "ewha-72"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[29].source_statement",
+   "program_ids": [
+    "j-na-rural-csat-practical"
+   ],
+   "unit_ids": [
+    "ewha-73"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[30].source_statement",
+   "program_ids": [
+    "j-na-voc-csat"
+   ],
+   "unit_ids": [
+    "ewha-09",
+    "ewha-10",
+    "ewha-11",
+    "ewha-12",
+    "ewha-13",
+    "ewha-14",
+    "ewha-15",
+    "ewha-16",
+    "ewha-17",
+    "ewha-18",
+    "ewha-19",
+    "ewha-20",
+    "ewha-21",
+    "ewha-22",
+    "ewha-23",
+    "ewha-24",
+    "ewha-25",
+    "ewha-26",
+    "ewha-27",
+    "ewha-28",
+    "ewha-29",
+    "ewha-30",
+    "ewha-31",
+    "ewha-32",
+    "ewha-33",
+    "ewha-34",
+    "ewha-35",
+    "ewha-36",
+    "ewha-37",
+    "ewha-38",
+    "ewha-39"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[31].source_statement",
+   "program_ids": [
+    "j-ga-voc-csat-practical"
+   ],
+   "unit_ids": [
+    "ewha-66",
+    "ewha-67",
+    "ewha-68",
+    "ewha-69",
+    "ewha-70",
+    "ewha-71",
+    "ewha-72"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[32].source_statement",
+   "program_ids": [
+    "j-ga-poor-csat"
+   ],
+   "unit_ids": [
+    "ewha-54",
+    "ewha-55"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[33].source_statement",
+   "program_ids": [
+    "j-na-poor-csat"
+   ],
+   "unit_ids": [
+    "ewha-01",
+    "ewha-02",
+    "ewha-03",
+    "ewha-04",
+    "ewha-05",
+    "ewha-06",
+    "ewha-07",
+    "ewha-08",
+    "ewha-09",
+    "ewha-10",
+    "ewha-11",
+    "ewha-12",
+    "ewha-13",
+    "ewha-14",
+    "ewha-15",
+    "ewha-16",
+    "ewha-17",
+    "ewha-18",
+    "ewha-19",
+    "ewha-20",
+    "ewha-21",
+    "ewha-22",
+    "ewha-23",
+    "ewha-24",
+    "ewha-25",
+    "ewha-26",
+    "ewha-27",
+    "ewha-28",
+    "ewha-29",
+    "ewha-30",
+    "ewha-31",
+    "ewha-32",
+    "ewha-33",
+    "ewha-34",
+    "ewha-35",
+    "ewha-36",
+    "ewha-37",
+    "ewha-38",
+    "ewha-39"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[34].source_statement",
+   "program_ids": [
+    "j-da-poor-csat"
+   ],
+   "unit_ids": [
+    "ewha-53",
+    "ewha-59"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[35].source_statement",
+   "program_ids": [
+    "j-na-poor-record"
+   ],
+   "unit_ids": [
+    "ewha-43",
+    "ewha-44",
+    "ewha-75",
+    "ewha-50"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[36].source_statement",
+   "program_ids": [
+    "j-na-poor-practical"
+   ],
+   "unit_ids": [
+    "ewha-60",
+    "ewha-61",
+    "ewha-62",
+    "ewha-63"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[37].source_statement",
+   "program_ids": [
+    "j-ga-poor-csat-practical"
+   ],
+   "unit_ids": [
+    "ewha-66",
+    "ewha-67",
+    "ewha-68",
+    "ewha-69",
+    "ewha-70",
+    "ewha-71",
+    "ewha-72"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[38].source_statement",
+   "program_ids": [
+    "j-na-poor-csat-practical"
+   ],
+   "unit_ids": [
+    "ewha-73"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[39].source_statement",
+   "program_ids": [
+    "j-na-disability-csat"
+   ],
+   "unit_ids": [
+    "ewha-01",
+    "ewha-02",
+    "ewha-03",
+    "ewha-04",
+    "ewha-05",
+    "ewha-06",
+    "ewha-07",
+    "ewha-08",
+    "ewha-09",
+    "ewha-10",
+    "ewha-11",
+    "ewha-12",
+    "ewha-13",
+    "ewha-14",
+    "ewha-15",
+    "ewha-16",
+    "ewha-17",
+    "ewha-18",
+    "ewha-19",
+    "ewha-20",
+    "ewha-21",
+    "ewha-22",
+    "ewha-23",
+    "ewha-24",
+    "ewha-25",
+    "ewha-26",
+    "ewha-27",
+    "ewha-28",
+    "ewha-29",
+    "ewha-30",
+    "ewha-31",
+    "ewha-32",
+    "ewha-33",
+    "ewha-34",
+    "ewha-35",
+    "ewha-36",
+    "ewha-37",
+    "ewha-38",
+    "ewha-39"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[40].source_statement",
+   "program_ids": [
+    "j-na-disability-record"
+   ],
+   "unit_ids": [
+    "ewha-40",
+    "ewha-41",
+    "ewha-42",
+    "ewha-43",
+    "ewha-44",
+    "ewha-45",
+    "ewha-75",
+    "ewha-49",
+    "ewha-50",
+    "ewha-51"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[41].source_statement",
+   "program_ids": [
+    "j-na-disability-practical"
+   ],
+   "unit_ids": [
+    "ewha-60",
+    "ewha-61",
+    "ewha-62",
+    "ewha-63"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "이화여자대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000163.json#minimum_rules[42].source_statement",
+   "program_ids": [
+    "j-ga-disability-csat-practical"
+   ],
+   "unit_ids": [
+    "ewha-66",
+    "ewha-67",
+    "ewha-68",
+    "ewha-69",
+    "ewha-70",
+    "ewha-71",
+    "ewha-72"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "장로회신학대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000170.json#minimum_rules[0].source_statement",
+   "program_ids": [
+    "s-bible"
+   ],
+   "unit_ids": [
+    "puts-01",
+    "puts-02",
+    "puts-03"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "장로회신학대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000170.json#minimum_rules[1].source_statement",
+   "program_ids": [
+    "s-school"
+   ],
+   "unit_ids": [
+    "puts-01",
+    "puts-02",
+    "puts-03"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "장로회신학대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000170.json#minimum_rules[2].source_statement",
+   "program_ids": [
+    "s-social"
+   ],
+   "unit_ids": [
+    "puts-01",
+    "puts-02",
+    "puts-03"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "장로회신학대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000170.json#minimum_rules[3].source_statement",
+   "program_ids": [
+    "s-dream"
+   ],
+   "unit_ids": [
+    "puts-01",
+    "puts-02",
+    "puts-03"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "장로회신학대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000170.json#minimum_rules[4].source_statement",
+   "program_ids": [
+    "s-music"
+   ],
+   "unit_ids": [
+    "puts-04",
+    "puts-05",
+    "puts-06",
+    "puts-07",
+    "puts-08",
+    "puts-09",
+    "puts-10",
+    "puts-11"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "장로회신학대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000170.json#minimum_rules[5].source_statement",
+   "program_ids": [
+    "s-rural-academic"
+   ],
+   "unit_ids": [
+    "puts-01",
+    "puts-02",
+    "puts-03"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "장로회신학대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000170.json#minimum_rules[6].source_statement",
+   "program_ids": [
+    "s-rural-music"
+   ],
+   "unit_ids": [
+    "puts-12"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "장로회신학대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000170.json#minimum_rules[7].source_statement",
+   "program_ids": [
+    "s-disability-academic"
+   ],
+   "unit_ids": [
+    "puts-01",
+    "puts-02",
+    "puts-03"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "장로회신학대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000170.json#minimum_rules[8].source_statement",
+   "program_ids": [
+    "s-disability-music"
+   ],
+   "unit_ids": [
+    "puts-12"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "장로회신학대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000170.json#minimum_rules[9].source_statement",
+   "program_ids": [
+    "s-equity-academic"
+   ],
+   "unit_ids": [
+    "puts-01",
+    "puts-02",
+    "puts-03"
+   ],
+   "sentence": "수능최저학력기준 미적용",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "한국기술교육대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000189.json#minimum_rules[8].source_conditions",
+   "program_ids": [
+    "p006"
+   ],
+   "unit_ids": [
+    "u001",
+    "u002",
+    "u003",
+    "u004",
+    "u005",
+    "u006",
+    "u008",
+    "u009",
+    "u010",
+    "u011",
+    "u012",
+    "u014",
+    "u015",
+    "u016",
+    "u018",
+    "u019"
+   ],
+   "sentence": "▪ 반영영역: 국어, 수학, 영어, 탐구\n- (전계열) 상위 2개 영역 합 8등급 이내\n* 필수 반영과목\n- 공학·ICT융합계열: 수학 (※ 디자인공학과는 필수 반영과목 없음)\n- 사회융합계열: 국어\n- 자율전공: (자연)공학·ICT계열, (인문)사회계열 수능최저 반영\n* 탐구영역은 과학ㆍ사회 탐구 중 상위 1개 과목만 반영(*직업탐구 제외)",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "한국기술교육대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000189.json#minimum_rules[9].source_conditions",
+   "program_ids": [
+    "p007"
+   ],
+   "unit_ids": [
+    "u001",
+    "u002",
+    "u003",
+    "u004",
+    "u005",
+    "u006",
+    "u008",
+    "u009",
+    "u010",
+    "u011",
+    "u012",
+    "u014",
+    "u015",
+    "u016"
+   ],
+   "sentence": "▪ 반영영역: 국어, 수학, 영어, 탐구\n- (전계열) 상위 2개 영역 합 8등급 이내\n* 필수 반영과목: 계열별 상이\n- 공학·ICT융합계열: 수학 (※ 디자인공학과는 필수 반영과목 없음)\n- 사회융합계열: 없음\n* 탐구영역은 과학ㆍ사회 탐구 중 상위 1개 과목만 반영(*직업탐구 제외)",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[0].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u01"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[1].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u02"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[2].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u03"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[3].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u04"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[4].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u05"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[5].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u06"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[6].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u07"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[7].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u08"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[8].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u09"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[9].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u10"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[10].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u11"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[11].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u12"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[12].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u13"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[13].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u14"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[14].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u15"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[15].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u16"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[16].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u17"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[17].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u18"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[18].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u19"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[19].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u20"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[20].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u21"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[21].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u23"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[22].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u24"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[23].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u25"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[24].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u26"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[25].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u27"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[26].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u30"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[27].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u31"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[28].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u32"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[29].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u33"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[30].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u34"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[31].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u35"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[32].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u36"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[33].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u37"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[34].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u38"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[35].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u39"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[36].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u40"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[37].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u41"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[38].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u42"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[39].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u49"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[40].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u50"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[41].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u51"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[42].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u59"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[43].source_text",
+   "program_ids": [
+    "s-recommend"
+   ],
+   "unit_ids": [
+    "u64"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역(수학 포함) 각 3등급 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "영역별 등급 상한(각 n등급) — 기준 모양에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[44].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u01"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[45].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u02"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[46].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u03"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[47].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u04"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[48].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u05"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[49].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u06"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[50].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u07"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[51].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u08"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[52].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u09"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[53].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u10"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[54].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u11"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[55].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u12"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[56].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u13"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[57].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u14"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[58].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u15"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[59].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u16"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[60].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u17"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[61].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u18"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[62].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u19"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[63].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u20"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[64].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u21"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[65].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u22"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(2개 과목 평균) 중 3개 영역 등급합 4 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 4,
+    "required": null,
+    "history_max": null,
+    "tamgu": "avg"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[66].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u23"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[67].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u24"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[68].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u25"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[69].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u26"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[70].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u27"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[71].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u28"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[72].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u29"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[73].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u30"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[74].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u31"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[75].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u32"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[76].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u33"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[77].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u34"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[78].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u35"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[79].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u36"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[80].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u37"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[81].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u38"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[82].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u39"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[83].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u40"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[84].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u41"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[85].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u42"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[86].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u43"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[87].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u44"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[88].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u45"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[89].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u46"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[90].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u47"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[91].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u49"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[92].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u50"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[93].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u51"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[94].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u57"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[95].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u58"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[96].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u59"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[97].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u63"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[98].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u65"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[99].source_text",
+   "program_ids": [
+    "s-academic"
+   ],
+   "unit_ids": [
+    "u66"
+   ],
+   "sentence": "국어, 수학, 영어, 사회, 과학 중 3개 영역(수학 포함) 등급합 7 이내",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "사회·과학 탐구를 각각 영역으로 셈 — 기준 모양(탐구 1영역)에 없음"
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[101].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u01"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[102].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u02"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[103].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u03"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[104].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u04"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[105].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u06"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[106].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u07"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[107].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u08"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[108].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u09"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[109].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u11"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[110].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u12"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[111].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u16"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[112].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u18"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[113].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u19"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[114].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u20"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[115].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u21"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[116].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u22"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(2개 과목 평균) 중 3개 영역 등급합 4 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 4,
+    "required": null,
+    "history_max": null,
+    "tamgu": "avg"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[117].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u23"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[118].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u24"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[119].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u28"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[120].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u29"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[121].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u30"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[122].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u31"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[123].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u32"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[124].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u33"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[125].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u34"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[126].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u35"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[127].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u36"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[128].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u37"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[129].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u38"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[130].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u39"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[131].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u40"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[132].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u41"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[133].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u42"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[134].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u45"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[135].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u47"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[136].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u49"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[137].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u50"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[138].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u51"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[139].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u65"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "한양대학교",
+   "campus": "본교",
+   "source": "structured/universities/plan-0000203.json#minimum_rules[140].source_text",
+   "program_ids": [
+    "s-essay"
+   ],
+   "unit_ids": [
+    "u66"
+   ],
+   "sentence": "국어, 수학, 영어, 탐구(상위 1개 과목) 중 3개 영역 등급합 7 이내",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "가천대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000063/학생부우수자 전형",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "인문·자연은 국어·수학·영어·사회탐구·과학탐구 중 2개 합 6, 바이오로직스학과는 2개 합 5. 의예과는 국어·수학·영어·과학탐구 중 3개 각 1등급, 한의예과는 2개 각 1등급, 약학과는 3개 합 5 이내.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "등급 합 기준이 없거나 둘 이상(모집단위별 기준이 섞인 문장)"
+  },
+  {
+   "university": "가천대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000063/지역균형 전형",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "미적용.",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "가천대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000063/가천바람개비 전형",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "미적용.",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "가천대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000063/논술 전형",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "인문·자연은 국어·수학·영어·사회탐구·과학탐구 중 2개 합 6, 바이오로직스학과는 2개 합 5. 의예과는 국어·수학·영어·과학탐구 중 3개 각 1등급, 한의예과는 2개 각 1등급, 약학과는 3개 합 5 이내. 인문·자연의 국어 또는 수학 반영 시 1개 등급 상향 조건은 원문을 확인.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "등급 합 기준이 없거나 둘 이상(모집단위별 기준이 섞인 문장)"
+  },
+  {
+   "university": "가톨릭관동대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000072/학생부교과(일반)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "의학과(의예과)는 국어·수학·영어·통합과학 상위 3개 합 4 이내. 간호학과는 국어·수학·영어·통합사회·통합과학 상위 2개 합 9 이내. 나머지 모집단위는 미적용.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "가톨릭관동대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000072/학생부종합(일반)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "의학과(의예과)는 국어·수학·영어·통합과학 상위 3개 합 5 이내. 간호학과는 국어·수학·영어·통합사회·통합과학 상위 2개 합 9 이내. 나머지 모집단위는 미적용.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "가톨릭관동대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000072/학생부교과(지역인재)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "의학과(의예과)는 국어·수학·영어·통합과학 상위 3개 합 5 이내. 간호학과는 국어·수학·영어·통합사회·통합과학 상위 2개 합 9 이내. 나머지 모집단위는 미적용.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "강원대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000003/학생부교과(일반전형)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "국어·수학·영어·탐구 중 2개 영역 합 적용. 일반전형은 사범·간호 6, 그 외 해당 인문·자연 모집단위 8 이내. 강원인재는 사범·간호 7, 그 외 해당 모집단위 8 이내. 학과별 필수 영역·탐구 허용 범위는 PDF 35쪽 확인. 수의·약학·의예의 정성평가 전형은 별도 조건.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "강원대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000003/학생부교과(강원인재전형)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "국어·수학·영어·탐구 중 2개 영역 합 적용. 일반전형은 사범·간호 6, 그 외 해당 인문·자연 모집단위 8 이내. 강원인재는 사범·간호 7, 그 외 해당 모집단위 8 이내. 학과별 필수 영역·탐구 허용 범위는 PDF 35쪽 확인. 수의·약학·의예의 정성평가 전형은 별도 조건.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "강원대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000003/학생부종합(미래인재서류전형)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "간호학과는 2개 영역 합 7, 수의학과는 수학 포함 3개 합 8 이내. 그 외 미적용. 학과별 탐구 반영 범위는 PDF 35쪽 확인.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "강원대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000003/학생부종합(미래인재면접전형)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "미적용.",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "강원대학교",
+   "campus": "제2캠퍼스",
+   "source": "admission-plans.json#plan-0000004/학생부교과(일반전형)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "미적용.",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "강원대학교",
+   "campus": "제2캠퍼스",
+   "source": "admission-plans.json#plan-0000004/학생부종합(미래인재서류전형)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "미적용.",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "강원대학교",
+   "campus": "제2캠퍼스",
+   "source": "admission-plans.json#plan-0000004/학생부종합(미래인재면접전형)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "미적용.",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "춘천교육대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-e7e562519408/학생부종합(교직적·인성인재)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "국어·수학·영어·사회/과학탐구(상위 1과목) 중 3개 영역 합 9 이내, 한국사 4등급 이내.",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 9,
+    "required": null,
+    "history_max": 4,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "춘천교육대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-e7e562519408/학생부종합(강원교육인재)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "국어·수학·영어·사회/과학탐구(상위 1과목) 중 3개 영역 합 10 이내, 한국사 4등급 이내.",
+   "status": "parsed",
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 10,
+    "required": null,
+    "history_max": 4,
+    "tamgu": "best"
+   },
+   "reason": ""
+  },
+  {
+   "university": "포항공과대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-24d1dd443390/학생부종합(일반전형Ⅰ)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "수능최저 미적용.",
+   "status": "no_minimum",
+   "criterion": null,
+   "reason": "최저 없음"
+  },
+  {
+   "university": "한국교원대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000031/학생부종합우수자",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "모집단위에 따라 다름. 초등·불어교육과 제외 기준과 독어·중국어교육과의 탐구 반영 예외를 원문 PDF 11쪽에서 확인.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "한국교원대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000031/지역인재 특별전형",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "국어·수학·영어·사회·과학 5과목 중 상위 3과목 합 10등급 이내. 탐구 반영 예외는 원문 확인.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "등급 합 기준을 찾지 못함"
+  },
+  {
+   "university": "한림대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000198/학생부교과(교과우수자전형)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "간호학과는 국어·수학·영어·사회 또는 과학탐구 중 3개 영역 합 12등급 이내. 나머지 학과는 미적용.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "한림대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000198/학생부교과(지역인재전형)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "간호학과는 국어·수학·영어·사회 또는 과학탐구 중 3개 영역 합 12등급 이내. 나머지 학과는 미적용.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  },
+  {
+   "university": "한림대학교",
+   "campus": "본교",
+   "source": "admission-plans.json#plan-0000198/학생부종합(학교생활우수자전형)",
+   "program_ids": [],
+   "unit_ids": [],
+   "sentence": "의학과는 국어·수학·영어·과학탐구 중 3개 합 4등급 이내. 영어를 반영하면 1등급이어야 함. 의학과 외에는 미적용.",
+   "status": "unparsed",
+   "criterion": null,
+   "reason": "모집단위·계열별로 다른 조건이 섞인 문장"
+  }
+ ]
+}

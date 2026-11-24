@@ -27,3 +27,14 @@ test('계열표: CSV를 불러와 서로 다른 2명이 승인하면 공개 파�
   await waitFor(() => expect(exportButton.disabled).toBe(false));
   expect(screen.getByText('승인 관리자 A · 승인 관리자 B')).toBeTruthy();
 });
+
+test('계열표: 대계열 칸을 보여 주고 고르면 저장한다', async () => {
+  render(<MemoryRouter initialEntries={['/admin/admin-rules/fields']}><App /></MemoryRouter>);
+  const csv = new File(['대학,모집단위,소계열,중계열,대계열\n경희대학교,행정학과,행정·정책,사회과학,인문\n'], 'fields.csv', { type: 'text/csv' });
+  fireEvent.change(await screen.findByLabelText('계열표 CSV 불러오기'), { target: { files: [csv] } });
+  const major = await screen.findByLabelText('경희대학교 행정학과 대계열') as HTMLSelectElement;
+  expect(major.value).toBe('인문');
+  expect(screen.getByRole('columnheader', { name: '대계열' })).toBeTruthy();
+  fireEvent.change(major, { target: { value: '자연' } });
+  await waitFor(async () => expect((await adminDb.fields.get('current'))?.rows[0].major).toBe('자연'));
+});
