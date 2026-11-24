@@ -64,16 +64,17 @@ export const sampleReleasedUnits: ReleasedUnit[] = [
   ...INTEREST.slice(1).flatMap(line => YEARS.map((year, y) => ({ ...khuUnits[y], university: line[0], year, source_url: INTEREST_SOURCE, rows: [interestRow(line, y)] }))),
 ];
 
-// 수시 입결 '대학별' 그래프 샘플: work/admission-results/02-spec.md 1-1(2025~2027학년도, 자율전공학부 = 최종 등록자 평균이라 좌표에 없음).
-// Figma 프레임(346:267881)은 의예과~사학과 10행만 그려서 국어국문학과는 뺐어요(spec은 11행 — 보고함).
-// 다른 화면 샘플(sampleReleasedUnits)은 demo-dataset 공통 기준(2024~2026)이라 같은 숫자가 1년 당겨져 있어요 — 시안끼리 학년도가 어긋나요(보고함).
-const shift = (r: ResultRow): ResultRow => ({ ...r, result_year: String(Number(r.result_year) + 1) });
-const JAYU: [number, number, string, string, string][] = [[2025, 2.15, '', '', ''], [2026, 2.08, '', '', ''], [2027, 2.11, '20', '11.7', '95']];
+// 수시 입결 '대학별' 그래프 샘플: v2 시안(346:267881 · 1440 347:310145) 기준 2024~2026학년도.
+// 좌표 9행 = 컴퓨터공학부~사학과 + 경희 행정학과(관심 학과, 고른 학과 기본값) — 시안에 없는 의예과·약학과·국어국문학과는 뺐어요.
+// 자율전공학부 = 최종 등록자 평균이라 좌표에 없음.
+const NOT_PLOTTED = ['의예과', '약학과', '국어국문학과'];
+const JAYU: [number, number, string, string, string][] = [[2024, 2.15, '', '', ''], [2025, 2.08, '', '', ''], [2026, 2.11, '20', '11.7', '95']];
 export const sampleOverviewRows: ResultRow[] = [
-  ...khuUnits.flatMap(u => u.rows).filter(r => r.recruit_unit !== '국어국문학과').map(shift),
+  ...khuUnits.flatMap(u => u.rows).filter(r => !NOT_PLOTTED.includes(r.recruit_unit)),
+  ...YEARS.map((_, y) => interestRow(INTEREST[0], y)),
   ...JAYU.map(([year, value, quota, rate, fill]) => row({ university: '경희대학교', result_year: String(year), round: '수시', admission_type: '교과', program: '학생부교과(지역균형)',
     recruit_unit: '자율전공학부', quota, competition_rate: rate, fill_rate: fill, cut_other: value.toFixed(2), metric: '교과등급', basis: '최종 등록자 평균', grade_system: '9', source_url: SOURCE, note: '샘플 데이터(가상)' })),
-  ...INTEREST.slice(1).flatMap(line => YEARS.map((_, y) => shift(interestRow(line, y)))),
+  ...INTEREST.slice(1).flatMap(line => YEARS.map((_, y) => interestRow(line, y))),
 ];
 
 // 대학별 환산 샘플 규칙(가상). 점수표·만점은 대학마다 다르게 둬서 같은 성적도 점수가 달라지는 걸 보여 줘요.

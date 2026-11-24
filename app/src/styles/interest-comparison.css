@@ -66,6 +66,8 @@
   .comparison-status-block { display: grid; gap: 8px; }
   .interest-comparison .comparison-table thead th:first-child, .interest-comparison .comparison-table tbody th { width: 200px; }
   .interest-comparison .comparison-table thead th { padding-block: 12px; height: 79px; }
+  .comparison-statistic > .comparison-link { text-decoration: underline; text-underline-offset: 2px; } /* 시안 1440: 원문·상세 링크 밑줄 */
+  .interest-comparison .comparison-table tbody th { vertical-align: middle; } /* 시안: 키 큰 행(최근 3개 학년도 컷)의 항목 이름은 세로 가운데 */
 }
 @media (min-width: 1024px) {
   .shell:has(.interest-comparison) .topbar__heading > h1:not(.comparison-title) { display: none; }

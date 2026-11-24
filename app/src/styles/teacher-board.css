@@ -1,0 +1,120 @@
+/* 우리 반 홈 · 카드 수합 v2 시안(teacher-dashboard 330:1766·330:16438, card-collect 346:78062·346:78011).
+   흰 카드 · 모서리 0 · 테두리 없음, 줄 구분 hairline. 값은 Figma 노드 실측. Route Blue = 오늘 할 일 링크 · 선택 칩만. */
+.tb { display: grid; gap: 32px; min-width: 0; }
+.tb p, .tb h2, .tb h3 { margin: 0; }
+.tb-caption { font-size: 12px; line-height: 16.8px; font-weight: 400; color: var(--color-text-muted); }
+.topbar__heading .tb-lead { margin: 4px 0 0; font-size: 18px; line-height: 27px; font-weight: 300; color: var(--color-ink); }
+.tb-asof { display: inline-flex; align-items: center; align-self: center; height: 24px; padding: 0 8px; background: var(--color-canvas-soft); font-size: 12px; line-height: 16.8px; white-space: nowrap; }
+
+/* 모바일 화면 머리(page-header) · 보기 전용 안내 */
+.tb-head { display: grid; gap: 8px; }
+.tb-head .screen-heading { display: block; }
+.tb-head h2 { font-size: 26px; line-height: 34px; font-weight: 700; color: var(--color-ink); }
+.tb-viewonly { display: flex; align-items: center; gap: 6px; height: 20px; font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); }
+.tb-viewonly .icon { color: var(--color-ink); }
+
+/* 오늘 할 일 */
+.tb-today { display: grid; gap: 4px; padding: 20px 20px 8px; background: var(--color-canvas); }
+.tb-today__head { display: flex; align-items: flex-start; gap: 12px; }
+.tb-today__title { font-size: 19px; line-height: 26px; font-weight: 700; color: var(--color-ink); }
+.tb-today__head .tb-caption { margin-top: 8px; }
+.tb-today__row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--color-hairline); }
+.tb-today__row:last-child { border-bottom: 0; }
+.tb-today__row > .icon { color: var(--color-ink); }
+.tb-today__count { flex: 0 0 64px; font-size: 24px; line-height: 28.8px; font-weight: 700; color: var(--color-ink); }
+.tb-today__text { flex: 1 1 0; min-width: 0; min-height: 44px; display: grid; align-content: start; gap: 2px; }
+.tb-today__name { font-size: 16px; line-height: 22.4px; font-weight: 600; color: var(--color-ink); }
+.tb-today__sub { font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); }
+.tb-action { flex: none; padding: 0; border: 0; background: none; font: inherit; font-size: 15px; line-height: 22.5px; font-weight: 600; color: var(--color-accent); text-decoration: none; white-space: nowrap; cursor: pointer; }
+
+/* 표 카드 머리 · 칩 */
+.tb-section { display: grid; gap: 12px; min-width: 0; }
+.tb-section__head { display: flex; justify-content: space-between; align-items: flex-start; }
+.tb-section__title { font-size: 22px; line-height: 30px; font-weight: 700; color: var(--color-ink); }
+.tb-section__head .tb-caption { margin-top: 9px; }
+.tb-chips { display: flex; gap: 8px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.tb-chips::-webkit-scrollbar { display: none; }
+.tb .filter-chip { flex: none; height: 36px; min-height: 36px; padding: 0 12px; border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 12px; line-height: 16.8px; font-weight: 600; cursor: pointer; }
+.tb .filter-chip { padding: 0 12.4px; } /* 앱 글꼴이 시안보다 칩마다 약 0.8px 좁아 폭을 맞춰요 */
+.tb .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+
+/* 판정 표식: ■ 8 · ▲ 9×8 · ◐ · ● 8, 이름과 4 */
+.tb-mark { display: inline-flex; align-items: center; gap: 4px; height: 24px; font-size: 12px; line-height: 16.8px; font-weight: 600; white-space: nowrap; }
+.tb-mark > i { flex: none; width: 8px; height: 8px; background: currentColor; }
+.tb-mark--risk { color: var(--color-judge-risk); }
+.tb-mark--reach { color: var(--color-judge-reach); }
+.tb-mark--reach > i { width: 9px; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.tb-mark--fit { color: var(--color-judge-fit); }
+.tb-mark--fit > i { border: 1.5px solid currentColor; border-radius: 50%; background: linear-gradient(90deg, currentColor 50%, transparent 50%); box-sizing: border-box; }
+.tb-mark--safe { color: var(--color-judge-safe); }
+.tb-mark--safe > i { border-radius: 50%; }
+.tb-mark--none { color: var(--color-text-muted); }
+.tb-mark--edge { color: var(--color-ink); }
+.tb-mark--soft { padding: 0 8px; }
+.tb-mark--soft.tb-mark--risk { background: var(--color-judge-risk-bg); }
+.tb-mark--soft.tb-mark--reach { background: var(--color-judge-reach-bg); }
+.tb-badge { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: var(--color-canvas-soft); color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; font-weight: 600; white-space: nowrap; }
+
+/* 모바일 학생 줄(student-row-card) */
+.tb-list { display: grid; background: var(--color-canvas); }
+.tb-rowcard { display: grid; align-content: center; gap: 2px; height: 60px; padding: 0 16px; border-bottom: 1px solid var(--color-hairline); color: var(--color-ink); text-decoration: none; }
+.tb-rowcard--two { align-content: start; padding-top: 6px; }
+.tb-rowcard--two .tb-rowcard__num { position: relative; top: 1.2px; } /* 시안: 번호 글자 상자 줄 + 2 */
+.tb-rowcard__line { display: flex; align-items: center; height: 24px; min-width: 0; }
+.tb-rowcard__num { font-size: 16px; line-height: 22.4px; font-weight: 600; }
+.tb-rowcard__alias { margin-left: 8px; font-size: 15px; line-height: 22.5px; }
+.tb-rowcard__mid { margin-left: 12px; font-size: 14px; line-height: 19.6px; }
+.tb-rowcard__badges { display: flex; gap: 8px; margin-left: auto; }
+.tb-rowcard__sub { font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tb-more { display: flex; justify-content: center; align-items: center; height: 44px; border: 0; background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 15px; line-height: 22.5px; font-weight: 600; cursor: pointer; }
+
+/* 한 줄 고지: 시안처럼 줄바꿈 없이(모바일은 칸 폭에서 잘려요) */
+.tb .tb-disclaimer { display: flex; align-items: center; gap: 4px; min-width: 0; height: 17px; margin: 0; overflow: hidden; font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); white-space: nowrap; }
+.tb-disclaimer > span { overflow: hidden; }
+
+/* 표(data-table): 머리 32 · 행 36 + 1px 선 */
+.tb-panel { display: grid; background: var(--color-canvas); min-width: 0; }
+.tb-toolbar { display: flex; align-items: center; gap: 24px; padding: 20px 24px; }
+.tb-toolbar__title { display: grid; gap: 2px; }
+.tb-toolbar__title h3 { font-size: 21px; line-height: 28.4px; font-weight: 700; color: var(--color-ink); }
+.tb-toolbar__actions { display: flex; gap: 8px; margin-left: auto; }
+.tb-toolbar .button-outline { height: 44px; text-decoration: none; }
+.tb-table { display: grid; min-width: 0; }
+.tb-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--color-hairline); }
+.tb-row--head { border-bottom: 0; }
+.tb-cell { display: flex; align-items: center; gap: 8px; flex: none; box-sizing: border-box; min-width: 0; padding: 6px 16px; font-size: 14px; line-height: 19.6px; color: var(--color-ink); white-space: nowrap; }
+.tb-row--head .tb-cell { height: 32px; padding-block: 0; background: var(--color-canvas-soft); font-size: 12px; line-height: 16.8px; font-weight: 600; color: var(--color-ink-soft); }
+.tb-cell.is-right { justify-content: flex-end; }
+.tb-cell.is-center { justify-content: center; }
+.tb-cell.is-flex { flex: 1 1 0; }
+.tb-cell.is-mark { min-width: 48px; justify-content: center; }
+.tb-cell .tb-muted { color: var(--color-text-muted); }
+.tb-cell .tb-strong { font-weight: 600; }
+.tb-cell a { color: inherit; text-decoration: none; font-weight: 600; }
+.tb-sort { display: inline-flex; align-items: center; gap: 8px; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
+
+@media (min-width: 1024px) {
+  .tb { gap: 24px; }
+  .tb-today { padding: 24px 24px 12px; }
+  .tb-today__head { gap: 12px; }
+  .tb-today__title { font-size: 21px; line-height: 28.4px; }
+  .tb-today__row { gap: 16px; }
+  .tb-today__sub { font-size: 14px; line-height: 21px; }
+  .tb .tb-disclaimer { width: fit-content; max-width: 100%; }
+}
+
+/* 판정 표식 배경(모바일 학생 줄) · 카드 수합 칸 */
+.tb-mark--soft.tb-mark--fit { background: var(--color-judge-fit-bg); }
+.tb-mark--soft.tb-mark--safe { background: var(--color-judge-safe-bg); }
+.tb-mark--soft.tb-mark--none { background: var(--color-judge-none-bg); }
+.tb-cell.is-narrow { min-width: 40px; }
+.tb-slot { flex: 0 0 54px; }
+/* 카드 받기(button-primary)는 시안처럼 머리 오른쪽 끝(잠금 다음) */
+.shell:has(.tb--collect) #topbar-screen-actions { order: 9; }
+.shell:has(.tb--collect) .topbar__actions { align-items: center; }
+.shell:has(.tb) .topbar__actions { gap: 12px; } /* 시안 actions: 배지 · 모드 · 잠금(· 카드 받기) 사이 12 */
+@media (max-width: 1023px) {
+  /* card-collect 390 시안 sub-nav는 카드 수합 · 결과 집계 두 칸(우리 반 입시 일정은 PC 사이드바에만) */
+  .shell:has(.tb--collect) .sub-nav__tab[href='/teacher/class-calendar'] { display: none; }
+}
+@media (max-width: 1023px) { .shell__content:has(.tb) { padding-top: 24px; } } /* 시안 390: sub-nav 아래 24에서 본문 */

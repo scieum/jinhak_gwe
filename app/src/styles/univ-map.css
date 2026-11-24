@@ -15,7 +15,7 @@
 .um-panel, .um-map-card, .um-list-card { display: grid; gap: var(--spacing-sm); align-content: start; padding: var(--spacing-lg); background: var(--color-canvas); }
 .um-panel { max-height: 720px; overflow-y: auto; }
 .um-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--spacing-xs); }
-.um-head .button-pill-soft, .um-head > :last-child:not(:first-child) { margin-left: auto; }
+.um-head .button-pill-soft, .um-head > :last-child:not(:first-child):not(span) { margin-left: auto; }
 .um-only { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-xs); }
 
 .um-stage { position: relative; }
@@ -140,7 +140,7 @@
   .um-map-card > .data-status-badge { margin-bottom: 4px; }
   .um-head .t-heading-3 { font-size: 19px; line-height: 25.6px; }
   .um-stage { padding-bottom: 0; }
-  .um-toggle { bottom: 16px; width: 118px; min-height: 52px; padding: 0; }
+  .um-toggle { bottom: 16px; z-index: 4; width: 118px; min-height: 52px; padding: 0; } /* 시안: 하단 탭바 위에 그려요 */
   .univ-map > .data-status-badge { background: var(--color-canvas); justify-self: start; }
   .univ-map .disclaimer-note > span:not(.icon) { flex: 1; word-break: keep-all; }
   .um-sources { gap: 12px; }

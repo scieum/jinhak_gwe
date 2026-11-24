@@ -1,14 +1,10 @@
 {
   "slug": "admissions-list",
   "gate": "G5",
-  "pass": false,
-  "errors": [
-    "V 390: 차이 영역 x 40 y 496 40×24",
-    "V 390: 차이 영역 x 40 y 744 40×24",
-    "V 390: 차이 영역 x 48 y 624 32×24"
-  ],
-  "back_to": "S5",
-  "same_fail_streak": 1,
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
   "route": "/admissions-list",
   "allowed": [],
   "notes": [
@@ -20,7 +16,7 @@
     "1440": "work/_cache/impl/admissions-list-1440.png"
   },
   "ssim": {
-    "390": 0.9592,
-    "1440": 0.9849
+    "390": 0.9707,
+    "1440": 0.9858
   }
 }

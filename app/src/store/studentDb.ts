@@ -1,6 +1,6 @@
 import Dexie, { type Table } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { parseStudentBackup, type GradeRecord, type AttendanceRecord, type StudentBackup } from '../domain/student';
+import { parseStudentBackup, parseTargetPriorities, type GradeRecord, type AttendanceRecord, type StudentBackup } from '../domain/student';
 import { addToBoard, moveSlot, newBoard, nextBoardName, parseBoards, removeFromBoard, reorderSlots, updateSlot, type Board, type BoardChange } from '../domain/board';
 import { parseMocks, type MockScore, type Area } from '../domain/mock';
 import { interestId, parseInterests, type Interest } from '../domain/interests';
@@ -14,6 +14,8 @@ export class StudentDatabase extends Dexie {
   boards!: Table<Board, string>;
   mocks!: Table<MockScore, string>;
   interests!: Table<Interest, string>;
+  preferences!: Table<{ id: string; targetPriorities: string[] }, string>;
+  private legacyMigration?: Promise<void>;
   constructor(name = 'jinhak-navi-student-v1') {
     super(name);
     this.version(1).stores({ grades: 'id, semester', attendance: 'year' });
@@ -21,9 +23,38 @@ export class StudentDatabase extends Dexie {
     this.version(3).stores({ grades: 'id, semester', attendance: 'year', applications: 'id, year, updated_at', tasks: 'id, application_id, due_date, kind', boards: 'id' });
     this.version(4).stores({ grades: 'id, semester', attendance: 'year', applications: 'id, year, updated_at', tasks: 'id, application_id, due_date, kind', boards: 'id', mocks: 'exam' });
     this.version(5).stores({ interests: 'id, university, created_at' });
+    this.version(6).stores({ preferences: 'id' });
+  }
+  async migrateLegacyTargets() {
+    if (this.name !== 'jinhak-navi-student-v1') return;
+    if (!this.legacyMigration) this.legacyMigration = (async () => {
+      let raw: string | null;
+      try { raw = localStorage.getItem('jinhak-navi-score-trend-targets'); } catch { return; }
+      if (raw === null) return;
+      let ids: unknown; try { ids = JSON.parse(raw); } catch { return; }
+      if (!Array.isArray(ids)) return;
+      await this.transaction('rw', [this.applications, this.preferences], async () => {
+        if (await this.preferences.get('score-trend-targets')) return;
+        const existing = new Set(await this.applications.toCollection().primaryKeys());
+        await this.preferences.put({ id: 'score-trend-targets', targetPriorities: [...new Set(ids.filter((id): id is string => typeof id === 'string' && existing.has(id)))].slice(0, 3) });
+      });
+      try { localStorage.removeItem('jinhak-navi-score-trend-targets'); } catch { /* DB is now authoritative. */ }
+    })().catch(error => { this.legacyMigration = undefined; throw error; });
+    return this.legacyMigration;
+  }
+  async saveTargetPriorities(ids: string[]) {
+    await this.migrateLegacyTargets();
+    await this.transaction('rw', [this.applications, this.preferences], async () => {
+      const targetPriorities = parseTargetPriorities(ids, new Set(await this.applications.toCollection().primaryKeys()));
+      await this.preferences.put({ id: 'score-trend-targets', targetPriorities });
+    });
   }
   async snapshot(): Promise<StudentBackup> {
-    return this.transaction('r', [this.grades, this.attendance, this.applications, this.tasks, this.boards, this.mocks, this.interests], async () => ({ grades: await this.grades.toArray(), attendance: await this.attendance.toArray(), planning: await this.planningSnapshot(), boards: await this.boards.toArray(), mocks: await this.mocks.toArray(), interests: await this.interests.toArray() }));
+    await this.migrateLegacyTargets();
+    return this.transaction('r', [this.grades, this.attendance, this.applications, this.tasks, this.boards, this.mocks, this.interests, this.preferences], async () => {
+      const preference = await this.preferences.get('score-trend-targets');
+      return { grades: await this.grades.toArray(), attendance: await this.attendance.toArray(), planning: await this.planningSnapshot(), boards: await this.boards.toArray(), mocks: await this.mocks.toArray(), interests: await this.interests.toArray(), ...(preference ? { targetPriorities: preference.targetPriorities } : {}) };
+    });
   }
   async planningSnapshot(): Promise<PlannerData> { return { applications: await this.applications.toArray(), tasks: await this.tasks.toArray() }; }
   async addApplication(value: ApplicationPlan): Promise<{ id: string; created: boolean }> {
@@ -55,8 +86,10 @@ export class StudentDatabase extends Dexie {
     });
   }
   async deleteApplication(id: string) {
-    await this.transaction('rw', [this.applications, this.tasks, this.boards], async () => {
+    await this.transaction('rw', [this.applications, this.tasks, this.boards, this.preferences], async () => {
       await this.applications.delete(id);
+      const preference = await this.preferences.get('score-trend-targets');
+      if (preference) await this.preferences.put({ ...preference, targetPriorities: preference.targetPriorities.filter(value => value !== id) });
       for (const b of await this.boards.toArray()) await this.boards.put(removeFromBoard(b, id));
       await this.tasks.where('application_id').equals(id).modify({ application_id: null, updated_at: new Date().toISOString() });
     });
@@ -138,10 +171,11 @@ export class StudentDatabase extends Dexie {
       if (legacy) await this.interests.delete(legacy.id);
     });
   }
-  async clearStudentData() { await this.restore({ grades: [], attendance: [], planning: emptyPlanner(), boards: [], mocks: [], interests: [] }); }
+  async clearStudentData() { await this.restore({ grades: [], attendance: [], planning: emptyPlanner(), boards: [], mocks: [], interests: [], targetPriorities: [] }); }
   async restore(value: unknown) {
     const data = parseStudentBackup(value);
-    await this.transaction('rw', [this.grades, this.attendance, this.applications, this.tasks, this.boards, this.mocks, this.interests], async () => {
+    await this.migrateLegacyTargets();
+    await this.transaction('rw', [this.grades, this.attendance, this.applications, this.tasks, this.boards, this.mocks, this.interests, this.preferences], async () => {
       await this.grades.clear();
       // Older backups have no interests field and must preserve this device's list.
       if (data.interests !== undefined) { await this.interests.clear(); await this.interests.bulkPut(data.interests); }
@@ -154,6 +188,8 @@ export class StudentDatabase extends Dexie {
         await this.applications.bulkPut(data.planning.applications); await this.tasks.bulkPut(data.planning.tasks);
         // Boards point at applications; a restored plan list invalidates boards from the old list.
         await this.boards.clear(); await this.boards.bulkPut(data.boards ?? []);
+        const preference = await this.preferences.get('score-trend-targets');
+        if (data.targetPriorities !== undefined || preference) await this.preferences.put({ id: 'score-trend-targets', targetPriorities: data.targetPriorities ?? preference!.targetPriorities.filter(id => data.planning!.applications.some(a => a.id === id)) });
       }
     });
   }

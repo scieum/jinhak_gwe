@@ -1,13 +1,10 @@
 {
   "slug": "home",
   "gate": "G5",
-  "pass": false,
-  "errors": [
-    "V 1440: 차이 영역 x 1088 y 400 48×32",
-    "V 1440: 차이 영역 x 1088 y 648 40×24"
-  ],
-  "back_to": "S5",
-  "same_fail_streak": 1,
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
   "route": "/home",
   "allowed": [
     {
@@ -40,7 +37,7 @@
     "1440": "work/_cache/impl/home-1440.png"
   },
   "ssim": {
-    "390": 0.954,
-    "1440": 0.9875
+    "390": 0.9538,
+    "1440": 0.9889
   }
 }

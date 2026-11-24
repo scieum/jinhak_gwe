@@ -143,7 +143,7 @@ test('샘플 모드는 시안 데모 3개(가천·강원·경북)를 바로 비�
     show();
     expect(await screen.findByRole('button', { name: '경북대학교 학생부교과(교과우수자) 간호학과 비교에서 빼기' })).toBeTruthy();
     expect(screen.getAllByRole('columnheader')).toHaveLength(4);
-    expect(screen.getByText('18명')).toBeTruthy(); // 2026 원문 2건 모두 18명
+    expect(await screen.findByText('18명')).toBeTruthy(); // 비동기 자료 로딩 후, 2026 원문 2건 모두 18명
     expect(screen.getByRole('combobox', { name: '경북대학교 학생부교과(교과우수자) 간호학과 2026학년도 원문 선택' })).toBeTruthy();
     expect(screen.getByText('2024 미기재')).toBeTruthy();
     expect(screen.getByText(/샘플의 대학·숫자는 예시예요/)).toBeTruthy();

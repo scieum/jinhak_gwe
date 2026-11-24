@@ -20,7 +20,7 @@
 .teacher-screen[data-slug='student-record'] .srec-card .segmented-control { background: var(--color-canvas-soft); }
 .teacher-screen[data-slug='student-record'] .srec-card .segmented-control__option { padding: 0 16px; }
 .teacher-screen[data-slug='student-record'] .srec-card .segmented-control { width: 156px; }
-.teacher-screen[data-slug='student-record'] .segmented-control__option { min-height: 40px; padding: 0 17px; /* 앱 글꼴이 시안보다 칸마다 약 2px 좁아 폭을 맞춰요 */ font-size: 15px; line-height: 22px; font-weight: 600; }
+.teacher-screen[data-slug='student-record'] .segmented-control__option { min-height: 40px; padding: 0 16px; font-size: 15px; line-height: 22px; font-weight: 600; }
 
 /* 카드 */
 .srec-cards { display: grid; gap: 32px; align-items: start; }
@@ -38,9 +38,9 @@
 .teacher-screen[data-slug='student-record'] .srec-chips .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
 
 /* grade-trend-chart */
-.srec-card .trend-chart { display: block; overflow: visible; }
-.srec-tick { font-size: 12px; fill: var(--color-text-muted); }
-.srec-tick--value { fill: var(--color-ink); font-weight: 600; }
+.srec-card .trend-chart { display: block; overflow: visible; margin-top: 1px; } /* 시안 차트 y 540(앱 539) */
+.srec-tick { font-size: 12px; fill: var(--color-text-muted); color: var(--color-text-muted); }
+.srec-tick--value { fill: var(--color-ink); color: var(--color-ink); font-weight: 600; }
 .srec-line { fill: none; stroke: var(--color-text-faint); stroke-width: 1; }
 .srec-line--on { stroke: var(--color-accent); stroke-width: 2; }
 .srec-dot { fill: var(--color-accent); }
@@ -78,5 +78,12 @@
   .srec-table--school thead th.num { width: 80px; }
   .srec-table--mock thead th.num { width: 70px; }
   .srec-table--mock .num { padding-inline: 8px; }
+  .srec-table--mock th.num, .srec-table--mock td.num { text-align: right; } /* 시안: 회차 열 글자 오른쪽(여백 8) */
   .teacher-screen[data-slug='student-record'] > .disclaimer-note { justify-self: start; }
 }
+/* 시안 390 app-bar: 뒤로 44 상자 x 4 · 동작 44 상자 x 330(오른쪽 16) */
+@media (max-width: 1023px) {
+  .shell:has([data-slug='student-record']) .appbar__back { margin-left: -16px; }
+  .shell:has([data-slug='student-record']) .appbar__actions { margin-right: -4px; }
+}
+.shell:has([data-slug='student-record']) .topbar__actions { gap: 12px; } /* 시안 page-header 동작 사이 12 */

@@ -1,23 +1,25 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+﻿import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { afterEach, expect, test, vi } from 'vitest';
-import { MockTrend } from '../src/components/MockTrend';
+import { afterEach, beforeEach, expect, test, vi } from 'vitest';
+import { ScoreTrendContent, mockRows } from '../src/components/ScoreTrendContent';
 import { mockTrend } from '../src/domain/mockTrend';
 import type { CutTable, MockScore } from '../src/domain/mock';
 
 // Synthetic tables stay in tests; product data remains empty.
-vi.mock('../src/data/mock-exams', () => ({ mockExams: ['첫 시험', '둘째 시험', '셋째 시험'], cutTables: [
-  { id: 'test', source: 'test', review_status: 'verified', exam: '첫 시험', version: 'test', as_of: '2026-11-20', areas: {
-    국어: { absolute: false, cuts: [{ grade: 1, min: 90, max: 90 }, { grade: 2, min: 80, max: 85 }] },
-  } },
-  { id: 'test', source: 'test', review_status: 'verified', exam: '셋째 시험', version: 'test', as_of: '2026-11-20', areas: {
-    국어: { absolute: false, cuts: [{ grade: 1, min: 90, max: 90 }, { grade: 2, min: 80, max: 85 }] },
-  } },
-] }));
+vi.mock('../src/data/mock-exams', () => {
+  const cutTables = ['첫 시험', '셋째 시험'].map(exam => ({
+    id: 'test', source: 'test', review_status: 'verified', exam, version: 'test', as_of: '2026-11-20', areas: {
+      국어: { absolute: false, cuts: [{ grade: 1, min: 90, max: 90 }, { grade: 2, min: 80, max: 85 }] },
+    },
+  }));
+  return { mockExams: ['첫 시험', '둘째 시험', '셋째 시험'], cutTables, cutTableFor: (exam: string) => cutTables.find(t => t.exam === exam) };
+});
 
+beforeEach(() => localStorage.clear());
 afterEach(cleanup);
 const score = (exam: string, raw: MockScore['raw'], updated_at = ''): MockScore => ({ exam, raw, updated_at });
-const show = (scores: MockScore[]) => render(<MemoryRouter><MockTrend scores={scores} /></MemoryRouter>);
+const show = (scores: MockScore[]) => render(<MemoryRouter><ScoreTrendContent data={{ grades: [], attendance: [], mocks: scores }} /></MemoryRouter>);
+const korean = () => fireEvent.click(within(screen.getByRole('group', { name: '모의고사 영역' })).getByRole('button', { name: '국어' }));
 
 test('orders known exams by catalog, retains unknown exams and zero, ignores empty records', () => {
   const rows = mockTrend([
@@ -41,35 +43,39 @@ test('empty and cleared records lead to score entry', () => {
   expect(screen.queryByRole('table')).toBeNull();
 });
 
-test('shows raw scores without inventing grades and changes areas', () => {
-  show([score('둘째 시험', { 국어: 0, 한국사: 40 })]);
+test('expanded raw scores preserve zero and legacy areas without inventing grades', () => {
+  show([score('둘째 시험', { 국어: 0, 한국사: 40, 통합사회: 38, 통합과학: 42 })]);
   expect(screen.queryByRole('img')).toBeNull();
-  expect(within(screen.getByRole('table')).getByText('0/100점')).toBeTruthy();
-  expect(within(screen.getByRole('table')).getByText('등급컷 준비 중')).toBeTruthy();
-  fireEvent.change(screen.getByLabelText('추이를 볼 영역'), { target: { value: '한국사' } });
-  expect(within(screen.getByRole('table')).getByText('40/50점')).toBeTruthy();
-  expect(screen.getByRole('link', { name: '둘째 시험 성적 수정' }).getAttribute('href')).toBe(`/mock-score?exam=${encodeURIComponent('둘째 시험')}`);
+  fireEvent.click(screen.getByRole('button', { name: '둘째 시험 원점수 펼치기' }));
+  const table = screen.getByRole('table', { name: '둘째 시험 원점수' });
+  for (const text of ['0/100', '40/50', '38/50', '42/50']) expect(within(table).getByText(text)).toBeTruthy();
+  expect(within(table).getAllByText('준비 중')).toHaveLength(4);
+  expect(screen.getByRole('link', { name: '둘째 시험 성적 수정 ›' }).getAttribute('href')).toBe(`/mock-score?exam=${encodeURIComponent('둘째 시험')}`);
 });
 
 test('grade gaps do not connect and ranges do not become a midpoint', () => {
   show([score('첫 시험', { 국어: 95 }), score('둘째 시험', { 수학: 80 }), score('셋째 시험', { 국어: 82 })]);
-  const chart = screen.getByRole('img');
+  korean();
+  const chart = screen.getByRole('img', { name: /^모의고사 국어/ });
   expect(chart.querySelectorAll('circle')).toHaveLength(1);
-  expect(chart.querySelectorAll('line[stroke-width="2"]')).toHaveLength(0);
-  expect(chart.querySelectorAll('line[stroke-width="3"]')).toHaveLength(1);
-  expect(within(screen.getByRole('table')).getByText('약 2~3등급')).toBeTruthy();
-  expect(within(screen.getByRole('table')).getByText('원점수를 입력해 주세요')).toBeTruthy();
+  expect(chart.querySelector('.trd-line--on')?.getAttribute('d')).not.toContain('L');
+  expect(screen.getByRole('table').textContent).toContain('2~3');
+  expect(mockRows([score('셋째 시험', { 국어: 82 })])[0].cells.국어.value).toBeNull();
 });
 
 test('known adjacent grades connect, unknown exams remain outside the chronological chart', () => {
   show([score('첫 시험', { 국어: 95 }), score('셋째 시험', { 국어: 88 }), score('복원한 시험', { 국어: 70 })]);
-  expect(screen.getByRole('img').querySelectorAll('line[stroke-width="2"]')).toHaveLength(1);
-  expect(screen.getByText('순서 미확인')).toBeTruthy();
-  expect(screen.getByText('셋째 시험 · 원점수 88/100점')).toBeTruthy();
+  korean();
+  const chart = screen.getByRole('img', { name: /^모의고사 국어/ });
+  expect(chart.querySelector('.trd-line--on')?.getAttribute('d')).toContain('L');
+  expect(chart.getAttribute('aria-label')).not.toContain('복원한 시험');
+  expect(screen.getByRole('link', { name: '복원한 시험 성적 수정' }).textContent).toBe('순서 미확인');
 });
 
-test('a newer exam missing the selected area does not reuse an older grade', () => {
+test('a newer exam missing the selected area does not label an older grade as current', () => {
   show([score('첫 시험', { 국어: 95 }), score('둘째 시험', { 영어: 85 })]);
-  expect(screen.getByText('둘째 시험', { selector: '.score-trend-summary span' })).toBeTruthy();
-  expect(screen.getByText('원점수를 입력해 주세요', { selector: '.score-trend-summary strong' })).toBeTruthy();
+  korean();
+  const chart = screen.getByRole('img', { name: /^모의고사 국어/ });
+  expect(chart.getAttribute('aria-label')).toContain('둘째 시험 표시할 등급 없음');
+  expect(chart.querySelector('.trd-tick--value')).toBeNull();
 });

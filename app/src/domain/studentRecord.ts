@@ -74,9 +74,10 @@ export function axis(series: Series[], school: boolean): number[] {
 }
 
 /** 선 끝 이름표: 마지막 값 높이에 두고 겹치면(간격 gap) 묶어서 위아래로 비켜요. 고른 계열이 같은 값에서 먼저. */
-export function labelPositions(items: { key: string; y: number }[], gap = 18): Record<string, number> {
+// 시안(grade-trend-chart): 겹치는 이름표는 13 간격으로, 묶음 맨 위 이름표를 제 값 자리에 두고 아래로 쌓아요.
+export function labelPositions(items: { key: string; y: number }[], gap = 13): Record<string, number> {
   let clusters = items.map(i => ({ keys: [i.key], ideal: [i.y] }));
-  const start = (c: { ideal: number[] }) => c.ideal.reduce((a, b) => a + b, 0) / c.ideal.length - (c.ideal.length - 1) * gap / 2;
+  const start = (c: { ideal: number[] }) => Math.min(...c.ideal);
   for (let merged = true; merged;) {
     merged = false;
     for (let i = 1; i < clusters.length; i++) {

@@ -12,7 +12,7 @@ import { gradeSummary, validateGrade, type StudentBackup } from '../domain/stude
 import type { ProgramData } from '../data/catalog';
 import type { ScoringRule } from '../engine/scoring';
 import { PlacementExplorer } from '../components/PlacementExplorer';
-import { ScoreTrendContent } from '../components/ScoreTrendContent';
+import { ScoreTrendScreen } from '../components/ScoreTrendContent';
 import { QuickGradeCalculator } from '../components/QuickGradeCalculator';
 import { HomeDashboard } from '../components/HomeDashboard';
 import { GradeRange } from '../components/GradeRange';
@@ -163,5 +163,5 @@ export function StudentHome() {
 }
 
 export function ScoreTrend() {
-  return <StudentDataScreen slug="score-trend" title="성적 추이">{data => <ScoreTrendContent data={data} />}</StudentDataScreen>;
+  return <ScoreTrendScreen />;
 }

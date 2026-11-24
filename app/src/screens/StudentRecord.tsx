@@ -6,7 +6,7 @@ import { Icon } from '../components/Icon';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { dataAsOf } from '../data/catalog';
 import { useSampleMode } from '../data/sample';
-import { nextState, type Student } from '../domain/classroom';
+import { nextState, soonestCounsel, type Student } from '../domain/classroom';
 import { CORE, describe } from '../domain/minimum';
 import { fiveToNineFor } from '../domain/results';
 import { schoolAverage } from '../domain/scoreImport';
@@ -42,9 +42,9 @@ function Record(c: ClassState & { info: NonNullable<ClassState['info']> }) {
   const desktop = useDesktop(), sample = useSampleMode();
   const [params] = useSearchParams();
   const [tab, setTab] = useState<Tab>('trend');
-  // 주소에 번호가 없으면 성적이 있는 첫 학생(없으면 첫 학생)으로 열어요.
+  // 주소에 번호가 없으면 상담 화면처럼 다음 상담이 가장 이른 학생, 없으면 성적이 있는 첫 학생(없으면 첫 학생)으로 열어요.
   const scored = (n: string) => school.some(g => g.number === n) || mocks.some(m => m.number === n);
-  const s = students.find(x => x.number === params.get('n')) ?? students.find(x => scored(x.number)) ?? students[0];
+  const s = students.find(x => x.number === params.get('n')) ?? soonestCounsel(students, memos, new Date().toLocaleDateString('sv-SE')) ?? students.find(x => scored(x.number)) ?? students[0];
   const grades = school.find(g => g.number === s.number), myMocks = mocks.filter(m => m.number === s.number);
   const sch = schoolTrend(grades), mk = mockTrend(myMocks), records = grades?.records ?? [];
   const average = records.length ? gradeSummary(records).average : schoolAverage(grades);

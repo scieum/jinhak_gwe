@@ -120,7 +120,7 @@
   .susiro .susi-asof { display: none; }
   /* 수시로 v2 시안 머리(346:131303): 로고 y 12 · 제목 y 43 · sub-nav y 89 · 경고 바 y 145 — 다른 수시 전략 화면(sub-nav 100)보다 11 낮아요 */
   .shell:has(.susiro) { --shell-appbar-height: 43px; }
-  .shell:has(.susiro) .appbar-title { min-height: 46px; align-items: flex-start; }
+  .shell:has(.susiro) .appbar-title { margin-top: -3px; min-height: 49px; align-items: flex-start; } /* 시안 제목 글자 상자 y 39.7, sub-nav는 그대로 89 */
   .susi-slot__badges { margin-right: 4px; } /* 시안: 판정·날짜 칩 오른쪽 끝 318(grip 칸 앞 12) */
   .shell:has(.susiro) .shell__content { padding-top: 12px; }
 }
@@ -179,3 +179,6 @@
   .susiro :is(.susi-top button, .susi-menu, .susi-slot__grip, .susi-send-bar, .susi-panel button:not(.warning-callout), .susi-check-bar) { display: none !important; }
   .susiro .susi-layout { grid-template-columns: minmax(0, 1fr); }
 }
+/* 시안 1440 page-header: 배지 좌우 8 · 배지·모드·잠금 사이 12 */
+.topbar__actions .susi-asof { padding-left: 8px; padding-right: 8px; }
+.shell:has(.susiro) .topbar__actions { gap: 12px; }

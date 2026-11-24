@@ -2,16 +2,23 @@ export const stepStates = { pending: '확인 전', progress: '진행 중', done:
 export const eligibilityStates = { unknown: '확인 필요', met: '충족으로 확인', unmet: '미충족으로 확인', na: '해당 없음' } as const;
 export interface ChecklistStep { id: string; title: string; status: keyof typeof stepStates; due_at: string | null; note: string; source_url: string; checked_at: string | null }
 export interface EligibilityItem { id: string; title: string; status: keyof typeof eligibilityStates; note: string; source_url: string; checked_at: string | null }
+export interface PlanSourceSelection { package_id: string; program_id: string; unit_id: string; round: string; source_sha256: string }
 export interface ApplicationPlan {
   id: string; year: number; university: string; program: string; department: string; source_url: string;
   steps: ChecklistStep[]; eligibility: EligibilityItem[]; created_at: string; updated_at: string;
+  source_selection?: PlanSourceSelection;
 }
 export interface CounselTask { id: string; application_id: string | null; kind: 'question' | 'action'; title: string; note: string; session_date: string | null; due_date: string | null; done: boolean; completed_at: string | null; created_at: string; updated_at: string }
 export interface PlannerData { applications: ApplicationPlan[]; tasks: CounselTask[] }
 export const emptyPlanner = (): PlannerData => ({ applications: [], tasks: [] });
-export function sameApplication(a: Pick<ApplicationPlan, 'year' | 'university' | 'program' | 'department'>, b: Pick<ApplicationPlan, 'year' | 'university' | 'program' | 'department'>) {
+export function sameApplication(a: Pick<ApplicationPlan, 'year' | 'university' | 'program' | 'department' | 'source_selection'>, b: Pick<ApplicationPlan, 'year' | 'university' | 'program' | 'department' | 'source_selection'>) {
   return a.year === b.year && a.university.trim() === b.university.trim()
-    && a.program.trim() === b.program.trim() && a.department.trim() === b.department.trim();
+    && a.program.trim() === b.program.trim() && a.department.trim() === b.department.trim()
+    && (!a.source_selection || !b.source_selection || ['package_id', 'program_id', 'unit_id', 'round'].every(k => a.source_selection![k as keyof PlanSourceSelection] === b.source_selection![k as keyof PlanSourceSelection]));
+}
+export function applicationIdentityChanged(a: ApplicationPlan, b: ApplicationPlan) {
+  return ['year', 'university', 'program', 'department'].some(k => a[k as keyof ApplicationPlan] !== b[k as keyof ApplicationPlan])
+    || (['package_id', 'program_id', 'unit_id', 'round', 'source_sha256'] as const).some(k => a.source_selection?.[k] !== b.source_selection?.[k]);
 }
 export function newApplication(year = 2028): ApplicationPlan {
   const now = new Date().toISOString();
@@ -67,6 +74,11 @@ export function parsePlannerData(value: unknown): PlannerData {
     if (!a || !required(a.id) || !Number.isInteger(a.year) || a.year < 2020 || a.year > 2100 || !required(a.university) || !required(a.program) || !text(a.department, 200)
       || !text(a.source_url) || !safeSourceUrl(a.source_url) || !timestamp(a.created_at) || !timestamp(a.updated_at)
       || !Array.isArray(a.steps) || !Array.isArray(a.eligibility) || a.steps.length > 50 || a.eligibility.length > 50) return fail();
+    if (a.source_selection !== undefined) {
+      const s = a.source_selection;
+      if (!s || typeof s !== 'object' || Array.isArray(s) || !/^plan-(?:\d{7}|[a-f0-9]{12})$/.test(s.package_id)
+        || !required(s.program_id) || !required(s.unit_id) || !required(s.round) || typeof s.source_sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(s.source_sha256)) return fail();
+    }
     for (const s of a.steps) if (!s || !required(s.id) || !required(s.title) || !Object.hasOwn(stepStates, s.status)
       || !(s.due_at === null || typeof s.due_at === 'string' && validDeadline(s.due_at)) || !text(s.note) || !text(s.source_url) || !safeSourceUrl(s.source_url)
       || !(s.checked_at === null || timestamp(s.checked_at)) || (s.status === 'pending' ? s.checked_at !== null : s.checked_at === null)) return fail();
@@ -80,6 +92,8 @@ export function parsePlannerData(value: unknown): PlannerData {
   if (!uniqueIds(p.applications) || !uniqueIds(p.tasks)) return fail();
   return { applications: p.applications.map(a => ({ id: a.id, year: a.year, university: a.university.trim(), program: a.program.trim(), department: a.department.trim(), source_url: a.source_url,
     created_at: a.created_at, updated_at: a.updated_at,
+    ...(a.source_selection ? { source_selection: { package_id: a.source_selection.package_id, program_id: a.source_selection.program_id,
+      unit_id: a.source_selection.unit_id, round: a.source_selection.round, source_sha256: a.source_selection.source_sha256 } } : {}),
     steps: a.steps.map(s => ({ id: s.id, title: s.title.trim(), status: s.status, due_at: s.due_at, note: s.note, source_url: s.source_url, checked_at: s.checked_at })),
     eligibility: a.eligibility.map(e => ({ id: e.id, title: e.title.trim(), status: e.status, note: e.note, source_url: e.source_url, checked_at: e.checked_at })) })),
     tasks: p.tasks.map(t => ({ id: t.id, application_id: t.application_id, kind: t.kind, title: t.title.trim(), note: t.note, session_date: t.session_date, due_date: t.due_date,
@@ -87,7 +101,7 @@ export function parsePlannerData(value: unknown): PlannerData {
 }
 /** Changing a program identity invalidates confirmations, deadlines and evidence from the old program. */
 export function updateApplicationIdentity(previous: ApplicationPlan, next: ApplicationPlan): ApplicationPlan {
-  const changed = previous.year !== next.year || previous.university !== next.university || previous.program !== next.program || previous.department !== next.department;
+  const changed = applicationIdentityChanged(previous, next);
   return { ...next, updated_at: new Date().toISOString(), ...(changed ? {
     steps: next.steps.map(s => ({ ...s, status: 'pending' as const, checked_at: null, due_at: null, source_url: '', note: '' })),
     eligibility: next.eligibility.map(e => ({ ...e, status: 'unknown' as const, checked_at: null, source_url: '', note: '' })),

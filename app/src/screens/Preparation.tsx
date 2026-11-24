@@ -1,13 +1,16 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import { ButtonOutline, ButtonPrimary } from '../components/Buttons';
 import { Modal } from '../components/Modal';
 import { studentDb, usePlanner } from '../store/studentDb';
 import { admissionYear } from '../data/catalog';
 import { PlanEditor } from '../components/PlanEditor';
-import { eligibilityStates, eligibilitySummary, newApplication, newCounselTask, safeSourceUrl, stepDeadline, stepStates, taskDeadline, updateApplicationIdentity,
+import { eligibilityStates, newApplication, newCounselTask, stepStates, taskDeadline, updateApplicationIdentity,
   type ApplicationPlan, type ChecklistStep, type CounselTask, type EligibilityItem } from '../domain/planner';
 import '../styles/preparation.css';
+import { Icon } from '../components/Icon';
+import { PreparationOverview, usePreparationDesktop } from '../components/PreparationOverview';
 
 function useActions() {
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [message, setMessage] = useState('');
@@ -20,14 +23,15 @@ function useActions() {
 }
 function useNow() { const [now, setNow] = useState(new Date()); useEffect(() => { const id = setInterval(() => setNow(new Date()), 60000); return () => clearInterval(id); }, []); return now; }
 const stamp = (iso: string | null) => iso ? new Date(iso).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) : '아직 확인하지 않음';
-function SourceLink({ url }: { url: string }) { return url && safeSourceUrl(url) ? <a className="t-link" href={url} target="_blank" rel="noreferrer">등록한 자료 열기 ↗</a> : <span className="text-muted">자료 링크 미등록</span>; }
 function Feedback({ error, message }: { error: string; message: string }) { return <>{error && <p role="alert" className="error-note">{error}</p>}{message && <p role="status">{message}</p>}</>; }
 function DeleteConfirm({ title, children, busy, error, onClose, onDelete }: { title: string; children: ReactNode; busy: boolean; error: string; onClose: () => void; onDelete: () => void }) {
   return <Modal label={title} onClose={() => { if (!busy) onClose(); }}><h3 className="t-heading-3">{title}</h3><p>{children}</p><Feedback error={error} message="" /><div className="toolbar"><ButtonPrimary disabled={busy} onClick={onDelete}>삭제</ButtonPrimary><ButtonOutline disabled={busy} onClick={onClose}>취소</ButtonOutline></div></Modal>;
 }
 
 export function Preparation({ view }: { view: 'checklist' | 'eligibility' }) {
-  const state = usePlanner(), actions = useActions(), now = useNow();
+  const state = usePlanner(), actions = useActions(), now = useNow(), desktop = usePreparationDesktop();
+  const [headerSlots, setHeaderSlots] = useState<{ heading: Element; actions: Element } | null>(null);
+  useEffect(() => { const heading = document.querySelector('.topbar__heading'), actions = document.getElementById('topbar-screen-actions'); if (heading && actions) setHeaderSlots({ heading, actions }); }, []);
   const [query, setQuery] = useSearchParams();
   const [planEdit, setPlanEdit] = useState<ApplicationPlan | null>(null), [planDelete, setPlanDelete] = useState<ApplicationPlan | null>(null);
   const [stepEdit, setStepEdit] = useState<ChecklistStep | null>(null), [eligibilityEdit, setEligibilityEdit] = useState<EligibilityItem | null>(null);
@@ -53,27 +57,13 @@ export function Preparation({ view }: { view: 'checklist' | 'eligibility' }) {
     await studentDb.saveApplication({ ...selected, updated_at: new Date().toISOString(), eligibility: selected.eligibility.some(e => e.id === item.id) ? selected.eligibility.map(e => e.id === item.id ? item : e) : [...selected.eligibility, item] });
     setEligibilityEdit(null);
   });
-  return <section className="student-screen preparation" data-slug={view === 'checklist' ? 'application-checklist' : 'eligibility-check'}>
-    <div className="screen-heading"><div><h2 className="t-heading-1">{title}</h2><p className="text-muted">{view === 'checklist' ? '접수부터 서류 도착까지, 빠뜨린 단계가 없는지 확인해요.' : '모집요강을 확인하며 내 조건과 필요한 증빙을 정리해요.'}</p></div><ButtonPrimary disabled={!state?.data || actions.busy} onClick={() => open(() => setPlanEdit(newApplication(admissionYear)))}>+ 지원 전형 추가</ButtonPrimary></div>
+  const addPlan = <button className={view === 'checklist' || !desktop ? 'button-pill-soft' : 'button-primary'} aria-label="+ 지원 전형 추가" disabled={!state?.data || actions.busy} onClick={() => open(() => setPlanEdit(newApplication(admissionYear)))}><Icon name="plus" size={20} />지원 전형 추가</button>;
+  const description = view === 'checklist' ? '접수부터 서류 도착까지, 빠뜨린 단계가 없는지 확인해요.' : '모집요강을 확인하며 내 조건과 필요한 증빙을 정리해요.';
+  return <section className={`student-screen preparation preparation--${view}`} data-slug={view === 'checklist' ? 'application-checklist' : 'eligibility-check'}>
+    {desktop && headerSlots ? <>{createPortal(<p className="prep-header-description">{description}</p>, headerSlots.heading)}{createPortal(<div className="prep-header-action">{addPlan}</div>, headerSlots.actions)}</> : <div className="screen-heading prep-heading"><div><h2 className="t-heading-1">{title}</h2><p>{description}</p></div>{(desktop || !selected) && addPlan}</div>}
     {!state ? <p role="status">준비 기록을 읽고 있어요.</p> : !state.data ? <p role="alert">{state.error}</p> : <>
       <Feedback {...actions} />
-      {!selected ? <div className="empty-state"><h3 className="t-heading-3">준비할 전형을 먼저 추가해 주세요</h3><p>대학·전형 이름과 모집요강 링크를 직접 등록할 수 있어요. 추가한 전형은 체크리스트와 자격 확인표에서 함께 사용해요.</p></div> : <>
-        <div className="filter-panel"><label>준비할 전형<select value={selected.id} onChange={e => setQuery({ plan: e.target.value })}>{applications.map(a => <option key={a.id} value={a.id}>{a.year} · {a.university} · {a.program}{a.department && ` · ${a.department}`}</option>)}</select></label></div>
-        <article className="univ-card"><div className="section-row"><div><p className="t-caption">{selected.year}학년도 · 내가 등록한 전형</p><h3 className="t-heading-3">{selected.university} · {selected.program}</h3><p>{selected.department || '모집단위 미입력'}</p></div><div className="toolbar"><ButtonOutline disabled={actions.busy} onClick={() => open(() => setPlanEdit(selected))}>전형 정보 수정</ButtonOutline><ButtonOutline disabled={actions.busy} onClick={() => open(() => setPlanDelete(selected))}>전형 삭제</ButtonOutline></div></div><SourceLink url={selected.source_url} />
-          <div className="toolbar"><Link className="button-outline" to={`/${view === 'checklist' ? 'eligibility-check' : 'application-checklist'}?plan=${selected.id}`}>{view === 'checklist' ? '지원 자격 확인하기' : '원서·서류 확인하기'}</Link><Link className="button-outline" to={`/counsel-tasks?plan=${selected.id}`}>상담 질문·할 일</Link><Link className="button-outline" to={`/susiro?plan=${encodeURIComponent(selected.id)}`}>수시로에서 카드 담기</Link><Link className="button-outline" to={`/calendar?plan=${encodeURIComponent(selected.id)}`}>이 전형 일정 보기</Link><Link className="button-outline" to="/admission-results?view=interests">관심 전형 모아보기</Link></div></article>
-        {view === 'checklist' ? <>
-          <div className="stats"><div>완료 <strong>{selected.steps.filter(s => s.status === 'done').length}</strong></div><div>확인·진행 중 <strong>{selected.steps.filter(s => s.status === 'pending' || s.status === 'progress').length}</strong></div><div>기한 지남 <strong>{selected.steps.filter(s => stepDeadline(s, now) === '기한 지남').length}</strong></div><div>해당 없음 <strong>{selected.steps.filter(s => s.status === 'na').length}</strong></div></div>
-          <p className="notice">결제·접수·서류 제출은 각각 확인해 주세요. 날짜와 완료 상태는 내가 등록한 기록이며, 접수처·대학 입학처에서 최종 확인해요. 마감 시각은 한국 시간 기준이에요.</p>
-          <div className="prep-grid">{selected.steps.map(s => <article className="univ-card" key={s.id}><div className="section-row"><h3 className="t-heading-3">{s.title}</h3><span className="prep-status">{stepStates[s.status]}</span></div><p className="text-muted">{stepDeadline(s, now)}{s.due_at && ` · ${s.due_at.replace('T', ' ')} (한국 시간)`}</p>{s.note && <p className="prep-note">{s.note}</p>}<SourceLink url={s.source_url} /><small className="text-muted">확인 기록: {stamp(s.checked_at)}</small><div className="toolbar"><ButtonOutline disabled={actions.busy} onClick={() => open(() => setStepEdit(s))}>{s.title} 수정</ButtonOutline><button className="text-button" disabled={actions.busy} onClick={() => open(() => setItemDelete(s))}>{s.title} 삭제</button></div></article>)}</div>
-          <ButtonOutline disabled={actions.busy || selected.steps.length >= 50} onClick={() => open(() => setStepEdit({ id: crypto.randomUUID(), title: '', status: 'pending', note: '', source_url: '', checked_at: null, due_at: null }))}>+ 체크 항목 추가</ButtonOutline>
-        </> : <>
-          <div className="stats"><div>내 확인 상태 <strong>{eligibilitySummary(selected.eligibility)}</strong></div><div>확인 필요 <strong>{selected.eligibility.filter(e => e.status === 'unknown').length}</strong></div></div>
-          <p className="notice">아래는 직접 작성하는 확인표예요. 공통 항목 중 적용되지 않는 것은 ‘해당 없음’으로 표시해 주세요. 추천 배정이나 최종 지원 자격은 학교·대학에 확인해요.</p>
-          <div className="prep-grid">{selected.eligibility.map(e => <article className="univ-card" key={e.id}><div className="section-row"><h3 className="t-heading-3">{e.title}</h3><span className="prep-status">{eligibilityStates[e.status]}</span></div><p className="prep-note">{e.note || '확인한 조건·근거 또는 문의할 담당자를 기록해 주세요.'}</p><SourceLink url={e.source_url} /><small className="text-muted">확인 기록: {stamp(e.checked_at)}</small><div className="toolbar"><ButtonOutline disabled={actions.busy} onClick={() => open(() => setEligibilityEdit(e))}>{e.title} 수정</ButtonOutline><button className="text-button" disabled={actions.busy} onClick={() => open(() => setItemDelete(e))}>{e.title} 삭제</button></div></article>)}</div>
-          <ButtonOutline disabled={actions.busy || selected.eligibility.length >= 50} onClick={() => open(() => setEligibilityEdit({ id: crypto.randomUUID(), title: '', status: 'unknown', note: '', source_url: '', checked_at: null }))}>+ 자격 조건 추가</ButtonOutline>
-        </>}
-        <p className="t-caption text-muted">준비 기록은 이 브라우저에 저장돼요. <Link to="/grade-input">암호화 백업·복원</Link>에 함께 포함돼요.</p>
-      </>}
+      {!selected ? <div className="empty-state"><h3 className="t-heading-3">준비할 전형을 먼저 추가해 주세요</h3><p>대학·전형 이름과 모집요강 링크를 직접 등록할 수 있어요. 추가한 전형은 체크리스트와 자격 확인표에서 함께 사용해요.</p></div> : <PreparationOverview view={view} applications={applications} selected={selected} now={now} desktop={desktop} busy={actions.busy} addPlan={addPlan} select={id => setQuery({ plan: id })} editPlan={() => open(() => setPlanEdit(selected))} deletePlan={() => open(() => setPlanDelete(selected))} editStep={item => open(() => setStepEdit(item))} editEligibility={item => open(() => setEligibilityEdit(item))} deleteItem={item => open(() => setItemDelete(item))} />}
     </>}
     {planEdit && <PlanEditor key={planEdit.id} initial={planEdit} applications={applications} existing={applications.some(a => a.id === planEdit.id)} busy={actions.busy} error={actions.error} onSave={savePlan} onClose={() => setPlanEdit(null)} />}
     {stepEdit && <StepEditor initial={stepEdit} busy={actions.busy} error={actions.error} onSave={saveStep} onClose={() => setStepEdit(null)} />}

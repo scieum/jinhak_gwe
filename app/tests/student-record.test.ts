@@ -15,8 +15,9 @@ test('하늘 내신·모의고사 추이와 규칙 문장(v2 시안 문구)', ()
   expect(axis(m.series, false)).toEqual([1, 2, 3, 4, 5]);
 });
 
-test('이름표는 겹치면 18px 간격으로 묶어 비켜요', () => {
+test('이름표는 겹치면 맨 위 값 자리부터 13px 간격으로 쌓아요', () => {
   const p = labelPositions([{ key: 'a', y: 50 }, { key: 'b', y: 50 }, { key: 'c', y: 100 }]);
-  expect(p.b - p.a).toBe(18);
-  expect(p.c - p.b).toBeGreaterThanOrEqual(18);
+  expect(p.a).toBe(50);
+  expect(p.b - p.a).toBe(13);
+  expect(p.c - p.b).toBeGreaterThanOrEqual(13);
 });

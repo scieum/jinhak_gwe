@@ -43,7 +43,7 @@
 .ar .ar-plot { --head: 220px; --row: 44px; position: relative; display: block; overflow: visible; }
 .ar-plot__bubble-row { height: 27px; padding-left: var(--head); padding-right: 12px; }
 .ar-plot__bubble-row > div { position: relative; height: 100%; }
-.ar-plot__bubble { position: absolute; top: 0; transform: translateX(-50%); padding: 2px 4px; background: var(--color-accent); color: var(--color-on-primary); font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; }
+.ar-plot__bubble { position: absolute; top: 0; transform: translateX(-50%); padding: 2px 0.5px; background: var(--color-accent); color: var(--color-on-primary); font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; }
 .ar-plot__bubble::after { content: ''; position: absolute; left: calc(50% - 1px); top: 100%; width: 2px; height: 6px; background: var(--color-accent); }
 .ar-plot__body { position: relative; }
 .ar-plot__layer { position: absolute; top: 0; bottom: 0; left: var(--head); right: 12px; pointer-events: none; }
@@ -123,3 +123,9 @@
   .ar-plot__point.is-default .ring { fill: none; stroke: none; }
   .ar-others { font-size: 13px; line-height: 20px; }
 }
+/* 시안 1440 page-header: 데이터 기준일 배지 · 모드 전환(사이 12), 잠금 버튼 없음 */
+.topbar__actions .ar-asof { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: var(--color-canvas); font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; }
+.shell:has(.ar) .topbar__actions { gap: 12px; }
+.shell:has(.ar) .topbar__actions > .teacher-lock__button { display: none; }
+@media (max-width: 1023px) { .data-status-badge.ar-asof { display: none; } }
+@media (max-width: 1023px) { .ar-plot__bubble { top: 1px; } } /* 시안 390 말풍선 y 550 */

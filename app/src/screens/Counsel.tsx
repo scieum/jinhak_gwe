@@ -7,7 +7,7 @@ import { Icon } from '../components/Icon';
 import { Modal } from '../components/Modal';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { UniversityLogo } from '../components/UniversityLogo';
-import { MEMO_AREAS, nextDue, nextState, submissionRows, type CardRecord, type Memo, type MemoArea, type Student } from '../domain/classroom';
+import { MEMO_AREAS, nextState, soonestCounsel, upcomingCounsel, submissionRows, type CardRecord, type Memo, type MemoArea, type Student } from '../domain/classroom';
 import { examsByRecent } from '../domain/minimum';
 import { schoolAverage } from '../domain/scoreImport';
 import { fiveToNineFor } from '../domain/results';
@@ -60,9 +60,9 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
   const mine = (n: string) => memos.filter(m => m.number === n);
   const waiting = (m: Memo) => { const s = nextState(m, now); return s === '대기' || s === '기한 지남'; };
   /** 다음 상담 = 대기 중인 "다음에 볼 것" 기한 가운데 오늘 이후 가장 이른 날 */
-  const upcoming = (n: string) => mine(n).filter(m => nextState(m, now) === '대기').map(m => nextDue(m.next, Number(m.date.slice(0, 4)))).filter((d): d is string => !!d && d >= now).sort()[0] ?? null;
-  const soonest = students.map(s => ({ s, due: upcoming(s.number) })).filter(x => x.due).sort((a, b) => a.due!.localeCompare(b.due!))[0];
-  const current = students.find(s => s.number === params.get('n')) ?? soonest?.s ?? students[0];
+  const upcoming = (n: string) => upcomingCounsel(n, memos, now);
+  const first = soonestCounsel(students, memos, now), soonest = first && { s: first, due: upcoming(first.number) };
+  const current = students.find(s => s.number === params.get('n')) ?? first ?? students[0];
   const myCards = cards.filter(x => x.number === current.number).sort((a, b) => b.created_at.localeCompare(a.created_at)), latest = myCards[0];
   useEffect(() => { if (latest && !latest.seen) teacherDb.cards.update(latest.id!, { seen: true }); }, [latest]);
 

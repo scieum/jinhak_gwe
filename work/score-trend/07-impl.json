@@ -1,0 +1,27 @@
+{
+  "slug": "score-trend",
+  "gate": "G5",
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
+  "route": "/score-trend",
+  "allowed": [
+    {
+      "error": "V 1440: 차이 영역 x 352 y 144 32×32",
+      "reason": "글꼴 렌더 차이: '2.5등급'(IBM Plex Sans KR 44/700, 자간 0) 글자 상자는 시안과 같고(x 280, 폭 280) 잉크 폭(140px)도 같아요. 잉크가 1px씩 옮겨진 안티에일리어싱 차이예요."
+    }
+  ],
+  "notes": [
+    "390: F 글자 짝 73/93 (짝 없는 글자는 T만 본다)",
+    "1440: F 글자 짝 158/196 (짝 없는 글자는 T만 본다)"
+  ],
+  "images": {
+    "390": "work/_cache/impl/score-trend-390.png",
+    "1440": "work/_cache/impl/score-trend-1440.png"
+  },
+  "ssim": {
+    "390": 0.9583,
+    "1440": 0.9817
+  }
+}

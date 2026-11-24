@@ -42,8 +42,8 @@
 .st-table td.num { text-align: right; }
 .st-table .st-card__value, .st-table .st-blank { font-size: 14px; font-weight: 400; line-height: 19.6px; }
 .st-table tbody tr:hover { box-shadow: inset 0 0 0 1px var(--color-ink); }
-.st-univ { display: inline-flex; align-items: center; gap: var(--spacing-xs); word-break: keep-all; }
-.st-univ .st-mono, .st-univ .university-logo, .st-univ .university-logo img { width: 24px; height: 24px; object-fit: contain; }
+.st-univ { display: flex; align-items: center; gap: var(--spacing-xs); word-break: keep-all; }
+.st-univ .st-mono, .st-univ .university-logo, .st-univ .university-logo img { flex: 0 0 24px; width: 24px; height: 24px; object-fit: contain; }
 .st-detail-title .university-logo img { width: 20px; height: 20px; object-fit: contain; }
 .st-basis { display: inline-flex; cursor: help; }
 .st-row-open, .st-expand { min-width: 44px; min-height: 44px; border: 0; background: none; color: var(--color-ink); font: inherit; cursor: pointer; }
@@ -54,7 +54,7 @@
 .special-tracks .univ-card.st-card { display: grid; gap: 0; padding: var(--spacing-md); background: var(--color-canvas); border: 0; }
 .st-card header { display: flex; align-items: center; gap: var(--spacing-xs); min-height: 44px; }
 .st-card__name { flex: 1; font-size: 19px; font-weight: 700; line-height: 26px; word-break: keep-all; }
-.st-card .university-logo, .st-card .university-logo img { width: 32px; height: 32px; object-fit: contain; }
+.st-card .university-logo, .st-card .university-logo img { flex: 0 0 32px; width: 32px; height: 32px; object-fit: contain; }
 .st-card .interest-heart { width: 44px; height: 44px; min-height: 44px; margin: 0; padding: 0; justify-content: center; border: 0; background: none; }
 .st-card__open { display: grid; justify-items: start; padding: 0; margin-top: var(--spacing-xxs); border: 0; background: none; color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
 .st-card__unit { font-size: 16px; font-weight: 600; line-height: 22px; }

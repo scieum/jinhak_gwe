@@ -73,7 +73,12 @@ export function gradeSummary(grades: readonly GradeRecord[], groups?: readonly s
   return { count: valid.length, credits: valid.reduce((n, g) => n + g.credits, 0), ranked: ranked.length,
     average: credits ? ranked.reduce((n, g) => n + g.credits * g.rank_grade!, 0) / credits : null };
 }
-export interface StudentBackup { grades: GradeRecord[]; attendance: AttendanceRecord[]; planning?: PlannerData; boards?: Board[]; mocks?: MockScore[]; interests?: Interest[] }
+export interface StudentBackup { grades: GradeRecord[]; attendance: AttendanceRecord[]; planning?: PlannerData; boards?: Board[]; mocks?: MockScore[]; interests?: Interest[]; targetPriorities?: string[] }
+
+export function parseTargetPriorities(value: unknown, applicationIds: Set<string>): string[] {
+  if (!Array.isArray(value) || value.length > 3 || new Set(value).size !== value.length || value.some(id => typeof id !== 'string' || !applicationIds.has(id))) throw new Error('목표 대학 순위와 지원 전형 연결을 확인해 주세요.');
+  return [...value];
+}
 
 // Backups may contain incomplete drafts. Validate their shape without turning drafts into valid results.
 export function parseStudentBackup(value: unknown): StudentBackup {
@@ -100,7 +105,9 @@ export function parseStudentBackup(value: unknown): StudentBackup {
   // Strip unknown properties; names/identifiers from unrelated documents are not retained.
   const planning = obj.planning !== undefined ? parsePlannerData(obj.planning) : undefined;
   if (obj.boards !== undefined && !planning) throw new Error('지원하지 않는 학생 백업 형식이에요.');
-  return { ...(obj.interests !== undefined ? { interests: parseInterests(obj.interests) } : {}), ...(obj.mocks !== undefined ? { mocks: parseMocks(obj.mocks) } : {}), ...(planning ? { planning } : {}), ...(obj.boards !== undefined ? { boards: parseBoards(obj.boards, new Set(planning!.applications.map(a => a.id))) } : {}), grades: obj.grades.map(g => ({ id: g.id, name: g.name, semester: g.semester, subject_group: g.subject_group,
+  if (obj.targetPriorities !== undefined && !planning) throw new Error('목표 대학 순위에는 지원 준비 기록이 필요해요.');
+  const targetPriorities = obj.targetPriorities !== undefined ? parseTargetPriorities(obj.targetPriorities, new Set(planning!.applications.map(a => a.id))) : undefined;
+  return { ...(targetPriorities !== undefined ? { targetPriorities } : {}), ...(obj.interests !== undefined ? { interests: parseInterests(obj.interests) } : {}), ...(obj.mocks !== undefined ? { mocks: parseMocks(obj.mocks) } : {}), ...(planning ? { planning } : {}), ...(obj.boards !== undefined ? { boards: parseBoards(obj.boards, new Set(planning!.applications.map(a => a.id))) } : {}), grades: obj.grades.map(g => ({ id: g.id, name: g.name, semester: g.semester, subject_group: g.subject_group,
     type: g.type, credits: g.credits, rank_grade: g.rank_grade, is_joint: g.is_joint, raw_score: g.raw_score,
     subject_mean: g.subject_mean, achievement: g.achievement, enrolled_count: g.enrolled_count,
     division: g.division, achievement_distribution: g.achievement_distribution })),

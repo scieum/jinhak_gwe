@@ -1,14 +1,10 @@
 {
   "slug": "five-to-nine",
   "gate": "G5",
-  "pass": false,
-  "errors": [
-    "I 390: 아이콘 개수 8 (시안 9)",
-    "I 390 #I346:285636;60:297: 아이콘 없음 icon/pencil x 30 y 16 24×24 (±4)",
-    "V 390: 차이 영역 x 24 y 16 32×24"
-  ],
-  "back_to": "S5",
-  "same_fail_streak": 1,
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
   "route": "/five-to-nine",
   "allowed": [
     {
@@ -65,7 +61,7 @@
     "1440": "work/_cache/impl/five-to-nine-1440.png"
   },
   "ssim": {
-    "390": 0.9627,
+    "390": 0.9634,
     "1440": 0.9697
   }
 }

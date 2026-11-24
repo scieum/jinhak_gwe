@@ -89,7 +89,7 @@ describe('교사 화면 흐름', () => {
     expect(await screen.findByText('상담카드 1개를 불러왔어요')).toBeTruthy();
     expect(await screen.findByRole('cell', { name: /가온대/ })).toBeTruthy();
     expect(screen.getByRole('region', { name: '카드 수합' }).classList.contains('student-screen')).toBe(true);
-    fireEvent.click(screen.getByRole('link', { name: '07 · 하늘' }));
+    fireEvent.click(screen.getByRole('link', { name: '7번 하늘' }));
 
     expect(await screen.findByRole('heading', { name: '3학년 2반 7번 하늘' })).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: '메모 저장' }));
@@ -131,9 +131,12 @@ describe('성적 불러오기 (score-import)', () => {
     expect(await screen.findByRole('heading', { name: '2명을 반영했어요' })).toBeTruthy();
     unmount();
     render(<MemoryRouter initialEntries={['/teacher/teacher-dashboard']}><App /></MemoryRouter>);
-    expect(await screen.findByText('2.40')).toBeTruthy();
-    expect(screen.getByText('지난 학기보다 5등급 평균이 0.4 내려갔어요')).toBeTruthy();
-    expect(screen.getByText('약 4.1 (추정)')).toBeTruthy();
+    const table = await screen.findByRole('table', { name: '학생 한눈에' });
+    const row = within(table).getByRole('link', { name: '7번 하늘' }).closest('[role="row"]') as HTMLElement;
+    expect(within(row).getByText('2.4')).toBeTruthy();
+    expect(within(row).getByText('약 4.1 (추정)')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: /^상담 필요/ }));
+    expect(within(table).getByRole('link', { name: '7번 하늘' })).toBeTruthy();
   });
 });
 

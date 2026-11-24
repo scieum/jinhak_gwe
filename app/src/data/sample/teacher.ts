@@ -12,29 +12,45 @@ export const SAMPLE_CLASS: ClassInfo = { key: 'class', name: '2학년 3반', cod
 const ALIASES = ['새벽', '들꽃', '노을', '단비', '햇살', '바람', '하늘', '이슬', '소나무', '별빛', '구름', '가람', '달빛', '시내', '바다', '봄비', '윤슬', '여울', '너울', '버들', '모래', '은하', '안개', '파도', '꽃잎', '서리', '샘물', '솔잎'];
 const no = (n: number) => String(n).padStart(2, '0');
 // 7번 하늘 = 학생 화면의 "나"(demo-dataset: 인문사회 · 희망 전공 정책·행정)
-export const sampleStudents: Student[] = ALIASES.map((alias, i) => ({ number: no(i + 1), alias, ...(i === 6 ? { track: '인문사회', major: '정책·행정' } : {}) }));
+// 확정(잠금) 카드: card-collect v2 시안 표 "확정" 2 들꽃 · 13 달빛 · 18 여울 · 21 모래 · 28 솔잎(시안 기준 보강)
+const LOCKED = new Set([2, 13, 18, 21, 28]);
+export const sampleStudents: Student[] = ALIASES.map((alias, i) => ({ number: no(i + 1), alias, ...(i === 6 ? { track: '인문사회', major: '정책·행정' } : {}), ...(LOCKED.has(i + 1) ? { locked: true } : {}) }));
 
 // 상담카드 제출 21명 · 미제출 7명(teacher-dashboard v2 시안 표: 3 노을 · 4 단비 · 11 구름 · 12 가람 · 16 봄비 · 20 버들 · 26 서리).
 const UNSUBMITTED = new Set([3, 4, 11, 12, 16, 20, 26]);
-// 경고: 15 바다 · 5 햇살 2개, 22 은하 · 18 여울 1개
-const WARNINGS: Record<number, number> = { 5: 2, 15: 2, 18: 1, 22: 1 };
-const warning = (i: number) => i === 0
-  ? { code: 'R-CARD-002', title: '면접 일정이 겹쳐요', message: '같은 날 면접이 2개 있어요. 두 대학 일정을 다시 확인해 보세요.' }
-  : { code: 'R-CARD-004', title: '수능 최저 확인이 필요해요', message: '수능 최저 기준을 아직 확인하지 않은 카드가 있어요.' };
+// 경고: 15 바다 · 5 햇살 2개, 22 은하 · 18 여울 1개(card-collect v2 시안: 바다·햇살 = 소신·위험 쏠림 + 면접 일정 겹침, 은하 = 쏠림, 여울 = 면접 겹침)
+const SKEW = { code: 'R-CARD-003', title: '소신·위험 쪽으로 쏠렸어요', message: '6장 중 4장 이상이 소신·위험이에요. 입결과 비교하면 안정에 드는 카드를 1장 이상 넣어 보세요.' };
+const CLASH = { code: 'R-CARD-002', title: '면접 일정이 겹쳐요', message: '같은 날 면접이 2개 있어요. 두 대학 일정을 다시 확인해 보세요.' };
+const WARNINGS: Record<number, typeof SKEW[]> = { 5: [SKEW, CLASH], 15: [SKEW, CLASH], 18: [CLASH], 22: [SKEW] };
 /** 하늘이 샘플 모드 수시로에서 보던 판정(관심 대학 6곳 순서). tests/sample-judgment.test.ts가 judgeUniversity 결과와 같은지 확인해요. */
 export const SAMPLE_CARD_VERDICTS = ['안정', '안정', '적정', '적정', '소신', '경계'] as const;
-// 7번 하늘만 데모의 수시 6장을 실어요. 다른 학생 카드 내용은 데모에 없어서 비워 둬요.
+// 7번 하늘은 데모의 수시 6장. 다른 학생 카드(대학 · 학생이 본 판정)는 데모에 없어서 card-collect v2 시안 표 값으로 채워요(시안 기준 보강, 대학 이름 줄임 = "○○대학교").
 const HANUL_SLOTS = SAMPLE_UNIVERSITIES.map(([university, department, program], i) => ({ priority: i + 1, university, program, department, judgment: SAMPLE_CARD_VERDICTS[i] }));
 // counsel v2 시안 "카드 v3 · 11-10 받음" · "6번 칸 교체 (국민대 행정학과 → 중앙대 공공인재학부)": v1·v2는 6번 칸이 국민대였어요.
 const HANUL_OLD = HANUL_SLOTS.map((s, i) => i === 5 ? { ...s, university: '국민대학교', department: '행정학과', program: '학생부교과' } : s);
-const card = (n: number, slots: CounselPayload['slots'] = n === 7 ? HANUL_SLOTS : []): CounselPayload => ({
-  scenario: 'A안', slots, exempt: [], warnings: Array.from({ length: WARNINGS[n] ?? 0 }, (_, i) => warning(i)),
-});
-const record = (number: string, date: string, c: CounselPayload): CardRecord => ({ number, created_at: `${date}T09:00:00.000Z`, received_at: `${date}T10:00:00.000Z`, seen: true, card: c });
+const CARD_SLOTS: Record<number, string> = {
+  1: '건국 소신,한양 적정,연세 적정,경희 안정,동국 안정,고려 안정', 2: '성균관 적정,중앙 소신,강원 적정,건국 안정,한양 안정',
+  5: '연세 소신,고려 소신,성균관 소신,한양 위험,경희 적정,중앙 소신', 6: '고려 적정,한림 소신,성균관 적정,중앙 안정,강원 안정,건국 적정',
+  8: '강원 적정,건국 적정,한양 안정,연세 안정,경희 소신', 9: '한림 소신,성균관 적정,중앙 적정,강원 안정,건국 안정,한양 안정',
+  10: '경희 적정,동국 소신,고려 적정,한림 안정', 13: '동국 소신,고려 적정,한림 적정,성균관 안정,중앙 안정,강원 안정',
+  14: '한양 적정,연세 소신,경희 적정,동국 안정,고려 안정', 15: '고려 위험,연세 위험,성균관 소신,한양 소신,중앙 소신,동국 적정',
+  17: '연세 소신,경희 적정,동국 적정,고려 안정,한림 안정,성균관 안정', 18: '경희 적정,동국 적정,건국 안정,강원 안정,중앙 소신,한양 소신',
+  19: '한림 안정,성균관 적정,중앙 적정,강원 소신,건국 안정,한양 안정', 21: '건국 소신,한양 적정,연세 적정,경희 안정,동국 안정,고려 안정',
+  22: '성균관 위험,한양 소신,중앙 소신,경희 소신,동국 적정', 23: '동국 안정,고려 적정,한림 적정,성균관 소신,중앙 안정,강원 안정',
+  24: '한양 적정,연세 적정,경희 안정,동국 안정,고려 소신,한림 적정', 25: '중앙 소신,강원 적정,건국 적정,한양 안정,연세 안정,경희 안정',
+  27: '연세 안정,경희 적정,동국 적정,고려 소신,한림 안정,성균관 안정', 28: '강원 적정,건국 적정,한양 안정,연세 안정',
+};
+const slotsOf = (n: number): CounselPayload['slots'] => n === 7 ? HANUL_SLOTS : (CARD_SLOTS[n] ?? '').split(',').filter(Boolean)
+  .map((x, i) => { const [u, judgment] = x.split(' '); return { priority: i + 1, university: `${u}대학교`, judgment }; });
+const card = (n: number, slots: CounselPayload['slots'] = slotsOf(n)): CounselPayload => ({ scenario: 'A안', slots, exempt: [], warnings: WARNINGS[n] ?? [] });
+const record = (number: string, date: string, c: CounselPayload, seen = true): CardRecord => ({ number, created_at: `${date}T09:00:00.000Z`, received_at: `${date}T10:00:00.000Z`, seen, card: c });
+// 새 버전(아직 안 본 두 번째 카드): 5 햇살 · 9 소나무 · 24 파도(card-collect v2 시안). 첫 버전(11-10)은 마지막 칸이 없었어요.
+const NEW_VERSION = new Set([5, 9, 24]);
 // 하늘 카드 v1 10-13 · v2 10-27 · v3 11-10(시안). 나머지는 데이터 기준일(11-18)에 한 번.
 export const sampleCards: CardRecord[] = [
   record('07', '2026-10-13', card(7, HANUL_OLD)), record('07', '2026-10-27', card(7, HANUL_OLD)),
-  ...sampleStudents.filter((_, i) => !UNSUBMITTED.has(i + 1)).map(s => record(s.number, s.number === '07' ? '2026-11-10' : '2026-11-18', card(Number(s.number)))),
+  ...[...NEW_VERSION].map(n => record(no(n), '2026-11-10', card(n, slotsOf(n).slice(0, -1)))),
+  ...sampleStudents.filter((_, i) => !UNSUBMITTED.has(i + 1)).map(s => record(s.number, s.number === '07' ? '2026-11-10' : '2026-11-18', card(Number(s.number)), !NEW_VERSION.has(Number(s.number)))),
 ];
 
 // 하늘 상담 메모 4회(counsel v2 시안 지난 메모). 11-12 메모의 다음에 볼 것(11-24) = 이번 주 상담 11/24(화).
@@ -45,7 +61,12 @@ const MEMOS: M[] = [
   ['2026-10-20', '진로', '정책·행정 희망은 그대로예요. 행정학과와 정책학과의 차이를 같이 정리했어요.', '', '06:10'],
   ['2026-09-22', '생활', '등교 전 1시간 영어 단어 공부를 시작했다고 해요. 아침 컨디션은 괜찮다고 해요.', '', '04:00'],
 ];
-export const sampleMemos: Memo[] = MEMOS.map(([date, area, text, next, time]) => ({ number: '07', date, area, text, next, next_done: false, created_at: `${date}T${time}:00.000Z` }));
+// 이번 주 상담(demo-dataset 11/24 하늘 · 11/25 바다 · 11/27 은하): 바다 · 은하는 데모에 메모가 없어서 "다음에 볼 것" 기한만 있는 메모를 하나씩 둬요(보강).
+const OTHER_MEMOS: Memo[] = [
+  { number: '15', date: '2026-11-13', area: '수시로', text: '카드 조합 경고 2개를 같이 보기로 했어요.', next: '11-25까지 · 소신·위험 칸 다시 보기', next_done: false, created_at: '2026-11-13T07:00:00.000Z' },
+  { number: '22', date: '2026-11-13', area: '수시로', text: '수능 최저 미충족이라 칸을 같이 보기로 했어요.', next: '11-27까지 · 최저 없는 전형 찾아 오기', next_done: false, created_at: '2026-11-13T07:30:00.000Z' },
+];
+export const sampleMemos: Memo[] = [...MEMOS.map(([date, area, text, next, time]): Memo => ({ number: '07', date, area, text, next, next_done: false, created_at: `${date}T${time}:00.000Z` })), ...OTHER_MEMOS];
 // 학급 성적(teacher-dashboard v2 시안 "학생 한눈에" 5등급 평균). 16 봄비는 성적 없음, 7 하늘은 아래 demo-dataset 값.
 const G5: Record<number, number> = { 1: 1.5, 2: 1.1, 3: 2.1, 4: 1.8, 5: 1.3, 6: 1.3, 8: 2.0, 9: 1.1, 10: 1.4, 11: 2.2, 12: 1.7, 13: 1.2, 14: 1.5, 15: 2.0,
   17: 1.3, 18: 1.6, 19: 2.0, 20: 1.4, 21: 1.1, 22: 2.1, 23: 1.6, 24: 1.7, 25: 1.4, 26: 2.2, 27: 1.8, 28: 1.3 };

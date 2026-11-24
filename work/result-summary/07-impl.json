@@ -30,7 +30,7 @@
     "V 1440: 차이 영역 x 1272 y 72 32×16"
   ],
   "back_to": "S5",
-  "same_fail_streak": 1,
+  "same_fail_streak": 2,
   "route": "/teacher/result-summary",
   "allowed": [],
   "notes": [
@@ -43,7 +43,7 @@
     "1440": "work/_cache/impl/result-summary-1440.png"
   },
   "ssim": {
-    "390": 0.9537,
+    "390": 0.9535,
     "1440": 0.9725
   }
 }

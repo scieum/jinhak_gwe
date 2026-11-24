@@ -60,6 +60,10 @@
 
 /* PC 오른쪽 패널 */
 .us-panel { position: sticky; top: 0; align-self: stretch; min-height: calc(100dvh - 150px); max-height: 100dvh; overflow-y: auto; padding: 24px; background: var(--color-canvas); box-shadow: inset 1px 0 0 var(--color-hairline-soft); }
+/* 시안 1440 상세 패널 오른쪽 스크롤바(4px, #adadad) */
+.us-panel::-webkit-scrollbar { width: 4px; }
+.us-panel::-webkit-scrollbar-thumb { background: #adadad; }
+.us-panel::-webkit-scrollbar-track { background: transparent; }
 .us-detail { display: grid; gap: var(--spacing-lg); align-content: start; min-width: 0; }
 .us-detail p { margin: 0; }
 .us-detail__head { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: var(--spacing-sm); }

@@ -115,6 +115,14 @@ export function nextState(memo: Memo, today: string): '대기' | '완료' | '기
   return due && due < today ? '기한 지남' : '대기';
 }
 
+/** 다음 상담 = 대기 중인 "다음에 볼 것" 기한 가운데 오늘 이후 가장 이른 날. 그 학생과 날짜를 돌려줘요(상담·학생 기록 기본 학생). */
+export function upcomingCounsel(number: string, memos: readonly Memo[], today: string): string | null {
+  return memos.filter(m => m.number === number && nextState(m, today) === '대기').map(m => nextDue(m.next, Number(m.date.slice(0, 4)))).filter((d): d is string => !!d && d >= today).sort()[0] ?? null;
+}
+export function soonestCounsel<S extends { number: string }>(students: readonly S[], memos: readonly Memo[], today: string): S | undefined {
+  return students.map(s => ({ s, due: upcomingCounsel(s.number, memos, today) })).filter(x => x.due).sort((a, b) => a.due!.localeCompare(b.due!))[0]?.s;
+}
+
 /** 누가기록 화면은 2026-11-23 사용자 결정으로 뺐어요. 기기에 남은 기록과 백업 파일 형식을 깨지 않으려고 타입만 남겨요. */
 export const LOG_AREAS = ['자율·자치', '진로'] as const;
 export type LogArea = typeof LOG_AREAS[number];

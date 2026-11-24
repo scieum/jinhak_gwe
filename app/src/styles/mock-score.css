@@ -158,9 +158,7 @@
   .ms-trace .ms-trace__note { white-space: nowrap; }
 }
 .ms-nowrap { white-space: nowrap; }
-/* 이 화면 시안(346:140564)만 사이드바 '홈'이 600이에요(다른 시안은 400). 셸은 그대로 두고 이 화면에서만 맞춰요. */
 @media (min-width: 1024px) {
-  body:has([data-slug='mock-score']) .sidebar-item--top { font-weight: 600; }
   body:has([data-slug='mock-score']) .topbar__actions { gap: 12px; } /* 시안 page-header 동작 사이 12 */
 }
 @media (max-width: 1023px) { .ms-scores > .disclaimer-note { line-height: 17px; } }

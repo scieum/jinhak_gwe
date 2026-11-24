@@ -16,6 +16,7 @@ export function stripSample(b: StudentBackup): StudentBackup {
   const keep = <T extends { id: string }>(rows: T[]) => rows.filter(r => !isSampleId(r.id));
   const drop = <S extends { application_id: string }>(slots: S[]) => slots.filter(s => !isSampleId(s.application_id));
   return { ...b, grades: keep(b.grades), attendance: b.attendance.filter(a => !isSampleAttendance(a)),
+    ...(b.targetPriorities !== undefined ? { targetPriorities: b.targetPriorities.filter(id => !isSampleId(id)) } : {}),
     ...(b.interests ? { interests: b.interests.filter(i => !isSampleInterest(i)) } : {}),
     ...(b.mocks ? { mocks: b.mocks.filter(m => !isSampleMock(m)) } : {}),
     ...(b.planning ? { planning: { applications: keep(b.planning.applications),

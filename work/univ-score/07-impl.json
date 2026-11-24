@@ -1,36 +1,31 @@
 {
   "slug": "univ-score",
   "gate": "G5",
-  "pass": false,
-  "errors": [
-    "V 390: 차이 영역 x 32 y 368 40×48",
-    "V 390: 차이 영역 x 32 y 528 40×32",
-    "V 390: 차이 영역 x 32 y 680 40×32",
-    "V 390: 차이 영역 x 40 y 224 32×24",
-    "V 1440: 차이 영역 x 1432 y 152 8×440",
-    "V 1440: 차이 영역 x 1112 y 184 32×24",
-    "V 1440: 차이 영역 x 296 y 304 24×24",
-    "V 1440: 차이 영역 x 296 y 368 24×24"
-  ],
-  "back_to": "S5",
-  "same_fail_streak": 1,
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
   "route": "/univ-score",
   "allowed": [
+    {
+      "error": "V 1440: 차이 영역 x 1432 y 152 8×440",
+      "reason": "시안의 상세 패널 스크롤바(4px, #adadad)는 앱 .us-panel::-webkit-scrollbar로 같게 그려요. 게이트 스크린샷의 Playwright 헤드리스 Chromium은 기본으로 --hide-scrollbars라 스크롤바가 찍히지 않아요(렌더 환경 차이)."
+    },
     {
       "error": "V 1440: 차이 영역 x 1264 y 480 32×16",
       "reason": "NEVER-1: 시안 산출 근거 1단계는 '검수 완료'인데, 샘플 환산 규칙은 검수 전(draft·sample) 가상 규칙이라 앱은 '샘플 규칙(가상)'으로 적어요. 검수 안 된 규칙을 검수 완료로 표시하지 않아요."
     }
   ],
   "notes": [
-    "390: F 글자 짝 74/76 (짝 없는 글자는 T만 본다)",
-    "1440: F 글자 짝 106/111 (짝 없는 글자는 T만 본다)"
+    "390: F 글자 짝 74/74 (짝 없는 글자는 T만 본다)",
+    "1440: F 글자 짝 106/108 (짝 없는 글자는 T만 본다)"
   ],
   "images": {
     "390": "work/_cache/impl/univ-score-390.png",
     "1440": "work/_cache/impl/univ-score-1440.png"
   },
   "ssim": {
-    "390": 0.9625,
-    "1440": 0.9641
+    "390": 0.9738,
+    "1440": 0.9657
   }
 }

@@ -14,8 +14,9 @@ const areas: CutTable['areas'] = {
   국어: { absolute: false, cuts: point(92, 85, 78, 70) }, 수학: { absolute: false, cuts: point(90, 82, 74, 66) },
   영어: { absolute: true, cuts: point(90, 80, 70, 60) }, 탐구1: { absolute: false, cuts: point(47, 43, 38, 32) }, 탐구2: { absolute: false, cuts: point(47, 43, 38, 32) },
 };
+// 9·10월 표는 성적 추이 샘플(scoreTrend.ts)이 읽어요. 값은 3·6월과 같은 예시 컷이에요.
 const SOURCE = '샘플 데이터(가상) · 강원진학지원센터 등록 예상 등급컷';
-export const sampleCutTables: CutTable[] = [3, 6].map(m => ({
+export const sampleCutTables: CutTable[] = [3, 6, 9, 10].map(m => ({
   id: `sample-cut-2026-${m}`, source: SOURCE, review_status: 'draft', sample: true,
   exam: `2026년 ${m}월 학력평가(고2)`, version: `2026-${m}학평-v2`, as_of: '2026-11-18', areas,
 }));

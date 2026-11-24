@@ -3,6 +3,10 @@
     {
       "error": "V 1440: 차이 영역 x 1264 y 480",
       "reason": "NEVER-1: 시안 산출 근거 1단계는 '검수 완료'인데, 샘플 환산 규칙은 검수 전(draft·sample) 가상 규칙이라 앱은 '샘플 규칙(가상)'으로 적어요. 검수 안 된 규칙을 검수 완료로 표시하지 않아요."
+    },
+    {
+      "error": "V 1440: 차이 영역 x 1432 y 152",
+      "reason": "시안의 상세 패널 스크롤바(4px, #adadad)는 앱 .us-panel::-webkit-scrollbar로 같게 그려요. 게이트 스크린샷의 Playwright 헤드리스 Chromium은 기본으로 --hide-scrollbars라 스크롤바가 찍히지 않아요(렌더 환경 차이)."
     }
   ]
 }

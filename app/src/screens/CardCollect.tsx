@@ -1,58 +1,112 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ButtonOutline, ButtonPrimary } from '../components/Buttons';
-import { Icon } from '../components/Icon';
 import { ClassGate } from '../components/ClassGate';
 import { Modal } from '../components/Modal';
 import { QrScanner } from '../components/QrScanner';
 import { SegmentedControl } from '../components/SegmentedControl';
-import { receiveCards, studentLabel, submissionRows, type ClassInfo, type Received, type Student, type CardRecord } from '../domain/classroom';
+import { receiveCards, studentLabel, submissionRows, type ClassInfo, type Received, type Student, type CardRecord, type SubmissionRow } from '../domain/classroom';
+import { ActionLink, BoardHead, BoardTable, Chips, Disclaimer, Mark, NotifyButton, RowCard, TodayCard, ViewOnly, someOf, useDesktop, who, type Tone, type TodayRow } from '../components/TeacherBoard';
+import { ScreenActions } from '../components/ScreenActions';
+import { dataAsOf } from '../data/catalog';
+import { useSampleMode } from '../data/sample';
 import { downloadFile } from '../io/backup';
 import { xlsxOf } from '../io/grades';
 import { teacherDb } from '../store/teacherDb';
-import { WarningBadge, counselPath } from './TeacherDashboard';
+import { counselPath } from './TeacherDashboard';
 
-type Filter = 'all' | 'submitted' | 'missing' | 'warning';
+type Filter = 'all' | 'warning' | 'new' | 'missing';
 const JUDGE: Record<string, string> = { 안정: 'judge-safe', 적정: 'judge-fit', 소신: 'judge-reach', 위험: 'judge-risk', 경계: 'judge-edge' };
 const ICON: Record<string, string> = { 안정: '●', 적정: '◐', 소신: '▲', 위험: '■' };
 // 경계는 아이콘 없이 점선 테두리 + 이름(design.md judge-badge 경계)
 export const JudgeMark = ({ value }: { value?: string | null }) => value && JUDGE[value] ? <span className={`judge-badge ${JUDGE[value]}`}>{ICON[value] ? `${ICON[value]} ` : ''}{value}</span> : null;
+const TONE: Record<string, Tone> = { 안정: 'safe', 적정: 'fit', 소신: 'reach', 위험: 'risk', 경계: 'edge' };
+/** "면접 일정이 겹쳐요" → "면접 일정 겹침", "소신·위험 쪽으로 쏠렸어요" → "소신·위험 쏠림"(수시로 경고 요약과 같은 줄임) */
+const shortTitle = (t: string) => t.replace('이 겹쳐요', ' 겹침').replace(' 쪽으로 쏠렸어요', ' 쏠림');
+const short = (u: string) => u.replace(/학교$/, '');
+const xlsxType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
 export function CardCollect() {
-  const [filter, setFilter] = useState<Filter>('all'), [receiving, setReceiving] = useState(false), [message, setMessage] = useState('');
-  return <ClassGate slug="card-collect" title="카드 수합">{({ info, students, cards }) => {
-    const rows = submissionRows(students, cards), submitted = rows.filter(r => r.latest), warned = rows.filter(r => r.warnings);
-    const shown = filter === 'submitted' ? submitted : filter === 'missing' ? rows.filter(r => !r.latest) : filter === 'warning' ? warned : rows;
-    const exportXlsx = async () => downloadFile(await xlsxOf('카드 수합', ['학생', '장수', '상태', '1순위', '2순위', '3순위', '4순위', '5순위', '6순위', '경고'],
-      rows.map(r => [studentLabel(r.student), r.latest ? `${r.latest.card.slots.length}/6` : '', r.status, ...Array.from({ length: 6 }, (_, i) => r.latest?.card.slots[i]?.university ?? ''), r.warnings])),
-      `카드수합_${info.name}.xlsx`, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    return <>
-      <p className="t-caption text-muted">{info.name} · {students.length}명 · 학급 코드 {info.code}</p>
-      {message && <p role="status" className="notice">{message}</p>}
-      <div className="stats">
-        <div><span className="t-caption">학생 수</span><strong className="num">{students.length}명</strong></div>
-        <div><span className="t-caption">제출</span><strong className="num">{submitted.length}명</strong><span className="t-caption text-muted">새 버전 {rows.filter(r => r.status === '새 버전').length}명 · 확정 {rows.filter(r => r.status === '확정').length}명 포함</span></div>
-        <button className="stat-button" onClick={() => setFilter('missing')}><span className="t-caption">미제출</span><strong className="num key-number">{students.length - submitted.length}명</strong><span className="t-caption text-muted">학생에게 수시로에서 보내 달라고 해 주세요</span></button>
-        <button className="stat-button" onClick={() => setFilter('warning')}><span className="judge-badge judge-reach">▲ 경고 있는 학생</span><strong className="num">{warned.length}명</strong><span className="t-caption text-muted">면접 일정 겹침 · 소신·위험 쏠림</span></button>
+  const [receiving, setReceiving] = useState(false), [message, setMessage] = useState('');
+  return <ClassGate slug="card-collect" title="카드 수합">{c => <>
+    {message && <p role="status" className="notice">{message}</p>}
+    <Collect {...c} onReceive={() => setReceiving(true)} />
+    {receiving && <ReceiveCards info={c.info} students={c.students} cards={c.cards} onClose={() => setReceiving(false)} onDone={n => { setReceiving(false); setMessage(`상담카드 ${n}개를 불러왔어요`); }} />}
+  </>}</ClassGate>;
+}
+
+function Collect({ info, students, cards, onReceive }: { info: ClassInfo; students: Student[]; cards: CardRecord[]; onReceive: () => void }) {
+  const desktop = useDesktop(), sample = useSampleMode();
+  const [filter, setFilter] = useState<Filter>('all'), [byWarn, setByWarn] = useState(true), [showAll, setShowAll] = useState(false);
+  const risk = (r: SubmissionRow) => r.latest?.card.slots.filter(s => s.judgment === '위험').length ?? 0;
+  // 경고 많은 순 → 위험 칸 많은 순 → 번호, 미제출은 맨 아래(시안 "경고 있는 학생 먼저 · 미제출은 맨 아래")
+  const rows = submissionRows(students, cards).sort((a, b) => Number(!a.latest) - Number(!b.latest) || (byWarn ? b.warnings - a.warnings || risk(b) - risk(a) : 0) || a.student.number.localeCompare(b.student.number));
+  const submitted = rows.filter(r => r.latest), warned = rows.filter(r => r.warnings), fresh = rows.filter(r => r.status === '새 버전');
+  const missing = rows.filter(r => !r.latest).map(r => r.student);
+  const shown = filter === 'warning' ? warned : filter === 'new' ? fresh : filter === 'missing' ? rows.filter(r => !r.latest) : rows;
+  const titles = [...new Set(warned.flatMap(r => r.latest!.card.warnings.map(w => shortTitle(w.title))))];
+  const warnSub = (r: SubmissionRow) => r.latest!.card.warnings.map(w => shortTitle(w.title));
+  // "15번 바다 · 5번 햇살 경고 2 · 22번 은하 · 18번 여울 경고 1"
+  const groups = [...new Set(warned.map(r => r.warnings))].map(k => `${warned.filter(r => r.warnings === k).map(r => who(r.student)).join(' · ')} 경고 ${k}`).join(' · ');
+  const now = new Date().toLocaleDateString('sv-SE');
+  const firstWarn = warned[0]?.student.number, firstNew = fresh[0]?.student.number;
+  const top = warned.filter(r => r.warnings === warned[0]?.warnings);
+  const showMissing = () => { setFilter('missing'); setShowAll(true); };
+  const todo: TodayRow[] = desktop ? [
+    { icon: 'triangle-alert', count: `${warned.length}명`, title: '조합 경고가 있는 카드예요', sub: warned.length ? `${groups} · ${titles.join(', ')}` : '경고가 있는 카드가 없어요', action: <ActionLink to={firstWarn ? counselPath(firstWarn) : '/teacher/counsel'}>상담 화면 열기 ›</ActionLink> },
+    { icon: 'upload', count: `${missing.length}명`, title: '상담카드를 아직 안 냈어요', sub: `${students.length}명 중 ${submitted.length}명 제출${missing.length ? ` · ${someOf(missing)}` : ''}`, action: <NotifyButton code={info.code} missing={missing} /> },
+    { icon: 'file-text', count: `${fresh.length}명`, title: '새 버전 카드가 들어왔어요', sub: fresh.length ? `${fresh.map(r => who(r.student)).join(' · ')} · 지난 버전과 바뀐 칸만 다시 보면 돼요` : '새로 들어온 버전이 없어요', action: <ActionLink to={firstNew ? counselPath(firstNew) : '/teacher/counsel'}>바뀐 칸 보기 ›</ActionLink> },
+  ] : [
+    // "15번 바다 · 5번 햇살 경고 2 외 2명": 가장 많은 경고 수의 학생들 + 나머지 수
+    { icon: '', count: '', title: `조합 경고 ${warned.length}명`, sub: warned.length ? `${top.map(r => who(r.student)).join(' · ')} 경고 ${top[0].warnings}${warned.length > top.length ? ` 외 ${warned.length - top.length}명` : ''}` : '경고가 있는 카드가 없어요', action: <ActionLink to={firstWarn ? counselPath(firstWarn) : '/teacher/counsel'}>상담 보기 ›</ActionLink> },
+    { icon: '', count: '', title: `상담카드 미제출 ${missing.length}명`, sub: `${students.length}명 중 ${submitted.length}명이 냈어요`, action: <button type="button" className="tb-action" onClick={showMissing}>명단 보기 ›</button> },
+    { icon: '', count: '', title: `새 버전 카드 ${fresh.length}명`, sub: fresh.length ? fresh.map(r => who(r.student)).join(' · ') : '새로 들어온 버전이 없어요', action: <ActionLink to={firstNew ? counselPath(firstNew) : '/teacher/counsel'}>바뀐 칸 보기 ›</ActionLink> },
+  ];
+  const note = [sample && '샘플의 대학·숫자는 예시예요', '판정은 학생이 카드를 보낸 때 기준이에요', desktop && '대학 공식 자료가 최종 기준이에요', `데이터 기준일 ${dataAsOf}`].filter(Boolean).join(' · ');
+  const all: [Filter, string] = ['all', `전체 ${rows.length}`], warnChip: [Filter, string] = ['warning', `경고 ${warned.length}`];
+  const newChip: [Filter, string] = ['new', `새 버전 ${fresh.length}`], missChip: [Filter, string] = ['missing', `미제출 ${missing.length}`];
+  const exportXlsx = async () => downloadFile(await xlsxOf('카드 수합', ['학생', '장수', '상태', '1순위', '2순위', '3순위', '4순위', '5순위', '6순위', '경고'],
+    rows.map(r => [studentLabel(r.student), r.latest ? `${r.latest.card.slots.length}/6` : '', r.status, ...Array.from({ length: 6 }, (_, i) => r.latest?.card.slots[i]?.university ?? ''), r.warnings])),
+    `카드수합_${info.name}.xlsx`, xlsxType);
+
+  if (!desktop) return <div className="tb tb--collect">
+    <BoardHead desktop={false} lead="" />
+    <div className="tb-head"><ViewOnly>{`${submitted.length}명 제출 · 보기 전용이에요. 카드는 PC에서 받아요.`}</ViewOnly></div>
+    <TodayCard desktop={false} rule="" rows={todo} />
+    <section className="tb-section" aria-label="제출 현황">
+      <div className="tb-section__head"><h3 className="tb-section__title">제출 현황</h3><span className="tb-caption">경고 순</span></div>
+      <Chips value={filter} options={[all, warnChip, missChip, newChip]} onChange={setFilter} />
+      <div className="tb-list">{(showAll ? shown : shown.slice(0, 4)).map(r => <RowCard key={r.student.number} number={r.student.number} alias={r.student.alias} to={counselPath(r.student.number)}
+        line2={r.latest ? [`${r.latest.card.slots.length}장`, ...warnSub(r)].join(' · ') : '아직 안 냈어요'}
+        badges={<><span className="tb-badge">{r.status}</span>{r.warnings > 0 && <Mark tone="reach" label={`경고 ${r.warnings}`} soft />}</>} />)}</div>
+      {!showAll && shown.length > 4 && <button type="button" className="tb-more" onClick={() => setShowAll(true)}>{shown.length}명 전체 보기 ›</button>}
+    </section>
+    <Disclaimer>{note}</Disclaimer>
+  </div>;
+
+  return <div className="tb tb--collect">
+    <BoardHead desktop lead={`${info.name} ${students.length}명 중 ${submitted.length}명이 카드를 냈어요.${warned.length ? ` 경고가 있는 ${warned.length}명부터 살펴봐요.` : ''}`} />
+    <ScreenActions><ButtonPrimary className="tb-receive" onClick={onReceive}>카드 받기</ButtonPrimary></ScreenActions>
+    <TodayCard desktop rule={`규칙으로 골랐어요 · ${now} 기준`} rows={todo} />
+    <section className="tb-panel" aria-label="제출 현황">
+      <div className="tb-toolbar">
+        <div className="tb-toolbar__title"><h3>제출 현황</h3><span className="tb-caption">경고 있는 학생 먼저 · 미제출은 맨 아래</span></div>
+        <Chips value={filter} options={[all, warnChip, newChip, missChip]} onChange={setFilter} />
+        <div className="tb-toolbar__actions"><ButtonOutline onClick={exportXlsx}>엑셀 내보내기</ButtonOutline></div>
       </div>
-      {!cards.length ? <div className="empty-state"><h3 className="t-heading-3">아직 받은 상담카드가 없어요</h3><p>학생이 수시로에서 보낸 파일(.jnavi)을 받아 보세요. 학생에게 학급 코드 {info.code}를 알려 주세요.</p>
-        <ButtonPrimary onClick={() => setReceiving(true)}>카드 받기</ButtonPrimary></div> : <>
-        <div className="section-row"><h3 className="t-heading-2">제출 현황</h3>
-          <SegmentedControl label="거르기" value={filter} onChange={setFilter} options={[{ value: 'all', label: `전체 ${rows.length}` }, { value: 'submitted', label: `제출 ${submitted.length}` }, { value: 'missing', label: `미제출 ${rows.length - submitted.length}` }, { value: 'warning', label: `경고 있음 ${warned.length}` }]} />
-          <div className="toolbar"><ButtonOutline onClick={exportXlsx}>엑셀 내보내기</ButtonOutline><ButtonPrimary onClick={() => setReceiving(true)}>카드 받기</ButtonPrimary></div></div>
-        <div className="table-scroll"><table className="data-table collect-table"><thead><tr><th>학생</th><th>상태</th>{[1, 2, 3, 4, 5, 6].map(i => <th key={i}>{i}순위</th>)}<th>경고</th></tr></thead>
-          <tbody>{shown.map(r => <tr key={r.student.number}>
-            <td><Link to={counselPath(r.student.number)} className="num">{studentLabel(r.student)}</Link> <span className="t-caption text-muted num">{r.latest ? `${r.latest.card.slots.length}/6` : ''}</span></td>
-            <td><span className="data-status-badge">{r.status === '확정' && <Icon name="lock" size={14} />}{r.status}</span></td>
-            {Array.from({ length: 6 }, (_, i) => { const s = r.latest?.card.slots[i]; return <td key={i}>{s ? <>{s.university} <JudgeMark value={s.judgment} /></> : <span className="text-muted">–</span>}</td>; })}
-            <td><WarningBadge count={r.warnings} /></td></tr>)}</tbody></table>
-          {!shown.length && <p className="text-muted table-empty">{filter === 'missing' ? '모든 학생이 냈어요' : '경고가 있는 학생이 없어요'}</p>}</div>
-        <div className="section-row t-caption text-muted"><span>{rows.length}명 중 {shown.length}명 보는 중</span><span>학급 데이터는 이 기기에만 저장돼요</span></div>
-      </>}
-      <p className="disclaimer-note">ⓘ 판정·경고는 학생이 카드를 보낸 때 기준이에요 · 검수된 판정 규칙이 생기기 전에는 판정 없이 대학 이름만 보여요 · 대학 공식 자료가 최종 기준이에요</p>
-      {receiving && <ReceiveCards info={info} students={students} cards={cards} onClose={() => setReceiving(false)} onDone={n => { setReceiving(false); setMessage(`상담카드 ${n}개를 불러왔어요`); }} />}
-    </>;
-  }}</ClassGate>;
+      <BoardTable label="제출 현황" columns={[{ label: '', className: 'is-mark is-narrow', headWidth: 72 }, { label: '학생', className: 'is-flex' }, { label: '카드', width: 120 },
+        ...[1, 2, 3, 4, 5, 6].map(i => ({ label: `${i}순위`, width: 128 })), { label: '경고', width: 96, sort: () => setByWarn(v => !v) }]}
+        rows={shown.map(r => ({ key: r.student.number, cells: [
+          r.warnings ? <Mark tone="reach" /> : null,
+          <Link to={counselPath(r.student.number)}>{who(r.student)}</Link>,
+          !r.latest ? <span className="tb-strong">미제출</span> : <span className={r.status === '새 버전' ? 'tb-strong' : 'tb-muted'}>{r.status} · {r.latest.card.slots.length}장</span>,
+          ...Array.from({ length: 6 }, (_, i) => { const s = r.latest?.card.slots[i]; return s ? <><span className="tb-slot">{short(s.university)}</span>{s.judgment && TONE[s.judgment] && <Mark tone={TONE[s.judgment]} label={s.judgment} />}</> : <span className="tb-muted">–</span>; }),
+          r.warnings ? <Mark tone="reach" label={`경고 ${r.warnings}`} /> : <span className="tb-muted">–</span>,
+        ] }))} />
+      {!shown.length && <p className="text-muted table-empty">{filter === 'missing' ? '모든 학생이 냈어요' : filter === 'new' ? '새로 들어온 버전이 없어요' : '경고가 있는 학생이 없어요'}</p>}
+    </section>
+    <Disclaimer>{note}</Disclaimer>
+  </div>;
 }
 
 function ReceiveCards({ info, students, cards, onClose, onDone }: { info: ClassInfo; students: Student[]; cards: CardRecord[]; onClose: () => void; onDone: (n: number) => void }) {

@@ -3,7 +3,7 @@ import Dexie from 'dexie';
 import { webcrypto } from 'node:crypto';
 import { afterEach, beforeAll, expect, test, vi } from 'vitest';
 import { StudentDatabase } from '../src/store/studentDb';
-import { newApplication, newCounselTask, parsePlannerData, eligibilitySummary, safeSourceUrl, stepDeadline, taskDeadline, validDeadline, updateApplicationIdentity, type PlannerData } from '../src/domain/planner';
+import { newApplication, newCounselTask, parsePlannerData, eligibilitySummary, safeSourceUrl, sameApplication, stepDeadline, taskDeadline, validDeadline, updateApplicationIdentity, type PlannerData } from '../src/domain/planner';
 import { encryptBackup, decryptBackup } from '../src/io/backup';
 import { subject } from './fixtures';
 beforeAll(() => vi.stubGlobal('crypto', webcrypto));
@@ -11,6 +11,34 @@ const dbs: StudentDatabase[] = [];
 const database = () => { const db = new StudentDatabase(`planner-test-${crypto.randomUUID()}`); dbs.push(db); return db; };
 afterEach(async () => { for (const db of dbs.splice(0)) await db.delete(); });
 const plan = () => ({ ...newApplication(), university: '검증용 대학', program: '가상 전형' });
+const sourceSelection = { package_id: 'plan-0000198', program_id: 'source-program', unit_id: 'source-unit', round: '수시', source_sha256: 'a'.repeat(64) };
+
+test('source selection survives storage, encrypted backup and restoration', async () => {
+  const db = database(), p = { ...plan(), source_selection: sourceSelection };
+  await db.saveApplication(p);
+  const snapshot = await db.snapshot();
+  const decoded = await decryptBackup(await encryptBackup(snapshot, 'test-password'), 'test-password');
+  expect(decoded.planning?.applications[0].source_selection).toEqual(sourceSelection);
+  await db.clearStudentData(); await db.restore(decoded);
+  expect((await db.applications.get(p.id))?.source_selection).toEqual(sourceSelection);
+});
+
+test('source identity separates same-name rounds and resets previous confirmations', () => {
+  const a = { ...plan(), source_selection: sourceSelection };
+  const b = { ...a, source_selection: { ...sourceSelection, program_id: 'regular', round: '정시' } };
+  expect(sameApplication(a, b)).toBe(false);
+  a.steps[0].status = 'done'; a.steps[0].checked_at = new Date().toISOString();
+  expect(updateApplicationIdentity(a, b).steps[0].status).toBe('pending');
+  expect(updateApplicationIdentity(a, { ...a, source_selection: { ...sourceSelection, source_sha256: 'b'.repeat(64) } }).steps[0].status).toBe('pending');
+  expect(updateApplicationIdentity(a, { ...a, source_url: 'https://example.com' }).steps[0].status).toBe('done');
+});
+
+test('malformed reference metadata is rejected while legacy plans remain valid', () => {
+  expect(parsePlannerData({ applications: [plan()], tasks: [] }).applications[0].source_selection).toBeUndefined();
+  for (const selection of [null, {}, { ...sourceSelection, source_sha256: 'invalid' }, { ...sourceSelection, program_id: '' }, { ...sourceSelection, package_id: '../private' }]) {
+    expect(() => parsePlannerData({ applications: [{ ...plan(), source_selection: selection }], tasks: [] })).toThrow();
+  }
+});
 test('자격은 초기에 확인 필요이며 모든 확인이 끝나도 최종 자격 판정으로 바꾸지 않음', () => {
   const p = plan(); expect(eligibilitySummary(p.eligibility)).toBe('확인 필요');
   p.eligibility.forEach(e => { e.status = 'na'; e.checked_at = new Date().toISOString(); });
