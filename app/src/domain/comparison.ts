@@ -1,3 +1,4 @@
+import { passesReview } from '../engine/types';
 export interface ComparisonBasis {
   year: number;
   grade_system: 5 | 9 | null;
@@ -10,6 +11,8 @@ export interface ComparisonBasis {
   method_version: string;
   source: string;
   review_status: 'draft' | 'verified';
+  /** 샘플 모드 전용 가상 입결 기준(data/sample). 샘플 모드일 때만 검수 완료처럼 통과해요. */
+  sample?: true;
 }
 export const metricLabels = { rank_grade: '원등급 평균', converted_grade: '환산 등급(추정)', university_score: '대학별 환산점수' };
 export const statisticLabels = { individual: '개인 성적', p50: '50% 컷', p70: '70% 컷', mean: '평균' };
@@ -29,7 +32,7 @@ export function compareBasis(input: ComparisonBasis | null | undefined, cut: Com
   const reasons: string[] = [];
   if (!input || !cut) return { comparable: false, reasons: ['학년도·등급제·지표·산식 등 비교 조건이 아직 등록되지 않았어요.'] };
   if (!complete(input) || !complete(cut)) return { comparable: false, reasons: ['비교 조건에 빠졌거나 잘못된 항목이 있어요.'] };
-  if (input.review_status !== 'verified' || cut.review_status !== 'verified') reasons.push('비교 기준의 검수가 필요해요.');
+  if (!passesReview(input) || !passesReview(cut)) reasons.push('비교 기준의 검수가 필요해요.');
   if (input.year !== cut.year) reasons.push('학년도가 달라요. 같은 기준으로 검수된 자료가 필요해요.');
   if (input.grade_system !== cut.grade_system) reasons.push('등급제가 달라요. 5등급과 9등급 수치를 직접 비교하지 않아요.');
   if (input.metric !== cut.metric) reasons.push('지표가 달라요. 원등급·추정 환산등급·대학별 점수를 구분해 주세요.');

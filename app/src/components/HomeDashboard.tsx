@@ -3,12 +3,10 @@ import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { useStudent } from '../store/studentDb';
 import { gradeSummary } from '../domain/student';
-import { combinations, conversionFor, currentComparisonBasis, fiveToNineFor } from '../domain/results';
-import { compareBasis } from '../domain/comparison';
+import { fiveToNineFor, judgeUniversity } from '../domain/results';
 import { collectedProgramPath } from '../domain/interests';
-import { judgeRange } from '../engine/judgment';
-import { judgmentRule } from '../data/conversion-rules';
-import { admissionYear, dataAsOf, programs } from '../data/catalog';
+import { useSampleMode } from '../data/sample/mode';
+import { dataAsOf } from '../data/catalog';
 import { UniversityLogo } from './UniversityLogo';
 import { GradeRange } from './GradeRange';
 import { Icon } from './Icon';
@@ -40,24 +38,14 @@ function useDesktop() {
 export function HomeDashboard() {
   const state = useStudent();
   const desktop = useDesktop();
+  useSampleMode(); // 샘플을 켜고 끄면 샘플 전형·판정 규칙이 바뀌어서 다시 그려요
   if (!state?.data) return <section className="student-screen" data-slug="home">{state ? <p role="alert">{state.error}</p> : <p role="status">기기에 저장된 성적을 읽고 있어요.</p>}</section>;
   const data = state.data, has = data.grades.length > 0;
   const result = fiveToNineFor(data.grades, '전 교과'), average = gradeSummary(data.grades).average;
   const ready = result.min !== null && result.max !== null;
 
   // 관심 대학 될각: 될각 화면과 같은 조건(검수된 입결 · 같은 비교 기준)일 때만 판정해요. 그 밖은 판정 없음(NEVER-1).
-  const conversion = conversionFor(data.grades, COMBO), scope = combinations[COMBO]!;
-  const basis = currentComparisonBasis(data.grades, scope, conversion.status === 'ready');
-  const judged = (university: string) => {
-    if (conversion.status !== 'ready') return null;
-    for (const p of programs) {
-      if (p.university !== university || p.admission_year !== admissionYear || (p.admission_type && p.admission_type !== '교과')) continue;
-      if (!compareBasis(basis, p.cut_basis).comparable || p.cut_grade_system !== basis.grade_system || p.cut_subject_scope.length !== scope.length || !scope.every(g => p.cut_subject_scope.includes(g))) continue;
-      const r = judgeRange(conversion.value, p.license_status === 'allowed' ? p.cut : null, judgmentRule);
-      if (r.status === 'ready') return { p, v: r.value };
-    }
-    return null;
-  };
+  const judged = (university: string) => judgeUniversity(data.grades, university, COMBO);
   const universities = (data.interests ?? []).filter((i, k, all) => all.findIndex(x => x.university === i.university) === k); // 대학마다 첫 관심 하나
   const rows = universities.map(i => ({ i, j: judged(i.university) }));
   const judgedCount = rows.filter(r => r.j).length;

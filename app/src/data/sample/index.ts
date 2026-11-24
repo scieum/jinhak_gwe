@@ -76,13 +76,13 @@ export async function initSample() {
   await loadStudent();
   if (teacherEmpty) await loadTeacher();
   if (adminEmpty) await loadAdmin();
-  setSampleFlag('on'); showPublicSample();
+  showPublicSample(); setSampleFlag('on'); // 전형을 먼저 넣고 알려야 다시 그린 화면이 샘플 전형을 봐요
 }
 
 /** "샘플 데이터 다시 보기": 빈 자리에만 샘플을 다시 넣어요. */
 export async function showSample() {
   await loadStudent(); await loadTeacher(); await loadAdmin();
-  setSampleFlag('on'); showPublicSample();
+  showPublicSample(); setSampleFlag('on');
 }
 
 /** "샘플 데이터 지우기": 샘플 행만 지우고 다시 자동으로 넣지 않게 표시해요. 사용자가 넣은 행은 그대로예요. */
@@ -101,5 +101,5 @@ export async function clearSample() {
     await adminDb.wiki.filter(d => !!d.sample).delete();
     await adminDb.fields.filter(d => !!d.sample).delete();
   });
-  setSampleFlag('off'); hidePublicSample();
+  hidePublicSample(); setSampleFlag('off');
 }

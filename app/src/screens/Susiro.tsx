@@ -8,6 +8,8 @@ import { SendToTeacher } from '../components/SendToTeacher';
 import { UniversityLogo } from '../components/UniversityLogo';
 import { boardWarnings, csatStates, examKinds, isExempt, LIMIT, newBoard, SCENARIO_NAMES, type Board, type BoardSlot } from '../domain/board';
 import type { ApplicationPlan } from '../domain/planner';
+import { judgeUniversity } from '../domain/results';
+import { useSampleMode } from '../data/sample/mode';
 import '../styles/susiro.css';
 
 /** .jnavi counsel_card payload. 판정은 검수된 판정이 생기기 전까지 null(NEVER-1). */
@@ -18,8 +20,11 @@ export const counselCard = (board: Board, apps: readonly ApplicationPlan[]) => {
     warnings: boardWarnings(board, name).map(w => ({ code: w.code, title: w.title, message: w.message })) };
 };
 
+const JUDGE = { 안정: ['judge-safe', '●'], 적정: ['judge-fit', '◐'], 소신: ['judge-reach', '▲'], 위험: ['judge-risk', '■'] } as const;
+
 export function Susiro() {
   const state = useStudent();
+  useSampleMode(); // 샘플 전형·판정 규칙이 켜고 끌 때 바뀌어요
   const [query, setQuery] = useSearchParams();
   const [initialBoard] = useState(() => newBoard('A안'));
   const [boardId, setBoardId] = useState(''), [picking, setPicking] = useState<{ id: string; create: boolean } | null>(null);
@@ -53,11 +58,15 @@ export function Susiro() {
   });
   const pickedBoard = picking ? boards.find(b => b.id === picking.id) : undefined;
   const pickable = apps.filter(a => ![...(pickedBoard?.slots ?? []), ...(pickedBoard?.exempt ?? [])].some(s => s.application_id === a.id));
+  // 될각과 같은 조건(같은 대학·모집단위의 교과 전형 입결)일 때만 판정해요. 그 밖은 판정 준비 중(NEVER-1).
+  const judgeBadge = (a?: ApplicationPlan) => { const j = a ? judgeUniversity(state.data!.grades, a.university, undefined, a.department || undefined) : null;
+    return !j ? <span className="judge-badge judge-none">— 판정 준비 중</span> : j.v.boundary ? <span className="judge-badge judge-edge">경계</span>
+      : <span className={`judge-badge ${JUDGE[j.v.label][0]}`}><span aria-hidden="true">{JUDGE[j.v.label][1]}</span> {j.v.label}</span>; };
   const slotView = (s: BoardSlot, rank: number | null, index = -1) => { const a = app(s.application_id);
     return <li key={s.application_id} className={`susi-slot${focus.includes(s.application_id) ? ' susi-slot--focus' : ''}`}>
       <span className="susi-slot__rank num">{rank ?? '제외'}</span>
       <div className="susi-slot__body">{a && <UniversityLogo university={a.university} />}<strong>{a?.university ?? '지운 전형'}</strong><span className="t-caption text-muted">{a ? [`${a.year}학년도`, a.program, a.department].filter(Boolean).join(' · ') : '목록에서 지운 전형이에요. 이 칸을 비워 주세요.'}</span>
-        <span className="susi-slot__chips"><span className="judge-badge judge-none">— 판정 준비 중</span>
+        <span className="susi-slot__chips">{judgeBadge(a)}
           {s.exam_kind !== 'none' && <span className="data-status-badge">{s.exam_kind}{s.exam_date ? ` ${s.exam_date.slice(5).replace('-', '.')}` : ' 일정 미정'}</span>}
           <span className="data-status-badge">{csatStates[s.csat]}</span></span>
         {s.memo && <span className="t-caption text-muted">{s.memo}</span>}</div>

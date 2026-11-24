@@ -12,7 +12,8 @@ import { validateGrade } from '../domain/student';
 import { compareBasis } from '../domain/comparison';
 import { pending } from '../engine/types';
 import { judgeRange } from '../engine/judgment';
-import { judgmentRule } from '../data/conversion-rules';
+import { activeRules } from '../data/sample/rules';
+import { useSampleMode } from '../data/sample/mode';
 import { admissionYear, dataAsOf, programs, type ProgramData } from '../data/catalog';
 import { StudentDataScreen } from './Results';
 import '../styles/doelgak.css';
@@ -85,6 +86,7 @@ function FilterFields({ value, onChange, combo, onCombo }: { value: Filters; onC
 }
 
 export function Doelgak() {
+  useSampleMode(); // 샘플을 켜고 끄면 programs(샘플 전형)·판정 규칙이 바뀌어서 다시 그려요
   const [combo, setCombo] = useState('국수영사과');
   const [track, setTrack] = useState<'교과' | '종합'>('교과'), [view, setView] = useState<'lane' | 'table'>('lane');
   const [draft, setDraft] = useState(EMPTY), [applied, setApplied] = useState(EMPTY);
@@ -101,7 +103,7 @@ export function Doelgak() {
         : !compareBasis(inputBasis, p.cut_basis).comparable ? pending(compareBasis(inputBasis, p.cut_basis).reasons.join(' '))
         : p.cut_grade_system !== inputBasis.grade_system ? pending('등급제 확인이 필요해요.') : p.cut_subject_scope.length !== scope.length || !scope.every(g => p.cut_subject_scope.includes(g))
         ? pending('같은 반영 교과 기준의 입결 자료가 필요해요.')
-        : judgeRange(conversion.value, p.license_status === 'allowed' ? p.cut : null, judgmentRule) }));
+        : judgeRange(conversion.value, p.license_status === 'allowed' ? p.cut : null, activeRules().judgment) }));
     type Row = typeof rows[number];
     const laneOf = (r: Row['r']) => r?.status === 'ready' ? r.value.label : null;
     const shown = (f: Filters) => rows.filter(({ p, r }) => matches(p, f) && (f.judge === '전체' || laneOf(r) === f.judge));

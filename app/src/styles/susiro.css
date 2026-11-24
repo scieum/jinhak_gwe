@@ -12,3 +12,6 @@
 .warning-callout strong { color: var(--color-judge-reach); }
 .susi-pick { display: grid; gap: var(--spacing-xs); width: 100%; text-align: left; cursor: pointer; font: inherit; }
 .susi-scenarios { border: 0; padding: 0; margin: 0; min-width: 0; }
+
+/* 경계 판정: ink 글자 + canvas + 1px 점선 ink (home.css와 같은 모양) */
+.susi-slot .judge-edge { color: var(--color-judge-edge); background: var(--color-canvas); outline: 1px dashed var(--color-judge-edge); outline-offset: -1px; }

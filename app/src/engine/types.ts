@@ -1,8 +1,12 @@
+import { isSampleMode } from '../data/sample/mode';
+
 export type ReviewStatus = 'draft' | 'verified';
 export interface Provenance {
   id: string;
   source: string;
   review_status: ReviewStatus;
+  /** 샘플 모드 전용 가상 값(data/sample). 검수 상태는 draft 그대로이고, 샘플 모드일 때만 통과해요. */
+  sample?: true;
 }
 export interface Trace {
   rule: string;
@@ -17,8 +21,11 @@ export type Calculation<T> =
 export const ready = <T>(value: T, trace: Trace[] = []): Calculation<T> => ({ status: 'ready', value, trace });
 export const pending = (reason: string, trace: Trace[] = []): Calculation<never> => ({ status: 'not_ready', reason, trace });
 export const invalid = (reason: string): Calculation<never> => ({ status: 'invalid', reason, trace: [] });
+/** 검수 완료, 또는 샘플 모드에서 sample 표식이 붙은 값만 통과해요. 표식 없는 미검수 값은 언제나 막혀요(NEVER-1). */
+export const passesReview = (x: { review_status: ReviewStatus; sample?: true }) =>
+  x.review_status === 'verified' || (x.sample === true && isSampleMode());
 export const reviewed = (rule: Provenance) =>
-  rule.review_status === 'verified' && rule.id.trim().length > 0 && rule.source.trim().length > 0;
+  passesReview(rule) && rule.id.trim().length > 0 && rule.source.trim().length > 0;
 export const between = (n: number, min: number, max: number) => Number.isFinite(n) && n >= min && n <= max;
 
 export interface SubjectGrade {

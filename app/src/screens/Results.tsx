@@ -9,6 +9,7 @@ import { gradeSummary, validateGrade, type StudentBackup } from '../domain/stude
 import { scoreUniversity } from '../engine/scoring';
 import { admissionYear, programs, type ProgramData } from '../data/catalog';
 import { useReleasedRules } from '../data/releasedRules';
+import { useSampleMode } from '../data/sample/mode';
 import type { ScoringRule } from '../engine/scoring';
 import { PlacementExplorer } from '../components/PlacementExplorer';
 import { ScoreTrendContent } from '../components/ScoreTrendContent';
@@ -66,6 +67,7 @@ export function withReleasedRules(catalog: readonly ProgramData[], rules: readon
 }
 
 export function UniversityScores() {
+  useSampleMode(); // 샘플 전형(sample 규칙)이 켜고 끌 때 들어오고 빠져요
   const [sort, setSort] = useState('환산 비율');
   const [selected, setSelected] = useState('');
   const released = useReleasedRules();

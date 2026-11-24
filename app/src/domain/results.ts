@@ -1,11 +1,13 @@
 import { convertSubjects } from '../engine/conversion';
 import { baseConversionRule, enrollmentRule, distributionRule, placementCandidates } from '../data/conversion-rules';
-import { admissionYear, confidenceRule } from '../data/catalog';
-import type { ComparisonBasis } from './comparison';
+import { admissionYear, confidenceRule, programs } from '../data/catalog';
+import { judgeRange } from '../engine/judgment';
+import { compareBasis, type ComparisonBasis } from './comparison';
 import { validateGrade, type GradeRecord } from './student';
 import { SUBJECT_COMBOS, convertFiveToNine, type SubjectCombo } from '../engine/fiveToNine';
 import type { ConversionConfig, GradeSet } from '../engine/fiveToNineTypes';
 import fiveToNineConfig from '../data/conversion-config.json';
+import { activeRules } from '../data/sample/rules';
 
 export const combinations: Record<string, readonly string[] | null> = {
   '전 교과': null, '국수영사과': ['국어', '수학', '영어', '사회', '과학'],
@@ -27,7 +29,8 @@ export function currentComparisonBasis(grades: readonly GradeRecord[], groups: r
 export function conversionFor(grades: readonly GradeRecord[], combination: string) {
   const valid = grades.filter(g => !validateGrade(g).length);
   const groups = combinations[combination] ?? [...new Set(valid.map(g => g.subject_group))];
-  const result = convertSubjects(valid, { base: baseConversionRule, enrollment: enrollmentRule, distribution: distributionRule,
+  const rules = activeRules();
+  const result = convertSubjects(valid, { base: rules.base, enrollment: rules.enrollment, distribution: rules.distribution,
     confidence: confidenceRule, tables: placementCandidates,
     placement: { basis_semesters: new Set(valid.map(g => g.semester)).size, subject_scope: groups } });
   return { ...result, trace: [...result.trace, ...grades.filter(g => validateGrade(g).length).map(g => ({
@@ -48,4 +51,18 @@ export function fiveToNineFor(grades: readonly GradeRecord[], combination: strin
       distribution: d ? { A: d[0], B: d[1], C: d[2], D: d[3], E: d[4] } : undefined });
   }
   return convertFiveToNine(set, (combination in SUBJECT_COMBOS ? combination : '전 교과') as SubjectCombo, fiveToNineConfig as ConversionConfig);
+}
+
+/** 관심 대학 하나의 교과 전형 판정(될각과 같은 조건: 검수된 입결 · 같은 비교 기준, 샘플 모드면 sample 표식 값). 없으면 null(NEVER-1). */
+export function judgeUniversity(grades: readonly GradeRecord[], university: string, combo = '국수영사과', department?: string) {
+  const conversion = conversionFor(grades, combo), scope = combinations[combo]!;
+  if (conversion.status !== 'ready') return null;
+  const basis = currentComparisonBasis(grades, scope, true);
+  for (const p of programs) {
+    if (p.university !== university || (department !== undefined && p.department !== department) || p.admission_year !== admissionYear || (p.admission_type && p.admission_type !== '교과')) continue;
+    if (!compareBasis(basis, p.cut_basis).comparable || p.cut_grade_system !== basis.grade_system || p.cut_subject_scope.length !== scope.length || !scope.every(g => p.cut_subject_scope.includes(g))) continue;
+    const r = judgeRange(conversion.value, p.license_status === 'allowed' ? p.cut : null, activeRules().judgment);
+    if (r.status === 'ready') return { p, v: r.value };
+  }
+  return null;
 }
