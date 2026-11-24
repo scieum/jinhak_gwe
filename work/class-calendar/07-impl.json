@@ -1,0 +1,31 @@
+{
+  "slug": "class-calendar",
+  "gate": "G5",
+  "pass": false,
+  "errors": [
+    "T 390: 문구 없음 '학생이 보낸 카드와 직접 입력한 일정 · 결과예요 · 대학 공식 발표가 최종 기준이에요 · 학생은 번호·별칭으로만 보여요 · 시안의 대학·날짜는 예시예요'",
+    "S 390: 블록 없음 page-header",
+    "S 390: 블록 없음 text-input",
+    "S 390: 블록 순서 다름 시안 [sub-nav > segmented-control > stat-tile > filter-chip > data-table > disclaimer-note] / 앱 [sub-nav > stat-tile > filter-chip > segmented-control > data-table > disclaimer-note]",
+    "P 390: segmented-control 폭 350 (시안 140±4)",
+    "P 390: stat-tile 폭 100 (시안 174±4)",
+    "P 390: data-table x 36 (시안 20±4)",
+    "P 390: data-table 폭 318 (시안 350±4)",
+    "T 1440: 문구 없음 '백업'",
+    "T 1440: 문구 없음 '로그아웃'",
+    "T 1440: 문구 없음 '잠금'",
+    "T 1440: 문구 없음 '학생이 보낸 카드와 직접 입력한 일정 · 결과예요 · 대학 공식 발표가 최종 기준이에요 · 학생은 번호·별칭으로만 보여요 · 시안의 대학·날짜는 예시예요'",
+    "S 1440: 블록 없음 text-input",
+    "S 1440: 블록 순서 다름 시안 [page-header > filter-chip > segmented-control > stat-tile > data-table > disclaimer-note] / 앱 [page-header > stat-tile > filter-chip > segmented-control > data-table > disclaimer-note]",
+    "P 1440: page-header 글자→첫 블록 간격(시안) 109 (기준 48±2)",
+    "P 1440: segmented-control x 280 (시안 1071±4)",
+    "P 1440: segmented-control 폭 1128 (시안 240±4)",
+    "P 1440: stat-tile 폭 120 (시안 370±4)",
+    "P 1440: data-table 폭 712 (시안 704±4)"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 2,
+  "route": "/teacher/class-calendar",
+  "allowed": [],
+  "notes": []
+}

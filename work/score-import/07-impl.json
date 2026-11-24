@@ -1,0 +1,38 @@
+{
+  "slug": "score-import",
+  "gate": "G5",
+  "pass": false,
+  "errors": [
+    "S 390: 블록 없음 page-header",
+    "S 390: 블록 없음 stat-tile",
+    "S 390: 블록 없음 warning-callout",
+    "P 390: segmented-control x 37 (시안 20±4)",
+    "P 390: segmented-control 폭 316 (시안 354±4)",
+    "T 1440: 문구 없음 '백업'",
+    "T 1440: 문구 없음 '로그아웃'",
+    "T 1440: 문구 없음 '잠금'",
+    "T 1440: 문구 없음 '등급만'",
+    "T 1440: 문구 없음 '원점수·백분위 함께'",
+    "T 1440: 문구 없음 '다른 파일 올리기'",
+    "T 1440: 문구 없음 '상태'",
+    "T 1440: 문구 없음 '사유'",
+    "T 1440: 문구 없음 '열 맞추기로 돌아가기'",
+    "T 1440: 문구 없음 '오류 행만 내려받기'",
+    "S 1440: 블록 없음 stat-tile",
+    "S 1440: 블록 없음 warning-callout",
+    "S 1440: 블록 없음 data-table",
+    "S 1440: 블록 순서 다름 시안 [page-header > text-input > segmented-control] / 앱 [page-header > segmented-control > text-input]",
+    "P 1440: page-header 글자→첫 블록 간격(시안) 110 (기준 48±2)",
+    "P 1440: text-input x 297 (시안 334±4)",
+    "P 1440: text-input 폭 539 (시안 88±4)",
+    "P 1440: segmented-control x 297 (시안 554±4)",
+    "P 1440: segmented-control 폭 1094 (시안 232±4)"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 2,
+  "route": "/teacher/score-import",
+  "allowed": [],
+  "notes": [
+    "390: 앱 표식 없는 블록(구조 미검사) student-row-card"
+  ]
+}

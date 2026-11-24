@@ -1,0 +1,28 @@
+{
+  "slug": "admission-results",
+  "gate": "G5",
+  "pass": false,
+  "errors": [
+    "T 390: 문구 없음 '좌표'",
+    "T 390: 문구 없음 '계열 전체'",
+    "S 390: 블록 없음 filter-chip",
+    "S 390: 블록 없음 cut-dot-plot",
+    "S 390: 블록 없음 disclaimer-note",
+    "P 390: 본문 왼쪽 여백(시안) 20 (기준 16±2)",
+    "P 390: segmented-control 폭 158 (시안 358±4)",
+    "T 1440: 문구 없음 '좌표'",
+    "T 1440: 문구 없음 '계열 전체'",
+    "T 1440: 문구 없음 '지원 준비에 추가'",
+    "S 1440: 블록 없음 filter-chip",
+    "S 1440: 블록 없음 cut-dot-plot",
+    "S 1440: 블록 없음 data-table",
+    "S 1440: 블록 없음 disclaimer-note",
+    "P 1440: page-header 글자→첫 블록 간격(시안) 110 (기준 48±2)",
+    "P 1440: segmented-control 폭 158 (시안 240±4)"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 2,
+  "route": "/admission-results",
+  "allowed": [],
+  "notes": []
+}

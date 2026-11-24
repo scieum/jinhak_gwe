@@ -1,0 +1,27 @@
+{
+  "slug": "minimum-board",
+  "gate": "G5",
+  "pass": false,
+  "errors": [
+    "T 390: 문구 없음 '먼저 볼 학생'",
+    "T 390: 문구 없음 '대학 공식 모집요강이 최종 기준이에요 · '미검수'는 교사 입력 기준이라 참고로만 봐 주세요 · 시안의 대학·숫자는 예시예요'",
+    "S 390: 블록 없음 page-header",
+    "P 390: filter-chip x 297 (시안 20±4)",
+    "P 390: disclaimer-note 폭 558 (시안 350±4)",
+    "T 1440: 문구 없음 '백업'",
+    "T 1440: 문구 없음 '로그아웃'",
+    "T 1440: 문구 없음 '잠금'",
+    "T 1440: 문구 없음 '먼저 볼 학생'",
+    "P 1440: page-header 글자→첫 블록 간격(시안) 110 (기준 48±2)",
+    "P 1440: filter-chip x 670 (시안 454±4)",
+    "P 1440: data-table 폭 784 (시안 772±4)"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 2,
+  "route": "/teacher/minimum-board",
+  "allowed": [],
+  "notes": [
+    "390: 앱 표식 없는 블록(구조 미검사) student-row-card",
+    "1440: 앱 표식 없는 블록(구조 미검사) student-row-card"
+  ]
+}

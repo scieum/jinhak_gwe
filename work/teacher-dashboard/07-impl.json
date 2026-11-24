@@ -1,0 +1,26 @@
+{
+  "slug": "teacher-dashboard",
+  "gate": "G5",
+  "pass": false,
+  "errors": [
+    "T 390: 문구 없음 '오늘 할 일'",
+    "S 390: 블록 없음 page-header",
+    "S 390: 블록 없음 filter-chip",
+    "T 1440: 문구 없음 '백업'",
+    "T 1440: 문구 없음 '로그아웃'",
+    "T 1440: 문구 없음 '잠금'",
+    "T 1440: 문구 없음 '오늘 할 일'",
+    "T 1440: 문구 없음 '성적 불러오기'",
+    "T 1440: 문구 없음 '엑셀 내보내기'",
+    "T 1440: 문구 없음 '관심 대학'",
+    "S 1440: 블록 없음 filter-chip",
+    "P 1440: page-header 글자→첫 블록 간격(시안) 110 (기준 48±2)"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 2,
+  "route": "/teacher/teacher-dashboard",
+  "allowed": [],
+  "notes": [
+    "390: 앱 표식 없는 블록(구조 미검사) student-row-card"
+  ]
+}

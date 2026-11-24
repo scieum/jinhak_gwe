@@ -1,0 +1,21 @@
+{
+  "slug": "doelgak",
+  "gate": "G5",
+  "pass": false,
+  "errors": [
+    "T 390: 문구 없음 '강원'",
+    "T 390: 문구 없음 '서울'",
+    "S 390: 블록 없음 filter-chip",
+    "S 390: 블록 없음 univ-card",
+    "S 1440: 블록 없음 univ-card",
+    "P 1440: page-header 글자→첫 블록 간격(시안) 109 (기준 48±2)"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 2,
+  "route": "/doelgak",
+  "allowed": [],
+  "notes": [
+    "1440: 앱 표식 없는 블록(구조 미검사) judge-lane"
+  ],
+  "status": "재구현 중(2026-11-24 다른 에이전트가 시안대로 다시 구현하는 중)"
+}

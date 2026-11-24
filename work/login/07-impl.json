@@ -1,0 +1,11 @@
+{
+  "slug": "login",
+  "gate": "G5",
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
+  "route": "/login",
+  "allowed": [],
+  "notes": []
+}

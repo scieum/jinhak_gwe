@@ -1,0 +1,23 @@
+{
+  "slug": "eligibility-check",
+  "gate": "G5",
+  "pass": false,
+  "errors": [
+    "T 390: 문구 없음 '사회 진로선택 이수 과목 수'",
+    "S 390: 블록 없음 disclaimer-note",
+    "P 390: stat-tile x 41 (시안 20±4)",
+    "P 390: stat-tile 폭 100 (시안 214±4)",
+    "T 1440: 문구 없음 '사회 진로선택 이수 과목 수'",
+    "S 1440: 블록 없음 disclaimer-note",
+    "P 1440: page-header 글자→첫 블록 간격(시안) 110 (기준 24±2)",
+    "P 1440: text-input x 297 (시안 377±4)",
+    "P 1440: text-input 폭 1094 (시안 440±4)",
+    "P 1440: stat-tile x 301 (시안 280±4)",
+    "P 1440: stat-tile 폭 120 (시안 240±4)"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 2,
+  "route": "/eligibility-check",
+  "allowed": [],
+  "notes": []
+}

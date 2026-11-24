@@ -1,0 +1,28 @@
+{
+  "slug": "mock-score",
+  "gate": "G5",
+  "pass": false,
+  "errors": [
+    "T 390: 문구 없음 '시험 바꾸기'",
+    "S 390: 블록 없음 trace-accordion",
+    "S 390: 블록 순서 다름 시안 [sub-nav > stat-tile > text-input > disclaimer-note] / 앱 [sub-nav > text-input > stat-tile > disclaimer-note]",
+    "P 390: stat-tile 폭 169 (시안 350±4)",
+    "P 390: text-input x 50 (시안 140±4)",
+    "P 390: text-input 폭 191 (시안 104±4)",
+    "P 390: disclaimer-note x 20 (시안 40±4)",
+    "P 390: disclaimer-note 폭 350 (시안 310±4)",
+    "T 1440: 문구 없음 '원점수를 넣으면 등급컷으로 등급을 추정하고, 수능 최저 충족 현황을 보여 줘요.'",
+    "T 1440: 문구 없음 '잠금'",
+    "T 1440: 문구 없음 '시험 바꾸기'",
+    "S 1440: 블록 없음 trace-accordion",
+    "P 1440: page-header 글자→첫 블록 간격(시안) 110 (기준 24±2)",
+    "P 1440: stat-tile 폭 229 (시안 744±4)",
+    "P 1440: disclaimer-note x 280 (시안 304±4)",
+    "P 1440: disclaimer-note 폭 736 (시안 696±4)"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 2,
+  "route": "/mock-score",
+  "allowed": [],
+  "notes": []
+}

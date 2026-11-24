@@ -1,0 +1,33 @@
+{
+  "slug": "special-tracks",
+  "gate": "G5",
+  "pass": false,
+  "errors": [
+    "T 390: 문구 없음 '교과'",
+    "T 390: 문구 없음 '종합'",
+    "T 390: 문구 없음 '세부 전체 · 가나다순 ▾'",
+    "S 390: 블록 없음 segmented-control",
+    "S 390: 블록 없음 univ-card",
+    "S 390: 블록 없음 trace-accordion",
+    "T 1440: 문구 없음 '전체'",
+    "T 1440: 문구 없음 '의예'",
+    "T 1440: 문구 없음 '치의예'",
+    "T 1440: 문구 없음 '한의예'",
+    "T 1440: 문구 없음 '수의예'",
+    "T 1440: 문구 없음 '교과'",
+    "T 1440: 문구 없음 '종합'",
+    "T 1440: 문구 없음 '모집단위'",
+    "T 1440: 문구 없음 '경쟁률'",
+    "T 1440: 문구 없음 '충원율'",
+    "S 1440: 블록 없음 segmented-control",
+    "S 1440: 블록 없음 data-table",
+    "S 1440: 블록 없음 trace-accordion",
+    "P 1440: page-header 글자→첫 블록 간격(시안) 109 (기준 48±2)",
+    "P 1440: filter-chip x 304 (시안 352±4)"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 2,
+  "route": "/special-tracks",
+  "allowed": [],
+  "notes": []
+}
