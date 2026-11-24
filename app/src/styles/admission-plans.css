@@ -1,20 +1,130 @@
-.plan-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-md); }
-.result-panel.plan-results { padding: 0; gap: 0; }
-.plan-results-heading { padding: var(--spacing-md) var(--spacing-card); border-bottom: 2px solid var(--color-hairline); background: var(--color-canvas-soft); }
-.plan-results-heading h3 { display: flex; align-items: baseline; gap: var(--spacing-sm); }
-.plan-result-count { font-size: var(--font-body-size); font-weight: var(--font-body-weight); color: var(--color-text-muted); }
-.plan-results .plan-grid { padding: var(--spacing-card); align-items: stretch; gap: var(--spacing-sm); }
-.plan-grid .plan-card { min-width: 0; padding: var(--spacing-md); gap: var(--spacing-sm); grid-template-rows: 1fr auto; }
-.plan-card-heading { display: grid; align-content: start; gap: var(--spacing-xxs); }
+/* 전형계획 목록 (work/admissions-list/02-spec.md · Figma admissions-list/1440 346:125015 · /390 346:123524).
+   모서리 0 · Route Blue는 선택 표시에만 · heart는 담긴 하트에만 · delta 색은 ▲▼ 숫자에만. */
+.student-screen.admissions-list { display: grid; gap: 0; }
+.admissions-list > .screen-heading:not(:has(> :not(h2))) { display: none; }
+.admissions-list .promo-banner-wrap { margin-bottom: 16px; }
+.al-asof { display: inline-flex; align-items: center; height: 24px; padding: 0 var(--spacing-xs); background: var(--color-canvas); color: var(--color-ink-soft); font-size: var(--font-label-size); font-weight: var(--font-label-weight); white-space: nowrap; }
+.al-panel { margin: 0; padding: var(--spacing-lg); background: var(--color-canvas); }
+.al-load-error { display: flex; align-items: center; gap: var(--spacing-sm); flex-wrap: wrap; }
+.al-load-error p { flex: 1; margin: 0; }
+.al-error-line { display: flex; align-items: flex-start; gap: var(--spacing-xs); margin: 0 0 var(--spacing-sm); padding: var(--spacing-sm) var(--spacing-md); background: var(--color-canvas); color: var(--color-ink); }
+
+/* 검색 · 칩 */
+.al-search { position: relative; display: block; width: 400px; max-width: 100%; margin-bottom: 16px; }
+.al-search > .icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--color-ink); pointer-events: none; }
+.al-search .text-input { width: 100%; height: 48px; padding: 0 16px 0 44px; border: 0; background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 15px; }
+.al-search .text-input::placeholder { color: var(--color-text-faint); }
+.al-search .text-input:focus-visible { outline: 2px solid var(--color-ink); outline-offset: -2px; }
+.admissions-list .filter-chip { display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 var(--spacing-sm); border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: var(--font-label-size); font-weight: var(--font-label-weight); white-space: nowrap; cursor: pointer; font-variant-numeric: tabular-nums; }
+.admissions-list .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.al-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.al-chips__divider { width: 1px; height: 24px; background: var(--color-hairline); }
+.al-chiprow { display: none; }
+.al-filters { position: relative; display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: 8px; row-gap: 8px; align-items: center; margin-bottom: 16px; padding: 18px 24px; background: var(--color-canvas); }
+.al-filters__label { color: var(--color-text-muted); font-size: var(--font-caption-size); }
+.al-reset { position: absolute; top: 18px; right: 24px; min-height: 32px; padding: 0; border: 0; background: none; color: var(--color-ink); font: inherit; font-weight: 600; cursor: pointer; }
+
+/* 결과 줄 */
+.al-result { display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-md); min-height: 48px; margin-bottom: 16px; }
+.al-result:focus { outline: none; }
+.al-result__count { display: flex; align-items: center; gap: var(--spacing-xs); flex-wrap: wrap; }
+.al-result__count .t-title { color: var(--color-ink); }
+.al-result__badge { display: none; }
+.al-result__tools { display: flex; align-items: center; gap: var(--spacing-sm); }
+.al-sort-link { display: none; }
+.al-sort { position: relative; }
+.al-sort .button-pill-soft { display: inline-flex; align-items: center; gap: var(--spacing-xs); min-height: 40px; padding: 0 var(--spacing-md); border: 0; background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; }
+.al-dropdown__backdrop { position: fixed; inset: 0; z-index: 9; }
+.al-dropdown, .al-sort-list { margin: 0; padding: 0; list-style: none; }
+.al-dropdown { position: absolute; top: calc(100% + 4px); left: 0; z-index: 10; width: 220px; border: 1px solid var(--color-hairline); background: var(--color-canvas); box-shadow: var(--shadow-overlay); }
+.al-dropdown button, .al-sort-list button { display: flex; justify-content: space-between; align-items: center; width: 100%; min-height: 40px; padding: 0 var(--spacing-md); border: 0; background: none; color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
+.al-dropdown button:hover { background: var(--color-canvas-soft); }
+.al-dropdown button[aria-selected='true'], .al-sort-list button[aria-selected='true'] { background: var(--color-accent-soft); }
+.al-dropdown .icon, .al-sort-list .icon { color: var(--color-accent); }
+.admissions-list .al-result__tools .segmented-control { width: 160px; padding: 4px; background: var(--color-canvas); }
+.admissions-list .al-result__tools .segmented-control__option { flex: 1; min-height: 40px; padding: 0; }
+.al-note { display: flex; align-items: flex-start; gap: 4px; margin: 0 0 16px; color: var(--color-text-muted); font-size: var(--font-caption-size); }
+.al-note > .icon { flex: none; margin-top: 1px; }
+
+/* 표 */
+.al-table-card { padding: 24px; }
+.al-table-card--hidden { display: none; }
+.al-table thead th { height: 40px; padding: 0 16px; background: var(--color-canvas-soft); border-bottom: 0; color: var(--color-ink); white-space: nowrap; }
+.al-table td { height: 48px; padding: 0 16px; border-bottom: 1px solid var(--color-hairline-soft); }
+.al-table tbody tr { cursor: pointer; }
+.al-table tbody tr:hover { background: var(--color-canvas-soft); }
+.al-table tbody tr:focus-visible, .al-item:focus-visible { outline: 2px solid var(--color-ink); outline-offset: -2px; }
+.al-table th.num, .al-table td.num { text-align: right; white-space: nowrap; }
+.al-table td:first-child { white-space: nowrap; }
+.al-th-sort { display: inline-flex; align-items: center; gap: 4px; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.al-th-sort .icon { color: var(--color-text-muted); }
+.al-th-sort .al-th-sort--on { color: var(--color-ink); }
+.al-table .interest-heart, .al-card .interest-heart { width: 44px; height: 44px; margin: -6px 0; padding: 0; border-color: transparent; background: transparent; }
+.al-date { display: block; }
+.al-univ { display: inline-flex; align-items: center; gap: var(--spacing-xs); min-width: 0; color: var(--color-ink); text-decoration: none; }
+.al-univ:hover span { text-decoration: underline; }
+.al-univ .university-logo { flex: 0 0 24px; width: 24px; height: 24px; }
+.delta-up { color: var(--color-delta-up); }
+.delta-down { color: var(--color-delta-down); }
+
+/* 목록(univ-card 공개 변형): 모바일 행 · PC 2열 카드 */
+.al-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.al-list--table-view { display: none; }
+.al-item { display: grid; gap: 8px; padding: 24px; background: var(--color-canvas); cursor: pointer; }
+.admissions-list .al-card { display: grid; gap: 4px; padding: 0; border: 0; background: none; }
+.al-card__head { display: flex; align-items: center; gap: var(--spacing-xs); min-width: 0; }
+.al-card__head .al-univ { font-size: var(--font-heading-4-size); font-weight: var(--font-heading-4-weight); }
+.al-card__head .al-univ span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.al-card__head .al-univ .university-logo { flex-basis: 32px; width: 32px; height: 32px; }
+.al-card__head .interest-heart { margin-left: auto; }
+.al-card__program { margin: 0; overflow: hidden; color: var(--color-text-muted); font-size: var(--font-body-sm-size); white-space: nowrap; text-overflow: ellipsis; }
+.al-card__facts { display: flex; justify-content: space-between; align-items: baseline; gap: var(--spacing-xs); color: var(--color-ink-soft); font-size: var(--font-body-sm-size); }
+.al-quota.data-table { display: inline-block; width: auto; min-width: 74px; text-align: right; border-collapse: initial; color: var(--color-ink); font-size: var(--font-table-size); white-space: nowrap; }
+.al-pager { display: flex; justify-content: center; align-items: center; gap: var(--spacing-md); padding: 16px 0; }
+.al-pager .button-outline { min-height: 32px; }
+
+.al-empty { display: grid; justify-items: center; gap: var(--spacing-xs); padding: 64px var(--spacing-md); text-align: center; }
+.al-empty p { margin: 0 0 var(--spacing-xs); }
+
+/* 시트(모바일 bottom-sheet) · 확인 창 · 토스트 */
+.al-sheet { display: grid; gap: var(--spacing-lg); }
+.al-sheet__head { display: flex; justify-content: space-between; align-items: center; }
+.al-sheet__close { display: grid; place-items: center; width: 44px; height: 44px; margin-right: -12px; border: 0; background: none; color: var(--color-ink); cursor: pointer; }
+.al-sheet__section { display: grid; gap: var(--spacing-sm); }
+.al-sheet__actions { position: sticky; bottom: calc(-1 * var(--spacing-md)); display: flex; gap: var(--spacing-xs); padding: var(--spacing-xs) 0 var(--spacing-md); background: var(--color-canvas); }
+.al-sheet__actions .button-primary { flex: 1; }
+.al-sort-list li + li { border-top: 1px solid var(--color-hairline-soft); }
+.al-sort-list button { min-height: 48px; }
+.al-confirm__actions { display: flex; justify-content: flex-end; gap: var(--spacing-xs); }
+.al-toast { display: grid; gap: 2px; }
+
+@media (max-width: 1023px) {
+  .admissions-list > .screen-heading { display: none; }
+  .al-search { width: 100%; }
+  .al-filters, .al-result__interest, .al-sort, .al-result__tools .segmented-control, .al-table-card { display: none; }
+  .al-chiprow { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; overflow-x: auto; scrollbar-width: none; }
+  .al-chiprow > * { flex: none; }
+  .al-chiprow .filter-chip { min-height: 36px; }
+  .al-filter-button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; min-width: 87px; justify-content: center; padding: 0 16px; border: 0; background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .al-filter-button[aria-pressed='true'] { outline: 1px solid var(--color-accent); outline-offset: -1px; background: var(--color-accent-soft); }
+  .al-result { min-height: 32px; }
+  .al-result__count > .t-caption { display: none; }
+  .al-result__badge { display: inline-flex; align-items: center; height: 24px; padding: 0 var(--spacing-xs); }
+  .al-sort-link { flex: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0; border: 0; background: none; color: var(--color-ink); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .al-list, .al-list--table-view { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .al-item { gap: 4px; padding: 0 0 16px; border-bottom: 1px solid var(--color-hairline); }
+  .al-item:last-child { border-bottom: 0; }
+  .admissions-list .al-card { padding: 16px 20px 0; }
+  .al-card__facts { padding: 0 20px; }
+  .al-pager .button-outline { min-height: 44px; }
+  .al-toast { bottom: calc(80px + 12px); }
+}
+
+/* 전형계획 상세 펼침(원문 · 근거 쪽수) */
+.plan-document { display: grid; gap: var(--spacing-sm); padding: var(--spacing-lg); border: 1px solid var(--color-hairline); background: var(--color-canvas); }
 .plan-university { display: flex; align-items: center; gap: var(--spacing-sm); min-width: 0; }
 .plan-university > :last-child { min-width: 0; }
-.plan-card-heading h4 { font-size: var(--font-heading-3-size); overflow-wrap: anywhere; }
-.plan-card-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: var(--spacing-xs); border-top: 1px solid var(--color-hairline); padding-top: var(--spacing-xxs); }
-.plan-card-footer .text-button { margin-left: auto; min-height: 44px; padding: 0; white-space: nowrap; }
-.plan-results > .toolbar { justify-content: center; padding: var(--spacing-md); border-top: 1px solid var(--color-hairline); }
-@media (min-width: 1200px) { .plan-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (min-width: 1600px) { .plan-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.plan-detail { display: grid; gap: var(--spacing-md); border-block: 2px solid var(--color-accent); padding-block: var(--spacing-lg); min-width: 0; }
+.plan-detail { display: grid; gap: var(--spacing-md); margin-bottom: 16px; border-block: 2px solid var(--color-accent); padding-block: var(--spacing-lg); min-width: 0; }
 .plan-facts { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: var(--spacing-sm); }
 .plan-facts dt, .plan-topics dt { font-weight: 600; }
 .plan-facts dd, .plan-topics dd { margin: 0; }
@@ -23,13 +133,5 @@
 .plan-detail summary { cursor: pointer; padding-block: var(--spacing-sm); }
 .plan-filename, .plan-notices { overflow-wrap: anywhere; }
 .plan-notices { padding-left: var(--spacing-lg); display: grid; gap: var(--spacing-sm); }
-@media (max-width: 767px) {
-  .plan-grid { grid-template-columns: 1fr; }
-  .plan-results-heading, .plan-results .plan-grid { padding: var(--spacing-md); }
-  .plan-results-heading h3 { font-size: var(--font-heading-3-size); }
-}
 .plan-facts > .plan-fact-row { display: contents; }
 .plan-field-sources { display: flex; flex-wrap: wrap; gap: var(--spacing-sm); margin-top: var(--spacing-xs); font-size: var(--font-caption-size); }
-/* 모집인원 전년 대비 증감(▲ delta-up · ▼ delta-down, 전년 값이 있을 때만) */
-.plan-detail .delta-up { color: var(--color-delta-up); }
-.plan-detail .delta-down { color: var(--color-delta-down); }

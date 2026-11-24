@@ -1,7 +1,9 @@
+import 'fake-indexeddb/auto';
 import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { afterEach, expect, test, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { studentDb } from '../src/store/studentDb';
 import { MemoryRouter } from 'react-router-dom';
 import { parsePlanCatalog, matchesPlan, planPageUrl } from '../src/domain/admissionPlans';
 import { AdmissionsList, quotaDelta } from '../src/screens/AdmissionsList';
@@ -9,7 +11,7 @@ import { loadAdmissionPlans } from '../src/data/admissionPlans';
 
 const raw = () => JSON.parse(readFileSync('public/data/admission-plans.json', 'utf8'));
 const catalog = parsePlanCatalog(raw());
-afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
+afterEach(async () => { cleanup(); vi.unstubAllGlobals(); await studentDb.interests.clear(); });
 function serve() { vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(catalog)))); }
 function at(path = '/admissions-list') { return render(<MemoryRouter initialEntries={[path]}><AdmissionsList /></MemoryRouter>); }
 
@@ -70,25 +72,47 @@ test('대학 약칭 검색과 PDF 쪽수 링크는 캠퍼스·문서 형식을 �
   expect(planPageUrl(archive, 1)).toBe(archive.download_url);
 });
 
-test('대학 검색·상세 원문·일부 전형 요약과 성적 판정 제외 안내를 보여준다', async () => {
+const rowsShown = () => screen.getAllByRole('link', { name: /전형계획 보기$/ });
+const first = (name: string) => screen.getAllByRole('button', { name })[0];
+test('전형 1행 목록: 검색·상세 원문·유형 칩·지역 칩·페이지(10행)와 성적 판정 제외 안내', async () => {
   serve(); at('/admissions-list?q=한림대');
-  fireEvent.click(await screen.findByRole('button', { name: '한림대학교 본교 전형계획 보기' }));
+  fireEvent.click((await screen.findAllByRole('link', { name: '한림대학교 학생부교과(교과우수자전형) 전형계획 보기' }))[0]);
   const detail = screen.getByRole('region', { name: '한림대학교 본교 전형계획 상세' });
-  expect(within(detail).getByText('학생부교과(교과우수자전형)')).toBeTruthy();
+  expect(within(detail).getAllByText('학생부교과(교과우수자전형)').length).toBeGreaterThan(0);
   expect(within(detail).getByText(/성적 판정에 사용하지 않아요/)).toBeTruthy();
   expect(within(detail).getAllByRole('link', { name: /PDF 13쪽/ })[0].getAttribute('href')).toContain('#page=13');
   fireEvent.click(within(detail).getByRole('button', { name: '상세 닫기' }));
   expect(screen.queryByRole('region', { name: '한림대학교 본교 전형계획 상세' })).toBeNull();
-  fireEvent.change(screen.getByLabelText('대학·캠퍼스·전형 검색'), { target: { value: '없는대학명' } });
-  expect(screen.getByText(/조건에 맞는 전형계획이 없어요/)).toBeTruthy();
-  fireEvent.click(screen.getByRole('button', { name: '검색 조건 초기화' }));
-  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(24);
+  fireEvent.change(screen.getByLabelText('대학 이름으로 찾기'), { target: { value: '없는대학명' } });
+  expect(screen.getByText("'없는대학명'에 맞는 대학이 없어요")).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '검색어 지우기' }));
+  expect(rowsShown()).toHaveLength(10);
+  expect(screen.getByText('1 / 24')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '다음' }));
-  expect(screen.getByText('2 / 10 페이지')).toBeTruthy();
-  fireEvent.click(screen.getByLabelText('일부 전형 요약이 있는 대학만'));
-  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(8);
-  fireEvent.change(screen.getByLabelText('지역'), { target: { value: '강원' } });
-  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(5);
+  expect(screen.getByText('2 / 24')).toBeTruthy();
+  fireEvent.click(first('종합 12'));
+  expect(screen.getByText('전형 12개')).toBeTruthy();
+  expect(screen.getByText('1 / 2')).toBeTruthy();
+  fireEvent.click(first('강원'));
+  expect(screen.getByText('전형 8개')).toBeTruthy();
+  fireEvent.click(first('면접 있음'));
+  expect(screen.getByText('전형 3개')).toBeTruthy();
+  fireEvent.click(first('사립'));
+  expect(screen.getByText('조건에 맞는 전형이 없어요')).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '필터 초기화' }));
+  expect(screen.getByText('전형 22개')).toBeTruthy();
+});
+
+test('하트로 담고 관심만 보기에서 뺄 때는 한 번 묻는다', async () => {
+  serve(); at('/admissions-list?q=한림대');
+  const heart = (await screen.findAllByRole('button', { name: '한림대학교 학생부교과(지역인재전형) 관심에 담기' }))[0];
+  fireEvent.click(heart);
+  expect(await screen.findByText('관심 전형에 담았어요')).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '관심만 보기 1' }));
+  await waitFor(() => expect(screen.getByText('전형 1개')).toBeTruthy());
+  fireEvent.click(screen.getAllByRole('button', { name: '한림대학교 학생부교과(지역인재전형) 관심에서 빼기' })[0]);
+  fireEvent.click(within(screen.getByRole('dialog', { name: '관심에서 뺄까요?' })).getByRole('button', { name: '빼기' }));
+  expect(await screen.findByText('아직 담은 전형이 없어요')).toBeTruthy();
 });
 
 test('직접 연결된 캠퍼스 상세는 목록 필터와 독립적으로 열리고 ZIP 파일명을 안내한다', async () => {
@@ -104,11 +128,11 @@ test('직접 연결된 캠퍼스 상세는 목록 필터와 독립적으로 열�
 test('조회 실패는 빈 검색과 구분하고 재시도한다', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValueOnce(new Response('', { status: 503 })).mockResolvedValueOnce(new Response(JSON.stringify(catalog))));
   at('/admissions-list?plan=missing');
-  await screen.findByRole('alert');
-  expect(screen.queryByText(/조건에 맞는 전형계획이 없어요/)).toBeNull();
-  fireEvent.click(screen.getByRole('button', { name: '자료 다시 불러오기' }));
-  await screen.findByText(/선택한 전형계획을 찾지 못했어요/);
-  expect(screen.getAllByRole('button', { name: /전형계획 보기/ })).toHaveLength(24);
+  expect((await screen.findByRole('alert')).textContent).toContain('전형계획 자료를 불러오지 못했어요');
+  expect(screen.queryByText(/조건에 맞는 전형이 없어요/)).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: '다시 불러오기' }));
+  await screen.findByText(/고른 전형을 목록에서 찾지 못했어요/);
+  expect(rowsShown()).toHaveLength(10);
 });
 
 test('로더는 구조가 잘못된 응답을 빈 목록으로 바꾸지 않는다', async () => {

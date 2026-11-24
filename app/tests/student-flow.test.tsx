@@ -25,8 +25,8 @@ test('과목 추가 → 저장 → 재진입 → 5 to 9 범위 표시, 네트워
   expect(screen.getByRole('spinbutton', { name: '대수 석차등급' }).getAttribute('value')).toBe('2');
   fireEvent.click(screen.getByRole('link', { name: '5 to 9 보기' }));
   fireEvent.click(screen.getByRole('button', { name: '내 성적 분석' }));
-  await screen.findByText('3.3 ~ 3.4');
-  expect(within(screen.getByRole('region', { name: '내 성적 상세 분석' })).getByText('2.00')).toBeTruthy();
+  await screen.findByText('약 3.3~3.4');
+  expect(screen.getAllByText(/5등급 평균 2\.00/).length).toBeGreaterThan(0);
   expect(fetchSpy).not.toHaveBeenCalled(); fetchSpy.mockRestore();
 });
 

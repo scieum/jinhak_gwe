@@ -30,8 +30,8 @@ test('검수된 데이터가 있는 5→9 화면은 외측 반올림 범위를 �
   at('/five-to-nine');
   fireEvent.click(screen.getByRole('button', { name: '내 성적 분석' }));
   // 5등급 2 -> 누적 22%; 9등급 3 + (22-17)/(31.5-17) = 3.344827...
-  expect(await screen.findByText('3.3 ~ 3.4')).toBeTruthy();
-  expect(screen.getByText('A-2 과목 기반')).toBeTruthy();
+  expect(await screen.findByText('약 3.3~3.4')).toBeTruthy();
+  expect(screen.getAllByText(/A-2 과목 기반/).length).toBeGreaterThan(0);
 });
 test('대학별 화면은 엔진 결과와 trace 표시', async () => {
   expect(scoringRule().review_status).toBe('verified');
