@@ -86,6 +86,7 @@ export function AdmissionsList() {
         <p className="t-caption text-muted">시행계획은 최종 모집요강과 달라질 수 있어요. 지원 전 대학 입학처의 변경 공지·최종 모집요강을 확인해 주세요. 이 자료는 성적 판정에 사용하지 않아요.</p></section>
         {selected ? <PlanDetail key={selected.id} plan={selected} onClose={() => update('plan', '')} /> : selectedId && <p role="alert">선택한 전형계획을 찾지 못했어요. 아래 목록에서 다시 선택해 주세요.</p>}
         <section className="result-panel plan-results" aria-label="전형계획 조회 결과"><header className="section-row plan-results-heading"><h3 className="t-heading-2">대학 목록 <span className="plan-result-count">{filtered.length}건</span></h3><button className="button-outline" onClick={() => { update('q', ''); setRegion(''); setSummaryOnly(false); }}>검색 조건 초기화</button></header>
+        <p className="t-caption text-muted">모집인원 옆 ▲▼는 전년 대비 증감이에요.</p>
         {!filtered.length ? <p className="empty-state">조건에 맞는 전형계획이 없어요. 대학명으로 검색하거나 지역 조건을 바꿔 보세요.</p> : <>
           <div className="plan-grid">{filtered.slice(current * PAGE_SIZE, (current + 1) * PAGE_SIZE).map(p => <article className="univ-card plan-card" key={p.id}>
             <div className="plan-university"><UniversityLogo planId={p.id} /><div className="plan-card-heading"><h4 className="t-heading-3">{p.university}</h4><p className="t-body-sm text-muted">{p.campus} · {p.region}</p></div></div>

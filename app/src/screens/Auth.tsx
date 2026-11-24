@@ -32,7 +32,7 @@ function NotReady() {
 }
 const Band = ({ children }: { children: ReactNode }) => <div className="auth__band" role="status"><Icon name="info" size={16} className="auth__icon" /><p className="t-body-sm">{children}</p></div>;
 function FieldError({ text }: { text?: string }) {
-  return text ? <p className="field-error t-caption"><Icon name="triangle-alert" size={14} /> {text}</p> : null;
+  return text ? <p className="field-error t-caption"><Icon name="triangle-alert" size={16} /> {text}</p> : null;
 }
 function Password({ id, label, value, onChange, placeholder, error }: { id: string; label: ReactNode; value: string; onChange: (v: string) => void; placeholder: string; error?: string }) {
   const [shown, setShown] = useState(false);

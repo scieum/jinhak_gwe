@@ -39,12 +39,12 @@ test('대학별 화면은 엔진 결과와 trace 표시', async () => {
   expect(screen.getByText('어떻게 계산했나요?')).toBeTruthy();
 });
 test('교과 판정은 실제 환산 결과로 적정, 최저는 별도 확인 상태', async () => {
-  at('/doelgak'); expect(await screen.findByText('◆ 적정')).toBeTruthy();
+  at('/doelgak'); expect(await screen.findByText('◐ 적정')).toBeTruthy();
   expect(screen.getByText('수능최저 확인 필요')).toBeTruthy();
 });
 test('입결 기준이 없으면 판정 표시를 차단', async () => {
   programs[0].cut_basis = undefined;
   at('/doelgak');
   expect(await screen.findByText(/— 학년도·등급제·지표·산식/)).toBeTruthy();
-  expect(screen.queryByText('◆ 적정')).toBeNull();
+  expect(screen.queryByText('◐ 적정')).toBeNull();
 });

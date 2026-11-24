@@ -92,7 +92,7 @@ export function UniversityScores() {
 }
 
 const judgmentClass = { 안정: 'safe', 적정: 'fit', 소신: 'reach', 위험: 'risk' };
-const judgmentIcon = { 안정: '●', 적정: '◆', 소신: '▲', 위험: '■' };
+const judgmentIcon = { 안정: '●', 적정: '◐', 소신: '▲', 위험: '■' };
 export function Doelgak() {
   const [combo, setCombo] = useState('국수영사과');
   const [filter, setFilter] = useState('전체');
