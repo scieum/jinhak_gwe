@@ -1,0 +1,1482 @@
+[
+  {
+    "id": "350:4617",
+    "name": "score-bar",
+    "layout": "VERTICAL",
+    "w": 368,
+    "h": 194,
+    "children": [
+      {
+        "id": "350:4603",
+        "name": "fill=ink, variant=default",
+        "x": 24,
+        "y": 24,
+        "w": 320,
+        "h": 6
+      },
+      {
+        "id": "350:4610",
+        "name": "fill=accent, variant=default",
+        "x": 24,
+        "y": 54,
+        "w": 320,
+        "h": 6
+      },
+      {
+        "id": "520:4107",
+        "name": "fill=accent, variant=progress",
+        "x": 24,
+        "y": 84,
+        "w": 310,
+        "h": 31
+      },
+      {
+        "id": "672:215368",
+        "name": "fill=ink, variant=progress",
+        "x": 24,
+        "y": 139,
+        "w": 310,
+        "h": 31
+      }
+    ]
+  },
+  {
+    "id": "60:399",
+    "name": "warning-callout",
+    "layout": "HORIZONTAL",
+    "w": 1846,
+    "h": 117,
+    "children": [
+      {
+        "id": "30:43",
+        "name": "state=default, selected=false, tone=default",
+        "x": 16,
+        "y": 16,
+        "w": 350,
+        "h": 98
+      },
+      {
+        "id": "60:389",
+        "name": "state=collapsed, selected=false, tone=default",
+        "x": 382,
+        "y": 16,
+        "w": 350,
+        "h": 46
+      },
+      {
+        "id": "77:1816",
+        "name": "state=default, selected=true, tone=default",
+        "x": 748,
+        "y": 16,
+        "w": 350,
+        "h": 100
+      },
+      {
+        "id": "77:1821",
+        "name": "state=collapsed, selected=true, tone=default",
+        "x": 1114,
+        "y": 16,
+        "w": 350,
+        "h": 48
+      },
+      {
+        "id": "493:3833",
+        "name": "state=default, selected=false, tone=neutral",
+        "x": 1480,
+        "y": 16,
+        "w": 350,
+        "h": 77
+      }
+    ]
+  },
+  {
+    "id": "591:4072",
+    "name": "promo-banner",
+    "layout": "VERTICAL",
+    "w": 390,
+    "h": 208,
+    "children": [
+      {
+        "id": "591:4054",
+        "name": "closable=false",
+        "x": 20,
+        "y": 20,
+        "w": 350,
+        "h": 74
+      },
+      {
+        "id": "591:4061",
+        "name": "closable=true",
+        "x": 20,
+        "y": 114,
+        "w": 350,
+        "h": 74
+      }
+    ]
+  },
+  {
+    "id": "63:148",
+    "name": "data-table/cell",
+    "layout": "HORIZONTAL",
+    "w": 580,
+    "h": 1104.1600341796875,
+    "children": [
+      {
+        "id": "63:130",
+        "name": "type=head, align=left, direction=up, density=default",
+        "x": 16,
+        "y": 16,
+        "w": 120,
+        "h": 44
+      },
+      {
+        "id": "63:137",
+        "name": "type=head, align=right, direction=up, density=default",
+        "x": 152,
+        "y": 16,
+        "w": 120,
+        "h": 44
+      },
+      {
+        "id": "63:144",
+        "name": "type=body, align=left, direction=up, density=default",
+        "x": 288,
+        "y": 16,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "63:146",
+        "name": "type=body, align=right, direction=up, density=default",
+        "x": 424,
+        "y": 16,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "80:766",
+        "name": "type=body-strong, align=left, direction=up, density=default",
+        "x": 16,
+        "y": 76.00999450683594,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "80:774",
+        "name": "type=badge, align=left, direction=up, density=default",
+        "x": 152,
+        "y": 76.00999450683594,
+        "w": 120,
+        "h": 48.0099983215332
+      },
+      {
+        "id": "80:787",
+        "name": "type=body-strong, align=right, direction=up, density=default",
+        "x": 288,
+        "y": 76.00999450683594,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "80:795",
+        "name": "type=badge, align=right, direction=up, density=default",
+        "x": 424,
+        "y": 76.00999450683594,
+        "w": 120,
+        "h": 48.0099983215332
+      },
+      {
+        "id": "90:7241",
+        "name": "type=body-semibold, align=left, direction=up, density=default",
+        "x": 16,
+        "y": 140.01998901367188,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "90:7251",
+        "name": "type=body-semibold, align=right, direction=up, density=default",
+        "x": 152,
+        "y": 140.01998901367188,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "90:7265",
+        "name": "type=muted, align=left, direction=up, density=default",
+        "x": 288,
+        "y": 140.01998901367188,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "90:7275",
+        "name": "type=muted, align=right, direction=up, density=default",
+        "x": 424,
+        "y": 140.01998901367188,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "90:7289",
+        "name": "type=body-sm, align=left, direction=up, density=default",
+        "x": 16,
+        "y": 200.0299835205078,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "90:7299",
+        "name": "type=body-sm, align=right, direction=up, density=default",
+        "x": 152,
+        "y": 200.0299835205078,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "90:7313",
+        "name": "type=check, align=left, direction=up, density=default",
+        "x": 288,
+        "y": 200.0299835205078,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "90:7325",
+        "name": "type=check, align=right, direction=up, density=default",
+        "x": 424,
+        "y": 200.0299835205078,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "90:7341",
+        "name": "type=body, align=right, direction=down, density=default",
+        "x": 16,
+        "y": 260.03997802734375,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "90:7355",
+        "name": "type=body-strong, align=right, direction=down, density=default",
+        "x": 152,
+        "y": 260.03997802734375,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "90:7369",
+        "name": "type=body-semibold, align=right, direction=down, density=default",
+        "x": 288,
+        "y": 260.03997802734375,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "100:15575",
+        "name": "type=compare, align=left, direction=up, density=default",
+        "x": 424,
+        "y": 260.03997802734375,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "100:15591",
+        "name": "type=compare, align=right, direction=up, density=default",
+        "x": 16,
+        "y": 320.04998779296875,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "100:15610",
+        "name": "type=head, align=center, direction=up, density=default",
+        "x": 152,
+        "y": 320.04998779296875,
+        "w": 120,
+        "h": 44
+      },
+      {
+        "id": "100:15617",
+        "name": "type=body, align=center, direction=up, density=default",
+        "x": 288,
+        "y": 320.04998779296875,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "100:15630",
+        "name": "type=body-strong, align=center, direction=up, density=default",
+        "x": 424,
+        "y": 320.04998779296875,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "100:15643",
+        "name": "type=badge, align=center, direction=up, density=default",
+        "x": 16,
+        "y": 380.05999755859375,
+        "w": 120,
+        "h": 48.0099983215332
+      },
+      {
+        "id": "100:15655",
+        "name": "type=body-semibold, align=center, direction=up, density=default",
+        "x": 152,
+        "y": 380.05999755859375,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "100:15668",
+        "name": "type=muted, align=center, direction=up, density=default",
+        "x": 288,
+        "y": 380.05999755859375,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "100:15681",
+        "name": "type=body-sm, align=center, direction=up, density=default",
+        "x": 424,
+        "y": 380.05999755859375,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "100:15694",
+        "name": "type=check, align=center, direction=up, density=default",
+        "x": 16,
+        "y": 444.07000732421875,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "100:15702",
+        "name": "type=compare, align=center, direction=up, density=default",
+        "x": 152,
+        "y": 444.07000732421875,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "100:15718",
+        "name": "type=head, align=left, direction=up, density=compact",
+        "x": 288,
+        "y": 444.07000732421875,
+        "w": 120,
+        "h": 32
+      },
+      {
+        "id": "100:15725",
+        "name": "type=head, align=right, direction=up, density=compact",
+        "x": 424,
+        "y": 444.07000732421875,
+        "w": 120,
+        "h": 32
+      },
+      {
+        "id": "100:15732",
+        "name": "type=body, align=left, direction=up, density=compact",
+        "x": 16,
+        "y": 504.08001708984375,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15745",
+        "name": "type=body, align=right, direction=up, density=compact",
+        "x": 152,
+        "y": 504.08001708984375,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15762",
+        "name": "type=body-strong, align=left, direction=up, density=compact",
+        "x": 288,
+        "y": 504.08001708984375,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15775",
+        "name": "type=badge, align=left, direction=up, density=compact",
+        "x": 424,
+        "y": 504.08001708984375,
+        "w": 120,
+        "h": 36.0099983215332
+      },
+      {
+        "id": "100:15787",
+        "name": "type=body-strong, align=right, direction=up, density=compact",
+        "x": 16,
+        "y": 556.0900268554688,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15804",
+        "name": "type=badge, align=right, direction=up, density=compact",
+        "x": 152,
+        "y": 556.0900268554688,
+        "w": 120,
+        "h": 36.0099983215332
+      },
+      {
+        "id": "100:15816",
+        "name": "type=body-semibold, align=left, direction=up, density=compact",
+        "x": 288,
+        "y": 556.0900268554688,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15829",
+        "name": "type=body-semibold, align=right, direction=up, density=compact",
+        "x": 424,
+        "y": 556.0900268554688,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15846",
+        "name": "type=muted, align=left, direction=up, density=compact",
+        "x": 16,
+        "y": 608.1000366210938,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15859",
+        "name": "type=muted, align=right, direction=up, density=compact",
+        "x": 152,
+        "y": 608.1000366210938,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15876",
+        "name": "type=body-sm, align=left, direction=up, density=compact",
+        "x": 288,
+        "y": 608.1000366210938,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15889",
+        "name": "type=body-sm, align=right, direction=up, density=compact",
+        "x": 424,
+        "y": 608.1000366210938,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15906",
+        "name": "type=check, align=left, direction=up, density=compact",
+        "x": 16,
+        "y": 656.1100463867188,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15914",
+        "name": "type=check, align=right, direction=up, density=compact",
+        "x": 152,
+        "y": 656.1100463867188,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15922",
+        "name": "type=body, align=right, direction=down, density=compact",
+        "x": 288,
+        "y": 656.1100463867188,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15939",
+        "name": "type=body-strong, align=right, direction=down, density=compact",
+        "x": 424,
+        "y": 656.1100463867188,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15956",
+        "name": "type=body-semibold, align=right, direction=down, density=compact",
+        "x": 16,
+        "y": 704.1200561523438,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15973",
+        "name": "type=compare, align=left, direction=up, density=compact",
+        "x": 152,
+        "y": 704.1200561523438,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:15989",
+        "name": "type=compare, align=right, direction=up, density=compact",
+        "x": 288,
+        "y": 704.1200561523438,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:16008",
+        "name": "type=head, align=center, direction=up, density=compact",
+        "x": 424,
+        "y": 704.1200561523438,
+        "w": 120,
+        "h": 32
+      },
+      {
+        "id": "100:16015",
+        "name": "type=body, align=center, direction=up, density=compact",
+        "x": 16,
+        "y": 752.1300659179688,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:16028",
+        "name": "type=body-strong, align=center, direction=up, density=compact",
+        "x": 152,
+        "y": 752.1300659179688,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:16041",
+        "name": "type=badge, align=center, direction=up, density=compact",
+        "x": 288,
+        "y": 752.1300659179688,
+        "w": 120,
+        "h": 36.0099983215332
+      },
+      {
+        "id": "100:16053",
+        "name": "type=body-semibold, align=center, direction=up, density=compact",
+        "x": 424,
+        "y": 752.1300659179688,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:16066",
+        "name": "type=muted, align=center, direction=up, density=compact",
+        "x": 16,
+        "y": 804.1400756835938,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:16079",
+        "name": "type=body-sm, align=center, direction=up, density=compact",
+        "x": 152,
+        "y": 804.1400756835938,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:16092",
+        "name": "type=check, align=center, direction=up, density=compact",
+        "x": 288,
+        "y": 804.1400756835938,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:16100",
+        "name": "type=compare, align=center, direction=up, density=compact",
+        "x": 424,
+        "y": 804.1400756835938,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "100:16116",
+        "name": "type=body, align=right, direction=up, density=inline",
+        "x": 16,
+        "y": 852.1500854492188,
+        "w": 21,
+        "h": 20.010000228881836
+      },
+      {
+        "id": "100:16133",
+        "name": "type=body-strong, align=right, direction=up, density=inline",
+        "x": 53,
+        "y": 852.1500854492188,
+        "w": 21,
+        "h": 20.010000228881836
+      },
+      {
+        "id": "100:16150",
+        "name": "type=body-semibold, align=right, direction=up, density=inline",
+        "x": 90,
+        "y": 852.1500854492188,
+        "w": 21,
+        "h": 20.010000228881836
+      },
+      {
+        "id": "100:16167",
+        "name": "type=body, align=right, direction=down, density=inline",
+        "x": 127,
+        "y": 852.1500854492188,
+        "w": 21,
+        "h": 20.010000228881836
+      },
+      {
+        "id": "100:16184",
+        "name": "type=body-strong, align=right, direction=down, density=inline",
+        "x": 164,
+        "y": 852.1500854492188,
+        "w": 21,
+        "h": 20.010000228881836
+      },
+      {
+        "id": "100:16201",
+        "name": "type=body-semibold, align=right, direction=down, density=inline",
+        "x": 201,
+        "y": 852.1500854492188,
+        "w": 21,
+        "h": 20.010000228881836
+      },
+      {
+        "id": "448:1186",
+        "name": "type=head, align=left, direction=up, density=expand",
+        "x": 238,
+        "y": 852.1500854492188,
+        "w": 120,
+        "h": 40
+      },
+      {
+        "id": "448:1193",
+        "name": "type=head, align=right, direction=up, density=expand",
+        "x": 374,
+        "y": 852.1500854492188,
+        "w": 120,
+        "h": 40
+      },
+      {
+        "id": "448:1200",
+        "name": "type=head, align=center, direction=up, density=expand",
+        "x": 16,
+        "y": 908.1500854492188,
+        "w": 120,
+        "h": 40
+      },
+      {
+        "id": "448:1207",
+        "name": "type=body, align=left, direction=up, density=expand",
+        "x": 152,
+        "y": 908.1500854492188,
+        "w": 120,
+        "h": 40
+      },
+      {
+        "id": "448:1220",
+        "name": "type=body, align=right, direction=up, density=expand",
+        "x": 288,
+        "y": 908.1500854492188,
+        "w": 120,
+        "h": 40
+      },
+      {
+        "id": "448:1237",
+        "name": "type=body, align=center, direction=up, density=expand",
+        "x": 424,
+        "y": 908.1500854492188,
+        "w": 120,
+        "h": 40
+      },
+      {
+        "id": "448:1250",
+        "name": "type=muted, align=left, direction=up, density=expand",
+        "x": 16,
+        "y": 964.1500854492188,
+        "w": 120,
+        "h": 40
+      },
+      {
+        "id": "448:1263",
+        "name": "type=muted, align=right, direction=up, density=expand",
+        "x": 152,
+        "y": 964.1500854492188,
+        "w": 120,
+        "h": 40
+      },
+      {
+        "id": "469:17101",
+        "name": "type=link, align=right, direction=up, density=compact",
+        "x": 288,
+        "y": 964.1500854492188,
+        "w": 120,
+        "h": 32.0099983215332
+      },
+      {
+        "id": "469:17118",
+        "name": "type=link, align=right, direction=up, density=default",
+        "x": 424,
+        "y": 964.1500854492188,
+        "w": 120,
+        "h": 44.0099983215332
+      },
+      {
+        "id": "485:3710",
+        "name": "type=month, align=left, direction=up, density=default",
+        "x": 16,
+        "y": 1024.1600341796875,
+        "w": 50,
+        "h": 48
+      },
+      {
+        "id": "485:3714",
+        "name": "type=month-today, align=left, direction=up, density=default",
+        "x": 82,
+        "y": 1024.1600341796875,
+        "w": 50,
+        "h": 48
+      },
+      {
+        "id": "485:3718",
+        "name": "type=month-selected, align=left, direction=up, density=default",
+        "x": 148,
+        "y": 1024.1600341796875,
+        "w": 50,
+        "h": 48
+      },
+      {
+        "id": "485:3722",
+        "name": "type=month-today-selected, align=left, direction=up, density=default",
+        "x": 214,
+        "y": 1024.1600341796875,
+        "w": 50,
+        "h": 48
+      }
+    ]
+  },
+  {
+    "id": "66:409",
+    "name": "susi-slot",
+    "layout": "HORIZONTAL",
+    "w": 2690,
+    "h": 216,
+    "children": [
+      {
+        "id": "66:360",
+        "name": "type=기본, layout=card",
+        "x": 16,
+        "y": 16,
+        "w": 240,
+        "h": 184
+      },
+      {
+        "id": "66:383",
+        "name": "type=6회 제외, layout=card",
+        "x": 272,
+        "y": 16,
+        "w": 240,
+        "h": 184
+      },
+      {
+        "id": "66:407",
+        "name": "type=빈 칸, layout=card",
+        "x": 528,
+        "y": 16,
+        "w": 240,
+        "h": 184
+      },
+      {
+        "id": "78:604",
+        "name": "type=기본, layout=row",
+        "x": 784,
+        "y": 16,
+        "w": 358,
+        "h": 75
+      },
+      {
+        "id": "78:621",
+        "name": "type=6회 제외, layout=row",
+        "x": 1158,
+        "y": 16,
+        "w": 358,
+        "h": 77
+      },
+      {
+        "id": "78:639",
+        "name": "type=빈 칸, layout=row",
+        "x": 1532,
+        "y": 16,
+        "w": 358,
+        "h": 64
+      },
+      {
+        "id": "90:11040",
+        "name": "type=6회 제외, layout=wide",
+        "x": 1906,
+        "y": 16,
+        "w": 768,
+        "h": 72
+      }
+    ]
+  },
+  {
+    "id": "90:10936",
+    "name": "range-bar-5to9",
+    "layout": "VERTICAL",
+    "w": 390,
+    "h": 436,
+    "children": [
+      {
+        "id": "90:10845",
+        "name": "size=full, marker-line=off",
+        "x": 16,
+        "y": 16,
+        "w": 358,
+        "h": 108
+      },
+      {
+        "id": "90:10897",
+        "name": "size=mini, marker-line=off",
+        "x": 16,
+        "y": 156,
+        "w": 358,
+        "h": 46
+      },
+      {
+        "id": "335:2973",
+        "name": "size=full, marker-line=on",
+        "x": 16,
+        "y": 234,
+        "w": 358,
+        "h": 108
+      },
+      {
+        "id": "335:3023",
+        "name": "size=mini, marker-line=on",
+        "x": 16,
+        "y": 374,
+        "w": 358,
+        "h": 46
+      }
+    ]
+  },
+  {
+    "id": "102:2160",
+    "name": "cut-dot-plot/dot",
+    "layout": "HORIZONTAL",
+    "w": 128,
+    "h": 32,
+    "children": [
+      {
+        "id": "102:2144",
+        "name": "shape=교과, tone=recent, dot=8, selected=false",
+        "x": 16,
+        "y": 16,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "102:2146",
+        "name": "shape=교과, tone=prev, dot=8, selected=false",
+        "x": 40,
+        "y": 16,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "102:2148",
+        "name": "shape=종합, tone=recent, dot=8, selected=false",
+        "x": 64,
+        "y": 16,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "102:2150",
+        "name": "shape=종합, tone=prev, dot=8, selected=false",
+        "x": 88,
+        "y": 16,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "102:2152",
+        "name": "shape=논술, tone=recent, dot=8, selected=false",
+        "x": 16,
+        "y": 40,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "102:2154",
+        "name": "shape=논술, tone=prev, dot=8, selected=false",
+        "x": 40,
+        "y": 40,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "102:2156",
+        "name": "shape=기타, tone=recent, dot=8, selected=false",
+        "x": 64,
+        "y": 40,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "102:2158",
+        "name": "shape=기타, tone=prev, dot=8, selected=false",
+        "x": 88,
+        "y": 40,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "260:4",
+        "name": "shape=교과, tone=old, dot=8, selected=false",
+        "x": 16,
+        "y": 64,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "260:6",
+        "name": "shape=종합, tone=old, dot=8, selected=false",
+        "x": 40,
+        "y": 64,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "260:8",
+        "name": "shape=논술, tone=old, dot=8, selected=false",
+        "x": 64,
+        "y": 64,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "260:10",
+        "name": "shape=기타, tone=old, dot=8, selected=false",
+        "x": 88,
+        "y": 64,
+        "w": 8,
+        "h": 8
+      },
+      {
+        "id": "351:51064",
+        "name": "shape=교과, tone=recent, dot=11, selected=false",
+        "x": 16,
+        "y": 88,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "id": "351:51066",
+        "name": "shape=교과, tone=prev, dot=11, selected=false",
+        "x": 43,
+        "y": 88,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "id": "351:51068",
+        "name": "shape=종합, tone=recent, dot=11, selected=false",
+        "x": 70,
+        "y": 88,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "id": "351:51070",
+        "name": "shape=종합, tone=prev, dot=11, selected=false",
+        "x": 97,
+        "y": 88,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "id": "351:51072",
+        "name": "shape=논술, tone=recent, dot=11, selected=false",
+        "x": 16,
+        "y": 115,
+        "w": 11.000284194946289,
+        "h": 11.000284194946289
+      },
+      {
+        "id": "351:51074",
+        "name": "shape=논술, tone=prev, dot=11, selected=false",
+        "x": 43.000282287597656,
+        "y": 115,
+        "w": 11.000284194946289,
+        "h": 11.000284194946289
+      },
+      {
+        "id": "351:51076",
+        "name": "shape=기타, tone=recent, dot=11, selected=false",
+        "x": 70.00056457519531,
+        "y": 115,
+        "w": 11.000284194946289,
+        "h": 11.000284194946289
+      },
+      {
+        "id": "351:51078",
+        "name": "shape=기타, tone=prev, dot=11, selected=false",
+        "x": 97.00084686279297,
+        "y": 115,
+        "w": 11.000284194946289,
+        "h": 11.000284194946289
+      },
+      {
+        "id": "351:51080",
+        "name": "shape=교과, tone=old, dot=11, selected=false",
+        "x": 16,
+        "y": 142.0002899169922,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "id": "351:51082",
+        "name": "shape=종합, tone=old, dot=11, selected=false",
+        "x": 43,
+        "y": 142.0002899169922,
+        "w": 11,
+        "h": 11
+      },
+      {
+        "id": "351:51084",
+        "name": "shape=논술, tone=old, dot=11, selected=false",
+        "x": 70,
+        "y": 142.0002899169922,
+        "w": 11.000284194946289,
+        "h": 11.000284194946289
+      },
+      {
+        "id": "351:51086",
+        "name": "shape=기타, tone=old, dot=11, selected=false",
+        "x": 97.00028228759766,
+        "y": 142.0002899169922,
+        "w": 11.000284194946289,
+        "h": 11.000284194946289
+      },
+      {
+        "id": "555:1242",
+        "name": "shape=교과, tone=recent, dot=11, selected=true",
+        "x": 16,
+        "y": 169.00057983398438,
+        "w": 11,
+        "h": 11
+      }
+    ]
+  },
+  {
+    "id": "92:1687",
+    "name": "competency-highlight",
+    "layout": "HORIZONTAL",
+    "w": 1104,
+    "h": 55,
+    "children": [
+      {
+        "id": "92:1663",
+        "name": "competency=학업, focus=on",
+        "x": 16,
+        "y": 16,
+        "w": 120,
+        "h": 23
+      },
+      {
+        "id": "92:1666",
+        "name": "competency=학업, focus=off",
+        "x": 152,
+        "y": 16,
+        "w": 120,
+        "h": 23
+      },
+      {
+        "id": "92:1669",
+        "name": "competency=진로, focus=on",
+        "x": 288,
+        "y": 16,
+        "w": 120,
+        "h": 23
+      },
+      {
+        "id": "92:1672",
+        "name": "competency=진로, focus=off",
+        "x": 424,
+        "y": 16,
+        "w": 120,
+        "h": 23
+      },
+      {
+        "id": "92:1675",
+        "name": "competency=공동체, focus=on",
+        "x": 560,
+        "y": 16,
+        "w": 120,
+        "h": 23
+      },
+      {
+        "id": "92:1678",
+        "name": "competency=공동체, focus=off",
+        "x": 696,
+        "y": 16,
+        "w": 120,
+        "h": 23
+      },
+      {
+        "id": "92:1681",
+        "name": "competency=없음, focus=on",
+        "x": 832,
+        "y": 16,
+        "w": 120,
+        "h": 23
+      },
+      {
+        "id": "92:1684",
+        "name": "competency=없음, focus=off",
+        "x": 968,
+        "y": 16,
+        "w": 120,
+        "h": 23
+      }
+    ]
+  },
+  {
+    "id": "80:10210",
+    "name": "mask-preview",
+    "layout": "HORIZONTAL",
+    "w": 1138,
+    "h": 221,
+    "children": [
+      {
+        "id": "63:436",
+        "name": "state=default",
+        "x": 16,
+        "y": 16,
+        "w": 358,
+        "h": 189
+      },
+      {
+        "id": "80:10211",
+        "name": "state=highlight",
+        "x": 390,
+        "y": 16,
+        "w": 358,
+        "h": 189
+      },
+      {
+        "id": "80:10230",
+        "name": "state=read-only",
+        "x": 764,
+        "y": 16,
+        "w": 358,
+        "h": 162
+      }
+    ]
+  },
+  {
+    "id": "63:435",
+    "name": "competency-card",
+    "layout": "HORIZONTAL",
+    "w": 1150,
+    "h": 358,
+    "children": [
+      {
+        "id": "92:1933",
+        "name": "competency=학업, layout=mobile",
+        "x": 16,
+        "y": 16,
+        "w": 350,
+        "h": 136
+      },
+      {
+        "id": "92:1953",
+        "name": "competency=진로, layout=mobile",
+        "x": 382,
+        "y": 16,
+        "w": 350,
+        "h": 136
+      },
+      {
+        "id": "92:1973",
+        "name": "competency=공동체, layout=mobile",
+        "x": 748,
+        "y": 16,
+        "w": 350,
+        "h": 136
+      },
+      {
+        "id": "92:1995",
+        "name": "competency=학업, layout=pc",
+        "x": 16,
+        "y": 168,
+        "w": 312,
+        "h": 141
+      },
+      {
+        "id": "92:2012",
+        "name": "competency=진로, layout=pc",
+        "x": 344,
+        "y": 168,
+        "w": 312,
+        "h": 141
+      },
+      {
+        "id": "92:2029",
+        "name": "competency=공동체, layout=pc",
+        "x": 672,
+        "y": 168,
+        "w": 312,
+        "h": 174
+      }
+    ]
+  },
+  {
+    "id": "92:1697",
+    "name": "competency-highlight/tooltip",
+    "layout": "HORIZONTAL",
+    "w": 439,
+    "h": 67,
+    "children": [
+      {
+        "id": "92:1688",
+        "name": "competency=학업",
+        "x": 16,
+        "y": 16,
+        "w": 125,
+        "h": 35
+      },
+      {
+        "id": "92:1691",
+        "name": "competency=진로",
+        "x": 157,
+        "y": 16,
+        "w": 125,
+        "h": 35
+      },
+      {
+        "id": "92:1694",
+        "name": "competency=공동체",
+        "x": 298,
+        "y": 16,
+        "w": 125,
+        "h": 35
+      }
+    ]
+  },
+  {
+    "id": "110:3433",
+    "name": "placement-board",
+    "layout": "HORIZONTAL",
+    "w": 1342,
+    "h": 1131,
+    "children": [
+      {
+        "id": "110:2429",
+        "name": "size=pc, variant=default",
+        "x": 24,
+        "y": 24,
+        "w": 912,
+        "h": 598
+      },
+      {
+        "id": "110:2935",
+        "name": "size=mobile, variant=default",
+        "x": 968,
+        "y": 24,
+        "w": 350,
+        "h": 598
+      },
+      {
+        "id": "415:3312",
+        "name": "size=pc, variant=layer",
+        "x": 24,
+        "y": 670,
+        "w": 1080,
+        "h": 188
+      },
+      {
+        "id": "415:3204",
+        "name": "size=mobile, variant=layer",
+        "x": 24,
+        "y": 906,
+        "w": 310,
+        "h": 201
+      }
+    ]
+  },
+  {
+    "id": "31:56",
+    "name": "sidebar-item",
+    "layout": "VERTICAL",
+    "w": 280,
+    "h": 136,
+    "children": [
+      {
+        "id": "31:49",
+        "name": "state=default",
+        "x": 16,
+        "y": 16,
+        "w": 248,
+        "h": 44
+      },
+      {
+        "id": "31:55",
+        "name": "state=selected",
+        "x": 16,
+        "y": 76,
+        "w": 248,
+        "h": 44
+      }
+    ]
+  },
+  {
+    "id": "100:25153",
+    "name": "sidebar-group",
+    "layout": "VERTICAL",
+    "w": 280,
+    "h": 256,
+    "children": [
+      {
+        "id": "100:25117",
+        "name": "state=current, expanded=true",
+        "x": 16,
+        "y": 16,
+        "w": 248,
+        "h": 44
+      },
+      {
+        "id": "100:25126",
+        "name": "state=current, expanded=false",
+        "x": 16,
+        "y": 76,
+        "w": 248,
+        "h": 44
+      },
+      {
+        "id": "100:25135",
+        "name": "state=default, expanded=true",
+        "x": 16,
+        "y": 136,
+        "w": 248,
+        "h": 44
+      },
+      {
+        "id": "100:25144",
+        "name": "state=default, expanded=false",
+        "x": 16,
+        "y": 196,
+        "w": 248,
+        "h": 44
+      }
+    ]
+  },
+  {
+    "id": "62:236",
+    "name": "mode-switch",
+    "layout": "HORIZONTAL",
+    "w": 880,
+    "h": 80,
+    "children": [
+      {
+        "id": "62:226",
+        "name": "선택=학생, on=card",
+        "x": 16,
+        "y": 16,
+        "w": 200,
+        "h": 48
+      },
+      {
+        "id": "62:231",
+        "name": "선택=교사, on=card",
+        "x": 232,
+        "y": 16,
+        "w": 200,
+        "h": 48
+      },
+      {
+        "id": "335:3222",
+        "name": "선택=학생, on=page",
+        "x": 448,
+        "y": 16,
+        "w": 200,
+        "h": 48
+      },
+      {
+        "id": "335:3227",
+        "name": "선택=교사, on=page",
+        "x": 664,
+        "y": 16,
+        "w": 200,
+        "h": 48
+      }
+    ]
+  },
+  {
+    "id": "480:3862",
+    "name": "region-map",
+    "layout": "NONE",
+    "w": 1870,
+    "h": 1184,
+    "children": [
+      {
+        "id": "480:3550",
+        "name": "view=nation, size=mobile, sido=전국",
+        "x": 24,
+        "y": 24,
+        "w": 350,
+        "h": 440
+      },
+      {
+        "id": "480:3670",
+        "name": "view=nation, size=pc, sido=전국",
+        "x": 414,
+        "y": 24,
+        "w": 636,
+        "h": 540
+      },
+      {
+        "id": "480:3790",
+        "name": "view=region, size=mobile, sido=강원",
+        "x": 24,
+        "y": 604,
+        "w": 350,
+        "h": 440
+      },
+      {
+        "id": "480:3826",
+        "name": "view=region, size=pc, sido=강원",
+        "x": 414,
+        "y": 604,
+        "w": 636,
+        "h": 540
+      },
+      {
+        "id": "503:3870",
+        "name": "view=region, size=mobile, sido=세종",
+        "x": 1090,
+        "y": 604,
+        "w": 350,
+        "h": 440
+      },
+      {
+        "id": "503:3923",
+        "name": "view=region, size=mobile, sido=울산",
+        "x": 1480,
+        "y": 604,
+        "w": 350,
+        "h": 440
+      }
+    ]
+  }
+]

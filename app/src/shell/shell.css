@@ -274,3 +274,5 @@
 .sidebar__footer .sidebar__logout { padding: 0; border: 0; background: none; font: inherit; color: var(--color-ink); cursor: pointer; }
 .topbar__asof { line-height: 1.4; } /* caption 12/16.8 (v2 시안 page-header 기준일 배지) */
 .sidebar__footer button.button-pill-soft { border: 0; font: inherit; font-size: var(--font-link-size); font-weight: 600; cursor: pointer; }
+/* 2026-11-25 사용자 요청: 상단 바 기준일 배지는 음영 없이 글자만(화면별 채움 규칙보다 우선) */
+.topbar .data-status-badge, .appbar .data-status-badge { background: transparent !important; }

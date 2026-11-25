@@ -4,13 +4,14 @@ import type { ApplicationPlan, ChecklistStep, CounselTask, EligibilityItem } fro
 import type { Board, BoardSlot } from '../../domain/board';
 import type { Interest } from '../../domain/interests';
 import { interestId } from '../../domain/interests';
+import { rel } from './sampleClock';
 
 /** 문자열 id를 쓰는 샘플 행은 모두 이 접두어로 시작해요. 지우기는 이 접두어로 샘플만 골라요. */
 export const SAMPLE_PREFIX = 'sample-';
 export const SAMPLE_STAMP = '2026-11-18T00:00:00.000Z';
 /** 학생 화면에서 부르는 샘플 학생 이름(홈 v2 시안 817:2 "민지님, 지금 내 위치예요"). 교사 화면은 같은 사람을 번호·별칭 "7번 하늘"로만 보여요(demo-dataset). */
 export const SAMPLE_STUDENT_NAME = '민지';
-const kst = (d: string) => new Date(`${d}:00+09:00`).toISOString(); // '2026-11-14T21:10' → UTC ISO
+const kst = (d: string) => new Date(`${rel(d)}:00+09:00`).toISOString(); // '2026-11-14T21:10' → 오늘 기준으로 민 UTC ISO
 
 type Dist = [number, number, number, number, number];
 type Row = [name: string, group: string, type: SubjectType, credits: number, rank: number | null, extra?: Partial<GradeRecord>];
@@ -53,14 +54,14 @@ export const SAMPLE_UNIVERSITIES = [
   ['동국대학교', '행정학과', '학생부교과'], ['한양대학교', '정책학과', '학생부교과(추천형)'], ['중앙대학교', '공공인재학부', '학생부교과(지역균형)'],
 ] as const;
 export const sampleInterests: Interest[] = SAMPLE_UNIVERSITIES.map(([university, department, program], i) => ({
-  id: interestId(university, program, department), university, program, department, created_at: `2026-11-10T00:00:0${i}.000Z`,
+  id: interestId(university, program, department), university, program, department, created_at: rel(`2026-11-10T00:00:0${i}.000Z`),
 }));
 /** 2026-11-24 전에 넣은 샘플 관심 전형 id("학생부종합"). 지우기·백업에서 여전히 샘플로 봐요. */
 export const legacySampleInterestIds = SAMPLE_UNIVERSITIES.map(([university, department]) => interestId(university, '학생부종합', department));
 
 const appId = (i: number) => `${SAMPLE_PREFIX}app-${i + 1}`;
 const step = (a: number, n: number, title: string, status: ChecklistStep['status'], due: string | null, checked: string | null, note = '', source_url = ''): ChecklistStep =>
-  ({ id: `${SAMPLE_PREFIX}s-${a}-${n}`, title, status, due_at: due, note, source_url, checked_at: checked ? kst(checked) : null });
+  ({ id: `${SAMPLE_PREFIX}s-${a}-${n}`, title, status, due_at: due && rel(due), note, source_url, checked_at: checked ? kst(checked) : null });
 const elig = (a: number, n: number, title: string, status: EligibilityItem['status'], checked: string | null, note = '', source_url = ''): EligibilityItem =>
   ({ id: `${SAMPLE_PREFIX}e-${a}-${n}`, title, status, note, source_url, checked_at: checked ? kst(checked) : null });
 const LINK = 'https://admission.example.ac.kr/2028/plan.pdf';
@@ -72,7 +73,7 @@ const STEPS: Record<number, ChecklistStep[]> = {
   // application-checklist 상세 예시 · 전형 A(경희대학교) 8항목
   0: [step(0, 1, '모집요강 읽기', 'done', '2026-11-15T18:00', '2026-11-14T21:10', '', LINK),
     step(0, 2, '학교생활기록부 사본 확인', 'progress', '2026-11-18T18:00', '2026-11-17T19:40', '담임 선생님께 봉사 시간 정정 문의'),
-    step(0, 3, '담임 선생님 상담 신청', 'pending', '2026-11-20T18:00', null),
+    step(0, 3, '담임 선생님 상담 신청', 'pending', '2026-11-24T18:00', null), // 시안 '오늘 마감' = 샘플의 오늘
     step(0, 4, '원서 작성', 'pending', null, null),
     step(0, 5, '전형료 결제', 'pending', '2027-09-15T18:00', null, '결제 영수증 캡처해 두기'),
     step(0, 6, '접수 완료 확인', 'pending', null, null),
@@ -110,7 +111,7 @@ const TASKS: T[] = [
   ['question', null, '2026-11-10', null, '내신과 모의고사 중 지금 어디에 시간을 더 쓸까요?', '', '2026-11-10T15:10'],
 ];
 export const sampleTasks: CounselTask[] = TASKS.map(([kind, app, session_date, due_date, title, note, completed], i) => ({
-  id: `${SAMPLE_PREFIX}t-${i + 1}`, application_id: app === null ? null : appId(app), kind, title, note, session_date, due_date,
+  id: `${SAMPLE_PREFIX}t-${i + 1}`, application_id: app === null ? null : appId(app), kind, title, note, session_date: rel(session_date), due_date: due_date && rel(due_date),
   done: !!completed, completed_at: completed ? kst(completed) : null, created_at: SAMPLE_STAMP, updated_at: SAMPLE_STAMP,
 }));
 
@@ -118,5 +119,5 @@ export const sampleTasks: CounselTask[] = TASKS.map(([kind, app, session_date, d
 const EXAMS: [BoardSlot['exam_kind'], string | null][] = [['면접', '2026-11-21'], ['면접', '2026-11-21'], ['논술', '2026-11-28'], ['면접', '2026-12-05'], ['면접', null], ['면접', null]];
 export const sampleBoards: Board[] = [{
   id: `${SAMPLE_PREFIX}board-a`, name: 'A안', exempt: [], updated_at: SAMPLE_STAMP,
-  slots: EXAMS.map(([exam_kind, exam_date], i) => ({ application_id: appId(i), exam_kind, exam_date, csat: 'check', memo: '' })),
+  slots: EXAMS.map(([exam_kind, exam_date], i) => ({ application_id: appId(i), exam_kind, exam_date: exam_date && rel(exam_date), csat: 'check', memo: '' })),
 }];

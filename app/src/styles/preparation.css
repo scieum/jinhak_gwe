@@ -165,3 +165,31 @@
 .basis-grid > * { padding: var(--spacing-sm); border-bottom: 1px solid var(--color-hairline); overflow-wrap: anywhere; min-width: 0; }
 .basis-grid > dt { background: var(--color-canvas-soft); }
 @media (max-width: 767px) { .prep-grid { grid-template-columns: 1fr; } .prep-form .form-grid { grid-template-columns: 1fr; } .basis-grid { grid-template-columns: 80px repeat(2, minmax(0, 1fr)); font-size: 12px; } }
+@media (min-width: 1024px) { .preparation--eligibility .prep-add-item { width: auto; justify-self: start; } }
+@media (max-width: 1023px) { .preparation--eligibility .prep-identity { gap: 8px; } .preparation--eligibility .prep-shortcuts .toolbar { padding-bottom: 0; } }
+/* 시안(Figma)은 글 상자 높이를 정수로 올려 쌓아요(19.5→20 · 22.5→23 · 51→52). 줄 높이 토큰은 두고 상자만 맞춰요. 제목 줄 = 배지 24 */
+@media (max-width: 1023px) {
+  .preparation--eligibility .prep-heading p { min-height: 52px; }
+  .preparation--eligibility .prep-item-title { min-height: 24px; }
+  .preparation--eligibility .prep-eligibility-item .prep-note, .preparation--eligibility .prep-eligibility-item .prep-source-missing { min-height: 20px; }
+  .preparation--eligibility .prep-eligibility-item .prep-source { min-height: 23px; }
+}
+/* 원서·서류 체크리스트(v2 시안 668:210274 · 670:210435) */
+.preparation--checklist .prep-select > .prep-select-field { position: relative; display: grid; height: auto; }
+.preparation--checklist .prep-select-field select { appearance: none; color: transparent; }
+.preparation--checklist .prep-select-field option { color: var(--color-ink); }
+.preparation--checklist .prep-select-value { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: max-content; max-width: calc(100% - 32px); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; pointer-events: none; color: var(--color-ink); font-size: 15px; font-weight: 600; line-height: 22.5px; min-height: 23px; }
+.preparation--checklist .prep-shortcuts .button-pill-soft { gap: 0; }
+@media (min-width: 1024px) {
+  .preparation--checklist .prep-select-row .prep-plan-actions { gap: 24px; }
+  .preparation--checklist .prep-name-row { gap: 12px; }
+  .preparation--checklist .prep-check-table td:has(> .prep-source) { text-align: right; }
+}
+@media (max-width: 1023px) {
+  .preparation--checklist .prep-program-row { flex-wrap: nowrap; align-items: flex-start; justify-content: flex-start; }
+  .preparation--checklist .prep-program-row > span:first-child { flex: 1; min-width: 0; word-break: keep-all; line-height: 1.4; }
+  .preparation--checklist .prep-program-row .prep-source { flex: none; min-height: 23px; }
+  .preparation--checklist .prep-check-item .prep-deadline > span:first-child { vertical-align: top; }
+  .preparation--checklist .prep-check-item .prep-deadline { min-height: 20px; }
+  .preparation--checklist .prep-check-item .prep-note, .preparation--checklist .prep-check-item > .prep-source { min-height: 23px; }
+}

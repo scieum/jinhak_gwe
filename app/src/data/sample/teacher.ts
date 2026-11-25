@@ -6,6 +6,7 @@ import type { Target } from '../../domain/minimum';
 import type { ClassSchedule } from '../../domain/classCalendar';
 import type { Outcome } from '../../domain/outcomes';
 import { SAMPLE_PREFIX, SAMPLE_STAMP, SAMPLE_UNIVERSITIES, sampleGrades } from './student';
+import { rel, relNext } from './sampleClock';
 
 /** 이 학급 코드 + 만든 시각이면 샘플 학급이에요(지우기 기준). */
 export const SAMPLE_CLASS: ClassInfo = { key: 'class', name: '2학년 3반', code: 'SMPL', created_at: SAMPLE_STAMP };
@@ -43,7 +44,7 @@ const CARD_SLOTS: Record<number, string> = {
 const slotsOf = (n: number): CounselPayload['slots'] => n === 7 ? HANUL_SLOTS : (CARD_SLOTS[n] ?? '').split(',').filter(Boolean)
   .map((x, i) => { const [u, judgment] = x.split(' '); return { priority: i + 1, university: `${u}대학교`, judgment }; });
 const card = (n: number, slots: CounselPayload['slots'] = slotsOf(n)): CounselPayload => ({ scenario: 'A안', slots, exempt: [], warnings: WARNINGS[n] ?? [] });
-const record = (number: string, date: string, c: CounselPayload, seen = true): CardRecord => ({ number, created_at: `${date}T09:00:00.000Z`, received_at: `${date}T10:00:00.000Z`, seen, card: c });
+const record = (number: string, day: string, c: CounselPayload, seen = true, date = rel(day)): CardRecord => ({ number, created_at: `${date}T09:00:00.000Z`, received_at: `${date}T10:00:00.000Z`, seen, card: c });
 // 새 버전(아직 안 본 두 번째 카드): 5 햇살 · 9 소나무 · 24 파도(card-collect v2 시안). 첫 버전(11-10)은 마지막 칸이 없었어요.
 const NEW_VERSION = new Set([5, 9, 24]);
 // 하늘 카드 v1 10-13 · v2 10-27 · v3 11-10(시안). 나머지는 데이터 기준일(11-18)에 한 번.
@@ -66,7 +67,8 @@ const OTHER_MEMOS: Memo[] = [
   { number: '15', date: '2026-11-13', area: '수시로', text: '카드 조합 경고 2개를 같이 보기로 했어요.', next: '11-25까지 · 소신·위험 칸 다시 보기', next_done: false, created_at: '2026-11-13T07:00:00.000Z' },
   { number: '22', date: '2026-11-13', area: '수시로', text: '수능 최저 미충족이라 칸을 같이 보기로 했어요.', next: '11-27까지 · 최저 없는 전형 찾아 오기', next_done: false, created_at: '2026-11-13T07:30:00.000Z' },
 ];
-export const sampleMemos: Memo[] = [...MEMOS.map(([date, area, text, next, time]): Memo => ({ number: '07', date, area, text, next, next_done: false, created_at: `${date}T${time}:00.000Z` })), ...OTHER_MEMOS];
+export const sampleMemos: Memo[] = [...MEMOS.map(([day, area, text, next, time]): Memo => { const date = rel(day); return { number: '07', date, area, text, next: relNext(next), next_done: false, created_at: `${date}T${time}:00.000Z` }; }),
+  ...OTHER_MEMOS.map(m => ({ ...m, date: rel(m.date), next: relNext(m.next), created_at: rel(m.created_at) }))];
 // 학급 성적(teacher-dashboard v2 시안 "학생 한눈에" 5등급 평균). 16 봄비는 성적 없음, 7 하늘은 아래 demo-dataset 값.
 const G5: Record<number, number> = { 1: 1.5, 2: 1.1, 3: 2.1, 4: 1.8, 5: 1.3, 6: 1.3, 8: 2.0, 9: 1.1, 10: 1.4, 11: 2.2, 12: 1.7, 13: 1.2, 14: 1.5, 15: 2.0,
   17: 1.3, 18: 1.6, 19: 2.0, 20: 1.4, 21: 1.1, 22: 2.1, 23: 1.6, 24: 1.7, 25: 1.4, 26: 2.2, 27: 1.8, 28: 1.3 };
@@ -91,7 +93,7 @@ export const sampleTargets: Target[] = sampleStudents.map(s => ({ number: s.numb
 
 // 누가기록: 이번 달 기록 있음 25명 · 없음 3명(18 여울 · 21 모래 · 28 솔잎)
 export const sampleLogs: HomeroomLog[] = [{
-  date: '2026-11-13', area: '진로', text: '학급 진로 활동: 희망 전공 조사지 작성', created_at: '2026-11-13T08:00:00.000Z',
+  date: rel('2026-11-13'), area: '진로', text: '학급 진로 활동: 희망 전공 조사지 작성', created_at: rel('2026-11-13T08:00:00.000Z'),
   numbers: sampleStudents.map(s => s.number).filter(n => !['18', '21', '28'].includes(n)),
 }];
 
@@ -110,10 +112,10 @@ export const sampleClassMocks: MockGrades[] = sampleStudents.filter(s => s.numbe
 
 // 우리 반 입시 일정: 하늘의 고사 일정(calendar 상세 예시 E4 · E5 · E7 · E8)과 같은 날
 export const sampleSchedules: ClassSchedule[] = [
-  { university: '경희대학교', program: '학생부교과(지역균형)', kind: '면접·실기', date: '2026-11-21' },
-  { university: '건국대학교', program: '학생부교과', kind: '면접·실기', date: '2026-11-21' },
-  { university: '중앙대학교', program: '학생부교과', kind: '서류 제출', date: '2026-11-27', time: '17:00' },
-  { university: '동국대학교', program: '학생부교과', kind: '면접·실기', date: '2026-12-05' },
+  { university: '경희대학교', program: '학생부교과(지역균형)', kind: '면접·실기', date: rel('2026-11-21') },
+  { university: '건국대학교', program: '학생부교과', kind: '면접·실기', date: rel('2026-11-21') },
+  { university: '중앙대학교', program: '학생부교과', kind: '서류 제출', date: rel('2026-11-27'), time: '17:00' },
+  { university: '동국대학교', program: '학생부교과', kind: '면접·실기', date: rel('2026-12-05') },
 ];
 
 // 결과 집계 샘플(result-summary 02-spec 1-1 · v2 시안): 지원 162 = 합격 21 + 충원 합격 9 + 불합격 118(1단계 불합격 35 포함) + 미등록 7 + 미입력 7,

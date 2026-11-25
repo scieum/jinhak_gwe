@@ -1,0 +1,1968 @@
+[
+  {
+    "id": "346:123523",
+    "children": [
+      {
+        "id": "346:123524",
+        "name": "admissions-list/390",
+        "type": "FRAME",
+        "x": 80,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "346:125015",
+        "name": "admissions-list/1440",
+        "type": "FRAME",
+        "x": 80,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "736:259987",
+        "name": "admissions-list/390-loading",
+        "type": "FRAME",
+        "x": 550,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:260072",
+        "name": "admissions-list/390-error",
+        "type": "FRAME",
+        "x": 1020,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:260157",
+        "name": "admissions-list/390-plan-missing",
+        "type": "FRAME",
+        "x": 1490,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:260242",
+        "name": "admissions-list/390-search-result",
+        "type": "FRAME",
+        "x": 1960,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:260327",
+        "name": "admissions-list/390-search-empty",
+        "type": "FRAME",
+        "x": 2430,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:260412",
+        "name": "admissions-list/390-filter-sheet",
+        "type": "FRAME",
+        "x": 2900,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:260497",
+        "name": "admissions-list/390-filter-applied",
+        "type": "FRAME",
+        "x": 3370,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:260582",
+        "name": "admissions-list/390-filter-empty",
+        "type": "FRAME",
+        "x": 3840,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:260667",
+        "name": "admissions-list/390-sort-sheet",
+        "type": "FRAME",
+        "x": 4310,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:260752",
+        "name": "admissions-list/390-sort-recent",
+        "type": "FRAME",
+        "x": 4780,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:260837",
+        "name": "admissions-list/390-interest-added",
+        "type": "FRAME",
+        "x": 5250,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:260922",
+        "name": "admissions-list/390-interest-removed",
+        "type": "FRAME",
+        "x": 5720,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:261007",
+        "name": "admissions-list/390-interest-only",
+        "type": "FRAME",
+        "x": 6190,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:261092",
+        "name": "admissions-list/390-interest-only-empty",
+        "type": "FRAME",
+        "x": 6660,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:261177",
+        "name": "admissions-list/390-interest-remove-confirm",
+        "type": "FRAME",
+        "x": 7130,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:261262",
+        "name": "admissions-list/390-interest-error",
+        "type": "FRAME",
+        "x": 7600,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "736:261347",
+        "name": "admissions-list/390-page-end",
+        "type": "FRAME",
+        "x": 8070,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "740:264323",
+        "name": "admissions-list/1440-loading",
+        "type": "FRAME",
+        "x": 1600,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:264386",
+        "name": "admissions-list/1440-error",
+        "type": "FRAME",
+        "x": 3120,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:264449",
+        "name": "admissions-list/1440-plan-missing",
+        "type": "FRAME",
+        "x": 4640,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:264512",
+        "name": "admissions-list/1440-search-result",
+        "type": "FRAME",
+        "x": 6160,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:264575",
+        "name": "admissions-list/1440-search-empty",
+        "type": "FRAME",
+        "x": 7680,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:264638",
+        "name": "admissions-list/1440-filtered",
+        "type": "FRAME",
+        "x": 9200,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:264701",
+        "name": "admissions-list/1440-filter-empty",
+        "type": "FRAME",
+        "x": 10720,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:264764",
+        "name": "admissions-list/1440-sort-dropdown",
+        "type": "FRAME",
+        "x": 12240,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:264827",
+        "name": "admissions-list/1440-sort-recent",
+        "type": "FRAME",
+        "x": 13760,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:264890",
+        "name": "admissions-list/1440-list-view",
+        "type": "FRAME",
+        "x": 15280,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:264953",
+        "name": "admissions-list/1440-interest-added",
+        "type": "FRAME",
+        "x": 16800,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:265016",
+        "name": "admissions-list/1440-interest-only",
+        "type": "FRAME",
+        "x": 18320,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:265079",
+        "name": "admissions-list/1440-interest-remove-confirm",
+        "type": "FRAME",
+        "x": 19840,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:265142",
+        "name": "admissions-list/1440-interest-error",
+        "type": "FRAME",
+        "x": 21360,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "740:265205",
+        "name": "admissions-list/1440-page-end",
+        "type": "FRAME",
+        "x": 22880,
+        "y": 1060,
+        "w": 1440,
+        "h": 900
+      }
+    ]
+  },
+  {
+    "id": "346:131096",
+    "children": [
+      {
+        "id": "346:131097",
+        "name": "minimum-search/390",
+        "type": "FRAME",
+        "x": 80,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "346:131123",
+        "name": "minimum-search/1440",
+        "type": "FRAME",
+        "x": 550,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      }
+    ]
+  },
+  {
+    "id": "346:131149",
+    "children": [
+      {
+        "id": "346:131150",
+        "name": "univ-score/390",
+        "type": "FRAME",
+        "x": 80,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "346:131176",
+        "name": "univ-score/1440",
+        "type": "FRAME",
+        "x": 550,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "881:346358",
+        "name": "univ-score/390-loading",
+        "type": "FRAME",
+        "x": 2190,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "881:346509",
+        "name": "univ-score/390-error",
+        "type": "FRAME",
+        "x": 2660,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "881:346666",
+        "name": "univ-score/390-rules-error",
+        "type": "FRAME",
+        "x": 3130,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "881:346914",
+        "name": "univ-score/390-empty",
+        "type": "FRAME",
+        "x": 8280,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "881:347076",
+        "name": "univ-score/390-no-grades",
+        "type": "FRAME",
+        "x": 8750,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "881:347239",
+        "name": "univ-score/390-one",
+        "type": "FRAME",
+        "x": 9220,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "881:347418",
+        "name": "univ-score/390-all-pending",
+        "type": "FRAME",
+        "x": 9690,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "881:347603",
+        "name": "univ-score/390-missing-input",
+        "type": "FRAME",
+        "x": 16360,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "883:348742",
+        "name": "univ-score/390-detail-missing",
+        "type": "FRAME",
+        "x": 16830,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "881:347825",
+        "name": "univ-score/390-many-pending",
+        "type": "FRAME",
+        "x": 17300,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "883:347750",
+        "name": "univ-score/390-detail",
+        "type": "FRAME",
+        "x": 20930,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "883:348126",
+        "name": "univ-score/390-detail-trace",
+        "type": "FRAME",
+        "x": 21400,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "883:348457",
+        "name": "univ-score/390-detail-trace-all",
+        "type": "FRAME",
+        "x": 21870,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "881:348315",
+        "name": "univ-score/390-sort-sheet",
+        "type": "FRAME",
+        "x": 25500,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "881:348081",
+        "name": "univ-score/390-sort-name",
+        "type": "FRAME",
+        "x": 25970,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "883:349026",
+        "name": "univ-score/390-heart-confirm",
+        "type": "FRAME",
+        "x": 28080,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "881:348608",
+        "name": "univ-score/390-heart-removed",
+        "type": "FRAME",
+        "x": 28550,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "885:347550",
+        "name": "univ-score/1440-loading",
+        "type": "FRAME",
+        "x": 3600,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "885:354072",
+        "name": "univ-score/1440-error",
+        "type": "FRAME",
+        "x": 5120,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "885:358064",
+        "name": "univ-score/1440-rules-error",
+        "type": "FRAME",
+        "x": 6640,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "885:366188",
+        "name": "univ-score/1440-empty",
+        "type": "FRAME",
+        "x": 10160,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "885:370186",
+        "name": "univ-score/1440-no-grades",
+        "type": "FRAME",
+        "x": 11680,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "885:374184",
+        "name": "univ-score/1440-one",
+        "type": "FRAME",
+        "x": 13200,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "885:381941",
+        "name": "univ-score/1440-all-pending",
+        "type": "FRAME",
+        "x": 14720,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "886:349632",
+        "name": "univ-score/1440-missing-input",
+        "type": "FRAME",
+        "x": 17770,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "886:360867",
+        "name": "univ-score/1440-many-pending",
+        "type": "FRAME",
+        "x": 19290,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "886:372784",
+        "name": "univ-score/1440-select-other",
+        "type": "FRAME",
+        "x": 22340,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "886:381402",
+        "name": "univ-score/1440-trace-all",
+        "type": "FRAME",
+        "x": 23860,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "886:389355",
+        "name": "univ-score/1440-sort-name",
+        "type": "FRAME",
+        "x": 26440,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "886:397889",
+        "name": "univ-score/1440-heart-confirm",
+        "type": "FRAME",
+        "x": 29020,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "886:405884",
+        "name": "univ-score/1440-heart-removed",
+        "type": "FRAME",
+        "x": 30540,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      }
+    ]
+  },
+  {
+    "id": "346:131225",
+    "children": [
+      {
+        "id": "346:131226",
+        "name": "five-to-nine/390",
+        "type": "FRAME",
+        "x": 80,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "346:131252",
+        "name": "five-to-nine/1440",
+        "type": "FRAME",
+        "x": 550,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "819:21978",
+        "name": "five-to-nine/390-placement",
+        "type": "FRAME",
+        "x": 2070,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "819:22048",
+        "name": "five-to-nine/1440-placement",
+        "type": "FRAME",
+        "x": 3480,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "819:22124",
+        "name": "five-to-nine/390-placement-board",
+        "type": "FRAME",
+        "x": 2540,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "819:22219",
+        "name": "five-to-nine/1440-placement-board",
+        "type": "FRAME",
+        "x": 5000,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "819:22376",
+        "name": "five-to-nine/390-placement-dots",
+        "type": "FRAME",
+        "x": 3010,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "819:22411",
+        "name": "five-to-nine/1440-placement-dots",
+        "type": "FRAME",
+        "x": 6520,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "822:2",
+        "name": "five-to-nine/390-combo",
+        "type": "FRAME",
+        "x": 12270,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "822:21483",
+        "name": "five-to-nine/1440-combo",
+        "type": "FRAME",
+        "x": 25040,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "822:36445",
+        "name": "five-to-nine/390-b-pending",
+        "type": "FRAME",
+        "x": 13210,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "822:43599",
+        "name": "five-to-nine/1440-b-pending",
+        "type": "FRAME",
+        "x": 26560,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "822:50913",
+        "name": "five-to-nine/390-low-confidence",
+        "type": "FRAME",
+        "x": 13680,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "822:58067",
+        "name": "five-to-nine/390-trace-open",
+        "type": "FRAME",
+        "x": 12740,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "822:65331",
+        "name": "five-to-nine/390-entry-off",
+        "type": "FRAME",
+        "x": 14150,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "822:72495",
+        "name": "five-to-nine/1440-entry-off",
+        "type": "FRAME",
+        "x": 28080,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "825:2",
+        "name": "five-to-nine/390-loading",
+        "type": "FRAME",
+        "x": 10390,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "825:21472",
+        "name": "five-to-nine/390-error",
+        "type": "FRAME",
+        "x": 10860,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "825:28700",
+        "name": "five-to-nine/390-empty",
+        "type": "FRAME",
+        "x": 11330,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "825:35884",
+        "name": "five-to-nine/390-no-ranked",
+        "type": "FRAME",
+        "x": 11800,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "825:43057",
+        "name": "five-to-nine/1440-loading",
+        "type": "FRAME",
+        "x": 20480,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "825:58006",
+        "name": "five-to-nine/1440-error",
+        "type": "FRAME",
+        "x": 22000,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "825:65392",
+        "name": "five-to-nine/1440-empty",
+        "type": "FRAME",
+        "x": 23520,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "829:2",
+        "name": "five-to-nine/390-quick",
+        "type": "FRAME",
+        "x": 8040,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "829:22185",
+        "name": "five-to-nine/390-quick-nine",
+        "type": "FRAME",
+        "x": 8510,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "829:30038",
+        "name": "five-to-nine/390-quick-error",
+        "type": "FRAME",
+        "x": 8980,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "829:37603",
+        "name": "five-to-nine/390-quick-capped",
+        "type": "FRAME",
+        "x": 9450,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "829:45457",
+        "name": "five-to-nine/390-quick-method",
+        "type": "FRAME",
+        "x": 9920,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "829:53509",
+        "name": "five-to-nine/1440-quick",
+        "type": "FRAME",
+        "x": 17440,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "829:69078",
+        "name": "five-to-nine/1440-quick-error",
+        "type": "FRAME",
+        "x": 18960,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "835:2",
+        "name": "five-to-nine/390-placement-options",
+        "type": "FRAME",
+        "x": 14620,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "835:14880",
+        "name": "five-to-nine/390-placement-no-position",
+        "type": "FRAME",
+        "x": 15090,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "835:22396",
+        "name": "five-to-nine/390-placement-empty",
+        "type": "FRAME",
+        "x": 15560,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "835:29982",
+        "name": "five-to-nine/390-placement-no-data",
+        "type": "FRAME",
+        "x": 16030,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "835:37506",
+        "name": "five-to-nine/390-placement-pending",
+        "type": "FRAME",
+        "x": 16500,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "835:45024",
+        "name": "five-to-nine/390-placement-board-subject",
+        "type": "FRAME",
+        "x": 16970,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "835:52541",
+        "name": "five-to-nine/1440-placement-options",
+        "type": "FRAME",
+        "x": 29600,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "835:61667",
+        "name": "five-to-nine/1440-placement-no-position",
+        "type": "FRAME",
+        "x": 31120,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "835:70431",
+        "name": "five-to-nine/1440-placement-empty",
+        "type": "FRAME",
+        "x": 32640,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "835:79245",
+        "name": "five-to-nine/1440-placement-no-data",
+        "type": "FRAME",
+        "x": 34160,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "835:88020",
+        "name": "five-to-nine/1440-placement-board-subject",
+        "type": "FRAME",
+        "x": 35680,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      }
+    ]
+  },
+  {
+    "id": "346:131301",
+    "children": [
+      {
+        "id": "346:131302",
+        "name": "susiro/390",
+        "type": "FRAME",
+        "x": 80,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "346:131328",
+        "name": "susiro/1440",
+        "type": "FRAME",
+        "x": 80,
+        "y": 1044,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "920:340190",
+        "name": "susiro/390-loading",
+        "type": "FRAME",
+        "x": 550,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "920:340461",
+        "name": "susiro/390-error",
+        "type": "FRAME",
+        "x": 1020,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "920:340759",
+        "name": "susiro/390-empty",
+        "type": "FRAME",
+        "x": 1490,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "920:341089",
+        "name": "susiro/390-judge-pending",
+        "type": "FRAME",
+        "x": 1960,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "920:341363",
+        "name": "susiro/390-bottom",
+        "type": "FRAME",
+        "x": 2430,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "920:341642",
+        "name": "susiro/390-warnings-sheet",
+        "type": "FRAME",
+        "x": 2900,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "921:341122",
+        "name": "susiro/390-pick",
+        "type": "FRAME",
+        "x": 3370,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "921:341463",
+        "name": "susiro/390-pick-full",
+        "type": "FRAME",
+        "x": 3840,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "921:341837",
+        "name": "susiro/390-pick-none",
+        "type": "FRAME",
+        "x": 4310,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "921:342150",
+        "name": "susiro/390-add-toast",
+        "type": "FRAME",
+        "x": 4780,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "921:342456",
+        "name": "susiro/390-from-plan",
+        "type": "FRAME",
+        "x": 5250,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "922:342331",
+        "name": "susiro/390-slot-detail",
+        "type": "FRAME",
+        "x": 5720,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "922:342734",
+        "name": "susiro/390-slot-select",
+        "type": "FRAME",
+        "x": 6190,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "922:343162",
+        "name": "susiro/390-slot-clear-confirm",
+        "type": "FRAME",
+        "x": 6660,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "922:343265",
+        "name": "susiro/390-leave-confirm",
+        "type": "FRAME",
+        "x": 7600,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "922:343680",
+        "name": "susiro/390-slot-clear-toast",
+        "type": "FRAME",
+        "x": 7130,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "925:343654",
+        "name": "susiro/390-reorder-sheet",
+        "type": "FRAME",
+        "x": 8070,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "925:343836",
+        "name": "susiro/390-scenario-sheet",
+        "type": "FRAME",
+        "x": 8540,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "925:343906",
+        "name": "susiro/390-scenario-delete-confirm",
+        "type": "FRAME",
+        "x": 9010,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "925:343979",
+        "name": "susiro/390-share-file",
+        "type": "FRAME",
+        "x": 9480,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "925:344112",
+        "name": "susiro/390-share-qr",
+        "type": "FRAME",
+        "x": 9950,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "926:344919",
+        "name": "susiro/1440-loading",
+        "type": "FRAME",
+        "x": 1600,
+        "y": 1044,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "926:345448",
+        "name": "susiro/1440-error",
+        "type": "FRAME",
+        "x": 3120,
+        "y": 1044,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "926:346103",
+        "name": "susiro/1440-empty",
+        "type": "FRAME",
+        "x": 4640,
+        "y": 1044,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "926:346662",
+        "name": "susiro/1440-judge-pending",
+        "type": "FRAME",
+        "x": 6160,
+        "y": 1044,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "926:347185",
+        "name": "susiro/1440-from-plan",
+        "type": "FRAME",
+        "x": 7680,
+        "y": 1044,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "926:347722",
+        "name": "susiro/1440-pick",
+        "type": "FRAME",
+        "x": 9200,
+        "y": 1044,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "926:348305",
+        "name": "susiro/1440-pick-full",
+        "type": "FRAME",
+        "x": 10720,
+        "y": 1044,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "927:346703",
+        "name": "susiro/1440-slot-detail",
+        "type": "FRAME",
+        "x": 80,
+        "y": 2064,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "927:346894",
+        "name": "susiro/1440-slot-clear-confirm",
+        "type": "FRAME",
+        "x": 1600,
+        "y": 2064,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "927:346990",
+        "name": "susiro/1440-drag",
+        "type": "FRAME",
+        "x": 3120,
+        "y": 2064,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "927:347547",
+        "name": "susiro/1440-scenario-menu",
+        "type": "FRAME",
+        "x": 4640,
+        "y": 2064,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "927:348070",
+        "name": "susiro/1440-scenario-delete-confirm",
+        "type": "FRAME",
+        "x": 6160,
+        "y": 2064,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "927:348638",
+        "name": "susiro/1440-scenario-limit",
+        "type": "FRAME",
+        "x": 7680,
+        "y": 2064,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "927:349167",
+        "name": "susiro/1440-share-error",
+        "type": "FRAME",
+        "x": 9200,
+        "y": 2064,
+        "w": 1440,
+        "h": 900
+      }
+    ]
+  },
+  {
+    "id": "346:140444",
+    "children": [
+      {
+        "id": "346:140445",
+        "name": "mock-score/390",
+        "type": "FRAME",
+        "x": 80,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "346:140564",
+        "name": "mock-score/1440",
+        "type": "FRAME",
+        "x": 8540,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "965:377311",
+        "name": "mock-score/390-loading",
+        "type": "FRAME",
+        "x": 550,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "965:377851",
+        "name": "mock-score/390-load-error",
+        "type": "FRAME",
+        "x": 1020,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "965:378309",
+        "name": "mock-score/390-empty",
+        "type": "FRAME",
+        "x": 1490,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "965:378780",
+        "name": "mock-score/1440-loading",
+        "type": "FRAME",
+        "x": 10060,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "965:382168",
+        "name": "mock-score/1440-load-error",
+        "type": "FRAME",
+        "x": 11580,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "965:384510",
+        "name": "mock-score/1440-empty",
+        "type": "FRAME",
+        "x": 13100,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "966:377897",
+        "name": "mock-score/390-exam-sheet",
+        "type": "FRAME",
+        "x": 1960,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "966:378110",
+        "name": "mock-score/1440-exam-list",
+        "type": "FRAME",
+        "x": 14620,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "966:381539",
+        "name": "mock-score/390-partial",
+        "type": "FRAME",
+        "x": 2430,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "966:382128",
+        "name": "mock-score/1440-partial",
+        "type": "FRAME",
+        "x": 16140,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "966:384487",
+        "name": "mock-score/390-saved",
+        "type": "FRAME",
+        "x": 2900,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "966:384606",
+        "name": "mock-score/1440-saved",
+        "type": "FRAME",
+        "x": 17660,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "967:383116",
+        "name": "mock-score/390-save-error",
+        "type": "FRAME",
+        "x": 3370,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "967:383587",
+        "name": "mock-score/1440-save-error",
+        "type": "FRAME",
+        "x": 19180,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "967:385949",
+        "name": "mock-score/390-clear-confirm",
+        "type": "FRAME",
+        "x": 3840,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "967:386431",
+        "name": "mock-score/1440-clear-confirm",
+        "type": "FRAME",
+        "x": 20700,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "967:388790",
+        "name": "mock-score/390-nocut",
+        "type": "FRAME",
+        "x": 4310,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "967:389238",
+        "name": "mock-score/1440-nocut",
+        "type": "FRAME",
+        "x": 22220,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "968:381778",
+        "name": "mock-score/390-unmet",
+        "type": "FRAME",
+        "x": 4780,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "968:382323",
+        "name": "mock-score/1440-unmet",
+        "type": "FRAME",
+        "x": 23740,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "968:385713",
+        "name": "mock-score/390-noboard",
+        "type": "FRAME",
+        "x": 5250,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "968:386161",
+        "name": "mock-score/1440-noboard",
+        "type": "FRAME",
+        "x": 25260,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "968:388493",
+        "name": "mock-score/390-nocsat",
+        "type": "FRAME",
+        "x": 5720,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "968:388945",
+        "name": "mock-score/1440-nocsat",
+        "type": "FRAME",
+        "x": 26780,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "968:391281",
+        "name": "mock-score/390-trace",
+        "type": "FRAME",
+        "x": 6190,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "969:385005",
+        "name": "mock-score/390-send",
+        "type": "FRAME",
+        "x": 6660,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "969:385219",
+        "name": "mock-score/1440-send",
+        "type": "FRAME",
+        "x": 28300,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "969:385394",
+        "name": "mock-score/390-send-error",
+        "type": "FRAME",
+        "x": 7130,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "969:385971",
+        "name": "mock-score/1440-send-error",
+        "type": "FRAME",
+        "x": 29820,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "969:389437",
+        "name": "mock-score/390-send-qr",
+        "type": "FRAME",
+        "x": 7600,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "969:390022",
+        "name": "mock-score/1440-send-qr",
+        "type": "FRAME",
+        "x": 31340,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "969:392489",
+        "name": "mock-score/390-sent",
+        "type": "FRAME",
+        "x": 8070,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "969:392608",
+        "name": "mock-score/1440-sent",
+        "type": "FRAME",
+        "x": 32860,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      }
+    ]
+  },
+  {
+    "id": "346:143370",
+    "children": [
+      {
+        "id": "346:143371",
+        "name": "univ-detail/390",
+        "type": "FRAME",
+        "x": 80,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "346:144159",
+        "name": "univ-detail/1440",
+        "type": "FRAME",
+        "x": 80,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "792:317366",
+        "name": "univ-detail/390-scroll-mid",
+        "type": "FRAME",
+        "x": 530,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "792:317743",
+        "name": "univ-detail/390-scroll-end",
+        "type": "FRAME",
+        "x": 980,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "792:318083",
+        "name": "univ-detail/390-changes-none",
+        "type": "FRAME",
+        "x": 1430,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "792:318423",
+        "name": "univ-detail/390-changes-pending",
+        "type": "FRAME",
+        "x": 1880,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "792:318767",
+        "name": "univ-detail/390-badge-guide",
+        "type": "FRAME",
+        "x": 2330,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "792:319107",
+        "name": "univ-detail/390-long-name",
+        "type": "FRAME",
+        "x": 2780,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "792:319460",
+        "name": "univ-detail/390-filter-type",
+        "type": "FRAME",
+        "x": 3230,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "792:319829",
+        "name": "univ-detail/390-filter-empty",
+        "type": "FRAME",
+        "x": 3680,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "793:318733",
+        "name": "univ-detail/390-loading",
+        "type": "FRAME",
+        "x": 4130,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "793:319074",
+        "name": "univ-detail/390-error",
+        "type": "FRAME",
+        "x": 4580,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "793:319426",
+        "name": "univ-detail/390-missing",
+        "type": "FRAME",
+        "x": 5030,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "793:319783",
+        "name": "univ-detail/390-heart-saved",
+        "type": "FRAME",
+        "x": 5480,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "793:320127",
+        "name": "univ-detail/390-heart-removed",
+        "type": "FRAME",
+        "x": 5930,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "793:320252",
+        "name": "univ-detail/390-heart-error",
+        "type": "FRAME",
+        "x": 6380,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      },
+      {
+        "id": "796:318929",
+        "name": "univ-detail/1440-changes-none",
+        "type": "FRAME",
+        "x": 1580,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "796:335092",
+        "name": "univ-detail/1440-changes-pending",
+        "type": "FRAME",
+        "x": 3080,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "796:345830",
+        "name": "univ-detail/1440-badge-guide",
+        "type": "FRAME",
+        "x": 4580,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "796:356562",
+        "name": "univ-detail/1440-long-name",
+        "type": "FRAME",
+        "x": 6080,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "796:367307",
+        "name": "univ-detail/1440-filter-type",
+        "type": "FRAME",
+        "x": 7580,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "796:378051",
+        "name": "univ-detail/1440-filter-empty",
+        "type": "FRAME",
+        "x": 9080,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "796:388824",
+        "name": "univ-detail/1440-panel-empty",
+        "type": "FRAME",
+        "x": 10580,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "797:325408",
+        "name": "univ-detail/1440-row-selected",
+        "type": "FRAME",
+        "x": 12080,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "797:342263",
+        "name": "univ-detail/1440-row-focus",
+        "type": "FRAME",
+        "x": 13580,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "797:352996",
+        "name": "univ-detail/1440-sort",
+        "type": "FRAME",
+        "x": 15080,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "797:364341",
+        "name": "univ-detail/1440-loading",
+        "type": "FRAME",
+        "x": 16580,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "797:375074",
+        "name": "univ-detail/1440-error",
+        "type": "FRAME",
+        "x": 18080,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "797:385817",
+        "name": "univ-detail/1440-missing",
+        "type": "FRAME",
+        "x": 19580,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "797:396566",
+        "name": "univ-detail/1440-heart-saved",
+        "type": "FRAME",
+        "x": 21080,
+        "y": 1140,
+        "w": 1440,
+        "h": 900
+      }
+    ]
+  },
+  {
+    "id": "346:152227",
+    "children": [
+      {
+        "id": "346:152228",
+        "name": "score-import/1440",
+        "type": "FRAME",
+        "x": 550,
+        "y": 80,
+        "w": 1440,
+        "h": 900
+      },
+      {
+        "id": "346:155908",
+        "name": "score-import/390",
+        "type": "FRAME",
+        "x": 80,
+        "y": 80,
+        "w": 390,
+        "h": 844
+      }
+    ]
+  }
+]

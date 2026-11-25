@@ -1,36 +1,104 @@
-/* 성적 입력 v3 (work/grade-input/02-spec.md v3-2 간격 규칙). 섹션 사이는 선 없이 빈 공간만. */
-.grade-input { gap: 0; }
-.grade-input > * + * { margin-top: var(--spacing-lg); }
-.grade-input__head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--spacing-xs); }
-.grade-input__head .button-outline, .grade-input__head .button-primary { display: inline-flex; align-items: center; gap: var(--spacing-xxs); }
-.grade-input > .grade-input__save { margin-top: var(--spacing-xs); display: flex; align-items: center; gap: var(--spacing-xxs); flex-wrap: wrap; }
-.grade-input__save .text-button { min-height: 0; padding: 0 var(--spacing-xxs); color: var(--color-accent); }
-.grade-input__pick { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-section); flex-wrap: wrap; }
+/* 성적 입력 — v2 시안(Figma 346:114211 모바일 · 346:114289 PC)과 work/grade-input/02-spec.md. 모서리 0, 섹션 사이 선 없음. */
+.student-screen.grade-input { gap: 0; }
+@media (max-width: 767px) { .shell__content:has(.grade-input) { padding-top: 0; padding-inline: var(--spacing-md); } }
+@media (min-width: 1024px) { .student-screen.grade-input { padding-top: 24px; } } /* 시안 body 프레임(143) 안 위 24에서 머리 줄 */
+.grade-input > * { margin: 0; }
+.grade-input__head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-xs); min-height: 44px; }
+.grade-input__head h2 { margin: 0; }
+.grade-input__headgroup { display: grid; }
+.grade-input__save { display: flex; align-items: center; gap: var(--spacing-xs); flex-wrap: wrap; margin: 0; }
+.grade-input__save .text-button { min-height: 0; padding: 0; border: 0; background: none; color: var(--color-accent); font-size: var(--font-link-size); font-weight: var(--font-link-weight); line-height: 23px; text-decoration: none; cursor: pointer; }
+.grade-input__pick { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-xxl, 48px); }
 .grade-input__view { display: flex; align-items: center; gap: var(--spacing-xs); }
-.grade-input__view .segmented-control__option { font-size: var(--font-label-size); min-height: 40px; }
-.grade-input__filter { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); flex-wrap: wrap; }
-.grade-input__filter + * , .grade-input__filter ~ .grade-desktop { margin-top: var(--spacing-xs); }
-.grade-input .filter-chip { min-height: 32px; padding: 0 var(--spacing-sm); border: 1px solid var(--color-hairline); background: var(--color-canvas-soft); font: inherit; font-size: var(--font-body-sm-size); cursor: pointer; }
+.grade-input .segmented-control { display: flex; gap: 4px; padding: 4px; overflow: visible; }
+.grade-input .segmented-control__option { flex: 1 1 0; min-width: 0; min-height: 40px; padding: 0; white-space: nowrap; font-size: 15px; line-height: 23px; }
+.grade-input__chips { gap: var(--spacing-xs); flex-wrap: nowrap; }
+.grade-input .filter-chip { display: inline-flex; align-items: center; gap: 4px; height: 36px; padding: 0 12px; border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; cursor: pointer; font-variant-numeric: tabular-nums; }
 .grade-input .filter-chip[aria-pressed='true'] { background: var(--color-accent-soft); border-color: var(--color-accent); }
 .grade-input .filter-chip:disabled { color: var(--color-text-faint); cursor: default; }
-.grade-input__summary td { font-weight: 600; border-top: 1px solid var(--color-hairline); }
-.grade-input > .grade-input__attendance { margin-top: var(--spacing-section); }
+.subject-type-chip { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: var(--color-canvas-soft); color: var(--color-ink-soft); font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; }
+/* 입력칸 밖 오류 줄: icon/triangle-alert 16 + 4 + caption judge-risk */
+.gi-error { display: flex; align-items: flex-start; gap: 4px; margin: 0; color: var(--color-judge-risk); font-size: 12px; line-height: 17px; }
+.gi-error .icon { flex: none; }
+
+/* 모바일 */
+.shell:has(.grade-input) .appbar { padding-inline: var(--spacing-md); }
+.shell:has(.grade-input) .appbar-title { min-height: 40px; }
+.appbar__actions .gi-files { width: auto; height: 44px; padding: 0 var(--spacing-md); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 15px; font-weight: 600; line-height: 23px; white-space: nowrap; }
+@media (max-width: 767px) {
+  .grade-input > .grade-input__pick { margin-top: var(--spacing-md); }
+  .grade-input__pick > .segmented-control { width: 100%; padding: 2px 4px; background: var(--color-canvas); }
+  .grade-input > .grade-input__headgroup { margin-top: var(--spacing-md); gap: 4px; }
+  .grade-input__head .button-pill-soft { min-height: 44px; border: 0; background: var(--color-canvas); font: inherit; font-size: 15px; font-weight: 600; line-height: 23px; cursor: pointer; }
+  .grade-input > .grade-input__chips { margin-top: var(--spacing-md); }
+  .grade-input .filter-chip { height: 44px; }
+  .grade-input > .gi-cards { margin-top: var(--spacing-xs); display: grid; gap: var(--spacing-xs); }
+  .gi-cards .gi-error { margin-top: -4px; }
+  .grade-input .gi-card { display: grid; gap: 4px; width: 100%; padding: 12px 16px; border: 0; border-bottom: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
+  .gi-card__title { display: flex; align-items: center; gap: var(--spacing-xs); min-height: 24px; }
+  .gi-card__name { font-size: 16px; font-weight: 600; line-height: 22.4px; }
+  .gi-card__meta { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-xs); }
+  .gi-card__info { display: flex; align-items: center; gap: var(--spacing-xs); }
+  .gi-card__text { color: var(--color-text-muted); font-size: 13px; line-height: 19.5px; }
+  .grade-input .gi-card .grade-chip { width: 24px; justify-content: center; padding: 0; background: var(--color-canvas-soft); }
+  .gi-card__score { font-size: 14px; line-height: 19.6px; }
+  .grade-input > .grade-input__add { margin-top: var(--spacing-lg); width: 100%; min-height: 52px; }
+  .grade-input > .grade-input__save { margin-top: var(--spacing-xs); }
+  .grade-input > .grade-input__attendance { margin-top: var(--spacing-xl); }
+  .grade-input > .empty-state, .grade-input > [role='status'], .grade-input > [role='alert'] { margin-top: var(--spacing-md); }
+}
+
+/* PC */
+@media (min-width: 768px) {
+  .grade-input > .grade-input__headgroup { gap: var(--spacing-xs); }
+  .grade-input > .grade-input__pick { margin-top: var(--spacing-lg); }
+  .grade-input__pick > .segmented-control { width: 620px; height: 48px; }
+  .grade-input__view .segmented-control { width: 240px; height: 48px; }
+  .grade-input > .grade-input__tablegroup { margin-top: var(--spacing-lg); display: grid; gap: var(--spacing-xs); justify-items: start; }
+  .grade-input > .empty-state, .grade-input > [role='status'], .grade-input > [role='alert'] { margin-top: var(--spacing-lg); }
+  .grade-input__filter { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); width: 100%; }
+  .grade-input > .grade-input__attendance { margin-top: 48px; }
+}
+.grade-input__summary { display: grid; gap: 4px; }
+.grade-input__summary p { margin: 0; }
+
+/* grade-input-table: 외곽 1px hairline, 머리글 canvas-soft 40, 행 36 + 1px 선, 첫 열 고정 */
+.grade-input .table-scroll { width: auto; max-width: 100%; }
+.grade-input .grade-input-table { min-width: 0; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-hairline); background: var(--color-canvas); table-layout: fixed; width: 1018px; font-variant-numeric: tabular-nums; }
+.grade-input .grade-input-table th, .grade-input .grade-input-table td { height: 36px; padding: 0 8px; border-bottom: 1px solid var(--color-hairline); font-size: 14px; font-weight: 400; line-height: 19.6px; color: var(--color-ink); text-align: right; white-space: nowrap; }
+.grade-input .grade-input-table tbody tr:last-child > * { border-bottom: 0; }
+.grade-input .grade-input-table thead th { height: 40px; background: var(--color-canvas-soft); color: var(--color-ink-soft); font-size: 12px; font-weight: 600; line-height: 16.8px; text-align: center; }
+.grade-input .grade-input-table th:first-child { position: sticky; left: 0; z-index: 1; width: 184px; padding: 0 12px; border-right: 1px solid var(--color-hairline); text-align: left; }
+.grade-input .grade-input-table tbody th:first-child { background: var(--color-canvas); }
+.grade-input .grade-input-table th:nth-child(2) { width: 88px; }
+.grade-input .grade-input-table th:nth-child(3) { width: 48px; }
+.grade-input .grade-input-table th:nth-child(4), .grade-input .grade-input-table th:nth-child(7) { width: 56px; }
+.grade-input .grade-input-table th:nth-child(5), .grade-input .grade-input-table th:nth-child(6), .grade-input .grade-input-table th:nth-child(14) { width: 64px; }
+.grade-input .grade-input-table th:nth-child(n+8):nth-child(-n+12) { width: 48px; }
+.grade-input .grade-input-table th:nth-child(13) { width: 72px; }
+.grade-input .grade-input-table th:nth-child(15) { width: 80px; }
+.gi-subject { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+.grade-input .grade-input-table .gi-type { text-align: center; }
+.grade-input .grade-input-table input { display: block; width: 100%; min-height: 0; height: 36px; padding: 0 8px; border: 0; background: transparent; color: var(--color-ink); font: inherit; text-align: right; -moz-appearance: textfield; appearance: textfield; }
+.grade-input .grade-input-table input::-webkit-inner-spin-button, .grade-input .grade-input-table input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.grade-input .grade-input-table input:focus { outline: 2px solid var(--color-ink); outline-offset: -2px; }
+.grade-input .grade-input-table td:has(> input) { padding: 0; }
+.grade-input .grade-input-table .gi-na { background: var(--color-canvas-soft); }
+.gi-none { color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; }
+.grade-input .grade-input-table .gi-bad { background: var(--color-judge-risk-bg); }
+.grade-input .grade-input-table .gi-bad .icon { display: inline-block; margin-right: 4px; vertical-align: -3px; }
+.grade-input .grade-input-table .gi-unranked { background: repeating-linear-gradient(-45deg, var(--color-hairline) 0 1px, transparent 1px 8px), var(--color-canvas-soft); text-align: center; }
+.gi-unranked span { color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; }
+
 .grade-input .empty-state--plain { background: none; padding: var(--spacing-section-lg) 0; display: grid; justify-items: center; gap: var(--spacing-xs); text-align: center; }
 .grade-input .empty-state--plain .button-primary { margin-top: var(--spacing-md); }
+.shell:has(.grade-input) .sidebar-item--top { font-weight: 600; } /* 시안 sidebar '홈' SemiBold(score-trend와 같음) */
+
 .menu-rows { display: grid; list-style: none; padding: 0; margin: 0; }
 .menu-row { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); min-height: 64px; padding: var(--spacing-sm) 0; border: 0; border-bottom: 1px solid var(--color-hairline); background: none; font: inherit; text-align: left; cursor: pointer; }
 .menu-row:first-child { border-top: 1px solid var(--color-hairline); }
 .menu-row:hover, .menu-row:focus-visible { background: var(--color-canvas-soft); }
 .menu-row > span { display: grid; gap: var(--spacing-xxs); }
-.grade-mobile-only { display: none; }
-@media (max-width: 767px) {
-  .grade-input > * + * { margin-top: var(--spacing-md); }
-  .grade-input > .grade-input__attendance { margin-top: var(--spacing-xl); }
-  .grade-input__pick > .segmented-control { width: 100%; overflow-x: auto; }
-  .grade-input .filter-chip { min-height: 44px; }
-  .grade-mobile-only { display: block; }
-  .grade-desktop-only { display: none; }
-}
 .menu-row[aria-pressed='true'] { background: var(--color-accent-soft); box-shadow: inset 3px 0 0 var(--color-accent); padding-left: var(--spacing-sm); }
 .grade-input__attendance { display: grid; gap: var(--spacing-md); }
 .attendance-days { display: flex !important; align-items: center; gap: var(--spacing-xs); }
@@ -39,10 +107,10 @@
 .attendance-cell { display: flex; align-items: center; gap: var(--spacing-xxs); }
 .attendance-cell input { width: 100%; min-height: 36px; font-variant-numeric: tabular-nums; }
 .attendance-grid input[aria-invalid='true'] { outline: 2px solid var(--color-judge-risk); outline-offset: -2px; }
-.grade-input__add { width: 100%; min-height: 52px; }
 @media (max-width: 767px) {
-  .grade-input__head .button-pill-soft { min-height: 44px; }
   .attendance-grid { grid-template-columns: 56px repeat(3, minmax(0, 1fr)); }
   .attendance-cell input { min-height: 44px; }
 }
 .reply-text { white-space: pre-wrap; }
+.topbar .gi-asof { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; }
+.shell:has(.grade-input) .topbar__actions { gap: 12px; } /* 시안 page-header 동작 간격 12 */

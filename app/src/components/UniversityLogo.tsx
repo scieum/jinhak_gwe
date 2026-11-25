@@ -9,7 +9,7 @@ const normalize = (name: string) => name.normalize('NFKC').replace(/대학교/g,
 const byName = new Map(Object.entries(names).map(([name, file]) => [normalize(name), file]));
 export function universityLogoFile(university: string, planId?: string): string | undefined {
   const name = normalize(currentUniversityName(university));
-  return (planId ? (logos as Record<string, string>)[planId] : undefined) ?? byName.get(name) ?? byName.get(name.replace(/\([^)]*\)/g, ''));
+  return (planId ? (logos as Record<string, string>)[planId] : undefined) ?? byName.get(name) ?? byName.get(normalize(currentUniversityName(university).replace(/\s+(\S+)캠퍼스$/, '($1)'))) ?? byName.get(name.replace(/\([^)]*\)/g, ''));
 }
 /** Decorative next to the visible university name; original proportions are preserved. */
 export function UniversityLogo({ planId, university = '' }: { planId?: string; university?: string }) {

@@ -93,3 +93,15 @@ test('좌표가 없는 대학도 모두 보이며 추가 통계 선택과 해당
   await within(screen.getByRole('dialog')).findByText('원문 1쪽');
   expect(within(screen.getByRole('dialog')).getByText('75% 컷 · 5.43등급')).toBeTruthy();
 });
+
+test('5 to 9에서 넘긴 ?min=&max=는 등급 범위로 채우고, 형식이 틀리면 기본값을 쓴다', async () => {
+  vi.spyOn(loader, 'loadNationalCatalog').mockResolvedValue(catalog);
+  vi.spyOn(loader, 'loadNationalYear').mockResolvedValue([row('행정학과')]);
+  render(<MemoryRouter initialEntries={['/national-placement?min=1.8&max=3.1']}><NationalPlacement /></MemoryRouter>);
+  expect((await screen.findByLabelText('등급 범위 시작') as HTMLInputElement).value).toBe('1.8');
+  expect((screen.getByLabelText('등급 범위 끝') as HTMLInputElement).value).toBe('3.1');
+  cleanup();
+  render(<MemoryRouter initialEntries={['/national-placement?min=0&max=abc']}><NationalPlacement /></MemoryRouter>);
+  expect((await screen.findByLabelText('등급 범위 시작') as HTMLInputElement).value).toBe('1.0');
+  expect((screen.getByLabelText('등급 범위 끝') as HTMLInputElement).value).toBe('9.0');
+});

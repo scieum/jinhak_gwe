@@ -468,6 +468,9 @@ class App:
         self.browser = self.pw.chromium.launch()
         self.ctx = self.browser.new_context(viewport={"width": 1440, "height": 900}, locale="ko-KR")
         self.page = self.ctx.new_page()
+        # 샘플 날짜는 실제 오늘 기준 상대 날짜라(2026-11-25 사용자 결정) 시계를 샘플의 "오늘"에 고정해야 시안과 날마다 같게 비교돼요.
+        today = re.search(r"SAMPLE_TODAY = '(\d{4}-\d\d-\d\d)'", (ROOT / "app/src/data/sample/sampleClock.ts").read_text(encoding="utf-8")).group(1)
+        self.page.clock.set_fixed_time(f"{today}T10:00:00+09:00")
         seed_app(self.page, self.url)
 
     def _wait(self):

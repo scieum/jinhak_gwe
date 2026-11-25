@@ -27,14 +27,15 @@ test('v3: 빈 학기에는 주요 버튼이 빈 상태 안에 하나뿐이고, �
 test('v3: 학기 세그먼트로 고르고, 확인 필요 칩으로 거른다', async () => {
   await studentDb.grades.bulkPut([g('a', 2), g('b', null)]); // b는 석차등급이 비어 확인 필요
   open();
+  expect(await screen.findByRole('heading', { name: '2학년 1학기' })).toBeTruthy(); // 처음엔 확인 필요 과목이 있는 학기를 연다(시안 기본 프레임)
   fireEvent.click(await screen.findByRole('button', { name: '2학년 1학기' }));
   expect(await screen.findByRole('heading', { name: '2학년 1학기' })).toBeTruthy();
   expect(screen.getByRole('button', { name: '+ 과목 추가' })).toBeTruthy();
   expect(screen.getByText(/학기 요약 · 2과목 · 학점 합/)).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: /확인 필요 1/ }));
   const table = screen.getByRole('table', { name: '입력한 과목 성적' });
-  expect(within(table).queryByRole('rowheader', { name: '과목a' })).toBeNull();
-  expect(within(table).getByRole('rowheader', { name: '과목b' })).toBeTruthy();
+  expect(within(table).queryByRole('rowheader', { name: /과목a/ })).toBeNull();
+  expect(within(table).getByRole('rowheader', { name: /과목b/ })).toBeTruthy();
 });
 
 test('v3: 앱바 ⋯ 성적 파일 시트와 보기 시트, 출결은 칸에서 바로 저장', async () => {

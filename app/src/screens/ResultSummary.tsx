@@ -220,10 +220,10 @@ function ResultsTab({ info, students, outcomes, cards, desktop, tabs }: Ready & 
       const head = rows.length > 5 && !restOpen ? rows.slice(0, 4) : rows, rest = rows.slice(4);
       const unfold = (key: string) => () => setOpen(open.includes(key) ? open.filter(x => x !== key) : [...open, key]);
       const sub = sum(rows);
-      if (folded) return [<tr key={g} className="rs-row--sub rs-row--expand" onClick={unfold(g)}><td /><td><button type="button" className="rs-expand" aria-expanded={false} onClick={e => { e.stopPropagation(); unfold(g)(); }}>{g} 소계</button></td>{numCells(sub, goMissing())}</tr>];
+      if (folded) return [<tr key={g} className="rs-row--sub rs-row--expand" onClick={unfold(g)}><td /><td><button type="button" className="rs-expand" aria-expanded={false} onClick={e => { e.stopPropagation(); unfold(g)(); }}>{g} 소계<Icon name="chevron-down" size={20} /></button></td>{numCells(sub, goMissing())}</tr>];
       return [...head.map((r, i) => <tr key={r.key}><td className="rs-type">{i === 0 ? g : ''}</td>
         <td><span className="rs-univ"><Logo university={r.university} />{r.university}{r.program && ` · ${r.program}`}</span></td>{numCells(r, goMissing(r.university))}</tr>),
-        ...(head.length < rows.length ? [<tr key={`${g}-rest`} className="rs-row--expand" onClick={unfold(`${g}-rest`)}><td /><td><button type="button" className="rs-expand" aria-expanded={false} onClick={e => { e.stopPropagation(); unfold(`${g}-rest`)(); }}>그 밖의 대학 {new Set(rest.map(r => r.university)).size}곳</button></td>{numCells(sum(rest), goMissing())}</tr>] : []),
+        ...(head.length < rows.length ? [<tr key={`${g}-rest`} className="rs-row--expand" onClick={unfold(`${g}-rest`)}><td /><td><button type="button" className="rs-expand" aria-expanded={false} onClick={e => { e.stopPropagation(); unfold(`${g}-rest`)(); }}>그 밖의 대학 {new Set(rest.map(r => r.university)).size}곳<Icon name="chevron-down" size={20} /></button></td>{numCells(sum(rest), goMissing())}</tr>] : []),
         <tr key={`${g}-sum`} className="rs-row--sub"><td /><td>{g} 소계</td>{numCells(sub, goMissing())}</tr>];
     })}</tbody>
     <tfoot><tr className="rs-row--total"><td /><td>전체 합계</td>{numCells(allShown)}</tr></tfoot></table>;

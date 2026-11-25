@@ -36,3 +36,8 @@ test('미등록 대학과 이미지 실패는 대체 아이콘을 표시하고 �
   rerender(<UniversityLogo university="한국예술종합학교" />);
   expect(container.querySelector('img')).not.toBeNull();
 });
+
+test('"○○ ○○캠퍼스" 이름은 "(○○)" 캠퍼스 로고를 쓴다', () => {
+  expect(universityLogoFile('연세대학교 미래캠퍼스')).toBe((names as Record<string, string>)['연세대학교(미래)']);
+  expect(universityLogoFile('고려대학교 세종캠퍼스')).toBe((names as Record<string, string>)['고려대학교(세종)']);
+});

@@ -55,8 +55,9 @@ export function validateGrade(s: GradeRecord): string[] {
   if (!hasScores(s) && [s.raw_score, s.subject_mean, s.enrolled_count, s.achievement_distribution].some(v => v !== undefined)) errors.push('이 과목 유형에는 원점수·분포비율·수강자수를 입력하지 않아요.');
   if (s.achievement_distribution) {
     const d = s.achievement_distribution;
-    if (d.length !== 5 || d.some(n => !bounded(n, 0, 100)) || Math.abs(d.reduce((a, b) => a + b, 0) - 100) > 0.100000001)
-      errors.push('분포비율 합은 100%(±0.1)여야 해요.');
+    const sum = d.reduce((a, b) => a + b, 0);
+    if (d.length !== 5 || d.some(n => !bounded(n, 0, 100))) errors.push('분포비율은 0~100으로 5칸 모두 입력해 주세요.');
+    else if (Math.abs(sum - 100) > 0.100000001) errors.push(`분포비율 합이 ${sum.toFixed(1)}%예요. 100%가 되도록 확인해 주세요.`);
   }
   return errors;
 }

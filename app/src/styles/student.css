@@ -64,3 +64,7 @@
   .quick-links { grid-template-columns: 1fr; }
 }
 .data-status-badge { display: inline-block; justify-self: start; padding: var(--spacing-xs) var(--spacing-sm); color: var(--color-text-muted); background: var(--color-canvas-soft); font-size: var(--font-label-size); font-weight: var(--font-label-weight); }
+/* design.md text-input-error: 아이콘 14 + 간격 4 + caption 위험색, 채움 없음 */
+.input-errors { display: grid; gap: var(--spacing-xxs); }
+.input-errors p { display: flex; gap: 4px; align-items: center; margin: 0; color: var(--color-judge-risk); }
+.input-errors svg { flex: none; }

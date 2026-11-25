@@ -4,14 +4,13 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { TraceAccordion } from '../components/CalculationDetails';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { useStudent } from '../store/studentDb';
-import { combinations, currentComparisonBasis, fiveToNineFor } from '../domain/results';
+import { combinations, fiveToNineFor } from '../domain/results';
 import type { ConversionConfig, MethodResult } from '../engine/fiveToNineTypes';
 import { g5ToPct, pctToG9 } from '../engine/fiveToNine';
 import fiveToNineConfig from '../data/conversion-config.json';
-import { gradeSummary, validateGrade, type StudentBackup } from '../domain/student';
+import { validateGrade, type StudentBackup } from '../domain/student';
 import type { ProgramData } from '../data/catalog';
 import type { ScoringRule } from '../engine/scoring';
-import { PlacementExplorer } from '../components/PlacementExplorer';
 import { ScoreTrendScreen } from '../components/ScoreTrendContent';
 import { QuickGradeCalculator } from '../components/QuickGradeCalculator';
 import { HomeDashboard } from '../components/HomeDashboard';
@@ -54,21 +53,24 @@ export function FiveToNine() {
     {tab === 'quick' ? <>{viewTabs}<QuickGradeCalculator /></> : <SavedGradeConversion viewTabs={viewTabs} desktop={desktop} />}
   </section>;
 }
+/** 수집 입결은 전국 배치표에 있어요. 내 추정 범위 ±0.5(1~9)를 등급 범위로 넘겨요(2026-11-25 사용자 결정). */
+const placementLink = (r: { min: number | null; max: number | null } | null) => {
+  if (r?.min == null || r.max == null) return '/national-placement';
+  const at = (v: number) => Math.min(9, Math.max(1, v)).toFixed(1);
+  return `/national-placement?min=${at(r.min - 0.5)}&max=${at(r.max + 0.5)}`;
+};
 const NOTE = `5 to 9 환산은 공식 환산표가 아닌 추정 범위예요 · 교육청 실측표는 한 지역 학생 표본으로 만든 표예요 · 내 5등급 평균은 입력한 성적으로 계산했어요 · 대학 공식 자료가 최종 기준이에요 · 데이터 기준일 ${dataAsOf}`;
 function SavedGradeConversion({ viewTabs, desktop }: { viewTabs: ReactNode; desktop: boolean }) {
   const state = useStudent();
   const [combo, setCombo] = useState('전 교과');
-  const [placementOpen, setPlacementOpen] = useState(false);
   const data = state?.data;
-  const r = data ? fiveToNineFor(data.grades, combo) : null, avg = data ? gradeSummary(data.grades, combinations[combo] ?? undefined) : null;
+  const r = data ? fiveToNineFor(data.grades, combo) : null;
   const ok = !!r && r.min !== null && r.max !== null && r.display !== null;
   const two = (v: number) => v.toFixed(2), one = (v: number) => (Math.round(v * 10) / 10).toFixed(1);
   const comboTabs = <SegmentedControl label="반영 교과" value={combo} onChange={setCombo} options={Object.keys(combinations).map(value => ({ value, label: value }))} />;
-  const entry = <div className="f2n-entry"><button type="button" className="button-outline" onClick={() => setPlacementOpen(true)}><Icon name="chart-column" size={20} />이 등급대 입결 보기</button>
+  const entry = <div className="f2n-entry"><Link className="button-outline" to={placementLink(r)}><Icon name="chart-column" size={20} />이 등급대 입결 보기</Link>
     <p className={desktop ? 't-body-sm text-muted' : 't-caption text-muted'}>작년 입결 70% 컷 기준으로 내 위치 주변 학과를 배치표 · 표 · 점 그래프로 보여줘요</p></div>;
   const note = <p className="disclaimer-note t-caption text-muted f2n-note"><Icon name="info" size={16} /><span>{NOTE}</span></p>;
-  const placement = placementOpen && data && <PlacementExplorer onClose={() => setPlacementOpen(false)} combination={combo} average={avg!.average}
-    range={ok ? { min: r!.min!, max: r!.max! } : undefined} inputBasis={currentComparisonBasis(data.grades, combinations[combo] ?? [...new Set(data.grades.filter(g => !validateGrade(g).length).map(g => g.subject_group))], ok)} />;
   if (!state) return <>{viewTabs}<p role="status" className="t-body-sm text-muted f2n-status">기기에 저장된 성적을 읽고 있어요.</p></>;
   if (!data) return <>{viewTabs}<div className="f2n-card f2n-error" role="alert"><Icon name="triangle-alert" size={20} /><p>{state.error}</p><button type="button" className="button-outline" onClick={() => window.location.reload()}>다시 열기</button></div></>;
   if (!ok) {
@@ -78,7 +80,7 @@ function SavedGradeConversion({ viewTabs, desktop }: { viewTabs: ReactNode; desk
         <p>{none ? '성적 입력 화면에서 과목을 추가해 주세요.' : '석차등급이 있는 과목을 입력하면 범위를 보여드려요.'}</p><Link className="button-primary" to="/grade-input">성적 입력하기</Link></div>
       {entry}</div>
       {desktop && <aside className="f2n-aside" aria-label="환산 신뢰도와 근거"><section className="f2n-card"><h3 className="t-heading-4">신뢰도 · —</h3><p className="t-body-sm text-muted">성적을 입력하면 신뢰도와 계산 과정을 보여드려요.</p></section><TraceAccordion trace={[]} /></aside>}
-      {note}{placement}</div>;
+      {note}</div>;
   }
   const res = r!, conf = res.confidence, okCount = [res.a1, res.a2, res.b].filter(m => m.status === 'ok').length;
   const g5 = res.g5 === null ? '—' : two(res.g5);
@@ -147,8 +149,8 @@ function SavedGradeConversion({ viewTabs, desktop }: { viewTabs: ReactNode; desk
   </TraceAccordion>;
   return desktop
     ? <div className="f2n-layout"><div className="f2n-main">{viewTabs}{comboTabs}{tile}<p className="num f2n-summary">방법 {okCount}가지로 본 범위 · 신뢰도 {conf} · 석차등급 산출 과목 {res.stats.rankedCount}개</p>{rangeCard}{methodCard}</div>
-      <aside className="f2n-aside" aria-label="환산 신뢰도와 근거">{reasonCard}{trace}</aside>{note}{placement}</div>
-    : <div className="f2n-layout">{viewTabs}{tile}{comboTabs}{rangeCard}{methodCard}<aside className="f2n-aside" aria-label="환산 신뢰도와 근거">{reasonCard}{trace}</aside>{note}{placement}</div>;
+      <aside className="f2n-aside" aria-label="환산 신뢰도와 근거">{reasonCard}{trace}</aside>{note}</div>
+    : <div className="f2n-layout">{viewTabs}{tile}{comboTabs}{rangeCard}{methodCard}<aside className="f2n-aside" aria-label="환산 신뢰도와 근거">{reasonCard}{trace}</aside>{note}</div>;
 }
 
 /** 관리자가 배포한 검수 완료 규칙(public/data/scoring-rules.json)을 대학별 환산에 더해요. 같은 대학·전형·연도는 카탈로그가 먼저예요. */

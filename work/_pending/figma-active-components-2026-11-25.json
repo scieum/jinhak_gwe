@@ -1,0 +1,1010 @@
+[
+  {
+    "id": "350:4602",
+    "name": "brand-logo",
+    "type": "COMPONENT_SET",
+    "parent": "32:169",
+    "page": "24:2",
+    "w": 436,
+    "h": 76.93008422851562
+  },
+  {
+    "id": "101:4854",
+    "name": "sub-nav",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 422,
+    "h": 736
+  },
+  {
+    "id": "91:2815",
+    "name": "segmented-control",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 382,
+    "h": 1616
+  },
+  {
+    "id": "335:84802",
+    "name": "button-pill-soft",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 296,
+    "h": 76
+  },
+  {
+    "id": "28:30",
+    "name": "filter-chip",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 2155,
+    "h": 88
+  },
+  {
+    "id": "29:26",
+    "name": "judge-badge",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 1682,
+    "h": 64
+  },
+  {
+    "id": "65:340",
+    "name": "univ-card",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 6004,
+    "h": 368
+  },
+  {
+    "id": "31:91",
+    "name": "trace-accordion",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 748,
+    "h": 248
+  },
+  {
+    "id": "30:34",
+    "name": "disclaimer-note",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 328,
+    "h": 17
+  },
+  {
+    "id": "60:528",
+    "name": "tab-bar-pill",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 422,
+    "h": 1776
+  },
+  {
+    "id": "101:2747",
+    "name": "sidebar",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 1600,
+    "h": 932
+  },
+  {
+    "id": "339:12812",
+    "name": "page-header",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 1160,
+    "h": 291
+  },
+  {
+    "id": "30:27",
+    "name": "text-input",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 12460,
+    "h": 173
+  },
+  {
+    "id": "529:17172",
+    "name": "button-outline",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 520,
+    "h": 44
+  },
+  {
+    "id": "28:9",
+    "name": "button-primary",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 544,
+    "h": 84
+  },
+  {
+    "id": "339:12784",
+    "name": "judge-lane",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 530,
+    "h": 756
+  },
+  {
+    "id": "25:65",
+    "name": "icon/triangle-alert",
+    "type": "COMPONENT",
+    "parent": "25:66",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "62:213",
+    "name": "empty-state",
+    "type": "COMPONENT",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 358,
+    "h": 243
+  },
+  {
+    "id": "335:84798",
+    "name": "data-status-badge",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 942,
+    "h": 56
+  },
+  {
+    "id": "25:71",
+    "name": "icon/x",
+    "type": "COMPONENT",
+    "parent": "25:72",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "559:4334",
+    "name": "bottom-sheet/option",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 422,
+    "h": 128
+  },
+  {
+    "id": "62:208",
+    "name": "toast",
+    "type": "COMPONENT",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 99,
+    "h": 47
+  },
+  {
+    "id": "31:62",
+    "name": "app-bar",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 390,
+    "h": 56
+  },
+  {
+    "id": "37:79",
+    "name": "univ-logo/경희대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "37:49",
+    "name": "interest-heart",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 136,
+    "h": 76
+  },
+  {
+    "id": "335:84826",
+    "name": "cut-compare-bar",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 772,
+    "h": 86
+  },
+  {
+    "id": "1015:394993",
+    "name": "univ-logo/가톨릭관동대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "80:4318",
+    "name": "data-table",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 800,
+    "h": 788.0799560546875
+  },
+  {
+    "id": "62:206",
+    "name": "ai-label",
+    "type": "COMPONENT",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 96,
+    "h": 24
+  },
+  {
+    "id": "26:50",
+    "name": "icon/upload",
+    "type": "COMPONENT",
+    "parent": "26:51",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "27:66",
+    "name": "icon/book-open",
+    "type": "COMPONENT",
+    "parent": "27:67",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "27:60",
+    "name": "icon/message-square",
+    "type": "COMPONENT",
+    "parent": "27:61",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "63:239",
+    "name": "data-table/row",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 800,
+    "h": 459.05999755859375
+  },
+  {
+    "id": "25:58",
+    "name": "icon/info",
+    "type": "COMPONENT",
+    "parent": "25:59",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "77:1963",
+    "name": "student-row-card",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 1512,
+    "h": 92
+  },
+  {
+    "id": "77:1901",
+    "name": "stat-tile",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 10928,
+    "h": 177
+  },
+  {
+    "id": "91:2078",
+    "name": "grade-trend-chart",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 1560,
+    "h": 252
+  },
+  {
+    "id": "26:91",
+    "name": "icon/file-text",
+    "type": "COMPONENT",
+    "parent": "26:92",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "67:548",
+    "name": "counsel-timeline",
+    "type": "COMPONENT",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 358,
+    "h": 240
+  },
+  {
+    "id": "77:1914",
+    "name": "subject-card",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 1512,
+    "h": 157
+  },
+  {
+    "id": "68:489",
+    "name": "grade-input-table",
+    "type": "COMPONENT",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 1106,
+    "h": 238
+  },
+  {
+    "id": "25:46",
+    "name": "icon/chevron-right",
+    "type": "COMPONENT",
+    "parent": "25:47",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "26:10",
+    "name": "icon/check",
+    "type": "COMPONENT",
+    "parent": "26:11",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "466:176646",
+    "name": "checkbox",
+    "type": "COMPONENT_SET",
+    "parent": "32:169",
+    "page": "24:2",
+    "w": 112,
+    "h": 68
+  },
+  {
+    "id": "493:3845",
+    "name": "button-danger-text",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 88,
+    "h": 44
+  },
+  {
+    "id": "25:41",
+    "name": "icon/chevron-left",
+    "type": "COMPONENT",
+    "parent": "25:42",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "350:4617",
+    "name": "score-bar",
+    "type": "COMPONENT_SET",
+    "parent": "32:169",
+    "page": "24:2",
+    "w": 368,
+    "h": 194
+  },
+  {
+    "id": "60:399",
+    "name": "warning-callout",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 1846,
+    "h": 117
+  },
+  {
+    "id": "591:4072",
+    "name": "promo-banner",
+    "type": "COMPONENT_SET",
+    "parent": "32:169",
+    "page": "24:2",
+    "w": 390,
+    "h": 208
+  },
+  {
+    "id": "27:55",
+    "name": "icon/arrow-up-down",
+    "type": "COMPONENT",
+    "parent": "27:56",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "63:148",
+    "name": "data-table/cell",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 580,
+    "h": 1104.1600341796875
+  },
+  {
+    "id": "71:2931",
+    "name": "univ-logo/강원대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "38:112",
+    "name": "univ-logo/성균관대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "71:2934",
+    "name": "univ-logo/중앙대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "1015:394991",
+    "name": "univ-logo/동국대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "1015:394989",
+    "name": "univ-logo/건국대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "71:2930",
+    "name": "univ-logo/한양대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "66:409",
+    "name": "susi-slot",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 2690,
+    "h": 216
+  },
+  {
+    "id": "71:2932",
+    "name": "univ-logo/고려대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "90:10936",
+    "name": "range-bar-5to9",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 390,
+    "h": 436
+  },
+  {
+    "id": "119:76557",
+    "name": "placement-board/board-tag",
+    "type": "COMPONENT",
+    "parent": "147:96028",
+    "page": "98:1904",
+    "w": 132,
+    "h": 20
+  },
+  {
+    "id": "102:2257",
+    "name": "cut-dot-plot",
+    "type": "COMPONENT",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 358,
+    "h": 188
+  },
+  {
+    "id": "62:237",
+    "name": "scenario-tabs",
+    "type": "COMPONENT",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 339,
+    "h": 48
+  },
+  {
+    "id": "27:32",
+    "name": "icon/grip-vertical",
+    "type": "COMPONENT",
+    "parent": "27:33",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "26:82",
+    "name": "icon/qr-code",
+    "type": "COMPONENT",
+    "parent": "26:83",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "71:2935",
+    "name": "univ-logo/연세대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "27:22",
+    "name": "icon/users",
+    "type": "COMPONENT",
+    "parent": "27:23",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "26:16",
+    "name": "icon/search",
+    "type": "COMPONENT",
+    "parent": "26:17",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "102:2160",
+    "name": "cut-dot-plot/dot",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 128,
+    "h": 32
+  },
+  {
+    "id": "102:2161",
+    "name": "cut-dot-plot/tooltip",
+    "type": "COMPONENT",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 150,
+    "h": 111
+  },
+  {
+    "id": "71:2936",
+    "name": "univ-logo/광주과학기술원",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "71:2933",
+    "name": "univ-logo/한림대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "92:1698",
+    "name": "competency-highlight/legend",
+    "type": "COMPONENT",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 214,
+    "h": 17
+  },
+  {
+    "id": "92:1687",
+    "name": "competency-highlight",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 1104,
+    "h": 55
+  },
+  {
+    "id": "80:10210",
+    "name": "mask-preview",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 1138,
+    "h": 221
+  },
+  {
+    "id": "92:1708",
+    "name": "competency-bar",
+    "type": "COMPONENT",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 358,
+    "h": 56
+  },
+  {
+    "id": "63:435",
+    "name": "competency-card",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 1150,
+    "h": 358
+  },
+  {
+    "id": "25:51",
+    "name": "icon/chevron-down",
+    "type": "COMPONENT",
+    "parent": "25:52",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "62:210",
+    "name": "evidence-quote",
+    "type": "COMPONENT",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 358,
+    "h": 67
+  },
+  {
+    "id": "92:1697",
+    "name": "competency-highlight/tooltip",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 439,
+    "h": 67
+  },
+  {
+    "id": "110:3433",
+    "name": "placement-board",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 1342,
+    "h": 1131
+  },
+  {
+    "id": "31:56",
+    "name": "sidebar-item",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 280,
+    "h": 136
+  },
+  {
+    "id": "100:25153",
+    "name": "sidebar-group",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 280,
+    "h": 256
+  },
+  {
+    "id": "62:236",
+    "name": "mode-switch",
+    "type": "COMPONENT_SET",
+    "parent": "60:53",
+    "page": "24:2",
+    "w": 880,
+    "h": 80
+  },
+  {
+    "id": "544:3985",
+    "name": "icon/pencil",
+    "type": "COMPONENT",
+    "parent": "544:3984",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "480:3862",
+    "name": "region-map",
+    "type": "COMPONENT_SET",
+    "parent": "32:169",
+    "page": "24:2",
+    "w": 1870,
+    "h": 1184
+  },
+  {
+    "id": "29:45",
+    "name": "univ-monogram",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "591:4053",
+    "name": "mascot-illustration",
+    "type": "COMPONENT_SET",
+    "parent": "32:169",
+    "page": "24:2",
+    "w": 920,
+    "h": 380
+  },
+  {
+    "id": "521:3976",
+    "name": "share-sheet",
+    "type": "COMPONENT_SET",
+    "parent": "32:169",
+    "page": "24:2",
+    "w": 1292,
+    "h": 368
+  },
+  {
+    "id": "27:8",
+    "name": "icon/sparkles",
+    "type": "COMPONENT",
+    "parent": "27:9",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "1049:5",
+    "name": "univ-logo/가천대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "1049:9",
+    "name": "univ-logo/경북대학교",
+    "type": "COMPONENT",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 40,
+    "h": 40
+  },
+  {
+    "id": "26:5",
+    "name": "icon/plus",
+    "type": "COMPONENT",
+    "parent": "26:6",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "655:13",
+    "name": "icon/link",
+    "type": "COMPONENT",
+    "parent": "655:12",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "667:4100",
+    "name": "icon/clock",
+    "type": "COMPONENT",
+    "parent": "667:17710",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "667:4111",
+    "name": "icon/calendar-x",
+    "type": "COMPONENT",
+    "parent": "667:17714",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "667:4096",
+    "name": "icon/circle-dashed",
+    "type": "COMPONENT",
+    "parent": "667:17708",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "667:4119",
+    "name": "icon/calendar-clock",
+    "type": "COMPONENT",
+    "parent": "667:17716",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "26:43",
+    "name": "icon/calendar",
+    "type": "COMPONENT",
+    "parent": "26:44",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "667:4103",
+    "name": "icon/minus",
+    "type": "COMPONENT",
+    "parent": "667:17712",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "27:73",
+    "name": "icon/circle-help",
+    "type": "COMPONENT",
+    "parent": "27:74",
+    "page": "24:2",
+    "w": 24,
+    "h": 24
+  },
+  {
+    "id": "29:37",
+    "name": "grade-chip",
+    "type": "COMPONENT_SET",
+    "parent": "28:2",
+    "page": "24:2",
+    "w": 234,
+    "h": 56
+  },
+  {
+    "id": "821:787",
+    "name": "range-bar-5to9 · 홈 PC",
+    "type": "COMPONENT",
+    "parent": "815:183",
+    "page": "815:183",
+    "w": 696,
+    "h": 108
+  },
+  {
+    "id": "817:91",
+    "name": "shortcut-row · 홈 상세",
+    "type": "COMPONENT",
+    "parent": "815:183",
+    "page": "815:183",
+    "w": 310,
+    "h": 56
+  },
+  {
+    "id": "857:625",
+    "name": "소개 상세 / 핵심 기능 카드",
+    "type": "COMPONENT",
+    "parent": "840:52",
+    "page": "840:52",
+    "w": 352,
+    "h": 214
+  },
+  {
+    "id": "842:18",
+    "name": "서비스 소개 / 대상 소개",
+    "type": "COMPONENT",
+    "parent": "840:52",
+    "page": "840:52",
+    "w": 536,
+    "h": 487
+  },
+  {
+    "id": "830:22",
+    "name": "홍보 / 내 위치 미리보기",
+    "type": "COMPONENT",
+    "parent": "827:14",
+    "page": "827:14",
+    "w": 358,
+    "h": 401
+  },
+  {
+    "id": "844:2",
+    "name": "서비스 소개 / 비교할 대학 예시",
+    "type": "COMPONENT",
+    "parent": "840:52",
+    "page": "840:52",
+    "w": 390,
+    "h": 78
+  },
+  {
+    "id": "857:630",
+    "name": "소개 상세 / 수시 계획 카드",
+    "type": "COMPONENT",
+    "parent": "840:52",
+    "page": "840:52",
+    "w": 240,
+    "h": 164
+  },
+  {
+    "id": "857:635",
+    "name": "소개 상세 / 상담 학생 행",
+    "type": "COMPONENT",
+    "parent": "840:52",
+    "page": "840:52",
+    "w": 472,
+    "h": 101
+  },
+  {
+    "id": "842:26",
+    "name": "서비스 소개 / 시작 순서",
+    "type": "COMPONENT",
+    "parent": "840:52",
+    "page": "840:52",
+    "w": 336,
+    "h": 115
+  },
+  {
+    "id": "872:522",
+    "name": "소개 상세 / FAQ · 번호 배지",
+    "type": "COMPONENT",
+    "parent": "840:52",
+    "page": "840:52",
+    "w": 1104,
+    "h": 114
+  }
+]

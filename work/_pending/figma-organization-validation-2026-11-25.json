@@ -1,0 +1,83 @@
+{
+  "preservation": {
+    "checked": 1359,
+    "missing": [],
+    "resized": [],
+    "activeMasters": 134,
+    "misplaced": []
+  },
+  "manifest": {
+    "checked": 789,
+    "missing": [],
+    "misplaced": []
+  },
+  "instanceCounts": {
+    "count": 25201,
+    "changed": [
+      {
+        "id": "29:29",
+        "before": 516,
+        "after": 518
+      },
+      {
+        "id": "335:2703",
+        "before": 23,
+        "after": 25
+      },
+      {
+        "id": "26:91",
+        "before": 8,
+        "after": 12
+      },
+      {
+        "id": "335:2973",
+        "before": 32,
+        "after": 34
+      },
+      {
+        "id": "591:4046",
+        "before": 11,
+        "after": 13
+      },
+      {
+        "id": "591:4048",
+        "before": 9,
+        "after": 11
+      },
+      {
+        "id": "335:3061",
+        "before": 3,
+        "after": 5
+      },
+      {
+        "id": "335:3063",
+        "before": 3,
+        "after": 5
+      }
+    ]
+  },
+  "final": {
+    "pageCount": 10,
+    "overflow": []
+  },
+  "foundations": {
+    "created": [
+      "1066:4633",
+      "1066:4799",
+      "1066:4854",
+      "1066:4873"
+    ],
+    "spacing": "1066:4854",
+    "guide": "1066:4873",
+    "colors": 55,
+    "styles": 27,
+    "space": 9,
+    "archived": [
+      "32:39",
+      "32:120"
+    ]
+  },
+  "componentSets": 56,
+  "activeMasters": 134,
+  "componentLabels": 99
+}

@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { loadNationalCatalog, loadNationalYear, loadPlacementSource } from '../data/nationalPlacement';
 import { dataAsOf } from '../data/catalog';
 import { defaultPlacementFilters, filterNationalRows, gradeCoordinate, matchesUniversity, placementBounds, statisticValue, statisticDetail, STATISTIC_LABELS, typeBucket, universityPoints, type CutField, type NationalPlacementRow, type PlacementFilters } from '../domain/nationalPlacement';
@@ -35,7 +35,8 @@ export function NationalPlacement() {
   const [catalog, setCatalog] = useState<Catalog | null>(null), [year, setYear] = useState('');
   const [rows, setRows] = useState<NationalPlacementRow[] | null>(null), [error, setError] = useState(''), [indexError, setIndexError] = useState('');
   const [attempt, setAttempt] = useState(0), [indexAttempt, setIndexAttempt] = useState(0);
-  const [filters, setFilters] = useState<PlacementFilters>({ ...DEFAULTS });
+  const [params] = useSearchParams(), band = (k: 'min' | 'max') => { const v = params.get(k); return v && /^[1-9](\.\d)?$/.test(v) && +v <= 9 ? v : DEFAULTS[k]; };
+  const [filters, setFilters] = useState<PlacementFilters>({ ...DEFAULTS, min: band('min'), max: band('max') }); // 5 to 9 "이 등급대 입결 보기"가 ?min=&max=로 넘겨요
   const [view, setView] = useState<'plot' | 'table' | 'coverage'>('plot'), [page, setPage] = useState(0);
   const [sort, setSort] = useState<TableSort<SortKey>>(null), [selected, setSelected] = useState<NationalPlacementRow[] | null>(null);
   const [detailOpen, setDetailOpen] = useState(true), [sheet, setSheet] = useState(false);
