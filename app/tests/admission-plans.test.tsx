@@ -5,7 +5,8 @@ import { afterEach, expect, test, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { studentDb } from '../src/store/studentDb';
 import { MemoryRouter } from 'react-router-dom';
-import { parsePlanCatalog, matchesPlan, planPageUrl } from '../src/domain/admissionPlans';
+import { parsePlanCatalog, matchesPlan, planPageUrl, planCampusCategory, withPlanFoundings } from '../src/domain/admissionPlans';
+import { parseUnivMap } from '../src/domain/univMap';
 import { AdmissionsList, quotaDelta } from '../src/screens/AdmissionsList';
 import { loadAdmissionPlans } from '../src/data/admissionPlans';
 
@@ -13,8 +14,11 @@ import { loadAdmissionPlans } from '../src/data/admissionPlans';
 vi.setConfig({ testTimeout: 20_000 });
 const raw = () => JSON.parse(readFileSync('public/data/admission-plans.json', 'utf8'));
 const catalog = parsePlanCatalog(raw());
+const mapFile = JSON.parse(readFileSync('public/data/univ-map.json', 'utf8'));
+const mapCampuses = parseUnivMap(mapFile).campuses;
+const classified = withPlanFoundings(catalog, mapCampuses);
 afterEach(async () => { cleanup(); vi.unstubAllGlobals(); await studentDb.interests.clear(); });
-function serve() { vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify(catalog)))); }
+function serve() { vi.stubGlobal('fetch', vi.fn(async (url: string) => new Response(JSON.stringify(url.includes('univ-map') ? mapFile : catalog)))); }
 function at(path = '/admissions-list') { return render(<MemoryRouter initialEntries={[path]}><AdmissionsList /></MemoryRouter>); }
 
 test('공식 포털 202개 캠퍼스의 다운로드 출처와 파일 해시를 보존하고 모든 요약에 근거 쪽수가 있다', () => {
@@ -80,6 +84,89 @@ test('대학 약칭 검색과 PDF 쪽수 링크는 캠퍼스·문서 형식을 �
 
 const rowsShown = () => screen.getAllByRole('link', { name: /전형계획 보기$/ });
 const first = (name: string) => screen.getAllByRole('button', { name })[0];
+
+test('설립을 공개 대학 목록으로 연결하고 분교와 번호 캠퍼스를 구분한다', () => {
+  expect(classified.entries.every(p => p.founding)).toBe(true);
+  expect(classified.entries.find(p => p.university === '서울대학교')?.founding).toBe('국립');
+  expect(classified.entries.find(p => p.university === '서울시립대학교')?.founding).toBe('공립');
+  expect(classified.entries.find(p => p.university === '고려대학교(세종)')?.founding).toBe('사립');
+  const special = { ...mapCampuses[0], name: catalog.entries[0].university, aliases: [], founding: '특별법 법인' as const };
+  expect(withPlanFoundings(catalog, [special]).entries[0].founding).toBe('그 밖');
+  expect(withPlanFoundings(catalog, [special, { ...special, founding: '사립' }]).entries[0].founding).toBeUndefined();
+  expect(planCampusCategory('본교')).toBe('본교');
+  expect(planCampusCategory('분교')).toBe('분교');
+  expect(planCampusCategory('제2캠퍼스')).toBe('제2캠퍼스 이상');
+  expect(planCampusCategory('제4캠퍼스')).toBe('제2캠퍼스 이상');
+  expect(planCampusCategory('확인 중')).toBeUndefined();
+  expect(withPlanFoundings(catalog, []).entries.every(p => p.founding === undefined)).toBe(true);
+});
+
+test('설립은 같은 그룹에서 합집합, 캠퍼스와는 교집합으로 적용하고 해제하면 복원한다', async () => {
+  serve(); at();
+  await screen.findByText('전형 3099개');
+  const countPrograms = (foundings: string[], campus?: string) => classified.entries
+    .filter(p => foundings.includes(p.founding!) && (!campus || planCampusCategory(p.campus) === campus))
+    .reduce((n, p) => n + p.programs.length, 0);
+  fireEvent.click(first('국립'));
+  expect(screen.getByText(`전형 ${countPrograms(['국립'])}개`)).toBeTruthy();
+  fireEvent.click(first('공립'));
+  expect(screen.getByText(`전형 ${countPrograms(['국립', '공립'])}개`)).toBeTruthy();
+  fireEvent.click(first('제2캠퍼스 이상'));
+  expect(screen.getByText(`전형 ${countPrograms(['국립', '공립'], '제2캠퍼스 이상')}개`)).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '초기화' }));
+  expect(screen.getByText('전형 3099개')).toBeTruthy();
+  fireEvent.click(first('사립'));
+  fireEvent.click(first('분교'));
+  const branchCount = countPrograms(['사립'], '분교');
+  expect(branchCount).toBeGreaterThan(0);
+  expect(screen.getByText(`전형 ${branchCount}개`)).toBeTruthy();
+  expect(rowsShown().every(row => row.textContent?.includes('분교'))).toBe(true);
+});
+
+test('모바일 필터에서도 설립·캠퍼스를 함께 적용한다', async () => {
+  serve(); at();
+  await screen.findByText('전형 3099개');
+  fireEvent.click(screen.getByRole('button', { name: '필터' }));
+  const sheet = screen.getByRole('dialog', { name: '필터' });
+  fireEvent.click(within(sheet).getByRole('button', { name: '사립' }));
+  fireEvent.click(within(sheet).getByRole('button', { name: '분교' }));
+  const count = classified.entries.filter(p => p.founding === '사립' && p.campus === '분교').reduce((n, p) => n + p.programs.length, 0);
+  fireEvent.click(within(sheet).getByRole('button', { name: `전형 ${count}개 보기` }));
+  expect(screen.getByText(`전형 ${count}개`)).toBeTruthy();
+});
+
+test('설립 보조 자료 실패 시 목록은 유지하고 설립 필터만 비활성화한다', async () => {
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => url.includes('univ-map') ? new Response('', { status: 503 }) : new Response(JSON.stringify(catalog))));
+  at();
+  await screen.findByText('전형 3099개');
+  expect((first('사립') as HTMLButtonElement).disabled).toBe(true);
+  expect((first('분교') as HTMLButtonElement).disabled).toBe(false);
+  expect(screen.getByText(/설립 정보를 확인하지 못한 캠퍼스 218곳/)).toBeTruthy();
+  serve();
+  fireEvent.click(screen.getByRole('button', { name: '설립 정보 다시 불러오기' }));
+  await waitFor(() => expect((first('사립') as HTMLButtonElement).disabled).toBe(false));
+});
+
+test('학생 성적이 샘플 모드여도 실제 전체 전형계획을 표시한다', async () => {
+  const previous = localStorage.getItem('jinhak-navi-sample');
+  localStorage.setItem('jinhak-navi-sample', 'on');
+  try {
+    serve(); at();
+    expect(await screen.findByText('전형 3099개')).toBeTruthy();
+    expect(screen.getByText('대학 194곳 · 캠퍼스 218곳')).toBeTruthy();
+    expect(screen.queryByText('전형 12개')).toBeNull();
+    expect(screen.queryByText(/샘플의 대학·숫자는 예시예요/)).toBeNull();
+    expect(fetch).toHaveBeenCalledWith(expect.stringContaining('data/admission-plans.json'));
+    expect(rowsShown()).toHaveLength(10);
+    fireEvent.click(screen.getByRole('button', { name: '다음' }));
+    expect(screen.getByText('2 / 314')).toBeTruthy();
+    expect(rowsShown()).toHaveLength(10);
+    expect(localStorage.getItem('jinhak-navi-sample')).toBe('on');
+  } finally {
+    if (previous === null) localStorage.removeItem('jinhak-navi-sample');
+    else localStorage.setItem('jinhak-navi-sample', previous);
+  }
+});
 test('전형 1행 목록: 검색·상세 원문·유형 칩·지역 칩·페이지(10행)와 성적 판정 제외 안내', async () => {
   serve(); at('/admissions-list?q=한림대');
   fireEvent.click((await screen.findAllByRole('link', { name: '한림대학교 학생부교과(교과우수자전형) 전형계획 보기' }))[0]);
@@ -104,8 +191,10 @@ test('전형 1행 목록: 검색·상세 원문·유형 칩·지역 칩·페이�
   fireEvent.click(first('면접 있음'));
   expect(screen.getByText('전형 3개')).toBeTruthy();
   fireEvent.click(first('사립'));
-  expect(screen.getByText('조건에 맞는 전형이 없어요')).toBeTruthy();
-  fireEvent.click(screen.getByRole('button', { name: '필터 초기화' }));
+  expect(rowsShown().length).toBeGreaterThan(0);
+  const privateNames = classified.entries.filter(p => p.founding === '사립' && p.region === '강원').map(p => p.university);
+  expect(rowsShown().every(row => privateNames.some(name => row.getAttribute('aria-label')?.startsWith(`${name} `)))).toBe(true);
+  fireEvent.click(screen.getByRole('button', { name: '초기화' }));
   expect(screen.getByText('전형 3099개')).toBeTruthy();
 }, 30_000);
 
@@ -138,8 +227,26 @@ test('직접 연결된 캠퍼스 상세는 목록 필터와 독립적으로 열�
   expect(within(detail).getAllByRole('link', { name: /원문 열기/ })[0].getAttribute('href')).not.toContain('#page=');
 });
 
+test('우리 서버 PDF 사본은 규칙 이름으로 내려받고, 쪽 링크는 사본을 새 탭으로 열며, 원래 게시 페이지는 출처로 남긴다', async () => {
+  serve();
+  const plan = catalog.entries.find(e => e.university === '성균관대학교' && e.campus === '본교')!;
+  const doc = plan.documents.find(d => d.local_file)!;
+  const name = '2028_성균관대학교_시행계획.pdf', href = `/plans/${encodeURIComponent(name)}`;
+  at(`/admissions-list?plan=${plan.id}`);
+  const detail = await screen.findByRole('region', { name: '성균관대학교 본교 전형계획 상세' });
+  const download = within(detail).getByRole('link', { name: '원문 내려받기 (PDF)' });
+  expect([download.getAttribute('href'), download.getAttribute('download'), download.getAttribute('target')]).toEqual([href, name, null]);
+  expect(within(detail).getByRole('link', { name: '출처: 성균관대학교 입학처 게시 페이지 ↗' }).getAttribute('href')).toBe(doc.source_url);
+  const page = within(detail).getAllByRole('link', { name: /^PDF \d+쪽/ })[0];
+  expect(page.getAttribute('href')).toMatch(new RegExp(`^${href}#page=\\d+$`));
+  expect(page.getAttribute('target')).toBe('_blank');
+  // 사본이 없는 HWPX는 지금처럼 원래 링크
+  const hwpx = plan.documents.find(d => d.format === 'hwpx')!;
+  expect(within(detail).getByRole('link', { name: '원문 열기 (HWPX) ↗' }).getAttribute('href')).toBe(hwpx.download_url);
+});
+
 test('조회 실패는 빈 검색과 구분하고 재시도한다', async () => {
-  vi.stubGlobal('fetch', vi.fn().mockResolvedValueOnce(new Response('', { status: 503 })).mockResolvedValueOnce(new Response(JSON.stringify(catalog))));
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValueOnce(new Response('', { status: 503 })).mockResolvedValueOnce(new Response(JSON.stringify(catalog))).mockResolvedValueOnce(new Response(JSON.stringify(mapFile))));
   at('/admissions-list?plan=missing');
   expect((await screen.findByRole('alert')).textContent).toContain('전형계획 자료를 불러오지 못했어요');
   expect(screen.queryByText(/조건에 맞는 전형이 없어요/)).toBeNull();

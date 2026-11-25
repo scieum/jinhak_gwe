@@ -53,6 +53,12 @@ export type MethodResult =
   | { status: 'pending'; reason: string }
   | { status: 'unavailable'; reason: string };
 
+/** 검수 전 후보 방식(R-CONV-012·013)의 결과. 범위 + (있으면) 기댓값. 학생 화면의 min/max/대표값에는 넣지 않는다 */
+export type CandidateResult =
+  | { status: 'ok'; value: number | null; min: number; max: number; note?: string }
+  | { status: 'pending'; reason: string }
+  | { status: 'unavailable'; reason: string };
+
 export type Confidence = '높음' | '보통' | '낮음';
 
 /** 배치표(방법 B). R-CONV-009 필수 메타 포함. 원자료의 대학 라인은 담지 않는다 */
@@ -66,7 +72,9 @@ export interface ConversionTable {
   n: number;
   license_status: LicenseStatus;
   review_status: ReviewStatus;
-  points: { avg5: number; converted9: number; cumulative_pct?: number }[];
+  /** converted9_low: 같은 평균 안에서 원표가 범위로 낸 아래 끝(예: 부산 1.00 → 1.15~1.45) */
+  points: { avg5: number; converted9: number; converted9_low?: number; cumulative_pct?: number }[];
+  source_url?: string;
   sample?: boolean;
   note?: string;
 }
@@ -78,7 +86,11 @@ export interface ConversionConfig {
   centers9: number[];
   /** 시행지침 5등급 누적비율(%) — R-CONV-010 실제 구간 계산용 */
   cumulative5: number[];
-  rules: Record<string, { review_status: ReviewStatus; note?: string }>;
+  /** 시행지침 9등급 누적비율(%) — R-CONV-013 균등분포 계산용 */
+  cumulative9?: number[];
+  rules: Record<string, { review_status: ReviewStatus; note?: string; source?: string }>;
+  /** R-CONV-012 후보 실측표(검수 전). 학기 라벨은 basis_semesters */
+  candidateTables?: ConversionTable[];
   confidence: {
     minRankedSubjects: number;
     maxSmallRatio: number;

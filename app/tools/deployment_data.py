@@ -13,6 +13,7 @@ from urllib.parse import urlparse
 APP = Path(__file__).resolve().parents[1]
 HASH = re.compile(r'[a-f0-9]{64}')
 MAX_BYTES = 250 * 1024 * 1024
+MAX_BUNDLE_BYTES = 600 * 1024 * 1024  # whole runtime bundle; plan PDF copies alone are ~200 MB
 
 
 def digest(raw):
@@ -23,7 +24,7 @@ def safe_path(name):
     path = PurePosixPath(name)
     if (not isinstance(name, str) or '\\' in name or ':' in name or path.is_absolute()
             or '..' in path.parts or str(path) != name
-            or not name.startswith(('data/', 'assets/universities/'))):
+            or not name.startswith(('data/', 'assets/universities/', 'plans/'))):
         raise ValueError(f'Unsafe asset path: {name}')
     return path
 
@@ -116,6 +117,11 @@ def check(root=APP / 'public', url=None):
     plans = document('data/admission-plans.json')
     if plans.get('format') != 'jinhak-navi-admission-plans' or not plans.get('entries') or plans.get('review_status') != 'draft':
         raise ValueError('Admission plan catalog is missing or not a reference catalog')
+    # Same-origin PDF copies (app/public/plans, gitignored): every referenced copy must exist with the catalog hash.
+    plan_pdfs = {d['local_file']: d['sha256'] for e in plans['entries'] for d in e.get('documents', []) if 'local_file' in d}
+    for name, sha in sorted(plan_pdfs.items()):
+        if not re.fullmatch(r'plans/2028_[^/]+\.pdf', name) or digest(read(name)) != sha:
+            raise ValueError(f'{name}: plan PDF copy missing or hash mismatch; rerun build_admission_plan_programs.py')
     document('data/released-results.json')
     document('data/scoring-rules.json')
     campus_map = document('data/univ-map.json')
@@ -133,7 +139,8 @@ def check(root=APP / 'public', url=None):
             raise ValueError(f'{name}: logo hash mismatch')
     report = {'files': len(files), 'bytes': sum(map(len, files.values())), 'collected_rows': collection['rows'],
               'universities': len(collection['universities']), 'placement_years': len(placement['years']),
-              'plan_campuses': len(plans['entries']), 'map_campuses': len(campus_map['campuses']), 'logos': len(logos)}
+              'plan_campuses': len(plans['entries']),
+              'plan_pdfs': len(plan_pdfs), 'plan_pdf_bytes': sum(len(files[n]) for n in plan_pdfs), 'map_campuses': len(campus_map['campuses']), 'logos': len(logos)}
     return files, report
 
 
@@ -158,7 +165,7 @@ def restore(archive_path, root):
         with zipfile.ZipFile(archive_path) as archive:
             infos = archive.infolist()
             names = [info.filename for info in infos]
-            if len(names) != len(set(names)) or len(names) > 2000 or sum(i.file_size for i in infos) > MAX_BYTES:
+            if len(names) != len(set(names)) or len(names) > 2000 or sum(i.file_size for i in infos) > MAX_BUNDLE_BYTES:
                 raise ValueError('Duplicate, oversized or excessive bundle entries')
             manifest = read_json(archive.read('runtime-manifest.json'), 'runtime-manifest.json')
             if manifest.get('format') != 'jinhak-runtime-bundle' or manifest.get('version') != 1 or not isinstance(manifest.get('files'), dict):

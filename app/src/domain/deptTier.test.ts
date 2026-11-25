@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildLayers, FORMAT_ERROR, groupsOf, lowerBound, parseTierDraft, parseWidth, RANGE_ERROR, tierData, type TierCell } from './deptTier';
+import { buildLayers, FORMAT_ERROR, groupsOf, isSpecialProgram, localTalentMatch, lowerBound, specialKind, parseTierDraft, parseWidth, RANGE_ERROR, tierData, type TierCell } from './deptTier';
 import type { ReleasedUnit, ResultRow } from './resultReview';
 
 const cell = (university: string, cut: number, unit = '행정학과'): TierCell => ({ university, unit, program: '학생부교과', cut });
@@ -35,8 +35,9 @@ describe('층 나누기', () => {
     expect(buildLayers([cell('가', 9)], 30)[0].label).toBe('8.8~9.0');
     expect(buildLayers([cell('가', 1)], 50)[0].label).toBe('1.0~1.5');
   });
-  it('층 안은 대학 → 모집단위 가나다순, 같은 대학 여러 모집단위는 각각 칸', () => {
-    expect(buildLayers(SPEC, 50)[2].cells.map(c => `${c.university} ${c.unit}`)).toEqual(['동국 행정학과', '성균관 행정학과', '한양 정책학과', '한양 행정학과']);
+  it('층 안은 컷이 작은 칸부터 왼쪽, 같으면 대학 → 모집단위 가나다순', () => {
+    expect(buildLayers(SPEC, 50)[2].cells.map(c => `${c.university} ${c.unit}`)).toEqual(['한양 정책학과', '한양 행정학과', '성균관 행정학과', '동국 행정학과']);
+    expect(buildLayers([cell('나', 2.1), cell('가', 2.1), cell('다', 2.0)], 50)[0].cells.map(c => c.university)).toEqual(['다', '가', '나']);
   });
   it('칸이 없으면 층도 없다', () => expect(buildLayers([], 50)).toEqual([]));
 });
@@ -73,6 +74,42 @@ describe('대상 고르기', () => {
     expect(d.pending).toBe(2); // 라(5등급제) · 바(공개 입결 없음). 마는 다른 학년도라 빠진다
     expect(tierData(units, fields, G, '종합').status).toBe('pending');
   });
+  it('특별 전형(자격 제한)은 기본으로 빼고 종류별 개수만 센다, 켠 종류만 모집단위마다 칸이 하나 더', () => {
+    expect(['학생부교과(농어촌학생전형)', '학생부종합(기회균형Ⅰ)', '특성화고교전형', '기초생활수급자 및 차상위계층전형', '재외국민', '학생부종합(사회적배려대상자)']
+      .map(specialKind)).toEqual(['농어촌', '기회균형', '특성화고', '기회균형', '재외국민·서해5도', '기회균형']);
+    expect(['학생부교과(일반전형)', '지역인재전형', '학생부종합(서류형)', '교과우수자'].filter(isSpecialProgram)).toEqual([]);
+    const sp = { program: '학생부교과(특성화고교)' }, rural = { program: '농어촌학생' };
+    const units = [unit('가', [row('가', '행정학과', '2.1'), row('가', '행정학과', '4.0', sp), row('가', '행정학과', '3.0', rural)]), unit('나', [row('나', '행정학과', '3.4')]),
+      unit('다', [row('다', '행정학과', '2.9')]), unit('라', [row('라', '행정학과', '5.1', sp)])];
+    const fields = ['가', '나', '다', '라'].map(u => field(u, '행정학과', '인문'));
+    const off = tierData(units, fields, G, '교과'), on = tierData(units, fields, G, '교과', { kinds: ['특성화고'] });
+    expect(off).toMatchObject({ status: 'ok', pending: 0, special: 3, kinds: { 특성화고: 2, 농어촌: 1 }, other: 0 });
+    expect(off.status !== 'pending' && off.cells.map(c => `${c.university}:${c.cut}`)).toEqual(['가:2.1', '나:3.4', '다:2.9']);
+    expect(on).toMatchObject({ special: 1, kinds: { 특성화고: 2, 농어촌: 1 } });
+    expect(on.status !== 'pending' && on.cells.map(c => `${c.university}:${c.cut}`)).toEqual(['가:2.1', '가:4', '나:3.4', '다:2.9', '라:5.1']);
+  });
+  it('지역인재는 권역이 맞는 대학만 칸으로, 아니면 개수만', () => {
+    const lt = { program: '지역인재전형' };
+    const units = [unit('가', [row('가', '행정학과', '2.1'), row('가', '행정학과', '2.6', lt)]), unit('나', [row('나', '행정학과', '3.4'), row('나', '행정학과', '3.9', lt)]),
+      unit('다', [row('다', '행정학과', '2.9')])];
+    const fields = ['가', '나', '다'].map(u => field(u, '행정학과', '인문'));
+    expect(tierData(units, fields, G, '교과')).toMatchObject({ local: 2, special: 0 });
+    const d = tierData(units, fields, G, '교과', { localOk: u => u === '가' });
+    expect(d).toMatchObject({ local: 1 });
+    expect(d.status !== 'pending' && d.cells.map(c => `${c.university}:${c.cut}`)).toEqual(['가:2.1', '가:2.6', '나:3.4', '다:2.9']);
+  });
+  it('지역인재 권역: 같은 권역이면 해당 가능, 수도권 · 모름 · 미설정은 아니다', () => {
+    expect(localTalentMatch('충청북도', ['대전'])).toBe(true);
+    expect(localTalentMatch('광주광역시', ['전남광주'])).toBe(true);
+    expect(localTalentMatch('전라남도', ['전북'])).toBe(true);
+    expect(localTalentMatch('경상북도', ['대구'])).toBe(true);
+    expect(localTalentMatch('경상남도', ['서울', '울산'])).toBe(true); // 캠퍼스 하나라도
+    expect(localTalentMatch('경상북도', ['부산'])).toBe(false);
+    expect(localTalentMatch('강원특별자치도', ['충북'])).toBe(false);
+    expect(localTalentMatch('서울특별시', ['서울'])).toBe(false);
+    expect(localTalentMatch('제주특별자치도', [])).toBe(false);
+    expect(localTalentMatch('', ['대전'])).toBe(false);
+  });
   it('3개 미만이면 자료 부족', () => {
     expect(tierData([unit('가', [row('가', '행정학과', '2.1')])], [field('가', '행정학과', '인문')], G, '교과').status).toBe('short');
   });
@@ -83,7 +120,7 @@ describe('실제 자료(dept-tier.json) 읽기', () => {
     format: 'jinhak-navi-dept-tier', version: 1,
     fields: [['가대', '행정학과', '행정·정책', '사회과학', '인문'], ['나대', '행정학부', '행정·정책', '사회과학', '인문'], ['다대', '행정학과', '행정·정책', '사회과학', '인문'],
       ['라대', '체육학과', '체육', '체육', '예체능']],
-    rows: [['가대', '행정학과', '교과', '지역균형', '2026', '2.31'], ['나대', '행정학부', '교과', '일반', '2026', '3.4'], ['다대', '행정학과', '교과', '일반', '2026', '1.9'],
+    rows: [['가대', '행정학과', '교과', '지역균형', '2026', '2.31', '15'], ['나대', '행정학부', '교과', '일반', '2026', '3.4'], ['다대', '행정학과', '교과', '일반', '2026', '1.9'],
       ['다대', '행정학과', '종합', '일반', '2026', '9.5'], ['라대', '체육학과', '교과', '일반', '2026', '4.0']],
   };
   it('인문·자연 계열만 · 범위 밖 컷은 버리고 원문 값 그대로 층을 쌓는다', () => {
@@ -93,6 +130,7 @@ describe('실제 자료(dept-tier.json) 읽기', () => {
     expect(data).toMatchObject({ status: 'ok', year: 2026, candidates: 3, pending: 0 });
     expect(data.status !== 'pending' && data.cells.map(c => `${c.university}:${c.cut}`)).toEqual(['가대:2.31', '나대:3.4', '다대:1.9']);
     expect(tierData(units, fields, group, '종합')).toMatchObject({ status: 'pending', pending: 3 }); // 9.5는 버림
+    expect(units.flatMap(u => u.rows).map(r => r.quota)).toEqual(['15', '', '', '']); // 7번째 칸 = 모집인원(없으면 빈칸)
   });
   it('형식이 다르면 빈 자료', () => {
     expect(parseTierDraft({ ...file, format: 'x' })).toEqual({ units: [], fields: [] });

@@ -2,15 +2,13 @@ import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNod
 import { Link, useSearchParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { loadAdmissionPlans } from '../data/admissionPlans';
-import { samplePlanCatalog } from '../data/sample/admissionPlans';
-import { isSampleMode, useSampleMode } from '../data/sample/mode';
 import { UniversityLogo } from '../components/UniversityLogo';
 import { PromoBanner } from '../components/PromoBanner';
 import { Icon } from '../components/Icon';
 import { Modal } from '../components/Modal';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { ScreenActions } from '../components/ScreenActions';
-import { matchesPlan, planPageUrl, type AdmissionPlan, type PlanCatalog, type PlanDocument, type PlanProgram } from '../domain/admissionPlans';
+import { matchesPlan, planCampusCategory, planFileName, planFileUrl, planPageUrl, type AdmissionPlan, type PlanCatalog, type PlanDocument, type PlanProgram } from '../domain/admissionPlans';
 import { interestId } from '../domain/interests';
 import { studentDb } from '../store/studentDb';
 import '../styles/interests.css';
@@ -32,11 +30,14 @@ function Quota({ program, prefix = '모집 ' }: { program: PlanProgram & { quota
 function SourceLink({ href, children }: { href: string; children: ReactNode }) {
   return <a className="t-link" href={href} target="_blank" rel="noreferrer">{children} ↗</a>;
 }
-function Document({ doc }: { doc: PlanDocument }) {
+function Document({ doc, university }: { doc: PlanDocument; university: string }) {
   return <article className="plan-document">
     <h4 className="t-heading-3">{doc.label}</h4>
     <p className="t-caption text-muted">{doc.provider === 'adiga' ? '대입정보포털 어디가' : '대학 입학처'} · {doc.format.toUpperCase()} · 자료 확인 {doc.checked_at}</p>
-    <div className="toolbar"><SourceLink href={doc.download_url}>원문 열기 ({doc.format.toUpperCase()})</SourceLink><SourceLink href={doc.source_url}>공식 게시 페이지</SourceLink></div>
+    {/* 우리 사본이 있으면 같은 출처에서 규칙 이름으로 내려받고, 원래 게시 페이지는 출처로 남겨요 */}
+    <div className="toolbar">{doc.local_file
+      ? <><a className="t-link" href={planFileUrl(doc)} download={planFileName(doc)}>원문 내려받기 (PDF)</a><SourceLink href={planFileUrl(doc)}>원문 열기 (PDF)</SourceLink><SourceLink href={doc.source_url}>출처: {doc.provider === 'adiga' ? '어디가' : `${university} 입학처`} 게시 페이지</SourceLink></>
+      : <><SourceLink href={doc.download_url}>원문 열기 ({doc.format.toUpperCase()})</SourceLink><SourceLink href={doc.source_url}>공식 게시 페이지</SourceLink></>}</div>
     {doc.filename && <p className="plan-filename">ZIP 안의 파일: {doc.filename}</p>}
     {doc.note && <p>{doc.note}</p>}
     {doc.year_check === 'portal' && <p className="notice">공식 포털의 2028학년도 항목에 연결된 파일이에요. 파일 본문의 학년도는 직접 확인해 주세요.</p>}
@@ -56,7 +57,7 @@ function PlanDetail({ plan, onClose }: { plan: AdmissionPlan; onClose: () => voi
     {!!plan.notices.length && <div><h4 className="t-heading-3">입학처 공지</h4><ul className="plan-notices">{plan.notices.map((n, i) => <li key={n.url + i}><SourceLink href={n.url}>{n.change_notice ? '[변경 공지] ' : ''}{n.title}</SourceLink></li>)}</ul></div>}
     <h4 className="t-heading-3">시행계획 원문</h4>
     <p className="t-body-sm text-muted">입학처 변경 공지와 최종 모집요강을 함께 확인해 주세요. 수집 이후 수정본이 게시될 수 있어요.</p>
-    {plan.documents.map(doc => <Document key={doc.id} doc={doc} />)}
+    {plan.documents.map(doc => <Document key={doc.id} doc={doc} university={plan.university} />)}
     <h4 className="t-heading-3">주요 전형 요약</h4>
     {!plan.programs.length ? <p className="notice">전형별 요약은 아직 없어요. 위 공식 원문에서 모집인원·지원자격·전형방법·수능최저를 확인해 주세요.</p>
       : <><p className="notice">원문에서 확인한 일부 전형만 정리했어요. 전체 전형과 모집단위별 예외는 원문을 확인해 주세요. 검수 전 요약은 성적 판정에 사용하지 않아요.</p>
@@ -77,7 +78,7 @@ const TYPES = ['교과', '종합', '논술', '실기', '정시'];
 const FILTERS = {
   region: ['강원', '수도권', '충청권', '영남권', '호남권', '제주'],
   founding: ['국립', '공립', '사립', '그 밖'],
-  campus: ['본캠퍼스', '분캠퍼스'],
+  campus: ['본교', '분교', '제2캠퍼스 이상'],
   field: ['인문', '사회', '자연', '공학', '의약', '예체능'],
   cond: ['수능최저 있음', '수능최저 없음', '면접 있음', '재학생만'],
 };
@@ -105,9 +106,10 @@ function toRows(catalog: PlanCatalog): Row[] {
     } satisfies Row));
   });
 }
-// shortcut: 설립(국립·공립·사립)·계열·재학생 자격은 행 자료가 없어 고르면 0건이에요, 시행계획 자료에 값이 들어오면 여기서 비교해요
+// 계열·재학생 자격은 아직 구조화된 행 자료가 없다.
 const facet = (row: Row, key: FilterKey, value: string) => key === 'region' ? row.group === value
-  : key === 'campus' ? (row.plan.campus === '본교' ? '본캠퍼스' : '분캠퍼스') === value
+  : key === 'founding' ? row.plan.founding === value
+  : key === 'campus' ? planCampusCategory(row.plan.campus) === value
   : key === 'cond' ? (value === '수능최저 있음' ? row.minimum === '있음' : value === '수능최저 없음' ? row.minimum === '없음' : value === '면접 있음' ? row.interview === '있음' : false)
   : false;
 const passes = (row: Row, f: Filters) => (Object.keys(f) as FilterKey[]).every(k => !f[k].length || (k === 'cond' ? f[k].every(v => facet(row, k, v)) : f[k].some(v => facet(row, k, v))));
@@ -132,16 +134,17 @@ export function AdmissionsList() {
   const [sort, setSort] = useState<Sort>('가나다순'), [view, setView] = useState<'list' | 'table'>('table'), [interestOnly, setInterestOnly] = useState(false);
   const [page, setPage] = useState(0), [sheet, setSheet] = useState<'' | 'filter' | 'sort'>(''), [dropdown, setDropdown] = useState(false);
   const [confirm, setConfirm] = useState<Row | null>(null), [toast, setToast] = useState<{ text: string; sub?: string } | null>(null), [saveError, setSaveError] = useState(false);
-  const resultRef = useRef<HTMLDivElement>(null), sample = useSampleMode();
+  const resultRef = useRef<HTMLDivElement>(null);
   useEffect(() => { let active = true; setError(false);
-    // 샘플 모드: 공개 자료 대신 시안 데모 전형 12행(02-spec.md 1장). 샘플을 지우면 실제 시행계획 자료.
-    (isSampleMode() ? Promise.resolve(samplePlanCatalog) : loadAdmissionPlans()).then(value => { if (active) setCatalog(value); }).catch(() => { if (active) setError(true); });
+    // 공개 전형계획은 학생 성적의 샘플 모드와 관계없이 전체 실제 자료를 읽는다.
+    loadAdmissionPlans().then(value => { if (active) setCatalog(value); }).catch(() => { if (active) setError(true); });
     return () => { active = false; };
-  }, [attempt, sample]);
+  }, [attempt]);
   useEffect(() => { setPage(0); }, [query, type, filters, sort, interestOnly]);
   useEffect(() => { if (!toast) return; const t = window.setTimeout(() => setToast(null), 3000); return () => window.clearTimeout(t); }, [toast]);
   const interests = useLiveQuery(async () => { try { return new Set((await studentDb.interests.toArray()).map(i => interestId(i.university, i.program))); } catch { return null; } }, []);
   const rows = useMemo(() => catalog ? toRows(catalog) : [], [catalog]);
+  const hasFounding = !!catalog?.entries.some(p => p.founding), missingFounding = catalog?.entries.filter(p => !p.founding).length ?? 0;
   function update(key: string, value: string) { const next = new URLSearchParams(params); if (value) next.set(key, value); else next.delete(key); setParams(next, { replace: key === 'q' }); }
   const idOf = (r: Row) => r.program ? interestId(r.plan.university, r.program.name) : '';
   const saved = (r: Row) => !!r.program && !!interests?.has(idOf(r));
@@ -149,6 +152,7 @@ export function AdmissionsList() {
   const beforeType = base(filters), filtered = beforeType.filter(r => !type || r.type === type).sort(sorters[sort]);
   const typeCount = (t: string) => beforeType.filter(r => r.program && (!t || r.type === t)).length;
   const programCount = filtered.filter(r => r.program).length, campusOnly = filtered.length - programCount;
+  const universityCount = new Set(filtered.map(r => r.plan.university)).size, campusCount = new Set(filtered.map(r => r.plan.id)).size;
   const interestCount = rows.filter(saved).length, interestLabel = (prefix: string) => interests === null ? prefix : `${prefix} ${interestCount}`;
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)), current = Math.min(page, pages - 1), shown = filtered.slice(current * PAGE_SIZE, (current + 1) * PAGE_SIZE);
   const selected = catalog?.entries.find(p => p.id === selectedId);
@@ -183,7 +187,7 @@ export function AdmissionsList() {
   };
   const goPage = (n: number) => { setPage(n); resultRef.current?.scrollIntoView?.({ block: 'start' }); resultRef.current?.focus({ preventScroll: true }); };
   const pager = <nav className="al-pager" aria-label="전형계획 페이지"><button type="button" className="button-outline" disabled={!current} onClick={() => goPage(current - 1)}>이전</button><span className="t-caption num">{current + 1} / {pages}</span><button type="button" className="button-outline" disabled={current + 1 >= pages} onClick={() => goPage(current + 1)}>다음</button></nav>;
-  const chip = (label: string, on: boolean, click: () => void, aria?: string) => <button key={label} type="button" className="filter-chip" aria-pressed={on} aria-label={aria} onClick={click}>{label}</button>;
+  const chip = (label: string, on: boolean, click: () => void, aria?: string, disabled = false) => <button key={label} type="button" className="filter-chip" aria-pressed={on} aria-label={aria} disabled={disabled} onClick={click}>{label}</button>;
   const flip = (f: Filters, k: FilterKey, v: string): Filters => ({ ...f, [k]: f[k].includes(v) ? f[k].filter(x => x !== v) : [...f[k], v] });
   const typeChips = ['', ...TYPES].map(t => chip(`${t || '전체'} ${typeCount(t)}`, type === t, () => setType(t)));
 
@@ -206,13 +210,15 @@ export function AdmissionsList() {
         <section className="al-filters" aria-label="전형계획 조회 조건">
           {anyFilter && <button type="button" className="al-reset" onClick={reset}>초기화</button>}
           <span className="al-filters__label">지역</span><div className="al-chips">{chip('전체', !filters.region.length, () => setFilters({ ...filters, region: [] }))}{FILTERS.region.map(v => chip(v, filters.region.includes(v), () => setFilters(flip(filters, 'region', v))))}</div>
-          <span className="al-filters__label">설립·캠퍼스</span><div className="al-chips">{FILTERS.founding.map(v => chip(v, filters.founding.includes(v), () => setFilters(flip(filters, 'founding', v))))}<span className="al-chips__divider" aria-hidden="true" />{FILTERS.campus.map(v => chip(v, filters.campus.includes(v), () => setFilters(flip(filters, 'campus', v))))}</div>
+          <span className="al-filters__label">설립·캠퍼스</span><div className="al-chips">{FILTERS.founding.map(v => chip(v, filters.founding.includes(v), () => setFilters(flip(filters, 'founding', v)), undefined, !hasFounding))}<span className="al-chips__divider" aria-hidden="true" />{FILTERS.campus.map(v => chip(v, filters.campus.includes(v), () => setFilters(flip(filters, 'campus', v))))}</div>
           <span className="al-filters__label">전형 유형</span><div className="al-chips">{typeChips}</div>
           <span className="al-filters__label">계열</span><div className="al-chips">{FILTERS.field.map(v => chip(v, filters.field.includes(v), () => setFilters(flip(filters, 'field', v))))}</div>
           <span className="al-filters__label">조건</span><div className="al-chips">{FILTERS.cond.map(v => chip(v, filters.cond.includes(v), () => setFilters(flip(filters, 'cond', v))))}</div>
         </section>
+        {missingFounding > 0 && <div className="al-panel" role="status"><p>설립 정보를 확인하지 못한 캠퍼스 {missingFounding}곳은 설립 필터에서 제외돼요.</p><button type="button" className="button-outline" onClick={() => setAttempt(n => n + 1)}>설립 정보 다시 불러오기</button></div>}
         <div className="al-result" ref={resultRef} tabIndex={-1}>
           <div className="al-result__count"><strong className="t-title num">전형 {programCount}개</strong>{campusOnly > 0 && <span className="t-caption text-muted num">요약 전 캠퍼스 {campusOnly}곳</span>}
+            <span className="t-caption text-muted num">대학 {universityCount}곳 · 캠퍼스 {campusCount}곳</span>
             <span className="data-status-badge al-result__badge">시행계획 기준</span>
             <span className="al-result__interest">{chip(interestLabel('관심만 보기'), interestOnly, () => setInterestOnly(v => !v))}</span></div>
           {!!filtered.length && <div className="al-result__tools">
@@ -224,7 +230,7 @@ export function AdmissionsList() {
             <SegmentedControl label="보기" value={view} onChange={setView} options={[{ value: 'list', label: '목록' }, { value: 'table', label: '표' }]} />
           </div>}
         </div>
-        <p className="disclaimer-note al-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {catalog.checked_at} · {sample ? <><br className="al-mobile" />샘플의 대학·숫자는 예시예요</> : '검수 전 요약은 성적 판정에 쓰지 않아요'}</span></p>
+        <p className="disclaimer-note al-note"><Icon name="info" size={16} /><span>실제 공개 전형계획 · 대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {catalog.checked_at} · 검수 전 요약은 성적 판정에 쓰지 않아요</span></p>
         {selectedId && !selected && errorLine('고른 전형을 목록에서 찾지 못했어요. 시행계획이 바뀌었을 수 있어요. 아래 목록에서 다시 골라 주세요.')}
         {(saveError || interests === null) && errorLine('관심 전형을 저장하지 못했어요. 브라우저 설정에서 사이트 저장을 허용한 뒤 다시 눌러 주세요.')}
         {selected && <PlanDetail key={selected.id} plan={selected} onClose={() => update('plan', '')} />}
@@ -255,7 +261,7 @@ export function AdmissionsList() {
       <div className="al-sheet"><div className="al-sheet__head"><h3 className="t-heading-4">필터</h3><button type="button" className="al-sheet__close" aria-label="닫기" onClick={() => setSheet('')}><Icon name="x" size={24} /></button></div>
         {([['region', '지역'], ['founding', '설립·캠퍼스'], ['type', '전형 유형'], ['field', '계열'], ['cond', '조건']] as const).map(([k, title]) => <section key={k} className="al-sheet__section"><h4 className="t-heading-4">{title}</h4><div className="al-chips">
           {k === 'type' ? TYPES.map(t => chip(t, draftType === t, () => setDraftType(draftType === t ? '' : t)))
-            : (k === 'founding' ? [...FILTERS.founding.map(v => ['founding', v] as const), ...FILTERS.campus.map(v => ['campus', v] as const)] : FILTERS[k].map(v => [k, v] as const)).map(([key, v]) => chip(v, draft[key].includes(v), () => setDraft(flip(draft, key, v))))}</div></section>)}
+            : (k === 'founding' ? [...FILTERS.founding.map(v => ['founding', v] as const), ...FILTERS.campus.map(v => ['campus', v] as const)] : FILTERS[k].map(v => [k, v] as const)).map(([key, v]) => chip(v, draft[key].includes(v), () => setDraft(flip(draft, key, v)), undefined, key === 'founding' && !hasFounding))}</div></section>)}
         <div className="al-sheet__actions"><button type="button" className="button-outline" onClick={() => { setDraft(NO_FILTERS); setDraftType(''); }}>초기화</button><button type="button" className="button-primary" onClick={() => { setFilters(draft); setType(draftType); setSheet(''); }}>전형 {base(draft).filter(r => r.program && (!draftType || r.type === draftType)).length}개 보기</button></div></div>
     </Modal>}
     {sheet === 'sort' && <Modal label="정렬" onClose={() => setSheet('')}>

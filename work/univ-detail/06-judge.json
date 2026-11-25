@@ -1,8 +1,10 @@
 {
   "slug": "univ-detail",
-  "pass": true,
-  "failed": [],
-  "same_fail_streak": 0,
+  "pass": false,
+  "failed": [
+    "J9"
+  ],
+  "same_fail_streak": 1,
   "counts": {
     "J1": 0,
     "J2": 0,
@@ -12,7 +14,14 @@
     "J6": 0,
     "J7": 0,
     "J8": 0,
-    "J9": 0
+    "J9": 1
   },
-  "violations": []
+  "violations": [
+    {
+      "rule": "J9",
+      "node_id": "-",
+      "name": "rules/design-rules.json",
+      "detail": "design.md가 바뀌었어요. 규칙 파일을 갱신해야 해요."
+    }
+  ]
 }

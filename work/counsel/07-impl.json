@@ -1,12 +1,10 @@
 {
   "slug": "counsel",
   "gate": "G5",
-  "pass": false,
-  "errors": [
-    "F 1440 #I346:85616;63:203;100:15781;29:21: '경계' 색 #5c4a9e (시안 #141414)"
-  ],
-  "back_to": "S5",
-  "same_fail_streak": 2,
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
   "route": "/teacher/counsel",
   "allowed": [
     {

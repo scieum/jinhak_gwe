@@ -45,7 +45,7 @@
 .tier-layer__range { font-size: 12px; font-weight: 600; line-height: 17px; }
 .tier-layer__head .t-caption { font-size: 12px; line-height: 17px; }
 .tier-layer > p { align-self: center; text-align: center; margin: 0; }
-.tier-layer__cells { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--spacing-xs); list-style: none; margin: 0; padding: 0; }
+.tier-layer__cells { display: flex; flex-wrap: wrap; justify-content: flex-start; /* 2026-11-25 사용자 요청: 컷 높은 칸부터 왼쪽 */ gap: var(--spacing-xs); list-style: none; margin: 0; padding: 0; }
 .tier-cell { display: flex; flex-direction: column; align-items: flex-start; width: 98px; height: 139px; padding: var(--spacing-xs); border: 1px solid var(--color-hairline-soft); color: var(--color-ink); text-decoration: none; }
 .tier-cell:hover { border-color: var(--color-ink); }
 .tier-cell .university-logo, .tier-cell .university-logo img { flex: none; width: 32px; height: 32px; object-fit: contain; } /* 공용 flex-basis 48이 세로 칸에서 높이가 되지 않게 */
@@ -100,6 +100,33 @@
 }
 @media (prefers-reduced-motion: no-preference) { .tier-layer { animation: tier-fade 150ms ease-out; } }
 @keyframes tier-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* 실제 입결 카드와 대학별 시행계획 연결 */
+.dept-tier__row { flex-wrap: wrap; }
+.dept-tier .dept-tier__pending-count { height: auto; min-height: 24px; white-space: normal; overflow-wrap: anywhere; }
+.dept-tier__right { flex-wrap: wrap; min-width: 0; }
+.dept-tier__row--top { flex-wrap: wrap; gap: var(--spacing-md); }
+.tier-cell-group { display: flex; flex-direction: column; width: 180px; min-width: 0; }
+.tier-cell-group .tier-cell { flex: 1; width: 100%; height: auto; min-height: 174px; }
+.tier-cell-group .tier-cell__unit { display: block; overflow: visible; overflow-wrap: anywhere; -webkit-line-clamp: unset; }
+.tier-cell__program { margin-top: var(--spacing-xs); font-size: 12px; line-height: 18px; color: var(--color-text-muted); overflow-wrap: anywhere; }
+.tier-cell-group .tier-cell__cut { padding-top: var(--spacing-sm); }
+.tier-cell__plan { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-xs); min-height: 44px; padding: var(--spacing-xs) var(--spacing-sm); border: 1px solid var(--color-hairline); border-top: 0; background: var(--color-canvas-soft); color: var(--color-accent); font: inherit; font-size: 12px; cursor: pointer; }
+.tier-cell__plan--empty { color: var(--color-text-muted); cursor: default; }
+.dept-tier__load-error { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-sm); padding: var(--spacing-md); background: var(--color-canvas); border: 1px solid var(--color-hairline); }
+.dept-tier__plan-campus { display: grid; gap: var(--spacing-md); min-width: 0; }
+.dept-tier__plan-program { padding: var(--spacing-md); border: 1px solid var(--color-hairline); }
+.dept-tier__plan-program h5 { margin: 0; }
+.dept-tier__plan-program dl { display: grid; gap: var(--spacing-sm); margin: var(--spacing-md) 0; }
+.dept-tier__plan-program dl > div { display: grid; grid-template-columns: 136px minmax(0, 1fr); gap: var(--spacing-sm); }
+.dept-tier__plan-program dt { color: var(--color-text-muted); font-size: 13px; }
+.dept-tier__plan-program dd { margin: 0; overflow-wrap: anywhere; }
+@media (max-width: 767px) {
+  .dept-tier .dept-tier__pick { min-width: 0; height: auto; white-space: normal; overflow-wrap: anywhere; }
+  .dept-tier__plan-program dl > div { grid-template-columns: minmax(0, 1fr); gap: var(--spacing-xxs); }
+  .tier-layer__cells { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tier-cell-group { width: 100%; height: 100%; }
+}
 /* 2026-11-25 사용자 요청 "조건 줄 규칙"(전국 배치표와 같음): 라벨 칸 108 + 12, 줄 사이 hairline-soft 실선 · 위아래 12, 안내 글은 컨트롤 바로 뒤 */
 .dept-tier__remember { margin: 0; }
 @media (min-width: 1024px) {
@@ -110,3 +137,8 @@
   .dept-tier__width-row > .t-label, .dept-tier__remember { flex: none; white-space: nowrap; }
   .dept-tier__width-row > .dept-tier__custom { flex-basis: 100%; display: flex; align-items: center; justify-content: flex-end; gap: 12px; } /* '직접' 입력은 다음 줄 */
 }
+/* 우리 도(지역인재 권역): score-import si-select와 같은 모양 */
+.dept-tier__sido { position: relative; display: inline-flex; flex: none; }
+.dept-tier__sido select { height: 40px; min-width: 200px; box-sizing: border-box; padding: 0 44px 0 16px; border: 0; background: var(--color-field); color: var(--color-ink); font: inherit; font-size: 15px; -webkit-appearance: none; appearance: none; }
+.dept-tier__sido select:focus-visible { outline: 2px solid var(--color-ink); outline-offset: -2px; }
+.dept-tier__sido .icon { position: absolute; right: 16px; top: 10px; pointer-events: none; color: var(--color-ink); }

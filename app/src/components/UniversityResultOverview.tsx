@@ -29,6 +29,7 @@ const tick = (t: number) => String(Math.round(t * 10) / 10);
 const narrow = () => typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 1023px)').matches;
 type Department = ReturnType<typeof universityPlot>['departments'][number];
 
+const DEFAULT_UNIVERSITY = '강원대학교(춘천)';
 export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   const [query, setQuery] = useSearchParams(), sampleMode = useSampleMode();
   const sample = sampleMode && import.meta.env.VITE_SUSI_DESIGN_FIXTURE === 'true';
@@ -42,7 +43,8 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   const [picked, setPicked] = useState<{ department: string; year: number; row?: ResultRow } | null>(null), [hover, setHover] = useState<ResultRow | null>(null);
   const [opened, setOpened] = useState<ResultRow | null>(null), [detail, setDetail] = useState(false), [page, setPage] = useState(0);
   const names = sample ? [...new Set(sampleOverviewRows.map(r => r.university))] : index?.universities.map(e => e.university) ?? [];
-  const university = collectedUniversitySelection(query.get('gu') ?? '', names) ?? names[0] ?? '';
+  // 2026-11-25 사용자 요청: 처음 보이는 대학은 직접 정한 강원대학교(춘천)(자료에 없으면 첫 대학).
+  const university = collectedUniversitySelection(query.get('gu') ?? '', names) ?? (names.includes(DEFAULT_UNIVERSITY) ? DEFAULT_UNIVERSITY : names[0]) ?? '';
   const tab = TYPE_TABS.includes(query.get('gt') as TypeTab) ? query.get('gt') as TypeTab : '교과';
   const rows = loaded?.university === university ? loaded.rows : null;
   const model = useMemo(() => universityPlot(rows ?? [], tab, query.get('gp') ?? ''), [rows, tab, query]);
@@ -98,7 +100,9 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   const interests = useLiveQuery(() => studentDb.interests.toArray().then(list => list.sort((a, b) => a.created_at.localeCompare(b.created_at))).catch(() => []), []) ?? [];
   // 고른 학과: 누른 점 → 이 전형에서 하트로 담은 학과 → 목록 가운데 학과(시작점일 뿐 추천이 아니에요).
   const saved = plotted.find(d => interests.some(i => i.university === university && i.program === model.selected && i.department === d.name));
-  const fallback = saved ?? plotted[Math.floor(plotted.length / 2)];
+  // ?gd=학과: 다른 화면(학과별 구간 칸)에서 넘어오면 그 학과를 먼저 골라 둬요.
+  const linked = departments.find(d => d.name === query.get('gd'));
+  const fallback = linked ?? saved ?? plotted[Math.floor(plotted.length / 2)];
   const selected: Department | undefined = (picked && departments.find(d => d.name === picked.department)) || fallback;
   const latestOf = (d?: Department) => d && [...d.points].sort((a, b) => Number(b.result_year) - Number(a.result_year))[0];
   const selectedPoint = picked && selected?.name === picked.department ? picked.row ?? selected.points.find(r => Number(r.result_year) === picked.year) ?? latestOf(selected) : latestOf(selected);
@@ -215,10 +219,9 @@ const cell = (r: ResultRow | undefined, key: 'cut_70' | 'cut_50' | 'competition_
   const v = r?.[key]?.trim();
   return !v ? '—' : key === 'competition_rate' ? `${v}:1` : key === 'fill_rate' ? `${v}%` : v;
 };
-const cells = (rows: ResultRow[], key: Parameters<typeof cell>[1]) => {
-  const mixed = key.startsWith('cut_') && new Set(rows.map(r => `${r.metric}|${r.basis}`)).size > 1;
-  return [...new Set(rows.map(r => `${cell(r, key)}${mixed ? ` (${r.metric || '지표 미기재'} · ${r.basis || '기준 미기재'})` : ''}`))].join(' / ') || '—';
-};
+// 같은 학년에 출처가 여럿이면 값이 있는 것만 모아요(출처·기준 설명은 '출처별 값'에서).
+const cells = (rows: ResultRow[], key: Parameters<typeof cell>[1]) =>
+  [...new Set(rows.map(r => cell(r, key)).filter(v => v !== '—'))].join(' / ') || '—';
 
 function SelectedDetail({ university, program, department, years, cut, preferred, onSource }: { university: string; program: string; department: Department; years: number[]; cut: 'cut_70' | 'cut_50'; preferred?: ResultRow; onSource: (row: ResultRow) => void }) {
   const desc = [...years].reverse(), byYear = (y: number) => department.rows.filter(r => Number(r.result_year) === y);

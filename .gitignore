@@ -36,3 +36,4 @@ app/public/data/dept-tier.json
 work/_data/university-map/*
 !work/_data/university-map/README.md
 work/_cache/
+app/public/plans/

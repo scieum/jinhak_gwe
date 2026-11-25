@@ -109,3 +109,11 @@
 }
 .appbar .ud-asof { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: var(--color-canvas-soft); color: var(--color-text-muted); font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; }
 .ud-delta > span:first-child { display: inline-block; width: 14px; text-align: center; } /* 시안 ▼ 글자 상자 14 */
+
+/* 대학 위키 링크(2026-11-25 사용자 요청). Figma가 글 상자 높이 22.5→23, 버튼 폭 121.x→122로 올려 그려서 같은 값으로 맞춰요. */
+.ud-wiki { display: block; min-height: 23px; }
+.ud-wiki-btn { min-width: 122px; justify-content: center; }
+
+/* 대학 없음(design.md empty-state: 가운데 정렬 · 선 아이콘 · heading-4 + body-sm + button-primary 하나) */
+.ud-missing { display: grid; justify-items: center; align-content: center; gap: var(--spacing-xs); min-height: 320px; padding: var(--spacing-xl) var(--spacing-lg); text-align: center; background: var(--color-canvas); border: 1px solid var(--color-hairline); }
+.ud-missing > .button-primary { margin-top: var(--spacing-sm); }

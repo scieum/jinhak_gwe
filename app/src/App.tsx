@@ -23,6 +23,7 @@ import { AdminWiki } from './screens/AdminWiki';
 import { AdminMap } from './screens/AdminMap';
 import { useDesktop } from './components/TeacherBoard';
 import { ProgramDetail, UnivDetail } from './screens/UnivDetail';
+import { UnivWiki } from './screens/UnivWiki';
 import { Susiro } from './screens/Susiro';
 import { MockScore } from './screens/MockScore';
 import { SaenggibuAi } from './screens/SaenggibuAi';
@@ -62,7 +63,7 @@ const implemented: Record<string, React.ReactNode> = {
   'application-checklist': <Preparation view="checklist" />, 'eligibility-check': <Preparation view="eligibility" />,
   'counsel-tasks': <CounselTasks />, 'admission-results': <AdmissionResults />,
   home: <StudentHome />, 'grade-input': <GradeInput />, 'five-to-nine': <FiveToNine />,
-  'admin-rules': <AdminRules />, 'univ-detail': <UnivDetail />, 'program-detail': <ProgramDetail />, susiro: <Susiro />, 'mock-score': <MockScore />, 'saenggibu-ai': <SaenggibuAi />,
+  'admin-rules': <AdminRules />, 'univ-detail': <UnivDetail />, 'univ-detail-wiki': <UnivWiki />, 'program-detail': <ProgramDetail />, susiro: <Susiro />, 'mock-score': <MockScore />, 'saenggibu-ai': <SaenggibuAi />,
   'teacher-dashboard': <TeacherDashboard />, 'card-collect': <CardCollect />, counsel: <Counsel />, 'score-import': <ScoreImport />, 'minimum-board': <MinimumBoard />, 'minimum-search': <MinimumSearch />, 'student-record': <StudentRecord />, 'result-summary': <ResultSummary />, 'class-calendar': <ClassCalendar />,
   'univ-score': <UniversityScores />, doelgak: <Doelgak />, 'score-trend': <ScoreTrend />,
 };

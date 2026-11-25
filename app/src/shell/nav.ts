@@ -112,6 +112,8 @@ export const NAV: Record<Mode, NavGroup[]> = {
 // 상세 화면: 소분류가 아니라 sub-nav 없이 뒤로가기로 들어간다
 export const DETAILS: DetailScreen[] = [
   { label: '대학 상세', slug: 'univ-detail', path: '/univ-detail', mode: 'student', group: '대학 찾기' },
+  // 대학 위키는 대학 상세와 다른 주소(2026-11-25 사용자 결정). 앱바 제목은 시안대로 '대학 상세'
+  { label: '대학 상세', slug: 'univ-detail-wiki', path: '/univ-detail/wiki', mode: 'student', group: '대학 찾기' },
   { label: '전형 상세', slug: 'program-detail', path: '/program-detail', mode: 'student', group: '대학 찾기' },
   // 전형 성향 탐색은 메뉴에 없고 홈·전형계획 목록 promo-banner로만 들어간다(design.md App Shell 2026-11-24)
   { label: '전형 성향 탐색', slug: 'admission-style', path: '/admission-style', mode: 'student', group: '대학 찾기' },

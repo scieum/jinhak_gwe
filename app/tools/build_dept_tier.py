@@ -6,6 +6,7 @@
   원문 대조가 필요한 행(review_flags, 앱의 susiIssues)은 빼고 개수만 적는다.
 - 계열: work/_data/review-queue/fields-draft.csv(build_review_queue.py FIELD_RULES 학과명 규칙 추천, 검수 전 초안).
   대계열이 인문·자연인 행만. 관리자는 같은 CSV를 관리자 › 계열표에서 검수한다(이 파일은 그 검수 전 미리보기용).
+- 7번째 칸은 그 행의 모집인원(숫자일 때만, 아니면 빈칸). 전형계획 모달의 증감 비교 기준.
 - 모집단위 × 전형 유형마다 가장 최근 학년도 행만 남긴다(구간표는 가장 최근 한 학년도만 쓰므로 결과는 같다).
 """
 from __future__ import annotations
@@ -47,7 +48,7 @@ def main() -> None:
                 flagged += 1
                 continue
             key = (r['university'], r['recruit_unit'], r['admission_type'])
-            row = [r['university'], r['recruit_unit'], r['admission_type'], r['program'], r['result_year'], r['cut_70']]
+            row = [r['university'], r['recruit_unit'], r['admission_type'], r['program'], r['result_year'], r['cut_70'], r['quota'] if r['quota'].isdigit() else '']
             old = latest.get(key)
             if not old or row[4] > old[0][4]:
                 latest[key] = [row]

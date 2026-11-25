@@ -85,8 +85,8 @@ Semantic — 될각 판정
 위험	
 #b8232a	
 #fce9ea	{colors.judge-risk} / {colors.judge-risk-bg}
-경계	{colors.ink}	{colors.canvas} + 1px 점선 {colors.ink}	{colors.judge-edge}
-판정 없음	{colors.text-muted}	{colors.canvas-soft}	{colors.judge-none}
+경계	
+#5c4a9e #edeaf6 + 1px 점선 #5c4a9e	{colors.judge-edge} / {colors.judge-edge-bg}판정 없음	{colors.text-muted}	{colors.canvas-soft}	{colors.judge-none}
 경고(수시로 조합 경고)는 소신 색 쌍을 씁니다. 수능 최저 미충족은 "수능 최저 판정 배지" 규칙(위험 쌍 ✕)을 따르고, "예상" 같은 예측 표현 대신 "충족 현황"이라고 씁니다.
 입력 오류는 위험 색 쌍을 씁니다(글자색 + 입력칸 아래 안내 문구).
 완료·검수 완료는 안정 색 쌍을 씁니다. 이 규칙은 환산 규칙 검수(규칙 편집기 · 검수)에만 적용하고, 계산이 없는 관리자 데이터(계열표 · 위키 요약)의 검수 대기 · 1인 승인 · 검수 완료는 흑백 data-status-badge로 씁니다(2026-11-23 사용자 결정, 판정 색 · ● 없음). 학생이 직접 적는 기록(지원 자격 확인표 · 원서·서류 체크리스트 · 상담 질문·할 일)의 완료 · 확인 표시도 판정 색을 쓰지 않습니다.

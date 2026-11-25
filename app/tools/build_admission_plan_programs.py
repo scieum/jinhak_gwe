@@ -8,6 +8,7 @@ import importlib.util
 import json
 import logging
 import re
+import shutil
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from functools import lru_cache
@@ -21,6 +22,7 @@ PACKAGES = PLANS / 'structured/universities'
 SCOPES = ROOT / 'work/_data/data-integration/minimum-scope-review.json'
 NORMALIZED = ROOT / 'work/_data/data-integration/minimum-normalized-review.json'
 OUT = ROOT / 'app/public/data/admission-plans.json'
+PUBLIC_PDFS = ROOT / 'app/public/plans'  # served same-origin so the download keeps our file name; gitignored (collected originals)
 UNKNOWN = '원문 확인 필요'
 TYPES = {'학생부교과': '교과', '학생부위주(교과)': '교과', '학생부종합': '종합', '학생부위주(종합)': '종합',
          '실기/실적': '실기', '실적': '실기', '특기자': '실기'}
@@ -127,6 +129,32 @@ def minimum_text(rows, rules, applicability, doc_ids):
     return ('적용 · 기준은 원문 확인' if kinds == {'required'} else '모집단위별 적용 다름 · 원문 확인'), pages
 
 
+CARRYOVER = '수시 미충원 시'
+WORDING = ('source_term', 'source_wording', 'source_quota_text')
+
+
+def unit_quotas(package, program_id, units, doc_ids, page_count):
+    """Per recruit unit [name, quota, pages] with same-document page evidence: an int from allocations, the source wording
+    ('약간 명') for unspecified ones, CARRYOVER for carryover. Pooled totals stay whole (never split per unit).
+    Names listed twice for one program are ambiguous and dropped."""
+    def pages_of(item):
+        found = same_doc_pages(item.get('evidence'), doc_ids)
+        return sorted(set(found)) if found and all(isinstance(n, int) and 1 <= n <= page_count for n in found) else None
+    rows = []
+    for kind, value in [('allocations', lambda a: a.get('quota') if isinstance(a.get('quota'), int) and a['quota'] >= 0 else None),
+                        ('unspecified_allocations', lambda a: next((a[k].strip() for k in WORDING if isinstance(a.get(k), str) and a[k].strip()), None)),
+                        ('carryover_allocations', lambda a: CARRYOVER if a.get('quota') is None else None)]:
+        for a in package.get(kind) or []:
+            if a.get('program_id') == program_id and a.get('unit_id') in units and value(a) is not None and (pages := pages_of(a)):
+                rows.append([units[a['unit_id']], value(a), pages])
+    names = Counter(r[0] for r in rows)
+    kept = [r for r in rows if names[r[0]] == 1]
+    pooled = [{'quota': q['quota'], 'units': [units[u] for u in q.get('unit_ids') or [] if u in units], 'pages': pages}
+              for q in package.get('pooled_quotas') or []
+              if q.get('program_id') == program_id and isinstance(q.get('quota'), int) and q['quota'] > 0 and (pages := pages_of(q))]
+    return kept, [q for q in pooled if q['units']], len(rows) - len(kept)
+
+
 QUALIFIERS = [lambda p: p.get('round'), lambda p: p.get('type'), lambda p: p.get('group') and f"{str(p['group']).removesuffix('군')}군",
               lambda p: '정원외' if p.get('out_of_quota') else '정원내' if p.get('out_of_quota') is False else None,
               lambda p: p.get('campus'), lambda p: p.get('admission_term'), lambda p: p.get('intake_month')]
@@ -184,13 +212,69 @@ def package_programs(package, entry_docs, scope_rows, applicability):
         if not all(isinstance(n, int) and 1 <= n <= doc['page_count'] for n in all_pages):
             skipped['page_out_of_range'] += 1
             continue
-        programs.append({
+        program = {
             'name': names[id(p)], 'round': p.get('round') or UNKNOWN, 'type': TYPES.get(p.get('type'), p.get('type') or UNKNOWN),
             'unit': units[unit_ids[0]] if len(unit_ids) == 1 and len(units.get(unit_ids[0], '')) <= 20 else f'모집단위 {len(unit_ids)}개' if unit_ids else '원문 확인',
             'quota': quota_text(p.get('quota')), 'method': method or UNKNOWN, 'minimum': minimum or UNKNOWN,
             'interview': interview or UNKNOWN, 'eligibility': UNKNOWN, 'pages': all_pages, 'document_id': doc_id,
-        })
+        }
+        if program['round'] == '수시' and program['type'] in ('교과', '종합'):  # only the dept-tier modal reads them: keep the file small
+            rows, pooled, ambiguous = unit_quotas(package, p.get('id'), units, doc_ids, doc['page_count'])
+            skipped['unit_name_ambiguous'] += ambiguous
+            if rows:
+                program['units'] = rows
+            if pooled:
+                program['pooled'] = pooled
+        programs.append(program)
     return programs, list(added.values()), skipped
+
+
+PROVIDER_LABEL = {'university': '입학처', 'adiga': '어디가'}
+
+
+def plan_filename(university, campus, provider=None):
+    """'2028_성균관대학교_시행계획.pdf'; campus unless 본교, provider label when one campus has several PDFs."""
+    parts = ['2028', university, *([campus] if campus != '본교' else []), '시행계획', *([PROVIDER_LABEL[provider]] if provider else [])]
+    return '_'.join(re.sub(r'[\\/:*?"<>|\x00-\x1f]', '', part).strip(' .') for part in parts) + '.pdf'
+
+
+def attach_local_files(entry, sources, report, sources_dir=PLANS / 'sources'):
+    """Set document local_file for PDFs whose package original is kept with the same SHA-256. Returns {name: original}."""
+    by_sha = defaultdict(list)
+    for s in sources:
+        if s.get('sha256') and s.get('id'):
+            by_sha[s['sha256']].append(s)
+    kept = []
+    for d in entry['documents']:
+        d.pop('local_file', None)
+        if d['format'] != 'pdf':
+            continue
+        if not by_sha[d['sha256']]:
+            report['local_pdf_no_source'] += 1
+        elif original := next(filter(None, (local_original(s, sources_dir) for s in by_sha[d['sha256']])), None):
+            kept.append((d, original))
+        else:
+            report['local_pdf_missing_or_hash_mismatch'] += 1
+    files = {}
+    for d, original in kept:
+        name = plan_filename(entry['university'], entry['campus'], d['provider'] if len(kept) > 1 else None)
+        stem, n = name[:-4], 2
+        while name in files:  # two PDFs from the same provider for one campus
+            name, n = f'{stem}_{n}.pdf', n + 1
+        files[name], d['local_file'] = original, 'plans/' + name
+    return files
+
+
+def sync_public_pdfs(files, out_dir=PUBLIC_PDFS):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for old in out_dir.glob('*.pdf'):
+        if old.name not in files:
+            old.unlink()
+    for name, original in files.items():
+        target = out_dir / name
+        if not target.is_file() or target.stat().st_size != original.stat().st_size or sha256(target.read_bytes()).digest() != sha256(original.read_bytes()).digest():
+            shutil.copyfile(original, target)
+    return sum(original.stat().st_size for original in files.values())
 
 
 def load_build_catalog():
@@ -213,9 +297,11 @@ def main():
         rows[row['package_id']].append(row)
     entries = {e['id']: e for e in catalog['entries']}
     report = Counter()
+    sources = defaultdict(list)
     for path in sorted(PACKAGES.glob('plan-*.json')):
         raw = path.read_bytes()
         package = json.loads(raw.decode('utf-8-sig'))
+        sources[package['university_id']] += [package['source'], *package.get('additional_sources', [])]
         entry = entries.get(package['university_id'])
         if not entry or package.get('admission_year') != 2028 or package.get('review_status') != 'draft':
             report['package_not_matched'] += 1
@@ -230,6 +316,10 @@ def main():
         report.update(skipped)
         entry['programs'], entry['documents'] = programs, entry['documents'] + docs
         report['programs'] += len(programs)
+    pdfs = {}
+    for e in catalog['entries']:
+        pdfs.update(attach_local_files(e, sources[e['id']], report))
+    report['local_pdfs'], report['local_pdf_bytes'] = len(pdfs), sync_public_pdfs(pdfs)
     # Source check date, not build date: the newest document check in the catalog.
     catalog['checked_at'] = max(d['checked_at'] for e in catalog['entries'] for d in e['documents'])
     OUT.write_text(json.dumps(catalog, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
@@ -237,6 +327,7 @@ def main():
     programs = [p for e in filled for p in e['programs']]
     summary = {**report, 'entries_with_programs': len(filled), 'entries': len(catalog['entries']), 'program_rows': len(programs),
                'filled': {k: sum(p.get(k, UNKNOWN) != UNKNOWN for p in programs) for k in ['quota', 'method', 'minimum', 'interview', 'eligibility']},
+               'unit_rows': sum(len(p.get('units', [])) for p in programs), 'pooled': sum(len(p.get('pooled', [])) for p in programs),
                'types': Counter(p['type'] for p in programs).most_common()}
     print(json.dumps(summary, ensure_ascii=False))
 

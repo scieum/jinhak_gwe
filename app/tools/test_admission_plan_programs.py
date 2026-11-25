@@ -1,7 +1,10 @@
+import tempfile
 import unittest
+from collections import Counter
+from hashlib import sha256
 from pathlib import Path
 
-from build_admission_plan_programs import UNKNOWN, method_text, minimum_text, package_programs, plan_document, quota_text, unique_names
+from build_admission_plan_programs import CARRYOVER, UNKNOWN, attach_local_files, method_text, minimum_text, package_programs, plan_document, plan_filename, quota_text, unique_names
 
 SHA = 'a' * 64
 SRC = {'id': 'doc', 'kind': 'pdf', 'pages': 10, 'url': 'https://u.ac.kr/2028plan.pdf', 'sha256': SHA,
@@ -53,6 +56,43 @@ class AdmissionPlanProgramsTest(unittest.TestCase):
                          [('지역인재', '교과', '의예과', '20명', [2], UNKNOWN)])
         self.assertEqual([d['id'] for d in docs], ['doc'])
         self.assertEqual(skipped['no_pdf_page_evidence'], 1)
+
+    def test_unit_quotas_need_same_document_pages_and_keep_pools_whole(self):
+        ev = lambda *pages: {'document_id': 'doc', 'pdf_pages': list(pages)}
+        units = [{'id': f'u{i}', 'name': n} for i, n in enumerate(['경영학과', '경제학과', '국문과', '사학과', '철학과'])]
+        package = {'source': SRC, 'recruit_units': units, 'programs': [
+            {'id': 'a', 'name': '교과', 'round': '수시', 'type': '학생부교과', 'evidence': ev(2)}],
+            'allocations': [{'program_id': 'a', 'unit_id': 'u0', 'quota': 12, 'evidence': ev(3)},
+                            {'program_id': 'a', 'unit_id': 'u1', 'quota': 5, 'evidence': {'document_id': 'xlsx', 'cells': ['F6']}},
+                            {'program_id': 'a', 'unit_id': 'u4', 'quota': 3, 'evidence': ev(99)}],
+            'unspecified_allocations': [{'program_id': 'a', 'unit_id': 'u2', 'quota': None, 'source_term': '약간 명', 'evidence': ev(4)}],
+            'carryover_allocations': [{'program_id': 'a', 'unit_id': 'u3', 'quota': None, 'evidence': ev(4)}],
+            'pooled_quotas': [{'program_id': 'a', 'quota': 30, 'unit_ids': ['u1', 'u4'], 'evidence': ev(5)}]}
+        [program], _, _ = package_programs(package, {}, [], {})
+        self.assertEqual(program['units'], [['경영학과', 12, [3]], ['국문과', '약간 명', [4]], ['사학과', CARRYOVER, [4]]])
+        self.assertEqual(program['pooled'], [{'quota': 30, 'units': ['경제학과', '철학과'], 'pages': [5]}])
+
+    def test_plan_pdf_file_names(self):
+        self.assertEqual(plan_filename('성균관대학교', '본교'), '2028_성균관대학교_시행계획.pdf')
+        self.assertEqual(plan_filename('가톨릭대학교', '제3캠퍼스', 'adiga'), '2028_가톨릭대학교_제3캠퍼스_시행계획_어디가.pdf')
+        self.assertEqual(plan_filename('가/나:대학교?', '본교', 'university'), '2028_가나대학교_시행계획_입학처.pdf')
+
+    def test_local_copies_only_for_hash_verified_pdfs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            good = Path(tmp) / 'good.pdf'
+            good.write_bytes(b'%PDF-1')
+            (Path(tmp) / 'bad.pdf').write_bytes(b'changed')
+            sha = sha256(b'%PDF-1').hexdigest()
+            doc = lambda i, sha, provider='university', fmt='pdf': {'id': i, 'sha256': sha, 'provider': provider, 'format': fmt}
+            entry = {'university': '가나대학교', 'campus': '본교', 'documents': [
+                doc('a', sha), doc('b', sha, 'adiga'), doc('c', SHA), doc('d', 'f' * 64), doc('e', sha, fmt='hwp')]}
+            sources = [{'id': 'good', 'sha256': sha, 'local_path': str(good)}, {'id': 'bad', 'sha256': SHA, 'local_path': str(Path(tmp) / 'bad.pdf')}]
+            report = Counter()
+            files = attach_local_files(entry, sources, report, Path(tmp))
+        self.assertEqual([d.get('local_file') for d in entry['documents']],
+                         ['plans/2028_가나대학교_시행계획_입학처.pdf', 'plans/2028_가나대학교_시행계획_어디가.pdf', None, None, None])
+        self.assertEqual(set(files), {'2028_가나대학교_시행계획_입학처.pdf', '2028_가나대학교_시행계획_어디가.pdf'})
+        self.assertEqual((report['local_pdf_missing_or_hash_mismatch'], report['local_pdf_no_source']), (1, 1))
 
 
 if __name__ == '__main__':

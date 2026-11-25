@@ -5,6 +5,7 @@ import { DeptTier } from '../src/screens/DeptTier';
 import { resetReleasedResults } from '../src/data/releasedResults';
 import { resetUnivWiki } from '../src/data/univWiki';
 import { resetTierDraft } from '../src/data/deptTier';
+import { samplePlanCatalog } from '../src/data/sample/admissionPlans';
 
 const APPROVALS = [{ reviewer: 'A', at: '2026-11-12' }, { reviewer: 'B', at: '2026-11-12' }];
 // spec 1-1 일부(시험용 숫자). 바(바다대학교)는 계열표에만 있고 공개 입결이 없어 "준비 중".
@@ -19,9 +20,9 @@ const fieldRows = [...CUTS.map(([university, unit]) => ({ university, unit, smal
   { university: '연세대학교', unit: '사학과', small: '역사', mid: '인문학' }]; // 대계열 없음 → 나오지 않는다
 const wiki = (rows: unknown[]) => ({ format: 'jinhak-navi-univ-wiki', version: 1, fields: { reviewed_at: '2026-11-16', approvals: APPROVALS, rows }, entries: [] });
 
-function serve(rows: unknown[] = fieldRows, draft: unknown = null) {
+function serve(rows: unknown[] = fieldRows, draft: unknown = null, plans: unknown = null) {
   resetReleasedResults(); resetUnivWiki(); resetTierDraft();
-  vi.stubGlobal('fetch', vi.fn(async (url: string) => new Response(JSON.stringify(String(url).includes('univ-wiki') ? wiki(rows) : String(url).includes('dept-tier') ? draft : released))));
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => new Response(JSON.stringify(String(url).includes('admission-plans') ? plans : String(url).includes('univ-wiki') ? wiki(rows) : String(url).includes('dept-tier') ? draft : released))));
 }
 const open = () => render(<MemoryRouter><DeptTier /></MemoryRouter>);
 const layerNames = () => screen.getAllByRole('heading', { level: 4 }).map(h => h.textContent);
@@ -31,14 +32,59 @@ beforeEach(() => localStorage.clear());
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); resetReleasedResults(); resetUnivWiki(); });
 
 describe('학과별 입결 구간표', () => {
+  it('학생 샘플 모드에서도 실제 입결과 전형계획을 읽고 해당 유형의 원문을 연결한다', async () => {
+    const plans = { ...samplePlanCatalog, entries: samplePlanCatalog.entries.filter(p => p.university === '고려대학교').map(p => ({
+      ...p, documents: p.documents.map(d => ({ ...d, sha256: 'a'.repeat(64), page_count: 100 })),
+    })) };
+    localStorage.setItem('jinhak-navi-sample', 'on');
+    serve(fieldRows, null, plans); open();
+    fireEvent.click(await screen.findByRole('button', { name: '고려대학교 2028 전형계획 보기' }));
+    const dialog = screen.getByRole('dialog', { name: '고려대학교 전형계획' });
+    expect(within(dialog).getByText('학생부교과(학교추천)')).toBeTruthy();
+    expect(within(dialog).queryByText('논술전형')).toBeNull();
+    expect(within(dialog).getByText('전형 전체 모집인원')).toBeTruthy();
+    expect(within(dialog).getByText('650명')).toBeTruthy();
+    expect(within(dialog).getByText('전 모집단위')).toBeTruthy();
+    expect(within(dialog).getByRole('link', { name: /시행계획 원문/ }).getAttribute('href')).toContain('#page=1');
+    expect(screen.getByRole('link', { name: /고려대학교 행정학과, 2026학년도 학생부교과 70% 컷 1.6/ })).toBeTruthy();
+    fireEvent.click(within(dialog).getByRole('button', { name: '닫기' }));
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  it('전형계획 모달은 이 학과의 2028 인원과 같은 전형 이름 입결 모집인원 대비 증감을 보여 준다', async () => {
+    const plans = { ...samplePlanCatalog, entries: samplePlanCatalog.entries.filter(p => p.university === '고려대학교').map(p => ({
+      ...p, documents: p.documents.map(d => ({ ...d, sha256: 'a'.repeat(64), page_count: 100 })),
+      programs: p.programs.map(x => x.name === '학생부교과(학교추천)' ? { ...x, name: '학생부교과', units: [['행정학과', 12, [3]]] } : x),
+    })) };
+    serve(fieldRows, null, plans);
+    const withQuota = { ...released, units: released.units.map(u => ({ ...u, rows: u.rows.map(r => r.recruit_unit === '행정학과' ? { ...r, quota: '10' } : r) })) };
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => new Response(JSON.stringify(String(url).includes('admission-plans') ? plans : String(url).includes('univ-wiki') ? wiki(fieldRows) : String(url).includes('dept-tier') ? null : withQuota))));
+    open();
+    fireEvent.click(await screen.findByRole('button', { name: '고려대학교 2028 전형계획 보기' }));
+    const dialog = screen.getByRole('dialog', { name: '고려대학교 전형계획' });
+    expect(within(dialog).getByText('모집인원(행정학과)')).toBeTruthy();
+    expect(within(dialog).getByText('+2').closest('dd')?.textContent).toContain('12명 +2 2026 입결 모집 10명 대비');
+    expect(within(dialog).getByRole('link', { name: '3쪽 ↗' }).getAttribute('href')).toContain('#page=3');
+  });
+  it('전형계획을 못 읽어도 입결은 표시하고 다시 불러올 수 있다', async () => {
+    serve(); open();
+    await screen.findByText('1.5~2.0');
+    expect(screen.getByRole('alert').textContent).toContain('전형계획');
+    const calls = vi.mocked(fetch).mock.calls.length;
+    fireEvent.click(screen.getByRole('button', { name: '다시 불러오기' }));
+    expect(vi.mocked(fetch).mock.calls.length).toBeGreaterThan(calls);
+    expect(screen.getByText('1.5~2.0')).toBeTruthy();
+  });
+
   it('기본 폭 0.5로 데이터 범위 안 층만, 빈 층은 한 줄로 남긴다', async () => {
     serve(); open();
     expect(await screen.findByText('1.5~2.0')).toBeTruthy();
     expect(layerNames()).toEqual(['70% 컷 1.5~2.0모집단위 1개', '70% 컷 2.0~2.5모집단위 1개', '70% 컷 2.5~3.0모집단위 2개', '70% 컷 3.0~3.5모집단위 1개', '70% 컷 3.5~4.0모집단위 1개']);
     expect(within(widthGroup()).getByRole('button', { name: '0.5' }).getAttribute('aria-pressed')).toBe('true');
     expect(screen.getByText('이 묶음에서 교과 컷이 없는 모집단위 1개는 층에 넣지 않았어요')).toBeTruthy();
-    const link = screen.getByRole('link', { name: '한양대학교 정책학과, 2026학년도 학생부교과 70% 컷 2.5, 대학 상세로 이동' });
-    expect(link.getAttribute('href')).toBe(`/univ-detail?u=${encodeURIComponent('한양대학교')}&d=${encodeURIComponent('정책학과|교과')}`);
+    const link = screen.getByRole('link', { name: '한양대학교 정책학과, 2026학년도 학생부교과 70% 컷 2.5, 수시 입결 최근 3개년 보기' });
+    expect(new URLSearchParams(link.getAttribute('href')!.split('?')[1]).get('gd')).toBe('정책학과');
+    expect(link.getAttribute('href')).toMatch(/^\/admission-results\?view=university&gu=/);
     expect(screen.getByText('어떻게 나눴나요?')).toBeTruthy();
     expect(screen.getByText(/순위 · 추천이 아니에요/)).toBeTruthy();
   });

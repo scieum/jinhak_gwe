@@ -28,7 +28,7 @@
 
 /* PC 표 */
 /* data-table v2(시안 878:352002): 표 바탕 = 페이지 바탕, 머리 칸 canvas-soft 44 · 12/600 ink-soft, 행 64 · 아래 hairline */
-.us-table-card { background: transparent; }
+.us-table-card { background: var(--color-canvas); } /* 2026-11-25 사용자 요청: 표 영역을 흰 바탕으로 구분 */
 .us-table { background: transparent; table-layout: fixed; }
 .univ-score .us-table th, .univ-score .us-table td { padding: 0 var(--spacing-md); border-bottom: 1px solid var(--color-hairline); vertical-align: middle; font-size: 14px; line-height: 19.6px; }
 .us-table thead { background: var(--color-canvas-soft); }

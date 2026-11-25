@@ -1,5 +1,6 @@
 // 5등급 → 9등급 환산 (PRD 6-5, 9장 R-CONV). 순수 함수, 네트워크 없음.
 import type {
+  CandidateResult,
   Confidence,
   ConversionConfig,
   ConversionTable,
@@ -59,6 +60,44 @@ export function rawScoreToPct(raw: number, d: Subject['distribution'] & object):
   return interpolate(raw, scores, cums);
 }
 
+/** R-CONV-013: 5등급 g의 누적 구간 [lo, hi] 안에서 백분위가 균등하다고 보고 9등급 기댓값과 가능한 최소~최대 */
+export function uniformBand(grade: number, cfg: ConversionConfig, c9: number[]): { mean: number; min: number; max: number } {
+  const [lo, hi] = nominalBand(grade, cfg);
+  let sum = 0;
+  const ks: number[] = [];
+  c9.forEach((top, i) => {
+    const overlap = Math.min(hi, top) - Math.max(lo, i ? c9[i - 1] : 0);
+    if (overlap > 0) { sum += (i + 1) * overlap; ks.push(i + 1); }
+  });
+  return { mean: sum / (hi - lo), min: ks[0], max: ks[ks.length - 1] };
+}
+
+/** R-CONV-012: 후보 실측표마다 5등급 평균을 꺾은선 보간해 [가장 작은 값 ~ 가장 큰 값]. 표 범위 밖이면 그 표는 뺀다 */
+function candidateTableRange(g5: number, cfg: ConversionConfig): CandidateResult {
+  if (!verified(cfg, 'R-CONV-012')) return { status: 'pending', reason: 'R-CONV-012 검수 전' };
+  const usable = (cfg.candidateTables ?? []).filter((t) => t.license_status === 'allowed' && t.review_status === 'verified');
+  if (!usable.length) return { status: 'pending', reason: '후보 실측표 검수·사용 허락 전이에요' };
+  const hits = usable.flatMap((t) => {
+    const pts = [...t.points].sort((x, y) => x.avg5 - y.avg5);
+    if (g5 < pts[0].avg5 - 1e-9 || g5 > pts[pts.length - 1].avg5 + 1e-9) return [];
+    const hi = interpolate(g5, pts.map((p) => p.avg5), pts.map((p) => p.converted9));
+    const lo = pts.find((p) => Math.abs(p.avg5 - g5) < 1e-9)?.converted9_low ?? hi;
+    return [{ lo, hi, label: `${t.region} ${t.basis_semesters}개 학기 기준` }];
+  });
+  if (!hits.length) return { status: 'unavailable', reason: '후보 실측표 범위 밖이에요' };
+  return { status: 'ok', value: null, min: Math.min(...hits.map((h) => h.lo)), max: Math.max(...hits.map((h) => h.hi)),
+    note: hits.map((h) => h.label).join(' · ') };
+}
+
+/** R-CONV-013: 과목별 uniformBand를 학점 가중 평균 */
+function uniformExpectation(ranked: Subject[], cfg: ConversionConfig): CandidateResult {
+  if (!verified(cfg, 'R-CONV-013')) return { status: 'pending', reason: 'R-CONV-013 검수 전' };
+  if (!cfg.cumulative9) return { status: 'unavailable', reason: '9등급 누적비율 설정이 없어요' };
+  const bands = ranked.map((s) => ({ b: uniformBand(s.grade5 as number, cfg, cfg.cumulative9!), w: s.credits }));
+  const avg = (k: 'mean' | 'min' | 'max') => weightedMean(bands.map(({ b, w }) => ({ v: b[k], w })));
+  return { status: 'ok', value: avg('mean'), min: avg('min'), max: avg('max') };
+}
+
 const weightedMean = (items: { v: number; w: number }[]) =>
   items.reduce((s, i) => s + i.v * i.w, 0) / items.reduce((s, i) => s + i.w, 0);
 
@@ -89,6 +128,8 @@ export interface FiveToNineResult {
   confidence: Confidence;
   stats: { rankedCount: number; excludedCount: number; smallCount: number; smallRatio: number };
   bTable: { id: string; source: string; basis_semesters: number; semesterMismatch: boolean } | null;
+  /** 검수 전 후보 방식. min/max/representative/display 계산에는 넣지 않는다(NEVER-1) */
+  candidates: Record<'R-CONV-012' | 'R-CONV-013', CandidateResult>;
   trace: TraceStep[];
 }
 
@@ -112,10 +153,11 @@ export function convertFiveToNine(
   const smallCount = all.filter((s) => isExcluded(s) || (s.enrolled != null && s.enrolled <= cfg.confidence.smallClassMax)).length;
   const stats = { rankedCount: ranked.length, excludedCount, smallCount, smallRatio: all.length ? smallCount / all.length : 0 };
 
-  const none: MethodResult = { status: 'unavailable', reason: '석차등급이 있는 과목이 없어요' };
+  const none = { status: 'unavailable', reason: '석차등급이 있는 과목이 없어요' } as const;
   if (!ranked.length) {
     return { combo, g5: null, semesters: semesterKeys.length, a1: none, a2: none, a3: none, b: none, min: null, max: null,
-      representative: null, display: null, spread: null, confidence: '낮음', stats, bTable: null, trace };
+      representative: null, display: null, spread: null, confidence: '낮음', stats, bTable: null,
+      candidates: { 'R-CONV-012': none, 'R-CONV-013': none }, trace };
   }
 
   const g5 = weightedMean(ranked.map((s) => ({ v: s.grade5 as number, w: s.credits })));
@@ -192,6 +234,9 @@ export function convertFiveToNine(
     b = { status: 'pending', reason: t.license_status !== 'allowed' ? '실측표 사용 허락 확인 중이에요' : '실측표 검수 전이에요' };
   }
 
+  // 후보 방식: 검수 전이면 숫자를 내지 않고, 검수돼도 아래 범위·대표값에는 아직 넣지 않는다
+  const candidates = { 'R-CONV-012': candidateTableRange(g5, cfg), 'R-CONV-013': uniformExpectation(ranked, cfg) };
+
   // 범위·대표값: 숫자가 나온 방법만
   const values = [a1, a2, a3, b].flatMap((m) => (m.status === 'ok' ? [m.value] : []));
   const min = values.length ? Math.min(...values) : null;
@@ -211,5 +256,5 @@ export function convertFiveToNine(
   ].filter(Boolean).length;
   const confidence = (['높음', '보통', '낮음'] as const)[Math.min(2, downs)];
 
-  return { combo, g5, semesters: sems, a1, a2, a3, b, min, max, representative, display, spread, confidence, stats, bTable, trace };
+  return { combo, g5, semesters: sems, a1, a2, a3, b, min, max, representative, display, spread, confidence, stats, bTable, candidates, trace };
 }

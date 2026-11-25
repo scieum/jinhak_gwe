@@ -59,7 +59,7 @@ export function UnivDetail() {
   const screen = (children: ReactNode) => <section className="student-screen ud" data-slug="univ-detail" aria-label="대학 상세">{children}</section>;
   if (!view) return screen(!loaded ? <p role="status" className="ud-status">대학 자료를 읽고 있어요.</p>
     : loaded.error ? <div className="ud-card ud-error" role="alert"><Icon name="triangle-alert" size={20} /><p>대학 자료를 읽지 못했어요. 연결을 확인하고 다시 읽어 주세요.</p><button type="button" className="button-outline" onClick={() => setAttempt(a => a + 1)}>다시 읽기</button></div>
-      : <div className="empty-state"><Icon name="search" /><h3 className="t-heading-4">대학을 찾지 못했어요</h3><p>공개된 자료에 있는 대학만 볼 수 있어요.</p><Link className="button-primary" to="/admissions-list">전형계획에서 찾기</Link></div>);
+      : <div className="empty-state ud-missing"><Icon name="search" size={48} /><h3 className="t-heading-4">대학을 찾지 못했어요</h3><p>{name ? `‘${name}’의 자료가 없어요. ` : ''}공개된 자료에 있는 대학만 볼 수 있어요.</p><Link className="button-primary" to={name ? `/admissions-list?q=${encodeURIComponent(name)}` : '/admissions-list'}>전형계획에서 찾기</Link></div>);
 
   const { programs, changes } = view, total = programs.length;
   const shown = programs.filter(p => tab === '전체' || p.type === tab);
@@ -81,6 +81,7 @@ export function UnivDetail() {
     {bar && createPortal(<span className="data-status-badge ud-asof">{view.status}</span>, bar)}
     <div className="ud-name"><UniversityLogo university={view.university} /><div><h2>{view.university}</h2><p>{view.place}</p></div>{heart(programs[0])}</div>
     {hero}
+    <Link className="t-link ud-wiki" to={`/univ-detail/wiki?u=${encodeURIComponent(view.university)}`}>대학 위키 보기 ›</Link>
     <section className="ud-card ud-changes" aria-label="전년 대비 바뀐 점">
       {!changes ? <Pending>2027학년도 자료가 아직 없어서 비교하지 않았어요</Pending> : changes.length > 0 && <ul className="ud-change-list">{changes.map(c => <li key={c.program + c.item}>
         <p>{c.program} · {c.item}</p><div className="ud-change-value"><span>{c.prev} →</span><span className="data-table ud-cell"><Next c={c} /></span></div></li>)}</ul>}
@@ -98,7 +99,7 @@ export function UnivDetail() {
   const changed = panel && changes?.filter(c => c.program === panel.name);
   return screen(<>
     {head && createPortal(<div className="ud-head"><p className="t-caption text-muted">대학 찾기 › 전형계획</p><h1>{view.university}</h1><p className="ud-lead">{view.place} · 2028학년도 전형 {total}개</p></div>, head)}
-    <ScreenActions><span className="data-status-badge ud-asof">{view.status} · {view.checked}</span>{view.homepage && <a className="button-outline" href={view.homepage} target="_blank" rel="noreferrer">홈페이지 ↗</a>}</ScreenActions>
+    <ScreenActions><span className="data-status-badge ud-asof">{view.status} · {view.checked}</span><Link className="button-outline ud-wiki-btn" to={`/univ-detail/wiki?u=${encodeURIComponent(view.university)}`}>대학 위키 보기</Link>{view.homepage && <a className="button-outline" href={view.homepage} target="_blank" rel="noreferrer">홈페이지 ↗</a>}</ScreenActions>
     <div className="ud-hero"><UniversityLogo university={view.university} />{hero}{heart(panel ?? programs[0])}</div>
     <section className="ud-card ud-changes"><h2 className="ud-h2">전년 대비 바뀐 점</h2>
       {!changes ? <Pending>2027학년도 자료가 아직 없어서 비교하지 않았어요</Pending> : changes.length > 0 && <table className="data-table ud-table ud-table--changes">
