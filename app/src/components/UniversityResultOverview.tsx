@@ -231,7 +231,7 @@ function SelectedDetail({ university, program, department, years, cut, preferred
   const lines: [string, Parameters<typeof cell>[1]][] = [['70% 컷', 'cut_70'], ['50% 컷', 'cut_50'], ['경쟁률', 'competition_rate'], ['모집', 'quota'], ['충원율', 'fill_rate']];
   return <div className="ar-detail">
     <p className="ar-muted ar-caption">고른 학과</p>
-    <div className="ar-detail__head"><UniversityLogo university={university} /><h4>{currentUniversityName(university)} {department.name}</h4>{program && <InterestButton university={university} program={program} department={department.name} compact />}</div>
+    <div className="ar-detail__head"><h4 aria-label={`${currentUniversityName(university)} ${department.name}`}><span className="ar-detail__univ"><UniversityLogo university={university} />{currentUniversityName(university)}</span>{department.name}</h4>{program && <InterestButton university={university} program={program} department={department.name} compact />}</div>
     <p className="ar-muted">{[program, basis, latest?.basis && !basis.endsWith(latest.basis) ? latest.basis : ''].filter(Boolean).join(' · ')}</p>
     <table className="data-table ar-detail__table"><thead><tr><th scope="col">구분</th>{desc.map(y => <th scope="col" key={y}>{y}</th>)}</tr></thead>
       <tbody>{lines.map(([label, key]) => <tr key={key}><th scope="row">{label}</th>{desc.map((y, i) => <td key={y} className={i ? undefined : 'is-latest'}>{cells(byYear(y), key)}</td>)}</tr>)}</tbody></table>

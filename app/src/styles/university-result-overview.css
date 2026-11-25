@@ -84,6 +84,9 @@
 .ar-detail__head { display: flex; align-items: center; gap: 8px; min-height: 44px; }
 .ar-detail__head .university-logo, .ar-compare .university-logo { flex-basis: 20px; width: 20px; height: 20px; }
 .ar-detail__head h4 { flex: 1; margin: 0; font-size: 18px; font-weight: 700; line-height: 24.3px; }
+/* 2026-11-25 사용자 요청: 첫 줄 = 로고 + 학교명(작게), 둘째 줄 = 학과명 */
+.ar-detail__head h4 { display: grid; gap: 2px; }
+.ar-detail__univ { display: flex; align-items: center; gap: 6px; color: var(--color-ink-soft); font-size: 14px; font-weight: 600; line-height: 20px; }
 .ar-detail__head .interest-control--compact .interest-heart { width: 44px; height: 44px; }
 .ar .ar-detail__table { table-layout: fixed; font-size: 14px; }
 .ar .ar-detail__table th, .ar .ar-detail__table td { height: 33px; padding: 0 16px; border-bottom: 1px solid var(--color-hairline); font-size: 14px; font-weight: 400; line-height: 19.6px; text-align: right; white-space: nowrap; }
