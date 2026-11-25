@@ -1,10 +1,10 @@
 // 샘플 모드에서만 대학 지도(univ-map)가 보여 주는 데모: 시·도별 개수 = Figma univ-map/390(504:81770) · /1440(506:82015) 그대로(대학 206곳 + 위치 확인 중 6곳).
-// 좌표는 시안 예시예요(demo-dataset "지도 위치·지역별 건수는 시안 예시다") — 시·도 대표점 둘레에 고르게 흩어 놓은 가짜 좌표라 실제 캠퍼스 위치가 아니에요.
+// 좌표는 시안 예시예요(demo-dataset "지도 위치·지역별 건수는 시안 예시다") — 시·도 경계 안에 고르게 흩어 놓은 가짜 좌표라 실제 캠퍼스 위치가 아니에요.
 // 시안 목록에 그려진 서울 4곳(건국·경희·고려·성균관) · 관심 대학(경희·건국·성균관·동국·한양·중앙)의 캠퍼스만 실제 이름이고 나머지는 "예시대학"이에요.
 // 샘플 띠가 보이는 샘플 모드에서만 쓰고, 샘플을 지우면 public/data/univ-map.json(관리자 2명 검수분)만 보여요.
 import { SIDO } from '../../domain/auth';
 import type { Campus, Founding, Kind, UnivMapData } from '../../domain/univMap';
-import type { Sido } from '../../assets/map/sido';
+import { RINGS, type Sido } from '../../assets/map/sido';
 
 // 시안 개수(합 206). 울산은 시안에서 "확인 중"(개수 표식 없음)
 const COUNT: Record<Sido, number> = {
@@ -12,13 +12,6 @@ const COUNT: Record<Sido, number> = {
   경기도: 30, 강원특별자치도: 9, 충청북도: 12, 충청남도: 16, 전북특별자치도: 9, 전라남도: 6, 경상북도: 19, 경상남도: 10, 제주특별자치도: 2,
 };
 const PENDING: Partial<Record<Sido, number>> = { 울산광역시: 2, 경기도: 2, 강원특별자치도: 2 }; // 시안 "위치 확인 중 6곳"
-// 시·도 대표점(경위도) = 지도 개수 표식 자리(assets/map/sido LABEL과 같은 값)
-const CENTER: Record<Sido, [number, number]> = {
-  서울특별시: [127.0, 37.56], 부산광역시: [129.05, 35.2], 대구광역시: [128.58, 35.87], 인천광역시: [126.65, 37.47], 광주광역시: [126.85, 35.16],
-  대전광역시: [127.38, 36.34], 울산광역시: [129.25, 35.56], 세종특별자치시: [127.24, 36.6], 경기도: [127.35, 37.27], 강원특별자치도: [128.3, 37.7],
-  충청북도: [127.85, 36.85], 충청남도: [126.85, 36.5], 전북특별자치도: [127.15, 35.75], 전라남도: [126.95, 34.8], 경상북도: [128.85, 36.45],
-  경상남도: [128.25, 35.3], 제주특별자치도: [126.55, 33.38],
-};
 // 실제 이름 캠퍼스: 대학, 캠퍼스, 본교/분교, 설립, 시·도, 시·군·구
 type Named = [name: string, campus: string, type: '본교' | '분교', founding: Founding, sido: Sido, sigungu: string];
 const NAMED: Named[] = [
@@ -32,18 +25,39 @@ const NAMED: Named[] = [
 ];
 const FOUNDINGS: Founding[] = ['사립', '사립', '국립', '사립', '공립'], KINDS: Kind[] = ['일반대학', '일반대학', '일반대학', '교육대학', '산업대학'];
 
+const halton = (i: number, b: number) => { let f = 1, r = 0; for (; i > 0; i = Math.floor(i / b)) { f /= b; r += f * (i % b); } return r; };
+const inside = ([x, y]: [number, number], ring: [number, number][]) => {
+  let hit = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i], [xj, yj] = ring[j];
+    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) hit = !hit;
+  }
+  return hit;
+};
+/** 시·도 경계 안에 고르게(Halton 수열) 흩은 시안 예시 좌표. 시·도 보기에서 핀이 한 묶음으로 뭉치지 않게 서로 거리를 둬요(2026-11-25). */
+function spread(sido: Sido, n: number): [number, number][] {
+  const ring = RINGS[sido][0], lngs = ring.map(p => p[0]), lats = ring.map(p => p[1]);
+  const [x0, x1, y0, y1] = [Math.min(...lngs), Math.max(...lngs), Math.min(...lats), Math.max(...lats)];
+  const out: [number, number][] = [];
+  let gap = Math.sqrt((x1 - x0) * (y1 - y0) / Math.max(n, 1)) * 0.6;
+  for (let i = 1; out.length < n; i++) {
+    if (i % 4000 === 0) gap *= 0.7; // 좁은 시·도는 간격을 줄여서라도 n개를 채워요
+    const p: [number, number] = [x0 + (x1 - x0) * halton(i, 2), y0 + (y1 - y0) * halton(i, 3)];
+    const m = gap * 0.35; // 경계선 위에 핀이 앉지 않게 둘레 네 점도 안쪽이어야 해요
+    if ([[0, 0], [m, 0], [-m, 0], [0, m], [0, -m]].every(([dx, dy]) => inside([p[0] + dx, p[1] + dy], ring)) && out.every(q => Math.hypot(q[0] - p[0], q[1] - p[1]) >= gap)) out.push(p);
+  }
+  return out;
+}
 function campuses(): Campus[] {
   const out: Campus[] = [];
   let filler = 0;
   for (const sido of SIDO) {
-    const named = NAMED.filter(n => n[4] === sido), [lng, lat] = CENTER[sido];
+    const named = NAMED.filter(n => n[4] === sido), spots = spread(sido, COUNT[sido]);
     for (let i = 0; i < COUNT[sido]; i++) {
-      // 대표점 둘레 나선(황금각)으로 흩는다 — 시안 예시 좌표
-      const r = 0.035 * Math.sqrt(i + 1), a = i * 2.39996;
-      const n = named[i], k = ++filler;
+      const [lng, lat] = spots[i], n = named[i], k = ++filler;
       const [name, campus, campus_type, founding, , sigungu] = n ?? [`예시대학 ${String(k).padStart(3, '0')}`, '예시캠퍼스', '본교', FOUNDINGS[k % 5], sido, '예시구'];
       out.push({ id: `sample-${k}|${campus}`.replace(/\s/g, ''), univ_id: `sample-${name}`, name, campus, campus_type, school_kind: n ? '일반대학' : KINDS[k % 5], founding,
-        sido, sigungu, address: '', lat: lat + r * Math.sin(a), lng: lng + r * Math.cos(a) * 1.25 });
+        sido, sigungu, address: '', lat, lng });
     }
   }
   return out;

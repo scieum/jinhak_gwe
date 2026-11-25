@@ -127,3 +127,6 @@
   .dg-main > .trace-accordion { margin-top: var(--spacing-md); } /* 시안: 마지막 카드 아래 32 */
   .dg-empty { padding: 64px var(--spacing-md); }
 }
+/* 2026-11-25 사용자 요청 "조건 줄 규칙"(전국 배치표와 같음): 필터 묶음 사이 hairline-soft 실선 · 위아래 12 */
+.dg-filters fieldset { gap: 12px; }
+.dg-filters fieldset > .dg-field + .dg-field { padding-top: 12px; border-top: 1px solid var(--color-hairline-soft); }

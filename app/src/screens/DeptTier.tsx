@@ -79,6 +79,7 @@ export function DeptTier() {
     <div className="dept-tier__width-row"><span className="t-label text-muted" id="dept-tier-width-label">구간 폭</span>
       <SegmentedControl label="구간 폭" value={width.choice} onChange={choose}
         options={[...WIDTH_PRESETS.map(w => ({ value: String(w), label: widthText(w) })), { value: CUSTOM, label: '직접' }]} />
+      <p className="t-caption text-muted dept-tier__remember">이 기기에서만 기억해요</p>{/* 2026-11-25 사용자 요청: 안내 글은 컨트롤 바로 뒤 같은 줄 */}
       {width.choice === CUSTOM && <div className="dept-tier__custom">
         <input ref={input} className={error ? 'text-input text-input-error' : 'text-input'} inputMode="decimal" placeholder="예: 0.25" value={width.draft}
           aria-label="구간 폭 직접 입력, 0.05부터 1.0까지" aria-invalid={!!error} aria-describedby="dept-tier-width-help"
@@ -86,7 +87,6 @@ export function DeptTier() {
         <div id="dept-tier-width-help">{error ? <><p className="t-caption dept-tier__error">{error}</p><p className="t-caption text-muted">표는 직전 구간 폭 {widthText(width.w100)} 그대로예요</p></>
           : <p className="t-caption text-muted">0.05~1.0 · 소수 둘째 자리까지 넣을 수 있어요</p>}</div>
       </div>}</div>
-    <p className="t-caption text-muted">이 기기에서만 기억해요</p>
   </div>;
   const asof = <span className="data-status-badge dept-tier__asof">데이터 기준일 {dataAsOf}</span>;
   const pendingBadge = data && data.status !== 'pending' && data.pending > 0 && <span className="data-status-badge dept-tier__pending-count">준비 중 {data.pending}개 — 검수가 끝나면 채워져요</span>;

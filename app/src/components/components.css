@@ -101,3 +101,5 @@
 .promo-banner-never { justify-self: end; min-height: 44px; padding: 0 var(--spacing-xs); border: 0; background: none; color: var(--color-ink-soft); font-size: var(--font-caption-size); text-decoration: underline; cursor: pointer; }
 .promo-banner-link:focus-visible, .promo-banner-close:focus-visible, .promo-banner-never:focus-visible { outline: 2px solid var(--color-ink); outline-offset: -2px; }
 @media (min-width: 1024px) { .promo-banner-never { min-height: 32px; } }
+/* button-pill-soft(design.md): 채움 canvas-soft · 선 없음. auth.css에만 있어 로그인 화면을 거치지 않으면 기본 버튼 테두리가 보였어요(2026-11-25) */
+.button-pill-soft { display: inline-flex; align-items: center; gap: var(--spacing-xxs); min-height: 44px; padding: 0 var(--spacing-md); border: 0; background: var(--color-canvas-soft); color: var(--color-ink); font-weight: 600; text-decoration: none; cursor: pointer; }
