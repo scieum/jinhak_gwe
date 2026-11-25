@@ -42,8 +42,10 @@ const POOL = ['가천대학교', '가톨릭대학교', '강원대학교', '건�
   '신라대학교', '아주대학교', '안동대학교', '연세대학교', '영남대학교', '울산대학교', '원광대학교', '을지대학교', '이화여자대학교', '인제대학교',
   '인천대학교', '인하대학교', '전남대학교', '전북대학교', '제주대학교', '조선대학교', '중앙대학교', '창원대학교', '충남대학교', '충북대학교',
   '한림대학교', '한남대학교', '한서대학교', '한양대학교', '호서대학교'];
-const fill = (track: TrackId, n: number, unit: string, plans: string, sub?: string, skip: string[] = []) =>
-  POOL.filter(u => !skip.includes(u)).slice(0, n).map(u => tr(track, u, unit, plans, sub ? { sub } : {}));
+/** unit을 배열로 주면 대학마다 돌아가며 써요(예: 사범대 46곳이 모두 '교육학과'로 보이지 않게) */
+const fill = (track: TrackId, n: number, unit: string | string[], plans: string, sub?: string, skip: string[] = []) =>
+  POOL.filter(u => !skip.includes(u)).slice(0, n).map((u, i) => tr(track, u, typeof unit === 'string' ? unit : unit[i % unit.length], plans, sub ? { sub } : {}));
+const SABUM = ['국어교육과', '영어교육과', '수학교육과', '역사교육과', '지리교육과', '물리교육과', '화학교육과', '생물교육과', '윤리교육과', '교육학과'];
 
 const KIST: Line[] = [
   ['광주과학기술원', '기초교육학부', '', '종합 200', '1.68', '9.4', '', '반영 교과 평균'],
@@ -68,7 +70,7 @@ const rows: TrackRow[] = [
       { name: '학생부종합(미래인재)', type: '종합', quota: 10, minimum: false }] }),
   ...MED_REST.flatMap((u, i) => [tr('메디컬', u, '의예과', '교과 10 · 종합 15', { sub: '의예' }), ...(i < 10 ? [tr('메디컬', u, '약학과', '교과 8 · 종합 10', { sub: '약학' })] : [])]),
   ...fill('보건', 61, '간호학과', '교과 20 · 종합 15', '간호'),
-  ...fill('교육', 46, '교육학과', '교과 8 · 종합 12', '사범대'),
+  ...fill('교육', 46, SABUM, '교과 8 · 종합 12', '사범대'),
   ...KIST.map(([u, unit, , p]) => tr('과기원', u, unit, p, { tag: '특수법 설립' })).map(r => r.university === '포항공과대학교' ? { ...r, tag: undefined } : r),
   tr('체육', '강원대학교', '체육교육과', '교과 6 · 실기 14', { sub: '체육교육' }), tr('교육', '강원대학교', '체육교육과', '교과 6 · 실기 14', { sub: '사범대' }),
   tr('체육', '경희대학교', '체육학과', '실기 40', { sub: '스포츠과학' }),

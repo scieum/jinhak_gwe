@@ -147,7 +147,7 @@ button.trd-target__name { cursor: pointer; }
   .trd-pair__count { display: inline-flex; align-items: center; gap: 6px; min-width: 55px; }
   .trd-pair__count .trd-badge--safe { min-width: 34px; }
   .trd-pair__count .trd-badge--fit { min-width: 35px; }
-  .trd-pc-summary { margin: 0; font-size: 18px; font-weight: 300; line-height: 27px; color: var(--color-ink); }
+  .trd-pc-summary { margin: 0; font-size: 18px; font-weight: 400; line-height: 27px; color: var(--color-ink); } /* 2026-11-26 사용자 요청: 굵은 지표 사이에서 Light(300)가 다른 글꼴처럼 보여 400 */
 
   .trd-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-lg); align-items: stretch; }
   .trd-card { display: flex; flex-direction: column; gap: var(--spacing-md); min-width: 0; padding: var(--spacing-lg); background: var(--color-canvas); }
