@@ -94,6 +94,7 @@
 .grade-input .grade-input-table th:nth-child(n+9):nth-child(-n+13) { width: 48px; }
 .grade-input .grade-input-table th:nth-child(14) { width: 72px; }
 .grade-input .grade-input-table th:nth-child(16) { width: 80px; }
+.gi-subject { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
 .grade-input .grade-input-table .gi-type { text-align: center; }
 .grade-input .grade-input-table .gi-group { text-align: left; color: var(--color-ink-soft); overflow: hidden; text-overflow: ellipsis; }
 .grade-input .grade-input-table input { display: block; width: 100%; min-height: 0; height: 36px; padding: 0 8px; border: 0; background: transparent; color: var(--color-ink); font: inherit; text-align: right; -moz-appearance: textfield; appearance: textfield; }
