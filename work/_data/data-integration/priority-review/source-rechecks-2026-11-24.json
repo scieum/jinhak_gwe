@@ -1,0 +1,120 @@
+{
+  "checked_on": "2026-11-24",
+  "review_status": "draft",
+  "executable": false,
+  "latest_across_site_confirmed": false,
+  "notices": [
+    {
+      "university": "한림대학교",
+      "url": "https://www.hallym.ac.kr/bbs/admission/957/385146/artclView.do",
+      "status": "opened",
+      "attachment_label": "(최종, 260602) 2028학년도 신입학 전형계획(안).pdf",
+      "note": "공지에서 수시·정시 세부내용은 추후 모집요강을 참고하도록 안내함"
+    },
+    {
+      "university": "강원대학교",
+      "url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+      "status": "opened",
+      "updated_on": "2026-06-11",
+      "note": "춘천·강릉·삼척·원주 첨부를 확인함. 사이트 전체 최신본 확인은 아님"
+    },
+    {
+      "university": "한국교원대학교",
+      "url": "https://www.knue.ac.kr/ipsi/selectBbsNttView.do?bbsNo=276&key=1845&nttNo=82605",
+      "status": "fetch_failed",
+      "error": "Web fetch HTTP 403"
+    },
+    {
+      "university": "가톨릭관동대학교",
+      "url": "https://ipsi.cku.ac.kr/bbs/iphak/1005/152140/download.do",
+      "status": "fetch_failed",
+      "error": "Web fetch HTTP 502"
+    }
+  ],
+  "documents": [
+    {
+      "package_id": "plan-0000003",
+      "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=20260611034926546.pdf&path=%2Fbbs%2F20260611135835",
+      "checked_on": "2026-11-24",
+      "latest_across_site_confirmed": false,
+      "expected_sha256": "61c542430f68670397b52474fd08dc9413a044d5c2f5d7eead72cdfb56106d9b",
+      "status": 200,
+      "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=20260611034926546.pdf&path=%2Fbbs%2F20260611135835",
+      "bytes": 443544,
+      "actual_sha256": "61c542430f68670397b52474fd08dc9413a044d5c2f5d7eead72cdfb56106d9b",
+      "hash_matches": true
+    },
+    {
+      "package_id": "plan-0000004",
+      "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=20260611034944247.pdf&path=%2Fbbs%2F20260611135835",
+      "checked_on": "2026-11-24",
+      "latest_across_site_confirmed": false,
+      "expected_sha256": "71ce98455afce6a353083031ee639bbc0a785bb88f14b037c4daab2e9342b144",
+      "status": 200,
+      "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=20260611034944247.pdf&path=%2Fbbs%2F20260611135835",
+      "bytes": 759615,
+      "actual_sha256": "71ce98455afce6a353083031ee639bbc0a785bb88f14b037c4daab2e9342b144",
+      "hash_matches": true
+    },
+    {
+      "package_id": "plan-0003363",
+      "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191776Rp.hwp&path=/DATA/bbs/373&fn=2.%20%EF%BC%88%EA%B0%95%EB%A6%89%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+      "checked_on": "2026-11-24",
+      "latest_across_site_confirmed": false,
+      "expected_sha256": "9a5f3b0df5a573f6e8fbd6362437f28053d062632f8680c89a300e1caa32d2fe",
+      "status": 200,
+      "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191776Rp.hwp&path=/DATA/bbs/373&fn=2.%20%EF%BC%88%EA%B0%95%EB%A6%89%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+      "bytes": 1567744,
+      "actual_sha256": "9a5f3b0df5a573f6e8fbd6362437f28053d062632f8680c89a300e1caa32d2fe",
+      "hash_matches": true
+    },
+    {
+      "package_id": "plan-0003364",
+      "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+      "checked_on": "2026-11-24",
+      "latest_across_site_confirmed": false,
+      "expected_sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+      "status": 200,
+      "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+      "bytes": 1524736,
+      "actual_sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+      "hash_matches": true
+    },
+    {
+      "package_id": "plan-0000198",
+      "url": "https://www.hallym.ac.kr/bbs/admission/957/230346/download.do",
+      "checked_on": "2026-11-24",
+      "latest_across_site_confirmed": false,
+      "expected_sha256": "7977689503c78912b041041d1fc6053f457aeee4f843f47acd498922bd34fba0",
+      "status": 200,
+      "final_url": "https://www.hallym.ac.kr/bbs/admission/957/230346/download.do",
+      "bytes": 342859,
+      "actual_sha256": "7977689503c78912b041041d1fc6053f457aeee4f843f47acd498922bd34fba0",
+      "hash_matches": true
+    },
+    {
+      "package_id": "plan-0000072",
+      "url": "https://ipsi.cku.ac.kr/bbs/iphak/1005/152140/download.do",
+      "checked_on": "2026-11-24",
+      "latest_across_site_confirmed": false,
+      "expected_sha256": "359d418d0c8bf671ef0c2085361f90bedf52eb4a387c11aee72b472b9ee8cbe5",
+      "status": 200,
+      "final_url": "https://ipsi.cku.ac.kr/bbs/iphak/1005/152140/download.do",
+      "bytes": 519720,
+      "actual_sha256": "359d418d0c8bf671ef0c2085361f90bedf52eb4a387c11aee72b472b9ee8cbe5",
+      "hash_matches": true
+    },
+    {
+      "package_id": "plan-0000031",
+      "url": "https://www.knue.ac.kr/ipsi/downloadBbsFile.do?atchmnflNo=86178",
+      "checked_on": "2026-11-24",
+      "latest_across_site_confirmed": false,
+      "expected_sha256": "78ab507ec0b7a0b50bd382c0aade5b0533a655b3050ab8c9d418cd07163f7703",
+      "status": 200,
+      "final_url": "https://www.knue.ac.kr/ipsi/downloadBbsFile.do?atchmnflNo=86178",
+      "bytes": 627853,
+      "actual_sha256": "78ab507ec0b7a0b50bd382c0aade5b0533a655b3050ab8c9d418cd07163f7703",
+      "hash_matches": true
+    }
+  ]
+}

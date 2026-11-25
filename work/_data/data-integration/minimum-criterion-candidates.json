@@ -1,0 +1,5810 @@
+{
+ "format": "unavi-minimum-criterion-candidates",
+ "version": 1,
+ "review_status": "draft",
+ "executable": false,
+ "purpose": "Review candidates only. Not an approved MinimumRule release.",
+ "rows": [
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u01",
+   "unit": "국어국문학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u02",
+   "unit": "국사학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u03",
+   "unit": "문예창작전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u04",
+   "unit": "영어전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u05",
+   "unit": "일어일본학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u06",
+   "unit": "유러피언스터디즈전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u07",
+   "unit": "중어중국학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u08",
+   "unit": "문헌정보학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u09",
+   "unit": "사회복지학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u10",
+   "unit": "아동학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u11",
+   "unit": "경영융합학부",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u12",
+   "unit": "식품영양학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u13",
+   "unit": "보건관리학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u14",
+   "unit": "응용화학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u15",
+   "unit": "화장품학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u17",
+   "unit": "컴퓨터학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u18",
+   "unit": "정보통계학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u22",
+   "unit": "큐레이터학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u35",
+   "unit": "커뮤니케이션콘텐츠전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u36",
+   "unit": "HCI사이언스전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u37",
+   "unit": "데이터사이언스전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u38",
+   "unit": "문화예술경영전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학생부교과우수자 특별전형",
+   "round": "수시",
+   "unit_id": "u39",
+   "unit": "글로벌MICE융합전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u01",
+   "unit": "국어국문학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u02",
+   "unit": "국사학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u03",
+   "unit": "문예창작전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u04",
+   "unit": "영어전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u05",
+   "unit": "일어일본학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u06",
+   "unit": "유러피언스터디즈전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u07",
+   "unit": "중어중국학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u08",
+   "unit": "문헌정보학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u09",
+   "unit": "사회복지학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u10",
+   "unit": "아동학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u11",
+   "unit": "경영융합학부",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u12",
+   "unit": "식품영양학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u13",
+   "unit": "보건관리학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u14",
+   "unit": "응용화학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u15",
+   "unit": "화장품학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u17",
+   "unit": "컴퓨터학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u18",
+   "unit": "정보통계학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u22",
+   "unit": "큐레이터학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u35",
+   "unit": "커뮤니케이션콘텐츠전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u36",
+   "unit": "HCI사이언스전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u37",
+   "unit": "데이터사이언스전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u38",
+   "unit": "문화예술경영전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u39",
+   "unit": "글로벌MICE융합전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000102",
+   "university": "동덕여자대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-essay",
+   "program": "논술우수자전형",
+   "round": "수시",
+   "unit_id": "u40",
+   "unit": "앙트러프러너십전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000102.json",
+   "source_sha256": "d879fb636cd30e9598408c2bc24b01389ced3f2792c7a11d554fff1b5850c0d0",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000102:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u05",
+   "unit": "화학나노학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u06",
+   "unit": "융합에너지학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u07",
+   "unit": "식품영양학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u08",
+   "unit": "시스템생명과학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u09",
+   "unit": "기계시스템공학부",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u10",
+   "unit": "건설환경공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u11",
+   "unit": "환경시스템공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u12",
+   "unit": "스마트모빌리티공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u13",
+   "unit": "화학공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u14",
+   "unit": "신소재공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u15",
+   "unit": "반도체공학부",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u16",
+   "unit": "전기정보공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u17",
+   "unit": "전자공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u18",
+   "unit": "AI컴퓨터공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u19",
+   "unit": "AI응용시스템전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u20",
+   "unit": "산업경영공학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u34",
+   "unit": "건축학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u35",
+   "unit": "전통건축학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u36",
+   "unit": "공간디자인학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u37",
+   "unit": "자율전공학부(자연)",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u05",
+   "unit": "화학나노학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u06",
+   "unit": "융합에너지학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u07",
+   "unit": "식품영양학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u08",
+   "unit": "시스템생명과학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u09",
+   "unit": "기계시스템공학부",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u10",
+   "unit": "건설환경공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u11",
+   "unit": "환경시스템공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u12",
+   "unit": "스마트모빌리티공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u13",
+   "unit": "화학공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u14",
+   "unit": "신소재공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u15",
+   "unit": "반도체공학부",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u16",
+   "unit": "전기정보공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u17",
+   "unit": "전자공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u18",
+   "unit": "AI컴퓨터공학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u19",
+   "unit": "AI응용시스템전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u20",
+   "unit": "산업경영공학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u34",
+   "unit": "건축학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u35",
+   "unit": "전통건축학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u36",
+   "unit": "공간디자인학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000109",
+   "university": "명지대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u37",
+   "unit": "자율전공학부(자연)",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000109.json",
+   "source_sha256": "313c10c474f962206de057fc7f19c735f5b434a2bbb9541e346b69f71870bd22",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000109:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 7,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u05",
+   "unit": "국어국문학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u06",
+   "unit": "영어영문학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u07",
+   "unit": "미술사·역사학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u08",
+   "unit": "문헌정보학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u09",
+   "unit": "중어중문학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u10",
+   "unit": "일어일문학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u11",
+   "unit": "아랍지역학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u13",
+   "unit": "행정학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u14",
+   "unit": "정치외교학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u15",
+   "unit": "경제학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u16",
+   "unit": "국제통상학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u17",
+   "unit": "응용통계학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u18",
+   "unit": "법학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u19",
+   "unit": "경영학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u20",
+   "unit": "AI경영정보학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u21",
+   "unit": "디지털미디어학부",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u22",
+   "unit": "청소년지도학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u23",
+   "unit": "아동학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u24",
+   "unit": "응용소프트웨어전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u25",
+   "unit": "데이터사이언스전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u26",
+   "unit": "인공지능전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u27",
+   "unit": "디지털콘텐츠디자인학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-school",
+   "program": "학교장추천전형",
+   "round": "수시",
+   "unit_id": "u28",
+   "unit": "자율전공학부(인문)",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u05",
+   "unit": "국어국문학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u06",
+   "unit": "영어영문학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u07",
+   "unit": "미술사·역사학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u08",
+   "unit": "문헌정보학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u09",
+   "unit": "중어중문학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u10",
+   "unit": "일어일문학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u11",
+   "unit": "아랍지역학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u13",
+   "unit": "행정학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u14",
+   "unit": "정치외교학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u15",
+   "unit": "경제학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u16",
+   "unit": "국제통상학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u17",
+   "unit": "응용통계학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u18",
+   "unit": "법학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u19",
+   "unit": "경영학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u20",
+   "unit": "AI경영정보학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u21",
+   "unit": "디지털미디어학부",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u22",
+   "unit": "청소년지도학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u23",
+   "unit": "아동학전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u24",
+   "unit": "응용소프트웨어전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u25",
+   "unit": "데이터사이언스전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u26",
+   "unit": "인공지능전공",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u27",
+   "unit": "디지털콘텐츠디자인학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000111",
+   "university": "명지대학교",
+   "campus": "제2캠퍼스",
+   "admission_year": 2028,
+   "program_id": "s-talent-doc",
+   "program": "명지인재서류전형",
+   "round": "수시",
+   "unit_id": "u28",
+   "unit": "자율전공학부(인문)",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000111.json",
+   "source_sha256": "0a712920582da77cffdf77a8fc29c3b12aca4c38525dbb5505c51778e1ee6dcb",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000111:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 2,
+    "sum": 6,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u007",
+   "unit": "경영학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u008",
+   "unit": "관광경영학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u009",
+   "unit": "경찰행정학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 3,
+    "sum": 9,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u010",
+   "unit": "중국학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u011",
+   "unit": "사회복지학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u012",
+   "unit": "문화콘텐츠학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u013",
+   "unit": "보건환경안전학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u014",
+   "unit": "AI융합학부(AI)",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u015",
+   "unit": "AI시스템반도체학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u016",
+   "unit": "바이오생명공학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u017",
+   "unit": "식품영양학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u018",
+   "unit": "물리치료학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-0000156",
+   "university": "용인대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "p002",
+   "program": "교과성적우수자특별전형",
+   "round": "수시",
+   "unit_id": "u019",
+   "unit": "문화유산학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-0000156.json",
+   "source_sha256": "0ffbc5290743a4965ca876e1ab301602b00959ffae70ef9522513009944ab45a",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-0000156:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "영어",
+     "수학"
+    ],
+    "count": 2,
+    "sum": 8,
+    "required": null,
+    "history_max": null,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-e7e562519408",
+   "university": "춘천교육대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-teaching",
+   "program": "교직적·인성인재",
+   "round": "수시",
+   "unit_id": "elementary",
+   "unit": "초등교육학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-e7e562519408.json",
+   "source_sha256": "126bb2beb22d2a2e3066f54ebcedf9ad4bb7b3bcb75fcedd24b49466c1e86545",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-e7e562519408:minimum_rules:0"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 9,
+    "required": null,
+    "history_max": 4,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/0",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-e7e562519408",
+   "university": "춘천교육대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-regional",
+   "program": "강원교육인재",
+   "round": "수시",
+   "unit_id": "elementary",
+   "unit": "초등교육학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-e7e562519408.json",
+   "source_sha256": "126bb2beb22d2a2e3066f54ebcedf9ad4bb7b3bcb75fcedd24b49466c1e86545",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-e7e562519408:minimum_rules:1"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 10,
+    "required": null,
+    "history_max": 4,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/1",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-e7e562519408",
+   "university": "춘천교육대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-veteran",
+   "program": "국가보훈대상자",
+   "round": "수시",
+   "unit_id": "elementary",
+   "unit": "초등교육학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-e7e562519408.json",
+   "source_sha256": "126bb2beb22d2a2e3066f54ebcedf9ad4bb7b3bcb75fcedd24b49466c1e86545",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-e7e562519408:minimum_rules:2"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 12,
+    "required": null,
+    "history_max": 4,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/2",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-e7e562519408",
+   "university": "춘천교육대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-multicultural",
+   "program": "다문화가정의 자녀",
+   "round": "수시",
+   "unit_id": "elementary",
+   "unit": "초등교육학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-e7e562519408.json",
+   "source_sha256": "126bb2beb22d2a2e3066f54ebcedf9ad4bb7b3bcb75fcedd24b49466c1e86545",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-e7e562519408:minimum_rules:3"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 12,
+    "required": null,
+    "history_max": 4,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/3",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-e7e562519408",
+   "university": "춘천교육대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-rural",
+   "program": "농어촌학생",
+   "round": "수시",
+   "unit_id": "elementary",
+   "unit": "초등교육학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-e7e562519408.json",
+   "source_sha256": "126bb2beb22d2a2e3066f54ebcedf9ad4bb7b3bcb75fcedd24b49466c1e86545",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-e7e562519408:minimum_rules:4"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 12,
+    "required": null,
+    "history_max": 4,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/4",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-e7e562519408",
+   "university": "춘천교육대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-low",
+   "program": "기초생활수급자 및 차상위계층",
+   "round": "수시",
+   "unit_id": "elementary",
+   "unit": "초등교육학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-e7e562519408.json",
+   "source_sha256": "126bb2beb22d2a2e3066f54ebcedf9ad4bb7b3bcb75fcedd24b49466c1e86545",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-e7e562519408:minimum_rules:5"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 12,
+    "required": null,
+    "history_max": 4,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/5",
+   "approval_status": "not_reviewed"
+  },
+  {
+   "package_id": "plan-e7e562519408",
+   "university": "춘천교육대학교",
+   "campus": "본교",
+   "admission_year": 2028,
+   "program_id": "s-disability",
+   "program": "특수교육대상자",
+   "round": "수시",
+   "unit_id": "elementary",
+   "unit": "초등교육학과",
+   "source_file": "work/_data/admission-plans/structured/universities/plan-e7e562519408.json",
+   "source_sha256": "126bb2beb22d2a2e3066f54ebcedf9ad4bb7b3bcb75fcedd24b49466c1e86545",
+   "scope_status": "classified",
+   "rule_ids": [
+    "plan-e7e562519408:minimum_rules:6"
+   ],
+   "rule_categories": [
+    "criterion_candidate"
+   ],
+   "pending": [],
+   "review_status": "draft",
+   "executable": false,
+   "criterion": {
+    "areas": [
+     "국어",
+     "수학",
+     "영어",
+     "탐구"
+    ],
+    "count": 3,
+    "sum": 14,
+    "required": null,
+    "history_max": 4,
+    "tamgu": "best"
+   },
+   "source_pointer": "/minimum_rules/6",
+   "approval_status": "not_reviewed"
+  }
+ ]
+}

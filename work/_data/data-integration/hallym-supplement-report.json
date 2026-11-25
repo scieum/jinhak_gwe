@@ -1,0 +1,25 @@
+{
+ "package": "work/_data/admission-plans/structured/universities/plan-0000198.json",
+ "source_document_sha256": "7977689503c78912b041041d1fc6053f457aeee4f843f47acd498922bd34fba0",
+ "package_sha256_before": "0631a2d2c194e797bba34510d48cd02fa674f3136c3e65c2a546b12f587785f4",
+ "package_sha256_after": "8c68f8cafa84f537ca50032c199664f8af1992fe595799e0c2d18d506cb5498c",
+ "susi_pairs": 255,
+ "added_no_minimum_rules": 18,
+ "added_no_minimum_pairs": 250,
+ "existing_applies_pairs": 5,
+ "source_pdf_pages": [
+  12,
+  13,
+  14,
+  15
+ ],
+ "review_status": "draft",
+ "independent_human_review": false,
+ "checks": {
+  "unrelated_fields_preserved": true,
+  "existing_rules_preserved": true,
+  "idempotent": true,
+  "medical_nursing_exceptions": true,
+  "package_validation_errors": []
+ }
+}

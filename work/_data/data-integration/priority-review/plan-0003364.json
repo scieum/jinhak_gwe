@@ -1,0 +1,4590 @@
+{
+  "format": "unavi-priority-review",
+  "version": 1,
+  "review_status": "draft",
+  "executable": false,
+  "identity": {
+    "package_id": "plan-0003364",
+    "university": "강원대학교",
+    "campus": "제4캠퍼스",
+    "admission_year": 2028,
+    "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+    "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+    "programs": 17,
+    "recruit_units": 13,
+    "allocations": 67,
+    "minimum_rules": 10,
+    "minimum_scope_pending": 10
+  },
+  "source": {
+    "id": "kangwon-wonju-20260609",
+    "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+    "notice_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+    "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+    "status": 200,
+    "checked_at": "2026-11-22T15:20:08.610989+00:00",
+    "bytes": 1524736,
+    "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+    "kind": "hwp",
+    "local_path": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+    "extraction": {
+      "local_path": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+      "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+      "table_count": 89,
+      "text_count": 2591
+    }
+  },
+  "local_integrity": [
+    {
+      "file": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+      "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+      "bytes": 1524736,
+      "hash_matches": true
+    },
+    {
+      "file": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+      "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+      "bytes": 1145065,
+      "hash_matches": true
+    }
+  ],
+  "input_hashes": {
+    "minimum_source": "7746aabdd4e63649bce8cca67e53305340df6b200d5bd3df4b04f5264265d5b8",
+    "minimum_normalized": "6af7bc4db842d8f18e3a5cd2bce5c1929c49c0f10fe55d0a24cfc1aa2f48e689"
+  },
+  "minimum": {
+    "categories": {
+      "no_minimum_source_statement": 10
+    },
+    "scope_statuses": {
+      "classified": 78,
+      "unclassified": 36,
+      "explicit_pending": 10
+    },
+    "rules": [
+      {
+        "record": {
+          "id": "plan-0003364:minimum_rules:0",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/0",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "programs": [
+            {
+              "id": "s-future",
+              "name": "미래인재서류전형",
+              "round": "수시",
+              "type": "종합"
+            }
+          ],
+          "recruit_units": [
+            {
+              "id": "unit-001",
+              "name": "유아교육과"
+            },
+            {
+              "id": "unit-002",
+              "name": "간호학과"
+            },
+            {
+              "id": "unit-003",
+              "name": "사회복지학과"
+            },
+            {
+              "id": "unit-004",
+              "name": "다문화학과"
+            },
+            {
+              "id": "unit-005",
+              "name": "디지털미디어커뮤니케이션학과"
+            },
+            {
+              "id": "unit-006",
+              "name": "AI콘텐츠공학과"
+            },
+            {
+              "id": "unit-007",
+              "name": "전기공학과"
+            },
+            {
+              "id": "unit-008",
+              "name": "정보통신공학과"
+            },
+            {
+              "id": "unit-009",
+              "name": "산업경영공학과"
+            },
+            {
+              "id": "unit-010",
+              "name": "컴퓨터공학과"
+            },
+            {
+              "id": "unit-011",
+              "name": "기계융합공학부"
+            }
+          ],
+          "evidence_documents": [
+            {
+              "id": "kangwon-wonju-20260609",
+              "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "notice_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+              "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "status": 200,
+              "checked_at": "2026-11-22T15:20:08.610989+00:00",
+              "bytes": 1524736,
+              "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+              "kind": "hwp",
+              "local_path": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+              "extraction": {
+                "local_path": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+                "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+                "table_count": 89,
+                "text_count": 2591
+              }
+            }
+          ],
+          "has_source_sentence": false,
+          "original_rule": {
+            "id": "s-future-minimum",
+            "program_ids": [
+              "s-future"
+            ],
+            "unit_ids": [
+              "unit-001",
+              "unit-002",
+              "unit-003",
+              "unit-004",
+              "unit-005",
+              "unit-006",
+              "unit-007",
+              "unit-008",
+              "unit-009",
+              "unit-010",
+              "unit-011"
+            ],
+            "status": "not_applied",
+            "expression": null,
+            "review_status": "draft",
+            "executable": false,
+            "evidence": {
+              "document_id": "kangwon-wonju-20260609",
+              "review_status": "draft"
+            }
+          },
+          "review_status": "draft",
+          "executable": false,
+          "checks": {
+            "references_valid": true,
+            "issues": []
+          }
+        },
+        "normalization": {
+          "id": "plan-0003364:minimum_rules:0",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/0",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "applicability": "not_required",
+          "applicability_signals": [
+            {
+              "path": "/status",
+              "value": false
+            }
+          ],
+          "category": "no_minimum_source_statement",
+          "condition_blocks": [],
+          "criterion_candidate": null,
+          "review_reasons": [],
+          "review_status": "draft",
+          "executable": false
+        },
+        "review": {
+          "status": "not_reviewed",
+          "reviewer": null,
+          "reviewed_at": null,
+          "scope_confirmed": null,
+          "condition_confirmed": null
+        }
+      },
+      {
+        "record": {
+          "id": "plan-0003364:minimum_rules:1",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/1",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "programs": [
+            {
+              "id": "s-regional-doc",
+              "name": "강원인재서류전형",
+              "round": "수시",
+              "type": "종합"
+            }
+          ],
+          "recruit_units": [
+            {
+              "id": "unit-001",
+              "name": "유아교육과"
+            },
+            {
+              "id": "unit-002",
+              "name": "간호학과"
+            },
+            {
+              "id": "unit-007",
+              "name": "전기공학과"
+            },
+            {
+              "id": "unit-008",
+              "name": "정보통신공학과"
+            },
+            {
+              "id": "unit-009",
+              "name": "산업경영공학과"
+            },
+            {
+              "id": "unit-010",
+              "name": "컴퓨터공학과"
+            },
+            {
+              "id": "unit-011",
+              "name": "기계융합공학부"
+            }
+          ],
+          "evidence_documents": [
+            {
+              "id": "kangwon-wonju-20260609",
+              "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "notice_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+              "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "status": 200,
+              "checked_at": "2026-11-22T15:20:08.610989+00:00",
+              "bytes": 1524736,
+              "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+              "kind": "hwp",
+              "local_path": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+              "extraction": {
+                "local_path": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+                "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+                "table_count": 89,
+                "text_count": 2591
+              }
+            }
+          ],
+          "has_source_sentence": false,
+          "original_rule": {
+            "id": "s-regional-doc-minimum",
+            "program_ids": [
+              "s-regional-doc"
+            ],
+            "unit_ids": [
+              "unit-001",
+              "unit-002",
+              "unit-007",
+              "unit-008",
+              "unit-009",
+              "unit-010",
+              "unit-011"
+            ],
+            "status": "not_applied",
+            "expression": null,
+            "review_status": "draft",
+            "executable": false,
+            "evidence": {
+              "document_id": "kangwon-wonju-20260609",
+              "review_status": "draft"
+            }
+          },
+          "review_status": "draft",
+          "executable": false,
+          "checks": {
+            "references_valid": true,
+            "issues": []
+          }
+        },
+        "normalization": {
+          "id": "plan-0003364:minimum_rules:1",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/1",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "applicability": "not_required",
+          "applicability_signals": [
+            {
+              "path": "/status",
+              "value": false
+            }
+          ],
+          "category": "no_minimum_source_statement",
+          "condition_blocks": [],
+          "criterion_candidate": null,
+          "review_reasons": [],
+          "review_status": "draft",
+          "executable": false
+        },
+        "review": {
+          "status": "not_reviewed",
+          "reviewer": null,
+          "reviewed_at": null,
+          "scope_confirmed": null,
+          "condition_confirmed": null
+        }
+      },
+      {
+        "record": {
+          "id": "plan-0003364:minimum_rules:2",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/2",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "programs": [
+            {
+              "id": "s-equity",
+              "name": "기회균형전형",
+              "round": "수시",
+              "type": "종합"
+            }
+          ],
+          "recruit_units": [
+            {
+              "id": "unit-001",
+              "name": "유아교육과"
+            },
+            {
+              "id": "unit-002",
+              "name": "간호학과"
+            },
+            {
+              "id": "unit-003",
+              "name": "사회복지학과"
+            },
+            {
+              "id": "unit-004",
+              "name": "다문화학과"
+            },
+            {
+              "id": "unit-005",
+              "name": "디지털미디어커뮤니케이션학과"
+            },
+            {
+              "id": "unit-006",
+              "name": "AI콘텐츠공학과"
+            },
+            {
+              "id": "unit-007",
+              "name": "전기공학과"
+            },
+            {
+              "id": "unit-008",
+              "name": "정보통신공학과"
+            },
+            {
+              "id": "unit-009",
+              "name": "산업경영공학과"
+            },
+            {
+              "id": "unit-010",
+              "name": "컴퓨터공학과"
+            },
+            {
+              "id": "unit-011",
+              "name": "기계융합공학부"
+            }
+          ],
+          "evidence_documents": [
+            {
+              "id": "kangwon-wonju-20260609",
+              "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "notice_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+              "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "status": 200,
+              "checked_at": "2026-11-22T15:20:08.610989+00:00",
+              "bytes": 1524736,
+              "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+              "kind": "hwp",
+              "local_path": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+              "extraction": {
+                "local_path": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+                "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+                "table_count": 89,
+                "text_count": 2591
+              }
+            }
+          ],
+          "has_source_sentence": false,
+          "original_rule": {
+            "id": "s-equity-minimum",
+            "program_ids": [
+              "s-equity"
+            ],
+            "unit_ids": [
+              "unit-001",
+              "unit-002",
+              "unit-003",
+              "unit-004",
+              "unit-005",
+              "unit-006",
+              "unit-007",
+              "unit-008",
+              "unit-009",
+              "unit-010",
+              "unit-011"
+            ],
+            "status": "not_applied",
+            "expression": null,
+            "review_status": "draft",
+            "executable": false,
+            "evidence": {
+              "document_id": "kangwon-wonju-20260609",
+              "review_status": "draft"
+            }
+          },
+          "review_status": "draft",
+          "executable": false,
+          "checks": {
+            "references_valid": true,
+            "issues": []
+          }
+        },
+        "normalization": {
+          "id": "plan-0003364:minimum_rules:2",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/2",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "applicability": "not_required",
+          "applicability_signals": [
+            {
+              "path": "/status",
+              "value": false
+            }
+          ],
+          "category": "no_minimum_source_statement",
+          "condition_blocks": [],
+          "criterion_candidate": null,
+          "review_reasons": [],
+          "review_status": "draft",
+          "executable": false
+        },
+        "review": {
+          "status": "not_reviewed",
+          "reviewer": null,
+          "reviewed_at": null,
+          "scope_confirmed": null,
+          "condition_confirmed": null
+        }
+      },
+      {
+        "record": {
+          "id": "plan-0003364:minimum_rules:3",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/3",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "programs": [
+            {
+              "id": "s-general",
+              "name": "일반전형",
+              "round": "수시",
+              "type": "교과"
+            }
+          ],
+          "recruit_units": [
+            {
+              "id": "unit-001",
+              "name": "유아교육과"
+            },
+            {
+              "id": "unit-002",
+              "name": "간호학과"
+            },
+            {
+              "id": "unit-003",
+              "name": "사회복지학과"
+            },
+            {
+              "id": "unit-004",
+              "name": "다문화학과"
+            },
+            {
+              "id": "unit-005",
+              "name": "디지털미디어커뮤니케이션학과"
+            },
+            {
+              "id": "unit-006",
+              "name": "AI콘텐츠공학과"
+            },
+            {
+              "id": "unit-007",
+              "name": "전기공학과"
+            },
+            {
+              "id": "unit-008",
+              "name": "정보통신공학과"
+            },
+            {
+              "id": "unit-009",
+              "name": "산업경영공학과"
+            },
+            {
+              "id": "unit-010",
+              "name": "컴퓨터공학과"
+            },
+            {
+              "id": "unit-011",
+              "name": "기계융합공학부"
+            }
+          ],
+          "evidence_documents": [
+            {
+              "id": "kangwon-wonju-20260609",
+              "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "notice_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+              "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "status": 200,
+              "checked_at": "2026-11-22T15:20:08.610989+00:00",
+              "bytes": 1524736,
+              "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+              "kind": "hwp",
+              "local_path": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+              "extraction": {
+                "local_path": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+                "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+                "table_count": 89,
+                "text_count": 2591
+              }
+            }
+          ],
+          "has_source_sentence": false,
+          "original_rule": {
+            "id": "s-general-minimum",
+            "program_ids": [
+              "s-general"
+            ],
+            "unit_ids": [
+              "unit-001",
+              "unit-002",
+              "unit-003",
+              "unit-004",
+              "unit-005",
+              "unit-006",
+              "unit-007",
+              "unit-008",
+              "unit-009",
+              "unit-010",
+              "unit-011"
+            ],
+            "status": "not_applied",
+            "expression": null,
+            "review_status": "draft",
+            "executable": false,
+            "evidence": {
+              "document_id": "kangwon-wonju-20260609",
+              "review_status": "draft"
+            }
+          },
+          "review_status": "draft",
+          "executable": false,
+          "checks": {
+            "references_valid": true,
+            "issues": []
+          }
+        },
+        "normalization": {
+          "id": "plan-0003364:minimum_rules:3",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/3",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "applicability": "not_required",
+          "applicability_signals": [
+            {
+              "path": "/status",
+              "value": false
+            }
+          ],
+          "category": "no_minimum_source_statement",
+          "condition_blocks": [],
+          "criterion_candidate": null,
+          "review_reasons": [],
+          "review_status": "draft",
+          "executable": false
+        },
+        "review": {
+          "status": "not_reviewed",
+          "reviewer": null,
+          "reviewed_at": null,
+          "scope_confirmed": null,
+          "condition_confirmed": null
+        }
+      },
+      {
+        "record": {
+          "id": "plan-0003364:minimum_rules:4",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/4",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "programs": [
+            {
+              "id": "s-regional",
+              "name": "강원인재전형",
+              "round": "수시",
+              "type": "교과"
+            }
+          ],
+          "recruit_units": [
+            {
+              "id": "unit-001",
+              "name": "유아교육과"
+            },
+            {
+              "id": "unit-002",
+              "name": "간호학과"
+            },
+            {
+              "id": "unit-003",
+              "name": "사회복지학과"
+            },
+            {
+              "id": "unit-004",
+              "name": "다문화학과"
+            },
+            {
+              "id": "unit-005",
+              "name": "디지털미디어커뮤니케이션학과"
+            },
+            {
+              "id": "unit-006",
+              "name": "AI콘텐츠공학과"
+            },
+            {
+              "id": "unit-010",
+              "name": "컴퓨터공학과"
+            },
+            {
+              "id": "unit-011",
+              "name": "기계융합공학부"
+            }
+          ],
+          "evidence_documents": [
+            {
+              "id": "kangwon-wonju-20260609",
+              "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "notice_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+              "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "status": 200,
+              "checked_at": "2026-11-22T15:20:08.610989+00:00",
+              "bytes": 1524736,
+              "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+              "kind": "hwp",
+              "local_path": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+              "extraction": {
+                "local_path": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+                "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+                "table_count": 89,
+                "text_count": 2591
+              }
+            }
+          ],
+          "has_source_sentence": false,
+          "original_rule": {
+            "id": "s-regional-minimum",
+            "program_ids": [
+              "s-regional"
+            ],
+            "unit_ids": [
+              "unit-001",
+              "unit-002",
+              "unit-003",
+              "unit-004",
+              "unit-005",
+              "unit-006",
+              "unit-010",
+              "unit-011"
+            ],
+            "status": "not_applied",
+            "expression": null,
+            "review_status": "draft",
+            "executable": false,
+            "evidence": {
+              "document_id": "kangwon-wonju-20260609",
+              "review_status": "draft"
+            }
+          },
+          "review_status": "draft",
+          "executable": false,
+          "checks": {
+            "references_valid": true,
+            "issues": []
+          }
+        },
+        "normalization": {
+          "id": "plan-0003364:minimum_rules:4",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/4",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "applicability": "not_required",
+          "applicability_signals": [
+            {
+              "path": "/status",
+              "value": false
+            }
+          ],
+          "category": "no_minimum_source_statement",
+          "condition_blocks": [],
+          "criterion_candidate": null,
+          "review_reasons": [],
+          "review_status": "draft",
+          "executable": false
+        },
+        "review": {
+          "status": "not_reviewed",
+          "reviewer": null,
+          "reviewed_at": null,
+          "scope_confirmed": null,
+          "condition_confirmed": null
+        }
+      },
+      {
+        "record": {
+          "id": "plan-0003364:minimum_rules:5",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/5",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "programs": [
+            {
+              "id": "s-regional-low",
+              "name": "저소득-강원인재전형",
+              "round": "수시",
+              "type": "교과"
+            }
+          ],
+          "recruit_units": [
+            {
+              "id": "unit-002",
+              "name": "간호학과"
+            }
+          ],
+          "evidence_documents": [
+            {
+              "id": "kangwon-wonju-20260609",
+              "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "notice_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+              "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "status": 200,
+              "checked_at": "2026-11-22T15:20:08.610989+00:00",
+              "bytes": 1524736,
+              "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+              "kind": "hwp",
+              "local_path": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+              "extraction": {
+                "local_path": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+                "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+                "table_count": 89,
+                "text_count": 2591
+              }
+            }
+          ],
+          "has_source_sentence": false,
+          "original_rule": {
+            "id": "s-regional-low-minimum",
+            "program_ids": [
+              "s-regional-low"
+            ],
+            "unit_ids": [
+              "unit-002"
+            ],
+            "status": "not_applied",
+            "expression": null,
+            "review_status": "draft",
+            "executable": false,
+            "evidence": {
+              "document_id": "kangwon-wonju-20260609",
+              "review_status": "draft"
+            }
+          },
+          "review_status": "draft",
+          "executable": false,
+          "checks": {
+            "references_valid": true,
+            "issues": []
+          }
+        },
+        "normalization": {
+          "id": "plan-0003364:minimum_rules:5",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/5",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "applicability": "not_required",
+          "applicability_signals": [
+            {
+              "path": "/status",
+              "value": false
+            }
+          ],
+          "category": "no_minimum_source_statement",
+          "condition_blocks": [],
+          "criterion_candidate": null,
+          "review_reasons": [],
+          "review_status": "draft",
+          "executable": false
+        },
+        "review": {
+          "status": "not_reviewed",
+          "reviewer": null,
+          "reviewed_at": null,
+          "scope_confirmed": null,
+          "condition_confirmed": null
+        }
+      },
+      {
+        "record": {
+          "id": "plan-0003364:minimum_rules:6",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/6",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "programs": [
+            {
+              "id": "s-rural",
+              "name": "농어촌학생전형",
+              "round": "수시",
+              "type": "교과"
+            }
+          ],
+          "recruit_units": [
+            {
+              "id": "unit-003",
+              "name": "사회복지학과"
+            },
+            {
+              "id": "unit-004",
+              "name": "다문화학과"
+            },
+            {
+              "id": "unit-006",
+              "name": "AI콘텐츠공학과"
+            },
+            {
+              "id": "unit-007",
+              "name": "전기공학과"
+            },
+            {
+              "id": "unit-008",
+              "name": "정보통신공학과"
+            },
+            {
+              "id": "unit-009",
+              "name": "산업경영공학과"
+            },
+            {
+              "id": "unit-010",
+              "name": "컴퓨터공학과"
+            },
+            {
+              "id": "unit-011",
+              "name": "기계융합공학부"
+            }
+          ],
+          "evidence_documents": [
+            {
+              "id": "kangwon-wonju-20260609",
+              "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "notice_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+              "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "status": 200,
+              "checked_at": "2026-11-22T15:20:08.610989+00:00",
+              "bytes": 1524736,
+              "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+              "kind": "hwp",
+              "local_path": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+              "extraction": {
+                "local_path": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+                "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+                "table_count": 89,
+                "text_count": 2591
+              }
+            }
+          ],
+          "has_source_sentence": false,
+          "original_rule": {
+            "id": "s-rural-minimum",
+            "program_ids": [
+              "s-rural"
+            ],
+            "unit_ids": [
+              "unit-003",
+              "unit-004",
+              "unit-006",
+              "unit-007",
+              "unit-008",
+              "unit-009",
+              "unit-010",
+              "unit-011"
+            ],
+            "status": "not_applied",
+            "expression": null,
+            "review_status": "draft",
+            "executable": false,
+            "evidence": {
+              "document_id": "kangwon-wonju-20260609",
+              "review_status": "draft"
+            }
+          },
+          "review_status": "draft",
+          "executable": false,
+          "checks": {
+            "references_valid": true,
+            "issues": []
+          }
+        },
+        "normalization": {
+          "id": "plan-0003364:minimum_rules:6",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/6",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "applicability": "not_required",
+          "applicability_signals": [
+            {
+              "path": "/status",
+              "value": false
+            }
+          ],
+          "category": "no_minimum_source_statement",
+          "condition_blocks": [],
+          "criterion_candidate": null,
+          "review_reasons": [],
+          "review_status": "draft",
+          "executable": false
+        },
+        "review": {
+          "status": "not_reviewed",
+          "reviewer": null,
+          "reviewed_at": null,
+          "scope_confirmed": null,
+          "condition_confirmed": null
+        }
+      },
+      {
+        "record": {
+          "id": "plan-0003364:minimum_rules:7",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/7",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "programs": [
+            {
+              "id": "s-vocational",
+              "name": "특성화고교졸업자전형",
+              "round": "수시",
+              "type": "교과"
+            }
+          ],
+          "recruit_units": [
+            {
+              "id": "unit-006",
+              "name": "AI콘텐츠공학과"
+            },
+            {
+              "id": "unit-007",
+              "name": "전기공학과"
+            },
+            {
+              "id": "unit-008",
+              "name": "정보통신공학과"
+            },
+            {
+              "id": "unit-009",
+              "name": "산업경영공학과"
+            },
+            {
+              "id": "unit-010",
+              "name": "컴퓨터공학과"
+            },
+            {
+              "id": "unit-011",
+              "name": "기계융합공학부"
+            }
+          ],
+          "evidence_documents": [
+            {
+              "id": "kangwon-wonju-20260609",
+              "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "notice_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+              "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "status": 200,
+              "checked_at": "2026-11-22T15:20:08.610989+00:00",
+              "bytes": 1524736,
+              "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+              "kind": "hwp",
+              "local_path": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+              "extraction": {
+                "local_path": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+                "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+                "table_count": 89,
+                "text_count": 2591
+              }
+            }
+          ],
+          "has_source_sentence": false,
+          "original_rule": {
+            "id": "s-vocational-minimum",
+            "program_ids": [
+              "s-vocational"
+            ],
+            "unit_ids": [
+              "unit-006",
+              "unit-007",
+              "unit-008",
+              "unit-009",
+              "unit-010",
+              "unit-011"
+            ],
+            "status": "not_applied",
+            "expression": null,
+            "review_status": "draft",
+            "executable": false,
+            "evidence": {
+              "document_id": "kangwon-wonju-20260609",
+              "review_status": "draft"
+            }
+          },
+          "review_status": "draft",
+          "executable": false,
+          "checks": {
+            "references_valid": true,
+            "issues": []
+          }
+        },
+        "normalization": {
+          "id": "plan-0003364:minimum_rules:7",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/7",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "applicability": "not_required",
+          "applicability_signals": [
+            {
+              "path": "/status",
+              "value": false
+            }
+          ],
+          "category": "no_minimum_source_statement",
+          "condition_blocks": [],
+          "criterion_candidate": null,
+          "review_reasons": [],
+          "review_status": "draft",
+          "executable": false
+        },
+        "review": {
+          "status": "not_reviewed",
+          "reviewer": null,
+          "reviewed_at": null,
+          "scope_confirmed": null,
+          "condition_confirmed": null
+        }
+      },
+      {
+        "record": {
+          "id": "plan-0003364:minimum_rules:8",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/8",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "programs": [
+            {
+              "id": "s-low",
+              "name": "저소득전형",
+              "round": "수시",
+              "type": "교과"
+            }
+          ],
+          "recruit_units": [
+            {
+              "id": "unit-002",
+              "name": "간호학과"
+            },
+            {
+              "id": "unit-006",
+              "name": "AI콘텐츠공학과"
+            },
+            {
+              "id": "unit-007",
+              "name": "전기공학과"
+            },
+            {
+              "id": "unit-008",
+              "name": "정보통신공학과"
+            },
+            {
+              "id": "unit-009",
+              "name": "산업경영공학과"
+            },
+            {
+              "id": "unit-010",
+              "name": "컴퓨터공학과"
+            },
+            {
+              "id": "unit-011",
+              "name": "기계융합공학부"
+            }
+          ],
+          "evidence_documents": [
+            {
+              "id": "kangwon-wonju-20260609",
+              "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "notice_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+              "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "status": 200,
+              "checked_at": "2026-11-22T15:20:08.610989+00:00",
+              "bytes": 1524736,
+              "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+              "kind": "hwp",
+              "local_path": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+              "extraction": {
+                "local_path": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+                "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+                "table_count": 89,
+                "text_count": 2591
+              }
+            }
+          ],
+          "has_source_sentence": false,
+          "original_rule": {
+            "id": "s-low-minimum",
+            "program_ids": [
+              "s-low"
+            ],
+            "unit_ids": [
+              "unit-002",
+              "unit-006",
+              "unit-007",
+              "unit-008",
+              "unit-009",
+              "unit-010",
+              "unit-011"
+            ],
+            "status": "not_applied",
+            "expression": null,
+            "review_status": "draft",
+            "executable": false,
+            "evidence": {
+              "document_id": "kangwon-wonju-20260609",
+              "review_status": "draft"
+            }
+          },
+          "review_status": "draft",
+          "executable": false,
+          "checks": {
+            "references_valid": true,
+            "issues": []
+          }
+        },
+        "normalization": {
+          "id": "plan-0003364:minimum_rules:8",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/8",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "applicability": "not_required",
+          "applicability_signals": [
+            {
+              "path": "/status",
+              "value": false
+            }
+          ],
+          "category": "no_minimum_source_statement",
+          "condition_blocks": [],
+          "criterion_candidate": null,
+          "review_reasons": [],
+          "review_status": "draft",
+          "executable": false
+        },
+        "review": {
+          "status": "not_reviewed",
+          "reviewer": null,
+          "reviewed_at": null,
+          "scope_confirmed": null,
+          "condition_confirmed": null
+        }
+      },
+      {
+        "record": {
+          "id": "plan-0003364:minimum_rules:9",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/9",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "programs": [
+            {
+              "id": "s-disability",
+              "name": "특수교육대상자전형",
+              "round": "수시",
+              "type": "교과"
+            }
+          ],
+          "recruit_units": [
+            {
+              "id": "unit-003",
+              "name": "사회복지학과"
+            },
+            {
+              "id": "unit-004",
+              "name": "다문화학과"
+            },
+            {
+              "id": "unit-006",
+              "name": "AI콘텐츠공학과"
+            },
+            {
+              "id": "unit-007",
+              "name": "전기공학과"
+            },
+            {
+              "id": "unit-008",
+              "name": "정보통신공학과"
+            },
+            {
+              "id": "unit-009",
+              "name": "산업경영공학과"
+            },
+            {
+              "id": "unit-010",
+              "name": "컴퓨터공학과"
+            },
+            {
+              "id": "unit-011",
+              "name": "기계융합공학부"
+            }
+          ],
+          "evidence_documents": [
+            {
+              "id": "kangwon-wonju-20260609",
+              "url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "notice_url": "https://admission.kangwon.ac.kr/admission/bbs/1165/detail.do?pstSn=1873",
+              "final_url": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=202606091525191806uq.hwp&path=/DATA/bbs/373&fn=4.%20%EF%BC%88%EC%9B%90%EC%A3%BC%EC%BA%A0%ED%8D%BC%EC%8A%A4%EF%BC%89%202028%ED%95%99%EB%85%84%EB%8F%84%20%EB%8C%80%ED%95%99%EC%9E%85%ED%95%99%EC%A0%84%ED%98%95%EC%8B%9C%ED%96%89%EA%B3%84%ED%9A%8D%20%EB%B0%8F%20%EB%AA%A8%EC%A7%91%EC%9D%B8%EC%9B%90.hwp",
+              "status": 200,
+              "checked_at": "2026-11-22T15:20:08.610989+00:00",
+              "bytes": 1524736,
+              "sha256": "cb67852f4732db03fe8321c2ec284e68266763e2345004c2e4a259a009fa9234",
+              "kind": "hwp",
+              "local_path": "work/_data/admission-plans/sources/kangwon-wonju-20260609.hwp",
+              "extraction": {
+                "local_path": "work/_data/admission-plans/structured/evidence/kangwon-wonju-20260609.content.json",
+                "sha256": "36dd0f4c1f2b57426cc7eaf1c12dae85a6531d3cd3590c2bcbb4889039c6df27",
+                "table_count": 89,
+                "text_count": 2591
+              }
+            }
+          ],
+          "has_source_sentence": false,
+          "original_rule": {
+            "id": "s-disability-minimum",
+            "program_ids": [
+              "s-disability"
+            ],
+            "unit_ids": [
+              "unit-003",
+              "unit-004",
+              "unit-006",
+              "unit-007",
+              "unit-008",
+              "unit-009",
+              "unit-010",
+              "unit-011"
+            ],
+            "status": "not_applied",
+            "expression": null,
+            "review_status": "draft",
+            "executable": false,
+            "evidence": {
+              "document_id": "kangwon-wonju-20260609",
+              "review_status": "draft"
+            }
+          },
+          "review_status": "draft",
+          "executable": false,
+          "checks": {
+            "references_valid": true,
+            "issues": []
+          }
+        },
+        "normalization": {
+          "id": "plan-0003364:minimum_rules:9",
+          "package_id": "plan-0003364",
+          "university": "강원대학교",
+          "campus": "제4캠퍼스",
+          "admission_year": 2028,
+          "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+          "source_pointer": "/minimum_rules/9",
+          "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+          "applicability": "not_required",
+          "applicability_signals": [
+            {
+              "path": "/status",
+              "value": false
+            }
+          ],
+          "category": "no_minimum_source_statement",
+          "condition_blocks": [],
+          "criterion_candidate": null,
+          "review_reasons": [],
+          "review_status": "draft",
+          "executable": false
+        },
+        "review": {
+          "status": "not_reviewed",
+          "reviewer": null,
+          "reviewed_at": null,
+          "scope_confirmed": null,
+          "condition_confirmed": null
+        }
+      }
+    ],
+    "scopes": [
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-future",
+        "program": "미래인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-001",
+        "unit": "유아교육과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:0"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-future",
+        "program": "미래인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-002",
+        "unit": "간호학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:0"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-future",
+        "program": "미래인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-003",
+        "unit": "사회복지학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:0"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-future",
+        "program": "미래인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-004",
+        "unit": "다문화학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:0"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-future",
+        "program": "미래인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-005",
+        "unit": "디지털미디어커뮤니케이션학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:0"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-future",
+        "program": "미래인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:0"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-future",
+        "program": "미래인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:0"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-future",
+        "program": "미래인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:0"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-future",
+        "program": "미래인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:0"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-future",
+        "program": "미래인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:0"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-future",
+        "program": "미래인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:0"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional-doc",
+        "program": "강원인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-001",
+        "unit": "유아교육과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:1"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional-doc",
+        "program": "강원인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-002",
+        "unit": "간호학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:1"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional-doc",
+        "program": "강원인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:1"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional-doc",
+        "program": "강원인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:1"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional-doc",
+        "program": "강원인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:1"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional-doc",
+        "program": "강원인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:1"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional-doc",
+        "program": "강원인재서류전형",
+        "round": "수시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:1"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-equity",
+        "program": "기회균형전형",
+        "round": "수시",
+        "unit_id": "unit-001",
+        "unit": "유아교육과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:2"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-equity",
+        "program": "기회균형전형",
+        "round": "수시",
+        "unit_id": "unit-002",
+        "unit": "간호학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:2"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-equity",
+        "program": "기회균형전형",
+        "round": "수시",
+        "unit_id": "unit-003",
+        "unit": "사회복지학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:2"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-equity",
+        "program": "기회균형전형",
+        "round": "수시",
+        "unit_id": "unit-004",
+        "unit": "다문화학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:2"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-equity",
+        "program": "기회균형전형",
+        "round": "수시",
+        "unit_id": "unit-005",
+        "unit": "디지털미디어커뮤니케이션학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:2"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-equity",
+        "program": "기회균형전형",
+        "round": "수시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:2"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-equity",
+        "program": "기회균형전형",
+        "round": "수시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:2"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-equity",
+        "program": "기회균형전형",
+        "round": "수시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:2"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-equity",
+        "program": "기회균형전형",
+        "round": "수시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:2"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-equity",
+        "program": "기회균형전형",
+        "round": "수시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:2"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-equity",
+        "program": "기회균형전형",
+        "round": "수시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:2"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-general",
+        "program": "일반전형",
+        "round": "수시",
+        "unit_id": "unit-001",
+        "unit": "유아교육과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:3"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-general",
+        "program": "일반전형",
+        "round": "수시",
+        "unit_id": "unit-002",
+        "unit": "간호학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:3"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-general",
+        "program": "일반전형",
+        "round": "수시",
+        "unit_id": "unit-003",
+        "unit": "사회복지학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:3"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-general",
+        "program": "일반전형",
+        "round": "수시",
+        "unit_id": "unit-004",
+        "unit": "다문화학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:3"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-general",
+        "program": "일반전형",
+        "round": "수시",
+        "unit_id": "unit-005",
+        "unit": "디지털미디어커뮤니케이션학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:3"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-general",
+        "program": "일반전형",
+        "round": "수시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:3"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-general",
+        "program": "일반전형",
+        "round": "수시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:3"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-general",
+        "program": "일반전형",
+        "round": "수시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:3"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-general",
+        "program": "일반전형",
+        "round": "수시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:3"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-general",
+        "program": "일반전형",
+        "round": "수시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:3"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-general",
+        "program": "일반전형",
+        "round": "수시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:3"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional",
+        "program": "강원인재전형",
+        "round": "수시",
+        "unit_id": "unit-001",
+        "unit": "유아교육과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:4"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional",
+        "program": "강원인재전형",
+        "round": "수시",
+        "unit_id": "unit-002",
+        "unit": "간호학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:4"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional",
+        "program": "강원인재전형",
+        "round": "수시",
+        "unit_id": "unit-003",
+        "unit": "사회복지학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:4"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional",
+        "program": "강원인재전형",
+        "round": "수시",
+        "unit_id": "unit-004",
+        "unit": "다문화학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:4"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional",
+        "program": "강원인재전형",
+        "round": "수시",
+        "unit_id": "unit-005",
+        "unit": "디지털미디어커뮤니케이션학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:4"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional",
+        "program": "강원인재전형",
+        "round": "수시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:4"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional",
+        "program": "강원인재전형",
+        "round": "수시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:4"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional",
+        "program": "강원인재전형",
+        "round": "수시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:4"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-regional-low",
+        "program": "저소득-강원인재전형",
+        "round": "수시",
+        "unit_id": "unit-002",
+        "unit": "간호학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:5"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-rural",
+        "program": "농어촌학생전형",
+        "round": "수시",
+        "unit_id": "unit-003",
+        "unit": "사회복지학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:6"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-rural",
+        "program": "농어촌학생전형",
+        "round": "수시",
+        "unit_id": "unit-004",
+        "unit": "다문화학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:6"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-rural",
+        "program": "농어촌학생전형",
+        "round": "수시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:6"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-rural",
+        "program": "농어촌학생전형",
+        "round": "수시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:6"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-rural",
+        "program": "농어촌학생전형",
+        "round": "수시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:6"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-rural",
+        "program": "농어촌학생전형",
+        "round": "수시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:6"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-rural",
+        "program": "농어촌학생전형",
+        "round": "수시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:6"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-rural",
+        "program": "농어촌학생전형",
+        "round": "수시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:6"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "수시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:7"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "수시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:7"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "수시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:7"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "수시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:7"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "수시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:7"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "수시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:7"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-low",
+        "program": "저소득전형",
+        "round": "수시",
+        "unit_id": "unit-002",
+        "unit": "간호학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:8"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-low",
+        "program": "저소득전형",
+        "round": "수시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:8"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-low",
+        "program": "저소득전형",
+        "round": "수시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:8"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-low",
+        "program": "저소득전형",
+        "round": "수시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:8"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-low",
+        "program": "저소득전형",
+        "round": "수시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:8"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-low",
+        "program": "저소득전형",
+        "round": "수시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:8"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-low",
+        "program": "저소득전형",
+        "round": "수시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:8"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-disability",
+        "program": "특수교육대상자전형",
+        "round": "수시",
+        "unit_id": "unit-003",
+        "unit": "사회복지학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:9"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-disability",
+        "program": "특수교육대상자전형",
+        "round": "수시",
+        "unit_id": "unit-004",
+        "unit": "다문화학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:9"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-disability",
+        "program": "특수교육대상자전형",
+        "round": "수시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:9"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-disability",
+        "program": "특수교육대상자전형",
+        "round": "수시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:9"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-disability",
+        "program": "특수교육대상자전형",
+        "round": "수시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:9"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-disability",
+        "program": "특수교육대상자전형",
+        "round": "수시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:9"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-disability",
+        "program": "특수교육대상자전형",
+        "round": "수시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:9"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "s-disability",
+        "program": "특수교육대상자전형",
+        "round": "수시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "classified",
+        "rule_ids": [
+          "plan-0003364:minimum_rules:9"
+        ],
+        "rule_categories": [
+          "no_minimum_source_statement"
+        ],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-001",
+        "unit": "유아교육과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-002",
+        "unit": "간호학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-003",
+        "unit": "사회복지학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-004",
+        "unit": "다문화학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-005",
+        "unit": "디지털미디어커뮤니케이션학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-general",
+        "program": "일반전형",
+        "round": "정시",
+        "unit_id": "unit-free",
+        "unit": "자유전공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-regional",
+        "program": "강원인재전형",
+        "round": "정시",
+        "unit_id": "unit-002",
+        "unit": "간호학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-regional-low",
+        "program": "저소득-강원인재전형",
+        "round": "정시",
+        "unit_id": "unit-002",
+        "unit": "간호학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-rural",
+        "program": "농어촌학생전형",
+        "round": "정시",
+        "unit_id": "unit-003",
+        "unit": "사회복지학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-rural",
+        "program": "농어촌학생전형",
+        "round": "정시",
+        "unit_id": "unit-004",
+        "unit": "다문화학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-rural",
+        "program": "농어촌학생전형",
+        "round": "정시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-rural",
+        "program": "농어촌학생전형",
+        "round": "정시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-rural",
+        "program": "농어촌학생전형",
+        "round": "정시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-rural",
+        "program": "농어촌학생전형",
+        "round": "정시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-rural",
+        "program": "농어촌학생전형",
+        "round": "정시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-rural",
+        "program": "농어촌학생전형",
+        "round": "정시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-rural",
+        "program": "농어촌학생전형",
+        "round": "정시",
+        "unit_id": "unit-free",
+        "unit": "자유전공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-low",
+        "program": "저소득전형",
+        "round": "정시",
+        "unit_id": "unit-002",
+        "unit": "간호학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-low",
+        "program": "저소득전형",
+        "round": "정시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-low",
+        "program": "저소득전형",
+        "round": "정시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-low",
+        "program": "저소득전형",
+        "round": "정시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-low",
+        "program": "저소득전형",
+        "round": "정시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-low",
+        "program": "저소득전형",
+        "round": "정시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-low",
+        "program": "저소득전형",
+        "round": "정시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "정시",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "정시",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "정시",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "정시",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "정시",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "j-vocational",
+        "program": "특성화고교졸업자전형",
+        "round": "정시",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "unclassified",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "f-foreign",
+        "program": "부모가 모두 외국인인 외국인",
+        "round": "자율화",
+        "unit_id": "unit-003",
+        "unit": "사회복지학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "explicit_pending",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [
+          {
+            "source_pointer": "/minimum_scope_pending/0",
+            "original": {
+              "program_id": "f-foreign",
+              "unit_id": "unit-003",
+              "reason": "not_stated_in_foreign_section"
+            }
+          }
+        ],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "f-foreign",
+        "program": "부모가 모두 외국인인 외국인",
+        "round": "자율화",
+        "unit_id": "unit-004",
+        "unit": "다문화학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "explicit_pending",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [
+          {
+            "source_pointer": "/minimum_scope_pending/1",
+            "original": {
+              "program_id": "f-foreign",
+              "unit_id": "unit-004",
+              "reason": "not_stated_in_foreign_section"
+            }
+          }
+        ],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "f-foreign",
+        "program": "부모가 모두 외국인인 외국인",
+        "round": "자율화",
+        "unit_id": "unit-005",
+        "unit": "디지털미디어커뮤니케이션학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "explicit_pending",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [
+          {
+            "source_pointer": "/minimum_scope_pending/2",
+            "original": {
+              "program_id": "f-foreign",
+              "unit_id": "unit-005",
+              "reason": "not_stated_in_foreign_section"
+            }
+          }
+        ],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "f-foreign",
+        "program": "부모가 모두 외국인인 외국인",
+        "round": "자율화",
+        "unit_id": "unit-006",
+        "unit": "AI콘텐츠공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "explicit_pending",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [
+          {
+            "source_pointer": "/minimum_scope_pending/3",
+            "original": {
+              "program_id": "f-foreign",
+              "unit_id": "unit-006",
+              "reason": "not_stated_in_foreign_section"
+            }
+          }
+        ],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "f-foreign",
+        "program": "부모가 모두 외국인인 외국인",
+        "round": "자율화",
+        "unit_id": "unit-007",
+        "unit": "전기공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "explicit_pending",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [
+          {
+            "source_pointer": "/minimum_scope_pending/4",
+            "original": {
+              "program_id": "f-foreign",
+              "unit_id": "unit-007",
+              "reason": "not_stated_in_foreign_section"
+            }
+          }
+        ],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "f-foreign",
+        "program": "부모가 모두 외국인인 외국인",
+        "round": "자율화",
+        "unit_id": "unit-008",
+        "unit": "정보통신공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "explicit_pending",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [
+          {
+            "source_pointer": "/minimum_scope_pending/5",
+            "original": {
+              "program_id": "f-foreign",
+              "unit_id": "unit-008",
+              "reason": "not_stated_in_foreign_section"
+            }
+          }
+        ],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "f-foreign",
+        "program": "부모가 모두 외국인인 외국인",
+        "round": "자율화",
+        "unit_id": "unit-009",
+        "unit": "산업경영공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "explicit_pending",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [
+          {
+            "source_pointer": "/minimum_scope_pending/6",
+            "original": {
+              "program_id": "f-foreign",
+              "unit_id": "unit-009",
+              "reason": "not_stated_in_foreign_section"
+            }
+          }
+        ],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "f-foreign",
+        "program": "부모가 모두 외국인인 외국인",
+        "round": "자율화",
+        "unit_id": "unit-010",
+        "unit": "컴퓨터공학과",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "explicit_pending",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [
+          {
+            "source_pointer": "/minimum_scope_pending/7",
+            "original": {
+              "program_id": "f-foreign",
+              "unit_id": "unit-010",
+              "reason": "not_stated_in_foreign_section"
+            }
+          }
+        ],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "f-foreign",
+        "program": "부모가 모두 외국인인 외국인",
+        "round": "자율화",
+        "unit_id": "unit-011",
+        "unit": "기계융합공학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "explicit_pending",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [
+          {
+            "source_pointer": "/minimum_scope_pending/8",
+            "original": {
+              "program_id": "f-foreign",
+              "unit_id": "unit-011",
+              "reason": "not_stated_in_foreign_section"
+            }
+          }
+        ],
+        "review_status": "draft",
+        "executable": false
+      },
+      {
+        "package_id": "plan-0003364",
+        "university": "강원대학교",
+        "campus": "제4캠퍼스",
+        "admission_year": 2028,
+        "program_id": "f-foreign",
+        "program": "부모가 모두 외국인인 외국인",
+        "round": "자율화",
+        "unit_id": "unit-global",
+        "unit": "글로벌융합학부",
+        "source_file": "work/_data/admission-plans/structured/universities/plan-0003364.json",
+        "source_sha256": "f951236ead9c642b3528e4f30de559fea8f37fb68b87fae455270f4ffd53157c",
+        "scope_status": "explicit_pending",
+        "rule_ids": [],
+        "rule_categories": [],
+        "pending": [
+          {
+            "source_pointer": "/minimum_scope_pending/9",
+            "original": {
+              "program_id": "f-foreign",
+              "unit_id": "unit-global",
+              "reason": "not_stated_in_foreign_section"
+            }
+          }
+        ],
+        "review_status": "draft",
+        "executable": false
+      }
+    ]
+  },
+  "scoring": {
+    "source_pointer": "/scoring_rules_draft",
+    "original": {
+      "review_status": "draft",
+      "executable": false,
+      "program_ids": [
+        "s-general",
+        "s-regional",
+        "s-regional-low",
+        "s-rural",
+        "s-vocational",
+        "s-low",
+        "s-disability",
+        "j-vocational"
+      ],
+      "semesters": {
+        "수시": "1-1 through 3-1 including graduates",
+        "정시": "1-1 through 3-2"
+      },
+      "year_weighting": "none",
+      "subject_groups": [
+        "국어",
+        "영어",
+        "수학",
+        "사회",
+        "과학"
+      ],
+      "course_types": [
+        "공통",
+        "일반선택",
+        "진로선택",
+        "융합선택"
+      ],
+      "selection": "all_completed_ranked_courses",
+      "formula": "credit_weighted_mean(rank_points) + credit_weighted_mean(achievement_points)",
+      "maximum": 1000,
+      "minimum": 500,
+      "declared_effective_ratio": [
+        80,
+        20
+      ],
+      "do_not_multiply_points_by_ratio_again": true,
+      "rounding": "not_stated",
+      "curriculum_2022": {
+        "rank_points": [
+          500,
+          470,
+          430,
+          380,
+          100
+        ],
+        "achievement_points": {
+          "A": 500,
+          "B": 481,
+          "C": 461,
+          "D": 441,
+          "E": 400
+        },
+        "evidence": {
+          "document_id": "kangwon-wonju-20260609",
+          "review_status": "draft",
+          "hwp_table_index": 69
+        }
+      },
+      "earlier_curricula": {
+        "rank_points": [
+          500,
+          500,
+          470,
+          455,
+          430,
+          395,
+          380,
+          100,
+          100
+        ],
+        "achievement_points_from_rank": [
+          500,
+          500,
+          481,
+          471,
+          461,
+          451,
+          441,
+          400,
+          400
+        ],
+        "2015_ABC_career_courses_excluded": true,
+        "evidence": {
+          "document_id": "kangwon-wonju-20260609",
+          "review_status": "draft",
+          "hwp_table_index": 71
+        }
+      },
+      "foreign_or_unranked": {
+        "letter_groups": [
+          [
+            "A",
+            "A+",
+            "A-"
+          ],
+          [
+            "B",
+            "B+",
+            "B-"
+          ],
+          [
+            "C",
+            "C+",
+            "C-"
+          ],
+          [
+            "D",
+            "D+",
+            "D-"
+          ],
+          [
+            "E"
+          ]
+        ],
+        "verbal_groups": [
+          "수",
+          "우",
+          "미",
+          "양",
+          "가"
+        ],
+        "score_bands": [
+          {
+            "min_inclusive": 90,
+            "max_inclusive": 100
+          },
+          {
+            "min_inclusive": 80,
+            "max_exclusive": 90
+          },
+          {
+            "min_inclusive": 70,
+            "max_exclusive": 80
+          },
+          {
+            "min_inclusive": 60,
+            "max_exclusive": 70
+          },
+          {
+            "max_exclusive": 60
+          }
+        ],
+        "rank_points": [
+          500,
+          470,
+          430,
+          380,
+          100
+        ],
+        "achievement_points": [
+          500,
+          481,
+          461,
+          441,
+          400
+        ],
+        "foreign_course_selection": "all_completed_courses",
+        "evidence": {
+          "document_id": "kangwon-wonju-20260609",
+          "review_status": "draft",
+          "hwp_table_index": 73
+        }
+      },
+      "unranked_professional_courses": {
+        "program_ids": [
+          "s-vocational",
+          "j-vocational"
+        ],
+        "formula": "(score-mean)/standard_deviation",
+        "z_round_decimal_places": 2,
+        "z_clamp": [
+          -3,
+          3
+        ],
+        "zero_standard_deviation": "not_stated",
+        "bands_raw": [
+          "1.29이상",
+          "1.29미만 ~ 0.41이상",
+          "0.41미만 ~ -0.41이상",
+          "-0.41미만 ~ -1..29이상",
+          "-1.29미만"
+        ],
+        "band4_typo_unresolved": true,
+        "evidence": {
+          "document_id": "kangwon-wonju-20260609",
+          "review_status": "draft",
+          "hwp_table_index": 74
+        }
+      },
+      "ged": {
+        "subject_weights": {
+          "국어": 3,
+          "영어": 3,
+          "수학": 3,
+          "사회": 2,
+          "과학": 2,
+          "한국사": 2
+        },
+        "bands": [
+          {
+            "equals": 100
+          },
+          {
+            "min_inclusive": 95,
+            "max_exclusive": 100
+          },
+          {
+            "min_inclusive": 90,
+            "max_exclusive": 95
+          },
+          {
+            "min_inclusive": 85,
+            "max_exclusive": 90
+          },
+          {
+            "min_inclusive": 80,
+            "max_exclusive": 85
+          },
+          {
+            "min_inclusive": 75,
+            "max_exclusive": 80
+          },
+          {
+            "min_inclusive": 70,
+            "max_exclusive": 75
+          },
+          {
+            "max_exclusive": 70
+          }
+        ],
+        "rank_points": [
+          472,
+          468,
+          460,
+          448,
+          432,
+          422,
+          390,
+          100
+        ],
+        "achievement_points": [
+          472,
+          470,
+          466,
+          460,
+          452,
+          442,
+          430,
+          300
+        ],
+        "evidence": {
+          "document_id": "kangwon-wonju-20260609",
+          "review_status": "draft",
+          "hwp_table_index": 76
+        }
+      },
+      "evidence": {
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 65
+      },
+      "visual_reference": {
+        "document_id": "kangwon-wonju-20260430",
+        "pdf_pages": [
+          20,
+          21,
+          22
+        ],
+        "printed_pages": [
+          "17",
+          "18",
+          "19"
+        ],
+        "review_status": "draft"
+      }
+    },
+    "evidence": [
+      {
+        "source_pointer": "/scoring_rules_draft/evidence",
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 65
+      },
+      {
+        "source_pointer": "/scoring_rules_draft/curriculum_2022/evidence",
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 69
+      },
+      {
+        "source_pointer": "/scoring_rules_draft/earlier_curricula/evidence",
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 71
+      },
+      {
+        "source_pointer": "/scoring_rules_draft/foreign_or_unranked/evidence",
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 73
+      },
+      {
+        "source_pointer": "/scoring_rules_draft/unranked_professional_courses/evidence",
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 74
+      },
+      {
+        "source_pointer": "/scoring_rules_draft/ged/evidence",
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 76
+      }
+    ],
+    "engine_contract": "app/src/engine/scoring.ts#ScoringRule",
+    "release_blockers": [
+      "원문 최신 공지와 변경 공지 대조",
+      "대학·캠퍼스·학년도·전형·모집단위별 적용 범위 확인",
+      "작성자와 다른 검수자의 승인 기록 필요",
+      "공식 예시 또는 수작업으로 독립 산출한 기대값 3개 이상과 경계 사례 필요"
+    ],
+    "review": {
+      "author": null,
+      "reviewer": null,
+      "approved_at": null,
+      "tests": []
+    }
+  },
+  "source_issues": [
+    {
+      "id": "W01",
+      "kind": "source_version_difference",
+      "field": "source_versions",
+      "detail": "4월PDF/어디가와 공식HWP의 출결 문구 및 변경 전 교과·동점자 표가 다름. 공식HWP를 작업본으로 사용."
+    },
+    {
+      "id": "W02",
+      "kind": "source_conflict",
+      "field": "rural_disability_evaluation",
+      "detail": "정량80%+정성20%와 배점1000+200=1200 동시 표기. 배점에 비율을 다시 곱하는 계산 금지.",
+      "evidence": {
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 42
+      }
+    },
+    {
+      "id": "W03",
+      "kind": "source_ambiguity",
+      "field": "z_score_and_rounding",
+      "detail": "전문교과 Z점수4등급 하한 -1..29 원문 오기 보존. 분산0·최종 반올림·미이수/누락과목 처리 미기재.",
+      "evidence": {
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 74
+      }
+    },
+    {
+      "id": "W04",
+      "kind": "scope_review",
+      "field": "free_major_carryover",
+      "detail": "자유전공학부는 정시 일반/농어촌 이월표에만 등장. 수시 원 모집단위·이월 경로 미확인.",
+      "evidence": {
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 88,
+        "row_index": 17,
+        "column_index": 0
+      }
+    },
+    {
+      "id": "W05",
+      "kind": "pending_mapping",
+      "field": "historical_results",
+      "detail": "통합 전 강릉원주대 원주캠퍼스 입결과 대학·학과·전형 개편 관계 검수 필요."
+    },
+    {
+      "id": "W06",
+      "kind": "pending_publication",
+      "field": "schedule",
+      "detail": "정확한 접수·서류·평가·발표·등록 일정은 미기재."
+    },
+    {
+      "id": "W07",
+      "kind": "source_gap",
+      "field": "csat_scope",
+      "detail": "자연과학·공학계열 가산점 적용 학과 범위, 가산 후 상한 및 미응시 처리 확인 대기. 단과대 명칭만으로 간호 등의 계열 추정 금지.",
+      "evidence": {
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 78
+      }
+    },
+    {
+      "id": "W08",
+      "kind": "source_gap",
+      "field": "attendance_cap",
+      "detail": "출결+3점으로 교과1000점 초과 시 상한 미기재. 공식HWP의 3회미만 결석0일 문구와 4월PDF의 0점 문구 차이 보존.",
+      "evidence": {
+        "document_id": "kangwon-wonju-20260609",
+        "review_status": "draft",
+        "hwp_table_index": 77
+      }
+    },
+    {
+      "id": "W09",
+      "kind": "source_gap",
+      "field": "eligibility_details",
+      "detail": "농어촌 가족관계 예외, 지역인재 코호트별 세부 지역, 외국인 어학 조건은 추후 모집요강 확인."
+    },
+    {
+      "id": "W10",
+      "kind": "scope_review",
+      "field": "starred_unit_identity",
+      "detail": "사회복지·컴퓨터·기계융합의 별표 표시는 보존. 통합대학 학사구조 개편 및 과거 동일명 학과와의 연결 검수 전."
+    }
+  ]
+}

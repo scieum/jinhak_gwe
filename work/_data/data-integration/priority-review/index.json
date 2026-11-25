@@ -1,0 +1,195 @@
+{
+  "format": "unavi-priority-review-index",
+  "version": 1,
+  "review_status": "draft",
+  "executable": false,
+  "entries": [
+    {
+      "package_id": "plan-0000003",
+      "university": "강원대학교",
+      "campus": "춘천",
+      "admission_year": 2028,
+      "file": "plan-0000003.json",
+      "minimum_rules": 587,
+      "scope_pairs": 783,
+      "scope_statuses": {
+        "classified": 587,
+        "explicit_pending": 2,
+        "unclassified": 194
+      },
+      "categories": {
+        "needs_condition_review": 192,
+        "no_minimum_source_statement": 395
+      },
+      "local_files_checked": 1,
+      "engine_support": "requires_extension",
+      "scoring_role": "not_classified",
+      "release_blockers": [
+        "원문 최신 공지와 변경 공지 대조",
+        "대학·캠퍼스·학년도·전형·모집단위별 적용 범위 확인",
+        "작성자와 다른 검수자의 승인 기록 필요",
+        "원본 환산 방식에 맞는 계산 엔진 확장 필요",
+        "공식 예시 또는 수작업으로 독립 산출한 기대값 3개 이상과 경계 사례 필요"
+      ]
+    },
+    {
+      "package_id": "plan-0000004",
+      "university": "강원대학교",
+      "campus": "삼척·도계",
+      "admission_year": 2028,
+      "file": "plan-0000004.json",
+      "minimum_rules": 13,
+      "scope_pairs": 287,
+      "scope_statuses": {
+        "classified": 205,
+        "unclassified": 82
+      },
+      "categories": {
+        "no_minimum_source_statement": 13
+      },
+      "local_files_checked": 1,
+      "engine_support": "requires_extension",
+      "scoring_role": "not_classified",
+      "release_blockers": [
+        "원문 최신 공지와 변경 공지 대조",
+        "대학·캠퍼스·학년도·전형·모집단위별 적용 범위 확인",
+        "작성자와 다른 검수자의 승인 기록 필요",
+        "원본 환산 방식에 맞는 계산 엔진 확장 필요",
+        "공식 예시 또는 수작업으로 독립 산출한 기대값 3개 이상과 경계 사례 필요"
+      ]
+    },
+    {
+      "package_id": "plan-0003363",
+      "university": "강원대학교",
+      "campus": "제3캠퍼스",
+      "admission_year": 2028,
+      "file": "plan-0003363.json",
+      "minimum_rules": 26,
+      "scope_pairs": 391,
+      "scope_statuses": {
+        "classified": 358,
+        "explicit_pending": 33
+      },
+      "categories": {
+        "no_minimum_source_statement": 20,
+        "needs_condition_review": 6
+      },
+      "local_files_checked": 2,
+      "engine_support": "not_classified",
+      "scoring_role": "not_classified",
+      "release_blockers": [
+        "원문 최신 공지와 변경 공지 대조",
+        "대학·캠퍼스·학년도·전형·모집단위별 적용 범위 확인",
+        "작성자와 다른 검수자의 승인 기록 필요",
+        "공식 예시 또는 수작업으로 독립 산출한 기대값 3개 이상과 경계 사례 필요"
+      ]
+    },
+    {
+      "package_id": "plan-0003364",
+      "university": "강원대학교",
+      "campus": "제4캠퍼스",
+      "admission_year": 2028,
+      "file": "plan-0003364.json",
+      "minimum_rules": 10,
+      "scope_pairs": 124,
+      "scope_statuses": {
+        "classified": 78,
+        "unclassified": 36,
+        "explicit_pending": 10
+      },
+      "categories": {
+        "no_minimum_source_statement": 10
+      },
+      "local_files_checked": 2,
+      "engine_support": "not_classified",
+      "scoring_role": "not_classified",
+      "release_blockers": [
+        "원문 최신 공지와 변경 공지 대조",
+        "대학·캠퍼스·학년도·전형·모집단위별 적용 범위 확인",
+        "작성자와 다른 검수자의 승인 기록 필요",
+        "공식 예시 또는 수작업으로 독립 산출한 기대값 3개 이상과 경계 사례 필요"
+      ]
+    },
+    {
+      "package_id": "plan-0000198",
+      "university": "한림대학교",
+      "campus": "본교",
+      "admission_year": 2028,
+      "file": "plan-0000198.json",
+      "minimum_rules": 21,
+      "scope_pairs": 331,
+      "scope_statuses": {
+        "classified": 255,
+        "unclassified": 76
+      },
+      "categories": {
+        "needs_condition_review": 3,
+        "no_minimum_source_statement": 18
+      },
+      "local_files_checked": 1,
+      "engine_support": "requires_extension",
+      "scoring_role": "not_classified",
+      "release_blockers": [
+        "원문 최신 공지와 변경 공지 대조",
+        "대학·캠퍼스·학년도·전형·모집단위별 적용 범위 확인",
+        "작성자와 다른 검수자의 승인 기록 필요",
+        "원본 환산 방식에 맞는 계산 엔진 확장 필요",
+        "공식 예시 또는 수작업으로 독립 산출한 기대값 3개 이상과 경계 사례 필요"
+      ]
+    },
+    {
+      "package_id": "plan-0000072",
+      "university": "가톨릭관동대학교",
+      "campus": "본교",
+      "admission_year": 2028,
+      "file": "plan-0000072.json",
+      "minimum_rules": 183,
+      "scope_pairs": 336,
+      "scope_statuses": {
+        "classified": 183,
+        "unclassified": 153
+      },
+      "categories": {
+        "needs_condition_review": 19,
+        "no_minimum_source_statement": 164
+      },
+      "local_files_checked": 1,
+      "engine_support": "requires_extension",
+      "scoring_role": "not_classified",
+      "release_blockers": [
+        "원문 최신 공지와 변경 공지 대조",
+        "대학·캠퍼스·학년도·전형·모집단위별 적용 범위 확인",
+        "작성자와 다른 검수자의 승인 기록 필요",
+        "원본 환산 방식에 맞는 계산 엔진 확장 필요",
+        "공식 예시 또는 수작업으로 독립 산출한 기대값 3개 이상과 경계 사례 필요"
+      ]
+    },
+    {
+      "package_id": "plan-0000031",
+      "university": "한국교원대학교",
+      "campus": "본교",
+      "admission_year": 2028,
+      "file": "plan-0000031.json",
+      "minimum_rules": 102,
+      "scope_pairs": 148,
+      "scope_statuses": {
+        "classified": 102,
+        "unclassified": 46
+      },
+      "categories": {
+        "needs_condition_review": 37,
+        "no_minimum_source_statement": 65
+      },
+      "local_files_checked": 1,
+      "engine_support": "not_classified",
+      "scoring_role": "susi_tiebreak_only",
+      "release_blockers": [
+        "원문 최신 공지와 변경 공지 대조",
+        "대학·캠퍼스·학년도·전형·모집단위별 적용 범위 확인",
+        "작성자와 다른 검수자의 승인 기록 필요",
+        "교과 총점 산식이 아니라 동점자 처리 자료: 일반 환산 규칙으로 사용 금지",
+        "공식 예시 또는 수작업으로 독립 산출한 기대값 3개 이상과 경계 사례 필요"
+      ]
+    }
+  ]
+}
