@@ -28,7 +28,6 @@ work/_data/admission-plans/review-images/
 # 공개 저장소에 올리지 않는 수집 자료(2026-11-20 사용자 결정: 코드만 공개). 파일은 로컬에 그대로 있어요.
 work/_data/university-logos/
 work/_data/admission-plans/
-app/public/assets/universities/
 app/public/data/national-placement/
 app/public/data/univ-map.json
 app/public/data/susi-results/
