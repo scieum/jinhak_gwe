@@ -117,3 +117,11 @@
 /* 대학 없음(design.md empty-state: 가운데 정렬 · 선 아이콘 · heading-4 + body-sm + button-primary 하나) */
 .ud-missing { display: grid; justify-items: center; align-content: center; gap: var(--spacing-xs); min-height: 320px; padding: var(--spacing-xl) var(--spacing-lg); text-align: center; background: var(--color-canvas); border: 1px solid var(--color-hairline); }
 .ud-missing > .button-primary { margin-top: var(--spacing-sm); }
+
+/* 전형 표 열 너비 조절(2026-11-25 사용자 요청): 머리 칸 오른쪽 경계 손잡이. 낱말 중간에서 끊지 않아요. */
+.ud .ud-table--programs thead th { position: relative; }
+.ud .ud-table--programs td { word-break: keep-all; }
+.ud-col-resize { position: absolute; top: 8px; right: -4px; bottom: 8px; z-index: 1; width: 8px; cursor: col-resize; touch-action: none; }
+.ud-col-resize::after { content: ''; position: absolute; top: 0; bottom: 0; left: 3px; width: 2px; background: transparent; }
+.ud-col-resize:hover::after, .ud-col-resize:focus-visible::after { background: var(--color-ink); }
+.ud-col-resize:focus-visible { outline: none; }

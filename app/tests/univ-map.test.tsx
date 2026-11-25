@@ -43,6 +43,36 @@ const toGangwon = async () => { fireEvent.click(await screen.findByRole('button'
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); resetUnivMap(); });
 
 describe('대학 지도', () => {
+  it('휠로 커서 위치를 유지하며 확대·축소하고 배율 제한·초기화·지역 전환을 적용한다', async () => {
+    serve('ok', false); open();
+    const svg = await screen.findByRole('group', { name: /대한민국 시·도 지도/ });
+    vi.spyOn(svg, 'getBoundingClientRect').mockReturnValue({ left: 100, top: 50, width: 636, height: 540 } as DOMRect);
+    const view = () => svg.getAttribute('viewBox')!.split(' ').map(Number);
+    const original = view();
+    const point = () => {
+      const [x, y, w, h] = view(), scale = Math.min(636 / w, 540 / h);
+      return [x + (470 - (636 - w * scale) / 2) / scale, y + (180 - (540 - h * scale) / 2) / scale];
+    };
+    const anchor = point();
+    const wheel = new WheelEvent('wheel', { deltaY: -120, clientX: 570, clientY: 230, bubbles: true, cancelable: true });
+    fireEvent(svg, wheel);
+    expect(wheel.defaultPrevented).toBe(true);
+    expect(view()[2]).toBeLessThan(original[2]);
+    expect(point()[0]).toBeCloseTo(anchor[0], 8);
+    expect(point()[1]).toBeCloseTo(anchor[1], 8);
+    fireEvent.wheel(svg, { deltaY: 60, clientX: 570, clientY: 230, deltaMode: 1 });
+    expect(view()).toEqual(original);
+    for (let i = 0; i < 12; i++) fireEvent.wheel(svg, { deltaY: -200, clientX: 570, clientY: 230 });
+    expect(view()[2]).toBeCloseTo(original[2] / 12, 8);
+    expect((screen.getByRole('button', { name: '지도 확대' }) as HTMLButtonElement).disabled).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: '지도 배율 초기화' }));
+    expect(view()).toEqual(original);
+    fireEvent.click(screen.getByRole('button', { name: '지도 확대' }));
+    await toGangwon();
+    expect((screen.getByRole('button', { name: '지도 축소' }) as HTMLButtonElement).disabled).toBe(true);
+    expect(screen.getByRole('heading', { name: '강원특별자치도' })).toBeTruthy();
+  });
+
   it('전국 → 시·도 선택: 확대 · 묶음 핀 · 위치 확인 중 · 전국으로', async () => {
     serve(); open();
     expect(screen.getByText('대학 위치를 읽고 있어요.')).toBeTruthy();

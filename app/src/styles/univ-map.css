@@ -19,11 +19,19 @@
 .um-only { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-xs); }
 
 .um-stage { position: relative; }
+.um-zoom { position: absolute; right: 12px; bottom: 12px; z-index: 2; display: grid; background: var(--color-canvas); border: 1px solid var(--color-hairline); }
+.um-zoom button { width: 48px; min-height: 44px; padding: 0; border: 0; background: var(--color-canvas); color: var(--color-ink); font-size: 24px; cursor: pointer; }
+.um-zoom button + button { border-top: 1px solid var(--color-hairline); }
+.um-zoom button:hover:enabled { background: var(--color-canvas-soft); }
+.um-zoom button:disabled { color: var(--color-text-faint); cursor: default; }
+.um-zoom .um-zoom__reset { font-size: 12px; }
 .um-map { display: block; width: 100%; height: 540px; background: var(--color-canvas); }
 .um-sido { fill: var(--color-canvas-soft); stroke: var(--color-text-muted); stroke-width: 1px; cursor: pointer; outline: none; }
 .um-sido:hover { fill: var(--color-hairline); }
 .um-sido.is-around { fill: var(--color-canvas); stroke: var(--color-hairline); }
 .um-sido.is-selected { fill: var(--color-accent-soft); stroke: var(--color-accent); stroke-width: 1.5px; }
+.um-district { fill: transparent; stroke: var(--color-text-muted); stroke-opacity: .55; stroke-width: .8px; pointer-events: none; }
+.um-district-name { fill: var(--color-ink-soft); stroke: var(--color-canvas); paint-order: stroke; stroke-linejoin: round; font-weight: 500; pointer-events: none; }
 .um-sido:focus-visible, .um-pin:focus-visible .um-hit { stroke: var(--color-ink); stroke-width: 2px; }
 .um-marker { cursor: pointer; }
 .um-marker circle, .um-cluster circle:not(.um-hit) { fill: var(--color-ink); }

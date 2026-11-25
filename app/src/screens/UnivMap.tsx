@@ -9,6 +9,7 @@ import {
   type Campus, type Filters, type Kind,
 } from '../domain/univMap';
 import { BOUNDARY_SOURCE, project, SIDO_SHAPES, type Sido } from '../assets/map/sido';
+import { DISTRICT_DATE, DISTRICT_SOURCE, REGION_BOUNDARIES, districtLabels } from '../assets/map/districts';
 import { useUnivMap } from '../data/univMap';
 import { useSampleMode } from '../data/sample/mode';
 import { SAMPLE_UNIV_MAP_SOURCE, sampleUnivMap } from '../data/sample/univMap';
@@ -31,10 +32,13 @@ const LEAD = '전국 4년제 대학이 어디 있는지 지도로 봐요 · 시�
 const facts = (c: Campus) => `${c.founding} · ${c.school_kind} · ${c.sido} ${c.sigungu}`;
 const detailHref = (c: Campus) => `/univ-detail?u=${encodeURIComponent(c.name)}`;
 const press = (fn: () => void) => (e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } };
-function viewOf(region: Sido | null, compact = false): View {
+function viewOf(region: Sido | null, compact = false, pins: Campus[] = []): View {
   if (!region) return compact ? NATIONAL.compact : NATIONAL.wide;
-  const b = SIDO_SHAPES[region].bbox, w = Math.max(b.w, 40) * 1.2, h = Math.max(b.h, 40) * 1.2;
-  return { x: b.x + b.w / 2 - w / 2, y: b.y + b.h / 2 - h / 2, w, h };
+  const b = REGION_BOUNDARIES[region].bbox, points = pins.map(c => project([c.lng, c.lat]));
+  const left = Math.min(b.x, ...points.map(p => p[0])), top = Math.min(b.y, ...points.map(p => p[1]));
+  const right = Math.max(b.x + b.w, ...points.map(p => p[0])), bottom = Math.max(b.y + b.h, ...points.map(p => p[1]));
+  const w = Math.max(right - left, 20) * 1.2, h = Math.max(bottom - top, 20) * 1.2;
+  return { x: (left + right - w) / 2, y: (top + bottom - h) / 2, w, h };
 }
 
 export function UnivMap() {
@@ -167,7 +171,7 @@ export function UnivMap() {
       {sample ? <p>{SAMPLE_UNIV_MAP_SOURCE}</p> : data?.list_source && <p>대학 목록 · 주소: {data.list_source}{data.list_as_of ? `(${data.list_as_of} 기준)` : ''} · 좌표: {data.provenance === 'official-published'
         ? <>{data.coordinate_source} · <a href={data.source_url} target="_blank" rel="noreferrer">원본 자료</a></>
         : <>주소를 좌표로 바꾼 뒤 관리자 2명 검수{data.reviewed_at ? `(검수일 ${data.reviewed_at})` : ''}</>}</p>}
-      <p>지도 경계: {BOUNDARY_SOURCE} · 본교 · 분교 · 캠퍼스는 따로 세요</p></div>
+      <p>지도 경계: {region ? <>통계청 SGIS · <a href={DISTRICT_SOURCE} target="_blank" rel="noreferrer">vuski/admdongkor</a> ({DISTRICT_DATE}, 시·군·구로 통합·단순화, 공공누리 1유형 · CC BY 4.0)</> : BOUNDARY_SOURCE} · 본교 · 분교 · 캠퍼스는 따로 세요</p></div>
     <p className="disclaimer-note"><Icon name="info" size={16} /><span>대학이 있는 곳을 보여 주는 지도예요 · 입결이나 대학 순위와는 관계없어요 · 정확한 주소와 캠퍼스 정보는 대학 공식 누리집이 최종 기준이에요{sample ? ' · 샘플의 대학·숫자는 예시예요' : ''}{data?.base_date ? ` · 데이터 기준일 ${data.base_date}` : ''}</span></p>
 
     {sheet === 'region' && <Sheet title="지역 고르기" onClose={() => setSheet(null)}>
@@ -230,17 +234,64 @@ interface MapProps {
   px: { w: number; h: number }; labels: boolean; onSido: (s: Sido) => void; onPin: (c: Campus) => void; onCluster: (ids: string[]) => void;
 }
 /** region-map(design.md): 시·도 = 버튼(Tab은 SIDO 순), 핀 = 버튼(누르는 영역 44). 표식 크기는 확대와 관계없이 화면 px로 고정. */
-function RegionMap({ region, counts, raw, pendingOf, pins, selected, total, px, labels, onSido, onPin, onCluster }: MapProps) {
-  const v = viewOf(region, px === PX.compact), scale = Math.min(px.w / v.w, px.h / v.h), k = 1 / scale;
+function RegionMap(props: MapProps) {
+  const base = viewOf(props.region, props.px === PX.compact, props.pins);
+  // 지역·필터·화면 크기가 바뀌면 해당 범위에 맞춰 확대 상태도 초기화한다.
+  return <ZoomableRegionMap key={`${props.region}-${props.px.w}-${base.x}-${base.y}-${base.w}-${base.h}`} {...props} base={base} />;
+}
+
+function ZoomableRegionMap({ region, counts, raw, pendingOf, pins, selected, total, px, labels, onSido, onPin, onCluster, base }: MapProps & { base: View }) {
+  const svgRef = useRef<SVGSVGElement>(null), current = useRef(base);
+  const [v, setView] = useState(base), [size, setSize] = useState(px);
+  const update = (next: View) => { current.current = next; setView(next); };
+  const zoom = (factor: number, anchor?: { x: number; y: number }) => {
+    const old = current.current;
+    const w = Math.max(base.w / 12, Math.min(base.w, old.w * factor));
+    if (w === old.w) return;
+    if (w === base.w) { update(base); return; }
+    const ratio = w / old.w, point = anchor ?? { x: old.x + old.w / 2, y: old.y + old.h / 2 };
+    update({ x: point.x - (point.x - old.x) * ratio, y: point.y - (point.y - old.y) * ratio, w, h: old.h * ratio });
+  };
+  useEffect(() => {
+    const svg = svgRef.current!;
+    const wheel = (event: WheelEvent) => {
+      if (!event.deltaY) return;
+      event.preventDefault();
+      const rect = svg.getBoundingClientRect(), old = current.current;
+      const scale = Math.min(rect.width / old.w, rect.height / old.h);
+      if (!scale) return;
+      // SVG의 중앙 정렬 여백까지 반영해 커서 아래의 지리 좌표를 고정한다.
+      const anchor = {
+        x: old.x + (event.clientX - rect.left - (rect.width - old.w * scale) / 2) / scale,
+        y: old.y + (event.clientY - rect.top - (rect.height - old.h * scale) / 2) / scale,
+      };
+      const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? rect.height : 1);
+      zoom(Math.exp(Math.max(-200, Math.min(200, delta)) * 0.002), anchor);
+    };
+    // React의 수동적 wheel 이벤트 대신 지도 안에서만 페이지 스크롤을 막는다.
+    svg.addEventListener('wheel', wheel, { passive: false });
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      if (width && height) setSize({ w: width, h: height });
+    });
+    observer?.observe(svg);
+    return () => { svg.removeEventListener('wheel', wheel); observer?.disconnect(); };
+  }, []);
+  const scale = Math.min(size.w / v.w, size.h / v.h), k = 1 / scale;
   const byId = new Map(pins.map(c => [c.id, c]));
   const groups = region ? clusterPins(sortCampuses(pins, '가나다').map(c => { const [x, y] = project([c.lng, c.lat]); return { id: c.id, x, y }; }), scale, selected)
     .sort((a, b) => byId.get(a.ids[0])!.name.localeCompare(byId.get(b.ids[0])!.name, 'ko')) : [];
   const num = (x: number, y: number, n: number | string) => <text x={x} y={y} fontSize={12 * k} className="um-num" textAnchor="middle" dominantBaseline="central">{n}</text>;
-  return <svg className="um-map" viewBox={`${v.x} ${v.y} ${v.w} ${v.h}`} role="group" aria-label={`대한민국 시·도 지도, 4년제 대학 ${total}곳, 목록과 같은 내용이에요`}>
-    {SIDO.map(s => <path key={s} d={SIDO_SHAPES[s].d} fillRule="evenodd" vectorEffect="non-scaling-stroke" role="button" tabIndex={0}
+  return <><svg ref={svgRef} className="um-map" viewBox={`${v.x} ${v.y} ${v.w} ${v.h}`} role="group" aria-label={`대한민국 시·도 지도, 4년제 대학 ${total}곳, 목록과 같은 내용이에요`}>
+    {SIDO.map(s => <path key={s} d={region ? REGION_BOUNDARIES[s].d : SIDO_SHAPES[s].d} fillRule="evenodd" vectorEffect="non-scaling-stroke" role="button" tabIndex={0}
       className={`um-sido${s === region ? ' is-selected' : region ? ' is-around' : ''}`} aria-pressed={s === region}
       aria-label={`${s}, ${!counts[s] && !raw[s] && pendingOf(s) ? `위치 확인 중 ${pendingOf(s)}곳` : `대학 ${counts[s]}곳`}`}
       onClick={() => onSido(s)} onKeyDown={press(() => onSido(s))} />)}
+    {region && <g className="um-districts" role="img" aria-label={`${region} 시·군·구 경계: ${REGION_BOUNDARIES[region].districts.map(d => d.name).join(', ')}`}>
+      {REGION_BOUNDARIES[region].districts.map(d => <path key={d.name} d={d.d} className="um-district" fillRule="evenodd" vectorEffect="non-scaling-stroke"><title>{d.name}</title></path>)}
+      {districtLabels(REGION_BOUNDARIES[region].districts, groups, scale).map(d => <text key={d.name} x={d.x} y={d.y}
+        className="um-district-name" fontSize={11 * k} strokeWidth={3 * k} textAnchor="middle" dominantBaseline="central" aria-hidden="true">{d.name}</text>)}
+    </g>}
     {!region && <>
       {SIDO.map(s => { const { label: [lx, ly], marker: [mx, my] } = SIDO_SHAPES[s], n = counts[s];
         if (!n && (raw[s] || !pendingOf(s))) return null;
@@ -261,5 +312,11 @@ function RegionMap({ region, counts, raw, pendingOf, pins, selected, total, px, 
         <circle r={22 * k} className="um-hit" />
         {sel ? <><circle r={14 * k} className="um-ring" /><circle r={13 * k} className="um-gap" /><circle r={10 * k} className="um-dot" /></>
           : <circle r={6 * k} className="um-dot" strokeWidth={2 * k} />}</g>; })}
-  </svg>;
+  </svg>
+    <div className="um-zoom" role="group" aria-label="지도 확대·축소">
+      <button type="button" aria-label="지도 확대" title="확대 · 마우스 휠 위로" disabled={v.w <= base.w / 12} onClick={() => zoom(1 / 1.5)}>+</button>
+      <button type="button" aria-label="지도 축소" title="축소 · 마우스 휠 아래로" disabled={v.w >= base.w} onClick={() => zoom(1.5)}>−</button>
+      <button type="button" className="um-zoom__reset" aria-label="지도 배율 초기화" disabled={v.w === base.w} onClick={() => update(base)}>초기화</button>
+    </div>
+  </>;
 }

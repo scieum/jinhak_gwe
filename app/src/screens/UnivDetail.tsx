@@ -40,11 +40,28 @@ const Delta = ({ d }: { d?: number }) => d ? <span className={`ud-delta ud-delta
 const Next = ({ c }: { c: UdChange }) => <><strong>{c.next}</strong><Delta d={c.delta} /></>;
 const Pending = ({ children }: { children: ReactNode }) => <div className="ud-pending"><span className="data-status-badge">준비 중</span><p>{children}</p></div>;
 
+const COL_DEFAULT = [64, 200, 100, 92, 73];
+/** 2026-11-25 사용자 요청: 열 경계를 끌거나(마우스·터치) 좌우 화살표로 너비를 바꿔요. 두 번 누르면 처음 너비. */
+function ColResize({ label, i, cols, setCols }: { label: string; i: number; cols: number[]; setCols: (f: (c: number[]) => number[]) => void }) {
+  const set = (w: number) => setCols(c => c.map((x, j) => j === i ? Math.min(480, Math.max(48, Math.round(w))) : x));
+  const drag = (e: React.PointerEvent) => {
+    e.preventDefault(); e.stopPropagation();
+    const x0 = e.clientX, w0 = cols[i];
+    const move = (ev: PointerEvent) => set(w0 + ev.clientX - x0);
+    const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
+    window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
+  };
+  return <span className="ud-col-resize" role="separator" aria-orientation="vertical" aria-label={`${label} 열 너비`} aria-valuenow={cols[i]} aria-valuemin={48} aria-valuemax={480} tabIndex={0}
+    onPointerDown={drag} onClick={e => e.stopPropagation()} onDoubleClick={() => set(COL_DEFAULT[i])}
+    onKeyDown={e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); set(cols[i] + (e.key === 'ArrowRight' ? 8 : -8)); } }} />;
+}
+
 export function UnivDetail() {
   const [query] = useSearchParams(), name = query.get('u') ?? '';
   const sample = useSampleMode(), compact = useCompactResults();
   const demo = sample && (!name || name === sampleUnivDetail.university);
   const [loaded, setLoaded] = useState<Loaded>(null), [attempt, setAttempt] = useState(0);
+  const [cols, setCols] = useState(COL_DEFAULT); // 전형 표 열 너비(유형~면접). 전형명은 남는 폭
   const [tab, setTab] = useState<Tab>('전체'), [sort, setSort] = useState<Sort>(null), [picked, setPicked] = useState<string | null>(null);
   const [head, setHead] = useState<Element | null>(null), [bar, setBar] = useState<Element | null>(null);
   useEffect(() => { setHead(compact ? null : document.querySelector('.topbar__heading')); setBar(compact ? document.getElementById('appbar-actions') : null); }, [compact]);
@@ -114,10 +131,10 @@ export function UnivDetail() {
         <div className="ud-filter"><SegmentedControl label="전형 유형" value={tab} onChange={setTab} options={TABS.map(t => ({ value: t, label: t }))} /><span>{count(shown)}</span></div>
         {shown.length ? <><p className="ud-caption">{shown.length}개 모두 {view.status}이에요</p>
           <table className="data-table ud-table ud-table--programs">
-            <colgroup><col /><col style={{ width: 64 }} /><col style={{ width: 88 }} /><col style={{ width: 100 }} /><col style={{ width: 92 }} /><col style={{ width: 73 }} /></colgroup>
-            <thead><tr><th scope="col">전형명</th><th scope="col">유형</th><th scope="col">세부 유형</th>
-              <th scope="col" aria-sort={sort === 'desc' ? 'descending' : sort === 'asc' ? 'ascending' : 'none'}><button type="button" className="ud-sort" data-on={sort ?? undefined} onClick={() => setSort(s => s === null ? 'desc' : s === 'desc' ? 'asc' : null)}>모집인원<Icon name="arrow-up-down" size={16} /></button></th>
-              <th scope="col">수능최저</th><th scope="col">면접</th></tr></thead>
+            <colgroup><col />{cols.map((w, i) => <col key={i} style={{ width: w }} />)}</colgroup>
+            <thead><tr><th scope="col">전형명</th><th scope="col">유형<ColResize label="유형" i={0} cols={cols} setCols={setCols} /></th><th scope="col">세부 유형<ColResize label="세부 유형" i={1} cols={cols} setCols={setCols} /></th>
+              <th scope="col" aria-sort={sort === 'desc' ? 'descending' : sort === 'asc' ? 'ascending' : 'none'}><button type="button" className="ud-sort" data-on={sort ?? undefined} onClick={() => setSort(s => s === null ? 'desc' : s === 'desc' ? 'asc' : null)}>모집인원<Icon name="arrow-up-down" size={16} /></button><ColResize label="모집인원" i={2} cols={cols} setCols={setCols} /></th>
+              <th scope="col">수능최저<ColResize label="수능최저" i={3} cols={cols} setCols={setCols} /></th><th scope="col">면접<ColResize label="면접" i={4} cols={cols} setCols={setCols} /></th></tr></thead>
             <tbody>{ordered.map(p => <tr key={p.name} tabIndex={0} aria-selected={p === panel} onClick={() => setPicked(p.name)} onKeyDown={e => { if (e.key === 'Enter') setPicked(p.name); }}>
               <td>{p.name}</td><td>{p.type}</td><td>{p.sub}</td><td className="num">{p.quota ?? '—'}</td><td>{p.minimum}</td><td>{p.interview}</td></tr>)}</tbody></table></> : empty}
       </section>

@@ -29,7 +29,7 @@ const tick = (t: number) => String(Math.round(t * 10) / 10);
 const narrow = () => typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 1023px)').matches;
 type Department = ReturnType<typeof universityPlot>['departments'][number];
 
-const DEFAULT_UNIVERSITY = '강원대학교(춘천)';
+const DEFAULT_UNIVERSITY = '강원대학교(춘천)', DEFAULT_PROGRAM = '지역교과전형'; // 기본 전형(자료에 없으면 원래 규칙대로)
 export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   const [query, setQuery] = useSearchParams(), sampleMode = useSampleMode();
   const sample = sampleMode && import.meta.env.VITE_SUSI_DESIGN_FIXTURE === 'true';
@@ -47,7 +47,7 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   const university = collectedUniversitySelection(query.get('gu') ?? '', names) ?? (names.includes(DEFAULT_UNIVERSITY) ? DEFAULT_UNIVERSITY : names[0]) ?? '';
   const tab = TYPE_TABS.includes(query.get('gt') as TypeTab) ? query.get('gt') as TypeTab : '교과';
   const rows = loaded?.university === university ? loaded.rows : null;
-  const model = useMemo(() => universityPlot(rows ?? [], tab, query.get('gp') ?? ''), [rows, tab, query]);
+  const model = useMemo(() => universityPlot(rows ?? [], tab, query.get('gp') ?? (university === DEFAULT_UNIVERSITY && tab === '교과' ? DEFAULT_PROGRAM : '')), [rows, tab, query]);
   const shownYears = year ? [Number(year)] : model.years;
   const departments = model.departments.map(d => ({ ...d, points: d.points.filter(r => shownYears.includes(Number(r.result_year))) }));
   const plotted = departments.filter(d => d.points.length), others = departments.filter(d => !d.rows.some(r => gradeCut(r, model.cut) !== null));
