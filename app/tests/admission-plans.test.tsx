@@ -356,3 +356,25 @@ test('원문 합성 지역(전남광주)은 캠퍼스 주소의 시·도로 보�
   expect(fixed.filter(p => p.region === '전남광주')).toHaveLength(0);
   expect(at('가야대학교')).toBe('경남'); // 원래 시·도 이름은 그대로
 });
+
+test('지역 묶음을 고르면 세부 시·도 칩이 나오고, 시·도를 고르면 그 시·도만 보여요', async () => {
+  serve(); at('/admissions-list');
+  await screen.findAllByRole('link', { name: /전형계획 보기$/ });
+  expect(screen.queryByRole('group', { name: '세부 지역' })).toBeNull();
+  fireEvent.click(first('광주·전라'));
+  const subs = screen.getByRole('group', { name: '세부 지역' });
+  expect(within(subs).getAllByRole('button').map(b => b.textContent)).toEqual(['광주', '전북', '전남']);
+  fireEvent.click(within(subs).getByRole('button', { name: '전남' }));
+  const regions = screen.getAllByRole('row').slice(1).map(r => r.querySelectorAll('td')[1]?.textContent).filter(Boolean);
+  expect(regions.length).toBeGreaterThan(0);
+  expect(new Set(regions)).toEqual(new Set(['전남']));
+  fireEvent.click(first('광주·전라')); // 묶음을 끄면 세부 칩도 사라져요
+  expect(screen.queryByRole('group', { name: '세부 지역' })).toBeNull();
+});
+
+test('서울처럼 시·도가 하나인 묶음은 세부 칩이 없어요', async () => {
+  serve(); at('/admissions-list');
+  await screen.findAllByRole('link', { name: /전형계획 보기$/ });
+  fireEvent.click(first('서울'));
+  expect(screen.queryByRole('group', { name: '세부 지역' })).toBeNull();
+});

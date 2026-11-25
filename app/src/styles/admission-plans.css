@@ -19,6 +19,7 @@
 .admissions-list .filter-chip { display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 var(--spacing-sm); border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: var(--font-label-size); font-weight: var(--font-label-weight); white-space: nowrap; cursor: pointer; font-variant-numeric: tabular-nums; }
 .admissions-list .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
 .al-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.al-subchips { flex-basis: 100%; padding-top: 8px; } /* 묶음 칩 아래 세부 시·도 줄 */
 .al-chips__divider { width: 1px; height: 24px; background: var(--color-hairline); }
 .al-chiprow { display: none; }
 .al-filters { position: relative; display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: 8px; row-gap: 8px; align-items: center; margin-bottom: 16px; padding: 18px 24px; background: var(--color-canvas); }

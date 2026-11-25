@@ -77,6 +77,7 @@ const REGIONS: [string, string[]][] = [['서울', ['서울']], ['경기·인천'
 const TYPES = ['교과', '종합', '논술', '실기', '정시'];
 const FILTERS = {
   region: REGIONS.map(([name]) => name), // 2026-11-26 사용자 결정: 권역 대신 서울 · 경기·인천 · 대전·충청 · 대구·경북 · 부산·울산·경남 · 광주·전라(세종은 대전·충청)
+  sido: [] as string[], // 묶음 칩을 고르면 그 아래 나오는 세부 시·도(2026-11-26 사용자 결정). 칩 목록은 SUBS에서 만들어요
   founding: ['국립', '공립', '사립', '그 밖'],
   campus: ['본교', '분교', '제2캠퍼스 이상'],
   field: [...PLAN_FIELDS],
@@ -84,7 +85,7 @@ const FILTERS = {
 };
 type FilterKey = keyof typeof FILTERS;
 type Filters = Record<FilterKey, string[]>;
-const NO_FILTERS: Filters = { region: [], founding: [], campus: [], field: [], cond: [] };
+const NO_FILTERS: Filters = { region: [], sido: [], founding: [], campus: [], field: [], cond: [] };
 const SORTS = ['가나다순', '모집인원 많은 순', '지역순', '최근 변경순'] as const;
 type Sort = typeof SORTS[number];
 interface Row {
@@ -114,7 +115,12 @@ const facet = (row: Row, key: FilterKey, value: string) => key === 'region' ? ro
   : key === 'field' ? !!row.program?.fields?.some(f => f === value)
   : key === 'cond' ? (value === '수능최저 있음' ? row.minimum === '있음' : value === '수능최저 없음' ? row.minimum === '없음' : value === '면접 있음' ? row.interview === '있음' : false)
   : false;
-const passes = (row: Row, f: Filters) => (Object.keys(f) as FilterKey[]).every(k => !f[k].length || (k === 'cond' ? f[k].every(v => facet(row, k, v)) : f[k].some(v => facet(row, k, v))));
+// 세부 시·도('전남광주' 같은 원문 합성 이름은 화면에서 시·도로 풀려서 빼요)
+const SUBS: Record<string, string[]> = Object.fromEntries(REGIONS.map(([g, list]) => [g, list.filter(x => x !== '전남광주')]));
+const regionPasses = (row: Row, f: Filters) => !f.region.length || (f.region.includes(row.group) && (!SUBS[row.group].some(x => f.sido.includes(x)) || f.sido.includes(row.plan.region)));
+/** 묶음을 끄면 그 묶음의 세부 시·도도 같이 꺼요 */
+const flipRegion = (f: Filters, g: string): Filters => f.region.includes(g) ? { ...f, region: f.region.filter(x => x !== g), sido: f.sido.filter(x => !SUBS[g].includes(x)) } : { ...f, region: [...f.region, g] };
+const passes = (row: Row, f: Filters) => regionPasses(row, f) && (Object.keys(f) as FilterKey[]).every(k => k === 'region' || k === 'sido' || !f[k].length || (k === 'cond' ? f[k].every(v => facet(row, k, v)) : f[k].some(v => facet(row, k, v))));
 const filterCount = (f: Filters) => Object.values(f).reduce((n, v) => n + v.length, 0);
 const ko = (a: string, b: string) => a.localeCompare(b, 'ko');
 const byName = (a: Row, b: Row) => ko(a.plan.university, b.plan.university) || ko(a.plan.campus, b.plan.campus) || (a.program ? 0 : 1) - (b.program ? 0 : 1); // 같은 캠퍼스 안은 자료 순서(수시 → 정시, 시안 순서)
@@ -165,7 +171,7 @@ export function AdmissionsList() {
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)), current = Math.min(page, pages - 1), shown = filtered.slice(current * PAGE_SIZE, (current + 1) * PAGE_SIZE);
   const selected = catalog?.entries.find(p => p.id === selectedId);
   const anyFilter = !!type || filterCount(filters) > 0;
-  const chosen = [...filters.region, ...filters.founding, ...filters.campus, ...(type ? [type] : []), ...filters.field, ...filters.cond];
+  const chosen = [...filters.region, ...filters.sido, ...filters.founding, ...filters.campus, ...(type ? [type] : []), ...filters.field, ...filters.cond];
   // 원문 확인(수능최저·면접)이나 계열 미연결 전형은 그 조건을 고르면 빠져요. 몇 개가 빠졌는지 결과 위에 알려요.
   const dropped = (f: Filters, t: string) => {
     const left = (g: Filters, unknown: (r: Row) => boolean) => base(g).filter(r => r.program && (!t || r.type === t) && unknown(r)).length;
@@ -208,6 +214,10 @@ export function AdmissionsList() {
   const pager = <nav className="al-pager" aria-label="전형계획 페이지"><button type="button" className="button-outline" disabled={!current} onClick={() => goPage(current - 1)}>이전</button><span className="t-caption num">{current + 1} / {pages}</span><button type="button" className="button-outline" disabled={current + 1 >= pages} onClick={() => goPage(current + 1)}>다음</button></nav>;
   const chip = (label: string, on: boolean, click: () => void, aria?: string, disabled = false, title?: string) => <button key={label} type="button" className="filter-chip" aria-pressed={on} aria-label={aria} title={title} disabled={disabled} onClick={click}>{label}</button>;
   const condChip = (v: string, on: boolean, click: () => void) => pending(v) ? chip(v, false, click, `${v}, ${NOT_READY}`, true, NOT_READY) : chip(v, on, click);
+  const subChips = (f: Filters, set: (f: Filters) => void) => {
+    const subs = f.region.flatMap(g => SUBS[g].length > 1 ? SUBS[g] : []);
+    return subs.length > 0 && <div className="al-chips al-subchips" role="group" aria-label="세부 지역">{subs.map(v => chip(v, f.sido.includes(v), () => set(flip(f, 'sido', v))))}</div>;
+  };
   const flip = (f: Filters, k: FilterKey, v: string): Filters => ({ ...f, [k]: f[k].includes(v) ? f[k].filter(x => x !== v) : [...f[k], v] });
   const typeChips = ['', ...TYPES].map(t => chip(`${t || '전체'} ${typeCount(t)}`, type === t, () => setType(t)));
 
@@ -229,7 +239,7 @@ export function AdmissionsList() {
         </div>
         <section className="al-filters" aria-label="전형계획 조회 조건">
           {anyFilter && <button type="button" className="al-reset" onClick={reset}>초기화</button>}
-          <span className="al-filters__label">지역</span><div className="al-chips">{chip('전체', !filters.region.length, () => setFilters({ ...filters, region: [] }))}{FILTERS.region.map(v => chip(v, filters.region.includes(v), () => setFilters(flip(filters, 'region', v))))}</div>
+          <span className="al-filters__label">지역</span><div className="al-chips">{chip('전체', !filters.region.length, () => setFilters({ ...filters, region: [] }))}{FILTERS.region.map(v => chip(v, filters.region.includes(v), () => setFilters(flipRegion(filters, v))))}{subChips(filters, setFilters)}</div>
           <span className="al-filters__label">설립·캠퍼스</span><div className="al-chips">{FILTERS.founding.map(v => chip(v, filters.founding.includes(v), () => setFilters(flip(filters, 'founding', v)), undefined, !hasFounding))}<span className="al-chips__divider" aria-hidden="true" />{FILTERS.campus.map(v => chip(v, filters.campus.includes(v), () => setFilters(flip(filters, 'campus', v))))}</div>
           <span className="al-filters__label">전형 유형</span><div className="al-chips">{typeChips}</div>
           <span className="al-filters__label">계열</span><div className="al-chips">{FILTERS.field.map(v => chip(v, filters.field.includes(v), () => setFilters(flip(filters, 'field', v))))}</div>
@@ -282,7 +292,7 @@ export function AdmissionsList() {
       <div className="al-sheet"><div className="al-sheet__head"><h3 className="t-heading-4">필터</h3><button type="button" className="al-sheet__close" aria-label="닫기" onClick={() => setSheet('')}><Icon name="x" size={24} /></button></div>
         {([['region', '지역'], ['founding', '설립·캠퍼스'], ['type', '전형 유형'], ['field', '계열'], ['cond', '조건']] as const).map(([k, title]) => <section key={k} className="al-sheet__section"><h4 className="t-heading-4">{title}</h4><div className="al-chips">
           {k === 'type' ? TYPES.map(t => chip(t, draftType === t, () => setDraftType(draftType === t ? '' : t)))
-            : (k === 'founding' ? [...FILTERS.founding.map(v => ['founding', v] as const), ...FILTERS.campus.map(v => ['campus', v] as const)] : FILTERS[k].map(v => [k, v] as const)).map(([key, v]) => key === 'cond' ? condChip(v, draft.cond.includes(v), () => setDraft(flip(draft, key, v))) : chip(v, draft[key].includes(v), () => setDraft(flip(draft, key, v)), undefined, key === 'founding' && !hasFounding))}</div></section>)}
+            : (k === 'founding' ? [...FILTERS.founding.map(v => ['founding', v] as const), ...FILTERS.campus.map(v => ['campus', v] as const)] : FILTERS[k].map(v => [k, v] as const)).map(([key, v]) => key === 'region' ? chip(v, draft.region.includes(v), () => setDraft(flipRegion(draft, v))) : key === 'cond' ? condChip(v, draft.cond.includes(v), () => setDraft(flip(draft, key, v))) : chip(v, draft[key].includes(v), () => setDraft(flip(draft, key, v)), undefined, key === 'founding' && !hasFounding))}{k === 'region' && subChips(draft, setDraft)}</div></section>)}
         {dropped(draft, draftType)}
         <div className="al-sheet__actions"><button type="button" className="button-outline" onClick={() => { setDraft(NO_FILTERS); setDraftType(''); }}>초기화</button><button type="button" className="button-primary" onClick={() => { setFilters(draft); setType(draftType); setSheet(''); }}>전형 {base(draft).filter(r => r.program && (!draftType || r.type === draftType)).length}개 보기</button></div></div>
     </Modal>}

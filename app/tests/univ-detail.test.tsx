@@ -45,6 +45,14 @@ describe('대학·전형 상세', () => {
     expect(screen.getAllByText('준비 중').length).toBeGreaterThan(0);
     expect(screen.getByRole('link', { name: '전형 상세 보기' }).getAttribute('href')).toBe(programPath('가나대학교', '논술전형'));
   });
+  it('샘플 모드에서도 다른 대학의 전형 상세는 데모(성균관대)가 아니라 그 대학 시행계획을 보여 준다', async () => {
+    localStorage.setItem('jinhak-navi-sample', 'on');
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => new Response(JSON.stringify(url.includes('admission-plans') ? plans : file([])))));
+    at(programPath('가나대학교', '논술전형'));
+    expect(await screen.findByText(/가나대학교/)).toBeTruthy();
+    expect(screen.queryByText(/성균관대학교/)).toBeNull();
+    localStorage.removeItem('jinhak-navi-sample');
+  });
   it('샘플 모드는 시안 데모(경희대학교)를 보여 주고 유형 필터 · 행 선택이 패널을 바꾼다', async () => {
     localStorage.setItem('jinhak-navi-sample', 'on');
     at('/univ-detail?u=경희대학교');
