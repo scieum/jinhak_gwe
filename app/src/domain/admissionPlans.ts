@@ -2,6 +2,8 @@
 import { universitySearchLabels } from './universityIdentity';
 import type { Campus } from './univMap';
 export type PlanFounding = '국립' | '공립' | '사립' | '그 밖';
+/** 전형계획 계열 칩. build_admission_plan_programs.py FIELD_CHIPS가 계열표(검수 전 초안)를 이 이름으로 묶어요. */
+export const PLAN_FIELDS = ['인문', '사회', '자연', '공학', '의약', '예체능'] as const;
 export interface PlanDocument {
   id: string; label: string; provider: 'university' | 'adiga'; source_url: string; download_url: string;
   format: 'pdf' | 'hwp' | 'hwpx' | 'zip'; sha256: string; checked_at: string;
@@ -19,6 +21,8 @@ export interface PlanProgram {
   units?: [string, number | string, number[]][];
   /** 공동선발 총원. 학과별로 나누거나 더하지 않는다 */
   pooled?: { quota: number; units: string[]; pages: number[] }[];
+  /** units · pooled 모집단위 중 계열표와 대학+모집단위가 정확히 같은 것의 계열 칩(검수 전). 없으면 계열 정보 없음 */
+  fields?: (typeof PLAN_FIELDS)[number][];
 }
 export interface AdmissionPlan {
   id: string; university: string; campus: string; region: string; year: number; review_status: 'draft';
@@ -108,6 +112,7 @@ export function parsePlanCatalog(input: unknown): PlanCatalog {
           requireValue((q.units as unknown[]).every(n => typeof n === 'string' && n.trim())); pages(q.pages, d.page_count);
         }
       }
+      if (p.fields !== undefined) requireValue(Array.isArray(p.fields) && p.fields.length && p.fields.every(f => (PLAN_FIELDS as readonly unknown[]).includes(f)));
       if (p.field_pages !== undefined) {
         const fields = record(p.field_pages); strings(p, ['interview']);
         for (const key of ['method', 'minimum', 'eligibility', 'interview']) {

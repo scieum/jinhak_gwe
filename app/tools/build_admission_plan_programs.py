@@ -4,6 +4,7 @@ Pipeline: build_catalog.py (sources, documents, curated summaries) -> this scrip
 Only values with a PDF page in the same document are published; the rest stay '원문 확인 필요'.
 Entries with hand-written curated summaries keep them. Everything stays draft and reference-only.
 """
+import csv
 import importlib.util
 import json
 import logging
@@ -22,6 +23,7 @@ PACKAGES = PLANS / 'structured/universities'
 SCOPES = ROOT / 'work/_data/data-integration/minimum-scope-review.json'
 NORMALIZED = ROOT / 'work/_data/data-integration/minimum-normalized-review.json'
 OUT = ROOT / 'app/public/data/admission-plans.json'
+FIELD_TABLE = ROOT / 'work/_data/review-queue/fields-draft.csv'  # 학과명 규칙 추천 계열표, 검수 전 초안
 PUBLIC_PDFS = ROOT / 'app/public/plans'  # served same-origin so the download keeps our file name; gitignored (collected originals)
 UNKNOWN = '원문 확인 필요'
 TYPES = {'학생부교과': '교과', '학생부위주(교과)': '교과', '학생부종합': '종합', '학생부위주(종합)': '종합',
@@ -229,6 +231,34 @@ def package_programs(package, entry_docs, scope_rows, applicability):
     return programs, list(added.values()), skipped
 
 
+# 계열표(중계열, 대계열) → 전형계획 계열 칩. 칩에 교육 계열이 없어서 교육은 대계열로 나눠요(대계열 빈 교육 = 체육·음악·미술교육).
+FIELD_CHIPS = {('어문', '인문'): '인문', ('인문', '인문'): '인문', ('교육', '인문'): '인문',
+               ('사회과학', '인문'): '사회', ('경상', '인문'): '사회', ('생활과학', '인문'): '사회', ('보건', '인문'): '사회',
+               ('자연과학', '자연'): '자연', ('생활과학', '자연'): '자연', ('농림·수산', '자연'): '자연', ('교육', '자연'): '자연',
+               ('공학', '자연'): '공학', ('의약', '자연'): '의약', ('보건', '자연'): '의약',
+               ('예술', ''): '예체능', ('체육', ''): '예체능', ('교육', ''): '예체능'}
+FIELD_ORDER = ['인문', '사회', '자연', '공학', '의약', '예체능']
+
+
+def attach_fields(catalog, table):
+    """program['fields'] = 모집단위(units · pooled) 중 계열표에 대학+모집단위가 정확히 같은 행이 있는 칩들. 하나도 없으면 키를 뺀다."""
+    chips = {(r['대학'], r['모집단위']): FIELD_CHIPS.get((r['중계열'], r['대계열'])) for r in table}
+    filled = 0
+    for e in catalog['entries']:
+        for p in e['programs']:
+            names = [u[0] for u in p.get('units', [])] + [n for q in p.get('pooled', []) for n in q['units']]
+            found = {chips.get((e['university'], n)) for n in names} - {None}
+            p.pop('fields', None)
+            if found:
+                p['fields'], filled = [c for c in FIELD_ORDER if c in found], filled + 1
+    return filled
+
+
+def read_field_table(path=FIELD_TABLE):
+    with path.open(encoding='utf-8-sig', newline='') as f:
+        return list(csv.DictReader(f))
+
+
 PROVIDER_LABEL = {'university': '입학처', 'adiga': '어디가'}
 
 
@@ -316,6 +346,7 @@ def main():
         report.update(skipped)
         entry['programs'], entry['documents'] = programs, entry['documents'] + docs
         report['programs'] += len(programs)
+    report['programs_with_fields'] = attach_fields(catalog, read_field_table())
     pdfs = {}
     for e in catalog['entries']:
         pdfs.update(attach_local_files(e, sources[e['id']], report))

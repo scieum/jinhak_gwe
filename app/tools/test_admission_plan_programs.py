@@ -4,7 +4,7 @@ from collections import Counter
 from hashlib import sha256
 from pathlib import Path
 
-from build_admission_plan_programs import CARRYOVER, UNKNOWN, attach_local_files, method_text, minimum_text, package_programs, plan_document, plan_filename, quota_text, unique_names
+from build_admission_plan_programs import CARRYOVER, FIELD_CHIPS, FIELD_ORDER, UNKNOWN, attach_fields, attach_local_files, method_text, minimum_text, package_programs, plan_document, plan_filename, quota_text, unique_names
 
 SHA = 'a' * 64
 SRC = {'id': 'doc', 'kind': 'pdf', 'pages': 10, 'url': 'https://u.ac.kr/2028plan.pdf', 'sha256': SHA,
@@ -71,6 +71,22 @@ class AdmissionPlanProgramsTest(unittest.TestCase):
         [program], _, _ = package_programs(package, {}, [], {})
         self.assertEqual(program['units'], [['경영학과', 12, [3]], ['국문과', '약간 명', [4]], ['사학과', CARRYOVER, [4]]])
         self.assertEqual(program['pooled'], [{'quota': 30, 'units': ['경제학과', '철학과'], 'pages': [5]}])
+
+    def test_fields_from_exact_university_and_unit_names(self):
+        self.assertTrue(set(FIELD_CHIPS.values()) <= set(FIELD_ORDER))
+        table = [{'대학': '가대학교', '모집단위': '기계공학과', '중계열': '공학', '대계열': '자연'},
+                 {'대학': '가대학교', '모집단위': '경영학과', '중계열': '경상', '대계열': '인문'},
+                 {'대학': '가대학교', '모집단위': '체육교육과', '중계열': '교육', '대계열': ''},
+                 {'대학': '가대학교', '모집단위': '자유전공', '중계열': '', '대계열': ''},
+                 {'대학': '나대학교', '모집단위': '국문과', '중계열': '어문', '대계열': '인문'}]
+        program = lambda **kw: {'name': 'x', **kw}
+        catalog = {'entries': [{'university': '가대학교', 'programs': [
+            program(units=[['경영학과', 3, [1]], ['기계공학과', 2, [1]], ['국문과', 1, [1]]]),  # 국문과는 나대학교 행이라 안 맞음
+            program(pooled=[{'quota': 9, 'units': ['체육교육과'], 'pages': [1]}]),
+            program(units=[['자유전공', 3, [1]], ['기계공학부', 1, [1]]], fields=['인문']),  # 계열 빈 행 · 이름 다름 → 없음
+            program()]}]}
+        self.assertEqual(attach_fields(catalog, table), 2)
+        self.assertEqual([p.get('fields') for p in catalog['entries'][0]['programs']], [['사회', '공학'], ['예체능'], None, None])
 
     def test_plan_pdf_file_names(self):
         self.assertEqual(plan_filename('성균관대학교', '본교'), '2028_성균관대학교_시행계획.pdf')

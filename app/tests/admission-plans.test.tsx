@@ -291,3 +291,42 @@ test('모집인원 증감은 전년 값이 있을 때만 계산하고, 배너는
   expect(screen.getByRole('link', { name: /나의 준비 방식 찾기/ }).getAttribute('href')).toBe('/admission-style');
   expect(screen.queryByRole('button', { name: /배너 닫기|다시 보지 않기/ })).toBeNull();
 });
+
+// 2026-11-25 "필터만 넣으면 이상하게 나온다": 계열·조건 칩이 실제 자료에서 0개가 되거나 말없이 빠지지 않는지 실제 admission-plans.json으로 확인
+const statusLines = () => screen.queryAllByRole('status').flatMap(s => [...s.querySelectorAll('p.t-caption')].map(p => p.textContent));
+const programs = classified.entries.flatMap(e => e.programs);
+test('실제 자료 필터 조합: 지역+유형, 계열, 수능최저+면접, 설립이 0이 아닌 개수를 내고 빠진 원문 확인·계열 미연결 개수를 알린다', async () => {
+  serve(); at();
+  await screen.findByText('전형 3099개');
+  fireEvent.click(first('강원')); fireEvent.click(screen.getAllByRole('button', { name: /^교과 \d+$/ })[0]);
+  expect(screen.getByText('전형 22개')).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '초기화' }));
+  const engineering = programs.filter(p => p.fields?.includes('공학')).length;
+  expect(engineering).toBe(326);
+  fireEvent.click(first('공학'));
+  expect(screen.getByText(`전형 ${engineering}개`)).toBeTruthy();
+  expect(statusLines()).toEqual([`계열은 검수 전 학과 계열표 기준이에요 · 계열 정보가 없는 전형 ${programs.filter(p => !p.fields).length}개는 빠졌어요`]);
+  fireEvent.click(screen.getByRole('button', { name: '초기화' }));
+  fireEvent.click(first('수능최저 있음')); fireEvent.click(first('면접 있음'));
+  expect(screen.getByText('전형 28개')).toBeTruthy();
+  expect(statusLines()).toEqual(['수능최저가 원문 확인인 전형 75개는 빠졌어요', '면접이 원문 확인인 전형 163개는 빠졌어요']);
+  fireEvent.click(screen.getByRole('button', { name: '초기화' }));
+  fireEvent.click(first('국립'));
+  expect(screen.getByText('전형 390개')).toBeTruthy();
+  expect(statusLines()).toEqual([]);
+  for (const field of ['인문', '사회', '자연', '공학', '의약', '예체능'] as const) expect(programs.filter(p => p.fields?.includes(field)).length).toBeGreaterThan(100);
+});
+
+test('재학생만은 자격 자료가 없어 막아 두고, 모바일 필터 시트도 계열·빠진 개수 안내를 같게 보여 준다', async () => {
+  serve(); at();
+  await screen.findByText('전형 3099개');
+  const only = screen.getAllByRole('button', { name: '재학생만, 자격 자료 준비 중' })[0] as HTMLButtonElement;
+  expect([only.disabled, only.title]).toEqual([true, '자격 자료 준비 중']);
+  fireEvent.click(screen.getByRole('button', { name: '필터' }));
+  const sheet = screen.getByRole('dialog', { name: '필터' });
+  expect((within(sheet).getByRole('button', { name: '재학생만, 자격 자료 준비 중' }) as HTMLButtonElement).disabled).toBe(true);
+  fireEvent.click(within(sheet).getByRole('button', { name: '공학' }));
+  expect(within(sheet).getByText(/계열 정보가 없는 전형 2465개는 빠졌어요/)).toBeTruthy();
+  fireEvent.click(within(sheet).getByRole('button', { name: '전형 326개 보기' }));
+  expect(screen.getByText('전형 326개')).toBeTruthy();
+});
