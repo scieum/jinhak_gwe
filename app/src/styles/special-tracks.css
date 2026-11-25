@@ -17,7 +17,7 @@
 .st-head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--spacing-md); }
 .st-head__text { display: grid; gap: 6px; min-width: 0; }
 .st-head__name { display: grid; gap: 6px; }
-.st-head__name h3 { margin: 0; font-size: 19px; font-weight: 700; line-height: 26px; }
+.st-head__name h3 { margin: 0; font-size: 19px; font-weight: 700; line-height: 26px; white-space: nowrap; flex: none; } /* 묶음 이름(예체능 실기)은 한 줄 */
 .st-head__name p { margin: 0; font-size: 13px; line-height: 20px; }
 .st-head__total { margin: 0; font-size: 16px; font-weight: 600; line-height: 22px; }
 .st-head__note { margin: 0; font-size: 12px; line-height: 17px; }

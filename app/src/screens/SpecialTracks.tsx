@@ -134,8 +134,7 @@ function ResultValue({ v, type }: { v: ViewRow; type: ResultType }) {
   return 'cut' in v.cell ? <span className="st-card__value num">{t}</span>
     : <span className="st-blank text-muted" aria-label={BLANK_SR[t] ? (t === '—' ? `${type} ${BLANK_SR[t]}` : BLANK_SR[t]) : undefined}>{t}</span>;
 }
-const practicalNote = (v: ViewRow, track: TrackId, pc: boolean) => track === '체육' || !PRACTICAL_TRACKS.includes(track) ? null
-  : <p className="t-caption text-muted">{v.practical.length ? `실기 ${v.practical[0].subjects.length}종목 · ${pc ? '채점 기준 있어요' : '상세에서 채점 기준을 봐요'}` : '실기 기준 준비 중'}</p>;
+// 모집단위 목록(표·카드)에는 학과 이름만 두고(2026-11-26 사용자 결정, 체육과 같음) 실기 안내는 상세 창에서만 보여요
 const practicalOnly = (v: ViewRow, track?: TrackId) => track !== '체육' && 'text' in v.cell && v.cell.text === '실기 전형'
   && <p className="t-caption text-muted">실기 점수 비중이 커서 교과 컷을 따로 보이지 않아요 · 전형 상세에서 봐요</p>;
 const othersNote = (v: ViewRow) => v.others.length > 0 && <p className="t-caption text-muted">· {v.others.join(' · ')} 묶음에도 있어요</p>;
@@ -144,7 +143,7 @@ const interestProgram = (v: ViewRow, type: ResultType) => (v.cell.row?.program |
 /** univ-logo, 로고 파일이 없으면 univ-monogram(첫 글자) */
 const Logo = ({ university }: { university: string }) => universityLogoFile(university) ? <UniversityLogo university={university} /> : <span className="st-mono" aria-hidden="true" data-ch={university.slice(0, 1)} />;
 
-function Card({ v, track, type, onOpen }: { v: ViewRow; track: TrackId; type: ResultType; onOpen: () => void }) {
+function Card({ v, type, onOpen }: { v: ViewRow; type: ResultType; onOpen: () => void }) {
   const r = v.row, cut = cellText(v.cell);
   const label = `${r.university} ${r.unit}, ${PLAN_YEAR} 모집 ${v.total}명 ${planSummary(r)}, ${RESULT_YEAR}학년도 ${type} 70% 컷 ${'cut' in v.cell ? cut : BLANK_SR[cut] ?? cut}${v.cell.row?.competition_rate ? `, 경쟁률 ${v.cell.row.competition_rate} 대 1` : ''}, 상세 보기`;
   return <article className="univ-card st-card">
@@ -155,8 +154,6 @@ function Card({ v, track, type, onOpen }: { v: ViewRow; track: TrackId; type: Re
       {r.tag && <span className="data-status-badge data-status-badge--fact">{r.tag}</span>}
       {othersNote(v)}
       <span className="st-card__plan">{PLAN_YEAR} · {planSummary(r)} · 모집 {v.total}</span>
-      {practicalOnly(v, track)}
-      {practicalNote(v, track, false)}
       <span className="st-card__kv"><span className="st-card__pairs"><span><span className="st-card__label">{type} 70% 컷</span><ResultValue v={v} type={type} /></span>
         {v.cell.row && <span><span className="st-card__label">경쟁률</span><span className="st-card__value num">{v.cell.row.competition_rate ? `${v.cell.row.competition_rate}:1` : '—'}</span></span>}</span>
         <Icon name="chevron-right" size={20} /></span>
@@ -177,7 +174,7 @@ function useFirstRows(rows: ViewRow[]) {
 function CardList({ rows, track, type, onOpen }: { rows: ViewRow[]; track: TrackId; type: ResultType; onOpen: (v: ViewRow) => void }) {
   const { shown, rest, more, moreButton } = useFirstRows(rows);
   return <><ul className="st-cards" tabIndex={0} aria-label={`${track} 모집단위 ${rows.length}개, 넘겨서 더 보기`} onScroll={more} onFocus={more}>
-    {shown.map(v => <li key={`${v.row.university}|${v.row.unit}`}><Card v={v} track={track} type={type} onOpen={() => onOpen(v)} /></li>)}
+    {shown.map(v => <li key={`${v.row.university}|${v.row.unit}`}><Card v={v} type={type} onOpen={() => onOpen(v)} /></li>)}
     {rest > 0 && <li aria-hidden="true" style={{ height: rest * 171 - 12 }} />}</ul>{moreButton}</>;
 }
 
@@ -193,7 +190,7 @@ function Table({ rows, track, type, sort, onSort, onOpen }: { rows: ViewRow[]; t
       <th scope="col" className="num">{RESULT_YEAR} {type} 70% 컷</th><th scope="col" className="num">경쟁률</th><th scope="col" className="num">충원율</th><th scope="col">기준</th><th scope="col"><span className="sr-only">상세</span></th></tr></thead>
     <tbody>{shown.map(v => { const r = v.row, row = v.cell.row; return <tr key={`${r.university}|${r.unit}`}>
       <td><span className="st-univ"><Logo university={r.university} />{r.university}</span></td>
-      <td>{r.unit}{r.tag && <><br /><span className="data-status-badge data-status-badge--fact">{r.tag}</span></>}{othersNote(v)}{practicalOnly(v, track)}{practicalNote(v, track, true)}</td>
+      <td>{r.unit}{r.tag && <><br /><span className="data-status-badge data-status-badge--fact">{r.tag}</span></>}{othersNote(v)}</td>
       <td>{planSummary(r)}</td><td className="num">{v.total}</td>
       <td className="num"><ResultValue v={v} type={type} /></td>
       <td className="num">{row?.competition_rate ? `${row.competition_rate}:1` : <span className="text-muted">—</span>}</td>

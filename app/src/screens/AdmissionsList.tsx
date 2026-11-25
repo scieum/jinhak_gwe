@@ -147,6 +147,9 @@ export function AdmissionsList() {
   const interests = useLiveQuery(async () => { try { return new Set((await studentDb.interests.toArray()).map(i => interestId(i.university, i.program))); } catch { return null; } }, []);
   const rows = useMemo(() => catalog ? toRows(catalog) : [], [catalog]);
   const hasFounding = !!catalog?.entries.some(p => p.founding), missingFounding = catalog?.entries.filter(p => !p.founding).length ?? 0;
+  // 입력칸은 화면 상태로 두고 주소(q)는 한글 조합이 끝난 뒤에만 바꿔요. 주소 값을 입력칸에 바로 묶으면 맥에서 '한ㅇ대'처럼 자모가 갈라져요.
+  const [text, setText] = useState(query);
+  useEffect(() => { setText(t => t === query ? t : query); }, [query]);
   function update(key: string, value: string) { const next = new URLSearchParams(params); if (value) next.set(key, value); else next.delete(key); setParams(next, { replace: key === 'q' }); }
   const idOf = (r: Row) => r.program ? interestId(r.plan.university, r.program.name) : '';
   const saved = (r: Row) => !!r.program && !!interests?.has(idOf(r));
@@ -216,7 +219,7 @@ export function AdmissionsList() {
     <PromoBanner />
     {error ? <div className="al-panel al-load-error" role="alert"><Icon name="triangle-alert" size={20} /><p>전형계획 자료를 불러오지 못했어요. 인터넷 연결을 확인하고 다시 불러와 주세요.</p><button type="button" className="button-outline" onClick={() => setAttempt(n => n + 1)}>다시 불러오기</button></div>
       : !catalog ? <p className="al-panel t-body-sm text-muted" role="status">전형계획을 읽고 있어요.</p> : <>
-        <label className="al-search"><Icon name="search" size={20} /><input className="text-input" type="search" value={query} placeholder="대학 이름으로 찾기" aria-label="대학 이름으로 찾기" onChange={e => update('q', e.target.value)} /></label>
+        <label className="al-search"><Icon name="search" size={20} /><input className="text-input" type="search" value={text} placeholder="대학 이름으로 찾기" aria-label="대학 이름으로 찾기" onChange={e => { setText(e.target.value); if (!(e.nativeEvent as InputEvent).isComposing) update('q', e.target.value); }} onCompositionEnd={e => update('q', e.currentTarget.value)} /></label>
         <div className="al-chiprow">
           <button type="button" className="button-pill-soft al-filter-button" aria-pressed={filterCount(filters) > 0} onClick={() => { setDraft(filters); setDraftType(type); setSheet('filter'); }}><Icon name="sliders-horizontal" size={20} />필터{filterCount(filters) ? ` ${filterCount(filters)}` : ''}</button>
           {typeChips}{chip(interestLabel('관심'), interestOnly, () => setInterestOnly(v => !v), '관심만 보기')}

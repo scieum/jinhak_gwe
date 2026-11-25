@@ -330,3 +330,16 @@ test('재학생만은 자격 자료가 없어 막아 두고, 모바일 필터 �
   fireEvent.click(within(sheet).getByRole('button', { name: '전형 326개 보기' }));
   expect(screen.getByText('전형 326개')).toBeTruthy();
 });
+
+test('검색창: 한글 조합 중에는 입력값을 덮어쓰지 않고, 조합이 끝나면 검색해요(맥 자모 분리 방지)', async () => {
+  serve(); at();
+  const input = await screen.findByLabelText('대학 이름으로 찾기') as HTMLInputElement;
+  fireEvent.compositionStart(input);
+  fireEvent.input(input, { target: { value: '한ㄹ' }, isComposing: true });
+  expect(input.value).toBe('한ㄹ'); // 조합 중 값이 그대로 남아요
+  fireEvent.input(input, { target: { value: '한림' }, isComposing: true });
+  fireEvent.compositionEnd(input, { data: '림' });
+  expect(input.value).toBe('한림');
+  await waitFor(() => expect(rowsShown().length).toBeGreaterThan(0));
+  expect(rowsShown().every(r => r.textContent!.includes('한림'))).toBe(true);
+});
