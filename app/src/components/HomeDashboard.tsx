@@ -10,6 +10,7 @@ import { SAMPLE_STUDENT_NAME } from '../data/sample/student';
 import { dataAsOf } from '../data/catalog';
 import { UniversityLogo } from './UniversityLogo';
 import { GradeRange } from './GradeRange';
+import { PromoBanner } from './PromoBanner';
 import { Icon } from './Icon';
 import '../styles/home.css';
 
@@ -74,6 +75,7 @@ export function HomeDashboard() {
             {result.representative !== null && <><span>대표값</span><b className="grade-chip grade-chip--9 num">{one(result.representative)}<sub>9</sub></b></>}
             <span className="home-chips__count num">입력 과목 {data.grades.length}개</span></p>
         </section> : <section className="home-card home-empty" aria-label="내 성적 요약"><div className="empty-state"><Icon name="file-text" size={48} /><h2>아직 입력한 성적이 없어요</h2><p>성적표를 한 번 입력하면 {desktop ? '' : <br />}환산 9등급 범위를 {desktop ? '여기에서 ' : ''}볼 수 있어요.</p><Link className="button-primary" to="/grade-input">성적 입력하기</Link></div></section>}
+        {!desktop && <PromoBanner closable />}{/* PC는 사이드바 아래(AppShell), 모바일은 사이드바가 없어 홈 이 자리 */}
         {has && <section className="home-card home-range" aria-label="5 to 9 내 위치">
           <h2>5 to 9 내 위치</h2>
           {ready && <div className="home-range__bar"><GradeRange min={result.min!} max={result.max!} representative={result.representative ?? undefined} /><span className="data-status-badge">신뢰도 {result.confidence}</span></div>}

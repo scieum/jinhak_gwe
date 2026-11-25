@@ -1,10 +1,12 @@
 {
   "slug": "login",
   "gate": "G5",
-  "pass": true,
-  "errors": [],
-  "back_to": null,
-  "same_fail_streak": 0,
+  "pass": false,
+  "errors": [
+    "V 1440: 차이 영역 x 368 y 576 112×32"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 2,
   "route": "/login",
   "allowed": [],
   "notes": [
@@ -17,6 +19,6 @@
   },
   "ssim": {
     "390": 0.992,
-    "1440": 0.9954
+    "1440": 0.9904
   }
 }

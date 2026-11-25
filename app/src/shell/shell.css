@@ -166,7 +166,9 @@
     overflow-y: auto;
     background: var(--color-canvas); /* design.md sidebar v2: canvas + 오른쪽 1px hairline-soft */
     border-right: 1px solid var(--color-hairline-soft);
+    scrollbar-width: none; /* 스크롤은 되고 막대만 숨겨요: 막대가 폭 16을 먹으면 사이드바 카드가 시안(215)보다 좁아져요 */
   }
+  .sidebar::-webkit-scrollbar { display: none; }
   /* 로고 위 32·폭 96(사용자 결정) · 메뉴 시작 y 104 */
   .sidebar__wordmark {
     display: flex;

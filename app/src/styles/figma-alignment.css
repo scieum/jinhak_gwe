@@ -63,7 +63,7 @@
 @media (min-width: 1024px) {
   .sidebar { display: flex; flex-direction: column; }
   .sidebar__wordmark { flex-shrink: 0; }
-  .sidebar__footer { margin-top: auto; padding: 24px 16px; display: grid; gap: 12px; } /* v2 시안: 기준일 → 12 → 백업(button-pill-soft) → 아래 24 */
+  .sidebar__footer { margin-top: auto; padding: 0 16px 24px; display: grid; gap: 12px; } /* v2 시안: (길콩 카드) → 12 → 기준일 → 12 → 백업(button-pill-soft) → 아래 24. 위 여백 0: 메뉴가 길면 시안처럼 메뉴 바로 아래에서 시작 */
   .shell__content { padding-top: 24px; }
   .student-screen > .screen-heading > h2:only-child { display: none; }
   .student-screen > .screen-heading:has(> h2:only-child) { display: none; }

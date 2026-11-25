@@ -32,6 +32,16 @@ export interface AdmissionPlan {
 }
 
 /** 설립만 대학 지도 공개 목록에서 연결한다. 캠퍼스 분류는 시행계획의 원래 표기를 따른다. */
+const SIDO_SHORT: Record<string, string> = { 서울특별시: '서울', 부산광역시: '부산', 대구광역시: '대구', 인천광역시: '인천', 광주광역시: '광주', 대전광역시: '대전', 울산광역시: '울산',
+  세종특별자치시: '세종', 경기도: '경기', 강원특별자치도: '강원', 충청북도: '충북', 충청남도: '충남', 전북특별자치도: '전북', 전라남도: '전남', 경상북도: '경북', 경상남도: '경남', 제주특별자치도: '제주' };
+const SHORT = new Set(Object.values(SIDO_SHORT));
+/** 원문 합성 지역(예: 2028 전형계획의 '전남광주')은 그 캠퍼스 주소의 시·도로 보여 줘요. 주소로 하나로 정해지지 않으면 원문 그대로. */
+export function planRegion(plan: Pick<AdmissionPlan, 'university' | 'campus' | 'region'>, campuses: readonly Campus[]): string {
+  if (SHORT.has(plan.region)) return plan.region;
+  const key = (n: string) => n.normalize('NFKC').replace(/\s/g, ''), name = key(plan.university);
+  const sidos = new Set(campuses.filter(c => [c.name, ...c.aliases ?? []].some(n => key(n) === name) && c.campus.split(' · ')[0] === plan.campus).map(c => SIDO_SHORT[c.sido]));
+  return sidos.size === 1 ? [...sidos][0]! : plan.region;
+}
 export function withPlanFoundings(catalog: PlanCatalog, campuses: readonly Campus[]): PlanCatalog {
   const names = new Map<string, Set<PlanFounding>>();
   const normalize = (name: string) => name.normalize('NFKC').replace(/\s/g, '');
@@ -44,7 +54,7 @@ export function withPlanFoundings(catalog: PlanCatalog, campuses: readonly Campu
   }
   return { ...catalog, entries: catalog.entries.map(plan => {
     const values = names.get(normalize(plan.university));
-    return { ...plan, founding: values?.size === 1 ? [...values][0] : undefined };
+    return { ...plan, founding: values?.size === 1 ? [...values][0] : undefined, region: planRegion(plan, campuses) };
   }) };
 }
 export function planCampusCategory(campus: string): '본교' | '분교' | '제2캠퍼스 이상' | undefined {
@@ -126,8 +136,11 @@ export function parsePlanCatalog(input: unknown): PlanCatalog {
   return input as PlanCatalog;
 }
 export function normalizePlanSearch(value: string) { return value.normalize('NFKC').toLowerCase().replace(/대학교/g, '대').replace(/^국립/, '').replace(/\s/g, ''); }
+// 검색할 글자는 전형계획마다 한 번만 만들어요(타이핑마다 전형 이름 수백 개를 다시 정규화하면 느려요)
+const haystacks = new WeakMap<AdmissionPlan, string>();
 export function matchesPlan(plan: AdmissionPlan, query: string) {
-  const haystack = normalizePlanSearch([...universitySearchLabels(plan.university), plan.campus, plan.region, ...plan.programs.map(p => p.name)].join(' '));
+  let haystack = haystacks.get(plan);
+  if (haystack === undefined) haystacks.set(plan, haystack = normalizePlanSearch([...universitySearchLabels(plan.university), plan.campus, plan.region, ...plan.programs.map(p => p.name)].join(' ')));
   return query.trim().split(/\s+/).every(term => haystack.includes(normalizePlanSearch(term)));
 }
 /** 내려받을 때 쓸 규칙 이름(우리 사본이 있을 때만). 다른 출처 링크에는 download 속성이 먹지 않아요 */

@@ -343,3 +343,16 @@ test('검색창: 한글 조합 중에는 입력값을 덮어쓰지 않고, 조�
   await waitFor(() => expect(rowsShown().length).toBeGreaterThan(0));
   expect(rowsShown().every(r => r.textContent!.includes('한림'))).toBe(true);
 });
+
+test('원문 합성 지역(전남광주)은 캠퍼스 주소의 시·도로 보여요 — 실제 자료 전수', () => {
+  const plans = parsePlanCatalog(JSON.parse(readFileSync('public/data/admission-plans.json', 'utf8')));
+  const map = parseUnivMap(JSON.parse(readFileSync('public/data/univ-map.json', 'utf8')));
+  const fixed = withPlanFoundings(plans, map.campuses).entries;
+  const at = (u: string, c = '본교') => fixed.find(p => p.university === u && p.campus === c)!.region;
+  expect(at('조선대학교')).toBe('광주');
+  expect(at('국립순천대학교')).toBe('전남');
+  expect(at('전남대학교')).toBe('광주');
+  expect(at('전남대학교', '제2캠퍼스')).toBe('전남');
+  expect(fixed.filter(p => p.region === '전남광주')).toHaveLength(0);
+  expect(at('가야대학교')).toBe('경남'); // 원래 시·도 이름은 그대로
+});

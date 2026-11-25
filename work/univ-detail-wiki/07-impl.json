@@ -1,10 +1,15 @@
 {
   "slug": "univ-detail-wiki",
   "gate": "G5",
-  "pass": true,
-  "errors": [],
-  "back_to": null,
-  "same_fail_streak": 0,
+  "pass": false,
+  "errors": [
+    "I 390 #I365:38169;30:29: 아이콘 없음 icon/info x 20 y 4786 16×16 (±4)",
+    "I 390: 시안에 없는 아이콘 x 20 y 4812 16×16",
+    "I 1440 #I365:38197;30:29: 아이콘 없음 icon/info x 280 y 3514 16×16 (±4)",
+    "I 1440: 시안에 없는 아이콘 x 280 y 3522 16×16"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 1,
   "route": "/univ-detail/wiki?u=경희대학교",
   "allowed": [
     {
@@ -21,8 +26,8 @@
     }
   ],
   "notes": [
-    "390: F 글자 짝 123/127 (짝 없는 글자는 T만 본다)",
-    "1440: F 글자 짝 211/215 (짝 없는 글자는 T만 본다)"
+    "390: F 글자 짝 124/127 (짝 없는 글자는 T만 본다)",
+    "1440: F 글자 짝 214/217 (짝 없는 글자는 T만 본다)"
   ],
   "images": {
     "390": "work/_cache/impl/univ-detail-wiki-390.png",
@@ -30,6 +35,6 @@
   },
   "ssim": {
     "390": 0.9625,
-    "1440": 0.9848
+    "1440": 0.9844
   }
 }

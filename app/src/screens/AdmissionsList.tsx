@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { useDeferredValue, useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { loadAdmissionPlans } from '../data/admissionPlans';
@@ -153,7 +153,10 @@ export function AdmissionsList() {
   function update(key: string, value: string) { const next = new URLSearchParams(params); if (value) next.set(key, value); else next.delete(key); setParams(next, { replace: key === 'q' }); }
   const idOf = (r: Row) => r.program ? interestId(r.plan.university, r.program.name) : '';
   const saved = (r: Row) => !!r.program && !!interests?.has(idOf(r));
-  const base = (f: Filters) => rows.filter(r => matchesPlan(r.plan, query) && passes(r, f) && (!interestOnly || saved(r)));
+  // 검색은 대학(전형계획) 단위로 한 번만 맞춰 보고, 목록 계산은 입력보다 한 박자 늦게 해서 타이핑이 먼저 반응해요
+  const searched = useDeferredValue(query);
+  const matching = useMemo(() => new Set(catalog?.entries.filter(p => matchesPlan(p, searched)).map(p => p.id)), [catalog, searched]);
+  const base = (f: Filters) => rows.filter(r => matching.has(r.plan.id) && passes(r, f) && (!interestOnly || saved(r)));
   const beforeType = base(filters), filtered = beforeType.filter(r => !type || r.type === type).sort(sorters[sort]);
   const typeCount = (t: string) => beforeType.filter(r => r.program && (!t || r.type === t)).length;
   const programCount = filtered.filter(r => r.program).length, campusOnly = filtered.length - programCount;
