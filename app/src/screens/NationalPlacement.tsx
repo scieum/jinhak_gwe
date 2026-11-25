@@ -16,7 +16,6 @@ import { universityLogoFile } from '../components/UniversityLogo';
 import { useCompactResults } from '../components/ResultFilters';
 import { CollectedResultFields } from '../components/CollectedResultFields';
 import { PlacementCoverage } from '../components/PlacementCoverage';
-import { useSampleMode } from '../data/sample/mode';
 import { SAMPLE_PENDING_NOTE, sampleNationalCatalog, sampleNationalRows, sampleSourceRow } from '../data/sample/nationalPlacement';
 import '../styles/national-placement.css';
 
@@ -31,7 +30,8 @@ const TYPE_TABS = ['교과', '종합', '논술', '기타', '전체'];
 const grade = (value: string) => { const n = gradeCoordinate(value); return n === null ? value : String(Number(n.toFixed(2))); };
 
 export function NationalPlacement() {
-  const compact = useCompactResults(), sample = useSampleMode(); // 샘플 모드 = 시안 데모(대학 24곳), 지우면 실제 공개 자료
+  // 2026-11-25 사용자 요청: 전국 배치표는 공개 입결이라 샘플 모드에서도 실제 자료(전체 대학)를 보여 줘요.
+  const compact = useCompactResults(), sample = false;
   const [catalog, setCatalog] = useState<Catalog | null>(null), [year, setYear] = useState('');
   const [rows, setRows] = useState<NationalPlacementRow[] | null>(null), [error, setError] = useState(''), [indexError, setIndexError] = useState('');
   const [attempt, setAttempt] = useState(0), [indexAttempt, setIndexAttempt] = useState(0);
