@@ -115,3 +115,9 @@ export function parseStudentBackup(value: unknown): StudentBackup {
   attendance: obj.attendance.map(a => ({ year: a.year, school_days: a.school_days,
     ...Object.fromEntries(attendanceKinds.map(k => [k, Object.fromEntries(attendanceReasons.map(r => [r, a[k][r]]))])) } as AttendanceRecord)) };
 }
+
+// design.md Subject Type: 화면 태그는 기초·일반·진로·융합·교양. 체육·예술은 2022 개정 선택 구분으로 보여 주고, 성적 처리(type)는 그대로 둬요.
+const TYPE_TAG: Record<SubjectType, string> = { 공통: '기초', 과탐실험: '기초', 일반선택: '일반', 진로선택: '진로', 융합선택: '융합', 체육예술: '일반', 교양: '교양' };
+const ARTS_TAG: Record<string, string> = { '운동과 건강': '진로', '스포츠 문화': '진로', '스포츠 과학': '진로', '음악 연주와 창작': '진로', '음악 감상과 비평': '진로', '미술 창작': '진로', '미술 감상과 비평': '진로',
+  '스포츠 생활1': '융합', '스포츠 생활2': '융합', '음악과 미디어': '융합', '미술과 매체': '융합' };
+export const typeTag = (g: Pick<GradeRecord, 'type' | 'name'>) => g.type === '체육예술' ? ARTS_TAG[g.name] ?? '일반' : TYPE_TAG[g.type];

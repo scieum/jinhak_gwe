@@ -69,7 +69,7 @@
   [data-slug='signup'] .auth__form { gap: 32px; }
   .auth__card-form { width: 440px; border: 0; padding: 0; }
   .auth__switch { width: 440px; }
-  .auth__about { margin-top: -48px; } /* 시안: 회원가입 줄 바로 아래 */
+  .auth__about { margin-top: -32px; } /* 폼 gap 48px에서 32px을 줄여 두 안내 줄 사이에 16px 여백 */
   .auth__card-form > h1 { line-height: 35px; }
   .auth__sub { margin-top: 8px; line-height: 27px; }
   .auth__lead { margin-top: 32px; }

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Icon } from '../components/Icon';
+import { PromoBanner } from '../components/PromoBanner';
 import { BrandLogo } from '../components/BrandLogo';
 import { ModeSwitch } from './ModeSwitch';
 import { DETAILS, MODE_HOME, MORE_PATH, NAV, locate, modeOf, type NavGroup } from './nav';
@@ -104,7 +105,7 @@ export function AppShell() {
             );
           })}</div>)}
         </nav>
-        <footer className="sidebar__footer"><p className="t-caption text-muted">데이터 기준일 {dataAsOf}{mode === 'admin' && adminName && <><br />{adminName}{withRo(adminName)} 로그인</>}</p>{mode === 'student' && <Link to="/grade-input?backup=1" className="button-pill-soft"><Icon name="download" size={20} />백업</Link>}{mode === 'teacher' && <TeacherBackupButton />}<SampleReshowButton className="text-button" />
+        <footer className="sidebar__footer">{mode === 'student' && <PromoBanner closable variant="sidebar" />}<p className="t-caption text-muted">데이터 기준일 {dataAsOf}{mode === 'admin' && adminName && <><br />{adminName}{withRo(adminName)} 로그인</>}</p>{mode === 'student' && <Link to="/grade-input?backup=1" className="button-pill-soft"><Icon name="download" size={20} />백업</Link>}{mode === 'teacher' && <TeacherBackupButton />}<SampleReshowButton className="text-button" />
           {/* 교사·관리자 셸 맨 아래 로그아웃(v2 시안 · design.md sidebar). 계정 세션이 없어도 로그인 화면으로 보내요. */}
           {(mode === 'teacher' || mode === 'admin') && <button type="button" className="sidebar-item sidebar__logout" onClick={() => void signOut().finally(() => navigate('/login'))}><Icon name="log-out" size={20} /><span>로그아웃</span></button>}</footer>
       </aside>

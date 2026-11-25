@@ -1,8 +1,8 @@
 import 'fake-indexeddb/auto';
 import { webcrypto } from 'node:crypto';
-import { afterEach, beforeAll, expect, test, vi } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it, test, vi } from 'vitest';
 import { StudentDatabase } from '../src/store/studentDb';
-import { validateGrade, parseStudentBackup, emptyAttendance, validateAttendance } from '../src/domain/student';
+import { validateGrade, parseStudentBackup, emptyAttendance, validateAttendance, typeTag } from '../src/domain/student';
 import { decryptBackup, encryptBackup } from '../src/io/backup';
 import { gradesCsv, parseCsv, rowsToGrades, parsePdfGradeLines, pdfLines, readSpreadsheet, gradeHeaders, templateXlsx } from '../src/io/grades';
 import { subject } from './fixtures';
@@ -77,4 +77,16 @@ test('XLSX 템플릿과 실제 값 읽기, 수식 셀은 거부', async () => {
 });
 test('CSV 내보내기의 수식 시작 문자는 텍스트로 처리', () => {
   expect(gradesCsv([subject({ name: '=1+1' })])).toContain("\"'=1+1\"");
+});
+
+describe('과목 유형 태그(design.md Subject Type)', () => {
+  it('공통·과탐실험은 기초, 체육·예술은 2022 개정 선택 구분, 교양은 따로', () => {
+    expect(typeTag({ type: '공통', name: '공통국어1' })).toBe('기초');
+    expect(typeTag({ type: '과탐실험', name: '과학탐구실험1' })).toBe('기초');
+    expect(typeTag({ type: '체육예술', name: '체육1' })).toBe('일반');
+    expect(typeTag({ type: '체육예술', name: '운동과 건강' })).toBe('진로');
+    expect(typeTag({ type: '체육예술', name: '미술과 매체' })).toBe('융합');
+    expect(typeTag({ type: '융합선택', name: '여행지리' })).toBe('융합');
+    expect(typeTag({ type: '교양', name: '논술' })).toBe('교양');
+  });
 });

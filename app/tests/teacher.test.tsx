@@ -175,7 +175,7 @@ describe('결과 집계 · 최저 판정 · 학생 기록 화면', () => {
     expect(screen.getByText(/학생이 보낸 카드와 직접 입력한 결과를 모았어요/)).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: '저장' }));
     expect(screen.getByRole('button', { name: /hwpx/ })).toHaveProperty('disabled', true);
-    expect(screen.getByRole('button', { name: /pdf/ })).toHaveProperty('disabled', true);
+    expect(screen.getByRole('button', { name: /pdf/ })).toHaveProperty('disabled', false);
     expect(screen.getByText(/학생은 번호·별칭으로 들어가요/)).toBeTruthy();
     URL.createObjectURL = () => 'blob:x'; URL.revokeObjectURL = () => undefined;
     fireEvent.click(screen.getByRole('button', { name: /xlsx/ }));

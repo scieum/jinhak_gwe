@@ -10,7 +10,7 @@ import { openReply, type TeacherReply } from '../domain/reply';
 import type { Exchange } from '../io/exchange';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { attendanceKinds, attendanceReasons, emptyAttendance, gradeSummary, hasRank, hasScores, newGrade, semesters,
-  subjectTypes, validateAttendance, validateGrade, type AttendanceRecord, type GradeRecord, type Semester, type StudentBackup } from '../domain/student';
+  subjectTypes, typeTag, validateAttendance, validateGrade, type AttendanceRecord, type GradeRecord, type Semester, type StudentBackup } from '../domain/student';
 import { studentDb, useStudent } from '../store/studentDb';
 import { subjectCatalog } from '../data/subject-catalog';
 import { decryptBackup, downloadFile, encryptBackup } from '../io/backup';
@@ -96,10 +96,11 @@ export function GradeInput() {
   const distBad = (g: GradeRecord) => !!g.achievement_distribution && validateGrade(g).some(e => e.startsWith('분포비율'));
   const none = <span className="gi-none">—</span>;
   const table = <div className="table-scroll"><table className="grade-input-table"><caption className="sr-only">입력한 과목 성적</caption>
-    <thead><tr>{['과목', '유형', '학점', '원점수', '과목평균', '표준편차', '성취도', 'A', 'B', 'C', 'D', 'E', '합계', '수강자수', '석차등급'].map(h => <th key={h} scope="col">{h}</th>)}</tr></thead>
+    <thead><tr>{['과목', '교과(군)', '유형', '학점', '원점수', '과목평균', '표준편차', '성취도', 'A', 'B', 'C', 'D', 'E', '합계', '수강자수', '석차등급'].map(h => <th key={h} scope="col">{h}</th>)}</tr></thead>
     <tbody>{visible.map(g => { const scores = hasScores(g), bad = distBad(g), d = g.achievement_distribution; return <tr key={g.id}>
-      <th scope="row"><button type="button" className="gi-subject" aria-label={`${g.name || '새 과목'} 편집`} onClick={() => setEdit({ ...g })}>{g.name || '새 과목'} · {g.subject_group}</button></th>
-      <td className="gi-type"><span className="subject-type-chip">{typeLabel(g.type)}</span></td>
+      <th scope="row"><button type="button" className="gi-subject" aria-label={`${g.name || '새 과목'} 편집`} onClick={() => setEdit({ ...g })}>{g.name || '새 과목'}</button></th>
+      <td className="gi-group">{g.subject_group}</td>
+      <td className="gi-type"><TagChip g={g} /></td>
       <td>{cell(g, 'credits', '학점')}</td>
       {scores ? <><td>{cell(g, 'raw_score', '원점수')}</td><td>{cell(g, 'subject_mean', '과목평균')}</td><td /></> : <><td className="gi-na">{none}</td><td className="gi-na">{none}</td><td className="gi-na">{none}</td></>}
       <td>{g.achievement ?? ''}</td>
@@ -111,7 +112,7 @@ export function GradeInput() {
   const tableErrors = visible.filter(g => validateGrade(g).length).map(g => <p key={g.id} className="gi-error"><Icon name="triangle-alert" size={16} />{g.name || '새 과목'} · {validateGrade(g).join(' ')}</p>);
   const cards = <div className="gi-cards">{visible.map(g => { const errs = validateGrade(g); return <Fragment key={g.id}>
     <button type="button" className="subject-card gi-card" aria-label={`${g.name || '새 과목'}${errs.length ? ' 확인 필요' : ''} 편집`} onClick={() => setEdit({ ...g })}>
-      <span className="gi-card__title"><span className="gi-card__name">{g.name || '새 과목'}</span><span className="subject-type-chip">{typeLabel(g.type)}</span></span>
+      <span className="gi-card__title"><span className="gi-card__name">{g.name || '새 과목'}</span><TagChip g={g} /></span>
       <span className="gi-card__meta"><span className="gi-card__info"><span className="gi-card__text">{g.credits}학점 · 성취도 {g.achievement ?? '—'}{hasRank(g) ? '' : ' · 등급 미산출'}</span>{hasRank(g) && g.rank_grade !== null && <span className="grade-chip num">{g.rank_grade}</span>}</span>
         {hasScores(g) && <span className="gi-card__score num">{g.raw_score ?? '—'} / {g.subject_mean ?? '—'}</span>}</span></button>
     {errs.length > 0 && <p className="gi-error"><Icon name="triangle-alert" size={16} />{errs.join(' ')}</p>}</Fragment>; })}</div>;
@@ -175,8 +176,7 @@ export function GradeInput() {
 
 const GROUP_ORDER = ['국어', '수학', '영어', '한국사', '사회', '과학', '체육', '예술', '기술·가정', '제2외국어', '한문', '교양'];
 const groupRank = (group: string) => { const i = GROUP_ORDER.indexOf(group); return i < 0 ? GROUP_ORDER.length : i; };
-const TYPE_SHORT: Partial<Record<GradeRecord['type'], string>> = { 일반선택: '일반', 진로선택: '진로', 융합선택: '융합' };
-const typeLabel = (type: GradeRecord['type']) => TYPE_SHORT[type] ?? type;
+const TagChip = ({ g }: { g: GradeRecord }) => { const t = typeTag(g); return <span className="subject-type-chip" data-tag={t}>{t}</span>; };
 
 function MenuRow({ title, caption, onClick, selected }: { title: string; caption: string; onClick: () => void; selected?: boolean }) {
   return <button type="button" className="menu-row" aria-pressed={selected} onClick={onClick}><span><strong>{title}</strong><span className="t-caption text-muted">{caption}</span></span><Icon name="chevron-right" size={20} /></button>;

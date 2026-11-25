@@ -54,6 +54,18 @@ export async function decryptTeacherBackup(text: string, password: string, table
   if (!ok || !tables.meta?.some(r => r.key === 'class' && typeof r.name === 'string')) throw new Error(fail);
   return tables;
 }
+const esc = (v: unknown) => String(v ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+/** 표를 인쇄용 문서로 만들어 브라우저 인쇄 창을 열어요. 사용자가 'PDF로 저장'을 고르면 PDF 파일이 돼요(서버로 보내지 않음). */
+export function printTable(title: string, lines: readonly string[], headers: readonly string[], rows: readonly (string | number | null)[][]) {
+  const frame = document.createElement('iframe');
+  frame.setAttribute('aria-hidden', 'true'); frame.style.cssText = 'position:fixed;width:0;height:0;border:0;right:0;bottom:0';
+  frame.srcdoc = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>${esc(title)}</title><style>
+body{font-family:Pretendard,'Malgun Gothic',sans-serif;font-size:10pt;color:#111;margin:12mm}h1{font-size:14pt;margin:0 0 4mm}p{margin:0 0 2mm;color:#444}
+table{border-collapse:collapse;width:100%;margin-top:4mm}th,td{border:1px solid #999;padding:1.5mm 2mm;text-align:left;vertical-align:top}th{background:#eee}tr{break-inside:avoid}</style></head>
+<body><h1>${esc(title)}</h1>${lines.map(l => `<p>${esc(l)}</p>`).join('')}<table><thead><tr>${headers.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></body></html>`;
+  frame.onload = () => { frame.contentWindow?.focus(); frame.contentWindow?.print(); setTimeout(() => frame.remove(), 1000); };
+  document.body.appendChild(frame);
+}
 export function downloadFile(content: BlobPart, filename: string, type: string) {
   const url = URL.createObjectURL(new Blob([content], { type }));
   const a = document.createElement('a'); a.href = url; a.download = filename; a.click();

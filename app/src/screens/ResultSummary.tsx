@@ -13,7 +13,7 @@ import { studentLabel, type Student } from '../domain/classroom';
 import { AREAS } from '../domain/mock';
 import { examsByRecent } from '../domain/minimum';
 import { RESULTS, byUniversity, outcomesFromCards, receiveMock, totals, type AdmissionType, type Outcome, type Result, type UnivRow } from '../domain/outcomes';
-import { downloadFile } from '../io/backup';
+import { downloadFile, printTable } from '../io/backup';
 import { xlsxOf } from '../io/grades';
 import { teacherDb, type ClassState } from '../store/teacherDb';
 import '../styles/result-summary.css';
@@ -22,11 +22,11 @@ import '../styles/result-summary.css';
 const XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 const SOURCE_NOTE = '학생이 보낸 카드와 직접 입력한 결과를 모았어요 · 대학 공식 발표가 최종 기준이에요 · 샘플의 대학·숫자는 예시예요';
 const MOCK_NOTE = '학생이 낸 가채점 원점수를 모았어요 · 등급컷이 검수되면 추정 등급과 최저 충족을 보여 줘요 · 성적 통지표와 대학 모집요강이 최종 기준이에요';
-// 02-spec 8절 · 기존 결정: hwpx·pdf는 아직 만들지 않아 목록에만 보이고 고를 수 없어요
+// 02-spec 8절: hwpx는 아직 만들지 않아 목록에만 보이고 고를 수 없어요. pdf는 브라우저 인쇄 창으로 저장해요
 const FORMATS = [
   { key: 'xlsx', note: '엑셀 표', ready: true },
   { key: 'hwpx', note: '한글 문서 · 준비 중', ready: false },
-  { key: 'pdf', note: '인쇄용 · 준비 중', ready: false },
+  { key: 'pdf', note: '인쇄용', ready: true },
 ] as const;
 const GROUPS = ['교과', '종합', '논술·기타'] as const;
 type Group = typeof GROUPS[number];
@@ -85,7 +85,7 @@ function ResultsTab({ info, students, outcomes, cards, desktop, tabs }: Ready & 
   const [open, setOpen] = useState<string[]>([]), [sort, setSort] = useState<{ key: 'applied' | 'pass' | 'missing'; desc: boolean } | null>(null);
   const [mobileFilter, setMobileFilter] = useState<'all' | 'missing'>('all');
   const [message, setMessage] = useState(''), [error, setError] = useState('');
-  const [saveOpen, setSaveOpen] = useState(false), [sheet, setSheet] = useState(false), [toast, setToast] = useState<string | null>(null);
+  const [saveOpen, setSaveOpen] = useState(false), [sheet, setSheet] = useState(false), [fmt, setFmt] = useState<'xlsx' | 'pdf'>('xlsx'), [toast, setToast] = useState<string | null>(null);
   useEffect(() => { if (!toast) return; const t = window.setTimeout(() => setToast(null), 3000); return () => window.clearTimeout(t); }, [toast]);
   const menu = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -134,7 +134,7 @@ function ResultsTab({ info, students, outcomes, cards, desktop, tabs }: Ready & 
   const clearFilters = () => { setTypes([]); setStatuses([]); setQuery(''); };
 
   // 02-spec 8절: 머리 · 개인정보 줄 · 화면 표 · 고지. 내 기기 저장이라 확인 창 없이 바로 저장해요(design.md 예외)
-  const saveXlsx = async (which: 'univ' | 'student') => {
+  const save = async (fmt: 'xlsx' | 'pdf', which: 'univ' | 'student') => {
     setSaveOpen(false); setSheet(false);
     const name = which === 'univ' ? '대학별' : '학생별';
     const file = `결과집계_${info.name.replace(/\s/g, '')}_${admissionYear}수시_${name}.xlsx`;
@@ -143,8 +143,10 @@ function ResultsTab({ info, students, outcomes, cards, desktop, tabs }: Ready & 
         ? groups.flatMap(x => x.rows.map(r => [x.g, r.university, r.program, r.applied, r.stage1, r.counts['합격'], r.counts['충원 합격'], failed(r.counts), r.counts['미등록'], r.counts['미입력']]))
         : studentRows.map(({ s, list, final }) => [label(s), final, ...list.slice(0, 6).map(o => `${o.university} ${o.program} · ${o.result}`)]);
       const headers = which === 'univ' ? ['전형 유형', '대학', '전형', '지원', '1단계 통과', '합격', '충원 합격', '불합격', '미등록', '미입력'] : ['학생', '최종 합격', ...[1, 2, 3, 4, 5, 6].map(i => `지원 ${i}`)];
-      downloadFile(await xlsxOf(name, [`결과 집계 · ${info.name} · ${admissionYear}학년도 수시 · ${name} 보기 · 저장일 ${new Date().toISOString().slice(0, 10)}`],
-        [['학생 개인정보가 들어 있어요 · 학교 밖으로 보내지 마세요'], ...(filterCount ? [[`필터: ${[...types, ...statuses, q].filter(Boolean).join(', ')}`]] : []), [], headers, ...rows, [], [SOURCE_NOTE]]), file, XLSX);
+      const head = `결과 집계 · ${info.name} · ${admissionYear}학년도 수시 · ${name} 보기 · 저장일 ${new Date().toISOString().slice(0, 10)}`;
+      const lines = ['학생 개인정보가 들어 있어요 · 학교 밖으로 보내지 마세요', ...(filterCount ? [`필터: ${[...types, ...statuses, q].filter(Boolean).join(', ')}`] : [])];
+      if (fmt === 'pdf') { printTable(head, [...lines, SOURCE_NOTE], headers, rows); setToast("인쇄 창에서 'PDF로 저장'을 고르면 파일로 남아요"); return; }
+      downloadFile(await xlsxOf(name, [head], [...lines.map(l => [l]), [], headers, ...rows, [], [SOURCE_NOTE]]), file, XLSX);
       setToast('결과 집계를 xlsx로 저장했어요');
     } catch { setToast('파일을 저장하지 못했어요. 다시 저장해 주세요.'); }
   };
@@ -185,9 +187,9 @@ function ResultsTab({ info, students, outcomes, cards, desktop, tabs }: Ready & 
         <Note>{SOURCE_NOTE}</Note></>}
       {sheet && <Modal label="결과 저장" onClose={() => setSheet(false)}>
         <div className="rs-sheet__head"><h2>결과 저장</h2><button type="button" className="rs-sheet__close" aria-label="닫기" onClick={() => setSheet(false)}><Icon name="x" size={24} /></button></div>
-        <ul className="rs-sheet__list">{FORMATS.map(f => <li key={f.key}><button type="button" className="rs-format" aria-pressed={f.key === 'xlsx'} disabled={!f.ready}><span className="rs-format__name">{f.key}</span><span className="rs-format__note">{f.note}</span></button></li>)}</ul>
+        <ul className="rs-sheet__list">{FORMATS.map(f => <li key={f.key}><button type="button" className="rs-format" aria-pressed={f.key === fmt} disabled={!f.ready} onClick={f.ready ? () => setFmt(f.key as 'xlsx' | 'pdf') : undefined}><span className="rs-format__name">{f.key}</span><span className="rs-format__note">{f.note}</span></button></li>)}</ul>
         <p className="rs-sheet__note">지금 보기와 필터를 그대로 담아요. 학생은 번호·별칭으로 들어가요.</p>
-        <div className="rs-sheet__actions"><ButtonOutline onClick={() => setSheet(false)}>취소</ButtonOutline><ButtonPrimary onClick={() => saveXlsx('student')}>xlsx로 저장</ButtonPrimary></div>
+        <div className="rs-sheet__actions"><ButtonOutline onClick={() => setSheet(false)}>취소</ButtonOutline><ButtonPrimary onClick={() => save(fmt, 'student')}>{fmt}로 저장</ButtonPrimary></div>
       </Modal>}
       <Toast text={toast} />
     </div>;
@@ -197,7 +199,7 @@ function ResultsTab({ info, students, outcomes, cards, desktop, tabs }: Ready & 
     <ButtonOutline aria-expanded={saveOpen} aria-controls="result-save-list" onClick={() => setSaveOpen(!saveOpen)}><Icon name="download" size={20} />저장</ButtonOutline>
     {saveOpen && <div id="result-save-list" className="rs-dropdown" role="group" aria-label="저장 형식">
       <p className="rs-dropdown__head">저장 형식</p>
-      {FORMATS.map(f => <button key={f.key} type="button" className="rs-dropdown__option" disabled={!f.ready} onClick={f.ready ? () => saveXlsx(view) : undefined}>
+      {FORMATS.map(f => <button key={f.key} type="button" className="rs-dropdown__option" disabled={!f.ready} onClick={f.ready ? () => save(f.key as 'xlsx' | 'pdf', view) : undefined}>
         <span className="rs-dropdown__name">{f.key}</span><span className="rs-dropdown__note">{f.note}</span></button>)}
       <p className="rs-dropdown__foot">지금 보기({viewName})와 필터를 그대로 담아요. 학생은 번호·별칭으로 들어가요.</p></div>}
   </div>;
