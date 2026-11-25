@@ -8,8 +8,10 @@ import { reviewed, type Provenance } from '../engine/types';
  */
 export const CORE = ['국어', '수학', '영어', '탐구'] as const;
 export type Core = typeof CORE[number];
-export interface Criterion { areas: Core[]; count: number; sum: number; required: Core | null; history_max: number | null; tamgu: 'avg' | 'best' }
-export interface Target { number: string; university: string; criterion: Criterion | null; source: 'teacher'; updated_at: string }
+/** also: 두 번째로 꼭 넣을 영역(예: "국·수 포함 3개"). 없으면 필수 영역은 required 하나예요. */
+export interface Criterion { areas: Core[]; count: number; sum: number; required: Core | null; also?: Core; history_max: number | null; tamgu: 'avg' | 'best' }
+/** unit = 학과(없으면 university 글자 뒤쪽). sample = 샘플 모드의 예시 모집요강 기준(표식 없으면 교사 입력 · 미검수). */
+export interface Target { number: string; university: string; unit?: string; criterion: Criterion | null; source: 'teacher'; sample?: true; updated_at: string }
 export type Verdict = '충족' | '근접' | '미충족' | '자료 부족' | '판정 불가';
 export interface Judged { verdict: Verdict; reason: string; values: Partial<Record<Core, number>> }
 
@@ -35,12 +37,13 @@ function coreValues(g: MockGrades['grades'], c: Criterion): Partial<Record<Core,
   if (Number.isNaN(out.탐구)) delete out.탐구; // 평균 방식인데 탐구 한 과목이 빠지면 계산하지 않아요
   return out;
 }
+export const requiredAreas = (c: Criterion): Core[] => [c.required, c.also].filter((a): a is Core => !!a);
 /** 필수 영역을 넣고 나머지는 좋은 등급부터 count개. 고를 수 없으면 null. */
 function bestSum(v: Partial<Record<Core, number>>, c: Criterion): number | null {
-  const avail = c.areas.filter(a => v[a] !== undefined);
-  if (c.required && v[c.required] === undefined) return null;
-  const rest = avail.filter(a => a !== c.required).map(a => v[a]!).sort((a, b) => a - b);
-  const picked = [...(c.required ? [v[c.required]!] : []), ...rest].slice(0, c.count);
+  const avail = c.areas.filter(a => v[a] !== undefined), must = requiredAreas(c);
+  if (must.some(a => v[a] === undefined)) return null;
+  const rest = avail.filter(a => !must.includes(a)).map(a => v[a]!).sort((a, b) => a - b);
+  const picked = [...must.map(a => v[a]!), ...rest].slice(0, c.count);
   return picked.length < c.count ? null : picked.reduce((a, b) => a + b, 0);
 }
 const fmt = (n: number) => Number.isInteger(n) ? String(n) : n.toFixed(1);

@@ -67,3 +67,14 @@ test.each([...STYLE_PROFILES.map(p => p.id), 'mixed', 'open'] as const)('%s resp
   }
   expect(screen.getByRole('img').getAttribute('src')).toContain(`gilkong-${kind}-v1.png`);
 });
+test('preparation card opens the D18 explanation dialog and 닫기 closes it', () => {
+  render(<MemoryRouter><AdmissionStyle /></MemoryRouter>);
+  fireEvent.click(screen.getByRole('button', { name: /01 매일의 힘/ }));
+  const dialog = screen.getByRole('dialog');
+  expect(dialog.textContent).toContain('꾸준히 쌓는 기록가');
+  expect(dialog.textContent).toContain('이런 문항으로 살펴봐요');
+  STYLE_QUESTIONS.filter(q => q.axis === 'record').forEach(q => expect(dialog.textContent).toContain(q.text));
+  expect(dialog.textContent).toContain('함께 살펴볼 전형 · 학생부교과');
+  fireEvent.click(screen.getByRole('button', { name: '닫기' }));
+  expect(screen.queryByRole('dialog')).toBeNull();
+});

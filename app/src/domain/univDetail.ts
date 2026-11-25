@@ -6,7 +6,7 @@ import { programPath } from './interests';
 export type UdType = '교과' | '종합' | '논술' | '기타' | '정시';
 export interface UdProgram {
   name: string; type: UdType; sub: string; round: '수시' | '정시'; quota: number | null;
-  minimum: '있음' | '없음' | '해당 없음'; interview: '있음' | '없음';
+  minimum: '있음' | '없음' | '해당 없음' | '원문 확인'; interview: '있음' | '없음' | '원문 확인';
   facts: [label: string, value: string][]; path: string; source?: string;
 }
 export interface UdChange { program: string; item: string; prev: string; next: string; delta?: number }
@@ -21,6 +21,8 @@ export interface UdView {
 const TYPES: UdType[] = ['교과', '종합', '논술', '기타', '정시'];
 const typeOf = (round: string, type: string): UdType => round === '정시' ? '정시' : TYPES.find(t => type.includes(t)) ?? '기타';
 const none = (v: string | undefined) => !v || /미적용|없음|미실시|해당 없음/.test(v);
+// 구조화 자료에서 근거 쪽수가 없는 항목은 '원문 확인 필요'로 와요(build_admission_plan_programs.py). 있음·없음으로 바꾸지 않아요.
+const UNKNOWN = '원문 확인 필요';
 
 export function planView(plan: AdmissionPlan): UdView {
   const doc = plan.documents[0];
@@ -33,7 +35,8 @@ export function planView(plan: AdmissionPlan): UdView {
       const round = p.round === '정시' ? '정시' : '수시', quota = Number.parseInt(p.quota, 10);
       return {
         name: p.name, type: typeOf(round, p.type), sub: p.scope ?? '—', round, quota: Number.isFinite(quota) ? quota : null,
-        minimum: round === '정시' ? '해당 없음' : none(p.minimum) ? '없음' : '있음', interview: none(p.interview) ? '없음' : '있음',
+        minimum: round === '정시' ? '해당 없음' : p.minimum === UNKNOWN ? '원문 확인' : none(p.minimum) ? '없음' : '있음',
+        interview: p.interview === UNKNOWN ? '원문 확인' : none(p.interview) ? '없음' : '있음',
         facts: [['모집인원', p.quota], ['전형요소', p.method], ['수능최저', p.minimum], ['면접', p.interview ?? '원문 확인']],
         path: programPath(plan.university, p.name), source: plan.documents.find(d => d.id === p.document_id)?.source_url,
       };

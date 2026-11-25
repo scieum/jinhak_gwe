@@ -58,9 +58,10 @@ div.home-heading > p { margin-top: 4px; font-size: var(--font-body-lg-size); fon
 .home-judge li > a { flex: 1; display: grid; gap: 2px; min-width: 0; color: var(--color-ink); text-decoration: none; }
 .home-judge li > a strong { font-size: 19px; font-weight: 700; line-height: 26px; }
 .home-judge li > a span { font-size: 13px; line-height: 20px; color: var(--color-text-muted); }
-.home-judge .judge-badge { display: inline-flex; align-items: center; gap: 4px; flex: none; height: 24px; padding: 0 8px; font-size: 12px; font-weight: 600; line-height: 17px; }
-.home-judge .judge-badge > span { font-size: 9px; }
-.home-judge .judge-edge { color: var(--color-judge-edge); background: var(--color-canvas); outline: 1px dashed var(--color-judge-edge); outline-offset: -1px; }
+.home-judge .judge-badge { display: inline-flex; align-items: center; justify-content: center; gap: 4px; flex: none; height: 26px; box-sizing: border-box; padding: 0 8px; border: 1px solid transparent; font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; }
+.home-judge .judge-badge:not(.judge-none) { width: 56px; padding-inline: 0; }
+.home-judge .judge-badge > span { display: inline-flex; align-items: center; justify-content: center; width: 10px; font-size: 10px; line-height: 1; }
+.home-judge .judge-edge { color: var(--color-judge-edge); background: var(--color-judge-edge-bg); border-color: var(--color-judge-edge); outline: none; }
 
 /* 이어서 준비해요(PC) · 바로가기(모바일) */
 .home-shortcuts { display: grid; gap: 12px; padding: 20px var(--spacing-lg); background: var(--color-canvas); }

@@ -24,7 +24,7 @@ type View = { x: number; y: number; w: number; h: number };
 const PX = { compact: { w: 350, h: 440 }, wide: { w: 636, h: 540 } }; // 지도 칸 크기(spec M6 · P3) — 24px 묶음 기준
 // 전국 보기 화면 틀: Figma region-map 390(504:81871) · 1440(506:87629)의 땅 자리에 맞춘 viewBox(지도 단위)
 const NATIONAL = { compact: { x: -54.98, y: -15.38, w: 528.71, h: 664.67 }, wide: { x: -205.44, y: -9.34, w: 768.59, h: 652.58 } };
-const KINDS_SHOWN: Kind[] = ['일반대학', '교육대학', '산업대학'];
+const KINDS_SHOWN: Kind[] = ['일반대학', '교육대학', '산업대학', '특별법 대학'];
 const FIRST = 4, MORE = 20;
 const Caret = () => <span className="um-caret" aria-hidden="true">▾</span>;
 const LEAD = '전국 4년제 대학이 어디 있는지 지도로 봐요 · 시·도를 고르면 그 지역 대학만 따로 보여 드려요';
@@ -39,8 +39,9 @@ function viewOf(region: Sido | null, compact = false): View {
 
 export function UnivMap() {
   const [loaded, retry] = useUnivMap(), compact = useCompactResults();
-  // 샘플 모드 = 시안 데모(시·도별 개수 · 예시 좌표, 샘플 띠가 보일 때만). 지우면 관리자 검수분(public/data)만
-  const sample = useSampleMode(), state = sample ? sampleUnivMap : loaded;
+  // 대학 위치는 개인 성적의 샘플 모드와 별개인 공개 자료다. 시안 대조 빌드에서만 고정 예시를 사용한다.
+  const sampleMode = useSampleMode();
+  const sample = sampleMode && import.meta.env.VITE_MAP_DESIGN_FIXTURE === 'true', state = sample ? sampleUnivMap : loaded;
   const [top, setTop] = useState<Element | null>(null);
   useEffect(() => { setTop(compact ? null : document.querySelector('.topbar__heading')); }, [compact]);
   const [region, setRegion] = useState<Sido | null>(null), [filters, setFilters] = useState<Filters>(NO_FILTERS);
@@ -163,7 +164,9 @@ export function UnivMap() {
         {mapCard}</div>}
 
     <div className="um-sources t-caption text-muted">
-      {sample ? <p>{SAMPLE_UNIV_MAP_SOURCE}</p> : data?.list_source && <p>대학 목록 · 주소: {data.list_source}{data.list_as_of ? `(${data.list_as_of} 기준)` : ''} · 좌표: 주소를 좌표로 바꾼 뒤 관리자 2명 검수{data.reviewed_at ? `(검수일 ${data.reviewed_at})` : ''}</p>}
+      {sample ? <p>{SAMPLE_UNIV_MAP_SOURCE}</p> : data?.list_source && <p>대학 목록 · 주소: {data.list_source}{data.list_as_of ? `(${data.list_as_of} 기준)` : ''} · 좌표: {data.provenance === 'official-published'
+        ? <>{data.coordinate_source} · <a href={data.source_url} target="_blank" rel="noreferrer">원본 자료</a></>
+        : <>주소를 좌표로 바꾼 뒤 관리자 2명 검수{data.reviewed_at ? `(검수일 ${data.reviewed_at})` : ''}</>}</p>}
       <p>지도 경계: {BOUNDARY_SOURCE} · 본교 · 분교 · 캠퍼스는 따로 세요</p></div>
     <p className="disclaimer-note"><Icon name="info" size={16} /><span>대학이 있는 곳을 보여 주는 지도예요 · 입결이나 대학 순위와는 관계없어요 · 정확한 주소와 캠퍼스 정보는 대학 공식 누리집이 최종 기준이에요{sample ? ' · 샘플의 대학·숫자는 예시예요' : ''}{data?.base_date ? ` · 데이터 기준일 ${data.base_date}` : ''}</span></p>
 
@@ -216,6 +219,8 @@ function PinCard({ c, titleRef, onClose }: { c: Campus; titleRef: React.RefObjec
       <button type="button" className="um-icon-button" aria-label="카드 닫기" onClick={onClose}><Icon name="x" size={20} /></button></header>
     <p className="t-title">{c.campus} · {c.campus_type}</p>
     <p className="t-body-sm text-muted">{facts(c)}</p>
+    {c.address && <p className="t-body-sm">{c.address}</p>}
+    {c.source_url && <p className="t-caption"><a href={c.campus_source_url ?? c.source_url} target="_blank" rel="noreferrer">위치 출처 확인</a></p>}
     <Link className="um-pin-card__link" to={detailHref(c)} aria-label={`${c.name} ${c.campus} 대학 상세 보기`}>대학 상세 보기 ›</Link>
   </article>;
 }

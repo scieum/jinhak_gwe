@@ -7,7 +7,7 @@ import type { ClassInfo } from '../domain/classroom';
  * 학급 데이터 서버 보관(PRD 7-3, supabase/migrations class_snapshots). 기기 저장소(Dexie) 표를 통째로 한 행에 올려요.
  * shortcut: 마지막 저장이 이겨요. 여러 기기에서 동시에 고치는 일이 잦아지면 표별 동기화로 바꿔요.
  */
-const TABLES = ['meta', 'students', 'cards', 'memos', 'mocks', 'school', 'logs', 'targets', 'outcomes', 'rawMocks', 'schedules', 'scheduleDone'] as const; // 예전 묶음에 없는 테이블은 빈 목록으로 읽어요
+const TABLES = ['meta', 'students', 'cards', 'memos', 'mocks', 'school', 'logs', 'targets', 'outcomes', 'rawMocks', 'schedules', 'scheduleDone', 'counselLists'] as const; // 예전 묶음에 없는 테이블은 빈 목록으로 읽어요
 type Snapshot = { version: 1; tables: Record<string, unknown[]> };
 const db = () => { if (!supabase) throw new Error('계정 서버를 준비하고 있어요.'); return supabase; };
 

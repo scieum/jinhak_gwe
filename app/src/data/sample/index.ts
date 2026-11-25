@@ -11,7 +11,7 @@ import { sampleFlag, setSampleFlag } from './mode';
 import { isSampleAttendance, isSampleId, isSampleInterest, isSampleMock } from './rows';
 import { sampleMockScores } from './mockScore';
 import { sampleApplications, sampleAttendance, sampleBoards, sampleGrades, sampleInterests, sampleTasks } from './student';
-import { SAMPLE_CLASS, sampleCards, sampleClassMocks, sampleLogs, sampleMemos, sampleMocks, sampleOutcomes, sampleSchedules, sampleSchool, sampleStudents, sampleTargets } from './teacher';
+import { SAMPLE_CLASS, sampleCards, sampleClassMocks, sampleLogs, sampleMemos, sampleMocks, sampleOutcomes, sampleSchedules, sampleSchool, sampleStudents, sampleTargets, sampleCounselLists } from './teacher';
 import { sampleFieldDraft, sampleWikiDrafts } from './admin';
 import { samplePrograms } from './public';
 
@@ -56,7 +56,7 @@ async function loadTeacher() {
     await teacherDb.cards.bulkAdd(sampleCards); await teacherDb.logs.bulkAdd(sampleLogs);
     await teacherDb.mocks.bulkPut([...sampleMocks, ...sampleClassMocks]); await teacherDb.schedules.bulkAdd(sampleSchedules);
     await teacherDb.memos.bulkAdd(sampleMemos); await teacherDb.school.bulkPut(sampleSchool); await teacherDb.targets.bulkPut(sampleTargets);
-    await teacherDb.outcomes.bulkAdd(sampleOutcomes);
+    await teacherDb.outcomes.bulkAdd(sampleOutcomes); await teacherDb.counselLists.bulkPut(sampleCounselLists);
   });
 }
 async function loadAdmin() {

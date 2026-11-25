@@ -8,6 +8,10 @@ import { MinimumSearch, type MinimumSource } from '../src/screens/MinimumSearch'
 import { gradesForMinimum, searchMinimum, whatIfMinimum, type Criterion, type MinimumRule } from '../src/domain/minimum';
 import type { CutTable } from '../src/domain/mock';
 import { studentDb } from '../src/store/studentDb';
+import { sampleMinimumRules } from '../src/data/sample/minimumSearch';
+import { sampleCutTables } from '../src/data/sample/mockScore';
+import { sampleTrendMocks } from '../src/data/sample/scoreTrend';
+import { setSampleFlag } from '../src/data/sample/mode';
 
 // Test-only cut table and criteria; not product data.
 const EXAM = '2027년 10월 학력평가';
@@ -52,14 +56,27 @@ describe('최저로 찾기 판정', () => {
   });
 });
 
+it('샘플 기준은 샘플 10월 등급으로 시안 숫자를 내고, 샘플 모드가 꺼지면 판정하지 않는다', () => {
+  const october = sampleTrendMocks.find(m => m.exam.includes('10월'))!;
+  setSampleFlag('on');
+  const g = gradesForMinimum(october, sampleCutTables.find(t => t.exam === october.exam))!;
+  const rows = searchMinimum(sampleMinimumRules, g);
+  const n = (v: string) => rows.filter(r => r.judged.verdict === v).length;
+  expect([rows.length, n('충족'), n('근접'), n('미충족'), n('자료 부족')]).toEqual([152, 48, 21, 71, 12]);
+  expect(whatIfMinimum(sampleMinimumRules, g).map(w => w.after - w.before)).toEqual([15, 9, 12, 7]);
+  setSampleFlag('off');
+  expect(searchMinimum(sampleMinimumRules, g)).toEqual([]);
+});
+
 describe('최저로 찾기 화면', () => {
-  it('주요 흐름: 타일로 거르고, 한 영역 올려 보고, 조건 0건에서 초기화하고, 근거를 펼친다', async () => {
+  it('390 흐름: 충족 타일로 열고, 타일·한 영역으로 거르고, 더 보기와 근거를 연다', async () => {
     await studentDb.saveMock(mock);
     show({ load: async () => source, cuts: [table] });
-    expect(await screen.findByText('국 3 · 수 2 · 영 2 · 탐 2 · 한국사 –')).toBeTruthy();
-    expect(screen.getByText('검수된 수능 최저 전형 4개 기준이에요')).toBeTruthy();
+    expect(await screen.findByText('국 3 · 수 2 · 영 2 · 탐 2 · 한국사 미입력')).toBeTruthy();
+    expect(screen.getByText('10월 모의고사 실채점으로 보면')).toBeTruthy();
     expect(screen.getByText(/검수 전이라 판정하지 않은 전형 37개/)).toBeTruthy();
-    expect(screen.getByRole('heading', { name: '전체 4개' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: '충족 1개' })).toBeTruthy();
+    expect(screen.getByText('강원대학교')).toBeTruthy();
     expect(screen.queryByText('고려대학교')).toBeNull();
 
     fireEvent.click(screen.getByRole('button', { name: /근접/, pressed: false }));
@@ -69,23 +86,45 @@ describe('최저로 찾기 화면', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /수학을 2등급에서 1등급으로 바꾸면 충족 전형이 1개에서 2개로 1개 늘어요/ }));
     expect(screen.getByRole('heading', { name: '수학 1등급 오르면 새로 충족 1개' })).toBeTruthy();
-    expect(screen.getByText('수학 1등급이면 → 충족')).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: /수학 1등급 오르면 ✕/ }));
+    fireEvent.click(screen.getByRole('button', { name: '수학 1등급 오르면 끄기' }));
     expect(screen.getByRole('heading', { name: '전체 4개' })).toBeTruthy();
+    expect(screen.queryByText('한림대학교')).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: '전체 전형 1개 더 보기' }));
+    expect(screen.getByText('한림대학교')).toBeTruthy();
 
-    fireEvent.change(screen.getByLabelText('계열'), { target: { value: '의약' } });
+    const trace = screen.getByText('어떻게 계산했나요?').closest('details')!;
+    expect(within(trace).getByText('2028 모집요강 · 검수 완료')).toBeTruthy();
+    expect(within(trace).getByText('수 2 + 영 2 + 탐 2 = 6')).toBeTruthy();
+    expect(within(trace).getByText('6, 기준보다 1 커요')).toBeTruthy();
+    expect(document.body.textContent).not.toMatch(FORBIDDEN);
+  });
+
+  it('1440 흐름: 판정별 표, 행을 골라 근거를 보고, 검색·필터로 거른다', async () => {
+    vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() })));
+    await studentDb.saveMock(mock);
+    show({ load: async () => source, cuts: [table] });
+    expect(await screen.findByRole('heading', { name: '전체 4개' })).toBeTruthy();
+    expect(screen.getByText('10월 모의고사 실채점 · 국 3 · 수 2 · 영 2 · 탐 2')).toBeTruthy();
+    expect(screen.getByText('검수된 수능 최저 전형 4개 중이에요')).toBeTruthy();
+    expect(screen.getAllByRole('row').length).toBe(5);
+    expect(screen.getByRole('heading', { name: '중앙대학교 경영학부' })).toBeTruthy(); // 첫 근접 행을 골라 열어요
+
+    fireEvent.click(screen.getByRole('button', { name: '연세대학교' }));
+    expect(screen.getByRole('heading', { name: '연세대학교 경영학과' })).toBeTruthy();
+    expect(screen.getByText('교과 · 내 합 7 / 기준 5')).toBeTruthy();
+    expect(screen.getByText('3개 합 5 이내')).toBeTruthy();
+    expect(screen.getByText('국 3 + 수 2 + 영 2 = 7')).toBeTruthy(); // 필수 영역(국어)을 먼저 넣어요
+    expect(screen.getAllByRole('button', { name: /관심에 담기/ }).length).toBe(5);
+
     fireEvent.change(screen.getByLabelText('대학·학과 검색'), { target: { value: '한의' } });
     expect(screen.getByText('고른 조건에 맞는 전형이 없어요')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: '조건 초기화' }));
     expect(screen.getByRole('heading', { name: '전체 4개' })).toBeTruthy();
 
-    const card = screen.getByText('연세대학교').closest('li')!;
-    const toggle = within(card).getByRole('button', { name: '어떻게 계산했나요?' });
-    fireEvent.click(toggle);
-    expect(toggle.getAttribute('aria-expanded')).toBe('true');
-    expect(within(card).getByText(/2028 모집요강 · 관리자 검수 2026-11-12/)).toBeTruthy();
-    expect(within(card).getByText('내 합 7 / 기준 5')).toBeTruthy();
-    expect(screen.getAllByRole('button', { name: /관심에 담기/ }).length).toBe(4);
+    fireEvent.click(screen.getByRole('button', { name: /필터/ }));
+    fireEvent.click(within(screen.getByRole('group', { name: '계열' })).getByRole('button', { name: '의약' }));
+    fireEvent.click(screen.getByRole('button', { name: '결과 2개 보기' }));
+    expect(screen.getByRole('heading', { name: '전체 2개' })).toBeTruthy();
     expect(document.body.textContent).not.toMatch(FORBIDDEN);
   });
 
@@ -106,7 +145,7 @@ describe('최저로 찾기 화면', () => {
     expect((await screen.findByRole('alert')).textContent).toContain('수능 최저 기준을 읽지 못했어요. 인터넷 연결을 확인하고 다시 읽어 주세요.');
     fail = false;
     fireEvent.click(screen.getByRole('button', { name: '다시 읽기' }));
-    expect(await screen.findByText('충족 현황')).toBeTruthy();
+    expect(await screen.findByText('한 영역만 1등급 오르면')).toBeTruthy();
   });
 
   it('성적 없음 · 검수 자료 없음 · 등급컷 검수 전은 판정하지 않는다', async () => {
@@ -119,18 +158,19 @@ describe('최저로 찾기 화면', () => {
     show({ load: async () => ({ ...source, rules: rules.map(r => ({ ...r, review_status: 'draft' as const })) }), cuts: [table] });
     expect(await screen.findByText('검수된 수능 최저 기준이 아직 없어요')).toBeTruthy();
     expect(screen.getByText(/지금은 37개가 검수 전이에요/)).toBeTruthy();
-    expect(screen.queryByText('충족 현황')).toBeNull();
+    expect(screen.queryByText('한 영역만 1등급 오르면')).toBeNull();
     cleanup();
 
     show({ load: async () => source, cuts: [] });
     expect(await screen.findByText('등급컷 준비 중')).toBeTruthy();
-    expect(screen.queryByText('충족 현황')).toBeNull();
+    expect(screen.queryByText('한 영역만 1등급 오르면')).toBeNull();
     expect(document.body.textContent).not.toMatch(FORBIDDEN);
   });
 
   it('메뉴와 경로로 들어가고 실제 전형계획 자료는 검수 전 개수만 보여 준다', async () => {
     const catalog = readFileSync('public/data/admission-plans.json', 'utf8');
-    const pending = JSON.parse(catalog).entries.flatMap((e: { programs: { minimum: string }[] }) => e.programs).filter((p: { minimum: string }) => p.minimum.trim() && !p.minimum.includes('미적용')).length;
+    const pending = JSON.parse(catalog).entries.flatMap((e: { programs: { minimum: string }[] }) => e.programs).filter((p: { minimum: string }) => p.minimum.trim() && !p.minimum.includes('미적용') && p.minimum !== '원문 확인 필요').length;
+    expect(pending).toBe(229); // 최저 문구 22개 요약 중 해당분 + 구조화 자료의 적용·모집단위별 다름. 근거 없는 '원문 확인 필요'는 세지 않아요
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(catalog)));
     await studentDb.saveMock(mock);
     render(<MemoryRouter initialEntries={['/minimum-search']}><App /></MemoryRouter>);

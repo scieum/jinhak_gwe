@@ -2,19 +2,43 @@ import 'fake-indexeddb/auto';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
-import * as loader from '../src/data/collectedResults';
+import * as loader from '../src/data/susiResults';
 import { AdmissionResults } from '../src/screens/AdmissionResults';
 import { RESULT_COLUMNS, type ResultRow } from '../src/domain/resultReview';
 import type { CollectedIndex } from '../src/domain/collectedResults';
 import { gradeCut, universityPlot } from '../src/domain/universityResultPlot';
 import { studentDb } from '../src/store/studentDb';
+import { setSampleFlag } from '../src/data/sample/mode';
 vi.mock('../src/data/releasedResults', () => ({ useReleasedResults: () => [] }));
 const row = (change: Partial<ResultRow> = {}): ResultRow => ({ ...Object.fromEntries(RESULT_COLUMNS.map(c => [c, ''])), university: '가온대', result_year: '2026', round: '수시', admission_type: '교과', program: '지역균형', recruit_unit: '의예과', grade_system: '9', metric: '교과등급', cut_70: '1.230', source_url: 'https://example.invalid/result.pdf', basis: '반영 교과 평균', source_page: '12쪽', ...change }) as ResultRow;
 const index: CollectedIndex = { format: 'jinhak-navi-collected-index', version: 1, status: 'draft', generated_at: '', source_file: '_all.csv', source_sha256: 'a'.repeat(64), rows: 2, sources: 2,
   universities: ['가온대', '누리대'].map(university => ({ university, file: 'a'.repeat(64) + '.json', sha256: 'a'.repeat(64), bytes: 1, rows: 1, sources: 1, years: ['2026'], rounds: { 수시: 1 } })) };
 beforeEach(async () => { await studentDb.clearStudentData(); });
-afterEach(() => { cleanup(); vi.restoreAllMocks(); });
-function setup(rows: ResultRow[]) { vi.spyOn(loader, 'loadCollectedIndex').mockResolvedValue(index); return vi.spyOn(loader, 'loadCollectedRows').mockResolvedValue(rows); }
+afterEach(() => { cleanup(); setSampleFlag('off'); vi.restoreAllMocks(); });
+function setup(rows: ResultRow[]) { vi.spyOn(loader, 'loadSusiIndex').mockResolvedValue(index); return vi.spyOn(loader, 'loadSusiRows').mockResolvedValue(rows); }
+test('샘플 성적 모드에서도 실제 수시를 읽고 선택한 출처의 값을 상세에 연결한다', async () => {
+  setSampleFlag('on');
+  const load = setup([row(), row({ cut_70: '1.7', source_page: '다른 출처 20쪽' })]);
+  render(<MemoryRouter><AdmissionResults /></MemoryRouter>);
+  fireEvent.click(await screen.findByRole('button', { name: '의예과 2026학년도 70% 컷 1.7' }));
+  expect(load).toHaveBeenCalled();
+  fireEvent.click(within(screen.getByRole('region', { name: '고른 학과' })).getByRole('button', { name: '원문 보기 ›' }));
+  expect(within(screen.getByRole('dialog')).getByText('다른 출처 20쪽')).toBeTruthy();
+});
+test('대조 대상은 표에 원문값을 보존하고 상세에서 사유를 표시한다', async () => {
+  const flagged = Object.assign(row({ recruit_unit: '확인학과', cut_70: '3.11' }), { collectionIssues: ['different_values_requires_review'] });
+  setup([row(), flagged, Object.assign({ ...flagged, cut_70: '3.22' }, { collectionIssues: ['different_values_requires_review'] })]);
+  render(<MemoryRouter><AdmissionResults /></MemoryRouter>);
+  await screen.findByText(/원문 대조가 필요한 2행/);
+  expect(screen.queryByRole('button', { name: /확인학과 2026학년도 70% 컷/ })).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: '표' }));
+  expect(screen.getByText('3.11 / 3.22')).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '확인학과' }));
+  fireEvent.click(screen.getByText('출처별 값 2건 확인'));
+  fireEvent.click(screen.getByRole('button', { name: /3.22 · 원문 2/ }));
+  expect(within(screen.getByRole('dialog')).getByText(/같은 전형·학과·학년도에 다른 값/)).toBeTruthy();
+  expect(within(screen.getByRole('dialog')).getByText('3.22')).toBeTruthy();
+});
 test('최근 3개 학년만 그리고 같은 연도의 출처·산식이 다른 행을 보존한다', () => {
   const rows = [row(), row({ result_year: '2025', cut_70: '1.4' }), row({ result_year: '2023', cut_70: '1.5' }), row({ cut_70: '1.7', basis: '다른 산식', source_url: 'https://example.invalid/other.pdf' }), row({ round: '정시' })];
   const result = universityPlot(rows, '교과', '지역균형');
@@ -47,9 +71,9 @@ test('기본 경로는 그래프·고른 학과 패널을 표시하고 점 원�
   expect(within(table).getByText('최종 등록자 평균 (좌표에 없음)')).toBeTruthy();
 });
 test('전형 유형·전형 변경, 빈 상태, 대학 변경 중 늦은 응답을 처리한다', async () => {
-  vi.spyOn(loader, 'loadCollectedIndex').mockResolvedValue(index);
+  vi.spyOn(loader, 'loadSusiIndex').mockResolvedValue(index);
   let resolveOld!: (r: ResultRow[]) => void;
-  vi.spyOn(loader, 'loadCollectedRows').mockImplementationOnce(() => new Promise(resolve => { resolveOld = resolve; }))
+  vi.spyOn(loader, 'loadSusiRows').mockImplementationOnce(() => new Promise(resolve => { resolveOld = resolve; }))
     .mockResolvedValueOnce([row({ university: '누리대', admission_type: '종합', program: '학생부종합', recruit_unit: '간호학과' })]);
   render(<MemoryRouter><AdmissionResults /></MemoryRouter>);
   fireEvent.click(await screen.findByRole('button', { name: '대학 바꾸기' }));

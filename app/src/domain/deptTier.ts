@@ -1,6 +1,6 @@
 // 학과별 입결 구간표(work/dept-tier/02-spec.md). 공개(관리자 2명 검수) 9등급 교과 70% 컷을 학생이 고른 폭의 층으로 나누기만 한다.
 // 새 환산·보간 없음(NEVER-1). 모든 경계 계산은 0.01 단위 정수(컷 c → 100c)라 소수 오차가 없다.
-import type { ReleasedUnit } from './resultReview';
+import { RESULT_COLUMNS, type ReleasedUnit, type ResultRow } from './resultReview';
 import { departmentsOf, type FieldRow } from './univWiki';
 
 export type Major = '인문' | '자연';
@@ -78,3 +78,22 @@ export function tierData(units: readonly ReleasedUnit[], fields: readonly FieldR
   const cells = valid.filter(x => x.d!.year === year).map(x => ({ university: x.f.university, unit: x.f.unit, program: x.d!.program, cut: x.d!.cut! }));
   return { status: cells.length < MIN_CELLS ? 'short' : 'ok', candidates: found.length, pending, year, cells };
 }
+
+/** app/public/data/dept-tier.json(app/tools/build_dept_tier.py): 수시 정리본의 9등급 교과등급 70% 컷 + 계열표 초안(학과명 규칙 추천, 검수 전).
+ *  구간표가 그대로 쓰도록 ReleasedUnit · FieldRow 모양으로 바꾼다. 값은 원문 문자열 그대로(환산 없음). 형식이 어긋난 행은 버린다. */
+export function parseTierDraft(value: unknown): { units: ReleasedUnit[]; fields: FieldRow[] } {
+  const v = value as { format?: string; version?: number; fields?: unknown[]; rows?: unknown[] };
+  if (v?.format !== 'jinhak-navi-dept-tier' || v.version !== 1 || !Array.isArray(v.fields) || !Array.isArray(v.rows)) return { units: [], fields: [] };
+  const strings = (x: unknown, n: number): x is string[] => Array.isArray(x) && x.length === n && x.every(s => typeof s === 'string' && s.trim() !== '');
+  const fields = (v.fields.filter(f => strings(f, 5) && MAJORS.includes(f[4])) as string[][]).map(([university, unit, small, mid, major]) => ({ university, unit, small, mid, major }));
+  const byUniversity = new Map<string, ResultRow[]>();
+  for (const r of v.rows) {
+    if (!strings(r, 6) || !['교과', '종합'].includes(r[2]) || !/^20\d\d$/.test(r[4]) || !(Number(r[5]) >= 1 && Number(r[5]) <= 9)) continue;
+    const [university, recruit_unit, admission_type, program, result_year, cut_70] = r;
+    const row = { ...EMPTY_ROW, university, recruit_unit, admission_type, program, result_year, cut_70, round: '수시', metric: '교과등급', grade_system: '9' };
+    byUniversity.set(university, [...byUniversity.get(university) ?? [], row]);
+  }
+  const units = [...byUniversity].map(([university, rows]): ReleasedUnit => ({ university, rows, year: Number(rows[0].result_year), source_url: '', license: 'allowed', approvals: [] }));
+  return { units, fields };
+}
+const EMPTY_ROW = Object.fromEntries(RESULT_COLUMNS.map(c => [c, ''])) as ResultRow;

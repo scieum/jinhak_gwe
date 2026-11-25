@@ -115,9 +115,11 @@ describe('특수 계열 모아보기', () => {
     serve(); open();
     await screen.findByRole('table');
     fireEvent.click(chip(/체육/));
-    expect(screen.getByText('실기 2종목 · 채점 기준 있어요')).toBeTruthy();
+    expect(screen.getByText('실기 전형은 교과 컷을 표시하지 않아요 · 실기 종목과 채점 기준은 대학별 상세에서 확인해 주세요')).toBeTruthy();
+    expect(screen.queryByText('실기 2종목 · 채점 기준 있어요')).toBeNull();
+    expect(screen.queryByText('실기 기준 준비 중')).toBeNull();
     expect(screen.getAllByText('· 교육 묶음에도 있어요').length).toBeGreaterThan(0);
-    expect(screen.getByText('실기 점수 비중이 커서 교과 컷을 따로 보이지 않아요 · 전형 상세에서 봐요')).toBeTruthy();
+    expect(screen.queryByText('실기 점수 비중이 커서 교과 컷을 따로 보이지 않아요 · 전형 상세에서 봐요')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: '경희대학교 체육학과 상세 보기' }));
     let dialog = screen.getByRole('dialog', { name: '경희대학교 체육학과' });
     expect(within(dialog).getByRole('heading', { name: '실기 과목 · 채점 기준' })).toBeTruthy();

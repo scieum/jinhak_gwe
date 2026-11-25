@@ -1,0 +1,102 @@
+/* 성적 불러오기 — v2 시안(Figma 346:152228 PC · 346:155908 모바일, 3 검증 단계). 값은 노드 실측. 모서리 0, 흰 카드 · 테두리 없음. */
+.si { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; min-width: 0; }
+.si p, .si h3 { margin: 0; }
+.si-caption { font-size: 12px; line-height: 16.8px; font-weight: 400; color: var(--color-text-muted); }
+.si-label { flex: none; font-size: 12px; line-height: 16.8px; font-weight: 600; color: var(--color-ink-soft); }
+.si-card { display: grid; gap: 12px; padding: 20px 24px; background: var(--color-canvas); min-width: 0; }
+
+/* 단계 표시: 지난 단계 icon/check + 이름, 지금 단계 accent-soft 칸, 사이 chevron-right */
+.si-steps { display: flex; align-items: center; margin: 0; padding: 0; list-style: none; }
+.si-step { display: inline-flex; align-items: center; height: 40px; padding: 0 16px; gap: 6px; font-size: 15px; line-height: 22.5px; font-weight: 600; color: var(--color-text-muted); white-space: nowrap; }
+.si-step.is-done, .si-step.is-current { color: var(--color-ink); }
+.si-step.is-current { background: var(--color-accent-soft); }
+.si-steps__sep { display: inline-flex; margin: 0 8px; color: var(--color-ink); }
+.si--m .si-step { height: 44px; padding: 0 10px; gap: 4px; }
+.si--m .si-steps__sep { margin: 0 6px; }
+
+/* 시험 줄 */
+.si-field { display: flex; align-items: center; gap: 8px; }
+.si .si-year, .si .si-select select { height: 48px; min-height: 48px; padding: 0 16px; border: 0; background: var(--color-field); color: var(--color-ink); font: inherit; font-size: 15px; line-height: 22.5px; }
+.si-year { width: 88px; -moz-appearance: textfield; appearance: textfield; }
+.si-year::-webkit-inner-spin-button, .si-year::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.si-select { position: relative; display: inline-flex; }
+.si-select select { width: 116px; -webkit-appearance: none; appearance: none; }
+.si-select .icon { position: absolute; right: 16px; top: 14px; pointer-events: none; color: var(--color-ink); }
+.si .segmented-control { display: flex; gap: 4px; padding: 4px; height: 48px; background: var(--color-canvas-soft); }
+.si .segmented-control__option { flex: 1 1 0; min-width: 0; min-height: 40px; padding: 0; border: 0; font: inherit; font-size: 15px; line-height: 22.5px; font-weight: 600; color: var(--color-text-muted); background: none; white-space: nowrap; }
+.si .segmented-control__option[aria-pressed='true'] { background: var(--color-accent-soft); color: var(--color-ink); }
+.si .segmented-control__option:disabled { color: var(--color-text-muted); cursor: default; }
+.si-exam .si-field > .segmented-control { width: 232px; }
+.si-exam .si-field > .si-include { width: 288px; }
+.si-exam__row { display: flex; align-items: center; gap: 32px; }
+
+/* 파일 줄: 위 선 + 아이콘 · 이름 · 다른 파일 올리기 */
+.si-file { display: flex; align-items: center; gap: 8px; padding-top: 12px; border-top: 1px solid var(--color-hairline-soft); font-size: 15px; line-height: 22.5px; }
+.si .si-pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; min-height: 44px; padding: 0 16px; border: 0; background: var(--color-canvas-soft); color: var(--color-ink); font: inherit; font-size: 15px; line-height: 22.5px; font-weight: 600; white-space: nowrap; cursor: pointer; }
+.si-file .si-pill:focus-within { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+
+/* 요약: 반영 예정(stat-tile) + 보조 수치 + 경고 */
+.si-summary { display: flex; align-items: center; gap: 48px; }
+.si-hero { display: grid; gap: 12px; flex: none; }
+.si--pc .si-hero { width: 320px; }
+.si--pc .si-callout { flex: 1 1 0; min-width: 0; }
+.si-stat { display: grid; gap: 4px; }
+.si-stat strong { font-size: 44px; line-height: 57.2px; font-weight: 700; }
+.si-stat p { font-size: 15px; line-height: 22.5px; color: var(--color-ink); }
+.si-substats { display: flex; gap: 24px; }
+.si-substat { display: inline-flex; align-items: baseline; gap: 6px; }
+.si-substat > span { letter-spacing: 0.3px; /* 앱 글꼴이 시안보다 글자당 약 0.3px 좁아 값 위치를 맞춰요 */ font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
+.si-substat strong { font-size: 16px; line-height: 22.4px; font-weight: 600; color: var(--color-ink); }
+.si-callout { display: flex; align-items: flex-start; gap: 8px; padding: 16px; background: var(--color-judge-reach-bg); }
+.si-callout > .icon { flex: none; color: var(--color-judge-reach); }
+.si-callout > div { display: grid; gap: 4px; }
+.si-callout__title { font-size: 16px; line-height: 22.4px; font-weight: 600; color: var(--color-judge-reach); }
+.si-callout__body { font-size: 13px; line-height: 19.5px; color: var(--color-ink); }
+
+/* 판정 표식 정상 = safe 배경(teacher-board.css는 risk·reach만) */
+.si .tb-mark--soft.tb-mark--safe { background: var(--color-judge-safe-bg); }
+
+/* PC 표 카드 */
+.si-tablecard { gap: 16px; }
+.si-filter { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.si-filter > .segmented-control { width: 320px; }
+.si-table { width: 100%; min-width: 0; border-collapse: collapse; table-layout: fixed; font-variant-numeric: tabular-nums; }
+.si .si-table th, .si .si-table td { height: 49px; padding: 0 16px; border-bottom: 1px solid var(--color-hairline); font-size: 14px; line-height: 19.6px; font-weight: 400; color: var(--color-ink); text-align: left; white-space: nowrap; }
+.si .si-table thead th { height: 44px; border-bottom: 0; background: var(--color-canvas-soft); font-size: 12px; line-height: 16.8px; font-weight: 600; color: var(--color-ink-soft); }
+.si-table .num { text-align: right; }
+.si-table th:nth-child(1) { width: 72px; }
+.si-table th:nth-child(2), .si-table th:nth-last-child(2) { width: 120px; }
+.si-table th:nth-child(n+3):nth-last-child(n+3) { width: 72px; }
+.si-table td:last-child { white-space: normal; }
+.si-bad { display: block; margin: 0 -16px; padding: 0 8px; background: var(--color-judge-risk-bg); }
+.si-count .text-button { min-height: 0; padding: 0; border: 0; background: none; color: var(--color-ink); font: inherit; text-decoration: underline; cursor: pointer; }
+
+/* PC 아래 고정 동작 줄: 흰 바탕 · 위 선, 보조 · 안내 · 주 버튼 */
+.si-actionbar { position: fixed; left: 248px; right: 0; bottom: 0; z-index: 3; display: flex; align-items: center; justify-content: space-between; height: 72px; padding: 13px 32px 14px; box-sizing: border-box; border-top: 1px solid var(--color-hairline); background: var(--color-canvas); }
+.si-actionbar__secondary { display: flex; gap: 12px; }
+.si-outline { display: inline-flex; align-items: center; gap: 8px; }
+.si-actionbar .button-primary { min-height: 44px; }
+.si--pc { padding-bottom: 72px; }
+
+/* 모바일 */
+.si-examsum { display: grid; gap: 4px; }
+.si-examsum__title { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 16px; line-height: 22.4px; font-weight: 600; color: var(--color-ink); }
+.si-examsum .data-status-badge { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: var(--color-canvas); color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; font-weight: 600; }
+.si--m .si-summary { display: grid; gap: 12px; }
+.si--m .si-stat strong { font-size: 32px; line-height: 41.6px; }
+.si-rows { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.si-rows > .segmented-control { width: 354px; max-width: none; } /* 시안 354(카드 폭 350보다 4 넓게 그려짐) */
+.si-list { display: grid; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-hairline); }
+.si-rowcard { background: var(--color-canvas); }
+.si-pcnote { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); }
+.si-pcnote .icon { flex: none; color: var(--color-ink); }
+.si-bottom { position: fixed; left: 0; right: 0; bottom: 88px; /* 탭바(764~828) 위로: 시안은 버튼이 탭바에 가려 20px만 보였어요(2026-11-25 수정, 시안도 맞춤) */ z-index: 2; display: grid; justify-items: center; align-content: start; gap: 8px; height: 101px; padding: 11px 20px 0; border-top: 1px solid var(--color-hairline); background: var(--color-canvas); }
+.si-bottom > .si-caption { height: 17px; line-height: 16.8px; }
+.si-bottom .button-primary { width: 100%; min-height: 52px; }
+
+@media (max-width: 1023px) { .shell__content:has(.si--m) { padding: 16px 20px calc(var(--shell-tabbar-height) + 160px); } }
+@media (min-width: 1024px) { .shell__content:has(.si--pc) { padding-top: 24px; } }
+/* 지금 단계 · 선택 칸: 아래 2 accent 선(시안 stroke bottom 2) */
+.si-step.is-current, .si .segmented-control__option[aria-pressed='true'] { box-shadow: inset 0 -2px 0 var(--color-accent); }
+.si .si-actionbar .button-primary { height: 44px; min-height: 44px; }
+.si--m .si-substats { gap: 20px; }

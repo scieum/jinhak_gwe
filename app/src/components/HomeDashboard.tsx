@@ -89,7 +89,7 @@ export function HomeDashboard() {
           <div><h2>관심 대학 될각</h2><p>{rows.length ? `관심 대학 ${rows.length}곳 중 ${judgedCount}곳 · 교과전형 입결과 비교했어요` : '관심 대학을 담으면 여기에서 될각 판정을 볼 수 있어요.'}</p></div>
           {rows.length > 0 && <ul>{shown.map(({ i, j }) => {
             const badge = !j ? <span className="judge-badge judge-none">{has ? '자료 준비 중' : '성적 입력 후 보여요'}</span>
-              : j.v.boundary ? <span className="judge-badge judge-edge">경계</span>
+              : j.v.boundary ? <span className="judge-badge judge-edge"><span aria-hidden="true">◇</span> 경계</span>
               : <span className={`judge-badge ${JUDGE[j.v.label][0]}`}><span aria-hidden="true">{JUDGE[j.v.label][1]}</span> {j.v.label}</span>;
             return <li className="univ-card" key={i.university}><UniversityLogo university={i.university} />
               <Link to={collectedProgramPath(i.university, j?.p.program ?? i.program, j ? j.p.department || undefined : i.department)}

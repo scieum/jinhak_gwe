@@ -30,4 +30,9 @@ work/_data/university-logos/
 work/_data/admission-plans/
 app/public/assets/universities/
 app/public/data/national-placement/
+app/public/data/univ-map.json
+app/public/data/susi-results/
+app/public/data/dept-tier.json
+work/_data/university-map/*
+!work/_data/university-map/README.md
 work/_cache/

@@ -74,8 +74,14 @@ def check(root=APP / 'public', url=None):
             or placement.get('collection_rows') != collection.get('rows')
             or placement.get('collection_universities') != len(collection['universities'])):
         raise ValueError('Collection and placement indexes are missing, incompatible or from different data releases')
+    susi = document('data/susi-results/index.json')
+    if (susi.get('format') != 'jinhak-navi-collected-index' or susi.get('status') != 'draft'
+            or susi.get('dataset') != 'organized-susi' or susi.get('review_format') != 'susi-row-review-v1'
+            or susi.get('master_sha256') != collection.get('source_sha256') or not susi.get('universities')):
+        raise ValueError('Susi catalog is missing or from another collection release')
     for index, key, directory, expected_format in [
         (collection, 'universities', 'collected-results', 'jinhak-navi-collected-results'),
+        (susi, 'universities', 'susi-results', 'jinhak-navi-collected-results'),
         (placement, 'years', 'national-placement', 'jinhak-national-placement')]:
         total = 0
         identities = set()
@@ -99,14 +105,23 @@ def check(root=APP / 'public', url=None):
                 hashes = {item['university']: item['sha256'] for item in collection['universities']}
                 if not package.get('sources') or any(hashes.get(name) != sha for name, sha in package['sources'].items()):
                     raise ValueError(f'{name}: placement references another source release')
+            if directory == 'susi-results':
+                if (package.get('review_format') != 'susi-row-review-v1'
+                        or len(package.get('review_flags', [])) != entry['rows']
+                        or entry.get('rounds') != {'수시': entry['rows']}):
+                    raise ValueError(f'{name}: missing susi review metadata')
             total += entry['rows']
-        if total != collection['rows']:
+        if total != (collection['rows'] if key == 'years' else index['rows']):
             raise ValueError(f'{directory}: incomplete row coverage')
     plans = document('data/admission-plans.json')
     if plans.get('format') != 'jinhak-navi-admission-plans' or not plans.get('entries') or plans.get('review_status') != 'draft':
         raise ValueError('Admission plan catalog is missing or not a reference catalog')
     document('data/released-results.json')
     document('data/scoring-rules.json')
+    campus_map = document('data/univ-map.json')
+    if (campus_map.get('format') != 'jinhak-navi-univ-map' or campus_map.get('version') not in (1, 2)
+            or not campus_map.get('campuses')):
+        raise ValueError('University campus map is missing or incompatible')
     logos = set()
     for mapping in ['universityLogos.json', 'universityLogoNames.json']:
         logos.update(json.loads((APP / 'src/data' / mapping).read_text(encoding='utf-8')).values())
@@ -118,7 +133,7 @@ def check(root=APP / 'public', url=None):
             raise ValueError(f'{name}: logo hash mismatch')
     report = {'files': len(files), 'bytes': sum(map(len, files.values())), 'collected_rows': collection['rows'],
               'universities': len(collection['universities']), 'placement_years': len(placement['years']),
-              'plan_campuses': len(plans['entries']), 'logos': len(logos)}
+              'plan_campuses': len(plans['entries']), 'map_campuses': len(campus_map['campuses']), 'logos': len(logos)}
     return files, report
 
 

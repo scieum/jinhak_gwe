@@ -38,18 +38,23 @@ test('자격 조건은 초기 미확인 → 근거와 미충족 기록, 확인 �
   const saved = (await studentDb.applications.get(p.id))!;
   expect(saved.eligibility[2].checked_at).not.toBeNull(); expect(saved.eligibility[0].status).toBe('unknown');
 });
-test('상담 전 질문 저장 → 완료 → 완료 필터 → 다시 진행', async () => {
+test('상담 전 질문 저장 → 물어봤어요 → 완료 칩 → 다시 진행 · 수정 팝업에서 삭제', async () => {
   await seed(); at('/counsel-tasks');
-  await screen.findByText('표시할 상담 항목이 없어요');
-  fireEvent.click(screen.getByRole('button', { name: '+ 질문·할 일 추가' }));
+  await screen.findByText('아직 적은 상담 질문이 없어요');
+  fireEvent.click(screen.getByRole('button', { name: '질문·할 일 추가' }));
   fireEvent.change(screen.getByLabelText('구분'), { target: { value: 'question' } });
   fireEvent.change(screen.getByLabelText('제목'), { target: { value: '추천 조건 질문하기' } });
   fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: '저장' }));
-  fireEvent.click(await screen.findByRole('button', { name: '완료로 표시' }));
+  fireEvent.click(await screen.findByRole('button', { name: '물어봤어요' }));
   await waitFor(async () => expect((await studentDb.tasks.toArray())[0].done).toBe(true));
-  fireEvent.change(screen.getByLabelText('완료 상태'), { target: { value: 'done' } });
+  fireEvent.click(await screen.findByRole('button', { name: '완료 1' }));
   fireEvent.click(await screen.findByRole('button', { name: '다시 진행' }));
   await waitFor(async () => expect((await studentDb.tasks.toArray())[0].completed_at).toBeNull());
+  fireEvent.click(await screen.findByRole('button', { name: '전체 1' }));
+  fireEvent.click(await screen.findByRole('button', { name: '추천 조건 질문하기 수정' }));
+  fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: '삭제' }));
+  fireEvent.click(within(await screen.findByRole('dialog', { name: '상담 항목을 삭제할까요?' })).getByRole('button', { name: '삭제' }));
+  await waitFor(async () => expect(await studentDb.tasks.count()).toBe(0));
 });
 test('전형 삭제는 확인 뒤 실행하고 연결된 상담은 유지', async () => {
   const p = await seed(); await studentDb.saveTask({ ...newCounselTask(p.id), title: '남길 상담 메모' });

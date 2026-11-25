@@ -9,6 +9,8 @@ import { parsePlanCatalog, matchesPlan, planPageUrl } from '../src/domain/admiss
 import { AdmissionsList, quotaDelta } from '../src/screens/AdmissionsList';
 import { loadAdmissionPlans } from '../src/data/admissionPlans';
 
+// 3천여 전형 행 자료라 병렬 실행 중 jsdom 렌더가 기본 5초를 넘을 수 있어요
+vi.setConfig({ testTimeout: 20_000 });
 const raw = () => JSON.parse(readFileSync('public/data/admission-plans.json', 'utf8'));
 const catalog = parsePlanCatalog(raw());
 afterEach(async () => { cleanup(); vi.unstubAllGlobals(); await studentDb.interests.clear(); });
@@ -27,13 +29,17 @@ test('공식 포털 202개 캠퍼스의 다운로드 출처와 파일 해시를 
     const meta = JSON.parse(readFileSync(`../work/_data/admission-plans/sources/${document.id}.meta.json`, 'utf8'));
     expect(meta.sha256).toBe(document.sha256);
   }
-  expect(catalog.entries.flatMap(e => e.programs)).toHaveLength(22);
+  // 22 hand summaries + per-type rows from the structured packages (build_admission_plan_programs.py), PDF page evidence only.
+  expect(catalog.entries.flatMap(e => e.programs)).toHaveLength(3099);
+  expect(catalog.entries.filter(e => e.programs.length)).toHaveLength(179);
+  const checked = new Set<string>();
   for (const entry of catalog.entries) for (const program of entry.programs) {
     const document = entry.documents.find(d => d.id === program.document_id)!;
     // New collection evidence stays local with its originals. A code checkout still validates
     // the public catalog; when local evidence exists, independently reconcile its file hash.
     const metaPath = `../work/_data/admission-plans/sources/${document.id}.meta.json`;
-    if (existsSync(metaPath)) expect(JSON.parse(readFileSync(metaPath, 'utf8')).sha256).toBe(document.sha256);
+    if (!checked.has(document.id) && existsSync(metaPath)) expect(JSON.parse(readFileSync(metaPath, 'utf8')).sha256).toBe(document.sha256);
+    checked.add(document.id);
     expect(program.pages.every(p => p <= document.page_count!)).toBe(true);
   }
   const sgu = catalog.entries.flatMap(e => e.notices.map(n => ({ university: e.university, url: n.url }))).filter(n => new URL(n.url).hostname === 'sgu.ac.kr');
@@ -87,21 +93,21 @@ test('전형 1행 목록: 검색·상세 원문·유형 칩·지역 칩·페이�
   expect(screen.getByText("'없는대학명'에 맞는 대학이 없어요")).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '검색어 지우기' }));
   expect(rowsShown()).toHaveLength(10);
-  expect(screen.getByText('1 / 24')).toBeTruthy();
+  expect(screen.getByText('1 / 314')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '다음' }));
-  expect(screen.getByText('2 / 24')).toBeTruthy();
-  fireEvent.click(first('종합 12'));
-  expect(screen.getByText('전형 12개')).toBeTruthy();
-  expect(screen.getByText('1 / 2')).toBeTruthy();
+  expect(screen.getByText('2 / 314')).toBeTruthy();
+  fireEvent.click(first('종합 561'));
+  expect(screen.getByText('전형 561개')).toBeTruthy();
+  expect(screen.getByText('1 / 57')).toBeTruthy();
   fireEvent.click(first('강원'));
-  expect(screen.getByText('전형 8개')).toBeTruthy();
+  expect(screen.getByText('전형 24개')).toBeTruthy();
   fireEvent.click(first('면접 있음'));
   expect(screen.getByText('전형 3개')).toBeTruthy();
   fireEvent.click(first('사립'));
   expect(screen.getByText('조건에 맞는 전형이 없어요')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '필터 초기화' }));
-  expect(screen.getByText('전형 22개')).toBeTruthy();
-});
+  expect(screen.getByText('전형 3099개')).toBeTruthy();
+}, 30_000);
 
 test('하트로 담고 관심만 보기에서 뺄 때는 한 번 묻는다', async () => {
   serve(); at('/admissions-list?q=한림대');
@@ -115,14 +121,21 @@ test('하트로 담고 관심만 보기에서 뺄 때는 한 번 묻는다', asy
   expect(await screen.findByText('아직 담은 전형이 없어요')).toBeTruthy();
 });
 
+test('학과까지 담은 다른 화면 관심도 같은 전형 줄에서 채워 보이고, 빼면 그 전형 관심이 모두 빠진다', async () => {
+  await studentDb.setInterest('한림대학교', '학생부교과(지역인재전형)', true, '간호학과');
+  await studentDb.setInterest('한림대학교', '학생부교과(지역인재전형)', true, '사회복지학부');
+  serve(); at('/admissions-list?q=한림대');
+  fireEvent.click((await screen.findAllByRole('button', { name: '한림대학교 학생부교과(지역인재전형) 관심에서 빼기' }))[0]);
+  await waitFor(async () => expect(await studentDb.interests.count()).toBe(0), { timeout: 5000 });
+  expect(await screen.findByText('관심 전형에서 뺐어요')).toBeTruthy();
+});
 test('직접 연결된 캠퍼스 상세는 목록 필터와 독립적으로 열리고 ZIP 파일명을 안내한다', async () => {
   serve();
   const plan = catalog.entries.find(e => e.documents[0].filename)!;
   at(`/admissions-list?q=없는대학&plan=${plan.id}`);
   const detail = await screen.findByRole('region', { name: `${plan.university} ${plan.campus} 전형계획 상세` });
   expect(within(detail).getByText(`ZIP 안의 파일: ${plan.documents[0].filename}`)).toBeTruthy();
-  expect(within(detail).getByText(/전형별 요약은 아직 없어요/)).toBeTruthy();
-  expect(within(detail).getByRole('link', { name: /원문 열기/ }).getAttribute('href')).not.toContain('#page=');
+  expect(within(detail).getAllByRole('link', { name: /원문 열기/ })[0].getAttribute('href')).not.toContain('#page=');
 });
 
 test('조회 실패는 빈 검색과 구분하고 재시도한다', async () => {

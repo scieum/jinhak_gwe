@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildLayers, FORMAT_ERROR, groupsOf, lowerBound, parseWidth, RANGE_ERROR, tierData, type TierCell } from './deptTier';
+import { buildLayers, FORMAT_ERROR, groupsOf, lowerBound, parseTierDraft, parseWidth, RANGE_ERROR, tierData, type TierCell } from './deptTier';
 import type { ReleasedUnit, ResultRow } from './resultReview';
 
 const cell = (university: string, cut: number, unit = '행정학과'): TierCell => ({ university, unit, program: '학생부교과', cut });
@@ -75,5 +75,27 @@ describe('대상 고르기', () => {
   });
   it('3개 미만이면 자료 부족', () => {
     expect(tierData([unit('가', [row('가', '행정학과', '2.1')])], [field('가', '행정학과', '인문')], G, '교과').status).toBe('short');
+  });
+});
+
+describe('실제 자료(dept-tier.json) 읽기', () => {
+  const file = {
+    format: 'jinhak-navi-dept-tier', version: 1,
+    fields: [['가대', '행정학과', '행정·정책', '사회과학', '인문'], ['나대', '행정학부', '행정·정책', '사회과학', '인문'], ['다대', '행정학과', '행정·정책', '사회과학', '인문'],
+      ['라대', '체육학과', '체육', '체육', '예체능']],
+    rows: [['가대', '행정학과', '교과', '지역균형', '2026', '2.31'], ['나대', '행정학부', '교과', '일반', '2026', '3.4'], ['다대', '행정학과', '교과', '일반', '2026', '1.9'],
+      ['다대', '행정학과', '종합', '일반', '2026', '9.5'], ['라대', '체육학과', '교과', '일반', '2026', '4.0']],
+  };
+  it('인문·자연 계열만 · 범위 밖 컷은 버리고 원문 값 그대로 층을 쌓는다', () => {
+    const { units, fields } = parseTierDraft(file);
+    expect(fields.map(f => f.unit)).toEqual(['행정학과', '행정학부', '행정학과']);
+    const group = groupsOf(fields)[0], data = tierData(units, fields, group, '교과');
+    expect(data).toMatchObject({ status: 'ok', year: 2026, candidates: 3, pending: 0 });
+    expect(data.status !== 'pending' && data.cells.map(c => `${c.university}:${c.cut}`)).toEqual(['가대:2.31', '나대:3.4', '다대:1.9']);
+    expect(tierData(units, fields, group, '종합')).toMatchObject({ status: 'pending', pending: 3 }); // 9.5는 버림
+  });
+  it('형식이 다르면 빈 자료', () => {
+    expect(parseTierDraft({ ...file, format: 'x' })).toEqual({ units: [], fields: [] });
+    expect(parseTierDraft(null)).toEqual({ units: [], fields: [] });
   });
 });

@@ -57,7 +57,8 @@
   --color-judge-reach-bg: #fdf1e3;
   --color-judge-risk: #b8232a;
   --color-judge-risk-bg: #fce9ea;
-  --color-judge-edge: #141414; /* 경계: ink 글자 + canvas + 1px 점선 ink */
+  --color-judge-edge: #5c4a9e; /* 2026-11-25 사용자 요청: 경계도 색으로 구분 */
+  --color-judge-edge-bg: #edeaf6;
   --color-judge-none: #707070; /* 판정 없음: text-muted 글자 + canvas-soft */
   --color-judge-none-bg: #f3f3f3;
 

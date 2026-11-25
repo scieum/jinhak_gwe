@@ -9,6 +9,7 @@ import { PlanEditor } from '../components/PlanEditor';
 import { eligibilityStates, newApplication, newCounselTask, stepStates, taskDeadline, updateApplicationIdentity,
   type ApplicationPlan, type ChecklistStep, type CounselTask, type EligibilityItem } from '../domain/planner';
 import '../styles/preparation.css';
+import '../styles/counsel-tasks.css';
 import { Icon } from '../components/Icon';
 import { PreparationOverview, usePreparationDesktop } from '../components/PreparationOverview';
 
@@ -89,29 +90,81 @@ function EligibilityEditor({ initial, busy, error, onSave, onClose }: EditorProp
     <label>확인할 조건<input required maxLength={200} value={draft.title} onChange={e => set({ ...draft, title: e.target.value, status: 'unknown', checked_at: null })} /></label><label>내 확인 상태<select value={draft.status} onChange={e => set({ ...draft, status: e.target.value as EligibilityItem['status'] })}>{Object.entries(eligibilityStates).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label><label>모집요강·확인 자료 링크<input type="url" maxLength={2000} placeholder="https://" value={draft.source_url} onChange={e => set({ ...draft, source_url: e.target.value })} /></label><label>조건·확인 근거·문의할 담당자<textarea maxLength={2000} rows={4} value={draft.note} onChange={e => set({ ...draft, note: e.target.value })} /></label><p className="t-caption text-muted">증빙 원본을 올릴 필요는 없어요. 확인한 내용과 필요한 다음 행동을 기록해 주세요.</p><EditorActions {...{ busy, error, onClose }} /></form></Modal>;
 }
 
+type TaskStatus = 'pending' | '오늘까지' | '기한 지남' | 'done' | 'all';
+const KIND_LABEL: Record<CounselTask['kind'], string> = { question: '상담 전 질문', action: '상담 후 할 일' };
+const planLabel = (a: ApplicationPlan) => [a.university, a.department || a.program].filter(Boolean).join(' ');
+const deadlineTone = (label: string) => label === '기한 지남' || label === '오늘까지' ? 'strong' : label === '예정' ? 'soft' : 'muted';
+
 export function CounselTasks() {
-  const state = usePlanner(), actions = useActions(), now = useNow();
+  const state = usePlanner(), actions = useActions(), now = useNow(), desktop = usePreparationDesktop();
+  const [headerSlots, setHeaderSlots] = useState<{ heading: Element; actions: Element } | null>(null);
+  useEffect(() => { const heading = document.querySelector('.topbar__heading'), slot = document.getElementById('topbar-screen-actions'); if (heading && slot) setHeaderSlots({ heading, actions: slot }); }, []);
   const [query, setQuery] = useSearchParams();
-  const [edit, setEdit] = useState<CounselTask | null>(null), [deleting, setDeleting] = useState<CounselTask | null>(null);
-  const [filter, setFilter] = useState('pending'), [kind, setKind] = useState('all');
-  const data = state?.data, plan = query.get('plan') ?? '';
-  const visible = (data?.tasks ?? []).filter(t => (!plan || t.application_id === plan) && (kind === 'all' || t.kind === kind) && (filter === 'all' || t.done === (filter === 'done')))
+  const [edit, setEdit] = useState<CounselTask | null>(null), [deleting, setDeleting] = useState<CounselTask | null>(null), [picking, setPicking] = useState(false);
+  const [status, setStatus] = useState<TaskStatus>('pending'), [kind, setKind] = useState<'all' | CounselTask['kind']>('all');
+  const data = state?.data, plan = query.get('plan') ?? '', apps = data?.applications ?? [], tasks = data?.tasks ?? [];
+  const planOf = (t: CounselTask) => { const a = apps.find(x => x.id === t.application_id); return a ? planLabel(a) : '공통 상담'; };
+  const linked = apps.find(a => a.id === plan);
+  const setPlan = (v: string) => setQuery(v ? { plan: v } : {});
+  // 칩 숫자 · 숫자 줄은 고른 전형 · 구분 안에서 세요(02-spec 390-plan)
+  const scope = tasks.filter(t => (!plan || (plan === 'common' ? !t.application_id : t.application_id === plan)) && (kind === 'all' || t.kind === kind));
+  const deadline = (t: CounselTask) => taskDeadline(t, now);
+  const n = { pending: scope.filter(t => !t.done).length, today: scope.filter(t => deadline(t) === '오늘까지').length, late: scope.filter(t => deadline(t) === '기한 지남').length, done: scope.filter(t => t.done).length, all: scope.length };
+  const visible = scope.filter(t => status === 'all' || (status === 'done' ? t.done : status === 'pending' ? !t.done : deadline(t) === status))
     .sort((a, b) => Number(a.done) - Number(b.done) || (a.due_date ?? '9999').localeCompare(b.due_date ?? '9999') || b.updated_at.localeCompare(a.updated_at));
+  const questions = tasks.filter(t => t.kind === 'question' && !t.done);
   const open = (task: CounselTask) => { actions.reset(); setEdit(task); };
-  return <section className="student-screen preparation" data-slug="counsel-tasks"><div className="screen-heading"><div><h2 className="t-heading-1">상담 질문·할 일</h2><p className="text-muted">상담 전에 궁금한 점을 모으고, 상담 뒤 해야 할 일을 챙겨요.</p></div><ButtonPrimary disabled={!data || actions.busy} onClick={() => open(newCounselTask(data?.applications.some(a => a.id === plan) ? plan : null))}>+ 질문·할 일 추가</ButtonPrimary></div>
-    {!state ? <p role="status">상담 기록을 읽고 있어요.</p> : !data ? <p role="alert">{state.error}</p> : <><Feedback {...actions} />
-      <div className="stats"><div>진행할 항목 <strong>{data.tasks.filter(t => !t.done).length}</strong></div><div>오늘까지 <strong>{data.tasks.filter(t => taskDeadline(t, now) === '오늘까지').length}</strong></div><div>기한 지남 <strong>{data.tasks.filter(t => taskDeadline(t, now) === '기한 지남').length}</strong></div><div>완료 <strong>{data.tasks.filter(t => t.done).length}</strong></div></div>
-      <div className="toolbar"><label>전형별 보기<select value={plan} onChange={e => setQuery(e.target.value ? { plan: e.target.value } : {})}><option value="">모든 전형·공통 상담</option>{data.applications.map(a => <option key={a.id} value={a.id}>{a.year} · {a.university} · {a.program}</option>)}</select></label><label>상담 구분<select value={kind} onChange={e => setKind(e.target.value)}><option value="all">질문·할 일 전체</option><option value="question">상담 전 질문</option><option value="action">상담 후 할 일</option></select></label><label>완료 상태<select value={filter} onChange={e => setFilter(e.target.value)}><option value="pending">진행할 항목</option><option value="done">완료한 항목</option><option value="all">전체</option></select></label></div>
-      {!visible.length && <div className="empty-state"><h3 className="t-heading-3">표시할 상담 항목이 없어요</h3><p>새 질문·할 일을 추가하거나 보기 조건을 바꿔 주세요.</p></div>}
-      <div className="prep-grid">{visible.map(t => <article className="univ-card" key={t.id}><p className="t-caption">{t.kind === 'question' ? '상담 전 질문' : '상담 후 할 일'} · {data.applications.find(a => a.id === t.application_id)?.university ?? '공통 상담'}{t.session_date && ` · 상담일 ${t.session_date}`}</p><h3 className="t-heading-3">{t.title}</h3><p className="text-muted">{taskDeadline(t, now)}{t.due_date && ` · ${t.due_date}까지`}</p>{t.note && <p className="prep-note">{t.note}</p>}{t.completed_at && <p className="t-caption text-muted">완료: {stamp(t.completed_at)}</p>}
-        <div className="toolbar"><ButtonOutline disabled={actions.busy} onClick={() => void actions.run(async () => { await studentDb.saveTask({ ...t, done: !t.done, completed_at: t.done ? null : new Date().toISOString(), updated_at: new Date().toISOString() }); }, t.done ? '다시 진행할 항목으로 바꿨어요.' : '완료로 기록했어요.')}>{t.done ? '다시 진행' : '완료로 표시'}</ButtonOutline><ButtonOutline disabled={actions.busy} onClick={() => open(t)}>{t.title} 수정</ButtonOutline><button className="text-button" disabled={actions.busy} onClick={() => { actions.reset(); setDeleting(t); }}>{t.title} 삭제</button></div></article>)}</div>
-      <p className="t-caption text-muted">기한은 한국 날짜 기준이에요. <Link to="/application-checklist">지원 전형 관리</Link> · <Link to="/grade-input">암호화 백업·복원</Link></p>
+  const add = (k?: CounselTask['kind']) => open({ ...newCounselTask(linked ? plan : null), ...(k && { kind: k }) });
+  const reset = () => { setStatus('pending'); setKind('all'); setPlan(''); };
+  const chip = (on: boolean, label: string, click: () => void) => <button key={label} type="button" className="filter-chip" aria-pressed={on} disabled={actions.busy} onClick={click}>{label}</button>;
+  const statusChips = ([['pending', `진행할 항목 ${n.pending}`], ...(n.today ? [['오늘까지', `오늘까지 ${n.today}`]] : []), ...(n.late ? [['기한 지남', `기한 지남 ${n.late}`]] : []), ['done', `완료 ${n.done}`], ['all', `전체 ${n.all}`]] as [TaskStatus, string][])
+    .map(([v, label]) => chip(status === v, label, () => setStatus(v)));
+  const kinds: ['all' | CounselTask['kind'], string][] = [['all', '전체'], ['question', KIND_LABEL.question], ['action', KIND_LABEL.action]];
+  const plans: [string, string][] = [['', '모든 전형'], ['common', '공통 상담'], ...apps.map(a => [a.id, planLabel(a)] as [string, string])];
+  const selectChip = (label: string, name: string, value: string, options: [string, string][], change: (v: string) => void) =>
+    <label className={`filter-chip ct-select${value ? ' is-on' : ''}`}><span aria-hidden="true">{value ? options.find(([v]) => v === value)?.[1] : label}</span>
+      <select aria-label={name} disabled={actions.busy} value={value} onChange={e => change(e.target.value)}>{options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select><Icon name="chevron-down" size={16} /></label>;
+  const share = <button type="button" className={desktop ? 'button-outline' : 'button-pill-soft'} disabled={!data || actions.busy} onClick={() => setPicking(true)}>상담카드에 담기</button>;
+  const addButton = <ButtonPrimary aria-label="질문·할 일 추가" disabled={!data || actions.busy} onClick={() => add()}><Icon name="plus" size={20} />{desktop ? '질문·할 일 추가' : '추가'}</ButtonPrimary>;
+  const description = '상담 전에 궁금한 점을 모으고, 상담 뒤 해야 할 일을 챙겨요.';
+  const countLine = <p className="ct-count">진행할 항목 {n.pending}개{n.today > 0 && ` · 오늘까지 ${n.today}개`}{n.late > 0 && <> · <strong>기한 지남 {n.late}개</strong></>}</p>;
+  return <section className="student-screen preparation counsel-tasks" data-slug="counsel-tasks">
+    {desktop && headerSlots ? <>{createPortal(<p className="prep-header-description">{description}</p>, headerSlots.heading)}{createPortal(<div className="ct-header-actions">{share}{addButton}</div>, headerSlots.actions)}</>
+      : <div className="ct-head">{addButton}<p className="ct-lead">{description}</p>{!desktop && tasks.length > 0 && <div className="ct-count-row">{countLine}{share}</div>}</div>}
+    {!state ? <p role="status">상담 기록을 읽고 있어요.</p> : !data ? <p role="alert">{state.error}</p> : <>
+      <Feedback {...actions} />
+      {!tasks.length ? <div className="empty-state"><Icon name="message-square" size={24} /><h3 className="t-heading-3">아직 적은 상담 질문이 없어요</h3><p>상담 전에 궁금한 점을 적어 두면 상담 때 놓치지 않아요.</p><ButtonPrimary disabled={actions.busy} onClick={() => add('question')}>+ 첫 질문 적기</ButtonPrimary></div> : <>
+        {desktop && countLine}
+        {desktop ? <div className="ct-filters">
+          <div className="ct-filter-row" role="group" aria-label="상태와 구분"><span className="ct-filter-label">상태</span>{statusChips}<span className="ct-filter-gap" aria-hidden="true" /><span className="ct-filter-label">구분</span>{kinds.map(([v, label]) => chip(kind === v, label, () => setKind(v)))}</div>
+          <div className="ct-filter-row" role="group" aria-label="전형"><span className="ct-filter-label">전형</span>{plans.map(([v, label]) => chip(plan === v, label, () => setPlan(v)))}</div>
+        </div> : <div className="ct-chips" role="group" aria-label="거르기">{statusChips}
+          {selectChip('구분', '상담 구분', kind === 'all' ? '' : kind, kinds.map(([v, l]) => [v === 'all' ? '' : v, l]), v => setKind((v || 'all') as typeof kind))}
+          {selectChip('전형', '전형별 보기', plan, plans, setPlan)}</div>}
+        {!visible.length ? <div className="empty-state"><Icon name="search" size={24} /><h3 className="t-heading-3">이 조건에 맞는 항목이 없어요</h3><p>구분이나 전형을 바꾸면 다른 항목이 보여요.</p><ButtonPrimary onClick={reset}>전체 보기</ButtonPrimary></div>
+          : <div className="ct-list">{visible.map(t => { const label = deadline(t); return <article className={`ct-card${t.done ? ' is-done' : ''}`} key={t.id}>
+            <p className="ct-caption">{KIND_LABEL[t.kind]} · {planOf(t)}{t.session_date && ` · 상담일 ${t.session_date}`}</p>
+            <h3 className="ct-title">{t.title}</h3>
+            <p className={`ct-deadline ct-deadline--${deadlineTone(label)}`}><Icon name="calendar" size={16} />{t.done ? `완료 · ${stamp(t.completed_at)}` : `${label}${t.due_date ? ` · ${t.due_date.slice(5)}까지` : ''}`}</p>
+            {t.note && <p className="ct-memo">{t.note}</p>}
+            <div className="ct-actions"><ButtonOutline disabled={actions.busy} onClick={() => void actions.run(async () => { await studentDb.saveTask({ ...t, done: !t.done, completed_at: t.done ? null : new Date().toISOString(), updated_at: new Date().toISOString() }); }, t.done ? '다시 진행할 항목으로 바꿨어요.' : '완료로 기록했어요.')}>{t.done ? '다시 진행' : t.kind === 'question' ? '물어봤어요' : '완료로 표시'}</ButtonOutline>
+              <ButtonOutline aria-label={`${t.title} 수정`} disabled={actions.busy} onClick={() => open(t)}>수정</ButtonOutline></div>
+          </article>; })}</div>}
+        {linked && <p className="ct-caption">+ 추가하면 {planLabel(linked)}가 연결돼요</p>}
+      </>}
+      <div className="ct-foot"><p className="ct-storage">기한은 한국 날짜 기준이에요 · 이 기기에만 저장돼요</p><div className="ct-links"><Link to="/application-checklist">지원 전형 관리 ›</Link><Link to="/grade-input">암호화 백업·복원 ›</Link></div></div>
     </>}
-    {edit && data && <TaskEditor initial={edit} applications={data.applications} busy={actions.busy} error={actions.error} onClose={() => setEdit(null)} onSave={t => actions.run(async () => { await studentDb.saveTask({ ...t, updated_at: new Date().toISOString() }); setEdit(null); })} />}
+    {edit && data && <TaskEditor initial={edit} applications={data.applications} busy={actions.busy} error={actions.error} onClose={() => setEdit(null)} onSave={t => actions.run(async () => { await studentDb.saveTask({ ...t, updated_at: new Date().toISOString() }); setEdit(null); })}
+      onDelete={data.tasks.some(t => t.id === edit.id) ? () => { setEdit(null); setDeleting(edit); } : undefined} />}
     {deleting && <DeleteConfirm title="상담 항목을 삭제할까요?" busy={actions.busy} error={actions.error} onClose={() => setDeleting(null)} onDelete={() => void actions.run(async () => { await studentDb.tasks.delete(deleting.id); setDeleting(null); }, '상담 항목을 삭제했어요.')}>{deleting.title}의 메모와 완료 기록도 함께 삭제해요.</DeleteConfirm>}
+    {picking && <Modal label="상담카드에 담을 질문" onClose={() => setPicking(false)}><h3 className="t-heading-3">상담카드에 담을 질문</h3>
+      {questions.length ? <ul className="ct-pick">{questions.map(q => <li key={q.id}><strong>{q.title}</strong><small>{planOf(q)}</small></li>)}</ul> : <p>진행 중인 상담 전 질문이 없어요.</p>}
+      {/* shortcut: 상담카드 형식에 질문 칸이 아직 없어 목록만 보여 줘요. 상담카드 · 카드 수합 형식 변경(K1)이 정해지면 담기를 구현 */}
+      <p className="t-caption text-muted">질문을 상담카드에 함께 담아 보내는 기능은 준비 중이에요. 지금은 수시로에서 상담카드를 보내고, 상담 때 이 목록을 함께 보여 주세요.</p>
+      <div className="toolbar"><ButtonOutline onClick={() => setPicking(false)}>닫기</ButtonOutline><Link className="button-primary" to="/susiro">수시로로 가기</Link></div></Modal>}
   </section>;
 }
-function TaskEditor({ initial, applications, busy, error, onSave, onClose }: EditorProps<CounselTask> & { applications: ApplicationPlan[] }) {
+function TaskEditor({ initial, applications, busy, error, onSave, onClose, onDelete }: EditorProps<CounselTask> & { applications: ApplicationPlan[]; onDelete?: () => void }) {
   const [draft, set] = useState(initial);
-  return <Modal label="상담 항목 편집" onClose={() => { if (!busy) onClose(); }}><h3 className="t-heading-3">상담 질문·할 일</h3><form className="prep-form" onSubmit={e => { e.preventDefault(); void onSave(draft); }}><label>구분<select value={draft.kind} onChange={e => set({ ...draft, kind: e.target.value as CounselTask['kind'] })}><option value="question">상담 전 질문</option><option value="action">상담 후 할 일</option></select></label><label>제목<input required maxLength={200} value={draft.title} onChange={e => set({ ...draft, title: e.target.value })} /></label><label>연결할 전형<select value={draft.application_id ?? ''} onChange={e => set({ ...draft, application_id: e.target.value || null })}><option value="">공통 상담</option>{applications.map(a => <option key={a.id} value={a.id}>{a.year} · {a.university} · {a.program}</option>)}</select></label><div className="form-grid"><label>상담일(선택)<input type="date" value={draft.session_date ?? ''} onChange={e => set({ ...draft, session_date: e.target.value || null })} /></label><label>기한(선택)<input type="date" value={draft.due_date ?? ''} onChange={e => set({ ...draft, due_date: e.target.value || null })} /></label></div><label>상담 메모·다음 행동<textarea maxLength={2000} rows={4} value={draft.note} onChange={e => set({ ...draft, note: e.target.value })} /></label><EditorActions {...{ busy, error, onClose }} /></form></Modal>;
+  return <Modal label="상담 항목 편집" onClose={() => { if (!busy) onClose(); }}><h3 className="t-heading-3">상담 질문·할 일</h3><form className="prep-form" onSubmit={e => { e.preventDefault(); void onSave(draft); }}><label>구분<select value={draft.kind} onChange={e => set({ ...draft, kind: e.target.value as CounselTask['kind'] })}><option value="question">상담 전 질문</option><option value="action">상담 후 할 일</option></select></label><label>제목<input required maxLength={200} value={draft.title} onChange={e => set({ ...draft, title: e.target.value })} /></label><label>연결할 전형<select value={draft.application_id ?? ''} onChange={e => set({ ...draft, application_id: e.target.value || null })}><option value="">공통 상담</option>{applications.map(a => <option key={a.id} value={a.id}>{a.year} · {a.university} · {a.program}</option>)}</select></label><div className="form-grid"><label>상담일(선택)<input type="date" value={draft.session_date ?? ''} onChange={e => set({ ...draft, session_date: e.target.value || null })} /></label><label>기한(선택)<input type="date" value={draft.due_date ?? ''} onChange={e => set({ ...draft, due_date: e.target.value || null })} /></label></div><label>상담 메모·다음 행동<textarea maxLength={2000} rows={4} value={draft.note} onChange={e => set({ ...draft, note: e.target.value })} /></label><EditorActions {...{ busy, error, onClose }} />{onDelete && <button type="button" className="prep-danger" disabled={busy} onClick={onDelete}>삭제</button>}</form></Modal>;
 }

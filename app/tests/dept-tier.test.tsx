@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { DeptTier } from '../src/screens/DeptTier';
 import { resetReleasedResults } from '../src/data/releasedResults';
 import { resetUnivWiki } from '../src/data/univWiki';
+import { resetTierDraft } from '../src/data/deptTier';
 
 const APPROVALS = [{ reviewer: 'A', at: '2026-11-12' }, { reviewer: 'B', at: '2026-11-12' }];
 // spec 1-1 일부(시험용 숫자). 바(바다대학교)는 계열표에만 있고 공개 입결이 없어 "준비 중".
@@ -18,9 +19,9 @@ const fieldRows = [...CUTS.map(([university, unit]) => ({ university, unit, smal
   { university: '연세대학교', unit: '사학과', small: '역사', mid: '인문학' }]; // 대계열 없음 → 나오지 않는다
 const wiki = (rows: unknown[]) => ({ format: 'jinhak-navi-univ-wiki', version: 1, fields: { reviewed_at: '2026-11-16', approvals: APPROVALS, rows }, entries: [] });
 
-function serve(rows: unknown[] = fieldRows) {
-  resetReleasedResults(); resetUnivWiki();
-  vi.stubGlobal('fetch', vi.fn(async (url: string) => new Response(JSON.stringify(String(url).includes('univ-wiki') ? wiki(rows) : released))));
+function serve(rows: unknown[] = fieldRows, draft: unknown = null) {
+  resetReleasedResults(); resetUnivWiki(); resetTierDraft();
+  vi.stubGlobal('fetch', vi.fn(async (url: string) => new Response(JSON.stringify(String(url).includes('univ-wiki') ? wiki(rows) : String(url).includes('dept-tier') ? draft : released))));
 }
 const open = () => render(<MemoryRouter><DeptTier /></MemoryRouter>);
 const layerNames = () => screen.getAllByRole('heading', { level: 4 }).map(h => h.textContent);
@@ -35,7 +36,7 @@ describe('학과별 입결 구간표', () => {
     expect(await screen.findByText('1.5~2.0')).toBeTruthy();
     expect(layerNames()).toEqual(['70% 컷 1.5~2.0모집단위 1개', '70% 컷 2.0~2.5모집단위 1개', '70% 컷 2.5~3.0모집단위 2개', '70% 컷 3.0~3.5모집단위 1개', '70% 컷 3.5~4.0모집단위 1개']);
     expect(within(widthGroup()).getByRole('button', { name: '0.5' }).getAttribute('aria-pressed')).toBe('true');
-    expect(screen.getByText('준비 중 1개 — 검수가 끝나면 채워져요')).toBeTruthy();
+    expect(screen.getByText('이 묶음에서 교과 컷이 없는 모집단위 1개는 층에 넣지 않았어요')).toBeTruthy();
     const link = screen.getByRole('link', { name: '한양대학교 정책학과, 2026학년도 학생부교과 70% 컷 2.5, 대학 상세로 이동' });
     expect(link.getAttribute('href')).toBe(`/univ-detail?u=${encodeURIComponent('한양대학교')}&d=${encodeURIComponent('정책학과|교과')}`);
     expect(screen.getByText('어떻게 나눴나요?')).toBeTruthy();
@@ -112,5 +113,21 @@ describe('학과별 입결 구간표', () => {
     fireEvent.click(within(dialog).getByRole('button', { name: /행정·정책/ }));
     expect(screen.queryByRole('dialog')).toBeNull();
     expect(screen.getByText('1.5~2.0')).toBeTruthy();
+  });
+});
+
+describe('실제 모드 문구(2026-11-25 사용자 결정: 전국 배치표와 같은 문구)', () => {
+  it('수시 정리본 · 계열표 초안 출처를 밝히고, 빠진 개수가 맞아떨어진다', async () => {
+    const draft = { format: 'jinhak-navi-dept-tier', version: 1,
+      fields: [['나무대학교', '행정학과', '행정·정책', '사회과학', '인문'], ['다리대학교', '행정학부', '행정·정책', '사회과학', '인문']],
+      rows: [['나무대학교', '행정학과', '교과', '일반', '2026', '2.2'], ['다리대학교', '행정학부', '교과', '일반', '2025', '3.1']] };
+    serve(fieldRows, draft); open();
+    await screen.findByText('1.5~2.0');
+    expect(screen.getByText(/원문 대조 전 참고자료예요 · 등급은/)).toBeTruthy();
+    expect(screen.queryByText(/관리자가 검수한 입결만/)).toBeNull();
+    expect(screen.getByText(/수시 정리본\(원문 대조 전\) · 원문 확인 필요 행 제외/)).toBeTruthy();
+    expect(screen.getByText(/학과 계열표 초안\(학과명 규칙 추천, 검수 전\)/)).toBeTruthy();
+    // 후보 9 = 검수 계열표 7 + 초안 2 · 컷 없음 1(바다) · 다른 학년도 1(다리 2025) → 7
+    expect(screen.getByText('대상 → 후보 9개 중 교과 컷 없음 1개 · 다른 학년도 1개 빼요 → 7개')).toBeTruthy();
   });
 });

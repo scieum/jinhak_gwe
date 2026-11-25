@@ -2,7 +2,8 @@
 import type { CardRecord, ClassInfo, CounselPayload, HomeroomLog, Memo, Student } from '../../domain/classroom';
 import type { MockGrades, SchoolGrades } from '../../domain/scoreImport';
 import type { GradeRecord, Semester } from '../../domain/student';
-import type { Target } from '../../domain/minimum';
+import type { Criterion, Target } from '../../domain/minimum';
+import type { CounselList } from '../../store/teacherDb';
 import type { ClassSchedule } from '../../domain/classCalendar';
 import type { Outcome } from '../../domain/outcomes';
 import { SAMPLE_PREFIX, SAMPLE_STAMP, SAMPLE_UNIVERSITIES, sampleGrades } from './student';
@@ -87,9 +88,20 @@ function classGrades(n: number, g5: number): SchoolGrades {
 // 하늘 내신 학기 평균(demo-dataset 학기 평균 1-1 1.7 → 2-2 1.2). 단순 평균 약 1.4. 하늘이 [0]이에요(tests/student-record).
 export const sampleSchool: SchoolGrades[] = [{ number: '07', semesters: { '1-1': 1.7, '1-2': 1.5, '2-1': 1.3, '2-2': 1.2 }, updated_at: SAMPLE_STAMP, records: sampleGrades },
   ...Object.entries(G5).map(([n, g]) => classGrades(Number(n), g))];
-// 1순위 목표 수능 최저(교사 입력 예시, 실제 경희대 기준 아님). 3합 6이라 10월 학평으로 demo-dataset 판정이 나와요.
-const CRITERION: Target['criterion'] = { areas: ['국어', '수학', '영어', '탐구'], count: 3, sum: 6, required: null, history_max: null, tamgu: 'best' };
-export const sampleTargets: Target[] = sampleStudents.map(s => ({ number: s.number, university: '경희대학교', source: 'teacher', updated_at: SAMPLE_STAMP, criterion: CRITERION }));
+// 1순위 목표 수능 최저(예시, 실제 대학 기준 아님). 기본 3합 6이라 10월 학평으로 demo-dataset 판정이 나와요.
+// minimum-board v2 시안 표(346:100508): 7 하늘 · 18 여울 · 24 파도 · 3 노을 · 11 구름은 시안 대학·기준. 3 노을만 교사 입력 · 미검수(sample 표식 없음).
+const ALL: Criterion['areas'] = ['국어', '수학', '영어', '탐구'];
+const crit = (count: number, sum: number, required: Criterion['required'] = null): Criterion => ({ areas: ALL, count, sum, required, history_max: null, tamgu: 'best' });
+const TARGETS: Record<string, [university: string, unit: string | undefined, criterion: Criterion, sample: boolean]> = {
+  '07': ['경희대학교', '행정학과', crit(2, 3, '수학'), true], '18': ['경희대학교', '경영학과', crit(3, 6), true], '24': ['성균관대학교', '사회과학계열', crit(3, 7), true],
+  '03': ['중앙대학교', '간호학과', crit(3, 7, '수학'), false], '11': ['한양대학교', '기계공학부', crit(2, 4, '수학'), true],
+};
+export const sampleTargets: Target[] = sampleStudents.map(s => {
+  const [university, unit, criterion, sample] = TARGETS[s.number] ?? ['경희대학교', undefined, crit(3, 6), true];
+  return { number: s.number, university, ...(unit ? { unit } : {}), source: 'teacher', ...(sample ? { sample: true as const } : {}), updated_at: SAMPLE_STAMP, criterion };
+});
+/** 지난번 저장한 상담 명단(minimum-board v2 시안 "지난 저장 2026-11-12 · 3명" = 근접 3명). */
+export const sampleCounselLists: CounselList[] = [{ key: 'minimum', numbers: ['07', '18', '24'], saved_at: rel('2026-11-12T08:00:00.000Z') }];
 
 // 누가기록: 이번 달 기록 있음 25명 · 없음 3명(18 여울 · 21 모래 · 28 솔잎)
 export const sampleLogs: HomeroomLog[] = [{
@@ -105,8 +117,14 @@ export const sampleMocks: MockGrades[] = EXAMS.map(([month, kind], i) => ({
   grades: Object.fromEntries(Object.entries(MOCK).map(([area, v]) => [area, v[i]])),
 }));
 // 반 학생 모의고사(네 회차 같은 등급). demo-dataset 최저: 미충족 5명(15 · 22 · 3 · 11 · 26) · 근접 3명(7 · 18 · 24) · 자료 부족 1명(16, 영어만) · 충족 19명.
-const MET = { 국어: 2, 수학: 2, 영어: 2, 탐구1: 2, 탐구2: 3 }, NEAR = { 국어: 3, 수학: 2, 영어: 2, 탐구1: 3, 탐구2: 3 }, UNMET = { 국어: 3, 수학: 3, 영어: 3, 탐구1: 4, 탐구2: 4 };
-const mockOf = (n: number) => [3, 11, 15, 22, 26].includes(n) ? UNMET : [18, 24].includes(n) ? NEAR : n === 16 ? { 영어: 3 } : MET;
+// 등급은 minimum-board v2 시안 표(18 여울 2·3·2·3 · 24 파도 3·3·2·3 · 3 노을 3·4·3·4 · 11 구름 3·4·2·3). 15 · 22는 4 넘게, 26은 2 모자라요(시안 "먼저 볼 학생" 순서).
+const MET = { 국어: 2, 수학: 2, 영어: 2, 탐구1: 2, 탐구2: 3 };
+const CLASS_MOCKS: Record<number, MockGrades['grades']> = {
+  18: { 국어: 2, 수학: 3, 영어: 2, 탐구1: 3, 탐구2: 3 }, 24: { 국어: 3, 수학: 3, 영어: 2, 탐구1: 3, 탐구2: 3 },
+  3: { 국어: 3, 수학: 4, 영어: 3, 탐구1: 4, 탐구2: 4 }, 11: { 국어: 3, 수학: 4, 영어: 2, 탐구1: 3, 탐구2: 3 },
+  15: { 국어: 3, 수학: 3, 영어: 4, 탐구1: 4, 탐구2: 4 }, 22: { 국어: 3, 수학: 3, 영어: 4, 탐구1: 4, 탐구2: 4 }, 26: { 국어: 3, 수학: 3, 영어: 2, 탐구1: 4, 탐구2: 4 }, 16: { 영어: 3 },
+};
+const mockOf = (n: number) => CLASS_MOCKS[n] ?? MET;
 export const sampleClassMocks: MockGrades[] = sampleStudents.filter(s => s.number !== '07').flatMap(s => EXAMS.map(([month, kind]) => ({
   number: s.number, exam: `2026년 ${month}월 ${kind}`, updated_at: SAMPLE_STAMP, grades: mockOf(Number(s.number)) })));
 
@@ -144,3 +162,15 @@ export const sampleOutcomes: Outcome[] = Object.entries(APPLIED).flatMap(([numbe
   const [type, university, program] = PROGRAMS[code.slice(0, 2)], result = RESULT_CODE[code[2]];
   return { number, university, program, type, result, stage1: type !== '종합' || result === '미입력' ? null : result !== '1단계 불합격' };
 }));
+
+// 성적 불러오기 샘플 파일(score-import v2 시안 346:152228·346:155908): 10월 학평 영역 등급 28행 — 7번 수학 12(범위 오류) · 12·18·25번 빈 칸(결시).
+// 1~7·12·18·25번은 시안 표 값, 나머지는 시안에 없어 반 모의고사 샘플 등급(한국사 3)으로 채웠어요(시안 기준 보강).
+const IMPORT_ROWS: Record<number, (number | '')[]> = {
+  1: [2, 2, 1, 3, 2, 2], 2: [1, 2, 2, 3, 2, 2], 3: [3, 4, 3, 4, 4, 4], 4: [2, 1, 2, 3, 3, 3], 5: [2, 2, 2, 3, 2, 3], 6: [2, 2, 1, 3, 2, 2],
+  7: [3, 12, 2, 4, 3, 3], 12: [2, '', 1, 3, 2, 2], 18: [2, 3, 2, 3, 3, ''], 25: ['', 2, '', 3, 2, 2],
+};
+const importRow = (n: number) => IMPORT_ROWS[n] ?? (g => [g.국어, g.수학, g.영어, 3, g.탐구1, g.탐구2])({ ...MET, ...mockOf(n) });
+export const sampleImport = {
+  fileName: '2-3_2026-10_학평.xlsx', year: 2026, month: 10, kind: '학평',
+  rows: [['번호', '별칭', '국어', '수학', '영어', '한국사', '탐구1', '탐구2'], ...sampleStudents.map((s, i) => [String(i + 1), s.alias, ...importRow(i + 1)])] as unknown[][],
+};

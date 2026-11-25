@@ -195,12 +195,16 @@ describe('결과 집계 · 최저 판정 · 학생 기록 화면', () => {
   it('최저 기준을 넣으면 교사 입력 · 미검수로 판정하고 학생 기록에도 보인다', async () => {
     await teacherDb.mocks.put({ number: '07', exam: '2026년 10월 학평', grades: { 국어: 3, 수학: 3, 영어: 2, 한국사: 3, 탐구1: 2, 탐구2: 3 }, updated_at: '' });
     const { unmount } = render(<MemoryRouter initialEntries={['/teacher/minimum-board']}><App /></MemoryRouter>);
-    const row = (await screen.findAllByRole('row')).find(r => r.textContent?.includes('07 · 하늘'))!;
+    const row = (await screen.findAllByRole('row')).find(r => r.textContent?.includes('7번 하늘'))!;
     fireEvent.click(within(row).getByRole('button', { name: '기준 넣기' }));
     fireEvent.change(screen.getByLabelText('목표 대학·학과'), { target: { value: '강원대 간호' } });
     fireEvent.click(screen.getByRole('button', { name: '저장' }));
-    expect((await screen.findAllByText('국어 1등급만 오르면 충족')).length).toBe(2);
+    // 표 이유 칸(합 · 한 과목만 1등급) · 상담 명단 줄(근접은 우선 1로 기본 선택)
+    expect(await screen.findByText('합 7.5 · 한 과목만 1등급 오르면 충족')).toBeTruthy();
+    expect(screen.getByText('합 7.5 · 한 과목만 오르면 충족')).toBeTruthy();
+    expect(screen.getByText('간호')).toBeTruthy();
     expect(screen.getAllByText('교사 입력 · 미검수').length).toBeGreaterThan(0);
+    expect(screen.getByRole('button', { name: '명단 저장 (1명)' })).toBeTruthy();
     unmount();
     render(<MemoryRouter initialEntries={['/teacher/student-record?n=07']}><App /></MemoryRouter>);
     expect(await screen.findByRole('heading', { name: '7번 하늘' })).toBeTruthy();

@@ -217,12 +217,12 @@ function AttendanceFields({ initial, onSave }: { initial: AttendanceRecord; onSa
   const num = (v: string) => (v === '' ? 0 : Number(v));
   return <div className="grade-input__attendance result-panel">
     <div className="section-row"><h3 className="t-heading-3">{a.year}학년 출결</h3>
-      <span className="attendance-days"><label className="attendance-days">수업일수<input type="number" inputMode="numeric" min="0" max="366" value={a.school_days || ''} placeholder="0" onChange={e => set({ ...a, school_days: num(e.target.value) })} onBlur={() => commit(a)} /></label><span className="t-caption text-muted">일</span></span></div>
+      <label className="attendance-days">수업일수<span className="text-input attendance-field"><input aria-label="수업일수" type="number" inputMode="numeric" min="0" max="366" value={a.school_days || ''} placeholder="0" onChange={e => set({ ...a, school_days: num(e.target.value) })} onBlur={() => commit(a)} /><span className="attendance-unit" aria-hidden="true">일</span></span></label></div>
     <div className="attendance-grid" role="group" aria-label={`${a.year}학년 출결 입력`}>
       <span />{REASON_LABEL.map(r => <span key={r} className="t-caption text-muted">{r}</span>)}
-      {attendanceKinds.map((k, i) => <Fragment key={k}><span className="t-body">{KIND_LABEL[i]}</span>
-        {attendanceReasons.map((r, j) => <span key={r} className="attendance-cell"><input aria-label={`${KIND_LABEL[i]} ${REASON_LABEL[j]}`} type="number" inputMode="numeric" min="0" max="366" placeholder="0"
-          value={a[k][r] || ''} aria-invalid={!!errors.length} onChange={e => set({ ...a, [k]: { ...a[k], [r]: num(e.target.value) } })} onBlur={() => commit(a)} /><span className="t-caption text-muted">{KIND_UNIT[i]}</span></span>)}</Fragment>)}
+      {attendanceKinds.map((k, i) => <Fragment key={k}><span className="attendance-kind">{KIND_LABEL[i]}</span>
+        {attendanceReasons.map((r, j) => <label key={r} className="text-input attendance-field"><input aria-label={`${KIND_LABEL[i]} ${REASON_LABEL[j]}`} type="number" inputMode="numeric" min="0" max="366" placeholder="0"
+          value={a[k][r] || ''} aria-invalid={!!errors.length} onChange={e => set({ ...a, [k]: { ...a[k], [r]: num(e.target.value) } })} onBlur={() => commit(a)} /><span className="attendance-unit" aria-hidden="true">{KIND_UNIT[i]}</span></label>)}</Fragment>)}
     </div>
     {errors.length > 0 ? <p role="alert" className="error-note t-caption">{errors.join(' ')}</p> : <p className="t-caption text-muted">질병·미인정·기타를 구분해 입력해요. 칸을 옮기면 저장돼요.</p>}
   </div>;

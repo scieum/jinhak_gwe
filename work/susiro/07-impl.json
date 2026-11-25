@@ -1,10 +1,15 @@
 {
   "slug": "susiro",
   "gate": "G5",
-  "pass": true,
-  "errors": [],
-  "back_to": null,
-  "same_fail_streak": 0,
+  "pass": false,
+  "errors": [
+    "F 390 #I916:340611;78:611;29:21: '경계' 색 #5c4a9e (시안 #141414)",
+    "F 1440 #I991:57876;29:21: '경계' 색 #5c4a9e (시안 #141414)",
+    "F 1440 #I918:340520;66:378;29:21: '경계' 색 #5c4a9e (시안 #141414)",
+    "V 1440: 차이 영역 x 1080 y 544 24×16"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 2,
   "route": "/susiro",
   "allowed": [],
   "notes": [

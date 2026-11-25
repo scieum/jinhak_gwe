@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "app/src/styles/minimum-board.css"
+        ],
+        "createdAt": "2026-11-25T00:49:08.070Z",
+        "reason": "user confirmed 2026-11-25: selected-row 3px accent bar is design.md Elevation Selected (accent-soft fill + accent indicator bar)"
+      }
+    ]
+  }
+}

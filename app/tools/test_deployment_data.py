@@ -36,6 +36,13 @@ class DeploymentDataTests(unittest.TestCase):
         self.write_json('data/admission-plans.json', {'format': 'jinhak-navi-admission-plans', 'review_status': 'draft', 'entries': [{'id': 'test'}]})
         self.write_json('data/released-results.json', {})
         self.write_json('data/scoring-rules.json', {})
+        self.write_json('data/univ-map.json', {'format': 'jinhak-navi-univ-map', 'version': 2, 'campuses': [{'campus_id': 'test'}]})
+        susi = self.package('susi-results', {'format': 'jinhak-navi-collected-results', 'status': 'draft',
+            'university': 'test', 'rows': [[0]], 'review_format': 'susi-row-review-v1', 'review_flags': [[]]})
+        susi.update(university='test', rounds={'수시': 1})
+        self.write_json('data/susi-results/index.json', {'format': 'jinhak-navi-collected-index', 'status': 'draft',
+            'dataset': 'organized-susi', 'review_format': 'susi-row-review-v1', 'master_sha256': 'a'*64,
+            'rows': 1, 'universities': [susi]})
 
     def write(self, name, raw):
         path = self.root / name
@@ -63,6 +70,23 @@ class DeploymentDataTests(unittest.TestCase):
     def test_missing_placement_fails_instead_of_silent_build(self):
         (self.root / 'data/national-placement/index.json').unlink()
         with self.assertRaisesRegex(ValueError, 'missing or unreadable'):
+            deploy.check(self.root)
+
+    def test_susi_required_and_must_match_collection(self):
+        files, _ = deploy.check(self.root)
+        self.assertIn('data/susi-results/index.json', files)
+        path = self.root/'data/susi-results/index.json'
+        index = json.loads(path.read_bytes()); index['master_sha256'] = 'b'*64
+        path.write_text(json.dumps(index), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'another collection'):
+            deploy.check(self.root)
+
+    def test_campus_map_is_included_and_required(self):
+        files, report = deploy.check(self.root)
+        self.assertIn('data/univ-map.json', files)
+        self.assertEqual(report['map_campuses'], 1)
+        (self.root / 'data/univ-map.json').unlink()
+        with self.assertRaisesRegex(ValueError, 'univ-map.json'):
             deploy.check(self.root)
 
     def test_html_fallback_and_corrupted_logo_are_rejected(self):

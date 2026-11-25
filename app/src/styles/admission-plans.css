@@ -197,3 +197,4 @@ body:has(.admissions-list) .topbar__actions > :not(#topbar-screen-actions) { dis
 /* 2026-11-25 사용자 요청 "조건 줄 규칙"(전국 배치표와 같음): 라벨 칸 108 + 12, 줄 사이 hairline-soft 실선 · 위아래 12 */
 .admissions-list .al-filters { grid-template-columns: 120px minmax(0, 1fr); column-gap: 0; row-gap: 12px; }
 .admissions-list .al-filters__label ~ .al-filters__label, .admissions-list .al-filters__label ~ .al-filters__label + .al-chips { padding-top: 12px; border-top: 1px solid var(--color-hairline-soft); min-height: 53px; }
+.al-table-card td:nth-last-child(-n+3) { white-space: nowrap; } /* 수능최저 · 면접 · 관심 칸: '원문 확인'이 두 줄로 꺾이지 않게(2026-11-25) */

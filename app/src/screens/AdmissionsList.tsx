@@ -99,8 +99,8 @@ function toRows(catalog: PlanCatalog): Row[] {
       key: `${plan.id}|${program.name}`, plan, program, group, type: program.round === '정시' ? '정시' : program.type,
       unit: (program as PlanProgram & { unit?: string }).unit ?? (/전형 전체|전체 모집/.test(program.scope ?? '') ? '전 모집단위' : '원문 확인'), quota: count(program.quota),
       date: plan.documents.find(d => d.id === program.document_id)?.checked_at ?? latest,
-      // 사실 글자만(판정 아님): 원문 요약이 "미적용"으로 시작하면 없음, 정시는 해당 없음, 그 밖에 기준이 적혀 있으면 있음
-      minimum: program.round === '정시' ? '해당 없음' : /^(수능최저\s*)?미적용/.test(program.minimum) ? '없음' : '있음',
+      // 사실 글자만(판정 아님): 원문 요약이 "미적용"으로 시작하면 없음, 정시는 해당 없음, 근거 없이 "원문 확인 필요"면 비워 둠, 그 밖에 기준이 적혀 있으면 있음
+      minimum: program.round === '정시' ? '해당 없음' : /^(수능최저\s*)?미적용/.test(program.minimum) ? '없음' : program.minimum === '원문 확인 필요' ? undefined : '있음',
       interview: /^있음/.test(program.interview ?? '') ? '있음' : /^(면접\s*)?없음/.test(program.interview ?? '') ? '없음' : undefined,
     } satisfies Row));
   });
@@ -121,7 +121,7 @@ const sorters: Record<Sort, (a: Row, b: Row) => number> = {
   지역순: (a, b) => (ORDER.indexOf(a.group) + 1 || 99) - (ORDER.indexOf(b.group) + 1 || 99) || byName(a, b),
   '최근 변경순': (a, b) => ko(b.date, a.date) || byName(a, b),
 };
-const facts = (row: Row) => row.program ? `${row.minimum === '해당 없음' ? '정시' : `수능최저 ${row.minimum}`} · 면접 ${row.interview ?? '원문 확인'}` : '공식 원문 제공';
+const facts = (row: Row) => row.program ? `${row.minimum === '해당 없음' ? '정시' : `수능최저 ${row.minimum ?? '원문 확인'}`} · 면접 ${row.interview ?? '원문 확인'}` : '공식 원문 제공';
 const shortDate = (d: string) => d.slice(5).replace('-', '.');
 
 const PAGE_SIZE = 10;
@@ -140,7 +140,7 @@ export function AdmissionsList() {
   }, [attempt, sample]);
   useEffect(() => { setPage(0); }, [query, type, filters, sort, interestOnly]);
   useEffect(() => { if (!toast) return; const t = window.setTimeout(() => setToast(null), 3000); return () => window.clearTimeout(t); }, [toast]);
-  const interests = useLiveQuery(async () => { try { return new Set((await studentDb.interests.toArray()).map(i => i.id)); } catch { return null; } }, []);
+  const interests = useLiveQuery(async () => { try { return new Set((await studentDb.interests.toArray()).map(i => interestId(i.university, i.program))); } catch { return null; } }, []);
   const rows = useMemo(() => catalog ? toRows(catalog) : [], [catalog]);
   function update(key: string, value: string) { const next = new URLSearchParams(params); if (value) next.set(key, value); else next.delete(key); setParams(next, { replace: key === 'q' }); }
   const idOf = (r: Row) => r.program ? interestId(r.plan.university, r.program.name) : '';
@@ -161,7 +161,11 @@ export function AdmissionsList() {
     if (interests === null) { setSaveError(true); return; }
     const on = saved(row);
     if (on && interestOnly && !sure) { setConfirm(row); return; }
-    try { await studentDb.setInterest(row.plan.university, row.program.name, !on); setSaveError(false);
+    // 전형 한 줄 = 학과 없는 전형 단위: 다른 화면에서 학과까지 담은 관심도 같은 전형이면 채워 보이고, 빼면 그 전형 관심을 모두 빼요(2026-11-25).
+    try {
+      if (on) { const u = row.plan.university, p = row.program.name; await studentDb.interests.bulkDelete((await studentDb.interests.toArray()).filter(i => i.university === u && i.program === p).map(i => i.id)); }
+      else await studentDb.setInterest(row.plan.university, row.program.name, true);
+      setSaveError(false);
       setToast(on ? { text: '관심 전형에서 뺐어요' } : { text: '관심 전형에 담았어요', sub: '이 기기에만 저장돼요' });
     } catch { setSaveError(true); }
   }
@@ -242,7 +246,7 @@ export function AdmissionsList() {
               <td>{univLink(row)}</td><td>{row.plan.region}</td>
               <td>{programText(row)}{sort === '최근 변경순' && <span className="t-caption text-muted num al-date">{shortDate(row.date)} 확인</span>}</td>
               <td>{row.type ?? '—'}</td><td>{row.unit}</td><td className="num">{row.program ? <Quota program={row.program} prefix="" /> : '—'}</td>
-              <td>{row.minimum ?? '—'}</td><td>{row.program ? row.interview ?? '원문 확인' : '—'}</td><td>{heart(row)}</td></tr>)}</tbody>
+              <td>{row.program ? row.minimum ?? '원문 확인' : '—'}</td><td>{row.program ? row.interview ?? '원문 확인' : '—'}</td><td>{heart(row)}</td></tr>)}</tbody>
           </table></div>
           {pager}
         </>}

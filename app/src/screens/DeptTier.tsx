@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { useReleasedResults } from '../data/releasedResults';
 import { useUnivWiki } from '../data/univWiki';
+import { useTierDraft } from '../data/deptTier';
 import { useSampleMode } from '../data/sample/mode';
 import { sampleTierFields, sampleTierUnits } from '../data/sample/deptTier';
 import { buildLayers, DEFAULT_WIDTH, groupsOf, parseWidth, sameGroup, tierData, tierFields, widthText, WIDTH_PRESETS, type Major, type TierCell, type TierGroup, type TierType } from '../domain/deptTier';
@@ -34,10 +35,14 @@ const Logo = ({ university }: { university: string }) => universityLogoFile(univ
 const detailPath = (c: TierCell, type: TierType) => `/univ-detail?u=${encodeURIComponent(c.university)}&d=${encodeURIComponent(`${c.unit}|${type}`)}`;
 
 export function DeptTier() {
-  const released = useReleasedResults(), wiki = useUnivWiki(), compact = useCompactResults(), sample = useSampleMode();
-  // 샘플 모드: 이 화면 샘플(계열표 · 입결)을 더해요. 다른 화면이 보는 공개 로더는 그대로예요.
-  const units = useMemo(() => released && sample ? [...released, ...sampleTierUnits] : released, [released, sample]);
-  const fields = useMemo(() => [...(wiki?.fields ?? []), ...(wiki && sample ? sampleTierFields : [])], [wiki, sample]);
+  const released = useReleasedResults(), wiki = useUnivWiki(), compact = useCompactResults(), sample = useSampleMode(), draft = useTierDraft(!sample);
+  // 샘플 모드: 이 화면 샘플(계열표 · 입결)을 더해요. 실제 모드: 수시 정리본 입결 + 계열표 초안(dept-tier.json)을 더해요. 다른 화면이 보는 공개 로더는 그대로예요.
+  const units = useMemo(() => !released ? null : sample ? [...released, ...sampleTierUnits] : draft && [...released, ...draft.units], [released, sample, draft]);
+  const fields = useMemo(() => {
+    const reviewed = wiki?.fields ?? [], has = new Set(reviewed.map(f => `${f.university}|${f.unit}`));
+    // 검수된 계열표가 있는 모집단위는 초안보다 검수표를 따른다
+    return [...reviewed, ...(wiki && sample ? sampleTierFields : []), ...(wiki && !sample && draft ? draft.fields.filter(f => !has.has(`${f.university}|${f.unit}`)) : [])];
+  }, [wiki, sample, draft]);
   const groups = useMemo(() => groupsOf(fields), [fields]);
   const [major, setMajor] = useState<Major>('인문'), [type, setType] = useState<TierType>('교과');
   const [pick, setPick] = useState<TierGroup | null>(null), [picker, setPicker] = useState(false);
@@ -89,7 +94,10 @@ export function DeptTier() {
       </div>}</div>
   </div>;
   const asof = <span className="data-status-badge dept-tier__asof">데이터 기준일 {dataAsOf}</span>;
-  const pendingBadge = data && data.status !== 'pending' && data.pending > 0 && <span className="data-status-badge dept-tier__pending-count">준비 중 {data.pending}개 — 검수가 끝나면 채워져요</span>;
+  const pendingBadge = data && data.status !== 'pending' && data.pending > 0 && <span className="data-status-badge dept-tier__pending-count">{sample ? `준비 중 ${data.pending}개 — 검수가 끝나면 채워져요` : `이 묶음에서 ${type} 컷이 없는 모집단위 ${data.pending}개는 층에 넣지 않았어요`}</span>;
+  // 실제 모드(2026-11-25 사용자 결정): 수시 정리본 · 계열표 초안을 쓰므로 전국 배치표와 같은 문구. 샘플 모드는 시안 문구 그대로
+  const basisNote = sample ? '관리자가 검수한 입결만' : '원문 대조 전 참고자료예요';
+  const otherYear = data && data.status !== 'pending' ? data.candidates - data.pending - data.cells.length : 0;
   return <section data-slug="dept-tier" aria-label="학과별 입결 구간표" className="student-screen dept-tier">
     {head && createPortal(<><h1 className="dept-tier__title">학과별 입결 구간표</h1><p className="dept-tier__lead">학과 묶음 하나를 골라 공개 입결 70% 컷을 구간으로 쌓아 보여 드려요</p></>, head)}
     {compact ? <h2 className="dept-tier__mtitle">학과별 입결 구간표</h2> : <ScreenActions>{asof}</ScreenActions>}
@@ -116,8 +124,8 @@ export function DeptTier() {
       : !group ? <div className="dept-tier__pending"><span className="data-status-badge">준비 중</span><p className="t-body-sm text-muted">학과 계열표에 {major} 계열이 아직 검수되지 않았어요. 검수가 끝나면 채워져요.</p></div>
       : data!.status === 'pending' ? <div className="dept-tier__pending"><h3 className="t-heading-4">{group.small}</h3><span className="data-status-badge">준비 중</span><p className="t-body-sm text-muted">이 묶음의 입결은 아직 검수 중이에요</p></div>
       : <>
-        {compact ? <div className="dept-tier__basis">{asof}<p className="t-caption text-muted">{year}학년도 수시 {typeName} · 70% 컷 · 9등급</p><p className="t-caption text-muted">관리자가 검수한 입결만 · 등급은 숫자가 작을수록 상위예요</p></div>
-          : <div className="dept-tier__basis"><p className="t-caption text-muted">{year}학년도 수시 {typeName} · 70% 컷 · 9등급 · 관리자가 검수한 입결만 · 등급은 숫자가 작을수록 상위예요</p>{pendingBadge}</div>}
+        {compact ? <div className="dept-tier__basis">{asof}<p className="t-caption text-muted">{year}학년도 수시 {typeName} · 70% 컷 · 9등급</p><p className="t-caption text-muted">{basisNote} · 등급은 숫자가 작을수록 상위예요</p></div>
+          : <div className="dept-tier__basis"><p className="t-caption text-muted">{year}학년도 수시 {typeName} · 70% 컷 · 9등급 · {basisNote} · 등급은 숫자가 작을수록 상위예요</p>{pendingBadge}</div>}
         <div className="dept-tier__mine"><div className="dept-tier__mine-head"><h3 className="t-title">내 위치</h3><span className="data-status-badge">준비 중</span></div>
           {/* shortcut: 검수된 5→9 환산 규칙이 아직 없어서(NEVER-1) 항상 준비 중. 규칙이 verified가 되면 spec D11 선 · 띠 · 말풍선을 그린다 */}
           <p className="text-muted">검수된 환산 규칙이 생기면 {compact ? '이 표 위에' : '왼쪽 축에'} 내 위치를 보여 드려요</p></div>
@@ -141,9 +149,10 @@ export function DeptTier() {
           </div>}
         <details className="trace-accordion"><summary><span>어떻게 나눴나요?</span><Icon name="chevron-down" size={20} /></summary>
           <ol>
-            <li>기준 → {year}학년도 수시 {typeName} 70% 컷 · 9등급 · 관리자 2명 검수</li>
-            <li>계열 → {group.major} › {group.mid} › {group.small}(학과 계열표, 관리자 2명 검수)</li>
-            <li>대상 → 후보 {data!.candidates}개 중 {data!.pending ? `검수 전 ${data!.pending}개 빼요 → ` : ''}{cells.length}개</li>
+            <li>기준 → {year}학년도 수시 {typeName} 70% 컷 · 9등급 · {sample ? '관리자 2명 검수' : '수시 정리본(원문 대조 전) · 원문 확인 필요 행 제외'}</li>
+            <li>계열 → {group.major} › {group.mid} › {group.small}{sample ? '(학과 계열표, 관리자 2명 검수)' : ' · 학과 계열표 초안(학과명 규칙 추천, 검수 전)'}</li>
+            <li>대상 → 후보 {data!.candidates}개 중 {sample ? (data!.pending ? `검수 전 ${data!.pending}개 빼요 → ` : '')
+              : [data!.pending && `${type} 컷 없음 ${data!.pending}개`, otherYear && `다른 학년도 ${otherYear}개`].filter(Boolean).map(t => `${t} `).join('· ') + (data!.pending || otherYear ? '빼요 → ' : '')}{cells.length}개</li>
             {data!.status === 'short' ? <li>층별 개수 → 모집단위 {cells.length}개 — 3개보다 적어서 표를 만들지 않아요</li> : <>
               <li>구간 폭 → {width.choice === CUSTOM ? `학생이 직접 넣은 ${widthText(width.w100)}(0.05~1.0 · 소수 둘째 자리까지)` : `학생이 고른 ${widthText(width.w100)}(0.1 · 0.2 · 0.3 · 0.5 중에서 고르거나 0.05~1.0 사이로 직접 넣을 수 있어요)`} · 1.0부터 {widthText(width.w100)}씩 · 아래 경계 포함 · 데이터 범위 {cutText(Math.min(...cells.map(c => c.cut)))}~{cutText(Math.max(...cells.map(c => c.cut)))} 밖 층은 그리지 않아요</li>
               <li>층별 개수 → {layers.map(l => `${l.label} ${l.cells.length}개`).join(' · ')}</li></>}

@@ -37,7 +37,9 @@
 .ar .ar-dot.prev { fill: var(--color-year-prev); } .ar .ar-dot.old { fill: var(--color-year-old); }
 .ar .ar-dot.empty { fill: var(--color-canvas); stroke: var(--color-year-old); stroke-width: 1.5px; }
 .ar-swatch { display: inline-block; width: 8px; height: 12px; background: var(--color-accent-soft); box-shadow: inset 0 0 0 1px var(--color-accent); }
-.ar-basis-link { justify-self: end; color: var(--color-accent); font-size: 12px; line-height: 16.8px; text-decoration: none; }
+.ar-basis-link { justify-self: end; display: flex; align-items: center; gap: 12px; color: var(--color-accent); font-size: 12px; line-height: 16.8px; text-decoration: none; }
+.ar-basis-link > a { color: inherit; text-decoration: none; }
+.ar-zoom-reset { padding: 0; border: 0; background: none; color: var(--color-ink); font: inherit; font-weight: 600; cursor: pointer; } /* 휠 확대 중에만 보여요 */
 
 /* cut-dot-plot: 행 머리 220 · 그래프(오른쪽 12 여백) · 행 44 */
 .ar .ar-plot { --head: 220px; --row: 44px; position: relative; display: block; overflow: visible; }
@@ -129,3 +131,8 @@
 .shell:has(.ar) .topbar__actions > .teacher-lock__button { display: none; }
 @media (max-width: 1023px) { .data-status-badge.ar-asof { display: none; } }
 @media (max-width: 1023px) { .ar-plot__bubble { top: 1px; } } /* 시안 390 말풍선 y 550 */
+/* 2026-11-25 사용자 요청: 그래프 아래(학과 페이지 · 다른 기준 안내 · 출처)가 축 눈금에 딱 붙지 않게 */
+.ar-card > nav.toolbar[aria-label='학과 그래프 페이지'] { margin-top: 16px; }
+.ar-card > .ar-others { margin-top: 8px; }
+.ar-card > .ar-source { margin-top: 12px; }
+@media (min-width: 1024px) { .ar-plot__track { cursor: ew-resize; } .ar-plot__body.is-dragging, .ar-plot__body.is-dragging * { cursor: ew-resize; user-select: none; } }

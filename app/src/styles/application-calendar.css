@@ -1,8 +1,4 @@
-.application-calendar { gap: var(--spacing-lg); }
-.calendar-filters { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto; gap: var(--spacing-md); padding-block: var(--spacing-md); border-block: 1px solid var(--color-hairline); align-items: end; }
-.calendar-filters select { width: 100%; min-width: 0; }
-.calendar-completed { display: flex !important; flex-direction: row !important; align-items: center; gap: var(--spacing-sm); min-height: 44px; }
-.calendar-completed input { width: 20px; height: 20px; }
+/* 아래 calendar-toolbar · calendar-month는 우리 반 입시 일정(ClassCalendar)이 같이 써요 */
 .calendar-toolbar { display: flex; justify-content: space-between; gap: var(--spacing-md); flex-wrap: wrap; align-items: center; }
 .calendar-toolbar .toolbar { margin: 0; }
 .calendar-toolbar h3 { margin: 0; }
@@ -12,25 +8,135 @@
 .calendar-month button { display: flex; width: 100%; height: 100%; min-height: 64px; padding: var(--spacing-sm); align-items: flex-start; justify-content: space-between; gap: var(--spacing-xs); background: var(--color-canvas); border: 0; color: var(--color-ink); cursor: pointer; }
 .calendar-month button[aria-current='date'] > span:first-child { font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
 .calendar-month button[aria-pressed='true'] { background: var(--color-accent-soft); box-shadow: inset 0 -2px var(--color-accent); }
-.calendar-day-count { font-size: var(--font-caption-size); background: var(--color-canvas-soft); padding-inline: var(--spacing-xs); white-space: nowrap; }
-.calendar-events { list-style: none; padding: 0; margin: 0; }
-.calendar-events li { border-bottom: 1px solid var(--color-hairline-soft); }
-.calendar-events button { width: 100%; text-align: left; display: flex; justify-content: space-between; gap: var(--spacing-md); padding: var(--spacing-md) 0; background: var(--color-canvas); color: var(--color-ink); border: 0; cursor: pointer; }
-.calendar-events button > span { display: grid; gap: var(--spacing-xs); min-width: 0; overflow-wrap: anywhere; }
-.calendar-events button span span { font-size: var(--font-body-sm-size); color: var(--color-text-muted); }
-.calendar-event-date { text-align: right; flex-shrink: 0; }
-.calendar-upcoming { min-height: 100px; display: flex; justify-content: space-between; gap: var(--spacing-md); padding-block: var(--spacing-md); border-bottom: 1px solid var(--color-hairline-soft); }
-.calendar-upcoming p { font-size: var(--font-body-sm-size); }
-.calendar-upcoming > strong { white-space: nowrap; }
 .calendar-empty { padding-block: var(--spacing-lg); color: var(--color-text-muted); }
-.application-calendar details summary { cursor: pointer; padding-block: var(--spacing-md); }
 @media (max-width: 767px) {
-  .calendar-filters { grid-template-columns: minmax(0, 1fr); }
   .calendar-toolbar { display: grid; }
   .calendar-toolbar .toolbar { gap: var(--spacing-xs); }
   .calendar-toolbar h3 { font-size: var(--font-heading-4-size); }
   .calendar-toolbar button { padding-inline: var(--spacing-sm); }
   .calendar-month button { flex-direction: column; align-items: center; padding: var(--spacing-xs); }
-  .calendar-events button { flex-direction: column; gap: var(--spacing-sm); }
-  .calendar-event-date { text-align: left; }
+}
+
+/* 학생 입시 일정 v2(Figma 627:168318 모바일 · 627:168449 PC). 모서리 0, 종류 색은 표식 · 태그 · 범례에만, 글자는 ink. */
+.student-screen.application-calendar { gap: 16px; }
+.application-calendar .ac-card { background: var(--color-canvas); }
+.application-calendar .segmented-control { padding: 4px; gap: 4px; background: var(--color-canvas); }
+.application-calendar .segmented-control__option { width: 64px; min-height: 40px; padding: 0; line-height: 22.5px; }
+.ac-head { display: grid; justify-items: start; gap: 8px; min-height: 107px; } /* Figma 글 상자 정수 올림(20·23) 누적 */
+.ac-lead { font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); }
+.ac-link { color: var(--color-accent); font-size: 15px; font-weight: 600; line-height: 22.5px; text-decoration: none; }
+.ac-header-lead { margin-top: 4px; font-size: 18px; font-weight: 300; line-height: 27px; color: var(--color-ink); }
+
+/* 다가오는 일정 stat-tile */
+.ac-upcoming { display: flex; align-items: center; gap: 1px; width: 100%; padding: 0; border: 0; background: var(--color-canvas); color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
+.ac-upcoming:disabled { cursor: default; }
+.ac-upcoming .stat-tile { flex: 1; min-height: 111px; display: grid; gap: 4px; min-width: 0; padding: 20px; border: 1px solid var(--color-hairline-soft); }
+.ac-stat-label { font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
+.ac-upcoming strong { font-size: 20px; font-weight: 700; line-height: 24px; color: var(--color-accent); }
+.ac-upcoming strong.ac-stat-none { color: var(--color-text-muted); }
+.ac-stat-sub { overflow: hidden; font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); white-space: nowrap; text-overflow: ellipsis; }
+.ac-upcoming > .icon { margin-right: 16px; }
+
+/* 칩 줄 */
+.ac-chips { display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.ac-chips .filter-chip { position: relative; display: inline-flex; flex: none; align-items: center; gap: 4px; height: 36px; padding: 0 12px; border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; cursor: pointer; }
+.application-calendar .event-tag { line-height: 16.8px; }
+.ac-chips .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.ac-plan > select, .ac-month-title > select { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; padding: 0; border: 0; opacity: 0; cursor: pointer; }
+.ac-divider { flex: none; width: 1px; height: 16px; background: var(--color-hairline); }
+
+/* 달력 카드 */
+.ac-calendar { padding-bottom: 12px; }
+.ac-month-head { display: flex; align-items: center; gap: 4px; padding: 16px 16px 8px; }
+.ac-month-head .button-outline { width: 44px; height: 44px; padding: 0; }
+.ac-month-head .ac-today { width: auto; height: 36px; margin-left: auto; padding: 0 16px; }
+.application-calendar .ac-month-title { position: relative; display: inline-flex; align-items: center; gap: 2px; font-size: 22px; font-weight: 700; line-height: 29.7px; }
+.ac-grid { width: 100%; table-layout: fixed; border-collapse: collapse; background: var(--color-canvas); }
+.ac-grid th { height: 32px; padding: 0; background: var(--color-canvas-soft); color: var(--color-ink-soft); font-size: 14px; font-weight: 400; line-height: 19.6px; }
+.ac-grid td { height: 61px; padding: 0; border-bottom: 1px solid var(--color-hairline-soft); vertical-align: top; }
+.ac-grid button { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; height: 100%; min-height: 60px; padding: 4px; border: 0; background: none; color: var(--color-ink); font: inherit; cursor: pointer; }
+.ac-grid button[aria-pressed='true'] { background: var(--color-accent-soft); box-shadow: inset 0 0 0 1px var(--color-accent); }
+.ac-day { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; font-size: 14px; line-height: 19.6px; }
+.ac-grid button[aria-current='date'] .ac-day { background: var(--color-primary); color: var(--color-on-primary); font-weight: 600; }
+.ac-count { display: inline-flex; align-items: center; gap: 2px; font-size: 12px; line-height: 16.8px; }
+.ac-overlap { color: var(--color-judge-reach); }
+.ac-marks { display: flex; gap: 2px; padding-left: 2px; }
+.ac-marks .event-mark, .ac-marks .event-mark-slot { width: 6px; height: 6px; }
+.ac-legend { display: flex; gap: 12px; padding: 16px 16px 0; font-size: 12px; line-height: 16.8px; }
+.ac-legend > span { display: inline-flex; align-items: center; gap: 4px; }
+
+/* 일정 목록 */
+.ac-list-section { display: grid; gap: 12px; }
+.ac-list-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ac-list-head h3 { font-size: 19px; font-weight: 700; line-height: 25.6px; }
+.ac-list-head .text-button { padding: 0; border: 0; background: none; color: var(--color-accent); font: inherit; font-size: 15px; font-weight: 600; line-height: 22.5px; cursor: pointer; }
+.ac-events { list-style: none; margin: 0; padding: 0; }
+.ac-events li + li { border-top: 1px solid var(--color-hairline-soft); }
+.ac-events button { display: flex; justify-content: space-between; gap: 12px; width: 100%; padding: 12px 16px; border: 0; background: none; color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
+.ac-who { display: grid; justify-items: start; gap: 4px; min-width: 0; }
+.ac-who strong { font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.ac-line { display: flex; flex-wrap: wrap; gap: 4px; }
+.ac-line > span:last-child { flex-basis: 100%; font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); }
+.ac-who small { font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
+.ac-when { display: grid; justify-items: end; align-content: start; gap: 4px; flex: none; font-size: 14px; line-height: 19.6px; white-space: nowrap; }
+.ac-status[data-status='기한 지남'], .ac-status[data-status='완료'] { color: var(--color-text-muted); }
+.ac-status[data-status='오늘'] { font-size: 12px; font-weight: 600; line-height: 16.8px; }
+.ac-empty { padding: 12px 16px; font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); }
+
+/* 날짜 미정 · 내보내기 · 고지 */
+.ac-undated { background: var(--color-canvas); }
+.ac-undated > summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 16px; list-style: none; cursor: pointer; }
+.ac-undated > summary::-webkit-details-marker { display: none; }
+.ac-undated > summary > span { display: grid; }
+.ac-undated strong { font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.ac-undated summary small { font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
+.ac-undated[open] > summary > .icon { transform: rotate(180deg); }
+.ac-undated > .ac-events { border-top: 1px solid var(--color-hairline-soft); }
+.ac-export { display: grid; gap: 8px; }
+.ac-source { font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
+.ac-export .button-outline { width: 100%; height: 44px; }
+.application-calendar .ac-note { display: flex; align-items: center; gap: 4px; margin: 0; font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
+.ac-alert { font-size: 13px; }
+
+@media (max-width: 1023px) {
+  .shell__content:has(> .application-calendar) { padding-top: 16px; }
+  /* 시안 event-row(631:2559)는 글 상자 높이를 정수로 쌓아요: 대학 22(22.4) · 메타 한 줄 20 · 두 줄 40 · "A안에 기록" 17 → who 90/91 */
+  .ac-who { min-height: 90px; align-content: start; }
+  .ac-who strong { height: 22px; }
+  .ac-line > span:last-child { min-height: 20px; }
+  .ac-who small { min-height: 17px; }
+}
+@media (min-width: 1024px) {
+  .shell__main:has(.application-calendar) > .topbar { height: 150px; align-items: flex-start; }
+  .shell__main:has(.application-calendar) .topbar__actions { align-self: center; }
+  .shell__main:has(.application-calendar) .topbar__actions > :not(#topbar-screen-actions) { display: none; }
+  .ac-edit { padding: 0 16px; }
+  .student-screen.application-calendar { gap: 24px; }
+  .ac-toolbar { display: flex; align-items: center; justify-content: space-between; height: 40px; }
+  .application-calendar .segmented-control__option { width: 74px; }
+  .ac-body { display: grid; grid-template-columns: minmax(0, 744fr) 360px; gap: 24px; align-items: start; }
+  .ac-left, .ac-right { display: grid; gap: 16px; min-width: 0; }
+  .ac-calendar { padding: 20px; }
+  .ac-month-head { gap: 8px; padding: 0 0 12px; }
+  .ac-month-head .button-outline { width: 40px; height: 40px; }
+  .ac-month-head .ac-today { width: auto; height: 40px; }
+  .application-calendar .ac-month-title { gap: 4px; font-size: 26px; line-height: 35.1px; }
+  .ac-upcoming strong { font-size: 24px; line-height: 28.8px; }
+  .ac-upcoming .stat-tile { min-height: 117px; }
+  .ac-stat-sub { font-size: 14px; line-height: 21px; }
+  .ac-grid td { height: 64px; }
+  .ac-grid button { min-height: 63px; }
+  .ac-marks { gap: 4px; padding-left: 4px; }
+  .ac-marks .event-mark, .ac-marks .event-mark-slot { width: 8px; height: 8px; }
+  .ac-legend { padding: 24px 0 0; }
+  .ac-list-card { display: flex; flex-direction: column; max-height: 304px; padding: 20px 20px 0; overflow: hidden; }
+  .ac-list-card .ac-list-head { margin-bottom: 8px; }
+  .ac-list-card .ac-list-head h3 { font-size: 18px; line-height: 24.3px; }
+  .ac-list-card .ac-events { overflow-y: auto; }
+  .ac-list-card .ac-events button { padding: 12px 0; }
+  .ac-when { width: 84px; gap: 2px; }
+  .ac-export-card { display: grid; gap: 12px; padding: 14px 20px 20px; }
+  .ac-export-card > hr { margin: 0; border: 0; border-top: 1px solid var(--color-hairline-soft); }
+  .ac-export-card .ac-undated > summary { padding: 0 0 14px; }
+  .ac-export-card .ac-export { gap: 12px; }
 }

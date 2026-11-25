@@ -1,13 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
-import { STYLE_OPTIONS, STYLE_PROFILES, STYLE_QUESTIONS, summarizeStyle, type StyleAnswers } from '../domain/admissionStyle';
+import { STYLE_OPTIONS, STYLE_PROFILES, STYLE_QUESTIONS, summarizeStyle, type StyleAnswers, type StyleId } from '../domain/admissionStyle';
 import '../styles/admission-style.css';
 import { StyleMascot } from '../components/StyleMascot';
+import { Icon } from '../components/Icon';
+import { Modal } from '../components/Modal';
+import { useDesktop } from '../components/TeacherBoard';
 
 export function AdmissionStyle() {
   const [step, setStep] = useState<'intro' | 'quiz' | 'result'>('intro');
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<StyleAnswers>({});
+  const [sheet, setSheet] = useState<StyleId | null>(null);
+  const sheetProfile = STYLE_PROFILES.find(p => p.id === sheet);
+  // v2 page-header(PC): 리드 + 체험판 배지 / app-bar(모바일): 체험판 배지
+  const desktop = useDesktop();
+  const [slots, setSlots] = useState<{ head: Element | null; badge: Element | null }>({ head: null, badge: null });
+  useEffect(() => { setSlots({ head: desktop ? document.querySelector('.topbar__heading') : null, badge: document.getElementById(desktop ? 'topbar-screen-actions' : 'appbar-actions') }); }, [desktop]);
   const title = useRef<HTMLHeadingElement>(null);
   const section = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -19,20 +29,41 @@ export function AdmissionStyle() {
   const mascot = <StyleMascot />;
   const result = step === 'result' ? summarizeStyle(answers) : null;
   return <section ref={section} className="admission-style" data-slug="admission-style" aria-label="대입 전형 성향 탐색">
-    <div className="style-topline"><span>나의 준비 방식 찾기</span><span>체험판 · v0.1</span></div>
+    {slots.head && createPortal(<p className="as-lead">15개 질문으로 나의 준비 방식을 살펴보고, 함께 알아볼 전형을 찾아요</p>, slots.head)}
+    {slots.badge && createPortal(<span className="data-status-badge as-badge">체험판 v0.1</span>, slots.badge)}
     {step === 'intro' && <>
-      <div className="style-hero">
-        <div className="style-hero-copy"><p className="style-eyebrow">성적표 밖의 나도 만나볼까요?</p>
-          <h2>나에게 맞는<br />입시의 시작점.</h2>
-          <p className="style-lead">꾸준히 쌓는 편인가요, 깊이 파고드는 편인가요?<br />길콩과 함께 나의 준비 방식을 발견해 보세요.</p>
-          <div className="style-facts"><span>15문항</span><span>약 3분</span><span>가입 없이</span></div>
-          <button className="style-primary" onClick={() => setStep('quiz')}>나의 전형 성향 알아보기 <span aria-hidden="true">↗</span></button>
-          <p className="style-small">답변은 서버에 보내거나 저장하지 않아요. 화면을 떠나면 초기화돼요.</p>
-        </div><div className="style-art"><span className="style-art-note">정답 대신, 나의 방식</span>{mascot}<span className="style-art-caption">함께 길을 찾는 친구, 길콩</span></div>
+      <div className="as-intro">
+        <div className="as-intro__mascot">{mascot}</div>
+        <div className="as-intro__text">
+          <p className="t-label text-muted">성적표 밖의 나도 만나볼까요?</p>
+          <h2 className="t-heading-2">나의 준비 방식을 살펴봐요</h2>
+          <p className="t-body-lg as-intro__lead">꾸준히 쌓는 편인가요, 깊이 파고드는<br className="as-br-m" /> 편인가요? 나의 준비<br className="as-br-pc" /> 방식을 발견해 보세요.</p>
+          <p className="t-title as-intro__facts">15문항 · 약 3분 · 가입 없이</p>
+          <button type="button" className="button-primary" onClick={() => setStep('quiz')}>나의 전형 성향 알아보기 ↗</button>
+          <p className="t-caption text-muted">답변은 서버에 보내거나 저장하지 않아요. 화면을 떠나면 초기화돼요.</p>
+        </div>
       </div>
-      <div className="style-about"><h3>나는 어떤 방식으로 준비할까요?</h3><p>한 가지 유형에 나를 가두지 않아요. 여러 준비 방식이 함께 나타날 수도 있어요.</p></div>
-      <div className="style-profile-strip">{STYLE_PROFILES.map((p, i) => <div key={p.id} className={`style-swatch style-swatch--${p.id}`}><span>0{i + 1}</span><strong>{p.short}</strong><small>{p.name}</small></div>)}</div>
-      <p className="style-disclaimer">직접 만든 자기탐색 질문입니다. MBTI나 표준화된 심리검사가 아니며, 답변만으로 지원 자격이나 입학 결과를 판단하지 않아요.</p>
+      <div className="as-styles">
+        <div className="as-styles__head"><h3 className="t-heading-3">나는 어떤 방식으로 준비할까요?</h3><p className="t-body-sm">한 가지 유형에 나를 가두지 않아요. 여러 준비 방식이 함께 나타날 수도 있어요.</p></div>
+        <div className="as-styles__cards">{STYLE_PROFILES.map((p, i) => <button type="button" key={p.id} className="as-style-card" aria-haspopup="dialog" aria-label={`0${i + 1} ${p.short}, ${p.name}, 설명 보기`} onClick={() => setSheet(p.id)}>
+          <StyleMascot kind={p.id} />
+          <span className="as-style-card__text"><span className="as-style-card__name"><span className="t-label text-muted">0{i + 1}</span><strong className="t-heading-4">{p.short}</strong></span><span className="t-body-sm text-muted">{p.name}</span></span>
+          <Icon name="chevron-right" size={24} />
+        </button>)}</div>
+      </div>
+      <p className="disclaimer-note t-caption text-muted"><Icon name="info" size={16} /><span>직접 만든 자기탐색 질문이에요 · MBTI나 표준화된 심리검사가 아니에요 · 답변만으로 지원 자격이나 입학 결과를 판단하지 않아요</span></p>
+      {sheetProfile && <Modal label={`${sheetProfile.short} 설명`} onClose={() => setSheet(null)}>
+        <div className="as-sheet">
+          <p className="t-label">0{STYLE_PROFILES.indexOf(sheetProfile) + 1} {sheetProfile.short}</p>
+          <h3 className="t-heading-3">{sheetProfile.name}</h3>
+          <p className="t-body">{sheetProfile.description}</p>
+          <p className="t-label text-muted">이런 문항으로 살펴봐요</p>
+          <ul className="t-body-sm">{STYLE_QUESTIONS.filter(q => q.axis === sheetProfile.id).map(q => <li key={q.id}>{q.text}</li>)}</ul>
+          <p className="t-body-sm">함께 살펴볼 전형 · {sheetProfile.route}</p>
+          <p className="t-body-sm"><strong>다음 확인</strong> {sheetProfile.check}</p>
+          <button type="button" className="button-outline" onClick={() => setSheet(null)}>닫기</button>
+        </div>
+      </Modal>}
     </>}
     {step === 'quiz' && <div className="style-question-layout">
       <aside className="style-guide">{mascot}<p>멋진 답보다<br /><strong>지금의 나와 가까운 답.</strong></p><small>경험이 없다면 마지막 선택지를 골라도 괜찮아요.</small></aside>

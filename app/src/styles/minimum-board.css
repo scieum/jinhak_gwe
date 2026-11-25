@@ -1,0 +1,70 @@
+/* 수능 최저 판정 v2 시안(minimum-board 346:100406 · 346:100457). 틀은 teacher-board.css(오늘 할 일 · 표 · 학생 줄)를 쓰고 이 화면 것만 더해요.
+   값은 Figma 노드 실측. 판정 = 색 + 모양 + 이름: ▲ 근접(judge-fit) · ✕ 미충족(judge-risk) · ● 충족(judge-safe), 자료 부족은 이름만. */
+
+/* 판정 표식: ▲ 9×8 · ✕ 8×8 · ● 8, 이름과 4 */
+.mb-mark { display: inline-flex; align-items: center; gap: 4px; height: 20px; font-size: 12px; line-height: 16.8px; font-weight: 600; white-space: nowrap; color: var(--color-text-muted); }
+.mb-mark > i { flex: none; width: 8px; height: 8px; background: currentColor; }
+.mb-mark--near { color: var(--color-judge-fit); }
+.mb-mark--near > i { width: 9px; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.mb-mark--unmet { color: var(--color-judge-risk); }
+.mb-mark--unmet > i { clip-path: polygon(0 13%, 13% 0, 50% 37%, 87% 0, 100% 13%, 63% 50%, 100% 87%, 87% 100%, 50% 63%, 13% 100%, 0 87%, 37% 50%); }
+.mb-mark--met { color: var(--color-judge-safe); }
+.mb-mark--met > i { border-radius: 50%; }
+.mb-mark--soft { height: 24px; padding: 0 8px; }
+.mb-mark--soft.mb-mark--near { background: var(--color-judge-fit-bg); }
+.mb-mark--soft.mb-mark--unmet { background: var(--color-judge-risk-bg); }
+.mb-mark--soft.mb-mark--met { background: var(--color-judge-safe-bg); }
+.mb-mark--soft.mb-mark--none { background: var(--color-judge-none-bg); }
+.mb .tb-today__text > .mb-mark { justify-self: start; }
+
+/* PC 본문: 왼쪽 772(먼저 볼 학생 · 학생별 판정) + 16 + 오른쪽 340(상담 명단) */
+.mb-body { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; min-width: 0; }
+.mb-main { display: grid; align-content: start; gap: 16px; min-width: 0; }
+.mb .tb-panel { padding-bottom: 8px; }
+@media (min-width: 1024px) { .mb .tb-today__text { height: 45px; } } /* 시안 글자 묶음 45(줄 74 · 73): 22.4 + 2 + 21 반올림 */
+
+/* 학생별 판정 표: 열 40 · 92 · 136 · 150 · 112 · 92 · 150, 시안처럼 표 안에서만 세로 스크롤 */
+.mb-table { max-height: max(240px, calc(100vh - 577px)); overflow: auto; }
+.mb-table .tb-row--head { position: sticky; top: 0; z-index: 1; }
+.mb .mb-c1 { width: 40px; padding-right: 0; }
+.mb .mb-c2 { width: 92px; }
+.mb .mb-c3 { width: 136px; }
+.mb .mb-c4 { width: 150px; }
+.mb .mb-c5 { width: 112px; }
+.mb .mb-c6 { width: 92px; }
+.mb .mb-c7 { width: 150px; }
+.mb .tb-row:not(.tb-row--head) .tb-cell { white-space: normal; }
+.mb .tb-cell .mb-mark { height: 24px; }
+.mb-stack { display: grid; justify-items: start; gap: 2px; min-width: 0; }
+.mb-univ { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.mb-univ .university-logo { flex: 0 0 24px; width: 24px; height: 24px; }
+.mb-univ .mb-stack > span:first-child { font-size: 14px; line-height: 19.6px; }
+.mb-caption { font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
+.mb-mono { display: grid; place-items: center; flex: none; width: 24px; height: 24px; background: var(--color-canvas-soft); color: var(--color-ink); font-size: 14px; font-weight: 700; line-height: 1; }
+.mb-mono::before { content: attr(data-ch); }
+.mb-crit { display: grid; align-content: start; padding: 0; border: 0; background: none; color: var(--color-ink); font: inherit; font-size: 13px; line-height: 19.5px; text-align: left; cursor: pointer; }
+.mb-crit:has(> span + span) { min-height: 40px; } /* 시안: 두 줄 기준 글자 상자 40 */
+.mb-crit:hover { text-decoration: underline; }
+.mb .mb-add { font-size: 13px; line-height: 19.5px; }
+.mb-reason { font-size: 13px; line-height: 19.5px; }
+
+/* 상담 명단 */
+.mb-list { display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 20px 24px; background: var(--color-canvas); }
+.mb-list:focus { outline: none; }
+.mb-list__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mb-list__head > div { display: grid; gap: 2px; }
+.mb-list__head h3 { font-size: 18px; line-height: 24.3px; font-weight: 700; color: var(--color-ink); }
+.mb-group { display: grid; gap: 12px; }
+.mb-group__head { display: flex; align-items: flex-end; gap: 8px; height: 28px; font-size: 12px; line-height: 16.8px; }
+.mb-group__head > :not(.mb-mark) { margin-bottom: 2px; } /* 시안: 판정 표식은 줄 아래 끝, 글자는 2 위 */
+.mb-group__head strong { font-weight: 600; color: var(--color-ink); }
+.mb-pick { position: relative; width: 100%; border-top: 0; border-inline: 0; background: var(--color-canvas); font: inherit; text-align: left; cursor: pointer; }
+.mb-pick.is-on { padding-right: 52px; background: var(--color-accent-soft); }
+.mb-pick.is-on::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--color-accent); }
+.mb-pick > .icon { position: absolute; top: 20px; right: 16px; color: var(--color-ink); }
+.mb .mb-open { justify-self: start; display: inline-flex; align-items: center; height: 44px; padding: 0 16px; border: 0; background: var(--color-canvas-soft); color: var(--color-ink); font: inherit; font-size: 15px; line-height: 22.5px; font-weight: 600; cursor: pointer; }
+.mb-list__spacer { flex: 1 0 1px; }
+.mb-list .button-primary { width: 100%; height: 52px; font-size: 15px; line-height: 22.5px; }
+/* 앱 글꼴 폭이 시안보다 0.6~0.9px 좁아 숫자 칸이 왼쪽으로 밀려요: 시안 표식 폭(미충족 45 · 근접 35)에 맞춰요 */
+.mb .tb-today__row > .mb-mark--unmet { min-width: 45px; }
+.mb .tb-today__row > .mb-mark--near { min-width: 35px; }

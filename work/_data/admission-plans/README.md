@@ -42,4 +42,6 @@ npm.cmd test -- tests/admission-plans.test.tsx
 npm.cmd run build
 ```
 
+전형별 행(programs)까지 채우려면 `python app/tools/build_admission_plan_programs.py`를 실행한다. 이 스크립트가 `build_catalog.py`를 먼저 돌린 뒤, `structured/universities/*.json` 패키지의 전형명·유형·모집인원을 **같은 PDF의 근거 쪽수가 있을 때만** 붙인다. 전형방법은 전형요소 표(합 100%), 수능최저는 `data-integration/minimum-*-review.json`의 명시 분류에서만 읽고, 근거가 없으면 `원문 확인 필요`로 둔다. HWP·HWPX·ZIP 안 파일·http 주소 근거는 싣지 않는다. 수작업 요약(curated) 8개 항목은 그대로 둔다. 목록 기준일은 문서 확인일 중 가장 최근 날짜다.
+
 `build_catalog.py`는 캠퍼스별 고유 ID, 원문 SHA-256, 확인일, 출처, 파일 형식, 근거 페이지를 출력한다. `coverage.json`에 모음집 연결 항목과 요약 수를 기록한다. 프런트엔드는 학년도·검수 상태·URL·중복 캠퍼스·쪽수 범위를 검사하여 잘못된 자료를 빈 검색 결과로 숨기지 않는다.

@@ -134,9 +134,9 @@ function ResultValue({ v, type }: { v: ViewRow; type: ResultType }) {
   return 'cut' in v.cell ? <span className="st-card__value num">{t}</span>
     : <span className="st-blank text-muted" aria-label={BLANK_SR[t] ? (t === '—' ? `${type} ${BLANK_SR[t]}` : BLANK_SR[t]) : undefined}>{t}</span>;
 }
-const practicalNote = (v: ViewRow, track: TrackId, pc: boolean) => !PRACTICAL_TRACKS.includes(track) ? null
+const practicalNote = (v: ViewRow, track: TrackId, pc: boolean) => track === '체육' || !PRACTICAL_TRACKS.includes(track) ? null
   : <p className="t-caption text-muted">{v.practical.length ? `실기 ${v.practical[0].subjects.length}종목 · ${pc ? '채점 기준 있어요' : '상세에서 채점 기준을 봐요'}` : '실기 기준 준비 중'}</p>;
-const practicalOnly = (v: ViewRow) => 'text' in v.cell && v.cell.text === '실기 전형'
+const practicalOnly = (v: ViewRow, track?: TrackId) => track !== '체육' && 'text' in v.cell && v.cell.text === '실기 전형'
   && <p className="t-caption text-muted">실기 점수 비중이 커서 교과 컷을 따로 보이지 않아요 · 전형 상세에서 봐요</p>;
 const othersNote = (v: ViewRow) => v.others.length > 0 && <p className="t-caption text-muted">· {v.others.join(' · ')} 묶음에도 있어요</p>;
 const interestProgram = (v: ViewRow, type: ResultType) => (v.cell.row?.program || v.row.plan.find(p => p.type === type)?.name || v.row.plan[0].name);
@@ -155,7 +155,7 @@ function Card({ v, track, type, onOpen }: { v: ViewRow; track: TrackId; type: Re
       {r.tag && <span className="data-status-badge data-status-badge--fact">{r.tag}</span>}
       {othersNote(v)}
       <span className="st-card__plan">{PLAN_YEAR} · {planSummary(r)} · 모집 {v.total}</span>
-      {practicalOnly(v)}
+      {practicalOnly(v, track)}
       {practicalNote(v, track, false)}
       <span className="st-card__kv"><span className="st-card__pairs"><span><span className="st-card__label">{type} 70% 컷</span><ResultValue v={v} type={type} /></span>
         {v.cell.row && <span><span className="st-card__label">경쟁률</span><span className="st-card__value num">{v.cell.row.competition_rate ? `${v.cell.row.competition_rate}:1` : '—'}</span></span>}</span>
@@ -193,7 +193,7 @@ function Table({ rows, track, type, sort, onSort, onOpen }: { rows: ViewRow[]; t
       <th scope="col" className="num">{RESULT_YEAR} {type} 70% 컷</th><th scope="col" className="num">경쟁률</th><th scope="col" className="num">충원율</th><th scope="col">기준</th><th scope="col"><span className="sr-only">상세</span></th></tr></thead>
     <tbody>{shown.map(v => { const r = v.row, row = v.cell.row; return <tr key={`${r.university}|${r.unit}`}>
       <td><span className="st-univ"><Logo university={r.university} />{r.university}</span></td>
-      <td>{r.unit}{r.tag && <><br /><span className="data-status-badge data-status-badge--fact">{r.tag}</span></>}{othersNote(v)}{practicalOnly(v)}{practicalNote(v, track, true)}</td>
+      <td>{r.unit}{r.tag && <><br /><span className="data-status-badge data-status-badge--fact">{r.tag}</span></>}{othersNote(v)}{practicalOnly(v, track)}{practicalNote(v, track, true)}</td>
       <td>{planSummary(r)}</td><td className="num">{v.total}</td>
       <td className="num"><ResultValue v={v} type={type} /></td>
       <td className="num">{row?.competition_rate ? `${row.competition_rate}:1` : <span className="text-muted">—</span>}</td>

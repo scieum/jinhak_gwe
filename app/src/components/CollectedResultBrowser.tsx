@@ -6,6 +6,8 @@ import { SortableHeader } from './SortableHeader';
 import { nextTableSort, sortTableRows, type TableSort } from '../domain/tableSort';
 import { ResultFilterFields, emptyResultFilters, filterCollectedRows, useCompactResults, type ResultFilters } from './ResultFilters';
 import { loadCollectedIndex, loadCollectedRows } from '../data/collectedResults';
+import { loadSusiIndex, loadSusiRows } from '../data/susiResults';
+import { susiIssues } from '../domain/susiResults';
 import type { CollectedIndex } from '../domain/collectedResults';
 import { rowIssues, type ResultRow } from '../domain/resultReview';
 import { CollectedResultFields } from './CollectedResultFields';
@@ -15,7 +17,7 @@ import { collectedUniversitySelection, matchesUniversityIdentity, currentUnivers
 
 const PAGE = 50;
 
-export function CollectedResultBrowser({ tabs, initialUniversity = '', initialProgram = '', initialDepartment = '' }: { tabs?: ReactNode; initialUniversity?: string; initialProgram?: string; initialDepartment?: string }) {
+export function CollectedResultBrowser({ tabs, initialUniversity = '', initialProgram = '', initialDepartment = '', susiOnly = false }: { tabs?: ReactNode; initialUniversity?: string; initialProgram?: string; initialDepartment?: string; susiOnly?: boolean }) {
   const [index, setIndex] = useState<CollectedIndex | null>(null), [university, setUniversity] = useState('');
   const [rows, setRows] = useState<ResultRow[] | null>(null), [nameQuery, setNameQuery] = useState('');
   const [filters, setFilters] = useState<ResultFilters>({ ...emptyResultFilters, round: initialProgram ? '전체' : '수시', query: initialProgram });
@@ -28,20 +30,20 @@ export function CollectedResultBrowser({ tabs, initialUniversity = '', initialPr
   const [indexAttempt, setIndexAttempt] = useState(0), [dataAttempt, setDataAttempt] = useState(0);
   useEffect(() => {
     let live = true; setIndexError('');
-    loadCollectedIndex().then(value => {
+    (susiOnly ? loadSusiIndex() : loadCollectedIndex()).then(value => {
       if (!live) return;
       setIndex(value); setUniversity(collectedUniversitySelection(initialUniversity, value.universities.map(e => e.university)) ?? value.universities[0].university);
     }).catch(e => { if (live) setIndexError(e instanceof Error ? e.message : '수집 자료 목록을 읽지 못했어요.'); });
     return () => { live = false; };
-  }, [indexAttempt, initialUniversity]);
+  }, [indexAttempt, initialUniversity, susiOnly]);
   useEffect(() => {
     let live = true;
     setRows(null); setDataError(''); setPage(0); setOpened(null); setDraft(null);
     const entry = index?.universities.find(e => e.university === university);
-    if (entry) loadCollectedRows(entry).then(value => { if (live) setRows(value); })
+    if (entry) (susiOnly ? loadSusiRows(entry) : loadCollectedRows(entry)).then(value => { if (live) setRows(value); })
       .catch(e => { if (live) setDataError(e instanceof Error ? e.message : '대학 자료를 읽지 못했어요.'); });
     return () => { live = false; };
-  }, [index, university, dataAttempt]);
+  }, [index, university, dataAttempt, susiOnly]);
   const scopedRows = useMemo(() => selectedInterest ? (rows ?? []).filter(r => r.program.trim() === selectedInterest.program.trim() && r.recruit_unit.trim() === selectedInterest.department.trim()) : rows ?? [], [rows, selectedInterest]);
   const filtered = useMemo(() => filterCollectedRows(scopedRows, filters), [scopedRows, filters]);
   const sorted = useMemo(() => sortTableRows(filtered, sort, (r, key) => r[key], key => ['result_year', 'quota', 'competition_rate', 'cut_50', 'cut_70'].includes(key)), [filtered, sort]);
@@ -88,10 +90,10 @@ export function CollectedResultBrowser({ tabs, initialUniversity = '', initialPr
               <thead><tr>{!compact && <>{header('result_year', '학년도')}{header('round', '시기')}{header('program', '전형')}</>}{header('recruit_unit', compact ? '모집단위 · 전형' : '모집단위')}{!compact && <>{header('quota', '모집')}{header('competition_rate', '경쟁률')}</>}{header('cut_50', '50% 컷')}{header('cut_70', '70% 컷')}{!compact && <>{header('metric', '지표')}<th scope="col">상세</th></>}</tr></thead>
               <tbody>{sorted.slice(page * PAGE, (page + 1) * PAGE).map((r, i) => <tr key={`${page}-${i}`}>
                 {!compact && <><td>{r.result_year}</td><td>{r.round}</td><td>{r.program || '—'}</td></>}
-                <td>{compact ? <><div className="collection-unit-heading">{heart(r)}<button className="collection-unit" onClick={() => setOpened(r)} aria-label={`${r.result_year} ${r.program} ${r.recruit_unit} 원문·상세`}>{r.recruit_unit || '모집단위 미기재'}<Icon name="chevron-right" size={16} /></button></div><p className="t-caption text-muted">{r.result_year} · {r.round} · {r.program || '전형 미기재'}</p><p className="t-caption text-muted">{r.metric || '지표 미기재'}{rowIssues(r).errors.length > 0 && ' · 확인 필요'}</p></> : <div className="collection-program">{heart(r)}<span>{r.recruit_unit || '—'}</span></div>}</td>
+                <td>{compact ? <><div className="collection-unit-heading">{heart(r)}<button className="collection-unit" onClick={() => setOpened(r)} aria-label={`${r.result_year} ${r.program} ${r.recruit_unit} 원문·상세`}>{r.recruit_unit || '모집단위 미기재'}<Icon name="chevron-right" size={16} /></button></div><p className="t-caption text-muted">{r.result_year} · {r.round} · {r.program || '전형 미기재'}</p><p className="t-caption text-muted">{r.metric || '지표 미기재'}{(rowIssues(r).errors.length > 0 || susiIssues(r).length > 0) && ' · 확인 필요'}</p></> : <div className="collection-program">{heart(r)}<span>{r.recruit_unit || '—'}</span></div>}</td>
                 {!compact && <><td className="num">{r.quota || '—'}</td><td className="num">{r.competition_rate || '—'}</td></>}
                 <td className="num">{r.cut_50 || '—'}</td><td className="num">{r.cut_70 || '—'}</td>
-                {!compact && <><td>{r.metric || '미기재'}{rowIssues(r).errors.length > 0 && <span className="data-status-badge">확인 필요</span>}</td><td><button className="text-button" onClick={() => setOpened(r)} aria-label={`${r.result_year} ${r.program} ${r.recruit_unit} 원문·상세`}>원문·상세</button></td></>}
+                {!compact && <><td>{r.metric || '미기재'}{(rowIssues(r).errors.length > 0 || susiIssues(r).length > 0) && <span className="data-status-badge">확인 필요</span>}</td><td><button className="text-button" onClick={() => setOpened(r)} aria-label={`${r.result_year} ${r.program} ${r.recruit_unit} 원문·상세`}>원문·상세</button></td></>}
               </tr>)}</tbody>
             </table></div>
             <nav className="toolbar collection-pagination" aria-label="입결 결과 페이지"><ButtonOutline disabled={!page} onClick={() => setPage(p => p - 1)}>이전</ButtonOutline><span>{page + 1} / {Math.ceil(filtered.length / PAGE)} 페이지</span><ButtonOutline disabled={(page + 1) * PAGE >= filtered.length} onClick={() => setPage(p => p + 1)}>다음</ButtonOutline>{sort && <button className="text-button" onClick={() => { setSort(null); setPage(0); }}>원문 순서로 보기</button>}</nav>

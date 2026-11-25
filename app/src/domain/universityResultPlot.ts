@@ -1,8 +1,10 @@
 import { typeTab, type TypeTab } from './resultBrowse';
 import type { ResultRow } from './resultReview';
+import { susiIssues } from './susiResults';
 
 export type CutField = 'cut_70' | 'cut_50';
 export const gradeCut = (row: ResultRow, cut: CutField = 'cut_70'): number | null => {
+  if (susiIssues(row).length) return null;
   const raw = row[cut] ?? '', value = Number(raw);
   return row.grade_system === '9' && row.metric === '교과등급' && raw.trim() !== '' && Number.isFinite(value) && value >= 1 && value <= 9 ? value : null;
 };
@@ -18,7 +20,7 @@ export function yearTone(rows: readonly ResultRow[], year: number): 'latest' | '
 export function noPlotReason(rows: readonly ResultRow[]): string {
   const reasons = new Map<string, number>();
   for (const r of rows) {
-    const reason = r.metric !== '교과등급' ? `교과등급이 아닌 '${r.metric || '지표 미기재'}' 자료라 그래프로 그리지 않아요.`
+    const reason = susiIssues(r).length ? '원문 대조가 필요한 자료라 그래프 대신 표에서 확인할 수 있어요.' : r.metric !== '교과등급' ? `교과등급이 아닌 '${r.metric || '지표 미기재'}' 자료라 그래프로 그리지 않아요.`
       : r.grade_system !== '9' ? '9등급제가 아닌 자료라 그래프로 그리지 않아요.'
       : r.cut_other?.trim() ? `70%·50% 컷 대신 '${(r.basis || '다른 기준').split(/[;(]/)[0].trim()}' 기준 값만 발표했어요.`
       : '발표된 컷 값이 없어요.';

@@ -1,0 +1,8 @@
+{
+  "allow": [
+    {
+      "error": "P 1440: page-header 글자→첫 블록 간격(시안) 44",
+      "reason": "구조 표현 차이: 시안 toolbar 프레임(627:168454)은 y 174(머리 글자 아래 48)지만 그 안 segmented-control(627:168466, 160×48)이 40 높이 줄에서 위로 4 넘쳐 y 170이에요. 게이트는 시안은 toolbar 프레임, 앱은 맨 위 요소(segmented-control y 170)로 재서 44가 나와요. segmented-control 위치 · 크기(1248, 170, 160×48)는 Z 검사에서 시안과 같아요."
+    }
+  ]
+}

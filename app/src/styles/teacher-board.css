@@ -34,9 +34,10 @@
 .tb-section__head .tb-caption { margin-top: 9px; }
 .tb-chips { display: flex; gap: 8px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
 .tb-chips::-webkit-scrollbar { display: none; }
-.tb .filter-chip { flex: none; height: 36px; min-height: 36px; padding: 0 12px; border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 12px; line-height: 16.8px; font-weight: 600; cursor: pointer; }
-.tb .filter-chip { padding: 0 12.4px; } /* 앱 글꼴이 시안보다 칩마다 약 0.8px 좁아 폭을 맞춰요 */
-.tb .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+/* teacher.css의 .teacher-screen .filter-chip(44)와 특이도가 같아 CSS 묶음 순서에 따라 졌어요 → 한 단계 높여요(2026-11-25) */
+.teacher-screen .tb .filter-chip { flex: none; height: 36px; min-height: 36px; padding: 0 12px; border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 12px; line-height: 16.8px; font-weight: 600; cursor: pointer; }
+.teacher-screen .tb .filter-chip { padding: 0 12.4px; } /* 앱 글꼴이 시안보다 칩마다 약 0.8px 좁아 폭을 맞춰요 */
+.teacher-screen .tb .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
 
 /* 판정 표식: ■ 8 · ▲ 9×8 · ◐ · ● 8, 이름과 4 */
 .tb-mark { display: inline-flex; align-items: center; gap: 4px; height: 24px; font-size: 12px; line-height: 16.8px; font-weight: 600; white-space: nowrap; }

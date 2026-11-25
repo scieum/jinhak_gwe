@@ -55,6 +55,20 @@ export function axisRange(values: readonly number[]) {
   return { min, max };
 }
 
+/** 휠 확대·축소(2026-11-25 사용자 요청): center를 고정점으로 폭을 factor배. 폭 0.4~8, 1~9 안. */
+export function zoomRange(r: { min: number; max: number }, center: number, factor: number) {
+  const w = Math.min(8, Math.max(0.4, (r.max - r.min) * factor)), t = (center - r.min) / (r.max - r.min);
+  let min = center - t * w, max = min + w;
+  if (min < 1) { min = 1; max = 1 + w; }
+  if (max > 9) { max = 9; min = 9 - w; }
+  return { min: Math.round(min * 1000) / 1000, max: Math.round(max * 1000) / 1000 };
+}
+/** 눈금: 폭 2 이상(기본 축)은 0.5, 좁히면 0.2 · 0.1 간격 */
+export function axisTicks(r: { min: number; max: number }) {
+  const w = r.max - r.min, step = w >= 2 - 1e-9 ? 0.5 : w > 1 ? 0.2 : 0.1, out: number[] = [];
+  for (let t = Math.ceil(r.min / step - 1e-9) * step; t <= r.max + 1e-9; t += step) out.push(Math.round(t * 10) / 10);
+  return out;
+}
 export interface ProgramSummary { program: string; round: string; type: string; year: number; units: number; quota: number | null }
 /** One entry per program, described by its most recent published year. */
 export function programSummaries(units: readonly ReleasedUnit[], university: string): ProgramSummary[] {

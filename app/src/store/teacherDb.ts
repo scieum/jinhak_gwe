@@ -6,6 +6,9 @@ import type { Target } from '../domain/minimum';
 import type { Outcome, RawMock } from '../domain/outcomes';
 import type { ClassSchedule, ScheduleDone } from '../domain/classCalendar';
 
+/** 저장한 상담 명단(수능 최저 판정 화면). key = 'minimum'. */
+export interface CounselList { key: string; numbers: string[]; saved_at: string }
+
 // shortcut: 학급 데이터는 교사 브라우저 IndexedDB에 평문으로 있어요(PRD 7-3은 암호화·서버 RLS). Supabase 붙일 때 서버로 옮겨요.
 export class TeacherDatabase extends Dexie {
   meta!: Table<ClassInfo, string>;
@@ -20,6 +23,7 @@ export class TeacherDatabase extends Dexie {
   rawMocks!: Table<RawMock, [string, string]>;
   schedules!: Table<ClassSchedule, number>;
   scheduleDone!: Table<ScheduleDone, string>;
+  counselLists!: Table<CounselList, string>;
   constructor(name = 'jinhak-navi-teacher-v1') {
     super(name);
     this.version(1).stores({ meta: 'key', students: 'number', cards: '++id, number', memos: '++id, number' });
@@ -29,6 +33,7 @@ export class TeacherDatabase extends Dexie {
     this.version(5).stores({ meta: 'key', students: 'number', cards: '++id, number', memos: '++id, number', mocks: '[number+exam], number, exam', school: 'number', logs: '++id, date', targets: 'number', outcomes: '++id, number', rawMocks: '[number+exam], number' });
     // 우리 반 입시 일정(class-calendar): 새 테이블 2개만 더해요. 기존 테이블은 그대로라 데이터 옮기기가 필요 없어요.
     this.version(6).stores({ schedules: '++id', scheduleDone: 'key' });
+    this.version(7).stores({ counselLists: 'key' }); // 수능 최저 판정 상담 명단 저장
   }
   async createClass(info: ClassInfo, students: readonly Student[]) {
     await this.transaction('rw', [this.meta, this.students], async () => { await this.meta.put(info); await this.students.clear(); await this.students.bulkPut([...students]); });
@@ -43,7 +48,7 @@ export class TeacherDatabase extends Dexie {
 }
 export const teacherDb = new TeacherDatabase();
 
-export interface ClassState { info: ClassInfo | null; students: Student[]; cards: CardRecord[]; memos: Memo[]; mocks: MockGrades[]; school: SchoolGrades[]; logs: HomeroomLog[]; targets: Target[]; outcomes: Outcome[]; rawMocks: RawMock[]; schedules: ClassSchedule[]; scheduleDone: ScheduleDone[] }
+export interface ClassState { info: ClassInfo | null; students: Student[]; cards: CardRecord[]; memos: Memo[]; mocks: MockGrades[]; school: SchoolGrades[]; logs: HomeroomLog[]; targets: Target[]; outcomes: Outcome[]; rawMocks: RawMock[]; schedules: ClassSchedule[]; scheduleDone: ScheduleDone[]; counselLists: CounselList[] }
 export function useClass(): { data: ClassState | null; error: string } | undefined {
   return useLiveQuery(async () => {
     try {
@@ -51,7 +56,7 @@ export function useClass(): { data: ClassState | null; error: string } | undefin
         students: await teacherDb.students.orderBy('number').toArray(), cards: await teacherDb.cards.toArray(), memos: await teacherDb.memos.toArray(),
         mocks: await teacherDb.mocks.toArray(), school: await teacherDb.school.toArray(), logs: await teacherDb.logs.toArray(), targets: await teacherDb.targets.toArray(),
         outcomes: await teacherDb.outcomes.toArray(), rawMocks: await teacherDb.rawMocks.toArray(),
-        schedules: await teacherDb.schedules.toArray(), scheduleDone: await teacherDb.scheduleDone.toArray() })) };
+        schedules: await teacherDb.schedules.toArray(), scheduleDone: await teacherDb.scheduleDone.toArray(), counselLists: await teacherDb.counselLists.toArray() })) };
     } catch { return { data: null, error: '이 브라우저에서 학급 저장소를 열 수 없어요. 저장 권한과 비공개 모드를 확인해 주세요.' }; }
   }, []);
 }

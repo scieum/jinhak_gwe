@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { parseUnivMap, type UnivMapData } from '../domain/univMap';
 
-/** public/data/univ-map.json: 관리자 2명이 검수한 캠퍼스 위치. 파일이 없거나 형식이 틀리면 빈 자료(= 위치 확인 중), 연결 실패만 오류. */
+/** 교육부 공개 위치(v2) 또는 기존 2인 검수 자료(v1). 출처/행 검증은 parseUnivMap에서 수행한다. */
 let cache: Promise<UnivMapData> | null = null;
 export function loadUnivMap(fetcher: typeof fetch = fetch): Promise<UnivMapData> {
   return cache ??= fetcher(`${import.meta.env.BASE_URL}data/univ-map.json`)

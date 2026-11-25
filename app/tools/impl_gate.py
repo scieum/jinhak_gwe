@@ -27,7 +27,9 @@ FIGMA_TOKEN 값은 어디에도 쓰지 않는다.
 import json
 import os
 import re
+import shutil
 import sys
+import time
 import urllib.request
 from pathlib import Path
 
@@ -457,6 +459,10 @@ class App:
             # node로 바로 부른다(cmd·npx를 거치면 한글 경로에서 vite가 죽음). 출력 폴더는 상대 경로.
             vite = ["node", "node_modules/vite/bin/vite.js"]
             dist = ["--outDir", f"../work/_cache/{DIST}"]
+            # 비정상 종료로 남은 남의 빌드본(2시간 지난 것)도 치워요 — 동시에 도는 다른 게이트 것은 건드리지 않게 오래된 것만
+            for old in (ROOT / "work/_cache").glob("impl-dist-*"):
+                if old.name != DIST and time.time() - old.stat().st_mtime > 7200:
+                    shutil.rmtree(old, ignore_errors=True)
             r = subprocess.run(vite + ["build", *dist, "--emptyOutDir", "--logLevel", "error"], cwd=os.path.relpath(ROOT / "app"), capture_output=True)
             if r.returncode:
                 raise RuntimeError("앱 빌드 실패: " + r.stderr.decode("utf-8", "replace")[-500:])
@@ -519,6 +525,7 @@ class App:
         self.pw.stop()
         if self.proc:
             subprocess.run(f"taskkill /PID {self.proc.pid} /T /F", shell=True, capture_output=True)
+            shutil.rmtree(ROOT / "work/_cache" / DIST, ignore_errors=True)  # 실행마다 만든 빌드본 정리(쌓여서 디스크가 찼어요, 2026-11-25)
 
 
 # ---------------------------------------------------------------- 비교
