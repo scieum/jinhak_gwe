@@ -51,6 +51,8 @@
 .ar-plot__layer { position: absolute; top: 0; bottom: 0; left: var(--head); right: 12px; pointer-events: none; }
 .ar-plot__layer > i { position: absolute; top: 0; }
 .ar-plot__grid { bottom: 0; width: 1px; background: var(--color-hairline); }
+/* 2026-11-25 사용자 요청: 확대할수록 눈금 사이 보조 점선이 더 촘촘해져요(글자 없음). */
+.ar-plot__grid--minor { width: 0; background: none; border-left: 1px dashed var(--color-hairline); }
 .ar-plot__band { bottom: 24px; background: var(--color-accent-soft); }
 .ar-plot__mine { bottom: 24px; width: 2px; margin-left: -1px; background: var(--color-accent); }
 .ar-plot__guide { bottom: 24px; width: 1px; background: var(--color-ink); }

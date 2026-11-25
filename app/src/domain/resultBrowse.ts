@@ -69,6 +69,15 @@ export function axisTicks(r: { min: number; max: number }) {
   for (let t = Math.ceil(r.min / step - 1e-9) * step; t <= r.max + 1e-9; t += step) out.push(Math.round(t * 10) / 10);
   return out;
 }
+/** 눈금 사이 보조선(점선, 글자 없음). 눈금 0.5 → 0.1 · 0.2 → 0.1 · 0.1 → 0.05 간격, 눈금 자리는 빼요. */
+export function axisMinorTicks(r: { min: number; max: number }) {
+  const w = r.max - r.min, major = w >= 2 - 1e-9 ? 0.5 : w > 1 ? 0.2 : 0.1, step = major === 0.1 ? 0.05 : 0.1, out: number[] = [];
+  for (let t = Math.ceil(r.min / step - 1e-9) * step; t <= r.max + 1e-9; t += step) {
+    const v = Math.round(t * 100) / 100;
+    if (Math.abs(v / major - Math.round(v / major)) > 1e-6) out.push(v);
+  }
+  return out;
+}
 export interface ProgramSummary { program: string; round: string; type: string; year: number; units: number; quota: number | null }
 /** One entry per program, described by its most recent published year. */
 export function programSummaries(units: readonly ReleasedUnit[], university: string): ProgramSummary[] {

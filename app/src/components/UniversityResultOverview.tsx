@@ -6,7 +6,7 @@ import { loadSusiIndex as loadCollectedIndex, loadSusiRows as loadCollectedRows 
 import { susiIssues } from '../domain/susiResults';
 import type { CollectedIndex } from '../domain/collectedResults';
 import type { ResultRow } from '../domain/resultReview';
-import { axisRange, axisTicks, zoomRange, TYPE_TABS, type TypeTab } from '../domain/resultBrowse';
+import { axisMinorTicks, axisRange, axisTicks, zoomRange, TYPE_TABS, type TypeTab } from '../domain/resultBrowse';
 import { gradeCut, noPlotReason, universityPlot, yearTone } from '../domain/universityResultPlot';
 import { collectedUniversitySelection, matchesUniversityIdentity, currentUniversityName } from '../domain/universityIdentity';
 import { fiveToNineFor } from '../domain/results';
@@ -58,7 +58,7 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   const auto = axisRange([...plotted.flatMap(d => d.points.map(r => gradeCut(r, model.cut)!)), ...(mine ? [mine.lo, mine.hi] : [])]);
   const [zoom, setZoom] = useState<{ key: string; min: number; max: number } | null>(null), zoomKey = `${university}|${model.selected}|${year}|${model.cut}`;
   const range = zoom?.key === zoomKey ? zoom : auto, zoomed = range !== auto;
-  const ticks = axisTicks(range);
+  const ticks = axisTicks(range), minorTicks = axisMinorTicks(range);
   const clamp = (v: number) => Math.min(range.max, Math.max(range.min, v)), inRange = (v: number) => v >= range.min - 1e-9 && v <= range.max + 1e-9;
   const x = (value: number) => `${(clamp(value) - range.min) / (range.max - range.min) * 100}%`;
   // 2026-11-25 사용자 요청: 그래프 위에서 휠을 굴리거나 좌우로 끌면 범위를 확대·축소해요(커서 자리 고정). 더블클릭 · "범위 원래대로"로 되돌려요.
@@ -170,7 +170,7 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
                 {mine && inRange((mine.lo + mine.hi) / 2) && <div className="ar-plot__bubble-row" aria-hidden="true"><div><span className="ar-plot__bubble" style={{ left: x((mine.lo + mine.hi) / 2) }}>내 환산 범위 약 {mine.lo.toFixed(1)}~{mine.hi.toFixed(1)}</span></div></div>}
                 <div className="ar-plot__body" ref={plotBody} onDoubleClick={() => setZoom(null)}>
                   <div className="ar-plot__layer" aria-hidden="true">
-                    {ticks.map(t => <i className="ar-plot__grid" key={t} style={{ left: x(t) }} />)}
+                    {minorTicks.map(t => <i className="ar-plot__grid ar-plot__grid--minor" key={`m${t}`} style={{ left: x(t) }} />)}{ticks.map(t => <i className="ar-plot__grid" key={t} style={{ left: x(t) }} />)}
                     {mine && <><i className="ar-plot__band" style={{ left: x(mine.lo), width: `calc(${x(mine.hi)} - ${x(mine.lo)})` }} />{inRange((mine.lo + mine.hi) / 2) && <i className="ar-plot__mine" style={{ left: x((mine.lo + mine.hi) / 2) }} />}</>}
                     {selectedPoint && inRange(gradeCut(selectedPoint, model.cut)!) && <i className={`ar-plot__guide${picked ? '' : ' is-default'}`} style={{ left: x(gradeCut(selectedPoint, model.cut)!) }} />}
                   </div>
