@@ -161,11 +161,15 @@
 .admissions-list .al-table { table-layout: fixed; width: 100%; }
 .admissions-list .al-table thead th { height: 44px; padding: 0 16px; font-size: 12px; font-weight: 600; line-height: var(--font-table-head-line); color: var(--color-ink-soft); }
 .admissions-list .al-table td { height: 49px; padding: 0 16px; border-bottom: 1px solid var(--color-hairline); line-height: var(--font-table-line); vertical-align: middle; }
-.al-table th:nth-child(1) { width: 152px; } .al-table th:nth-child(2) { width: 72px; } .al-table th:nth-child(4) { width: 72px; }
+.al-table th:nth-child(1) { width: 240px; } /* 가장 긴 이름(인천가톨릭대학교 제2캠퍼스 174) + 로고 24 + 8 + 좌우 32 */ .al-table th:nth-child(2) { width: 72px; } .al-table th:nth-child(4) { width: 72px; }
 .al-table th:nth-child(5) { width: 140px; } .al-table th:nth-child(6) { width: 136px; } .al-table th:nth-child(7) { width: 96px; }
 .al-table th:nth-child(8) { width: 72px; } .al-table th:nth-child(9) { width: 56px; }
 .admissions-list .al-th-sort { gap: 8px; }
 .admissions-list .al-table .al-univ { display: flex; width: fit-content; } /* 줄 상자 기준선에 얹히면 2~3px 위로 떠요 */
+/* 긴 대학·캠퍼스 이름이 지역 칸으로 넘치지 않게: 칸 안에서 말줄임, 전체 이름은 title */
+.admissions-list .al-table td:first-child { overflow: hidden; }
+.admissions-list .al-table .al-univ { max-width: 100%; }
+.admissions-list .al-table .al-univ span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .admissions-list .al-table th:nth-child(2) { padding-left: 10px; } /* 시안 머리글 열 2는 본문보다 6 왼쪽(449)에서 시작해요 */
 .admissions-list .al-pager { gap: 16px; padding: 16px 0 0; }
 /* 시안: PC 표 보기에서는 페이지 이동 줄이 표 카드 안(표 아래 16, 카드 아래 24) */

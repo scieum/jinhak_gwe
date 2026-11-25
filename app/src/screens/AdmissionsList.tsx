@@ -191,7 +191,7 @@ export function AdmissionsList() {
     onClick={e => { e.stopPropagation(); void toggle(row); }}><Icon name="heart" size={20} /></button>;
   const open = (row: Row) => update('plan', row.plan.id);
   const univLink = (row: Row, logo = true) => <Link className="al-univ" to={`/univ-detail?u=${encodeURIComponent(row.plan.university)}`} onClick={e => e.stopPropagation()}>
-    {logo && <UniversityLogo planId={row.plan.id} university={(row.plan as AdmissionPlan & { logo_name?: string }).logo_name ?? row.plan.university} />}<span>{row.plan.university}{row.plan.campus !== '본교' && ` ${row.plan.campus}`}</span></Link>;
+    {logo && <UniversityLogo planId={row.plan.id} university={(row.plan as AdmissionPlan & { logo_name?: string }).logo_name ?? row.plan.university} />}<span title={`${row.plan.university}${row.plan.campus !== '본교' ? ` ${row.plan.campus}` : ''}`}>{row.plan.university}{row.plan.campus !== '본교' && ` ${row.plan.campus}`}</span></Link>;
   const programText = (row: Row) => row.program?.name ?? '전형 요약 준비 중 · 원문 보기';
   const rowKeys = (row: Row) => (e: KeyboardEvent<HTMLElement>) => {
     if (e.target !== e.currentTarget) return;
