@@ -13,11 +13,13 @@ import { useReleasedResults } from '../data/releasedResults';
 import { loadAdmissionPlans } from '../data/admissionPlans';
 import { useSampleMode } from '../data/sample/mode';
 import { sampleUnivDetail } from '../data/sample/univDetail';
-import { programLine, planView, type UdChange, type UdProgram, type UdView } from '../domain/univDetail';
+import { sampleProgramDetail } from '../data/sample/programDetail';
+import { programLine, planView, programView, type Pair, type PdView, type UdChange, type UdProgram, type UdView } from '../domain/univDetail';
 import { programLines, yearsOf } from '../domain/resultBrowse';
 import { RESULT_NOTICE } from './AdmissionResults';
 import '../styles/result-browser.css';
 import '../styles/univ-detail.css';
+import '../styles/program-detail.css';
 
 function PlanLink({ name }: { name: string }) {
   return <p className="notice"><Link className="t-link" to={`/admissions-list?q=${encodeURIComponent(name)}`}>2028학년도 전형계획 확인하기</Link> · 시행계획·모집요강 자료는 변경될 수 있으므로 최종 모집요강을 확인해 주세요.</p>;
@@ -132,10 +134,74 @@ export function UnivDetail() {
 }
 
 export function ProgramDetail() {
-  const units = useReleasedResults(), [query] = useSearchParams(), name = query.get('u') ?? '', program = query.get('p') ?? '';
-  if (!units) return <section className="student-screen" data-slug="program-detail"><p role="status">공개 입결 자료를 읽고 있어요.</p></section>;
-  const lines = programLines(units, name, program);
+  const [query] = useSearchParams(), name = query.get('u') ?? '', program = query.get('p') ?? '';
+  const sample = useSampleMode(), units = useReleasedResults();
+  const [plan, setPlan] = useState<PdView | null | undefined>(undefined);
+  useEffect(() => {
+    if (sample) return;
+    let live = true; setPlan(undefined);
+    loadAdmissionPlans().then(c => { const e = c.entries.find(x => x.university === name); if (live) setPlan(e ? programView(e, program) : null); })
+      .catch(() => { if (live) setPlan(null); });
+    return () => { live = false; };
+  }, [sample, name, program]);
+  const lines = units ? programLines(units, name, program) : [];
+  // 샘플 모드: 샘플 입결에 있는 전형이면 입결 표, 아니면 시안 데모
+  const view = sample ? (units && !lines.length ? sampleProgramDetail : null) : plan;
+  if (view) return <PlanDetail view={view} sample={sample} />;
+  if (!units || (!sample && plan === undefined)) return <section className="student-screen" data-slug="program-detail"><p role="status">전형 자료를 읽고 있어요.</p></section>;
   if (!lines.length) return <section className="student-screen" data-slug="program-detail"><Missing what="전형" /></section>;
+  return <ResultDetail name={name} program={program} lines={lines} />;
+}
+
+function useShellSlots(compact: boolean) {
+  const [head, setHead] = useState<Element | null>(null), [bar, setBar] = useState<Element | null>(null);
+  useEffect(() => { setHead(compact ? null : document.querySelector('.topbar__heading')); setBar(compact ? document.getElementById('appbar-actions') : null); }, [compact]);
+  return { head, bar };
+}
+
+const Pairs = ({ rows }: { rows: Pair[] }) => <table className="data-table ud-table pd-table"><tbody>{rows.map(([k, v]) => <tr key={k}><th scope="row">{k}</th><td>{v}</td></tr>)}</tbody></table>;
+const Card = ({ title, children, className = '' }: { title: string; children: ReactNode; className?: string }) =>
+  <section className={`ud-card pd-card ${className}`} aria-label={title}><h2 className="pd-h2">{title}</h2>{children}</section>;
+
+function PlanDetail({ view: v, sample }: { view: PdView; sample: boolean }) {
+  const compact = useCompactResults(), { head, bar } = useShellSlots(compact);
+  const heart = <InterestButton key={interestId(v.university, v.program)} university={v.university} program={v.program} compact />;
+  const tile = <div className="stat-tile ud-tile">
+    <p className="ud-tile__caption">{compact ? '' : `${v.university} · `}2028 {v.round} · 모집인원</p>
+    <p className="ud-tile__value">{v.quota}</p><p className="ud-tile__lead">{v.lead[compact ? 'mobile' : 'pc']}</p></div>;
+  const facts = <dl className="pd-facts">{v.facts.map(([k, x]) => <div key={k}><dt>{k}</dt><dd>{x}</dd></div>)}</dl>;
+  const { method: m } = v;
+  const method = <Card title="전형요소와 비율"><p className="pd-lead">{m.lead}</p>
+    {m.table && <table className="data-table ud-table pd-table pd-table--grid"><thead><tr>{m.table.head.map((h, i) => <th key={h} scope="col" className={i >= 2 ? 'num' : undefined}>{h}</th>)}</tr></thead>
+      <tbody>{m.table.rows.map(r => <tr key={r[0]}>{r.map((c, i) => <td key={i} className={i >= 2 ? 'num' : undefined}>{c}</td>)}</tr>)}</tbody></table>}
+    {m.note && <p className="pd-note">{m.note}</p>}</Card>;
+  const eligibility = v.eligibility.length > 0 && <Card title="지원자격"><Pairs rows={v.eligibility} /></Card>;
+  const minimum = v.minimum && <Card title="수능최저학력기준"><Pairs rows={v.minimum.rows} />{v.minimum.original && <p className="pd-note">{v.minimum.original}</p>}</Card>;
+  const schedule = v.schedule.length > 0 && <Card title="일정" className="pd-card--schedule"><Pairs rows={v.schedule} />{!compact && <p className="pd-note">일정은 대학 사정으로 바뀔 수 있어요. 원문에서 꼭 확인해 주세요.</p>}</Card>;
+  const record = v.record.length > 0 && <Card title="교과 반영 방법"><Pairs rows={v.record} /></Card>;
+  const note = <p className="disclaimer-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {v.checked}{sample ? ' · 샘플의 대학·숫자는 예시예요' : ''}</span></p>;
+  const screen = (children: ReactNode) => <section className="student-screen ud pd" data-slug="program-detail" aria-label="전형 상세">{children}</section>;
+
+  if (compact) return screen(<>
+    {bar && createPortal(<span className="data-status-badge ud-asof">{v.status}</span>, bar)}
+    <div className="pd-head"><div className="pd-name"><UniversityLogo university={v.university} /><p>{v.university}</p>{heart}</div><h2 className="pd-title">{v.program}</h2></div>
+    <div className="pd-summary">{tile}{facts}</div>
+    {method}{eligibility}{minimum}{schedule}{record}
+    {v.source && <section className="ud-card pd-source" aria-label="출처와 원문"><p>{v.source.label}</p><a className="button-pill-soft" href={v.source.url} target="_blank" rel="noreferrer">원문 보기 ↗</a></section>}
+    {note}
+  </>);
+  return screen(<>
+    {head && createPortal(<div className="ud-head"><p className="t-caption text-muted">대학 찾기 › 전형계획</p><h1>{v.program}</h1><p className="ud-lead">{v.university} · 2028 {v.round} · {v.type}</p></div>, head)}
+    <ScreenActions><span className="data-status-badge ud-asof">{v.status} · {v.checked}</span>{v.source && <a className="button-outline" href={v.source.url} target="_blank" rel="noreferrer">원문 보기 ↗</a>}</ScreenActions>
+    <div className="ud-hero"><UniversityLogo university={v.university} /><div className="pd-hero">{tile}{facts}</div>{heart}</div>
+    <div className="pd-columns"><div className="pd-col">{method}{eligibility}{record}</div>
+      <div className="pd-col">{schedule}{minimum}{v.source && <section className="ud-card pd-source" aria-label="출처"><p>{v.source.label}</p></section>}</div></div>
+    {note}
+  </>);
+}
+
+// 시행계획에 없는 전형(공개 입결의 전형명으로 들어온 링크)은 예전처럼 모집단위별 70% 컷을 보여 줘요.
+function ResultDetail({ name, program, lines }: { name: string; program: string; lines: ReturnType<typeof programLines> }) {
   const years = yearsOf(lines), last = years[years.length - 1];
   return <section className="student-screen" data-slug="program-detail" aria-label="전형 상세">
     <div className="screen-heading"><div><p className="t-caption text-muted"><Link className="t-link" to={`/univ-detail?u=${encodeURIComponent(name)}`}>{name}</Link></p>

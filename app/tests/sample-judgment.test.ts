@@ -18,6 +18,7 @@ import { scoreUniversity } from '../src/engine/scoring';
 import { convertAverage } from '../src/engine/conversion';
 import { compareBasis } from '../src/domain/comparison';
 import { decryptBackup, encryptBackup } from '../src/io/backup';
+import { isSample, releaseRules } from '../src/domain/ruleEditor';
 
 beforeAll(() => vi.stubGlobal('crypto', webcrypto));
 beforeEach(async () => {
@@ -82,10 +83,15 @@ test('백업·공개 내보내기에는 샘플 입결·규칙이 안 들어가�
   const restored = await decryptBackup(await encryptBackup(await studentDb.snapshot(), 'password1'), 'password1');
   expect(JSON.stringify(restored)).not.toMatch(/sample-(rule|cut)|샘플 데이터\(가상\)/);
   // 공개 파일은 관리자 저장소(규칙·입결 검수)에서만 만들어요. 샘플 입결·규칙은 거기에 들어가지 않아요.
-  expect(await adminDb.rules.count()).toBe(0);
+  // 관리자 규칙 화면 시안용 샘플 규칙(sample-rule-*)은 저장소에 있어도 배포 파일에는 들어가지 않아요(검수 완료 샘플 포함).
+  const rules = await adminDb.rules.toArray();
+  expect(rules.every(isSample)).toBe(true);
+  expect(releaseRules(rules).rules).toEqual([]);
+  expect(releaseRules(rules.map(r => ({ ...r, sample: undefined }))).rules).toEqual([]); // 표식이 떨어져도 id로 걸러요
   expect(await adminDb.reviews.count()).toBe(0);
   await clearSample();
   const units = await loadReleasedResults(async () => new Response(JSON.stringify({ format: 'x' })));
   expect(units).toEqual([]); // 샘플을 끄면 샘플 입결 대신 공개 파일을 읽어요
+  expect(await adminDb.rules.count()).toBe(0); // 샘플 지우기는 샘플 규칙도 지워요
   setSampleFlag('off');
 });

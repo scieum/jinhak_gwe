@@ -47,3 +47,34 @@ export function planView(plan: AdmissionPlan): UdView {
 /** 모바일 전형 행 아래 줄: "교과 · 모집 98명 · 수능최저 있음" */
 export const programLine = (p: UdProgram) =>
   [p.type, p.quota !== null && `모집 ${p.quota}명`, p.minimum === '있음' ? '수능최저 있음' : p.interview === '있음' && '면접 있음'].filter(Boolean).join(' · ');
+
+// 전형 상세(program-detail, v2 시안 346:217877 · 346:235058). 샘플 모드 = data/sample/programDetail.ts(시안 데모),
+// 실제 모드 = 2028 시행계획 목록의 그 대학·전형. 자료에 없는 칸(일정·교과 반영 방법·단계별 비율)은 섹션째 빼고, 근거 없는 값은 '원문 확인'이에요.
+export type Pair = [label: string, value: string];
+export interface PdView {
+  university: string; program: string; round: string; type: string; status: string; checked: string;
+  source?: { url: string; label: string };
+  quota: string; lead: { pc: string; mobile: string }; facts: Pair[];
+  method: { lead: string; table?: { head: string[]; rows: string[][] }; note?: string };
+  eligibility: Pair[]; minimum: { rows: Pair[]; original?: string } | null; schedule: Pair[]; record: Pair[];
+}
+
+export function programView(plan: AdmissionPlan, name: string): PdView | null {
+  const rows = plan.programs.filter(p => p.name === name);
+  if (!rows.length) return null;
+  // shortcut: 같은 전형명이 모집단위별 여러 행이면 첫 행의 전형요소·자격·최저를 보여 줘요. 행마다 다르면 모집단위 표로 바꿔야 해요.
+  const p = rows[0], u = planView({ ...plan, programs: [p] }).programs[0];
+  const doc = plan.documents.find(d => d.id === p.document_id) ?? plan.documents[0];
+  const known = (v?: string) => !v || v === UNKNOWN ? '원문 확인' : v;
+  const lead = p.method === UNKNOWN ? '전형요소와 비율은 원문에서 확인해 주세요' : `전형요소: ${p.method}`;
+  return {
+    university: plan.university, program: name, round: u.round, type: p.type, status: '시행계획 기준', checked: doc?.checked_at ?? '',
+    source: doc && { url: doc.source_url, label: `출처: ${doc.label}${p.pages.length ? ` ${p.pages.join('·')}쪽` : ''}` },
+    quota: rows.length > 1 ? `모집단위 ${rows.length}개` : known(p.quota), lead: { pc: lead, mobile: lead },
+    facts: [['수능최저', u.minimum], ['면접', u.interview]],
+    method: { lead: known(p.method) === '원문 확인' ? '전형요소와 비율은 원문에서 확인해 주세요.' : p.method },
+    eligibility: [['대상', known(p.eligibility)]],
+    minimum: u.round === '정시' ? null : { rows: [['조건', known(p.minimum)]] },
+    schedule: [], record: [],
+  };
+}

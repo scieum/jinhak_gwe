@@ -21,6 +21,7 @@ import { teacherDb, type ClassState } from '../store/teacherDb';
 import { REPLY_MAX, makeReply } from '../domain/reply';
 import { packExchange } from '../io/exchange';
 import { downloadFile } from '../io/backup';
+import { BoardHead } from '../components/TeacherBoard';
 import { JudgeMark } from './CardCollect';
 import { WarningBadge, latestMinimum, signals } from './TeacherDashboard';
 import '../styles/counsel.css';
@@ -52,9 +53,9 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
   const { info, students, cards, memos, mocks, school } = c;
   const desktop = useDesktop(), sampleMode = useSampleMode();
   const [params, setParams] = useSearchParams();
-  const [area, setArea] = useState<MemoArea>('진로'), [text, setText] = useState(''), [next, setNext] = useState(''), [error, setError] = useState(''), [message, setMessage] = useState('');
+  const [area, setArea] = useState<MemoArea>('수시로'), [text, setText] = useState(''), [next, setNext] = useState(''), [error, setError] = useState(''), [message, setMessage] = useState('');
   const [query, setQuery] = useState(''), [listFilter, setListFilter] = useState<ListFilter>('all'), [pending, setPending] = useState<string | null>(null);
-  const [historyFilter, setHistoryFilter] = useState<HistoryFilter>('all'), [picking, setPicking] = useState(false), [showAll, setShowAll] = useState(false);
+  const [historyFilter, setHistoryFilter] = useState<HistoryFilter>('all'), [picking, setPicking] = useState(false), [expanded, setExpanded] = useState(false);
 
   const now = today();
   const mine = (n: string) => memos.filter(m => m.number === n);
@@ -87,7 +88,7 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
     return parts.length ? parts.join(' · ') : k ? `상담 ${k}회` : '상담 기록 없음';
   };
 
-  const choose = (n: string) => { setParams({ n }); setPending(null); setError(''); setMessage(''); setPicking(false); setShowAll(false); };
+  const choose = (n: string) => { setParams({ n }); setExpanded(false); setPending(null); setError(''); setMessage(''); setPicking(false); };
   const ask = (n: string) => { if (n === current.number) { setPicking(false); return; } if (text.trim()) { setPicking(false); setPending(n); } else choose(n); };
   const save = async () => {
     if (!text.trim()) { setError('메모 내용이 비어 있어요. 한 글자 이상 적고 저장해 주세요.'); return false; }
@@ -104,7 +105,8 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
     ...(latest ? [{ kind: 'system' as const, at: latest.received_at, card: latest, v: myCards.length }] : []),
   ].sort((a, b) => b.at.localeCompare(a.at));
   const shown = items.filter(t => historyFilter === 'all' || (historyFilter === '수시로' ? t.kind === 'system' || t.memo.area === '수시로' : t.kind === 'memo' && waiting(t.memo)));
-  const visible = desktop || showAll ? shown : shown.slice(0, 3);
+  // 모바일 시안(346:253753)은 최근 3건 + "전체 n건 보기"(1101:634)로 그 자리에서 펼쳐요
+  const visible = desktop || expanded ? shown : shown.slice(0, 3);
   const due = upcoming(current.number), name = `${info.name} ${Number(current.number)}번 ${current.alias}`;
   const lead = soonest ? `${Number(soonest.due!.slice(5, 7))}월 ${Number(soonest.due!.slice(8))}일 ${Number(soonest.s.number)}번 ${soonest.s.alias} 상담이 잡혀 있어요.` : '';
   // NEVER-1: 샘플 학급 카드의 판정은 샘플 모드일 때만 보여요(sample 표식 규칙으로 만든 판정).
@@ -118,7 +120,7 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
   const slots = latest?.card.slots ?? [];
   const counts = (['안정', '적정', '소신', '위험', '경계'] as const).map(v => [v, slots.filter(s => judgment(s.judgment) === v).length] as const).filter(([, n]) => n);
   const warnings = latest?.card.warnings ?? [];
-  const meta = (mobile: boolean) => [`상담 ${myMemos.length}회`, due ? `다음${mobile ? '' : ' 상담'} ${md(due)}` : myMemos[0] ? `마지막 ${md(myMemos[0].date)}` : ''].filter(Boolean).join(' · ');
+  const meta = (mobile: boolean) => [...(mobile ? [current.major] : [current.track, current.major && `희망 전공 ${current.major}`]), `상담 ${myMemos.length}회`, due ? `다음${mobile ? '' : ' 상담'} ${md(due)}` : myMemos[0] ? `마지막 ${md(myMemos[0].date)}` : ''].filter(Boolean).join(' · ');
 
   const studentList = <>
     <label className="cs-search text-input"><Icon name="search" size={20} /><input type="search" aria-label="번호·별칭으로 찾기" placeholder="번호·별칭으로 찾기" value={query} onChange={e => setQuery(e.target.value)} /></label>
@@ -134,7 +136,7 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
 
   const statTile = <div className="stat-tile cs-stat"><span className="t-caption text-muted">환산 9등급 (추정)</span>
     <strong className="num key-number">{g ? g.range : '–'}</strong>
-    <span className="t-body-sm num">{g ? `${g.sub} · 내신 5등급 ${g.g5.toFixed(1)}` : '내신 학기 평균을 불러오면 보여요'}</span></div>;
+    <span className="t-body num">{g ? `${g.sub} · 내신 5등급 ${g.g5.toFixed(1)}` : '내신 학기 평균을 불러오면 보여요'}</span></div>;
   const trace = <details className="trace-accordion cs-trace"><summary>어떻게 계산했나요?<Icon name="chevron-down" size={20} /></summary>
     {g ? <ol className="t-body-sm num">{g.steps.map((x, i) => <li key={i}>{x}</li>)}</ol>
       : <p className="t-body-sm">성적 불러오기에서 내신 학기 평균을 올리면 계산 단계가 여기에 보여요.</p>}</details>;
@@ -144,7 +146,7 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
   const memoForm = <>
     <SegmentedControl label="영역" value={area} onChange={setArea} options={MEMO_AREAS.map(a => ({ value: a, label: a }))} />
     <label className="sr-only" htmlFor="memo-text">상담 메모</label>
-    <textarea id="memo-text" className="cs-memo" rows={4} maxLength={2000} value={text} aria-invalid={!!error} placeholder="상담하면서 바로 적어요. 학생이 한 말, 같이 정한 것을 남겨요."
+    <textarea id="memo-text" className="cs-memo" rows={4} autoFocus={desktop} maxLength={2000} value={text} aria-invalid={!!error} placeholder="상담하면서 바로 적어요. 학생이 한 말, 같이 정한 것을 남겨요."
       onChange={e => { setText(e.target.value); setError(''); }} onKeyDown={e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); save(); } }} />
     {error && <p role="alert" className="error-note">{error}</p>}
     <input className="cs-next" aria-label="다음에 볼 것" maxLength={200} value={next} onChange={e => setNext(e.target.value)} placeholder="다음에 볼 것 (선택) · 예: 11-28까지 탐구 오답 같이 보기" />
@@ -192,9 +194,13 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
         <button type="button" className="filter-chip" aria-pressed={historyFilter === 'waiting'} onClick={() => setHistoryFilter('waiting')}>대기 {myMemos.filter(waiting).length}</button></div></div>
     {timeline}</> : <section className="cs-card cs-history" aria-label="지난 메모"><div className="cs-card__head"><h3 className="t-heading-4">지난 메모</h3><span className="t-caption text-muted num">{items.length}건</span></div>
       {timeline}
-      {!showAll && shown.length > visible.length && <button type="button" className="button-pill-soft cs-more" onClick={() => setShowAll(true)}>전체 {shown.length}건 보기</button>}</section>;
+      {shown.length > 3 && <ButtonOutline className="cs-more" aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>{expanded ? '접기' : `전체 ${shown.length}건 보기`}</ButtonOutline>}</section>;
+  // 모바일 시안 "확정 잠금 · 답장"(1101:641): PC는 학생 요약 아래(lockReply)
+  const lockCard = !desktop && latest && <section className="cs-card cs-lock" aria-label="확정 잠금 · 답장"><h3 className="t-heading-4">확정 잠금 · 답장</h3>
+    <LockToggle student={current} status={rowOf(current.number).status} /><ReplyBox code={info.code} student={current} card={latest} /></section>;
 
   return <div className="cs">
+    {!desktop && <BoardHead desktop={false} lead="" />}
     {headSlot && lead && createPortal(<p className="t-body-lg cs-lead">{lead} 메모는 상담하면서 바로 남겨요.</p>, headSlot)}
     {desktop ? <div className="cs-layout">
       <aside className="cs-panel cs-list" aria-label="학생 목록"><h3 className="t-heading-4">우리 반 {students.length}명</h3>{studentList}</aside>
@@ -205,11 +211,11 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
       </section>
       {summary}
     </div> : <div className="cs-stack">
-      {lead && <p className="cs-note t-body-sm">ⓘ {lead}</p>}
-      {summary}{write}{history}
-      {lockReply && <section className="cs-card" aria-label="확정 잠금 · 답장">{lockReply}</section>}
+      {lead && <p className="cs-note"><Icon name="info" size={16} /><span>{lead}</span></p>}
+      {summary}{write}{history}{lockCard}
     </div>}
-    <p className="disclaimer-note">ⓘ 환산 9등급은 추정 범위예요 · 판정과 최저 충족 현황은 대학 공식 자료가 최종 기준이에요 · 판정과 경고는 학생이 카드를 보낸 때 기준이에요 · 데이터 기준일 {dataAsOf}</p>
+    {/* 모바일 시안(346:85557)은 기준일 없이 짧은 문구, PC 시안(346:85639)은 기준일까지 */}
+    <p className="disclaimer-note"><Icon name="info" size={16} /><span>환산 9등급은 추정 범위예요 · {desktop ? '판정과 최저 충족 현황은' : '판정은'} 대학 공식 자료가 최종 기준이에요{sampleMode ? ' · 샘플의 대학·숫자는 예시예요' : ''}{desktop ? ` · 데이터 기준일 ${dataAsOf}` : ''}</span></p>
 
     {picking && <Modal label="학생 바꾸기" onClose={() => setPicking(false)}><div className="cs-picker"><div className="section-row"><h3 className="t-heading-3">학생 바꾸기</h3><button type="button" className="text-button" onClick={() => setPicking(false)}>닫기</button></div>{studentList}</div></Modal>}
     {pending && <Modal label="저장하지 않은 메모가 있어요" onClose={() => setPending(null)}><h3 className="t-heading-3">저장하지 않은 메모가 있어요</h3>
@@ -229,8 +235,9 @@ function slotChanges(now: CardRecord, prev?: CardRecord) {
 
 function TimelineMemo({ memo }: { memo: Memo }) {
   const state = nextState(memo, today());
-  return <li className="counsel-timeline__memo"><p className="t-caption text-muted num">{memo.date} · {memo.area}</p><p className="t-body">{memo.text}</p>
-    {state && <p className="t-body-sm">다음에 볼 것 · {memo.next} · <strong>{state}</strong> {state !== '완료' && <button className="text-button" onClick={() => teacherDb.memos.update(memo.id!, { next_done: true })}>완료로 표시</button>}</p>}</li>;
+  // 시안(346:217430): 다음에 볼 것은 본문 글에 이어 한 덩어리로. 상태 글자(대기)를 누르면 완료로 표시해요(시안에 따로 버튼이 없어요).
+  return <li className="counsel-timeline__memo"><p className="t-caption text-muted num">{memo.date} · {memo.area}</p><p className="t-body">{memo.text}{state && <> 다음에 볼 것 · {memo.next} · {state === '완료' ? state
+    : <button type="button" className="text-button" title="완료로 표시" aria-label={`${state} · 완료로 표시`} onClick={() => teacherDb.memos.update(memo.id!, { next_done: true })}>{state}</button>}</>}</p></li>;
 }
 
 function LockToggle({ student, status }: { student: Student; status: string }) {

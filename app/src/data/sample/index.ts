@@ -12,7 +12,7 @@ import { isSampleAttendance, isSampleId, isSampleInterest, isSampleMock } from '
 import { sampleMockScores } from './mockScore';
 import { sampleApplications, sampleAttendance, sampleBoards, sampleGrades, sampleInterests, sampleTasks } from './student';
 import { SAMPLE_CLASS, sampleCards, sampleClassMocks, sampleLogs, sampleMemos, sampleMocks, sampleOutcomes, sampleSchedules, sampleSchool, sampleStudents, sampleTargets, sampleCounselLists } from './teacher';
-import { sampleFieldDraft, sampleWikiDrafts } from './admin';
+import { sampleFieldDraft, sampleRuleDrafts, sampleWikiDrafts } from './admin';
 import { samplePrograms } from './public';
 
 export { isSampleMode, useSampleMode } from './mode';
@@ -60,9 +60,10 @@ async function loadTeacher() {
   });
 }
 async function loadAdmin() {
-  await adminDb.transaction('rw', [adminDb.wiki, adminDb.fields], async () => {
+  await adminDb.transaction('rw', [adminDb.wiki, adminDb.fields, adminDb.rules], async () => {
     await addMissing(adminDb.wiki, sampleWikiDrafts, r => r.key);
     await addMissing(adminDb.fields, [sampleFieldDraft], r => r.key);
+    await addMissing(adminDb.rules, sampleRuleDrafts, r => r.id);
   });
 }
 
@@ -102,9 +103,10 @@ export async function clearSample() {
   });
   const info = await teacherDb.meta.get('class');
   if (info?.code === SAMPLE_CLASS.code && info.created_at === SAMPLE_CLASS.created_at) await teacherDb.clearClass();
-  await adminDb.transaction('rw', [adminDb.wiki, adminDb.fields], async () => {
+  await adminDb.transaction('rw', [adminDb.wiki, adminDb.fields, adminDb.rules], async () => {
     await adminDb.wiki.filter(d => !!d.sample).delete();
     await adminDb.fields.filter(d => !!d.sample).delete();
+    await adminDb.rules.filter(d => !!d.sample).delete();
   });
   hidePublicSample(); setSampleFlag('off');
 }

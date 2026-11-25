@@ -1,0 +1,40 @@
+/* 전형 상세(program-detail) v2 시안: 346:217877(390) · 346:235058(1440). 셸·카드·stat-tile은 univ-detail.css(.ud)를 같이 써요. */
+.pd dl, .pd dd { margin: 0; }
+.pd-facts { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.pd-facts > div { display: flex; align-items: center; gap: 6px; }
+.pd-facts dt { color: var(--color-text-muted); font-size: 12px; font-weight: 400; line-height: 17px; }
+.pd-facts dd { color: var(--color-ink); font-size: 16px; font-weight: 600; line-height: 22px; white-space: nowrap; }
+.pd-lead { color: var(--color-ink); font-size: 15px; font-weight: 400; line-height: 22.5px; }
+.pd-note { color: var(--color-text-muted); font-size: 13px; font-weight: 400; line-height: 19.5px; }
+.pd-source { gap: 12px; justify-items: start; }
+.pd-source > p { color: var(--color-text-muted); font-size: 12px; font-weight: 400; line-height: 17px; }
+
+/* 표: 머리 44 · 행 44 + 아래 선 1(값이 두 줄이면 64 + 1) */
+.pd .pd-table { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0; }
+.pd .pd-table th, .pd .pd-table td { box-sizing: border-box; padding: 12px 16px; height: auto; vertical-align: middle; text-align: left; overflow-wrap: anywhere; }
+.pd .pd-table thead th { height: 44px; padding: 0 16px; border: 0; background: var(--color-canvas-soft); color: var(--color-ink-soft); font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; }
+.pd .pd-table tbody td, .pd .pd-table tbody th { border-bottom: 1px solid var(--color-hairline); color: var(--color-ink); font-size: 14px; font-weight: 400; line-height: 20px; }
+.pd .pd-table tbody th { width: 104px; background: var(--color-canvas-soft); color: var(--color-ink-soft); font-size: 12px; font-weight: 600; line-height: 17px; }
+.pd .pd-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 767px) {
+  .pd-head { display: grid; gap: 4px; }
+  .pd-name { display: flex; align-items: center; gap: 12px; min-height: 44px; }
+  .pd-name > p { flex: 1; min-width: 0; align-self: flex-start; font-size: 19px; font-weight: 700; line-height: 25.65px; } /* 시안 글 상자 위 맞춤(TOP) */
+  /* Figma는 줄마다 행간을 올려 잡아요(22.5→23, 19.5→20: 두 줄 45→46, 39→40). 행간 토큰은 두고 1px만 더해 누적을 맞춰요 */
+  .pd-lead, .pd-note { padding-bottom: 1px; }
+  .pd .disclaimer-note { align-items: flex-start; } /* 시안 아이콘 = 첫 줄 높이. 줄바꿈돼도 첫 줄 옆에 */
+  .pd-title { margin: 0; font-size: 26px; font-weight: 700; line-height: 34px; }
+  .pd-summary { display: grid; gap: 12px; }
+  .pd-h2 { font-size: 22px; font-weight: 700; line-height: 30px; }
+}
+
+@media (min-width: 768px) {
+  .pd-hero { flex: 1; min-width: 0; display: grid; gap: 12px; }
+  .pd-columns { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 24px; align-items: start; }
+  .pd-col { display: grid; gap: 24px; min-width: 0; }
+  .pd-h2 { font-size: 26px; font-weight: 700; line-height: 35px; }
+  .pd-note { font-size: 14px; line-height: 21px; }
+  .pd .pd-table tbody th { width: 160px; }
+  .pd .pd-card--schedule .pd-table tbody th { width: 120px; }
+}

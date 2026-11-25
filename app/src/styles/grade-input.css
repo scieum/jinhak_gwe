@@ -1,5 +1,15 @@
-/* 성적 입력 — v2 시안(Figma 346:114211 모바일 · 346:114289 PC)과 work/grade-input/02-spec.md. 모서리 0, 섹션 사이 선 없음. */
-.student-screen.grade-input { gap: 0; }
+/* 성적 입력 — v2 시안 기반. 교과 성적과 출결은 별도 섹션으로 구분한다. */
+.student-screen.grade-input { gap: var(--spacing-lg); }
+/* 회색 페이지 위에 흰색 패널을 배치해 섹션 경계를 드러낸다. */
+.grade-input__academic,
+.grade-input > .grade-input__attendance {
+  min-width: 0;
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-hairline);
+  background: var(--color-canvas);
+}
+.grade-input__academic { display: grid; gap: 0; }
+.grade-input__academic > * { min-width: 0; margin: 0; }
 @media (max-width: 767px) { .shell__content:has(.grade-input) { padding-top: 0; padding-inline: var(--spacing-md); } }
 @media (min-width: 1024px) { .student-screen.grade-input { padding-top: 24px; } } /* 시안 body 프레임(143) 안 위 24에서 머리 줄 */
 .grade-input > * { margin: 0; }
@@ -26,13 +36,13 @@
 .shell:has(.grade-input) .appbar-title { min-height: 40px; }
 .appbar__actions .gi-files { width: auto; height: 44px; padding: 0 var(--spacing-md); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 15px; font-weight: 600; line-height: 23px; white-space: nowrap; }
 @media (max-width: 767px) {
-  .grade-input > .grade-input__pick { margin-top: var(--spacing-md); }
+  .grade-input__academic > .grade-input__pick { margin-top: var(--spacing-md); }
   .grade-input__pick > .segmented-control { width: 100%; padding: 2px 4px; background: var(--color-canvas); }
-  .grade-input > .grade-input__headgroup { margin-top: var(--spacing-md); gap: 4px; }
+  .grade-input__academic > .grade-input__headgroup { margin-top: var(--spacing-md); gap: 4px; }
   .grade-input__head .button-pill-soft { min-height: 44px; border: 0; background: var(--color-canvas); font: inherit; font-size: 15px; font-weight: 600; line-height: 23px; cursor: pointer; }
-  .grade-input > .grade-input__chips { margin-top: var(--spacing-md); }
+  .grade-input__academic > .grade-input__chips { margin-top: var(--spacing-md); }
   .grade-input .filter-chip { height: 44px; }
-  .grade-input > .gi-cards { margin-top: var(--spacing-xs); display: grid; gap: var(--spacing-xs); }
+  .grade-input__academic > .gi-cards { margin-top: var(--spacing-xs); display: grid; gap: var(--spacing-xs); }
   .gi-cards .gi-error { margin-top: -4px; }
   .grade-input .gi-card { display: grid; gap: 4px; width: 100%; padding: 12px 16px; border: 0; border-bottom: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; text-align: left; cursor: pointer; }
   .gi-card__title { display: flex; align-items: center; gap: var(--spacing-xs); min-height: 24px; }
@@ -42,24 +52,25 @@
   .gi-card__text { color: var(--color-text-muted); font-size: 13px; line-height: 19.5px; }
   .grade-input .gi-card .grade-chip { width: 24px; justify-content: center; padding: 0; background: var(--color-canvas-soft); }
   .gi-card__score { font-size: 14px; line-height: 19.6px; }
-  .grade-input > .grade-input__add { margin-top: var(--spacing-lg); width: 100%; min-height: 52px; }
-  .grade-input > .grade-input__save { margin-top: var(--spacing-xs); }
-  .grade-input > .grade-input__attendance { margin-top: var(--spacing-xl); }
-  .grade-input > .empty-state, .grade-input > [role='status'], .grade-input > [role='alert'] { margin-top: var(--spacing-md); }
+  .grade-input__academic > .grade-input__add { margin-top: var(--spacing-lg); width: 100%; min-height: 52px; }
+  .grade-input__academic > .grade-input__save { margin-top: var(--spacing-xs); }
+  .grade-input__academic, .grade-input > .grade-input__attendance { padding: var(--spacing-md); }
+  .grade-input__academic > :first-child { margin-top: 0; }
+  .grade-input .gi-card { padding-inline: 0; }
+  .grade-input__academic > .empty-state, .grade-input__academic > [role='status'], .grade-input__academic > [role='alert'] { margin-top: var(--spacing-md); }
 }
 
 /* PC */
 @media (min-width: 768px) {
-  .grade-input > .grade-input__headgroup { gap: var(--spacing-xs); }
-  .grade-input > .grade-input__pick { margin-top: var(--spacing-lg); }
+  .grade-input__academic > .grade-input__headgroup { gap: var(--spacing-xs); }
+  .grade-input__academic > .grade-input__pick { margin-top: var(--spacing-lg); }
   .grade-input__pick > .segmented-control { width: 620px; height: 48px; }
   .grade-input__view .segmented-control { width: 240px; height: 48px; }
-  .grade-input > .grade-input__tablegroup { margin-top: var(--spacing-lg); display: grid; gap: var(--spacing-xs); justify-items: start; }
-  .grade-input > .empty-state, .grade-input > [role='status'], .grade-input > [role='alert'] { margin-top: var(--spacing-lg); }
+  .grade-input__academic > .grade-input__tablegroup { margin-top: var(--spacing-lg); display: grid; gap: var(--spacing-xs); justify-items: start; }
+  .grade-input__academic > .empty-state, .grade-input__academic > [role='status'], .grade-input__academic > [role='alert'] { margin-top: var(--spacing-lg); }
   .grade-input__filter { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); width: 100%; }
-  .grade-input > .grade-input__attendance { margin-top: 48px; }
 }
-.grade-input__summary { display: grid; gap: 4px; }
+.grade-input__summary { display: grid; gap: 4px; padding: var(--spacing-md); background: var(--color-canvas-soft); }
 .grade-input__summary p { margin: 0; }
 
 /* grade-input-table: 외곽 1px hairline, 머리글 canvas-soft 40, 행 36 + 1px 선, 첫 열 고정 */
@@ -118,15 +129,12 @@
   .attendance-grid { grid-template-columns: 56px repeat(3, minmax(0, 1fr)); }
   .grade-input__attendance .attendance-field { height: 44px; padding: 0 var(--spacing-sm); } /* 모바일 text-input md 44(02-spec 3-5 #9) */
 }
-@media (min-width: 768px) {
-  .grade-input > .grade-input__attendance { padding: 24px 0; border: 0; background: none; } /* 시안 출결 프레임은 Page 위 채움 없음, 위아래 24 */
-}
 .reply-text { white-space: pre-wrap; }
 .topbar .gi-asof { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; }
 .shell:has(.grade-input) .topbar__actions { gap: 12px; } /* 시안 page-header 동작 간격 12 */
 /* 2026-11-25 사용자 요청 "시안 개선": 표는 본문 폭을 다 쓰고(넓은 화면에서 오른쪽이 비지 않게), 안내 글은 칩 바로 뒤, 표 아래 오류 · 요약은 표에 붙지 않게 */
 @media (min-width: 768px) {
-  .grade-input > .grade-input__tablegroup { justify-items: stretch; }
+  .grade-input__academic > .grade-input__tablegroup { justify-items: stretch; }
   .grade-input .table-scroll { width: 100%; }
   .grade-input .grade-input-table { width: 100%; min-width: 1018px; }
   .grade-input__filter { justify-content: flex-start; }

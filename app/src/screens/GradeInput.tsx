@@ -121,6 +121,7 @@ export function GradeInput() {
     {topSlot && createPortal(<span className="data-status-badge gi-asof">데이터 기준일 {dataAsOf}</span>, topSlot)}
     <input hidden ref={replyRef} type="file" accept=".jnavi" aria-label="선생님 답장 파일" onChange={e => { const f = e.target.files?.[0]; e.target.value = ''; if (f) void run(async () => { if (f.size > 1_000_000) throw new Error('1MB 이하 파일을 골라 주세요.'); setReply(await openReply(await f.text())); }); }} />
     <input hidden ref={inputRef} type="file" accept=".csv,.xlsx,.pdf" aria-label="성적 파일" onChange={e => { const f = e.target.files?.[0]; e.target.value = ''; if (f) void importFile(f); }} />
+    <section className="grade-input__academic" aria-label="교과 성적 입력">
     {narrow ? <>
       {view !== '전체' && <div className="grade-input__pick">{unitPick}</div>}
       <div className="grade-input__headgroup"><div className="grade-input__head"><h2 className="t-heading-4">{title}</h2>
@@ -143,6 +144,7 @@ export function GradeInput() {
         <div className="grade-input__summary"><p className="t-title num">{view === '학기별' ? '학기' : view === '학년별' ? '학년' : '전체'} 요약 · {summaryText}</p>
           <p className="t-caption text-muted">확인 필요 과목은 계산에 넣지 않아요. 석차등급 평균은 수강자수 5명 이하 과목을 제외한 학점 가중 평균이에요.</p>{yearNote}</div></div>}
     </>}
+    </section>
     <AttendanceFields key={year} initial={attendance ?? emptyAttendance(year)} onSave={a => run(async () => { await studentDb.attendance.put(a); }, '출결을 저장했어요.')} />
     {menu === 'import' && <Modal label="성적 불러오기" onClose={() => setMenu(null)}><h3 className="t-heading-3">성적 불러오기</h3>{importRows}<p className="t-caption text-muted">파일은 이 기기 안에서 읽고, 어디로도 보내지 않아요.</p></Modal>}
     {menu === 'export' && <Modal label="내보내기·백업" onClose={() => setMenu(null)}><h3 className="t-heading-3">내보내기·백업</h3>{exportRows}{publicNote}</Modal>}

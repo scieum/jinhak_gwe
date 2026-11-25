@@ -1,0 +1,50 @@
+diff --git a/app/src/styles/dept-tier.css b/app/src/styles/dept-tier.css
+index 58d0792..f81ef37 100644
+--- a/app/src/styles/dept-tier.css
++++ b/app/src/styles/dept-tier.css
+@@ -110,3 +110,45 @@
+   .dept-tier__width-row > .t-label, .dept-tier__remember { flex: none; white-space: nowrap; }
+   .dept-tier__width-row > .dept-tier__custom { flex-basis: 100%; display: flex; align-items: center; justify-content: flex-end; gap: 12px; } /* '직접' 입력은 다음 줄 */
+ }
++
++/* 구간 라벨과 대학 카드를 분리하고 긴 모집단위명도 읽을 수 있게 한다. */
++.dept-tier__controls { padding: var(--spacing-lg); border: 1px solid var(--color-hairline); background: var(--color-canvas); }
++.dept-tier__row { flex-wrap: wrap; }
++.dept-tier__mine { height: auto; min-height: 56px; padding: var(--spacing-md) var(--spacing-lg); border: 1px solid var(--color-hairline); }
++.dept-tier__board { padding: 0; border: 1px solid var(--color-hairline); }
++.dept-tier .tier-layer { min-width: 0; padding: 0; gap: 0; }
++.dept-tier .tier-layer + .tier-layer { padding-top: 0; border-top: 1px solid var(--color-hairline); box-shadow: none; }
++.tier-layer__head { gap: var(--spacing-xs); padding: var(--spacing-md); background: var(--color-canvas-soft); }
++.tier-layer__range { font-size: 16px; line-height: 24px; }
++.tier-layer__cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); align-items: stretch; gap: var(--spacing-sm); min-width: 0; padding: var(--spacing-md); }
++.tier-layer__cells > li { display: flex; min-width: 0; }
++.tier-cell { width: 100%; height: auto; min-height: 174px; padding: var(--spacing-md); background: var(--color-canvas); border-color: var(--color-hairline); }
++.tier-cell__univ { white-space: normal; overflow: visible; overflow-wrap: anywhere; }
++.tier-cell__unit { display: block; overflow: visible; overflow-wrap: anywhere; -webkit-line-clamp: unset; font-size: 15px; font-weight: 600; line-height: 23px; }
++.tier-cell__cut { padding-top: var(--spacing-sm); font-size: 18px; line-height: 26px; }
++.tier-layer > p { padding: var(--spacing-lg) var(--spacing-md); }
++.dept-tier .trace-accordion { border: 1px solid var(--color-hairline); background: var(--color-canvas); }
++
++@media (min-width: 768px) {
++  .dept-tier__row--top { gap: var(--spacing-md); }
++  .dept-tier__row--top > .segmented-control { flex: 0 0 240px; }
++  .dept-tier__right { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--spacing-md); min-width: 0; margin-left: auto; }
++  .dept-tier__right > .segmented-control { flex: 0 0 200px; }
++  .dept-tier__width-row > .segmented-control { width: 300px; }
++  .dept-tier__controls > .dept-tier__row + .dept-tier__row { padding-top: var(--spacing-sm); border-top: 1px solid var(--color-hairline-soft); }
++  .dept-tier__row > .t-label { flex: 0 0 108px; }
++  .dept-tier__mine { flex-wrap: wrap; }
++  .dept-tier .tier-layer { grid-template-columns: 120px minmax(0, 1fr); }
++  .tier-layer__head { display: grid; align-content: start; border-right: 1px solid var(--color-hairline); }
++  .tier-layer__prefix { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
++}
++@media (max-width: 767px) {
++  .dept-tier__controls, .dept-tier__mine { padding: var(--spacing-md); }
++  .dept-tier__row > .dept-tier__pick { min-width: 0; height: auto; white-space: normal; overflow-wrap: anywhere; }
++  .dept-tier__row > .segmented-control { flex: 0 0 120px; }
++  .tier-layer__head { align-items: center; border-bottom: 1px solid var(--color-hairline); }
++  .tier-layer__range { font-size: 14px; line-height: 21px; }
++  .tier-layer__cells { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-xs); padding: var(--spacing-sm); }
++  .tier-cell { min-height: 174px; padding: var(--spacing-sm); }
++  .tier-cell__unit { font-size: 14px; line-height: 21px; }
++}

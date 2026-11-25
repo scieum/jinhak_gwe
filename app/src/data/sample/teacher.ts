@@ -27,7 +27,8 @@ const WARNINGS: Record<number, typeof SKEW[]> = { 5: [SKEW, CLASH], 15: [SKEW, C
 /** 하늘이 샘플 모드 수시로에서 보던 판정(관심 대학 6곳 순서). tests/sample-judgment.test.ts가 judgeUniversity 결과와 같은지 확인해요. */
 export const SAMPLE_CARD_VERDICTS = ['안정', '안정', '적정', '적정', '소신', '경계'] as const;
 // 7번 하늘은 데모의 수시 6장. 다른 학생 카드(대학 · 학생이 본 판정)는 데모에 없어서 card-collect v2 시안 표 값으로 채워요(시안 기준 보강, 대학 이름 줄임 = "○○대학교").
-const HANUL_SLOTS = SAMPLE_UNIVERSITIES.map(([university, department, program], i) => ({ priority: i + 1, university, program, department, judgment: SAMPLE_CARD_VERDICTS[i] }));
+// 중앙대 칸 = 면접 · 날짜 미정(학생 수시로 보드와 같음) → class-calendar v2 시안 "날짜 미정 1개"
+const HANUL_SLOTS = SAMPLE_UNIVERSITIES.map(([university, department, program], i) => ({ priority: i + 1, university, program, department, judgment: SAMPLE_CARD_VERDICTS[i], ...(i === 5 ? { exam_kind: '면접', exam_date: null } : {}) }));
 // counsel v2 시안 "카드 v3 · 11-10 받음" · "6번 칸 교체 (국민대 행정학과 → 중앙대 공공인재학부)": v1·v2는 6번 칸이 국민대였어요.
 const HANUL_OLD = HANUL_SLOTS.map((s, i) => i === 5 ? { ...s, university: '국민대학교', department: '행정학과', program: '학생부교과' } : s);
 const CARD_SLOTS: Record<number, string> = {
@@ -134,6 +135,9 @@ export const sampleSchedules: ClassSchedule[] = [
   { university: '건국대학교', program: '학생부교과', kind: '면접·실기', date: rel('2026-11-21') },
   { university: '중앙대학교', program: '학생부교과', kind: '서류 제출', date: rel('2026-11-27'), time: '17:00' },
   { university: '동국대학교', program: '학생부교과', kind: '면접·실기', date: rel('2026-12-05') },
+  // class-calendar v2 시안 그날 목록(서류 제출 체크 묶음 + 발표 결과 select 묶음)이 오늘 보이게: 하늘 카드의 두 전형
+  { university: '성균관대학교', program: '학생부교과(학교장추천)', kind: '서류 제출', date: rel('2026-11-24'), time: '18:00' },
+  { university: '한양대학교', program: '학생부교과(추천형)', kind: '최종 발표', date: rel('2026-11-24') },
 ];
 
 // 결과 집계 샘플(result-summary 02-spec 1-1 · v2 시안): 지원 162 = 합격 21 + 충원 합격 9 + 불합격 118(1단계 불합격 35 포함) + 미등록 7 + 미입력 7,

@@ -2,14 +2,14 @@
    PC: 학생 목록 272 · 상담 메모 · 학생 요약 336, 패널 높이는 화면에 맞추고 패널 안에서만 가는 스크롤.
    모바일: 학생 요약 → 상담 메모 → 지난 메모 카드. 모서리 0, 그림자 없음. Route Blue는 선택 표시 · 핵심 숫자 하나에만. */
 .cs { display: grid; gap: 24px; align-content: start; }
-.cs-lead { margin: 0; color: var(--color-ink-soft); }
+.topbar__heading .cs-lead { margin: 4px 0 0; font-size: 18px; font-weight: 300; line-height: 27px; color: var(--color-ink); } /* 시안 lead y 99 = 제목 아래 4 */
 .cs h3, .cs h4, .cs p { margin: 0; }
 
 /* 패널 공통 */
 .cs-panel, .cs-card { display: flex; flex-direction: column; gap: 16px; min-width: 0; padding: 20px; background: var(--color-canvas); }
 .cs-panel { min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--color-hairline) transparent; }
 .cs-panel > *, .cs-card > * { flex: none; }
-.cs-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.cs-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; } /* 시안: 버튼(44)은 이름 묶음 가운데 */
 .cs-head > div { display: grid; gap: 4px; min-width: 0; }
 .cs-card__head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
 
@@ -19,8 +19,8 @@
 .cs .cs-search input:focus { outline: none; }
 .cs-search:focus-within { outline: 2px solid var(--color-ink); outline-offset: 0; }
 .cs-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.cs .filter-chip { display: inline-flex; align-items: center; height: 36px; padding: 0 12px; border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; cursor: pointer; }
-.cs .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.cs .cs-chips .filter-chip { display: inline-flex; min-height: 0; align-items: center; height: 36px; padding: 0 12px; border: 1px solid var(--color-hairline); background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; cursor: pointer; }
+.cs .cs-chips .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
 
 /* 학생 목록: 행 높이 60 고정, 목록만 스크롤 */
 .cs-list { overflow: hidden; }
@@ -30,47 +30,51 @@
 .cs-student.is-selected { background: var(--color-accent-soft); box-shadow: inset 3px 0 0 var(--color-accent); }
 .cs-student__line1 { display: flex; justify-content: space-between; align-items: center; gap: 12px; height: 24px; }
 .cs-student__who { white-space: nowrap; }
-.cs-student__who strong { margin-right: 4px; font-weight: 700; }
+.cs-student__who strong { margin-right: 4px; font-size: 16px; font-weight: 600; line-height: 22px; }
 .cs-student__badges { display: flex; gap: 8px; flex: none; }
 .cs-student__line2 { overflow: hidden; color: var(--color-text-muted); font-size: 13px; line-height: 20px; white-space: nowrap; text-overflow: ellipsis; }
 .cs .data-status-badge, .cs .judge-badge { display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 8px; font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; }
-.cs .data-status-badge { background: var(--color-canvas-soft); color: var(--color-ink-soft); }
+.cs .data-status-badge { background: var(--color-canvas-soft); color: var(--color-text-muted); }
 
 /* 메모 쓰기 */
 .cs .segmented-control { display: flex; width: 100%; gap: 4px; padding: 4px; background: var(--color-canvas-soft); overflow: visible; }
 .cs .segmented-control__option { flex: 1 1 0; min-height: 40px; padding: 0 8px; }
-.cs-memo { display: block; width: 100%; height: 120px; padding: 12px 16px; border: 0; background: var(--color-field); color: var(--color-ink); font: inherit; resize: none; box-sizing: border-box; }
-.cs-next { width: 100%; height: 48px; padding: 0 16px; border: 0; background: var(--color-field); color: var(--color-ink); font: inherit; box-sizing: border-box; }
-.cs-memo:focus, .cs-next:focus { outline: 2px solid var(--color-ink); outline-offset: 0; }
-.cs-memo[aria-invalid='true'] { outline: 2px solid var(--color-judge-risk); }
+.cs .cs-memo { display: block; min-height: 0; width: 100%; height: 120px; padding: 12px 16px; border: 0; background: var(--color-field); color: var(--color-ink); font: inherit; resize: none; box-sizing: border-box; }
+.cs .cs-next { min-height: 0; width: 100%; height: 48px; padding: 0 16px; border: 0; background: var(--color-field); color: var(--color-ink); font: inherit; box-sizing: border-box; }
+.cs .cs-next:focus { outline: 2px solid var(--color-ink); outline-offset: 0; }
+.cs .cs-memo:focus { outline: none; border: 2px solid var(--color-ink); padding: 10px 14px; } /* 시안 PC 쓰는 중 칸 테두리 2 */
+.cs .cs-memo[aria-invalid='true'] { outline: 2px solid var(--color-judge-risk); }
 .cs-save { display: flex; justify-content: flex-end; align-items: center; gap: 12px; }
 
 /* 지난 메모 */
+.cs-history-head .cs-chips { gap: 16px; }
 .cs-history-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 20px; border-top: 1px solid var(--color-hairline-soft); }
 .cs .counsel-timeline { display: grid; gap: 8px; max-width: none; margin: 0; padding: 0; list-style: none; border-left: 1px solid var(--color-hairline); }
 .cs .counsel-timeline > li { position: relative; display: grid; gap: 4px; max-width: none; padding: 12px 16px; }
 /* 마디 점(ELLIPSE 8): 모서리 0 전역 규칙을 피해 원은 그레이디언트로 그려요 */
 .cs .counsel-timeline > li::before { content: ''; position: absolute; left: -5px; top: 16px; width: 8px; height: 8px; background: radial-gradient(circle closest-side, var(--color-ink) 92%, transparent); }
 .cs .counsel-timeline > .counsel-timeline__system { background: var(--color-canvas-soft); }
-.cs .counsel-timeline .text-button { min-height: 0; padding: 0 4px; }
+.cs .counsel-timeline__system .t-body-sm { font-size: 13px; line-height: 20px; }
+.cs .counsel-timeline .t-body { line-height: 23px; }
+.cs .counsel-timeline .text-button { min-height: 0; padding: 0; border: 0; background: none; font: inherit; color: inherit; text-decoration: none; cursor: pointer; }
 
 /* 학생 요약 */
 .cs-summary { gap: 12px; }
 .cs-summary__head { display: grid; gap: 2px; }
 .cs-stat { display: grid; gap: 4px; }
-.cs-stat strong { font-size: 48px; font-weight: 700; line-height: 57px; }
+.cs-stat strong { font-size: 44px; font-weight: 700; line-height: 57px; }
 .cs-mock { display: grid; gap: 2px; }
-.cs-mock__value { font-weight: 600; }
+.cs-mock__value { font-size: 16px; font-weight: 600; line-height: 22px; }
 .cs .cs-trace { padding: 0; border: 0; background: var(--color-canvas-soft); }
-.cs .cs-trace summary { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 48px; padding: 0 16px; font-weight: 600; list-style: none; cursor: pointer; }
+.cs .cs-trace summary { font-size: 16px; line-height: 22px; display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 48px; padding: 0 16px; font-weight: 600; list-style: none; cursor: pointer; }
 .cs .cs-trace summary::-webkit-details-marker { display: none; }
 .cs .cs-trace[open] summary .icon { transform: rotate(180deg); }
 .cs .cs-trace > ol, .cs .cs-trace > p { margin: 0; padding: 0 16px 16px 36px; display: grid; gap: 4px; }
 .cs .cs-trace > p { padding-left: 16px; }
 .cs-susi-head { display: flex; align-items: baseline; gap: 8px; }
 .cs .cs-table { width: 100%; }
-.cs .cs-table th { height: 32px; padding: 6px 16px; border: 0; font-size: 12px; }
-.cs .cs-table td { height: 36px; padding: 6px 16px; border-bottom: 1px solid var(--color-hairline-soft); font-size: 14px; overflow-wrap: normal; }
+.cs .cs-table th { height: 32px; padding: 6px 16px; border: 0; color: var(--color-ink-soft); font-size: 12px; font-weight: 600; line-height: 17px; }
+.cs .cs-table td { height: 36px; padding: 6px 16px; border-bottom: 1px solid var(--color-hairline-soft); font-size: 14px; line-height: 20px; overflow-wrap: normal; }
 .cs .cs-table th:last-child, .cs .cs-table td:last-child { width: 96px; }
 .cs-univ { display: flex; align-items: center; gap: 8px; }
 .cs-univ .university-logo { display: inline-grid; place-items: center; flex: 0 0 24px; width: 24px; height: 24px; }
@@ -78,7 +82,8 @@
 .cs .judge-edge { color: var(--color-judge-edge); background: var(--color-canvas); outline: 1px dashed var(--color-judge-edge); outline-offset: -1px; }
 .cs .button-pill-soft { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px; border: 0; background: var(--color-canvas-soft); color: var(--color-ink); font: inherit; font-weight: 600; white-space: nowrap; cursor: pointer; }
 .cs-actions { display: grid; gap: 12px; padding-top: 12px; border-top: 1px solid var(--color-hairline-soft); }
-.cs .disclaimer-note { margin: 0; color: var(--color-text-muted); font-size: 12px; line-height: 17px; }
+.cs .disclaimer-note { display: flex; align-items: flex-start; gap: 4px; width: fit-content; margin: 0; color: var(--color-text-muted); font-size: 12px; line-height: 17px; }
+.cs .disclaimer-note .icon { flex: none; }
 .cs-picker { display: grid; gap: 16px; }
 .cs-picker .cs-students { max-height: 60vh; }
 
@@ -86,16 +91,31 @@
   /* 머리(150) + 24 + 패널 + 24 + 고지 + 아래 32 = 화면 높이(900에서 패널 670) */
   .cs-layout { display: grid; grid-template-columns: 272px minmax(0, 1fr) 336px; gap: 16px; height: max(520px, calc(100vh - 230px)); }
   .cs-main .t-heading-2 { font-size: 26px; line-height: 35px; }
+  .cs-save .button-primary { min-width: 90px; padding-top: 2px; } /* Figma 글 상자 반올림(58×23): 폭 58+16·16 = 90, 글자 위끝 +10(앱은 1px 위라 내려요) */
+  .shell:has(.cs) .topbar__actions { gap: 12px; } /* 시안 actions: 배지 · 모드 · 잠금 사이 12 */
 }
 
 @media (max-width: 1023px) {
   .cs { gap: 32px; }
   .cs-stack { display: grid; gap: 32px; }
   .cs-card { gap: 12px; }
-  .cs-note { display: flex; gap: 6px; color: var(--color-ink-soft); }
-  .cs-stat strong { font-size: 36px; line-height: 42px; }
+  .cs-head > div { gap: 2px; } /* 시안: 이름 23 + 2 + 메타 17 */
+  .cs { padding-top: 4px; } /* 시안: 하위 탭 아래 24 */
+  .cs-note { display: flex; align-items: center; gap: 6px; color: var(--color-text-muted); font-size: 13px; line-height: 20px; }
+  .cs-note .icon { flex: none; }
+  .cs-summary > p.t-body-sm { font-size: 13px; line-height: 20px; }
+  .cs .counsel-timeline .t-body { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; } /* 모바일 시안은 메모를 세 줄로 줄여 보여요 */
+  .cs-card .button-outline { min-height: 0; height: 44px; } /* 시안 button-outline 44 */
+  .cs .cs-more { width: 100%; }
+  /* 확정 잠금 · 답장(1101:641): 요소 사이 12, 상태 글 · 라벨 13, 답장 칸 = 메모 칸과 같은 field 120 */
+  .cs-lock .toolbar { flex-wrap: nowrap; justify-content: space-between; gap: 12px; }
+  .cs-lock .t-body-sm, .cs-lock .reply-box label { color: var(--color-text-muted); font-size: 13px; line-height: 20px; }
+  .cs-lock .reply-box, .cs-lock .reply-box label { display: grid; gap: 12px; }
+  .cs-lock .reply-box textarea { display: block; min-height: 0; width: 100%; height: 120px; margin: 0; padding: 12px 16px; border: 0; background: var(--color-field); color: var(--color-ink); font: inherit; font-size: 15px; line-height: 22.5px; resize: none; box-sizing: border-box; }
+  .cs-lock .reply-box textarea:focus { outline: 2px solid var(--color-ink); outline-offset: 0; }
+  .cs-lock .reply-box > .button-outline { justify-self: start; }
+  .cs-stat strong { font-size: 32px; line-height: 42px; }
+  .cs-stat { min-height: 90px; } /* Figma 글 상자 반올림(17 · 23) 누적 = 시안 90 */
   .cs-write .cs-next, .cs-write .cs-save > span { display: none; }
   .cs-write .cs-save .button-primary { width: 100%; }
-  .cs-more { width: 100%; }
-  .cs-card > .cs-actions { padding-top: 0; border-top: 0; }
 }

@@ -1,4 +1,5 @@
 import { scoreUniversity, validateScoringRule, type ScoringRule } from '../engine/scoring';
+import { isSampleId } from '../data/sample/rows';
 import { emptyAttendance, type AttendanceRecord, type GradeRecord, type Semester } from './student';
 
 /**
@@ -14,6 +15,10 @@ export interface TestCase { id: string; name: string; years: Record<'1' | '2' | 
 export interface RuleDraft {
   id: string; source_page: string; rule: ScoringRule; tests: TestCase[]; status: RuleStatus;
   author: string; reviewer: string | null; reject_reason: string; history: { at: string; who: string; action: string }[]; updated_at: string;
+  /** 샘플 모드 예시(검수 기록 예시, 실제 승인 아님). 배포 파일 · 규칙 기록 내보내기에서 빠져요. */
+  sample?: true;
+  /** 모집요강에서 자동으로 뽑은 초안이면 true — 편집기에 'AI 초안 · 참고용'을 붙여요(원문 대조 전). */
+  ai_draft?: true;
 }
 
 export function newRuleDraft(author: string, now = new Date()): RuleDraft {
@@ -114,10 +119,12 @@ export function diffRules(before: ScoringRule | null, after: ScoringRule) {
   return ruleItems(after).map(([label, value], i) => ({ label, before: b ? b[i][1] : '–', after: value, changed: !b || b[i][1] !== value }));
 }
 
+/** 샘플 규칙: 표식(sample)이 떨어져도 id(SAMPLE_PREFIX)로 거르는 기존 방식과 같아요(백업 · 배포 · 기록 내보내기 공통). */
+export const isSample = (d: Pick<RuleDraft, 'id' | 'sample'>) => !!d.sample || isSampleId(d.id);
 /** 배포 파일: 검수 완료 규칙만(같은 대학·전형·연도는 최신 버전 하나). */
 export function releaseRules(drafts: readonly RuleDraft[], now = new Date()) {
   const latest = new Map<string, ScoringRule>();
-  for (const d of drafts.filter(x => x.status === '검수 완료')) {
+  for (const d of drafts.filter(x => x.status === '검수 완료' && !isSample(x))) {
     const k = `${d.rule.university}|${d.rule.program}|${d.rule.admission_year}`;
     if (!latest.has(k) || latest.get(k)!.version < d.rule.version) latest.set(k, d.rule);
   }

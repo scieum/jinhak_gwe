@@ -9,53 +9,87 @@
 .event-tag { display: inline-flex; align-items: center; gap: var(--spacing-xxs); height: 20px; padding: 0 var(--spacing-xs); background: var(--event-tint); color: var(--color-ink);
   font-size: var(--font-label-size); font-weight: var(--font-label-weight); white-space: nowrap; }
 
-.class-calendar { display: grid; gap: var(--spacing-lg); min-width: 0; }
-.cc-head { align-items: center; }
-.cc-head .button-outline { display: inline-flex; align-items: center; gap: var(--spacing-xxs); }
-.cc-card { background: var(--color-canvas); padding: var(--spacing-md); display: grid; gap: var(--spacing-sm); min-width: 0; }
-.cc-filters { display: flex; gap: var(--spacing-xs); align-items: center; overflow-x: auto; padding-bottom: var(--spacing-xxs); }
-.cc-filters .filter-chip { display: inline-flex; align-items: center; gap: 6px; flex: none; white-space: nowrap; }
-.cc-student select { border: 0; background: none; font: inherit; color: inherit; min-height: 40px; }
-.cc-divider { flex: none; width: 1px; height: 16px; background: var(--color-hairline); }
-.cc-layout { display: grid; gap: var(--spacing-lg); align-items: start; }
-.cc-main, .cc-aside, .cc-day { display: grid; gap: var(--spacing-md); min-width: 0; align-content: start; }
-.cc-month td { height: 52px; }
-.cc-month button { flex-direction: column; justify-content: flex-start; align-items: center; gap: 2px; min-height: 52px; padding: var(--spacing-xxs) 2px; }
-.cc-month button[aria-pressed='true'] { box-shadow: inset 0 0 0 1px var(--color-accent); }
-.cc-month button[aria-current='date'] .cc-date { background: var(--color-ink); color: var(--color-on-primary); text-decoration: none; min-width: 22px; }
+/* v2 시안 class-calendar/390(489:68749) · 1440(487:68233). 달력 · 칩 · 범례 · 날짜 미정은 application-calendar.css(ac-*)를 같이 써요. */
+.class-calendar { display: grid; gap: 16px; min-width: 0; }
+.class-calendar .segmented-control { justify-self: start; padding: 4px; gap: 4px; background: var(--color-canvas); }
+.class-calendar .segmented-control__option { width: 64px; min-height: 40px; padding: 0; line-height: 22.5px; }
+.class-calendar .event-tag { line-height: 16.8px; }
+.class-calendar .ac-month-title { position: relative; display: inline-flex; align-items: center; gap: 2px; margin: 0; font-size: 22px; font-weight: 700; line-height: 29.7px; }
+.cc-head { display: grid; justify-items: start; gap: 8px; }
+.cc-title-row { display: flex; height: 44px; }
+.cc-save { width: 44px; height: 44px; padding: 0; }
+.cc-lead { min-height: 40px; margin: 0; font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); } /* Figma 글 상자 정수 올림(39→40) */
+.class-calendar .ac-card { background: var(--color-canvas); }
+.class-calendar .ac-list-head .text-button { min-height: 0; text-decoration: none; }
+.cc-add { width: 100%; height: 44px; }
+
+/* stat-tile 2개: hairline-soft 바탕 위 흰 칸(사이 1) */
+.cc-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; padding: 1px 0 1px 1px; background: var(--color-hairline-soft); }
+.cc-stats .stat-tile { display: grid; align-content: start; gap: 4px; min-width: 0; min-height: 131px; padding: 20px; border: 1px solid var(--color-hairline-soft); background: var(--color-canvas); }
+.cc-stat-label { font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
+.cc-stats strong { font-size: 20px; font-weight: 700; line-height: 24px; color: var(--color-ink); }
+.cc-stats strong.key-number { color: var(--color-accent); }
+.cc-stat-sub { font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); white-space: pre-line; }
+
+/* 달력 · 범례 */
+.class-calendar .cc-legend { flex-wrap: wrap; row-gap: 4px; margin: 0; list-style: none; color: var(--color-ink); }
+.cc-legend li { display: inline-flex; align-items: center; gap: 4px; }
 .cc-month button:focus-visible { outline: 2px solid var(--color-ink); outline-offset: -2px; }
-.cc-count { font-size: var(--font-caption-size); white-space: nowrap; }
-.cc-marks { display: flex; gap: 2px; margin-top: auto; }
-.cc-marks .event-mark, .cc-marks .event-mark-slot { width: 6px; height: 6px; }
-.cc-legend { display: flex; flex-wrap: wrap; gap: var(--spacing-xxs) var(--spacing-sm); list-style: none; padding: var(--spacing-xs) 0 0; margin: 0; font-size: var(--font-caption-size); }
-.cc-legend li { display: inline-flex; align-items: center; gap: 6px; }
+
+/* 그날 목록 */
+.cc-day-list, .cc-day { display: grid; gap: 12px; min-width: 0; align-content: start; }
+.cc-card { display: grid; gap: var(--spacing-sm); min-width: 0; padding: var(--spacing-md); background: var(--color-canvas); }
+.cc-card p { margin: 0; }
+.cc-notice { justify-items: start; }
 .cc-period { display: flex; align-items: center; gap: var(--spacing-xs); width: 100%; min-height: 44px; padding: var(--spacing-xs) var(--spacing-md); border: 0; background: var(--color-canvas);
   color: var(--color-ink); font: inherit; font-size: var(--font-body-sm-size); text-align: left; cursor: pointer; }
 .cc-period span:nth-child(2) { flex: 1; }
-.cc-notice { justify-items: start; }
-.cc-group { padding: 0; gap: 0; }
-.cc-group-head { display: grid; gap: var(--spacing-xxs); padding: var(--spacing-sm) var(--spacing-xxs) var(--spacing-sm) var(--spacing-md); border-bottom: 1px solid var(--color-hairline-soft); }
-.cc-group-top { display: flex; justify-content: space-between; align-items: center; min-height: 32px; }
-.cc-edit { color: var(--color-ink); }
+.cc-group { display: grid; background: var(--color-canvas); }
+.cc-group-head { display: grid; gap: 2px; padding: 0 4px 12px 16px; border-bottom: 1px solid var(--color-hairline-soft); }
+.cc-group-top { display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
+.class-calendar .cc-edit { width: 44px; height: 44px; color: var(--color-ink); }
 .cc-edit:hover { background: var(--color-canvas-soft); }
 .cc-edit:focus-visible { outline: 2px solid var(--color-ink); }
-.cc-rows { list-style: none; padding: 0; margin: 0; }
-.cc-row { display: flex; align-items: center; gap: var(--spacing-xs); min-height: 56px; padding: var(--spacing-xs) var(--spacing-md); border-top: 1px solid var(--color-hairline-soft); }
-.cc-check { display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; margin-left: calc(-1 * var(--spacing-sm)); }
-.cc-check input { width: 20px; height: 20px; accent-color: var(--color-ink); }
+.cc-univ { font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.cc-meta { font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); }
+.cc-rows { list-style: none; margin: 0; padding: 0; }
+.cc-row { display: flex; align-items: center; gap: 8px; padding: 7px 16px 6px; border-bottom: 1px solid var(--color-hairline-soft); }
+.cc-row:has(.cc-check) { padding: 6px 16px 6px 4px; }
+.class-calendar .cc-check { display: inline-grid; place-items: center; flex: none; width: 44px; height: 44px; }
+.cc-check input { width: 20px; height: 20px; margin: 0; accent-color: var(--color-ink); }
 .cc-who { display: grid; flex: 1; min-width: 0; }
-.cc-status { flex: none; white-space: nowrap; }
-.cc-result { width: 128px; min-height: 44px; flex: none; color: var(--color-ink); }
-.cc-result.text-muted { color: var(--color-text-muted); }
-.cc-group details summary { cursor: pointer; padding: var(--spacing-sm) var(--spacing-md); border-top: 1px solid var(--color-hairline-soft); min-height: 44px; }
-.cc-sync { padding: var(--spacing-sm) var(--spacing-md); border-top: 1px solid var(--color-hairline-soft); }
-.cc-sync a { color: var(--color-accent); }
-.cc-list-day { display: grid; gap: var(--spacing-xs); padding-top: var(--spacing-sm); }
+.cc-name { font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.cc-dept { font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); }
+.cc-status { flex: none; font-size: 14px; font-weight: 600; line-height: 19.6px; white-space: nowrap; }
+/* 결과 칸 = text-input 변형 select(안쪽 field 채움 · 값 table · 미입력 faint · ▾ 20). 진짜 select는 투명하게 덮어요.
+   .student-screen label · select 기본 규칙(grid · 13px · 44 높이)보다 앞서게 .class-calendar를 붙여요 */
+.class-calendar .cc-result { position: relative; display: block; flex: none; width: 148px; height: 40px; background: var(--color-field); color: var(--color-ink); font-size: 15px; font-weight: 400; line-height: 22.5px; }
+.cc-field { display: flex; align-items: center; justify-content: space-between; gap: 8px; height: 100%; padding: 0 16px; background: var(--color-field); }
+.cc-result.is-empty .cc-field > span { color: var(--color-text-faint); }
+.class-calendar .cc-result > select { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; padding: 0; border: 0; opacity: 0; cursor: pointer; }
+.cc-result:focus-within { outline: 2px solid var(--color-ink); outline-offset: -2px; }
+/* 칩: teacher.css .teacher-screen .filter-chip(44)보다 특이도를 높여 ac-chips(36 · 12/600) 모양으로 */
+.class-calendar .ac-chips .filter-chip { position: relative; display: inline-flex; flex: none; align-items: center; gap: 4px; height: 36px; min-height: 36px; padding: 0 12.2px; border: 1px solid var(--color-hairline);
+  background: var(--color-canvas); color: var(--color-ink); font: inherit; font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; cursor: pointer; }
+.class-calendar .ac-chips .filter-chip[aria-pressed='true'] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.class-calendar .ac-plan > select, .class-calendar .ac-month-title > select { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; padding: 0; border: 0; opacity: 0; cursor: pointer; }
+.cc-more { border-bottom: 1px solid var(--color-hairline-soft); }
+.cc-more summary { display: flex; align-items: center; gap: 4px; padding: 12px 16px; list-style: none; color: var(--color-ink-soft); font-size: 15px; font-weight: 600; line-height: 22.5px; cursor: pointer; }
+.cc-more summary::-webkit-details-marker { display: none; }
+.cc-more details[open] > summary > .icon { transform: rotate(180deg); }
+.cc-more .cc-rows { border-top: 1px solid var(--color-hairline-soft); }
+.cc-more .cc-row:last-child { border-bottom: 0; }
+.cc-sync { display: grid; justify-items: start; align-content: start; gap: 2px; min-height: 66px; margin: 0; padding: 12px 16px; font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
+.cc-sync a { color: var(--color-accent); font-size: 15px; font-weight: 600; line-height: 22.5px; text-decoration: none; }
+.cc-group > details summary { cursor: pointer; padding: var(--spacing-sm) var(--spacing-md); min-height: 44px; }
+.cc-list-day { display: grid; gap: var(--spacing-xs); padding: var(--spacing-sm) var(--spacing-md) 0; }
 .cc-list-day .cc-group { border: 1px solid var(--color-hairline-soft); }
-.cc-empty { padding-block: var(--spacing-lg); }
-.cc-undated summary { cursor: pointer; min-height: 44px; }
-.cc-undated ul { list-style: none; padding: 0; display: grid; gap: var(--spacing-xs); }
+.cc-empty { padding: var(--spacing-lg) var(--spacing-md); }
+.cc-undated ul { display: grid; gap: var(--spacing-xs); margin: 0; padding: 0 16px 12px; list-style: none; }
 .cc-undated li { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); align-items: center; }
+.class-calendar .cc-note { display: flex; align-items: center; gap: 4px; margin: 0; font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
+
+/* 주간 · 시트 · 일정 입력 */
 .cc-week th, .cc-week td { vertical-align: top; }
 .cc-week th.is-today { text-decoration: underline; text-underline-offset: 4px; }
 .cc-week td.is-picked { background: var(--color-accent-soft); }
@@ -75,18 +109,47 @@
 .class-calendar .toast { display: grid; gap: 2px; }
 .class-calendar-empty { display: grid; justify-items: center; gap: var(--spacing-sm); text-align: center; }
 
+@media (max-width: 1023px) {
+  .shell__content:has(.class-calendar) { padding-top: 24px; }
+}
 @media (min-width: 1024px) {
-  .cc-layout { grid-template-columns: minmax(0, 1fr) 360px; gap: var(--spacing-lg); }
-  .cc-aside { max-height: calc(100dvh - 120px); overflow-y: auto; position: sticky; top: var(--spacing-lg); }
-  .cc-month td, .cc-month button { height: 88px; min-height: 88px; }
-  .cc-month button { align-items: flex-start; padding: var(--spacing-xs); }
-  .cc-marks { gap: var(--spacing-xxs); }
-  .cc-marks .event-mark, .cc-marks .event-mark-slot { width: 8px; height: 8px; }
-  .cc-result { min-height: 32px; width: 120px; }
+  /* page-header: 기준일 배지 없음(시안), mode-switch · 잠금 사이 12, "대학 일정 입력"은 actions 아래 오른쪽 */
+  .shell__main:has(.class-calendar) > .topbar { position: relative; }
+  .shell__main:has(.class-calendar) .topbar__asof { display: none; }
+  .shell__main:has(.class-calendar) .topbar__actions { gap: 12px; }
+  .topbar .cc-add { position: absolute; top: 108px; right: 32px; width: auto; height: 40px; padding: 0 16px; }
+  .class-calendar { gap: 24px; }
+  .cc-toolbar { display: flex; align-items: center; gap: 8px; height: 40px; }
+  .cc-toolbar .cc-chips { flex: 1; min-width: 0; }
+  .cc-toolbar .segmented-control { display: flex; width: 240px; }
+  .cc-toolbar .segmented-control__option { flex: 1; width: auto; }
+  .cc-toolbar .cc-save { width: auto; height: 40px; padding: 0 16px; }
+  .cc-body { display: grid; grid-template-columns: minmax(0, 744fr) 360px; gap: 24px; align-items: start; }
+  .cc-left, .cc-right { display: grid; gap: 16px; min-width: 0; }
+  .cc-left > .cc-note { margin-right: 20px; }
+  .cc-stats strong { font-size: 24px; line-height: 28.8px; }
+  .cc-stats .stat-tile { min-height: 117px; }
+  .cc-stat-sub { font-size: 14px; line-height: 21px; }
+  .class-calendar .ac-month-title { gap: 4px; font-size: 26px; line-height: 35.1px; }
+  .class-calendar .cc-legend { gap: 16px; }
+  /* 오른쪽 그날 목록 패널: 흰 카드 내용 높이(hug, 최대 560 넘치면 안에서 스크롤), 묶음은 카드 없이 사이 16 */
+  .cc-panel { max-height: 560px; padding: 20px; overflow-y: auto; background: var(--color-canvas); }
+  .cc-day { gap: 16px; }
+  .cc-panel .ac-list-head h3 { font-size: 18px; line-height: 24.3px; }
+  .cc-group-head { padding: 0 0 8px; }
+  .cc-group-top { min-height: 32px; }
+  .class-calendar .cc-edit { width: 32px; height: 32px; min-width: 32px; min-height: 32px; }
+  .cc-row, .cc-row:has(.cc-check) { padding: 8px 0; }
+  .class-calendar .cc-check { width: 32px; height: 32px; }
+  .class-calendar .cc-result { width: 152px; }
+  .cc-more summary { padding: 10px 0; }
+  .cc-sync { min-height: 50px; padding: 8px 0 0; }
+  .cc-panel .cc-card { padding: 0; }
+  .cc-right .cc-undated > summary { padding: 14px 20px; }
+  .cc-right .cc-undated ul { padding: 0 20px 14px; }
 }
 @media (max-width: 767px) {
   .dialog-backdrop:has(.cc-sheet) { align-items: flex-end; padding: 0; }
   .dialog-backdrop:has(.cc-sheet) .dialog { width: 100%; max-height: 90dvh; }
-  .cc-month button { padding: var(--spacing-xxs) 0; }
 }
 @media (prefers-reduced-motion: reduce) { .class-calendar * { transition: none !important; } }

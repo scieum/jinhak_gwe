@@ -11,7 +11,11 @@ import { TeacherBackupButton } from '../components/TeacherBackup';
 import { signOut } from '../io/account';
 import { dataAsOf } from '../data/catalog';
 import { SampleBanner, SampleReshowButton } from './SampleBanner';
+import { useAdminName } from '../store/adminName';
 import './shell.css';
+
+// "관리자 A로" · "김민준으로": 받침(ㄹ 빼고)이 있으면 '으로'
+const withRo = (name: string) => { const c = name.charCodeAt(name.length - 1) - 0xac00; return c >= 0 && c < 11172 && c % 28 !== 0 && c % 28 !== 8 ? '으로' : '로'; };
 
 // 소분류가 없는 대분류(학생 "홈")는 그룹 행 없이 바로 선택하는 메뉴 하나로 그린다
 const isSingle = (g: NavGroup) => g.items.length === 1 && g.items[0].label === g.label;
@@ -24,6 +28,7 @@ export function AppShell() {
   // 소분류이면서 모바일은 상세 화면인 곳(학생 기록)도 상세 앱바로 그려요
   const detail = loc.detail ?? DETAILS.find((d) => d.path === pathname);
   const mode = workspaceOf(pathname);
+  const adminName = useAdminName();
   const isMore = pathname === MORE_PATH[mode];
   // 교사 셸은 교사 메뉴만(v2 시안, 2026-11-24 사용자 결정). 학생 화면은 모드 전환으로 간다.
   const sections: [string | null, NavGroup[]][] = [[null, NAV[mode]]];
@@ -99,9 +104,9 @@ export function AppShell() {
             );
           })}</div>)}
         </nav>
-        <footer className="sidebar__footer"><p className="t-caption text-muted">데이터 기준일 {dataAsOf}</p>{mode === 'student' && <Link to="/grade-input?backup=1" className="button-pill-soft"><Icon name="download" size={20} />백업</Link>}{mode === 'teacher' && <TeacherBackupButton />}<SampleReshowButton className="text-button" />
-          {/* 교사 셸 맨 아래 로그아웃(v2 시안 · design.md sidebar). 계정 세션이 없어도 로그인 화면으로 보내요. */}
-          {mode === 'teacher' && <button type="button" className="sidebar-item sidebar__logout" onClick={() => void signOut().finally(() => navigate('/login'))}><Icon name="log-out" size={20} /><span>로그아웃</span></button>}</footer>
+        <footer className="sidebar__footer"><p className="t-caption text-muted">데이터 기준일 {dataAsOf}{mode === 'admin' && adminName && <><br />{adminName}{withRo(adminName)} 로그인</>}</p>{mode === 'student' && <Link to="/grade-input?backup=1" className="button-pill-soft"><Icon name="download" size={20} />백업</Link>}{mode === 'teacher' && <TeacherBackupButton />}<SampleReshowButton className="text-button" />
+          {/* 교사·관리자 셸 맨 아래 로그아웃(v2 시안 · design.md sidebar). 계정 세션이 없어도 로그인 화면으로 보내요. */}
+          {(mode === 'teacher' || mode === 'admin') && <button type="button" className="sidebar-item sidebar__logout" onClick={() => void signOut().finally(() => navigate('/login'))}><Icon name="log-out" size={20} /><span>로그아웃</span></button>}</footer>
       </aside>
 
       <div className="shell__main">
@@ -134,7 +139,7 @@ export function AppShell() {
         {group && !detail && !isSingle(group) && (
           <nav ref={subNav} className="sub-nav" aria-label={`${group.label} 소분류`}>
             {group.items.map((i) => (
-              <Link key={i.path} to={i.path} className="sub-nav__tab" aria-current={current(i.path)}>
+              <Link key={i.path} to={i.path} state={{ tab: true }} className="sub-nav__tab" aria-current={current(i.path)}>
                 {i.label}
               </Link>
             ))}

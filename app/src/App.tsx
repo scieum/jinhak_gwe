@@ -21,6 +21,7 @@ import { AdminReview } from './screens/AdminReview';
 import { AdminFields } from './screens/AdminFields';
 import { AdminWiki } from './screens/AdminWiki';
 import { AdminMap } from './screens/AdminMap';
+import { useDesktop } from './components/TeacherBoard';
 import { ProgramDetail, UnivDetail } from './screens/UnivDetail';
 import { Susiro } from './screens/Susiro';
 import { MockScore } from './screens/MockScore';
@@ -44,7 +45,12 @@ import './styles/workspace-layout.css';
 import './styles/figma-alignment.css';
 
 // slug admin-rules covers both the rule editor and review paths (nav.ts).
-function AdminRules() { const p = useLocation().pathname; return p.endsWith('/review') ? <AdminReview /> : p.endsWith('/fields') ? <AdminFields /> : p.endsWith('/wiki') ? <AdminWiki /> : p.endsWith('/map') ? <AdminMap /> : <RuleEditorScreen />; }
+// 모바일은 편집 없이 조회·승인만이라 대분류 첫 화면이 '검수'(규칙 검수 목록, admin-rules 02-spec M2). sub-nav로 고른 '규칙 편집기'만 그대로 둬요.
+function AdminRules() {
+  const loc = useLocation(), p = loc.pathname, desktop = useDesktop();
+  if (!desktop && p === '/admin/admin-rules' && !(loc.state as { tab?: boolean } | null)?.tab) return <Navigate to="/admin/admin-rules/review" replace />;
+  return p.endsWith('/review') ? (desktop ? <AdminReview /> : <RuleEditorScreen />) : p.endsWith('/fields') ? <AdminFields /> : p.endsWith('/wiki') ? <AdminWiki /> : p.endsWith('/map') ? <AdminMap /> : <RuleEditorScreen />;
+}
 
 const implemented: Record<string, React.ReactNode> = {
   'national-placement': <NationalPlacement />,

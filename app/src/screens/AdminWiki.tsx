@@ -1,9 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { ButtonOutline, ButtonPrimary } from '../components/Buttons';
+import { Icon } from '../components/Icon';
 import { Modal } from '../components/Modal';
+import { ScreenActions } from '../components/ScreenActions';
 import { SegmentedControl } from '../components/SegmentedControl';
+import { UniversityLogo } from '../components/UniversityLogo';
+import { useDesktop } from '../components/TeacherBoard';
 import { adminDb } from '../store/adminDb';
+import { setAdminName, useAdminName } from '../store/adminName';
 import { downloadFile } from '../io/backup';
 import { useReleasedResults } from '../data/releasedResults';
 import { useUnivWiki } from '../data/univWiki';
@@ -11,20 +17,24 @@ import { WIKI_SECTIONS, type WikiItem, type WikiSectionKey } from '../domain/uni
 import { approveWiki, buildWikiEntries, editItems, itemProblems, mergeWikiRecords, newWikiDraft, sectionTitle, wikiKey, wikiRecordFile, wikiStatus, type WikiDraft } from '../domain/wikiReview';
 import type { FieldStatus } from '../domain/fieldReview';
 import { StatusBadge } from './AdminReview';
+import '../styles/admin.css';
 
 const FILTERS: ('전체' | FieldStatus)[] = ['전체', '검수 대기', '1인 승인', '검수 완료'];
 const blank = (): WikiItem => ({ heading: '', text: '', source_label: '', source_url: '' });
-function loadName() { try { return localStorage.getItem('jinhak-navi-reviewer') ?? ''; } catch { return ''; } }
-function saveName(v: string) { try { localStorage.setItem('jinhak-navi-reviewer', v); } catch { /* per-viewer convenience only */ } }
+const FileButton = ({ accept, label, children, onFile }: { accept: string; label: string; children: ReactNode; onFile: (f: File) => void }) =>
+  <label className="button-outline file-button"><Icon name="upload" size={20} />{children}
+    <input type="file" accept={accept} className="sr-only" aria-label={label} onChange={e => { const f = e.target.files?.[0]; if (f) onFile(f); e.target.value = ''; }} /></label>;
 
 /** 대학 위키 요약 검수. 대학 × 섹션마다 2명이 승인한 요약만 univ-wiki.json으로 내보낸다. */
 export function AdminWiki() {
-  const units = useReleasedResults(), wiki = useUnivWiki();
+  const units = useReleasedResults(), wiki = useUnivWiki(), desktop = useDesktop();
   const list = useLiveQuery(() => adminDb.wiki.toArray(), []);
   const drafts = useMemo(() => new Map((list ?? []).map(d => [d.key, d])), [list]);
-  const [reviewer, setReviewer] = useState(loadName), [filter, setFilter] = useState<(typeof FILTERS)[number]>('전체'), [query, setQuery] = useState('');
+  const reviewer = useAdminName(), [filter, setFilter] = useState<(typeof FILTERS)[number]>('전체'), [query, setQuery] = useState('');
   const [university, setUniversity] = useState(''), [section, setSection] = useState<WikiSectionKey>('notes'), [open, setOpen] = useState<WikiDraft | null>(null);
   const [error, setError] = useState(''), [message, setMessage] = useState('');
+  const [head, setHead] = useState<Element | null>(null);
+  useEffect(() => { setHead(desktop ? document.querySelector('.topbar__heading') : null); }, [desktop]);
   const run = async (action: () => Promise<string | void>) => {
     setError(''); setMessage('');
     try { setMessage((await action()) || ''); } catch (e) { setError(e instanceof Error ? e.message : '처리하지 못했어요.'); }
@@ -34,6 +44,7 @@ export function AdminWiki() {
   const sorted = [...(list ?? [])].sort((a, b) => a.university.localeCompare(b.university, 'ko') || WIKI_SECTIONS.findIndex(s => s.key === a.section) - WIKI_SECTIONS.findIndex(s => s.key === b.section));
   const shown = sorted.filter(d => (filter === '전체' || wikiStatus(d) === filter) && (!query.trim() || d.university.includes(query.trim())));
   const done = sorted.filter(d => wikiStatus(d) === '검수 완료').length;
+  const count = (f: (typeof FILTERS)[number]) => f === '전체' ? sorted.length : sorted.filter(d => wikiStatus(d) === f).length;
 
   // 이 기기에 기록이 없으면 지금 공개 중인 요약에서 시작한다(승인은 새로 받는다)
   const openEditor = (u: string, s: WikiSectionKey) => setOpen(drafts.get(wikiKey(u, s)) ?? newWikiDraft(u, s, wiki?.sections.get(u.trim())?.[s]?.items ?? []));
@@ -50,37 +61,54 @@ export function AdminWiki() {
     return `검수 완료 요약 ${count}개를 넣어 내보냈어요. app/public/data/univ-wiki.json에 넣고 배포해요.`;
   });
 
-  return <section className="student-screen admin-review" data-slug="admin-rules">
-    <div className="screen-heading"><div><p className="t-caption text-muted">규칙 관리 › 위키 요약</p><h2 className="t-heading-1">대학 위키 요약 검수</h2>
-      <p className="text-muted">대학 공식 문서를 섹션별로 요약하고 출처를 붙여요. 대학 상세의 위키 섹션에 보여요.</p></div>
-      <ButtonPrimary disabled={!done} onClick={exportWiki}>공개 파일 내보내기</ButtonPrimary></div>
-    <p className="notice">ⓘ 섹션마다 검수자 2명이 승인해야 공개돼요 · 요약을 고치면 승인이 지워지고 다시 검수해요 · 모든 요약에 공식 문서 출처(https)가 있어야 해요</p>
-    <div className="form-grid filter-panel">
-      <label>검수자 이름<input value={reviewer} onChange={e => { setReviewer(e.target.value); saveName(e.target.value); }} placeholder="예: 관리자 A" /></label>
-      <label>검수 기록 가져오기<input type="file" accept=".json,application/json" onChange={e => { const f = e.target.files?.[0]; if (f) importRecord(f); e.target.value = ''; }} /></label>
+  const exportButton = <ButtonPrimary disabled={!done} onClick={exportWiki}><Icon name="download" size={20} />공개 파일 내보내기</ButtonPrimary>;
+  const band = <p className="af-band"><Icon name="info" size={24} /><span>{desktop ? '섹션마다 검수자 2명이 승인해야 공개돼요 · 요약을 고치면 승인이 지워지고 다시 검수해요 · 모든 요약에 공식 문서 출처(https)가 있어야 해요'
+    : <>섹션마다 검수자 2명이 승인해야 공개돼요<br />요약을 고치면 승인이 지워지고 다시 검수해요<br />모든 요약에 공식 문서 출처(https)가<br />있어야 해요</>}</span></p>;
+  const form = <div className="aw-form">
+    <div className="af-field aw-f-name"><label htmlFor="aw-name">검수자 이름</label><input id="aw-name" value={reviewer} onChange={e => setAdminName(e.target.value)} placeholder="예: 관리자 A" /><p className="af-cap">로그인한 계정 이름이에요</p></div>
+    <div className="af-field aw-f-univ"><label htmlFor="aw-univ">대학</label><input id="aw-univ" list="wiki-universities" value={university} onChange={e => setUniversity(e.target.value)} placeholder="예: 경희대학교" />
+      <datalist id="wiki-universities">{names.map(n => <option key={n} value={n} />)}</datalist></div>
+    <div className="af-field aw-f-sec"><label htmlFor="aw-sec">섹션</label><span className="aw-select"><select id="aw-sec" value={section} onChange={e => setSection(e.target.value as WikiSectionKey)}>{WIKI_SECTIONS.map(s => <option key={s.key} value={s.key}>{s.title}</option>)}</select><Icon name="chevron-down" size={20} /></span></div>
+    <ButtonOutline className="aw-write" disabled={!university.trim()} onClick={() => openEditor(university, section)}>요약 쓰기·고치기</ButtonOutline>
+  </div>;
+  const files = <><FileButton accept=".json,application/json" label="검수 기록 파일 고르기" onFile={importRecord}>{desktop ? '검수 기록 가져오기' : '기록 가져오기'}</FileButton>
+    <ButtonOutline disabled={!list?.length} onClick={() => downloadFile(JSON.stringify(wikiRecordFile(list ?? []), null, 1), 'wiki-review.json', 'application/json')}><Icon name="download" size={20} />{desktop ? '검수 기록 내보내기' : '기록 내보내기'}</ButtonOutline></>;
+  const search = <label className="af-search"><Icon name="search" size={20} /><input aria-label="대학 이름으로 찾기" placeholder="대학 이름으로 찾기" value={query} onChange={e => setQuery(e.target.value)} /></label>;
+  const notes = <>{error && <p role="alert" className="error-note">{error}</p>}{message && <p role="status" className="toast">{message}</p>}</>;
+  const empty = <div className="empty-state"><h3 className="t-heading-3">아직 쓴 요약이 없어요</h3><p>대학과 섹션을 고르고 ‘요약 쓰기·고치기’를 눌러 주세요.</p></div>;
+  const none = <p className="af-cap">조건에 맞는 요약이 없어요.</p>;
+  const disclaimer = <p className="disclaimer-note"><Icon name="info" size={16} /><span>대학 공식 발표 자료만 요약해요 · 사설 사이트 내용은 받지 않아요{list?.some(d => d.sample) && ' · 샘플의 대학·숫자는 예시예요'}</span></p>;
+  const editor = open && <WikiEditor key={open.key} draft={drafts.get(open.key) ?? open} reviewer={reviewer} onClose={() => setOpen(null)} />;
+
+  if (!desktop) return <section className="af aw af--mobile" data-slug="admin-rules" aria-label="대학 위키 요약 검수">
+    <div className="screen-heading"><h2>대학 위키 요약 검수</h2><p className="af-lead">대학 공식 문서를 섹션별로 요약하고<br />출처를 붙여요. 대학 상세의 위키<br />섹션에 보여요.</p></div>
+    {exportButton}
+    <div className="af-card aw-card">{band}{form}{notes}</div>
+    <div className="af-card"><h3 className="aw-title">검수 목록</h3><div className="af-files">{files}</div>{search}
+      {!sorted.length ? empty : <>
+        <div className="aw-chips">{FILTERS.map(f => <button key={f} type="button" className="filter-chip" aria-pressed={filter === f} onClick={() => setFilter(f)}>{`${f} ${count(f)}`}</button>)}</div>
+        {!shown.length ? none : <div className="aw-cards">{shown.map(d => <button key={d.key} type="button" className="univ-card" onClick={() => setOpen(d)}>
+          <span className="aw-card__head"><UniversityLogo university={d.university} /><strong>{d.university}</strong><Icon name="chevron-right" size={24} /></span>
+          <span className="aw-card__meta">{sectionTitle(d.section)} · 요약 {d.items.length}개</span>
+          <span className="aw-card__cut">{wikiStatus(d)} · 승인 {d.approvals.map(a => a.reviewer).join(' · ') || '—'}</span></button>)}</div>}</>}
     </div>
-    <div className="form-grid filter-panel">
-      <label>대학<input list="wiki-universities" value={university} onChange={e => setUniversity(e.target.value)} placeholder="예: 경희대학교" /></label>
-      <datalist id="wiki-universities">{names.map(n => <option key={n} value={n} />)}</datalist>
-      <label>섹션<select value={section} onChange={e => setSection(e.target.value as WikiSectionKey)}>{WIKI_SECTIONS.map(s => <option key={s.key} value={s.key}>{s.title}</option>)}</select></label>
-    </div>
-    <div className="toolbar"><ButtonOutline disabled={!university.trim()} onClick={() => openEditor(university, section)}>요약 쓰기·고치기</ButtonOutline>
-      <ButtonOutline disabled={!list?.length} onClick={() => downloadFile(JSON.stringify(wikiRecordFile(list ?? []), null, 1), 'wiki-review.json', 'application/json')}>검수 기록 내보내기</ButtonOutline></div>
-    {error && <p role="alert" className="error-note">{error}</p>}{message && <p role="status">{message}</p>}
-    {!sorted.length ? <div className="empty-state"><h3 className="t-heading-3">아직 쓴 요약이 없어요</h3><p>대학과 섹션을 고르고 ‘요약 쓰기·고치기’를 눌러 주세요.</p></div> : <>
-      <div className="toolbar">
-        <input aria-label="대학 이름으로 찾기" placeholder="대학 이름으로 찾기" value={query} onChange={e => setQuery(e.target.value)} />
-        <SegmentedControl label="검수 상태" value={filter} onChange={setFilter} options={FILTERS.map(f => ({ value: f, label: `${f} ${f === '전체' ? sorted.length : sorted.filter(d => wikiStatus(d) === f).length}` }))} />
-      </div>
-      {!shown.length ? <p className="text-muted">조건에 맞는 요약이 없어요.</p> : <div className="table-scroll"><table className="data-table">
+    {disclaimer}{editor}
+  </section>;
+
+  return <section className="af aw" data-slug="admin-rules" aria-label="대학 위키 요약 검수">
+    {head && createPortal(<><h1 className="af-title">대학 위키 요약 검수</h1><p className="af-toplead">대학 공식 문서를 섹션별로 요약하고 출처를 붙여요. 대학 상세의 위키 섹션에 보여요.</p></>, head)}
+    <ScreenActions>{exportButton}</ScreenActions>
+    <div className="af-card">{band}{form}{notes}</div>
+    <div className="af-card"><h3 className="aw-title">검수 목록</h3>
+      <div className="aw-tools">{search}<SegmentedControl label="검수 상태" value={filter} onChange={setFilter} options={FILTERS.map(f => ({ value: f, label: `${f} ${count(f)}` }))} /><span className="aw-spacer" />{files}</div>
+      {!sorted.length ? empty : !shown.length ? none : <div className="table-scroll af-table aw-table"><table className="data-table">
         <thead><tr><th>대학</th><th>섹션</th><th className="num">요약</th><th>승인</th><th>상태</th></tr></thead>
         <tbody>{shown.map(d => <tr key={d.key}>
           <td><button className="text-button" onClick={() => setOpen(d)}>{d.university}</button></td><td>{sectionTitle(d.section)}</td><td className="num">{d.items.length}</td>
           <td>{d.approvals.map(a => a.reviewer).join(' · ') || '—'}</td><td><StatusBadge status={wikiStatus(d)} /></td></tr>)}</tbody>
       </table></div>}
-    </>}
-    <p className="disclaimer-note">ⓘ 대학 공식 발표 자료만 요약해요 · 사설 사이트 내용은 받지 않아요</p>
-    {open && <WikiEditor key={open.key} draft={drafts.get(open.key) ?? open} reviewer={reviewer} onClose={() => setOpen(null)} />}
+    </div>
+    {disclaimer}{editor}
   </section>;
 }
 
