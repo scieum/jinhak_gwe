@@ -71,3 +71,19 @@ test('v3 모바일 폭: 학기 짧은 이름, 보기 시트, 목록 끝 과목 �
     expect(screen.getByRole('button', { name: '전체 보기' })).toBeTruthy();
   } finally { globalThis.matchMedia = original; }
 });
+
+test('내보내기·백업 창에서 이 학기 · 모든 성적을 확인 후 지운다(출결은 그대로)', async () => {
+  await studentDb.grades.bulkPut([g('a', 2), g('b', 1), { ...g('c', 3), semester: '1-1' }]);
+  open();
+  expect(await screen.findByRole('heading', { name: '2학년 1학기' })).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '내보내기·백업' }));
+  fireEvent.click(within(screen.getByRole('dialog', { name: '내보내기·백업' })).getByText('2학년 1학기 성적 지우기'));
+  const confirm = screen.getByRole('dialog', { name: '성적 지우기' });
+  expect(within(confirm).getByText('2학년 1학기 성적 2과목을 지울까요?')).toBeTruthy();
+  fireEvent.click(within(confirm).getByRole('button', { name: '지우기' }));
+  await waitFor(async () => expect((await studentDb.grades.toArray()).map(x => x.id)).toEqual(['c']));
+  fireEvent.click(screen.getByRole('button', { name: '내보내기·백업' }));
+  fireEvent.click(within(screen.getByRole('dialog', { name: '내보내기·백업' })).getByText('모든 성적 지우기'));
+  fireEvent.click(within(screen.getByRole('dialog', { name: '성적 지우기' })).getByRole('button', { name: '취소' }));
+  expect(await studentDb.grades.count()).toBe(1); // 취소하면 그대로
+});

@@ -30,6 +30,7 @@ export function GradeInput() {
     const next = new URLSearchParams(query); next.delete('backup'); setQuery(next, { replace: true });
   }, [query, setQuery]);
   const [deleting, setDeleting] = useState<GradeRecord | null>(null);
+  const [clearing, setClearing] = useState<{ title: string; ids: string[] } | null>(null); // 여러 과목 한꺼번에 지우기
   const inputRef = useRef<HTMLInputElement>(null), backupRef = useRef<HTMLInputElement>(null), replyRef = useRef<HTMLInputElement>(null);
   const [reply, setReply] = useState<Exchange<TeacherReply> | null>(null);
   const [edit, setEdit] = useState<GradeRecord | null>(null);
@@ -85,7 +86,10 @@ export function GradeInput() {
     <MenuRow title="백업 파일 만들기" caption="암호를 걸어 .jnavi 파일로 저장해요" onClick={() => { setMenu(null); setBackupOpen(true); }} />
     <MenuRow title="백업에서 되살리기" caption="백업 파일과 암호로 성적을 다시 불러와요" onClick={() => { setMenu(null); setBackupOpen(true); }} /></div>
     <p className="t-label text-muted">내보내기</p><div className="menu-rows">
-    <MenuRow title="CSV로 내보내기" caption="다른 프로그램에서 열 수 있어요" onClick={() => { downloadFile(gradesCsv(grades), '내-성적.csv', 'text/csv;charset=utf-8'); setMenu(null); setMessage('CSV 파일을 저장했어요.'); }} /></div></>;
+    <MenuRow title="CSV로 내보내기" caption="다른 프로그램에서 열 수 있어요" onClick={() => { downloadFile(gradesCsv(grades), '내-성적.csv', 'text/csv;charset=utf-8'); setMenu(null); setMessage('CSV 파일을 저장했어요.'); }} /></div>
+    {grades.length > 0 && <><p className="t-label text-muted">지우기</p><div className="menu-rows">
+      {view !== '전체' && selected.length > 0 && <MenuRow title={`${title} 성적 지우기`} caption={`지금 보는 ${selected.length}과목을 이 기기에서 지워요`} onClick={() => { setMenu(null); setClearing({ title: `${title} 성적 ${selected.length}과목`, ids: selected.map(g => g.id) }); }} />}
+      <MenuRow title="모든 성적 지우기" caption={`입력한 ${grades.length}과목을 모두 지워요(출결은 그대로)`} onClick={() => { setMenu(null); setClearing({ title: `모든 성적 ${grades.length}과목`, ids: grades.map(g => g.id) }); }} /></div></>}</>;
   const publicNote = <p className="t-body-sm text-muted">공용 기기에서는 쓰고 나서 백업 파일을 만들고, 이 기기의 데이터를 지워 주세요.</p>;
   const saveNote = <p className="grade-input__save"><span className="t-caption text-muted">입력한 성적은 이 기기에만 저장돼요.</span><button type="button" className="text-button" onClick={() => setMenu('export')}>백업하기</button></p>;
   const unitPick = view !== '전체' ? <SegmentedControl label={view === '학년별' ? '학년' : '학기'} value={unitValue} onChange={v => setSemester(v as Semester)} options={units} /> : <span />;
@@ -161,6 +165,10 @@ export function GradeInput() {
       <ButtonOutline onClick={() => setReply(null)}>닫기</ButtonOutline></Modal>}
     {edit && <GradeEditor initial={edit} busy={busy} onSave={saveGrade} onClose={() => setEdit(null)} onDelete={grades.some(x => x.id === edit.id) ? () => { setDeleting(edit); setEdit(null); } : undefined} />}
     {pasteText !== null && <Modal label="표 붙여넣기" wide onClose={() => setPasteText(null)}><h3 className="t-heading-3">엑셀 표 붙여넣기</h3><p>양식의 제목 행을 포함해 복사해 주세요. 확인 화면을 거친 뒤 저장해요.</p><label>성적 표<textarea rows={8} value={pasteText} onChange={e => setPasteText(e.target.value)} /></label><ButtonPrimary onClick={() => void run(async () => { setPreview(rowsToGrades(parseCsv(pasteText))); setPasteText(null); })}>가져올 값 확인</ButtonPrimary>{error && <p role="alert">{error}</p>}<ButtonOutline onClick={() => setPasteText(null)}>취소</ButtonOutline></Modal>}
+    {clearing && <Modal label="성적 지우기" onClose={() => { if (!busy) setClearing(null); }}><h3>{clearing.title}을 지울까요?</h3>
+        <p>지운 성적은 되돌릴 수 없어요. 다시 쓰려면 먼저 백업 파일을 만들어 두세요.</p>
+        <div className="toolbar"><ButtonOutline disabled={busy} onClick={() => setClearing(null)}>취소</ButtonOutline>
+          <ButtonPrimary disabled={busy} onClick={() => void run(async () => { await studentDb.grades.bulkDelete(clearing.ids); setClearing(null); setEdit(null); }, `${clearing.title}을 지웠어요.`)}>지우기</ButtonPrimary></div></Modal>}
     {deleting && <Modal label="과목 삭제" onClose={() => { if (!busy) setDeleting(null); }}><h3>이 과목을 삭제할까요?</h3><p>{deleting.name || '새 과목'}</p><ButtonPrimary disabled={busy} onClick={() => void run(async () => { await studentDb.grades.delete(deleting.id); setDeleting(null); }, '과목을 삭제했어요.')}>삭제</ButtonPrimary><ButtonOutline onClick={() => setDeleting(null)}>취소</ButtonOutline></Modal>}
     {preview && <Modal label="가져올 성적 확인" wide onClose={() => { if (!busy) setPreview(null); }}><h3 className="t-heading-3">가져올 성적을 확인해 주세요</h3><p>기존 성적에 {preview.grades.length}개 과목을 추가해요. 같은 과목이 이미 있다면 중복 여부를 확인해 주세요.</p><p>PDF 원본은 저장하지 않아요. 읽은 성적만 확인 후 저장해요.</p>
       <ul>{preview.warnings.map((w, i) => <li key={i}>{w}</li>)}</ul><div className="table-scroll"><table className="data-table"><thead><tr><th>학기</th><th>과목</th><th>학점</th><th>등급</th><th>원점수/평균</th><th>수강자수</th><th>제외</th></tr></thead><tbody>{preview.grades.map(g => <tr key={g.id}><td>{g.semester}</td><td>{g.name}</td><td>{g.credits}</td><td>{g.rank_grade ?? '미산출'}</td><td>{g.raw_score ?? '—'}/{g.subject_mean ?? '—'}</td><td>{g.enrolled_count ?? '—'}</td><td><button onClick={() => setPreview({ ...preview, grades: preview.grades.filter(x => x.id !== g.id) })}>빼기</button></td></tr>)}</tbody></table></div>
