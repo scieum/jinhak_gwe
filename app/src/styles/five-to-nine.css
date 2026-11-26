@@ -48,8 +48,8 @@
 .f2n .trace-accordion .disclaimer-note { margin: 8px 16px 16px; }
 .f2n .disclaimer-note { display: flex; align-items: center; gap: 4px; margin: 0; font-size: 12px; line-height: 16.8px; }
 .f2n .disclaimer-note .icon { flex: none; }
-/* 시안: 화면 맨 아래 고지는 한 줄(390에서는 옆으로 밀어 봐요) */
-.f2n-note { white-space: nowrap; overflow-x: auto; }
+/* 시안: 화면 맨 아래 고지는 줄바꿈 · 아이콘은 첫 줄 */
+.f2n .f2n-note { align-items: flex-start; }
 .f2n-error { grid-template-columns: auto 1fr; align-items: center; }
 .f2n-error .button-outline { grid-column: 1 / -1; justify-self: start; }
 .f2n .empty-state { display: grid; justify-items: center; gap: 8px; text-align: center; background: var(--color-canvas); }
@@ -76,3 +76,5 @@
 /* v0.4 uses two result columns instead of the former method-comparison table. */
 .f2n .f2n-reference-methods thead th:first-child { width: 65%; }
 .f2n .f2n-reference-methods thead th:nth-child(2) { text-indent: 0; }
+.f2n .f2n-reference-methods td { font-weight: 700; }
+.f2n-reference-methods tbody tr { height: 45px; }

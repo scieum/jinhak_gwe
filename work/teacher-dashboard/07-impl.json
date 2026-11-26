@@ -1,23 +1,16 @@
 {
   "slug": "teacher-dashboard",
   "gate": "G5",
-  "pass": false,
-  "errors": [
-    "V 1440: 차이 영역 x 768 y 624 64×16",
-    "V 1440: 차이 영역 x 768 y 808 64×16",
-    "V 1440: 차이 영역 x 792 y 664 56×16",
-    "V 1440: 차이 영역 x 792 y 848 56×16",
-    "V 1440: 차이 영역 x 792 y 888 56×8",
-    "V 1440: 차이 영역 x 792 y 776 48×8"
-  ],
-  "back_to": "S5",
-  "same_fail_streak": 3,
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
   "route": "/teacher/teacher-dashboard",
   "allowed": [],
   "notes": [
     "390: 앱 표식 없는 블록(구조 미검사) student-row-card",
     "390: F 글자 짝 44/49 (짝 없는 글자는 T만 본다)",
-    "1440: F 글자 짝 201/259 (짝 없는 글자는 T만 본다)"
+    "1440: F 글자 짝 228/259 (짝 없는 글자는 T만 본다)"
   ],
   "images": {
     "390": "work/_cache/impl/teacher-dashboard-390.png",
@@ -25,6 +18,6 @@
   },
   "ssim": {
     "390": 0.9696,
-    "1440": 0.9668
+    "1440": 0.973
   }
 }

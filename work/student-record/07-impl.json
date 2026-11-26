@@ -1,14 +1,10 @@
 {
   "slug": "student-record",
   "gate": "G5",
-  "pass": false,
-  "errors": [
-    "V 390: 차이 영역 x 120 y 248 56×16",
-    "V 1440: 차이 영역 x 808 y 192 64×24",
-    "V 1440: 차이 영역 x 768 y 192 32×24"
-  ],
-  "back_to": "S5",
-  "same_fail_streak": 3,
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
   "route": "/teacher/student-record",
   "allowed": [
     {
@@ -21,15 +17,15 @@
     }
   ],
   "notes": [
-    "390: F 글자 짝 97/129 (짝 없는 글자는 T만 본다)",
-    "1440: F 글자 짝 109/141 (짝 없는 글자는 T만 본다)"
+    "390: F 글자 짝 98/129 (짝 없는 글자는 T만 본다)",
+    "1440: F 글자 짝 110/141 (짝 없는 글자는 T만 본다)"
   ],
   "images": {
     "390": "work/_cache/impl/student-record-390.png",
     "1440": "work/_cache/impl/student-record-1440.png"
   },
   "ssim": {
-    "390": 0.9652,
-    "1440": 0.9748
+    "390": 0.9679,
+    "1440": 0.9762
   }
 }

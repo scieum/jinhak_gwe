@@ -41,7 +41,7 @@ export function ReferenceGradeAnalysis({ viewTabs, desktop }: { viewTabs: ReactN
       <tr><th scope="row">입력 학기</th><td>{r.semesters}개 학기</td></tr></tbody></table>
     {r.basisNotes.map(note => <p key={note} className="t-body-sm text-muted">{note}</p>)}</section>;
   const trace = <TraceAccordion trace={[]} open={desktop} note="중간 단계는 반올림하지 않아요. 실제 학생의 환산 정확도를 검증한 확정식은 아니에요.">
-    <ol className="f2n-steps">{r.trace.filter(t => !t.id.startsWith('basis-')).map(t => <li key={t.id}>
+    <ol className="f2n-steps">{r.trace.filter(t => !t.id.startsWith('basis-')).map(t => <li key={t.id} className={t.id === 'range' ? 'f2n-steps__final' : undefined}>
       <span>{t.label}</span><span>{typeof t.value === 'number' ? (t.id === 'excluded' ? String(t.value) : t.value.toFixed(2)) : t.value}</span>
     </li>)}</ol></TraceAccordion>;
   const note = <p className="disclaimer-note t-caption text-muted f2n-note"><Icon name="info" size={16} /><span>{referenceNote}</span></p>;
