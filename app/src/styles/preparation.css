@@ -32,7 +32,7 @@
 .prep-danger:disabled { cursor: default; opacity: .5; }
 .prep-plan-actions { flex-wrap: nowrap; }
 .prep-counts { display: flex; gap: 32px; }
-.prep-counts > div { display: grid; gap: 2px; }
+.prep-counts > div { display: grid; gap: 2px; justify-items: center; text-align: center; } /* 2026-11-26 사용자 요청: 라벨 · 숫자는 늘 칸 가운데 */
 .prep-counts span { color: var(--color-text-muted); font-size: 12px; line-height: 17px; white-space: nowrap; }
 .prep-counts strong { font-size: 24px; line-height: 29px; }
 .prep-shortcuts { display: flex; align-items: center; gap: 8px; padding-top: 16px; border-top: 1px solid var(--color-hairline-soft); }
