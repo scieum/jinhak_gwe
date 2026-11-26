@@ -290,9 +290,8 @@ grade-input-table — 성적 입력 표(PC)
 컨테이너 {rounded.sm} + 1px {colors.hairline} 외곽선, 내부 셀은 각지게
 머리글 {colors.canvas-soft} + {typography.table-head}, 첫 열(과목명) 고정
 셀 편집 시 셀 전체에 2px 잉크 링, 오류 셀은 {colors.judge-risk-bg} 채움
+석차등급 미산출 과목의 등급 칸은 {colors.canvas-soft} 빗금 + "미산출" 캡션(입력 불가)
 과목 유형 열에 subject-type-chip(기초 · 일반 · 진로 · 융합 · 교양, 2026-11-25 사용자 결정): 유형마다 Subject Type 채움 + {colors.ink} {typography.label} 이름, 높이 20, 좌우 패딩 {spacing.xs}, 모서리 0. 과목명과 교과(군)은 서로 다른 열로 나눕니다(과목 | 교과(군) | 유형). 화면에 "체육예술" · "과탐실험" 유형을 따로 두지 않습니다. 체육 · 예술 과목은 실제 선택 유형(예: 체육1 = 일반, 운동과 건강 = 진로, 스포츠 생활1 = 융합)으로, 과학탐구실험은 기초로 표시합니다. 원점수 없이 성취도 A·B·C만 받는 계산 규칙은 그대로입니다.
-과목 유형 열에 subject-type-chip(공통·일반·진로·융합·체육예술·과탐실험·교양)
-
 subject-card — 성적 입력(모바일). 변형 density=compact(2026-11-22 v2): 패딩 12·16, 카드 사이 선 하나로 이어지는 목록(첫 화면에 5과목 이상)
 
 흰 카드 + 1px {colors.hairline-soft}, {rounded.md}
