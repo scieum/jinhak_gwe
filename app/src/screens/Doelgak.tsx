@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import { useReferenceCuts } from '../data/referenceCuts';
-import { referenceDiffText } from '../domain/interestComparison';
+import { departmentsFor, referenceDiffText } from '../domain/interestComparison';
+import type { Interest } from '../domain/interests';
+import { studentDb } from '../store/studentDb';
 import { collectedProgramPath } from '../domain/interests';
 import { fiveToNineFor } from '../domain/results';
 import type { StudentBackup } from '../domain/student';
@@ -86,7 +88,10 @@ function MiniBar({ min, max, cut }: { min: number; max: number; cut?: number }) 
 function InterestReference({ data }: { data: StudentBackup }) {
   const interests = useMemo(() => [...(data.interests ?? [])].sort((a, b) => a.created_at.localeCompare(b.created_at)), [data.interests]);
   const mine = useMemo(() => { const r = data.grades.length ? fiveToNineFor(data.grades, '전 교과') : null; return r?.min != null && r.max != null ? { min: r.min, max: r.max } : null; }, [data.grades]);
-  const { cuts, error: indexError } = useReferenceCuts(interests);
+  const { cuts, rowsOf, error: indexError } = useReferenceCuts(interests);
+  const [pickError, setPickError] = useState('');
+  // 학과 없이 담은 관심 전형: 학과를 고르면 그 학과로 바꿔 담아요(setInterest가 학과 없는 옛 항목을 같이 정리해요)
+  const pickDepartment = (i: Interest, unit: string) => { setPickError(''); studentDb.setInterest(i.university, i.program, true, unit).catch(e => setPickError(e instanceof Error ? e.message : '학과를 저장하지 못했어요.')); };
 
   const head = <div className="dg-summary"><p className="t-body-sm num">관심 전형 {interests.length}개 · 참고 비교</p>
     <p className="t-caption text-muted">판정 기준과 입결 검수가 끝나면 안정 · 적정 · 소신 · 위험으로 나눠 보여 드려요. 지금은 내 참고 추정 범위와 최근 입결 컷만 비교해요.</p></div>;
@@ -95,6 +100,7 @@ function InterestReference({ data }: { data: StudentBackup }) {
   return <>{head}
     {!mine && <p className="t-caption text-muted">{data.grades.length ? '석차등급이 있는 과목을 입력하면 내 참고 추정 범위와 비교해요. ' : '성적을 입력하면 내 참고 추정 범위와 비교해요. '}<Link className="t-link" to="/grade-input">성적 입력하기 ›</Link></p>}
     {indexError && <p className="t-caption text-muted" role="alert">{indexError}</p>}
+    {pickError && <p className="t-caption text-muted" role="alert">{pickError}</p>}
     <div className="dg-pending__cards">{interests.map(i => {
       const ref = cuts[i.id];
       const cut = ref && 'value' in ref ? ref : null;
@@ -105,7 +111,11 @@ function InterestReference({ data }: { data: StudentBackup }) {
         <div className="dg-card__numbers"><span className="t-caption text-muted">내 환산 (참고 추정)</span>
           <div className="dg-card__range"><strong className="num">{mine ? rangeText(mine.min, mine.max) : '—'}</strong></div>
           <span className="t-caption text-muted num">{!ref ? '입결 자료를 불러오는 중이에요' : cut
-            ? `${cut.year}학년도 ${cut.row.program.trim() !== i.program.trim() ? `${cut.row.program} ` : ''}${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${mine ? ` · 차이 ${diffText(mine.max, cut.value)}` : ''}` : (ref as { reason: string }).reason}</span></div>
+            ? `${cut.year}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${mine ? ` · 차이 ${diffText(mine.max, cut.value)}` : ''}` : (ref as { reason: string }).reason}</span>
+          {/* 수집 전형 이름이 담은 이름과 다르면 무엇과 비교했는지 따로 한 줄(컷 숫자가 말줄임에 가리지 않게) */}
+          {cut && cut.row.program.trim() !== i.program.trim() && <span className="t-caption text-muted">비교한 전형: {cut.row.program}</span>}</div>
+        {!i.department && (() => { const units = departmentsFor(i, rowsOf(i.university)); return units.length > 0 && <label className="dg-field"><span className="t-caption text-muted">학과 고르기</span>
+          <span className="dg-select"><select className="text-input" value="" onChange={e => e.target.value && pickDepartment(i, e.target.value)}><option value="">학과를 골라 주세요</option>{units.map(u => <option key={u}>{u}</option>)}</select><Icon name="chevron-down" size={20} /></span></label>; })()}
         {mine && <MiniBar min={mine.min} max={mine.max} cut={cut?.value} />}
         <div className="dg-card__chips"><span className="data-status-badge">판정 준비 중</span>{cut && <span className="data-status-badge">검수 전 참고자료</span>}</div>
         {/* 짝지은 입결 행의 대학·전형 이름으로 걸어야 원문 화면에서 찾아져요(전형계획 이름과 수집 이름이 달라요) */}

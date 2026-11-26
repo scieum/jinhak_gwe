@@ -1,4 +1,4 @@
-import 'fake-indexeddb/auto';
+﻿import 'fake-indexeddb/auto';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
@@ -39,7 +39,7 @@ test('성적이 있으면 범위 막대와 관심 대학 참고 비교(검수 �
   expect(within(judge).getByText('관심 대학 1곳 · 최근 입결 컷과 참고 비교예요')).toBeTruthy(); // 같은 대학은 한 줄
   const link = within(judge).getByRole('link', { name: /가천대학교.*약학과/ });
   expect(new URLSearchParams(link.getAttribute('href')!.split('?')[1]).get('cd')).toBe('약학과');
-  expect(await within(judge).findByText(/^70% 컷 1\.20 · 차이 [+−]?\d\.\d$/)).toBeTruthy();
+  expect(await within(judge).findByText(/^2026학년도 70% 컷 1\.20 · 차이 [+−]?\d\.\d$/)).toBeTruthy();
   expect(within(judge).queryByText(/안정|적정|소신|위험/)).toBeNull(); // NEVER-1: 검수 입결 없이 판정하지 않아요
 });
 

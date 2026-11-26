@@ -1,5 +1,5 @@
 import 'fake-indexeddb/auto';
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { subject } from './fixtures';
@@ -66,6 +66,15 @@ describe('검수된 판정 전형이 없을 때 될각 = 관심 전형 참고 �
     expect(await within(card).findByText(/^2026학년도 70% 컷 2\.400 · 차이 [+−]?\d\.\d$/)).toBeTruthy();
     expect(within(card).getByText(/^약 \d\.\d~\d\.\d$/)).toBeTruthy();
     expect(screen.queryByText(/^(안정|적정|소신|위험)$/)).toBeNull();
+  });
+  test('학과 없이 담은 전형은 카드에서 학과를 고르면 그 학과로 바뀌고 입결과 비교해요', async () => {
+    await studentDb.setInterest('가온대', '일반전형', true);
+    at('/doelgak');
+    const select = await screen.findByRole('combobox', { name: '학과 고르기' });
+    expect(within(select).getAllByRole('option').map(o => o.textContent)).toEqual(['학과를 골라 주세요', '간호학과']);
+    fireEvent.change(select, { target: { value: '간호학과' } });
+    expect(await screen.findByText('2026학년도 70% 컷 2.400')).toBeTruthy();
+    expect((await studentDb.interests.toArray()).map(i => i.department)).toEqual(['간호학과']); // 학과 없는 옛 항목은 바뀌어요
   });
   test('관심 전형이 없으면 담는 곳을 안내해요', async () => {
     at('/doelgak');

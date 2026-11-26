@@ -7,7 +7,7 @@ import type { ResultRow } from '../domain/resultReview';
 
 type Loaded = Record<string, { rows: ResultRow[]; error: string }>;
 /** 관심 전형마다 최근 수집 입결 컷(참고 비교). 아직 불러오는 중이면 null. 될각 · 홈이 같이 써요. */
-export function useReferenceCuts(interests: readonly Interest[]): { cuts: Record<string, ReferenceCut | null>; error: string } {
+export function useReferenceCuts(interests: readonly Interest[]): { cuts: Record<string, ReferenceCut | null>; rowsOf: (university: string) => ResultRow[]; error: string } {
   const [loaded, setLoaded] = useState<Loaded>({}), [error, setError] = useState('');
   const names = JSON.stringify([...new Set(interests.map(i => i.university))].sort());
   useEffect(() => {
@@ -29,5 +29,5 @@ export function useReferenceCuts(interests: readonly Interest[]): { cuts: Record
     const pack = loaded[i.university];
     return [i.id, pack ? (pack.error ? { reason: pack.error } : latestReferenceCut(i, pack.rows)) : null];
   }));
-  return { cuts, error };
+  return { cuts, rowsOf: university => loaded[university]?.rows ?? [], error };
 }

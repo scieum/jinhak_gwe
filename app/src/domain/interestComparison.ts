@@ -64,6 +64,15 @@ export function latestReferenceCut(interest: Interest, rows: readonly ResultRow[
   if (kinds.size > 1) return { reason: `같은 학과 ${track}전형이 ${kinds.size}개라 고르지 않았어요. 수시 입결에서 전형을 골라 담아 주세요.` };
   return latestIn(family) ?? { reason: '이 학과의 교과등급 컷이 수집 자료에 없어요.' };
 }
+/** 학과 없이 담은 관심 전형에서 고를 학과 후보: 같은 전형(정확히 → 핵심 이름) 수시 교과등급 행의 모집단위, 없으면 같은 계열 전형의 모집단위. */
+export function departmentsFor(interest: Interest, rows: readonly ResultRow[]): string[] {
+  const usable = rows.filter(r => r.round === '수시' && r.metric === '교과등급' && r.recruit_unit.trim());
+  const exact = usable.filter(r => r.program.trim() === interest.program.trim());
+  const named = exact.length ? exact : usable.filter(r => sameProgram(r.program, interest.program));
+  const track = trackOf(interest.program) || '교과';
+  const pool = named.length ? named : usable.filter(r => (r.admission_type || trackOf(r.program)) === track);
+  return [...new Set(pool.map(r => r.recruit_unit.trim()))].sort((a, b) => a.localeCompare(b, 'ko'));
+}
 function latestIn(pool: readonly ComparisonRecord[]): ReferenceCut | null {
   const years = [...new Set(pool.map(r => r.row.result_year))].sort().reverse();
   for (const year of years) {

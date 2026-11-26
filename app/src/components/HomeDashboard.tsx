@@ -97,14 +97,15 @@ export function HomeDashboard() {
             : has ? `관심 대학 ${rows.length}곳 중 ${judgedCount}곳 · 교과전형 입결과 비교했어요` : `관심 대학 ${rows.length}곳 · 성적을 입력하면 될각 판정이 보여요`}</p></div>
           {rows.length > 0 && <ul>{shown.map(({ i, j }) => {
             const ref = reference ? cuts[i.id] : null, cut = ref && 'value' in ref ? ref : null;
-            const badge = reference ? (cut ? <span className="data-status-badge num">{`${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${has && ready ? ` · 차이 ${referenceDiffText(result.max!, cut.value)}` : ''}`}</span>
-                : ref ? <span className="data-status-badge">입결 확인 필요</span> : null)
+            // 참고 비교는 배지 대신 전형 줄 아래 한 줄(배지가 넓으면 대학 이름이 꺾여요)
+            const refLine = !reference || !ref ? null : cut ? `${cut.year}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${has && ready ? ` · 차이 ${referenceDiffText(result.max!, cut.value)}` : ''}` : '입결 확인 필요';
+            const badge = reference ? null
               : !j ? (has ? <span className="judge-badge judge-none">자료 준비 중</span> : null) // 성적 전이면 대학마다 같은 배지를 반복하지 않고 위 설명 한 줄로 알려요
               : j.v.boundary ? <span className="judge-badge judge-edge"><span aria-hidden="true">◇</span> 경계</span>
               : <span className={`judge-badge ${JUDGE[j.v.label][0]}`}><span aria-hidden="true">{JUDGE[j.v.label][1]}</span> {j.v.label}</span>;
             return <li className="univ-card" key={i.university}><UniversityLogo university={i.university} />
               <Link to={cut ? collectedProgramPath(cut.row.university, cut.row.program, cut.row.recruit_unit) : collectedProgramPath(i.university, j?.p.program ?? i.program, j ? j.p.department || undefined : i.department)}
-                aria-label={[i.university, programLine(j ? j.p.program : i.program), j ? j.p.department : i.department].filter(Boolean).join(' · ')}><strong>{i.university}</strong><span>{programLine(j ? j.p.program : i.program)}</span></Link>{badge}</li>;
+                aria-label={[i.university, programLine(j ? j.p.program : i.program), j ? j.p.department : i.department].filter(Boolean).join(' · ')}><strong>{i.university}</strong><span>{programLine(j ? j.p.program : i.program)}</span>{refLine && <span className="num">{refLine}</span>}</Link>{badge}</li>;
           })}</ul>}
           {rows.length ? <Link className="button-pill-soft" to="/doelgak">될각 전체 보기</Link> : <Link className="button-pill-soft" to="/admissions-list">전형계획 둘러보기</Link>}
         </section>
