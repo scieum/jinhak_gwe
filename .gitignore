@@ -31,3 +31,6 @@ work/_data/admission-plans/
 work/_data/university-map/*
 !work/_data/university-map/README.md
 work/_cache/
+
+# 로컬 임시 작업물(브라우저 실행 파일 등 100MB 넘는 파일이 섞여요)
+tmp/
