@@ -5,7 +5,7 @@ import { afterEach, expect, test, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { studentDb } from '../src/store/studentDb';
 import { MemoryRouter } from 'react-router-dom';
-import { parsePlanCatalog, matchesPlan, planPageUrl, planCampusCategory, withPlanFoundings } from '../src/domain/admissionPlans';
+import { parsePlanCatalog, matchesPlan, matchesProgram, matchedUnits, programUnits, planPageUrl, planCampusCategory, withPlanFoundings } from '../src/domain/admissionPlans';
 import { parseUnivMap } from '../src/domain/univMap';
 import { AdmissionsList, quotaDelta } from '../src/screens/AdmissionsList';
 import { loadAdmissionPlans } from '../src/data/admissionPlans';
@@ -176,7 +176,7 @@ test('전형 1행 목록: 검색·상세 원문·유형 칩·지역 칩·페이�
   expect(within(detail).getAllByRole('link', { name: /PDF 13쪽/ })[0].getAttribute('href')).toContain('#page=13');
   fireEvent.click(within(detail).getByRole('button', { name: '상세 닫기' }));
   expect(screen.queryByRole('region', { name: '한림대학교 본교 전형계획 상세' })).toBeNull();
-  fireEvent.change(screen.getByLabelText('대학 이름으로 찾기'), { target: { value: '없는대학명' } });
+  fireEvent.change(screen.getByLabelText('대학·학과 이름으로 찾기'), { target: { value: '없는대학명' } });
   expect(screen.getByText("'없는대학명'에 맞는 대학이 없어요")).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '검색어 지우기' }));
   expect(rowsShown()).toHaveLength(10);
@@ -302,7 +302,7 @@ test('실제 자료 필터 조합: 지역+유형, 계열, 수능최저+면접, �
   expect(screen.getByText('전형 22개')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '초기화' }));
   const engineering = programs.filter(p => p.fields?.includes('공학')).length;
-  expect(engineering).toBe(326);
+  expect(engineering).toBe(507); // 2026-11-26 계열표 대학 이름 표기를 맞춰 계열 연결이 늘었어요(634 → 933개 전형)
   fireEvent.click(first('공학'));
   expect(screen.getByText(`전형 ${engineering}개`)).toBeTruthy();
   expect(statusLines()).toEqual([`계열은 검수 전 학과 계열표 기준이에요 · 계열 정보가 없는 전형 ${programs.filter(p => !p.fields).length}개는 빠졌어요`]);
@@ -326,14 +326,14 @@ test('재학생만은 자격 자료가 없어 막아 두고, 모바일 필터 �
   const sheet = screen.getByRole('dialog', { name: '필터' });
   expect((within(sheet).getByRole('button', { name: '재학생만, 자격 자료 준비 중' }) as HTMLButtonElement).disabled).toBe(true);
   fireEvent.click(within(sheet).getByRole('button', { name: '공학' }));
-  expect(within(sheet).getByText(/계열 정보가 없는 전형 2465개는 빠졌어요/)).toBeTruthy();
-  fireEvent.click(within(sheet).getByRole('button', { name: '전형 326개 보기' }));
-  expect(screen.getByText('전형 326개')).toBeTruthy();
+  expect(within(sheet).getByText(/계열 정보가 없는 전형 2166개는 빠졌어요/)).toBeTruthy();
+  fireEvent.click(within(sheet).getByRole('button', { name: '전형 507개 보기' }));
+  expect(screen.getByText('전형 507개')).toBeTruthy();
 });
 
 test('검색창: 한글 조합 중에는 입력값을 덮어쓰지 않고, 조합이 끝나면 검색해요(맥 자모 분리 방지)', async () => {
   serve(); at();
-  const input = await screen.findByLabelText('대학 이름으로 찾기') as HTMLInputElement;
+  const input = await screen.findByLabelText('대학·학과 이름으로 찾기') as HTMLInputElement;
   fireEvent.compositionStart(input);
   fireEvent.input(input, { target: { value: '한ㄹ' }, isComposing: true });
   expect(input.value).toBe('한ㄹ'); // 조합 중 값이 그대로 남아요
@@ -377,4 +377,26 @@ test('서울처럼 시·도가 하나인 묶음은 세부 칩이 없어요', asy
   await screen.findAllByRole('link', { name: /전형계획 보기$/ });
   fireEvent.click(first('서울'));
   expect(screen.queryByRole('group', { name: '세부 지역' })).toBeNull();
+});
+
+test('학과 검색: 학과 이름으로 찾으면 그 학과가 있는 전형만 남고, 모집단위 칸의 학과를 누르면 수시 입결의 그 학과로 가요', async () => {
+  serve(); at('/admissions-list?q=의예');
+  await screen.findByText(/^전형 \d+개$/);
+  const shown = rowsShown();
+  expect(shown.length).toBeGreaterThan(0);
+  const links = screen.getAllByRole('link', { name: /의예과 최근 3년 입결 보기$/ });
+  expect(links.length).toBeGreaterThan(0);
+  const href = new URL(links[0].getAttribute('href')!, 'http://x');
+  expect(href.pathname).toBe('/admission-results');
+  expect(href.searchParams.get('gd')).toMatch(/의예/);
+  expect(href.searchParams.get('gu')).toBeTruthy();
+});
+
+test('대학과 학과를 섞어 찾을 수 있어요(연세 의예)', () => {
+  const yonsei = classified.entries.find(p => p.university === '연세대학교' && p.campus === '본교')!;
+  const program = yonsei.programs.find(p => programUnits(p).includes('의예과'))!;
+  expect(matchesProgram(yonsei, program, '연세 의예')).toBe(true);
+  expect(matchedUnits(yonsei, program, '연세 의예')).toEqual(['의예과', '치의예과']); // 검색어로 시작하는 학과가 먼저
+  expect(matchedUnits(yonsei, program, '연세')).toEqual([]); // 대학 이름으로만 찾으면 학과 링크 대신 원래 모집단위 표시
+  expect(matchesProgram(yonsei, program, '연세 수의예')).toBe(false);
 });

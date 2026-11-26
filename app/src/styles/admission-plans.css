@@ -206,3 +206,7 @@ body:has(.admissions-list) .topbar__actions > :not(#topbar-screen-actions) { dis
 .al-table-card td:nth-last-child(-n+3) { white-space: nowrap; } /* 수능최저 · 면접 · 관심 칸: '원문 확인'이 두 줄로 꺾이지 않게(2026-11-25) */
 /* PC는 사이드바 아래 길콩 카드가 있어 본문 배너를 숨겨요(2026-11-26 사용자 결정). 모바일은 사이드바가 없어 본문에 남겨요 */
 @media (min-width: 1024px) { .admissions-list > .promo-banner-wrap { display: none; } }
+
+/* 학과로 찾았을 때 모집단위 칸의 학과 링크(수시 입결로) */
+.al-unit-link { color: var(--color-accent); text-decoration: none; font-weight: 600; }
+.al-unit-link:hover { text-decoration: underline; }

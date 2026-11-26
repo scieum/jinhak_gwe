@@ -2,13 +2,14 @@ import { useDeferredValue, useEffect, useMemo, useRef, useState, type KeyboardEv
 import { Link, useSearchParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { loadAdmissionPlans } from '../data/admissionPlans';
+import { TYPE_TABS } from '../domain/resultBrowse';
 import { UniversityLogo } from '../components/UniversityLogo';
 import { PromoBanner } from '../components/PromoBanner';
 import { Icon } from '../components/Icon';
 import { Modal } from '../components/Modal';
 import { SegmentedControl } from '../components/SegmentedControl';
 import { ScreenActions } from '../components/ScreenActions';
-import { PLAN_FIELDS, matchesPlan, planCampusCategory, planFileName, planFileUrl, planPageUrl, type AdmissionPlan, type PlanCatalog, type PlanDocument, type PlanProgram } from '../domain/admissionPlans';
+import { PLAN_FIELDS, matchedUnits, matchesProgram, planCampusCategory, planFileName, planFileUrl, planPageUrl, type AdmissionPlan, type PlanCatalog, type PlanDocument, type PlanProgram } from '../domain/admissionPlans';
 import { interestId } from '../domain/interests';
 import { studentDb } from '../store/studentDb';
 import '../styles/interests.css';
@@ -161,8 +162,8 @@ export function AdmissionsList() {
   const saved = (r: Row) => !!r.program && !!interests?.has(idOf(r));
   // 검색은 대학(전형계획) 단위로 한 번만 맞춰 보고, 목록 계산은 입력보다 한 박자 늦게 해서 타이핑이 먼저 반응해요
   const searched = useDeferredValue(query);
-  const matching = useMemo(() => new Set(catalog?.entries.filter(p => matchesPlan(p, searched)).map(p => p.id)), [catalog, searched]);
-  const base = (f: Filters) => rows.filter(r => matching.has(r.plan.id) && passes(r, f) && (!interestOnly || saved(r)));
+  const matching = useMemo(() => new Set(rows.filter(r => matchesProgram(r.plan, r.program, searched)).map(r => r.key)), [rows, searched]);
+  const base = (f: Filters) => rows.filter(r => matching.has(r.key) && passes(r, f) && (!interestOnly || saved(r)));
   const beforeType = base(filters), filtered = beforeType.filter(r => !type || r.type === type).sort(sorters[sort]);
   const typeCount = (t: string) => beforeType.filter(r => r.program && (!t || r.type === t)).length;
   const programCount = filtered.filter(r => r.program).length, campusOnly = filtered.length - programCount;
@@ -202,6 +203,14 @@ export function AdmissionsList() {
     aria-label={`${row.plan.university} ${row.program.name} ${saved(row) ? '관심에서 빼기' : '관심에 담기'}`}
     onClick={e => { e.stopPropagation(); void toggle(row); }}><Icon name="heart" size={20} /></button>;
   const open = (row: Row) => update('plan', row.plan.id);
+  // 학과로 찾았으면 모집단위 자리에 찾은 학과를 보여 주고, 누르면 수시 입결의 그 학과(최근 3년 입결 · 내 환산 범위)로 가요
+  const unitCell = (row: Row) => {
+    const hits = matchedUnits(row.plan, row.program, searched);
+    if (!hits.length) return row.unit;
+    const tab = (TYPE_TABS as readonly string[]).includes(row.type ?? '') ? row.type! : '전체';
+    const to = `/admission-results?gu=${encodeURIComponent(row.plan.university)}&gt=${encodeURIComponent(tab)}&gd=${encodeURIComponent(hits[0])}`;
+    return <Link className="al-unit-link" to={to} onClick={e => e.stopPropagation()} aria-label={`${row.plan.university} ${hits[0]} 최근 3년 입결 보기`}>{hits[0]}{hits.length > 1 ? ` 외 ${hits.length - 1}` : ''} ›</Link>;
+  };
   const univLink = (row: Row, logo = true) => <Link className="al-univ" to={`/univ-detail?u=${encodeURIComponent(row.plan.university)}`} onClick={e => e.stopPropagation()}>
     {logo && <UniversityLogo planId={row.plan.id} university={(row.plan as AdmissionPlan & { logo_name?: string }).logo_name ?? row.plan.university} />}<span title={`${row.plan.university}${row.plan.campus !== '본교' ? ` ${row.plan.campus}` : ''}`}>{row.plan.university}{row.plan.campus !== '본교' && ` ${row.plan.campus}`}</span></Link>;
   const programText = (row: Row) => row.program?.name ?? '전형 요약 준비 중 · 원문 보기';
@@ -232,7 +241,7 @@ export function AdmissionsList() {
     <PromoBanner />
     {error ? <div className="al-panel al-load-error" role="alert"><Icon name="triangle-alert" size={20} /><p>전형계획 자료를 불러오지 못했어요. 인터넷 연결을 확인하고 다시 불러와 주세요.</p><button type="button" className="button-outline" onClick={() => setAttempt(n => n + 1)}>다시 불러오기</button></div>
       : !catalog ? <p className="al-panel t-body-sm text-muted" role="status">전형계획을 읽고 있어요.</p> : <>
-        <label className="al-search"><Icon name="search" size={20} /><input className="text-input" type="search" value={text} placeholder="대학 이름으로 찾기" aria-label="대학 이름으로 찾기" onChange={e => { setText(e.target.value); if (!(e.nativeEvent as InputEvent).isComposing) update('q', e.target.value); }} onCompositionEnd={e => update('q', e.currentTarget.value)} /></label>
+        <label className="al-search"><Icon name="search" size={20} /><input className="text-input" type="search" value={text} placeholder="대학·학과 이름으로 찾기" aria-label="대학·학과 이름으로 찾기" onChange={e => { setText(e.target.value); if (!(e.nativeEvent as InputEvent).isComposing) update('q', e.target.value); }} onCompositionEnd={e => update('q', e.currentTarget.value)} /></label>
         <div className="al-chiprow">
           <button type="button" className="button-pill-soft al-filter-button" aria-pressed={filterCount(filters) > 0} onClick={() => { setDraft(filters); setDraftType(type); setSheet('filter'); }}><Icon name="sliders-horizontal" size={20} />필터{filterCount(filters) ? ` ${filterCount(filters)}` : ''}</button>
           {typeChips}{chip(interestLabel('관심'), interestOnly, () => setInterestOnly(v => !v), '관심만 보기')}
@@ -269,7 +278,7 @@ export function AdmissionsList() {
           <div className={`al-list${view === 'table' ? ' al-list--table-view' : ''}`}>{shown.map(row => <div className="al-item" key={row.key} role="link" tabIndex={0} aria-label={`${row.plan.university} ${programText(row)} 전형계획 보기`} onClick={() => open(row)} onKeyDown={rowKeys(row)}>
             <article className="univ-card al-card">
               <div className="al-card__head">{univLink(row)}{heart(row)}</div>
-              <p className="al-card__program">{row.plan.region} · {programText(row)}{row.program && ` · ${row.unit}`}{sort === '최근 변경순' && <span className="t-caption text-muted num"> · {shortDate(row.date)} 확인</span>}</p>
+              <p className="al-card__program">{row.plan.region} · {programText(row)}{row.program && <> · {unitCell(row)}</>}{sort === '최근 변경순' && <span className="t-caption text-muted num"> · {shortDate(row.date)} 확인</span>}</p>
             </article>
             <div className="al-card__facts"><span>{facts(row)}</span>{row.program && (quotaDelta(row.program.quota, (row.program as PlanProgram & { quota_prev?: string }).quota_prev) === null ? <span className="al-quota-label"><Quota program={row.program} /></span>
               : <span className="al-quota-wrap"><span className="al-quota-label">모집</span><span className="data-table al-quota"><Quota program={row.program} prefix="" /></span></span>)}</div>
@@ -282,7 +291,7 @@ export function AdmissionsList() {
             <tbody>{shown.map(row => <tr key={row.key} tabIndex={0} aria-label={`${row.plan.university} ${programText(row)} 전형계획 보기`} onClick={() => open(row)} onKeyDown={rowKeys(row)}>
               <td>{univLink(row)}</td><td>{row.plan.region}</td>
               <td>{programText(row)}{sort === '최근 변경순' && <span className="t-caption text-muted num al-date">{shortDate(row.date)} 확인</span>}</td>
-              <td>{row.type ?? '—'}</td><td>{row.unit}</td><td className="num">{row.program ? <Quota program={row.program} prefix="" /> : '—'}</td>
+              <td>{row.type ?? '—'}</td><td>{unitCell(row)}</td><td className="num">{row.program ? <Quota program={row.program} prefix="" /> : '—'}</td>
               <td>{row.program ? row.minimum ?? '원문 확인' : '—'}</td><td>{row.program ? row.interview ?? '원문 확인' : '—'}</td><td>{heart(row)}</td></tr>)}</tbody>
           </table></div>
           {pager}

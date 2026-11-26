@@ -240,14 +240,29 @@ FIELD_CHIPS = {('어문', '인문'): '인문', ('인문', '인문'): '인문', (
 FIELD_ORDER = ['인문', '사회', '자연', '공학', '의약', '예체능']
 
 
+def _univ_key(name):
+    """계열표는 입결 표기('연세대(서울)'), 전형계획은 정식 이름('연세대학교')이라 같은 꼴로 맞춰 비교해요(2026-11-26)."""
+    name = re.sub(r'\s+', '', name)
+    return re.sub(r'대학교$', '대', re.sub(r'\(.*?\)', '', name))
+
+
+def _unit_key(name):
+    """'간호학과(자연)'처럼 계열 꼬리표가 붙은 모집단위도 같은 학과로 봐요."""
+    return re.sub(r'\s+', '', re.sub(r'\((인문|자연|예체능|인문사회|자연과학)\)$', '', name.strip()))
+
+
 def attach_fields(catalog, table):
-    """program['fields'] = 모집단위(units · pooled) 중 계열표에 대학+모집단위가 정확히 같은 행이 있는 칩들. 하나도 없으면 키를 뺀다."""
-    chips = {(r['대학'], r['모집단위']): FIELD_CHIPS.get((r['중계열'], r['대계열'])) for r in table}
+    """program['fields'] = 모집단위(units · pooled) 중 계열표에 대학+모집단위가 있는 칩들(이름은 _univ_key · _unit_key로 맞춤). 하나도 없으면 키를 뺀다."""
+    chips = {}
+    for r in table:
+        chip = FIELD_CHIPS.get((r['중계열'], r['대계열']))
+        if chip:
+            chips.setdefault((_univ_key(r['대학']), _unit_key(r['모집단위'])), set()).add(chip)
     filled = 0
     for e in catalog['entries']:
         for p in e['programs']:
             names = [u[0] for u in p.get('units', [])] + [n for q in p.get('pooled', []) for n in q['units']]
-            found = {chips.get((e['university'], n)) for n in names} - {None}
+            found = set().union(*[chips.get((_univ_key(e['university']), _unit_key(n)), set()) for n in names]) if names else set()
             p.pop('fields', None)
             if found:
                 p['fields'], filled = [c for c in FIELD_ORDER if c in found], filled + 1

@@ -136,12 +136,42 @@ export function parsePlanCatalog(input: unknown): PlanCatalog {
   return input as PlanCatalog;
 }
 export function normalizePlanSearch(value: string) { return value.normalize('NFKC').toLowerCase().replace(/대학교/g, '대').replace(/^국립/, '').replace(/\s/g, ''); }
-// 검색할 글자는 전형계획마다 한 번만 만들어요(타이핑마다 전형 이름 수백 개를 다시 정규화하면 느려요)
+// 검색할 글자는 전형계획 · 전형마다 한 번만 만들어요(타이핑마다 전형 이름 수백 개를 다시 정규화하면 느려요)
 const haystacks = new WeakMap<AdmissionPlan, string>();
+const planHay = (plan: AdmissionPlan) => {
+  let h = haystacks.get(plan);
+  if (h === undefined) haystacks.set(plan, h = normalizePlanSearch([...universitySearchLabels(plan.university), plan.campus, plan.region].join(' ')));
+  return h;
+};
+/** 전형의 모집단위(학과) 이름들(units · pooled) */
+export const programUnits = (p: PlanProgram) => [...(p.units ?? []).map(u => u[0]), ...(p.pooled ?? []).flatMap(q => q.units)];
+const unitHays = new WeakMap<PlanProgram, [string, string][]>();
+const unitHay = (p: PlanProgram) => {
+  let h = unitHays.get(p);
+  if (h === undefined) unitHays.set(p, h = [...new Set(programUnits(p))].map(n => [n, normalizePlanSearch(n)]));
+  return h;
+};
+const terms = (query: string) => query.trim().split(/\s+/).filter(Boolean).map(normalizePlanSearch);
+/** 대학 · 캠퍼스 · 지역 · 전형 이름 · 학과(모집단위) 이름으로 찾아요(2026-11-26 학과 검색). 검색어 낱말이 모두 어딘가에 있어야 해요. */
+export function matchesProgram(plan: AdmissionPlan, program: PlanProgram | undefined, query: string) {
+  const ts = terms(query);
+  if (!ts.length) return true;
+  const own = planHay(plan) + (program ? normalizePlanSearch(program.name) : '');
+  const units = program ? unitHay(program) : [];
+  return ts.every(t => own.includes(t) || units.some(([, n]) => n.includes(t)));
+}
+/** 대학 · 전형 이름으로는 안 맞고 학과 이름으로 맞은 낱말이 있으면, 그 낱말이 든 학과들 */
+export function matchedUnits(plan: AdmissionPlan, program: PlanProgram | undefined, query: string): string[] {
+  if (!program) return [];
+  const own = planHay(plan) + normalizePlanSearch(program.name);
+  const unitTerms = terms(query).filter(t => !own.includes(t));
+  if (!unitTerms.length) return [];
+  const hits = unitHay(program).filter(([, n]) => unitTerms.some(t => n.includes(t)));
+  // 검색어로 시작하는 학과를 앞에('의예' → 의예과, 치의예과)
+  return hits.sort((a, b) => Number(!unitTerms.some(t => a[1].startsWith(t))) - Number(!unitTerms.some(t => b[1].startsWith(t)))).map(([name]) => name);
+}
 export function matchesPlan(plan: AdmissionPlan, query: string) {
-  let haystack = haystacks.get(plan);
-  if (haystack === undefined) haystacks.set(plan, haystack = normalizePlanSearch([...universitySearchLabels(plan.university), plan.campus, plan.region, ...plan.programs.map(p => p.name)].join(' ')));
-  return query.trim().split(/\s+/).every(term => haystack.includes(normalizePlanSearch(term)));
+  return plan.programs.length ? plan.programs.some(p => matchesProgram(plan, p, query)) : matchesProgram(plan, undefined, query);
 }
 /** 내려받을 때 쓸 규칙 이름(우리 사본이 있을 때만). 다른 출처 링크에는 download 속성이 먹지 않아요 */
 export const planFileName = (doc: PlanDocument) => doc.local_file?.slice('plans/'.length);

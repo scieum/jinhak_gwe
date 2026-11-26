@@ -87,9 +87,9 @@ export function HomeDashboard() {
       <div className="home-right">
         <div className="home-dday">{DDAYS.map(([label, date]) => <div className="stat-tile home-tile" key={label}><span>{label}</span><strong className="num">{dday(date)}</strong><small className="num">{date} 예정</small></div>)}</div>
         <section className="home-card home-judge" aria-label="관심 대학 될각">
-          <div><h2>관심 대학 될각</h2><p>{rows.length ? `관심 대학 ${rows.length}곳 중 ${judgedCount}곳 · 교과전형 입결과 비교했어요` : '관심 대학을 담으면 여기에서 될각 판정을 볼 수 있어요.'}</p></div>
+          <div><h2>관심 대학 될각</h2><p>{rows.length ? (has ? `관심 대학 ${rows.length}곳 중 ${judgedCount}곳 · 교과전형 입결과 비교했어요` : `관심 대학 ${rows.length}곳 · 성적을 입력하면 될각 판정이 보여요`) : '관심 대학을 담으면 여기에서 될각 판정을 볼 수 있어요.'}</p></div>
           {rows.length > 0 && <ul>{shown.map(({ i, j }) => {
-            const badge = !j ? <span className="judge-badge judge-none">{has ? '자료 준비 중' : '성적 입력 후 보여요'}</span>
+            const badge = !j ? (has ? <span className="judge-badge judge-none">자료 준비 중</span> : null) // 성적 전이면 대학마다 같은 배지를 반복하지 않고 위 설명 한 줄로 알려요
               : j.v.boundary ? <span className="judge-badge judge-edge"><span aria-hidden="true">◇</span> 경계</span>
               : <span className={`judge-badge ${JUDGE[j.v.label][0]}`}><span aria-hidden="true">{JUDGE[j.v.label][1]}</span> {j.v.label}</span>;
             return <li className="univ-card" key={i.university}><UniversityLogo university={i.university} />

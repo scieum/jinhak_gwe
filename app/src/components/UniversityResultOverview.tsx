@@ -6,9 +6,9 @@ import { loadSusiIndex as loadCollectedIndex, loadSusiRows as loadCollectedRows 
 import { susiIssues } from '../domain/susiResults';
 import type { CollectedIndex } from '../domain/collectedResults';
 import type { ResultRow } from '../domain/resultReview';
-import { axisMinorTicks, axisRange, axisTicks, zoomRange, TYPE_TABS, type TypeTab } from '../domain/resultBrowse';
+import { axisMinorTicks, axisRange, axisTicks, zoomRange, TYPE_TABS, typeTab, type TypeTab } from '../domain/resultBrowse';
 import { gradeCut, noPlotReason, universityPlot, yearTone } from '../domain/universityResultPlot';
-import { collectedUniversitySelection, matchesUniversityIdentity, currentUniversityName } from '../domain/universityIdentity';
+import { collectedUniversityCandidates, matchesUniversityIdentity, currentUniversityName } from '../domain/universityIdentity';
 import { fiveToNineFor } from '../domain/results';
 import { useStudent, studentDb } from '../store/studentDb';
 import { useSampleMode } from '../data/sample/mode';
@@ -44,10 +44,19 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   const [opened, setOpened] = useState<ResultRow | null>(null), [detail, setDetail] = useState(false), [page, setPage] = useState(0);
   const names = sample ? [...new Set(sampleOverviewRows.map(r => r.university))] : index?.universities.map(e => e.university) ?? [];
   // 2026-11-25 사용자 요청: 처음 보이는 대학은 직접 정한 강원대학교(춘천)(자료에 없으면 첫 대학).
-  const university = collectedUniversitySelection(query.get('gu') ?? '', names) ?? (names.includes(DEFAULT_UNIVERSITY) ? DEFAULT_UNIVERSITY : names[0]) ?? '';
+  // ?gu=대학&gd=학과(전형계획 학과 검색 등에서 넘어옴): 캠퍼스가 여럿이면 차례로 열어 보고 그 학과가 있는 캠퍼스에서 멈춰요(2026-11-26)
+  const gu = query.get('gu') ?? '', namesKey = names.join('|');
+  // 화면이 주소를 다시 써도 같은 대학이면 후보 목록 · 진행 위치를 유지해요(다시 처음부터 돌면 캠퍼스 사이를 오가요)
+  const candidates = useMemo(() => collectedUniversityCandidates(gu, names), [gu, namesKey]);
+  const [alt, setAlt] = useState(0);
+  useEffect(() => { setAlt(0); }, [gu, namesKey]);
+  const university = candidates[alt] ?? candidates[0] ?? (names.includes(DEFAULT_UNIVERSITY) ? DEFAULT_UNIVERSITY : names[0]) ?? '';
   const tab = TYPE_TABS.includes(query.get('gt') as TypeTab) ? query.get('gt') as TypeTab : '교과';
   const rows = loaded?.university === university ? loaded.rows : null;
-  const model = useMemo(() => universityPlot(rows ?? [], tab, query.get('gp') ?? (university === DEFAULT_UNIVERSITY && tab === '교과' ? DEFAULT_PROGRAM : '')), [rows, tab, query]);
+
+  // ?gd=학과로 왔고 전형(gp)을 안 정했으면 그 학과가 든 전형을 먼저 열어요
+  const gd = query.get('gd'), gdRow = gd ? rows?.find(r => r.recruit_unit === gd && r.round === '수시' && (tab === '전체' || typeTab(r) === tab) && (gradeCut(r) !== null || gradeCut(r, 'cut_50') !== null)) : undefined; // 그래프에 찍을 컷이 있는 행만
+  const model = useMemo(() => universityPlot(rows ?? [], tab, query.get('gp') ?? gdRow?.program ?? (university === DEFAULT_UNIVERSITY && tab === '교과' ? DEFAULT_PROGRAM : '')), [rows, tab, query, gdRow]);
   const shownYears = year ? [Number(year)] : model.years;
   const departments = model.departments.map(d => ({ ...d, points: d.points.filter(r => shownYears.includes(Number(r.result_year))) }));
   const plotted = departments.filter(d => d.points.length), others = departments.filter(d => !d.rows.some(r => gradeCut(r, model.cut) !== null));
@@ -102,6 +111,10 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   const saved = plotted.find(d => interests.some(i => i.university === university && i.program === model.selected && i.department === d.name));
   // ?gd=학과: 다른 화면(학과별 구간 칸)에서 넘어오면 그 학과를 먼저 골라 둬요.
   const linked = departments.find(d => d.name === query.get('gd'));
+  // 고른 탭(전형 유형)에 그 학과가 없거나 자료를 못 읽은 캠퍼스는 건너뛰어요
+  useEffect(() => {
+    if (gd && (rows || error) && !gdRow && alt + 1 < candidates.length) setAlt(alt + 1);
+  }, [rows, error, gd, gdRow, alt, candidates]);
   const fallback = linked ?? saved ?? plotted[Math.floor(plotted.length / 2)];
   const selected: Department | undefined = (picked && departments.find(d => d.name === picked.department)) || fallback;
   const latestOf = (d?: Department) => d && [...d.points].sort((a, b) => Number(b.result_year) - Number(a.result_year))[0];

@@ -37,6 +37,15 @@ export function matchesUniversityIdentity(name: string, query: string): boolean 
   return universitySearchLabels(name).some(label => normalize(label).includes(q));
 }
 
+/** 같은 대학의 캠퍼스 후보들(정확히 같은 이름이 있으면 그것 하나). '연세대학교'처럼 캠퍼스가 여럿이면 '연세대(서울)', '연세대학교(미래)'를 모두 돌려줘요. */
+export function collectedUniversityCandidates(name: string, available: readonly string[]): string[] {
+  if (!name) return [];
+  if (available.includes(name)) return [name];
+  // 캠퍼스 괄호와 '대학교/대' 차이는 빼고 같은 대학인지 봐요('연세대(서울)' = '연세대학교')
+  const base = (n: string) => currentUniversityName(n).replace(/\s+/g, '').replace(/\(.*?\)/g, '').replace(/대학교$/, '대');
+  const key = base(name);
+  return available.filter(n => base(n) === key && !n.includes('캠퍼스미확인'));
+}
 export function collectedUniversitySelection(name: string, available: readonly string[]): string | undefined {
   const exact = available.find(n => n === name);
   if (exact) return exact;
