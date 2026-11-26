@@ -1,5 +1,7 @@
 /** Deterministic inverse of two source tables. No inference, fitting or I/O at runtime. */
 export type Scenario = 'optimistic' | 'conservative';
+export type InputBasis = 'rounded_average' | 'exact_all_one';
+export const scenarioRuntimeVersion = '0.5.1';
 type Range = [number, number];
 interface Curve { x9: number[]; y5: number[] }
 interface Bundle {
@@ -9,12 +11,14 @@ interface Bundle {
 export interface ScenarioMatch {
   range9: Range | null;
   exactRange9: Range | null;
+  tableRoundingRange9: Range | null;
   supportTruncated: boolean;
   // Largest grade9 source spacing used, to expose sparse interpolation.
   maxSourceGap9: number;
 }
 export interface ScenarioResult {
   modelVersion: string; grade5: number; estimate9: null;
+  inputBasis: InputBasis;
   status: 'source_scenarios' | 'partial_support' | 'outside_source_support';
   grade9Range: Range | null;
   scenarios: Record<Scenario, ScenarioMatch>;
@@ -52,17 +56,21 @@ export function createScenarioReference(value: unknown) {
       if (!valid(x, 1, 9) || !valid(c.y5[i], 1, 5) || (i > 0 && (x <= c.x9[i - 1] || c.y5[i] < c.y5[i - 1]))) fail();
     });
   }
-  return Object.freeze({ calculate(grade: number): ScenarioResult {
+  return Object.freeze({ calculate(grade: number, inputBasis: InputBasis = 'rounded_average'): ScenarioResult {
     if (!valid(grade, 1, 5)) throw new Error('Grade must be between 1 and 5');
-    const low = Math.max(1, grade - b.roundingHalfWidth5), high = Math.min(5, grade + b.roundingHalfWidth5);
+    if (!['rounded_average', 'exact_all_one'].includes(inputBasis) || (inputBasis === 'exact_all_one' && grade !== 1))
+      throw new Error('Exact all-one input requires grade 1');
+    const halfWidth = inputBasis === 'exact_all_one' ? 0 : b.roundingHalfWidth5;
+    const low = Math.max(1, grade - halfWidth), high = Math.min(5, grade + halfWidth);
     const scenarios = Object.fromEntries(names.map(name => {
       const c = b.curves[name], band = inverse(c, low, high);
       return [name, { range9: band.range, exactRange9: inverse(c, grade, grade).range,
+        tableRoundingRange9: inverse(c, Math.max(1, grade - b.roundingHalfWidth5), Math.min(5, grade + b.roundingHalfWidth5)).range,
         supportTruncated: low < c.y5[0] - 1e-10 || high > c.y5[c.y5.length - 1] + 1e-10,
         maxSourceGap9: band.gap }];
     })) as Record<Scenario, ScenarioMatch>;
     const ranges = names.flatMap(name => scenarios[name].range9 ? [scenarios[name].range9!] : []);
-    return { modelVersion: b.modelVersion, grade5: grade, estimate9: null,
+    return { modelVersion: scenarioRuntimeVersion, grade5: grade, estimate9: null, inputBasis,
       status: ranges.length === 2 ? 'source_scenarios' : ranges.length ? 'partial_support' : 'outside_source_support',
       // A partial source must not masquerade as a complete combined envelope.
       grade9Range: ranges.length === 2 ? [Math.min(...ranges.map(r => r[0])), Math.max(...ranges.map(r => r[1]))] : null,

@@ -4,6 +4,18 @@ import bundle from '../data/scenario-model.v05.json';
 import { createScenarioReference, formatScenarioRange } from './scenarioReference';
 
 const model = createScenarioReference(bundle);
+test('exact all-one input has an optimistic point and preserves the conservative plateau', () => {
+  const exact = model.calculate(1, 'exact_all_one'), rounded = model.calculate(1);
+  expect(formatScenarioRange(exact.scenarios.optimistic.range9)).toBe('1.00');
+  expect(formatScenarioRange(exact.scenarios.conservative.range9)).toBe('1.00~1.55');
+  expect(formatScenarioRange(rounded.scenarios.optimistic.range9)).toBe('1.00~1.02');
+  expect(formatScenarioRange(rounded.scenarios.conservative.range9)).toBe('1.00~1.56');
+  expect(exact.scenarios.optimistic.tableRoundingRange9).toEqual(rounded.scenarios.optimistic.range9);
+  expect(exact.scenarios.conservative.tableRoundingRange9).toEqual(rounded.scenarios.conservative.range9);
+  expect(exact.estimate9).toBeNull();
+  expect(() => model.calculate(1.001, 'exact_all_one')).toThrow();
+  expect(() => model.calculate(1, 'unknown' as never)).toThrow();
+});
 test('4,001 inputs match independent Python interval inversion for both scenarios', () => {
   const gold = JSON.parse(readFileSync('../work/_research/five-to-nine-2026-11-26/trained-scenario-model/parity.json', 'utf8'));
   for (const row of gold) {

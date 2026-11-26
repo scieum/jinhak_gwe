@@ -56,12 +56,14 @@ export function fiveToNineFor(grades: readonly GradeRecord[], combination: strin
   const semesters = new Set(eligible.map(g => g.semester)).size;
   const totalCredits = ranked.reduce((sum, g) => sum + g.credits, 0);
   const g5 = totalCredits ? ranked.reduce((sum, g) => sum + g.rank_grade! * g.credits, 0) / totalCredits : null;
-  const numericModel = g5 === null ? null : referenceConversion(g5);
+  const allOne = ranked.length > 0 && ranked.every(g => g.rank_grade === 1);
+  const numericModel = g5 === null ? null : referenceConversion(g5, allOne ? 'exact_all_one' : 'rounded_average');
   const range = numericModel?.grade9Range ?? null;
   const excludedCount = eligible.length - ranked.length;
   const smallCount = eligible.filter(g => g.rank_grade == null || (g.enrolled_count != null
     && g.enrolled_count <= fiveToNineConfig.confidence.smallClassMax)).length;
   const basisNotes = ['선택한 교과의 학점 가중평균을 사용했어요. 자료별 평균 정의와 모집단 차이가 남아 있어요.',
+    ...(allOne ? ['반영 과목이 모두 1등급이라 정확한 1.00으로 계산했어요. 낙관 대응은 1.00이며, 보수표의 1.00~1.55는 하나로 구분할 수 없는 범위예요.'] : []),
     `입력은 ${semesters}개 학기예요. 예상 대응표와 반영 학기·교과 정의가 일치하는지는 별도 확인이 필요해요.`,
     '낙관·보수는 서로 다른 가정이에요. 하나의 대표값으로 평균내지 않아요.',
     ...(numericModel && numericModel.status !== 'source_scenarios' ? ['자료 지원 구간이 부족해 전체 참고 범위를 산출하지 않아요.'] : [])];
@@ -76,6 +78,7 @@ export function fiveToNineFor(grades: readonly GradeRecord[], combination: strin
     trace: [
       { id: 'model', label: '자체 수치 모델', value: `v${referenceModelRelease.version} · 참고 추정` },
       { id: 'g5', label: '학점 가중 5등급 평균', value: g5 ?? '미산출' },
+      { id: 'input-basis', label: '입력 기준', value: allOne ? '반영 과목 모두 1등급 · 정확한 1.00' : '평균 입력 · 반올림 범위 포함' },
       { id: 'scope', label: '반영 교과 · 학기', value: `${combo} · ${semesters}개 학기` },
       { id: 'excluded', label: '석차등급 미산출·수강자 5명 이하 제외', value: excludedCount },
       { id: 'optimistic', label: '낙관 시나리오', value: formatScenarioRange(numericModel?.scenarios.optimistic.range9 ?? null) },

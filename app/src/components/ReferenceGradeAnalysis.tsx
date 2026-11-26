@@ -34,7 +34,7 @@ export function ReferenceGradeAnalysis({ viewTabs, desktop }: { viewTabs: ReactN
       <tr><th scope="row">학점 가중 5등급 평균</th><td className="num">{r.g5?.toFixed(2)}</td></tr>
       <tr><th scope="row">낙관 시나리오</th><td className="num">{formatScenarioRange(r.numericModel?.scenarios.optimistic.range9 ?? null)}</td></tr>
       <tr><th scope="row">보수 시나리오</th><td className="num">{formatScenarioRange(r.numericModel?.scenarios.conservative.range9 ?? null)}</td></tr>
-    </tbody></table><p className="t-body-sm text-muted">두 시나리오는 별개의 가정이에요. 하나의 대표값으로 합치지 않으며 범위에는 표의 반올림을 반영해요.</p></section>;
+    </tbody></table><p className="t-body-sm text-muted">두 시나리오는 별개의 가정이에요. {r.numericModel?.inputBasis === 'exact_all_one' ? '반영 과목이 모두 1등급이라 정확한 대응을 표시해요. 보수표의 겹친 범위는 그대로 보존해요.' : '하나의 대표값으로 합치지 않으며 범위에는 반올림을 반영해요.'}</p></section>;
   const reasonCard = <section className="f2n-card" aria-label="환산 해석 기준"><h3 className="t-heading-4">환산 해석 기준</h3>
     <table className="data-table f2n-reasons"><tbody><tr><th scope="row">반영 과목</th><td>{r.stats.rankedCount}개</td></tr>
       <tr><th scope="row">환산 제외 과목</th><td>{r.stats.excludedCount}개</td></tr>

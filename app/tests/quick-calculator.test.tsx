@@ -4,6 +4,23 @@ import { QuickGradeCalculator } from '../src/components/QuickGradeCalculator';
 
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 const field = (label: string) => screen.getByRole('textbox', { name: label }) as HTMLInputElement;
+test('1.00 distinguishes exact all-one grades from a rounded average and resets the calculation basis for other inputs', () => {
+  render(<QuickGradeCalculator />);
+  fireEvent.change(field('5등급제 평균'), { target: { value: '1.00' } });
+  expect(field('낙관 시나리오').value).toBe('1.00');
+  expect(field('보수 시나리오').value).toBe('1.00~1.55');
+  expect((screen.getByRole('radio', { name: '모든 반영 과목이 1등급' }) as HTMLInputElement).checked).toBe(true);
+  fireEvent.click(screen.getByRole('radio', { name: '반올림된 평균 1.00' }));
+  expect(field('낙관 시나리오').value).toBe('1.00~1.02');
+  expect(field('보수 시나리오').value).toBe('1.00~1.56');
+  fireEvent.click(screen.getByRole('radio', { name: '모든 반영 과목이 1등급' }));
+  fireEvent.change(field('5등급제 평균'), { target: { value: '1.17' } });
+  expect(screen.queryByRole('radio')).toBeNull();
+  expect(field('낙관 시나리오').value).toBe('1.41~1.44');
+  fireEvent.change(field('5등급제 평균'), { target: { value: '1.001' } });
+  expect(screen.queryByRole('radio')).toBeNull();
+  expect(field('낙관 시나리오').value).not.toBe('1.00');
+});
 test('DB·AI·네트워크 없이 v0.5 두 시나리오를 즉시 계산한다', () => {
   const fetch = vi.fn(() => { throw new Error('network forbidden'); });
   vi.stubGlobal('fetch', fetch);

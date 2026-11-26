@@ -4,6 +4,20 @@ import { expect, test } from 'vitest';
 import { referenceConversion, referenceModelRelease } from '../src/domain/referenceConversion';
 import { fiveToNineFor } from '../src/domain/results';
 import { subject } from './fixtures';
+import { formatScenarioRange } from '../src/engine/scenarioReference';
+
+test('only actual all-one subject records qualify, not an average displayed as 1.00', () => {
+  const exact = fiveToNineFor([subject({ rank_grade: 1 }), subject({ id: 'b', rank_grade: 1, credits: 7 })], '전 교과');
+  expect(exact.numericModel?.inputBasis).toBe('exact_all_one');
+  expect(formatScenarioRange(exact.numericModel!.scenarios.optimistic.range9)).toBe('1.00');
+  expect(formatScenarioRange(exact.numericModel!.scenarios.conservative.range9)).toBe('1.00~1.55');
+  const near = fiveToNineFor([...Array.from({ length: 10 }, (_, i) => subject({ id: String(i), credits: 30, rank_grade: 1 })),
+    subject({ id: 'two', credits: 1, rank_grade: 2 })], '전 교과');
+  expect(near.g5!.toFixed(2)).toBe('1.00');
+  expect(near.numericModel?.inputBasis).toBe('rounded_average');
+  expect(referenceConversion('1.001', 'exact_all_one')).toBeNull();
+  expect(referenceConversion('1.00')?.inputBasis).toBe('rounded_average');
+});
 
 test('배포 계수는 확정한 v0.5 연구 산출물과 동일하고 실증 검증 상태를 바꾸지 않는다', () => {
   expect(readFileSync(resolve('src/data/scenario-model.v05.json'), 'utf8')).toBe(
