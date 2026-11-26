@@ -11,9 +11,7 @@ import { MEMO_AREAS, nextState, soonestCounsel, upcomingCounsel, submissionRows,
 import { examsByRecent } from '../domain/minimum';
 import { schoolAverage } from '../domain/scoreImport';
 import { fiveToNineFor } from '../domain/results';
-import { g5ToPct, pctToG9, verified } from '../engine/fiveToNine';
-import type { ConversionConfig } from '../engine/fiveToNineTypes';
-import fiveToNineConfig from '../data/conversion-config.json';
+import { referenceConversion } from '../domain/referenceConversion';
 import { dataAsOf } from '../data/catalog';
 import { useSampleMode } from '../data/sample';
 import { SAMPLE_CLASS } from '../data/sample/teacher';
@@ -29,7 +27,6 @@ import '../styles/counsel.css';
 const today = () => new Date().toLocaleDateString('sv-SE');
 const short = (u: string) => u.replace(/대학교$/, '대');
 const md = (d: string) => d.slice(5);
-const cfg = fiveToNineConfig as ConversionConfig;
 type ListFilter = 'all' | 'need';
 type HistoryFilter = 'all' | '수시로' | 'waiting';
 type Item = { kind: 'memo'; at: string; memo: Memo } | { kind: 'system'; at: string; card: CardRecord; v: number };
@@ -73,14 +70,15 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
   const minOf = (n: string) => latestMinimum(n, c);
   // 상담 필요 = 우리 반 홈과 같은 신호(최저 근접·미충족 · 카드 경고 · 성적 하락)
   const need = (n: string) => signals(rowOf(n), grade(n), minOf(n)?.judged.verdict).length > 0;
-  /** 환산 9등급: 과목별 성적이 있으면 학생 5 to 9와 같은 엔진 범위(검수된 R-CONV-003·004만), 학기 평균만 있으면 A-1 한 값. */
+  /** 학생 화면과 같은 v0.4 참고 모델. */
   const g9Of = (n: string) => {
     const records = grade(n)?.records;
     const r = records?.length ? fiveToNineFor(records, '전 교과') : null;
-    if (r?.display && r.g5 !== null) return { g5: r.g5, range: `약 ${r.display.min.toFixed(1)}~${r.display.max.toFixed(1)}`, sub: `대표 ${r.representative!.toFixed(1)} · 신뢰도 ${r.confidence}`, steps: r.trace.map(t => `${t.label} ${typeof t.value === 'number' ? t.value.toFixed(2) : t.value}`) };
-    const g5 = schoolAverage(grade(n)); if (g5 === null || !verified(cfg, 'R-CONV-003')) return null;
-    const pct = g5ToPct(g5, cfg), g9 = pctToG9(pct, cfg);
-    return { g5, range: `약 ${g9.toFixed(1)}`, sub: 'A-1 평균 기반', steps: [`내신 5등급 평균 ${g5.toFixed(2)} (불러온 학기 평균의 단순 평균)`, `5등급 누적비 약 ${pct.toFixed(1)}% (R-CONV-003)`, `9등급 누적비 구간에서 옮기면 약 ${g9.toFixed(1)} (A-1)`] };
+    if (r && r.min !== null && r.max !== null && r.g5 !== null) return { g5: r.g5, range: `약 ${r.min.toFixed(2)}~${r.max.toFixed(2)}`, sub: `대표 ${r.representative?.toFixed(2) ?? '미산출'} · 참고 추정`, steps: r.trace.map(t => `${t.label} ${typeof t.value === 'number' ? t.value.toFixed(2) : t.value}`) };
+    const g5 = schoolAverage(grade(n)); if (g5 === null) return null;
+    const result = referenceConversion(g5), range = result?.grade9Range;
+    if (!range) return null;
+    return { g5, range: `약 ${range[0].toFixed(2)}~${range[1].toFixed(2)}`, sub: `대표 ${result?.estimate9?.toFixed(2) ?? '미산출'} · 참고 추정`, steps: [`내신 5등급 평균 ${g5.toFixed(2)} (불러온 학기 평균의 단순 평균)`, '자체 수치 모델 v0.4 · 산식 미지정 참고 시나리오', '자료의 성적 정의와 모집단이 달라 참고 범위로 해석해요'] };
   };
   const line2 = (s: Student) => {
     const g = g9Of(s.number), m = minOf(s.number), due = upcoming(s.number), k = mine(s.number).length;

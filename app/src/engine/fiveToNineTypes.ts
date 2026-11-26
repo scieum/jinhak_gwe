@@ -72,7 +72,7 @@ export interface ConversionTable {
   n: number;
   license_status: LicenseStatus;
   review_status: ReviewStatus;
-  /** converted9_low: 같은 평균 안에서 원표가 범위로 낸 아래 끝(예: 부산 1.00 → 1.15~1.45) */
+  /** converted9_low: 같은 평균 안에서 사용 가능한 표가 범위로 낸 아래 끝 */
   points: { avg5: number; converted9: number; converted9_low?: number; cumulative_pct?: number }[];
   source_url?: string;
   sample?: boolean;

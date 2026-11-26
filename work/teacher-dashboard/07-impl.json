@@ -1,10 +1,15 @@
 {
   "slug": "teacher-dashboard",
   "gate": "G5",
-  "pass": true,
-  "errors": [],
-  "back_to": null,
-  "same_fail_streak": 0,
+  "pass": false,
+  "errors": [
+    "V 1440: 차이 영역 x 792 y 848 56×16",
+    "V 1440: 차이 영역 x 768 y 624 40×16",
+    "V 1440: 차이 영역 x 768 y 808 40×16",
+    "V 1440: 차이 영역 x 792 y 888 56×8"
+  ],
+  "back_to": "S5",
+  "same_fail_streak": 1,
   "route": "/teacher/teacher-dashboard",
   "allowed": [],
   "notes": [
@@ -17,7 +22,7 @@
     "1440": "work/_cache/impl/teacher-dashboard-1440.png"
   },
   "ssim": {
-    "390": 0.9737,
-    "1440": 0.9728
+    "390": 0.9694,
+    "1440": 0.9668
   }
 }

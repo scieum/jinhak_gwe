@@ -29,14 +29,14 @@ function student(combo: SubjectCombo, shares: [number, number, number]): GradeSe
 }
 
 const spec: [SubjectCombo, [number, number, number], number, number, number, number, [number, number], number][] = [
-  // 조합, 학점 비중, g5, A-1, A-2, B, 표시 범위, 대표값 (02-spec v3.2-1 검산 표)
-  ['전 교과', [69, 25, 6], 1.31, 2.2916, 2.0918, 2.1282, [2.0, 2.3], 2.1282],
-  ['국수영사과', [76, 19, 5], 1.24, 2.1663, 1.9678, 1.9728, [1.9, 2.2], 1.9728],
-  ['국수영사', [65, 30, 5], 1.35, 2.3632, 2.1657, 2.21, [2.1, 2.4], 2.21],
-  ['국수영과', [82, 14, 4], 1.18, 2.0589, 1.8617, 1.8396, [1.8, 2.1], 1.8617],
+  // 조합, 학점 비중, g5, A-1, A-2, B, 표시 범위, 대표값. B는 독립 가상 직선 y=1.8x-0.2.
+  ['전 교과', [69, 25, 6], 1.31, 2.2916, 2.0918, 2.1580, [2.0, 2.3], 2.1580],
+  ['국수영사과', [76, 19, 5], 1.24, 2.1663, 1.9678, 2.0320, [1.9, 2.2], 2.0320],
+  ['국수영사', [65, 30, 5], 1.35, 2.3632, 2.1657, 2.2300, [2.1, 2.4], 2.2300],
+  ['국수영과', [82, 14, 4], 1.18, 2.0589, 1.8617, 1.9240, [1.8, 2.1], 1.9240],
 ];
 
-describe('v3.2 검산 숫자 재현 (±0.001)', () => {
+describe('기존 A 방식 검산과 독립 가상 B 보간 (±0.001)', () => {
   test.each(spec)('%s', (combo, shares, g5, a1, a2, b, disp, rep) => {
     const r = convertFiveToNine(student(combo, shares), combo, cfg010, tables);
     expect(r.g5).toBeCloseTo(g5, 6);
@@ -159,10 +159,17 @@ describe('A-3 분포비율 보정 (R-CONV-011)', () => {
 });
 
 describe('후보 방식 R-CONV-012 · 013 (검수 전 draft)', () => {
-  // 비교용: 규칙과 후보 실측표를 메모리에서만 verified · allowed로 바꾼다
+  // 기관 표와 무관한 가상 데이터로 허락·검수·보간 분기를 확인한다.
   const open: ConversionConfig = {
     ...withRules(['R-CONV-012', 'R-CONV-013']),
-    candidateTables: baseCfg.candidateTables!.map((t) => ({ ...t, license_status: 'allowed' as const, review_status: 'verified' as const })),
+    candidateTables: [
+      { ...tables[0], id: 'synthetic-a', basis_semesters: 2, points: [
+        { avg5: 1, converted9: 1.8 }, { avg5: 2, converted9: 3.6 }, { avg5: 3, converted9: 5.4 },
+      ] },
+      { ...tables[0], id: 'synthetic-b', basis_semesters: 2, points: [
+        { avg5: 1, converted9: 1.9, converted9_low: 1.2 }, { avg5: 2, converted9: 3.8 }, { avg5: 3, converted9: 5.6 },
+      ] },
+    ],
   };
   const mix = (parts: [number, number][]): GradeSet => ({ '1-1': parts.map(([g, c]) => sub({ grade5: g, credits: c })) });
   const ok = (r: ReturnType<typeof convertFiveToNine>, id: 'R-CONV-012' | 'R-CONV-013') => {
@@ -171,10 +178,10 @@ describe('후보 방식 R-CONV-012 · 013 (검수 전 draft)', () => {
     return c;
   };
 
-  test('설정의 두 규칙과 후보 실측표는 draft · 허락 전', () => {
+  test('설정의 두 규칙은 draft이며 기관 후보표는 포함하지 않는다', () => {
     expect(baseCfg.rules['R-CONV-012'].review_status).toBe('draft');
     expect(baseCfg.rules['R-CONV-013'].review_status).toBe('draft');
-    expect(baseCfg.candidateTables!.every((t) => t.review_status === 'draft' && t.license_status === 'pending')).toBe(true);
+    expect(baseCfg.candidateTables).toEqual([]);
   });
 
   test('검수 전이면 후보는 pending, 학생 결과(min/max/대표값/표시)는 후보를 열어도 같다', () => {
@@ -209,16 +216,19 @@ describe('후보 방식 R-CONV-012 · 013 (검수 전 draft)', () => {
     expect(a.value!).toBeCloseTo(1.78, 2);
   });
 
-  test('R-CONV-012 실측표 범위: 1.0 → 1.15~1.45(부산 원표 범위 포함), 2.0 → 3.16~3.35, 표 밖은 unavailable', () => {
-    expect(ok(convertFiveToNine(mix([[1, 3]]), '전 교과', open), 'R-CONV-012')).toMatchObject({ min: 1.15, max: 1.45 });
+  test('R-CONV-012 가상 표의 하한·상한·보간과 표 밖 unavailable', () => {
+    expect(ok(convertFiveToNine(mix([[1, 3]]), '전 교과', open), 'R-CONV-012')).toMatchObject({ min: 1.2, max: 1.9 });
     const two = ok(convertFiveToNine(mix([[2, 3]]), '전 교과', open), 'R-CONV-012');
-    expect([two.min, two.max]).toEqual([3.16, 3.35]);
+    expect([two.min, two.max]).toEqual([3.6, 3.8]);
     expect(two.note).toContain('2개 학기');
+    const middle = ok(convertFiveToNine(mix([[1, 1], [2, 1]]), '전 교과', open), 'R-CONV-012');
+    expect(middle.min).toBeCloseTo(2.7, 6);
+    expect(middle.max).toBeCloseTo(2.85, 6);
     expect(convertFiveToNine(mix([[4, 3]]), '전 교과', open).candidates['R-CONV-012'].status).toBe('unavailable');
   });
 
   test('R-CONV-012 규칙만 열고 표가 허락 전이면 계산하지 않는다', () => {
-    const r = convertFiveToNine(mix([[1, 3]]), '전 교과', withRules(['R-CONV-012']));
+    const r = convertFiveToNine(mix([[1, 3]]), '전 교과', { ...withRules(['R-CONV-012']), candidateTables: open.candidateTables!.map((t) => ({ ...t, license_status: 'pending' as const })) });
     expect(r.candidates['R-CONV-012']).toEqual({ status: 'pending', reason: '후보 실측표 검수·사용 허락 전이에요' });
   });
 });

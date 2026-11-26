@@ -72,3 +72,7 @@
   .f2n-methods tbody tr { height: 45px; }
   .f2n-card > p { font-size: 14px; line-height: 21px; }
 }
+
+/* v0.4 uses two result columns instead of the former method-comparison table. */
+.f2n .f2n-reference-methods thead th:first-child { width: 65%; }
+.f2n .f2n-reference-methods thead th:nth-child(2) { text-indent: 0; }

@@ -4,10 +4,11 @@ import { admissionYear, confidenceRule, programs } from '../data/catalog';
 import { judgeRange } from '../engine/judgment';
 import { compareBasis, type ComparisonBasis } from './comparison';
 import { validateGrade, type GradeRecord } from './student';
-import { SUBJECT_COMBOS, convertFiveToNine, type SubjectCombo } from '../engine/fiveToNine';
-import type { ConversionConfig, GradeSet } from '../engine/fiveToNineTypes';
+import { SUBJECT_COMBOS, floor1, ceil1, type SubjectCombo, type FiveToNineResult } from '../engine/fiveToNine';
+import type { CalibratedFusionResult } from '../engine/calibratedFusion';
 import fiveToNineConfig from '../data/conversion-config.json';
 import { activeRules } from '../data/sample/rules';
+import { referenceConversion, referenceModelRelease } from './referenceConversion';
 
 export const combinations: Record<string, readonly string[] | null> = {
   '전 교과': null, '국수영사과': ['국어', '수학', '영어', '사회', '과학'],
@@ -38,19 +39,48 @@ export function conversionFor(grades: readonly GradeRecord[], combination: strin
   }))] };
 }
 
-/**
- * 5 to 9 내 성적 분석(PRD 9장 R-CONV). 2026-11-20 사용자 결정: PRD 확정 공식 R-CONV-003/004는 검수된 규칙으로 계산해요.
- * 검수 전인 R-CONV-010·011, 허락 전 실측표(B)는 엔진이 계속 막아요(NEVER-1).
- */
-export function fiveToNineFor(grades: readonly GradeRecord[], combination: string) {
-  const set: GradeSet = {};
-  for (const g of grades.filter(x => !validateGrade(x).length)) {
-    const d = g.achievement_distribution;
-    (set[g.semester] ??= []).push({ name: g.name, group: g.subject_group, type: g.type, credits: g.credits, grade5: g.rank_grade, rawScore: g.raw_score, mean: g.subject_mean,
-      achievement: g.achievement === 'F' ? undefined : g.achievement, enrolled: g.enrolled_count, isJoint: g.is_joint, fixedCutoff: g.division === 'fixed' ? true : undefined,
-      distribution: d ? { A: d[0], B: d[1], C: d[2], D: d[3], E: d[4] } : undefined });
-  }
-  return convertFiveToNine(set, (combination in SUBJECT_COMBOS ? combination : '전 교과') as SubjectCombo, fiveToNineConfig as ConversionConfig);
+export interface AppReferenceConversion extends FiveToNineResult {
+  numericModel: CalibratedFusionResult | null;
+  modelVersion: string;
+  basisNotes: string[];
+}
+
+/** User-authorized reference model. Input weighting and exclusions remain explicit. */
+export function fiveToNineFor(grades: readonly GradeRecord[], combination: string): AppReferenceConversion {
+  const combo = (combination in SUBJECT_COMBOS ? combination : '전 교과') as SubjectCombo;
+  const groups: readonly string[] | null = SUBJECT_COMBOS[combo];
+  const eligible = grades.filter(g => !validateGrade(g).length
+    && ['공통', '일반선택', '진로선택', '융합선택'].includes(g.type)
+    && (!groups || groups.includes(g.subject_group)));
+  const ranked = eligible.filter(g => g.rank_grade != null && !(g.enrolled_count != null && g.enrolled_count <= 5));
+  const semesters = new Set(eligible.map(g => g.semester)).size;
+  const totalCredits = ranked.reduce((sum, g) => sum + g.credits, 0);
+  const g5 = totalCredits ? ranked.reduce((sum, g) => sum + g.rank_grade! * g.credits, 0) / totalCredits : null;
+  const numericModel = g5 === null ? null : referenceConversion(g5);
+  const range = numericModel?.grade9Range ?? null;
+  const excludedCount = eligible.length - ranked.length;
+  const smallCount = eligible.filter(g => g.rank_grade == null || (g.enrolled_count != null
+    && g.enrolled_count <= fiveToNineConfig.confidence.smallClassMax)).length;
+  const basisNotes = ['선택한 교과의 학점 가중평균을 사용했어요. 자료별 평균 정의와 모집단 차이가 남아 있어요.',
+    ...(semesters !== 3 ? [`입력은 ${semesters}개 학기예요. 모델의 현재 성적 참고자료는 3개 학기 기준이에요.`] : []),
+    ...(numericModel && numericModel.estimate9 === null ? ['일부 곡선의 지원 구간 밖이라 대표값 없이 범위만 표시해요.'] : [])];
+  const legacy = { status: 'unavailable' as const, reason: '자체 수치 모델 v0.4 참고 환산으로 통합했어요' };
+  return { combo, g5, semesters, numericModel, modelVersion: referenceModelRelease.version, basisNotes,
+    a1: legacy, a2: legacy, a3: legacy, b: legacy, bTable: null,
+    min: range?.[0] ?? null, max: range?.[1] ?? null, representative: numericModel?.estimate9 ?? null,
+    display: range ? { min: floor1(range[0]), max: ceil1(range[1]) } : null,
+    spread: range ? range[1] - range[0] : null, confidence: '낮음',
+    stats: { rankedCount: ranked.length, excludedCount, smallCount, smallRatio: eligible.length ? smallCount / eligible.length : 0 },
+    candidates: { 'R-CONV-012': legacy, 'R-CONV-013': legacy },
+    trace: [
+      { id: 'model', label: '자체 수치 모델', value: `v${referenceModelRelease.version} · 참고 추정` },
+      { id: 'g5', label: '학점 가중 5등급 평균', value: g5 ?? '미산출' },
+      { id: 'scope', label: '반영 교과 · 학기', value: `${combo} · ${semesters}개 학기` },
+      { id: 'excluded', label: '석차등급 미산출·수강자 5명 이하 제외', value: excludedCount },
+      { id: 'representative', label: '참고 대표값', value: numericModel?.estimate9 ?? '지원 구간 부족으로 미산출' },
+      { id: 'range', label: '자료 차이·검증잔차 반영 범위', value: range ? `${range[0].toFixed(2)}~${range[1].toFixed(2)}` : '미산출' },
+      ...basisNotes.map((note, i) => ({ id: `basis-${i}`, label: '해석 기준', value: note })),
+    ] };
 }
 
 /** 관심 대학 하나의 교과 전형 판정(될각과 같은 조건: 검수된 입결 · 같은 비교 기준, 샘플 모드면 sample 표식 값). 없으면 null(NEVER-1). */

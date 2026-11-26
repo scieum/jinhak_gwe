@@ -1,7 +1,7 @@
-/** range-bar-5to9(Figma 821:787): 1~9 등급 색 트랙 · 범위 괄호 · 대표값(말풍선 + 원 + 세로선). 검수된 환산 결과만 위치를 줘요. */
+/** range-bar-5to9(Figma 821:787): 범위와 산출 가능한 대표값을 표시해요. */
 export function GradeRange({ min, max, representative, digits = 1 }: { min: number; max: number; representative?: number; digits?: number }) {
   const at = (value: number) => `calc(20px + (100% - 40px) * ${Math.max(0, Math.min(1, (value - 1) / 8))})`; // 트랙 양끝 20px 안쪽 = 1 · 9
-  const one = (v: number) => (Math.round(v * 10) / 10).toFixed(1);
+  const one = (v: number) => v.toFixed(digits);
   return <div className="grade-range" role="img" aria-label={`환산 9등급 약 ${one(min)}에서 ${one(max)} 사이${representative === undefined ? '' : `, 대표값 ${one(representative)}`}`}>
     {/* 1·9는 반 칸, 2~8은 한 칸: 색이 눈금 숫자 가운데에 오게 */}
     <div className="grade-range-colors">{Array.from({ length: 9 }, (_, i) => <span key={i} style={{ background: `var(--color-grade-${i + 1})`, flexGrow: i === 0 || i === 8 ? 1 : 2 }} />)}</div>

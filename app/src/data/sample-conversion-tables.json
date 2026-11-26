@@ -1,42 +1,56 @@
 {
-  "_comment": "테스트용 예시 실측표(sample). 대응점은 work/_ref/conversion-methods.md 부산 1차(6과목) 표 값을 옮긴 것이며 실제 서비스 데이터가 아니다. 원자료의 대학 라인은 담지 않는다.",
+  "_comment": "독립 생성한 가상 테스트 자료. 실측자료·기관 환산표에서 가져온 값이 아니다. allowed/verified는 테스트 분기용 상태이며 실증 검증을 뜻하지 않는다. 서비스 환산에 사용하지 않는다.",
   "tables": [
     {
       "id": "sample-allowed-3sem",
-      "source": "예시 실측표(허락됨 · 테스트용)",
+      "source": "독립 가상 데이터 (테스트 전용)",
       "source_year": 2026,
       "basis_semesters": 3,
       "subject_scope": "전 교과",
       "region": "예시",
-      "n": 15978,
+      "n": 100,
       "license_status": "allowed",
       "review_status": "verified",
       "sample": true,
       "points": [
-        { "avg5": 1.0, "converted9": 1.64 },
-        { "avg5": 1.1666666666666667, "converted9": 1.81 },
-        { "avg5": 1.3333333333333333, "converted9": 2.18 },
-        { "avg5": 1.5, "converted9": 2.48 },
-        { "avg5": 2.0, "converted9": 3.44 },
-        { "avg5": 2.5, "converted9": 4.22 },
-        { "avg5": 3.0, "converted9": 5.08 },
-        { "avg5": 4.0, "converted9": 6.69 }
+        {
+          "avg5": 1,
+          "converted9": 1.6
+        },
+        {
+          "avg5": 2,
+          "converted9": 3.4
+        },
+        {
+          "avg5": 3,
+          "converted9": 5.2
+        },
+        {
+          "avg5": 4,
+          "converted9": 7.0
+        }
       ]
     },
     {
       "id": "sample-pending-3sem",
-      "source": "예시 실측표(사용 허락 확인 중 · 테스트용)",
+      "source": "독립 가상 데이터 (테스트 전용)",
       "source_year": 2026,
       "basis_semesters": 3,
       "subject_scope": "전 교과",
       "region": "예시",
-      "n": 15566,
+      "n": 120,
       "license_status": "pending",
       "review_status": "verified",
       "sample": true,
       "points": [
-        { "avg5": 1.0, "converted9": 1.55 },
-        { "avg5": 2.0, "converted9": 3.24 }
+        {
+          "avg5": 1,
+          "converted9": 1.7
+        },
+        {
+          "avg5": 2,
+          "converted9": 3.5
+        }
       ]
     }
   ]

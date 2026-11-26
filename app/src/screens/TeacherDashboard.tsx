@@ -10,9 +10,7 @@ import { nextDue, nextState, submissionRows, type SubmissionRow } from '../domai
 import { fiveToNineFor } from '../domain/results';
 import { decline, schoolAverage, type SchoolGrades } from '../domain/scoreImport';
 import { examMonth } from '../domain/studentRecord';
-import { g5ToPct, pctToG9, verified } from '../engine/fiveToNine';
-import type { ConversionConfig } from '../engine/fiveToNineTypes';
-import fiveToNineConfig from '../data/conversion-config.json';
+import { referenceConversion } from '../domain/referenceConversion';
 import { downloadFile } from '../io/backup';
 import { xlsxOf } from '../io/grades';
 import { teacherDb, type ClassState } from '../store/teacherDb';
@@ -27,11 +25,11 @@ export function WarningBadge({ count }: { count: number }) {
   return count ? <span className="judge-badge judge-reach">▲ 경고 {count}</span> : <span className="text-muted">–</span>;
 }
 
-/** 환산 9등급(A-1, 학생 5 to 9와 같은 설정). R-CONV-003이 검수 전이면 계산하지 않아요(NEVER-1). */
+/** 학생 계산기와 같은 v0.4 참고 환산. */
 export function g9Label(g5: number | null) {
   if (g5 === null) return '성적 없음';
-  const cfg = fiveToNineConfig as ConversionConfig;
-  return verified(cfg, 'R-CONV-003') ? `약 ${pctToG9(g5ToPct(g5, cfg), cfg).toFixed(1)} (추정)` : '환산 준비 중';
+  const range = referenceConversion(g5)?.grade9Range;
+  return range ? `약 ${range[0].toFixed(2)}~${range[1].toFixed(2)}` : '환산 불가';
 }
 /** 학생의 가장 최근 모의고사로 본 1순위 수능 최저(교사가 넣은 목표 기준). 목표나 모의고사가 없으면 null. */
 export function latestMinimum(n: string, c: Pick<ClassState, 'mocks' | 'targets'>) {
@@ -49,10 +47,10 @@ export function signals(r: SubmissionRow, g?: SchoolGrades, min?: Verdict | null
   return out;
 }
 
-/** 5등급 평균 · 환산 9등급: 과목 성적이 있으면 5 to 9 엔진 범위(검수된 규칙만), 학기 평균만 있으면 A-1 한 값(학생 상담과 같음). */
+/** 과목 성적은 학점 가중평균, 학기 평균만 있으면 학기 단순평균을 같은 참고 모델에 입력. */
 function gradeOf(g?: SchoolGrades) {
   const r = g?.records?.length ? fiveToNineFor(g.records, '전 교과') : null;
-  if (r?.display && r.g5 !== null) return { g5: r.g5, g9: `약 ${r.display.min.toFixed(1)}~${r.display.max.toFixed(1)}`, sortKey: r.display.min };
+  if (r && r.min !== null && r.max !== null && r.g5 !== null) return { g5: r.g5, g9: `약 ${r.min.toFixed(2)}~${r.max.toFixed(2)}`, sortKey: r.min };
   const g5 = schoolAverage(g);
   return { g5, g9: g9Label(g5), sortKey: g5 === null ? 99 : g5 };
 }

@@ -40,7 +40,7 @@ test('성적이 있으면 범위 막대와 관심 대학 될각(검수 입결 �
 test('홈 상세 링크는 간편 계산 대신 저장한 내 성적 분석을 바로 연다', async () => {
   await studentDb.grades.put(subject());
   render(<MemoryRouter initialEntries={['/five-to-nine?view=mine']}><FiveToNine /></MemoryRouter>);
-  expect(await screen.findByRole('complementary', { name: '환산 신뢰도와 근거' })).toBeTruthy();
+  expect(await screen.findByRole('complementary', { name: '환산 해석과 근거' })).toBeTruthy();
   expect(screen.getByRole('button', { name: '내 성적 분석' }).getAttribute('aria-pressed')).toBe('true');
 });
 

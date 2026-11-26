@@ -23,7 +23,7 @@ const COMBO = '국수영사과'; // 될각 화면 기본 반영 교과와 같아
 // 시안: 관심 대학 행 둘째 줄은 전형만 "학생부교과 · 지역균형"(모집단위는 빼요)
 const programLine = (program: string) => program.replace(/\s*\((.+)\)$/, ' · $1');
 const one = (v: number) => (Math.round(v * 10) / 10).toFixed(1);
-const rangeText = (min: number | null, max: number | null) => min === null || max === null ? '환산 준비 중' : `약 ${(Math.floor(min * 10) / 10).toFixed(1)}~${(Math.ceil(max * 10) / 10).toFixed(1)}`;
+const rangeText = (min: number | null, max: number | null) => min === null || max === null ? '환산 준비 중' : `약 ${min.toFixed(2)}~${max.toFixed(2)}`;
 const dday = (date: string) => { const now = new Date(); const d = Math.round((Date.parse(`${date}T00:00:00`) - new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()) / 864e5); return d > 0 ? `D-${d}` : d === 0 ? 'D-day' : `D+${-d}`; };
 
 /** PC(≥1024)면 셸 머리(page-header)에, 모바일이면 화면 안에 그려요. */
@@ -72,13 +72,13 @@ export function HomeDashboard() {
         {has ? <section className="home-hero" aria-label="내 성적 요약">
           <div className="stat-tile home-stat"><span>내 환산 9등급</span><strong className="num">{rangeText(result.min, result.max)}</strong><p>{ready ? '5등급 평균을 9등급 기준으로 옮긴 추정 범위예요.' : '석차등급이 있는 과목을 입력하면 범위를 보여 드려요.'}</p></div>
           <p className="home-chips"><span>5등급 평균</span><b className="grade-chip num">{average === null ? '—' : one(average)}</b>
-            {result.representative !== null && <><span>대표값</span><b className="grade-chip grade-chip--9 num">{one(result.representative)}<sub>9</sub></b></>}
+            {result.representative !== null && <><span>대표값</span><b className="grade-chip grade-chip--9 num">{result.representative.toFixed(2)}<sub>9</sub></b></>}
             <span className="home-chips__count num">입력 과목 {data.grades.length}개</span></p>
         </section> : <section className="home-card home-empty" aria-label="내 성적 요약"><div className="empty-state"><Icon name="file-text" size={48} /><h2>아직 입력한 성적이 없어요</h2><p>성적표를 한 번 입력하면 {desktop ? '' : <br />}환산 9등급 범위를 {desktop ? '여기에서 ' : ''}볼 수 있어요.</p><Link className="button-primary" to="/grade-input">성적 입력하기</Link></div></section>}
         {!desktop && <PromoBanner closable />}{/* PC는 사이드바 아래(AppShell), 모바일은 사이드바가 없어 홈 이 자리 */}
         {has && <section className="home-card home-range" aria-label="5 to 9 내 위치">
           <h2>5 to 9 내 위치</h2>
-          {ready && <div className="home-range__bar"><GradeRange min={result.min!} max={result.max!} representative={result.representative ?? undefined} /><span className="data-status-badge">신뢰도 {result.confidence}</span></div>}
+          {ready && <div className="home-range__bar"><GradeRange min={result.min!} max={result.max!} representative={result.representative ?? undefined} digits={2} /><span className="data-status-badge">참고 추정 · v{result.modelVersion}</span></div>}
           <p className="home-range__note">방법마다 값이 조금씩 달라서 범위로 보여드려요.</p>
           <Link className="button-pill-soft" to="/five-to-nine?view=mine">5 to 9 자세히 보기</Link>
         </section>}

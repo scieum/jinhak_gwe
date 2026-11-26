@@ -6,7 +6,7 @@ import { subject, scoringRule } from './fixtures';
 import { studentDb } from '../src/store/studentDb';
 import { App } from '../src/App';
 import { programs } from '../src/data/catalog';
-import { currentComparisonBasis } from '../src/domain/results';
+import { currentComparisonBasis, fiveToNineFor } from '../src/domain/results';
 
 // Only this test module replaces release data with synthetic reviewed fixtures.
 vi.mock('../src/data/conversion-rules', async importOriginal => {
@@ -26,12 +26,13 @@ beforeEach(async () => {
 });
 afterEach(cleanup);
 const at = (path: string) => render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>);
-test('검수된 데이터가 있는 5→9 화면은 외측 반올림 범위를 표시', async () => {
+test('저장 성적의 5→9 화면은 v0.4 참고 범위를 표시', async () => {
   at('/five-to-nine');
   fireEvent.click(screen.getByRole('button', { name: '내 성적 분석' }));
-  // 5등급 2 -> 누적 22%; 9등급 3 + (22-17)/(31.5-17) = 3.344827...
-  expect(await screen.findByText('약 3.3~3.4')).toBeTruthy();
-  expect(screen.getAllByText(/A-2 과목 기반/).length).toBeGreaterThan(0);
+  const r = fiveToNineFor([subject()], '전 교과');
+  expect(await screen.findByText(`약 ${r.min!.toFixed(2)}~${r.max!.toFixed(2)}`)).toBeTruthy();
+  expect(screen.getByRole('region', { name: '수치 모델 계산' })).toBeTruthy();
+  expect(screen.queryByText(/A-2 과목 기반/)).toBeNull();
 });
 test('대학별 화면은 엔진 결과와 trace 표시', async () => {
   expect(scoringRule().review_status).toBe('verified');
