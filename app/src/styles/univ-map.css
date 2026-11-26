@@ -117,7 +117,7 @@
 .um-item > .t-body-sm { font-size: 13px; line-height: 20px; }
 .um-item > .t-body-sm:not(.text-muted) { color: var(--color-ink); }
 .um-item__go { top: 16px; transform: none; color: var(--color-ink); }
-.univ-map .disclaimer-note { display: flex; align-items: center; gap: 4px; margin: 0; color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; }
+.univ-map .disclaimer-note { display: flex; align-items: flex-start; gap: 4px; margin: 0; color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; }
 .um-sources { margin: 0; gap: 4px; font-size: 12px; line-height: 16.8px; }
 .um-sources p { margin: 0; }
 .univ-map .data-status-badge { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; font-size: 12px; font-weight: 600; line-height: 16.8px; }
