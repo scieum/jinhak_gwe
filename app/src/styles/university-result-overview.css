@@ -146,3 +146,5 @@
 .ar-card > .ar-others { margin-top: 8px; }
 .ar-card > .ar-source { margin-top: 12px; }
 @media (min-width: 1024px) { .ar-plot__track { cursor: ew-resize; } .ar-plot__body.is-dragging, .ar-plot__body.is-dragging * { cursor: ew-resize; user-select: none; } }
+
+.ar-year-choices { display: grid; gap: 8px; } /* 겹친 점 학년도 고르기(모달) */

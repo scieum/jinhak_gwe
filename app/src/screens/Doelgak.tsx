@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useReferenceCuts } from '../data/referenceCuts';
 import { departmentsFor, referenceDiffText } from '../domain/interestComparison';
-import type { Interest } from '../domain/interests';
+import { interestId, type Interest } from '../domain/interests';
 import { studentDb } from '../store/studentDb';
 import { collectedProgramPath } from '../domain/interests';
 import { fiveToNineFor } from '../domain/results';
@@ -75,12 +75,12 @@ const diffText = referenceDiffText;
 const AXIS = [1, 4] as const;
 const pos = (v: number) => Math.min(100, Math.max(0, (v - AXIS[0]) / (AXIS[1] - AXIS[0]) * 100));
 
-function MiniBar({ min, max, cut }: { min: number; max: number; cut?: number }) {
+function MiniBar({ min, max, cut, cutLabel = '70% 컷' }: { min: number; max: number; cut?: number; cutLabel?: string }) {
   min = lower(min); max = upper(max); // 글자 범위(약 2.3~2.6)와 같은 구간을 그려요
-  const label = `내 환산 9등급 약 ${fmt(min)}에서 ${fmt(max)} 사이${cut === undefined ? '' : `, 70% 컷 ${fmt(cut)}, 차이 ${diffText(max, cut)}`}`;
+  const label = `내 환산 9등급 약 ${fmt(min)}에서 ${fmt(max)} 사이${cut === undefined ? '' : `, ${cutLabel} ${fmt(cut)}, 차이 ${diffText(max, cut)}`}`;
   return <div className="dg-bar" role="img" aria-label={label}>
     <div className="dg-bar__track"><span className="dg-bar__range" style={{ left: `${pos(min)}%`, width: `${Math.max(pos(max) - pos(min), 2)}%` }} />{cut !== undefined && <span className="dg-bar__cut" style={{ left: `${pos(cut)}%` }} />}</div>
-    <div className="dg-bar__axis"><span>{AXIS[0]}</span>{cut !== undefined && <span className="dg-bar__cut-label" style={{ left: `${pos(cut)}%` }}>70% 컷</span>}<span>{AXIS[1]}</span></div>
+    <div className="dg-bar__axis"><span>{AXIS[0]}</span>{cut !== undefined && <span className="dg-bar__cut-label" style={{ left: `${pos(cut)}%` }}>{cutLabel}</span>}<span>{AXIS[1]}</span></div>
   </div>;
 }
 
@@ -116,7 +116,7 @@ function InterestReference({ data }: { data: StudentBackup }) {
           {cut && cut.row.program.trim() !== i.program.trim() && <span className="t-caption text-muted">비교한 전형: {cut.row.program}</span>}</div>
         {!i.department && (() => { const units = departmentsFor(i, rowsOf(i.university)); return units.length > 0 && <label className="dg-field"><span className="t-caption text-muted">학과 고르기</span>
           <span className="dg-select"><select className="text-input" value="" onChange={e => e.target.value && pickDepartment(i, e.target.value)}><option value="">학과를 골라 주세요</option>{units.map(u => <option key={u}>{u}</option>)}</select><Icon name="chevron-down" size={20} /></span></label>; })()}
-        {mine && <MiniBar min={mine.min} max={mine.max} cut={cut?.value} />}
+        {mine && <MiniBar min={mine.min} max={mine.max} cut={cut?.value} cutLabel={cut?.cut === 'cut_50' ? '50% 컷' : '70% 컷'} />}
         <div className="dg-card__chips"><span className="data-status-badge">판정 준비 중</span>{cut && <span className="data-status-badge">검수 전 참고자료</span>}</div>
         {/* 짝지은 입결 행의 대학·전형 이름으로 걸어야 원문 화면에서 찾아져요(전형계획 이름과 수집 이름이 달라요) */}
         {i.department && <Link className="t-link t-caption" to={cut ? collectedProgramPath(cut.row.university, cut.row.program, cut.row.recruit_unit) : collectedProgramPath(i.university, i.program, i.department)}>입결 원문 보기 ›</Link>}
@@ -166,6 +166,8 @@ export function Doelgak() {
     const judged = visible.filter(({ r }) => r?.status === 'ready'), waiting = visible.filter(({ r }) => r?.status !== 'ready');
     const visibleLanes = applied.judge === '전체' || track === '종합' ? lanes : lanes.filter(l => l.key === applied.judge);
     const noGrades = !data.grades.length, chips = chipsOf(applied);
+    const known = new Set(programs.map(p => interestId(p.university, p.program, p.department || undefined)));
+    const others = (data.interests ?? []).filter(i => !known.has(i.id));
     const board = [...(data.boards ?? [])].sort((a, b) => a.name.localeCompare(b.name, 'ko'))[0];
     const empty = noGrades ? { icon: 'file-text', title: '아직 입력한 성적이 없어요', body: '성적을 입력하면 검수된 기준으로 입결과 비교해요.', action: <Link className="button-primary" to="/grade-input">성적 입력하기</Link> }
       : conversion.status !== 'ready' ? { icon: 'file-text', title: conversion.reason, body: '석차등급이 있는 과목을 입력하면 검수된 기준으로 입결과 비교해요.', action: <Link className="button-primary" to="/grade-input">성적 입력하기</Link> }
@@ -217,6 +219,8 @@ export function Doelgak() {
               {group.length ? group.map(card) : !empty && <p className="t-caption text-muted">표시할 전형이 없어요</p>}</section>; })}</div>
             {!empty && applied.judge === '전체' && pendingGroups.map(g => <section className="dg-lane dg-pending" key={g.name} aria-label={`${g.name} 전형`}><header><span className="data-status-badge">{g.name}</span><span className="dg-count">{g.items.length}개</span></header><div className="dg-pending__cards">{g.items.map(card)}</div></section>)}
           </>}
+          {/* 판정 목록(검수된 전형)에 없는 관심 전형도 하트로 담았으면 참고 비교로 같이 보여요(샘플 모드에서도) */}
+          {others.length > 0 && <section className="dg-lane dg-pending dg-others" aria-label="관심 전형 참고 비교"><InterestReference data={{ ...data, interests: others }} /></section>}
           {empty && <div className="empty-state dg-empty"><Icon name={empty.icon} size={40} /><h3 className="t-heading-4">{empty.title}</h3><p className="t-body-sm">{empty.body}</p>{empty.action}</div>}
           <TraceAccordion trace={[...conversion.trace, ...(active?.r?.trace ?? [])]} />
           {active && <ComparisonDetails input={inputBasis} cut={active.p.cut_basis} />}

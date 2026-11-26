@@ -5,6 +5,8 @@ import { loadNationalCatalog, loadNationalYear, loadPlacementSource } from '../d
 import { dataAsOf } from '../data/catalog';
 import { defaultPlacementFilters, filterNationalRows, gradeCoordinate, matchesUniversity, placementBounds, statisticValue, statisticDetail, STATISTIC_LABELS, typeBucket, universityPoints, type CutField, type NationalPlacementRow, type PlacementFilters } from '../domain/nationalPlacement';
 import { currentUniversityName } from '../domain/universityIdentity';
+import { fiveToNineFor } from '../domain/results';
+import { useStudent } from '../store/studentDb';
 import { nextTableSort, sortTableRows, type TableSort } from '../domain/tableSort';
 import type { ResultRow } from '../domain/resultReview';
 import { SegmentedControl } from '../components/SegmentedControl';
@@ -32,6 +34,10 @@ const grade = (value: string) => { const n = gradeCoordinate(value); return n ==
 export function NationalPlacement() {
   // 2026-11-25 사용자 요청: 전국 배치표는 공개 입결이라 샘플 모드에서도 실제 자료(전체 대학)를 보여 줘요.
   const compact = useCompactResults(), sample = false;
+  // 2026-11-26 사용자 요청: 수시 입결처럼 내 참고 추정 범위(5 to 9 · 전 교과)를 배치표 위에 띠로 보여 줘요
+  const student = useStudent();
+  const mine = useMemo(() => { const g = student?.data?.grades; const r = g?.length ? fiveToNineFor(g, '전 교과') : null;
+    return r?.min != null && r.max != null ? { lo: Math.floor(r.min * 10 + 1e-9) / 10, hi: Math.ceil(r.max * 10 - 1e-9) / 10 } : null; }, [student?.data?.grades]);
   const [catalog, setCatalog] = useState<Catalog | null>(null), [year, setYear] = useState('');
   const [rows, setRows] = useState<NationalPlacementRow[] | null>(null), [error, setError] = useState(''), [indexError, setIndexError] = useState('');
   const [attempt, setAttempt] = useState(0), [indexAttempt, setIndexAttempt] = useState(0);
@@ -130,7 +136,9 @@ export function NationalPlacement() {
           <div className="np-result__head"><div><h3>{year}학년도 · {filters.metric} {cutLabel}</h3>{rows && <p role="status">대학 {groups.length}곳 · 원문 {filtered.length.toLocaleString()}행</p>}</div>{!compact && viewTabs}</div>
           {view !== 'coverage' && <SegmentedControl label="전형 유형" value={filters.type} onChange={type => patch({ type })} options={TYPE_TABS.map(t => ({ value: t, label: t }))} />}
           {view !== 'coverage' && <div className="np-status">
-            <div className="np-mine"><span className="np-label">내 위치</span><span className="data-status-badge">준비 중</span><p>검수된 환산 규칙이 생기면 배치표 위에 내 위치를 보여 드려요</p></div>
+            <div className="np-mine"><span className="np-label">내 위치</span>{mine
+                ? <><strong className="num">약 {mine.lo.toFixed(1)}~{mine.hi.toFixed(1)}</strong><span className="data-status-badge">참고 추정</span><Link className="np-link" to="/five-to-nine?view=mine">5 to 9에서 근거 보기 ›</Link></>
+                : <><span className="data-status-badge">성적 필요</span><p>성적을 입력하면 배치표 위에 내 환산 범위를 보여 드려요 <Link className="np-link" to="/grade-input">성적 입력하기 ›</Link></p></>}</div>
             <div className="np-pending"><span className="data-status-badge">준비 중</span><p>{sample ? SAMPLE_PENDING_NOTE : `수집 대학 중 ${pending}곳은 좌표를 찍지 않았어요`}</p><button type="button" className="np-link" onClick={() => { setView('coverage'); setPage(0); }}>수집 대학에서 원문 보기 ›</button></div>
           </div>}
           {view !== 'coverage' && rows && !error && alternatives.length > 0 && (searching || !filtered.length) && <div className="national-coverage-note" role="note">
@@ -147,7 +155,7 @@ export function NationalPlacement() {
                 : !filtered.length ? <div className="empty-state"><h4 className="t-heading-3">조건에 맞는 입결 좌표가 없어요</h4><p>대학·학과 검색이나 학년도·지표·컷 기준을 바꿔 보세요. 9등급제와 선택한 컷 수치가 명시된 자료만 표시해요.</p></div> : <>
                   {view === 'plot' ? <>
                     <p className="np-caption">가로 = 발표 등급 · 1이 왼쪽 · 세로 위치는 대학 가나다순</p>
-                    <NationalPlot key={JSON.stringify([year, current, filters])} groups={groups.slice(current * UNIVERSITY_PAGE, (current + 1) * UNIVERSITY_PAGE)} cut={filters.cut} onSelect={setSelected} />
+                    <NationalPlot key={JSON.stringify([year, current, filters])} groups={groups.slice(current * UNIVERSITY_PAGE, (current + 1) * UNIVERSITY_PAGE)} cut={filters.cut} mine={mine} onSelect={setSelected} />
                   </> : <div className="table-scroll"><table className="data-table national-table"><caption className="sr-only">전국 대학 수집 입결 목록</caption><thead><tr>{tableColumns.map(([key, label]) => <SortableHeader key={key} column={key} label={label} sort={sort} onSort={key => { setSort(s => nextTableSort(s, key)); setPage(0); }} />)}<th scope="col">상세</th></tr></thead>
                     <tbody>{sorted.slice(current * ROW_PAGE, (current + 1) * ROW_PAGE).map(r => <tr key={r.id}>{tableColumns.map(([key]) => <td key={key}>{tableValue(r, key) || '—'}</td>)}<td><button className="text-button" onClick={() => setSelected([r])} aria-label={`${r.university} ${r.program} ${r.recruit_unit} 원문 상세`}>원문·상세</button></td></tr>)}</tbody></table></div>}
                   <nav className="np-pagination" aria-label="배치표 페이지"><button className="button-outline" disabled={!current} onClick={() => setPage(p => p - 1)}>이전</button><span>{current + 1} / {pages}</span><button className="button-outline" disabled={current + 1 >= pages} onClick={() => setPage(p => p + 1)}>다음</button></nav>
@@ -190,7 +198,7 @@ function plotPoints(points: ReturnType<typeof universityPoints>[number]['points'
   });
 }
 
-function NationalPlot({ groups, cut, onSelect }: { groups: ReturnType<typeof universityPoints>; cut: CutField; onSelect: (rows: NationalPlacementRow[]) => void }) {
+function NationalPlot({ groups, cut, mine, onSelect }: { groups: ReturnType<typeof universityPoints>; cut: CutField; mine: { lo: number; hi: number } | null; onSelect: (rows: NationalPlacementRow[]) => void }) {
   const axis = useRef<HTMLDivElement>(null), [width, setWidth] = useState(848);
   useLayoutEffect(() => {
     const element = axis.current;
@@ -203,20 +211,24 @@ function NationalPlot({ groups, cut, onSelect }: { groups: ReturnType<typeof uni
     return () => observer.disconnect();
   }, []);
   const grid = Array.from({ length: 17 }, (_, i) => <i key={i} className="np-gridline" style={{ left: `${i / 16 * 100}%` }} aria-hidden="true" />);
+  const pct = (v: number) => `${(Math.min(9, Math.max(1, v)) - 1) / 8 * 100}%`, mid = mine && (mine.lo + mine.hi) / 2;
+  // 수시 입결과 같은 모양: 범위 띠(accent-soft) + 가운데 선(accent), 점보다 아래 층
+  const band = mine && <><i className="np-band" aria-hidden="true" style={{ left: pct(mine.lo), width: `calc(${pct(mine.hi)} - ${pct(mine.lo)})` }} /><i className="np-mine-line" aria-hidden="true" style={{ left: pct(mid!) }} /></>;
   return <div className="result-plot np-plot">
     <div className="np-legend" aria-hidden="true">{['교과', '종합', '논술', '기타'].map(t => <span key={t}><Mark type={t} />{t}</span>)}</div>
     <div className="np-rows">
+      {mine && <div className="np-row np-bubble-row" aria-hidden="true"><div /><div className="np-row__cell"><span className="np-bubble" style={{ left: pct(mid!) }}>내 환산 범위 약 {mine.lo.toFixed(1)}~{mine.hi.toFixed(1)}</span></div></div>}
       {groups.map(group => { const points = plotPoints(group.points, width), lanes = Math.max(...points.map(p => p.lane)) + 1, logo = universityLogoFile(group.university), name = currentUniversityName(group.university);
         return <div className="np-row" key={group.university} style={{ '--np-lanes': lanes - 1 } as CSSProperties}>
           <div className="np-row__head">{logo ? <img className="np-logo" src={`${import.meta.env.BASE_URL}assets/universities/${logo}`} alt="" width={20} height={20} loading="lazy" /> : <span className="np-monogram" aria-hidden="true">{name.slice(0, 1)}</span>}<span>{name}</span></div>
-          <div className="np-row__cell">{grid}
+          <div className="np-row__cell">{grid}{band}
             {points.map(point => <button type="button" key={`${point.value}-${point.bucket}`} className="np-dot" style={{ left: point.x, '--np-lane': point.lane } as CSSProperties} onClick={() => onSelect(point.records)}
               title={`${group.university} · ${point.bucket} · ${point.value}등급 · ${point.records.length}행`}
               aria-label={`${group.university} ${STATISTIC_LABELS[cut]} ${point.value}등급, ${point.bucket}, 원문 ${point.records.length}행 상세`}><Mark type={point.bucket} />{point.records.length > 1 && <span className="np-count" aria-hidden="true">{point.records.length}</span>}</button>)}
           </div>
         </div>;
       })}
-      <div className="np-row np-axis" aria-hidden="true"><div /><div className="np-row__cell" ref={axis}>{grid}{Array.from({ length: 9 }, (_, i) => <span key={i} style={{ left: `${i / 8 * 100}%` }}>{i + 1}</span>)}</div></div>
+      <div className="np-row np-axis" aria-hidden="true"><div /><div className="np-row__cell" ref={axis}>{grid}{band}{Array.from({ length: 9 }, (_, i) => <span key={i} style={{ left: `${i / 8 * 100}%` }}>{i + 1}</span>)}</div></div>
     </div>
   </div>;
 }

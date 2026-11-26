@@ -157,3 +157,12 @@
 .np-mine > p, .np-pending > p { min-height: 20px; }
 /* 2026-11-25 사용자 요청: '컷' · '평균' 줄의 칩 시작 위치를 맞춰요 */
 .np-chip-group { flex: none; width: 2em; }
+
+/* 2026-11-26 내 환산 범위(수시 입결 ar-plot__band · __mine · __bubble과 같은 모양) */
+.np-band { position: absolute; top: 0; bottom: 0; background: var(--color-accent-soft); pointer-events: none; }
+.np-mine-line { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--color-accent); pointer-events: none; }
+.np-row__cell > .np-dot { z-index: 1; }
+.np-bubble-row .np-row__cell { height: 27px; }
+.np-bubble { position: absolute; top: 0; width: max-content; transform: translateX(-50%); padding: 2px 0.5px; background: var(--color-accent); color: var(--color-on-primary); font-size: 12px; font-weight: 600; line-height: 17px; white-space: nowrap; }
+.np-bubble::after { content: ''; position: absolute; left: calc(50% - 1px); top: 100%; width: 2px; height: 6px; background: var(--color-accent); }
+.np-mine > strong { font-size: 15px; font-weight: 700; color: var(--color-accent); }

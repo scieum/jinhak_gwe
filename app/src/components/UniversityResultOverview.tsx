@@ -26,6 +26,7 @@ import '../styles/university-result-overview.css';
 
 const short = (university: string) => currentUniversityName(university).replace(/대학교$/, '대');
 const tick = (t: number) => String(Math.round(t * 10) / 10);
+const byYear = (rows: readonly ResultRow[]) => [...rows].sort((a, b) => Number(a.result_year) - Number(b.result_year));
 const narrow = () => typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 1023px)').matches;
 type Department = ReturnType<typeof universityPlot>['departments'][number];
 
@@ -41,6 +42,7 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   const [choosing, setChoosing] = useState(false), [search, setSearch] = useState('');
   const [view, setView] = useState<'plot' | 'table'>('plot'), [year, setYear] = useState('');
   const [picked, setPicked] = useState<{ department: string; year: number; row?: ResultRow } | null>(null), [hover, setHover] = useState<ResultRow | null>(null);
+  const [choosingYear, setChoosingYear] = useState<{ department: string; rows: ResultRow[] } | null>(null); // 겹친 점의 학년도 고르기
   const [opened, setOpened] = useState<ResultRow | null>(null), [detail, setDetail] = useState(false), [page, setPage] = useState(0);
   const names = sample ? [...new Set(sampleOverviewRows.map(r => r.university))] : index?.universities.map(e => e.university) ?? [];
   // 2026-11-25 사용자 요청: 처음 보이는 대학은 직접 정한 강원대학교(춘천)(자료에 없으면 첫 대학).
@@ -193,9 +195,16 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
                       <button type="button" className="ar-plot__name" onClick={() => pick(d)}>{d.name || '모집단위 미기재'}</button>
                       <div className="ar-plot__track">
                         {points.slice(1).map((r, i) => <i key={i} className="ar-plot__link" style={{ left: x(gradeCut(points[i], model.cut)!), width: `calc(${x(gradeCut(r, model.cut)!)} - ${x(gradeCut(points[i], model.cut)!)})` }} />)}
-                        {[...points].sort((a, b) => Number(a.result_year) - Number(b.result_year)).map((r, i) => inRange(gradeCut(r, model.cut)!) && <button key={i} type="button" className={`ar-plot__point ${yearTone(model.rows, Number(r.result_year))}${r === selectedPoint ? ` is-selected${picked ? '' : ' is-default'}` : ''}`} style={{ left: x(gradeCut(r, model.cut)!) }}
+                        {byYear(points).map((r, i) => inRange(gradeCut(r, model.cut)!) && <button key={i} type="button" data-k={i} className={`ar-plot__point ${yearTone(model.rows, Number(r.result_year))}${r === selectedPoint ? ` is-selected${picked ? '' : ' is-default'}` : ''}`} style={{ left: x(gradeCut(r, model.cut)!) }}
                           onMouseEnter={() => setHover(r)} onFocus={() => setHover(r)} onBlur={() => setHover(null)}
-                        onClick={() => { setPicked({ department: d.name, year: Number(r.result_year), row: r }); setOpened(r); }} /* 2026-11-26 사용자 요청: 점을 고르면 그 해 원문 상세를 바로 열어요 */
+                          onClick={e => {
+                            // 2026-11-26 사용자 요청: 점을 고르면 그 해 원문 상세를 바로 열어요. 점이 겹치면(모바일에서 흔해요) 엉뚱한 해가 열리지 않게 학년도를 먼저 골라요.
+                            const me = e.currentTarget.getBoundingClientRect(), center = me.left + me.width / 2, sorted = byYear(points);
+                            const near = [...e.currentTarget.parentElement!.querySelectorAll<HTMLElement>('.ar-plot__point')]
+                              .filter(b => { const o = b.getBoundingClientRect(); return Math.abs(o.left + o.width / 2 - center) < me.width; }).map(b => sorted[Number(b.dataset.k)]);
+                            if (near.length > 1) { setChoosingYear({ department: d.name, rows: near }); return; }
+                            setPicked({ department: d.name, year: Number(r.result_year), row: r }); setOpened(r);
+                          }}
                           aria-label={`${d.name} ${r.result_year}학년도 ${model.cutLabel} ${r[model.cut]}`} aria-pressed={r === selectedPoint}><svg aria-hidden="true" viewBox="0 0 17 17"><circle className="ring" cx="8.5" cy="8.5" r="7.5" /><circle cx="8.5" cy="8.5" r="5.5" /></svg></button>)}
                         {tip && points.includes(tip) && inRange(gradeCut(tip, model.cut)!) && <div className={`ar-plot__tip${hover ? '' : picked ? '' : ' is-default'}`} style={gradeCut(tip, model.cut)! >= (range.min + range.max) / 2 + (range.max - range.min) * 0.2 - 1e-9 ? { right: `calc(100% - ${x(gradeCut(tip, model.cut)!)} + 12px)` } : { left: `calc(${x(gradeCut(tip, model.cut)!)} + 12px)` }}>
                           <strong>{d.name} · {tip.result_year} · {model.cutLabel} {tip[model.cut]}</strong><span>{[tip.program, tip.basis || '산출 기준 미기재'].join(' · ')}</span></div>}
@@ -224,6 +233,9 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
     <Link className="ar-doelgak ar-mobile" to="/doelgak">내 성적으로 판정을 보려면 될각에서 확인해 주세요 ›</Link>
     <p className="disclaimer-note ar-note"><Icon name="info" size={16} /><span>각 대학이 공식 발표한 수시 입결을 모은 참고 자료예요 · 대학마다 컷 산출 기준이 달라 대학끼리 같은 축에서 바로 비교하기 어려워요 · 내 환산 범위는 5 to 9 추정값이에요 · 대학 공식 자료가 최종 기준이에요{sample ? ' · 샘플의 대학·숫자는 예시예요' : ' · 검수 전 자료는 성적 판정에 쓰지 않아요'} · {dateLabel}</span></p>
     {choosing && <Modal label="그래프 대학 바꾸기" onClose={() => setChoosing(false)}><div className="section-row"><h3 className="t-heading-3">대학 바꾸기</h3><button className="button-outline" onClick={() => setChoosing(false)}>닫기</button></div><label>대학 검색<input type="search" value={search} onChange={e => setSearch(e.target.value)} /></label><p role="status">{names.filter(n => matchesUniversityIdentity(n, search)).length}개 대학·캠퍼스</p><div className="university-options">{names.filter(n => matchesUniversityIdentity(n, search)).map(n => <button className="button-outline" key={n} aria-pressed={university === n} onClick={() => { update({ gu: n, gp: null, gt: null }); setChoosing(false); }}>{currentUniversityName(n)}</button>)}</div></Modal>}
+    {choosingYear && <Modal label="학년도 고르기" onClose={() => setChoosingYear(null)}><div className="section-row"><h3 className="t-heading-3">{choosingYear.department || '모집단위 미기재'} · 학년도 고르기</h3><button className="button-outline" onClick={() => setChoosingYear(null)}>닫기</button></div>
+      <p className="t-caption text-muted">점이 겹쳐 있어요. 원문을 볼 학년도를 골라 주세요.</p>
+      <div className="ar-year-choices">{choosingYear.rows.map((r, i) => <button key={i} type="button" className="button-outline" onClick={() => { setPicked({ department: choosingYear.department, year: Number(r.result_year), row: r }); setChoosingYear(null); setOpened(r); }}>{r.result_year}학년도 · {model.cutLabel} {r[model.cut]}</button>)}</div></Modal>}
     {detail && detailPanel && <Modal label="고른 학과 상세" onClose={() => setDetail(false)}><div className="section-row"><span /><button className="button-outline" onClick={() => setDetail(false)}>닫기</button></div>{detailPanel}</Modal>}
     {opened && <Modal wide label="입결 원문 상세" onClose={() => setOpened(null)}><div className="section-row"><h3 className="t-heading-3">{opened.recruit_unit} · {opened.result_year}학년도</h3><button className="button-outline" onClick={() => setOpened(null)}>닫기</button></div>{!sample && <span className="data-status-badge">검수 전 참고자료</span>}<CollectedResultFields row={opened} /></Modal>}
   </section>;
