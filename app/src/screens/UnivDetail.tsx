@@ -84,7 +84,7 @@ export function UnivDetail() {
   const selected = programs.find(p => p.name === (picked ?? programs[0]?.name)), panel = selected && shown.includes(selected) ? selected : undefined;
   const count = (list: UdProgram[]) => `수시 ${list.filter(p => p.round === '수시').length} · 정시 ${list.filter(p => p.round === '정시').length}`;
   const note = <p className="disclaimer-note"><Icon name="info" size={16} /><span>대학 공식 자료가 최종 기준이에요 · 데이터 기준일 {view.checked}{sample ? ' · 샘플의 대학·숫자는 예시예요' : ''}</span></p>;
-  const heart = (p?: UdProgram) => p && <InterestButton key={interestId(view.university, p.name)} university={view.university} program={p.name} compact />;
+  const heart = (p?: UdProgram) => p && <InterestButton key={interestId(view.university, p.name)} university={view.university} program={p.name} compact askDepartment />;
   const source = view.source && <div className="ud-source"><a className="button-pill-soft" href={view.source.url} target="_blank" rel="noreferrer">원문 보기 ↗</a><span>{compact ? view.source.short : view.source.label}</span></div>;
   const lead = !changes ? '전년 대비 비교는 2027학년도 자료가 모이면 보여요' : !changes.length ? '2027학년도와 비교해 바뀐 점이 없어요' : view.headline?.[compact ? 'mobile' : 'pc'] ?? '';
   const hero = <div className="stat-tile ud-tile">
@@ -185,7 +185,7 @@ const Card = ({ title, children, className = '' }: { title: string; children: Re
 
 function PlanDetail({ view: v, sample }: { view: PdView; sample: boolean }) {
   const compact = useCompactResults(), { head, bar } = useShellSlots(compact);
-  const heart = <InterestButton key={interestId(v.university, v.program)} university={v.university} program={v.program} compact />;
+  const heart = <InterestButton key={interestId(v.university, v.program)} university={v.university} program={v.program} compact askDepartment />;
   const tile = <div className="stat-tile ud-tile">
     <p className="ud-tile__caption">{compact ? '' : `${v.university} · `}2028 {v.round} · 모집인원</p>
     <p className="ud-tile__value">{v.quota}</p><p className="ud-tile__lead">{v.lead[compact ? 'mobile' : 'pc']}</p></div>;

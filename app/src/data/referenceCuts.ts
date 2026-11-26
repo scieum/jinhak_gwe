@@ -5,6 +5,14 @@ import { latestReferenceCut, type ReferenceCut } from '../domain/interestCompari
 import type { Interest } from '../domain/interests';
 import type { ResultRow } from '../domain/resultReview';
 
+/** 한 대학의 수집 입결 행(캠퍼스 후보 모두). 대학을 못 찾으면 빈 배열. 하트로 학과를 고를 때 써요. */
+export async function loadUniversityRows(university: string): Promise<ResultRow[]> {
+  const index = await loadCollectedIndex();
+  const campuses = collectedUniversityCandidates(university, index.universities.map(e => e.university));
+  const all = await Promise.all(index.universities.filter(e => campuses.includes(e.university)).map(e => loadCollectedRows(e)));
+  return all.flat();
+}
+
 type Loaded = Record<string, { rows: ResultRow[]; error: string }>;
 /** 관심 전형마다 최근 수집 입결 컷(참고 비교). 아직 불러오는 중이면 null. 될각 · 홈이 같이 써요. */
 export function useReferenceCuts(interests: readonly Interest[]): { cuts: Record<string, ReferenceCut | null>; rowsOf: (university: string) => ResultRow[]; error: string } {

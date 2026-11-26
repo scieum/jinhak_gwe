@@ -37,3 +37,4 @@
 .interest-row__info { display: grid; gap: var(--spacing-xs); min-width: 0; overflow-wrap: anywhere; }
 .interest-row__info > a { color: inherit; }
 @media (max-width: 767px) { .interest-row { grid-template-columns: minmax(0, 1fr); } .interest-row .interest-control { justify-items: start; } }
+.interest-pick { display: grid; gap: var(--spacing-xs); margin-bottom: var(--spacing-md); }
