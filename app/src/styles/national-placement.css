@@ -69,7 +69,7 @@
 .national-placement .np-trace > summary::-webkit-details-marker { display: none; }
 .np-trace > ol { padding-bottom: 16px; font-size: 13px; }
 .np-note { display: flex; align-items: flex-start; gap: 4px; margin: 0; font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); }
-.np-note > .icon { flex: none; align-self: center; }
+.np-note > .icon { flex: none; } /* 여러 줄이면 첫 줄에 붙음(다른 화면 안내문과 같음) */
 
 /* 모바일 조회 조건 시트(Modal) 안 */
 .np-detail { display: grid; gap: 12px; }

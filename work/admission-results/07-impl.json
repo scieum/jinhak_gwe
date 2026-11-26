@@ -48,7 +48,7 @@
     "V 1440: 차이 영역 외 42곳"
   ],
   "back_to": "S5",
-  "same_fail_streak": 1,
+  "same_fail_streak": 3,
   "route": "/admission-results",
   "allowed": [],
   "notes": [

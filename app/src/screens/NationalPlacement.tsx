@@ -170,7 +170,8 @@ export function NationalPlacement() {
 // 원형 표식은 SVG로 그려요(base.css 모서리 0 규칙). 교과 ● · 종합 ○ · 논술 ■ · 기타 □
 function Mark({ type }: { type: string }) {
   const fill = type === '교과' || type === '논술' ? 'np-mark--fill' : '';
-  return <svg className={`np-mark ${fill}`} viewBox="0 0 11 11" aria-hidden="true">{type === '교과' || type === '종합' ? <circle cx="5.5" cy="5.5" r="5" /> : <rect x="0.5" y="0.5" width="10" height="10" />}</svg>;
+  // design.md cut-dot-plot: 교과 ● · 종합 ○ · 논술 ◆ 채운 마름모 · 기타 ◇ 빈 마름모
+  return <svg className={`np-mark ${fill}`} viewBox="0 0 11 11" aria-hidden="true">{type === '교과' || type === '종합' ? <circle cx="5.5" cy="5.5" r="5" /> : <polygon points="5.5,0.5 10.5,5.5 5.5,10.5 0.5,5.5" />}</svg>;
 }
 const BUCKETS = ['교과', '종합', '논술', '기타'];
 /** 시안 D5: 같은 대학 점끼리 0.15등급 안으로 붙으면 아래 줄로 내려요(교과 → 종합 → 논술 → 기타 순으로 자리를 잡아요). 같은 값이라도 전형 유형이 다르면 따로 찍어요. 가로 위치는 항상 정확한 값. */

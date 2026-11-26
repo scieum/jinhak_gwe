@@ -140,6 +140,7 @@ def comp_base(entry, node):
 
 
 # 구조 비교 대상 블록과 앱 표식(클래스 매핑 표). 앱에 고유 클래스가 없으면 None → 구조 미검사(notes).
+DETACHED_BLOCKS = {"cut-dot-plot"}  # 사용자가 연결 끊기를 허락한 블록만(2026-11-26)
 BLOCKS = {
     "page-header": ".topbar, .screen-heading",  # 모바일은 화면 안 제목 줄(.screen-heading)이 page-header 자리
     "sub-nav": ".sub-nav, .wiki-anchor",
@@ -271,6 +272,12 @@ def figma_frame(entry):
             return
         if n["type"] in BOX_TYPES:
             bg = solid(n.get("fills"), n.get("opacity", 1)) or bg
+        # 사용자 승인으로 연결을 끊은(detach) 블록(2026-11-26: 전국 배치표 · 수시 입결의 cut-dot-plot)은 레이어 이름으로 블록을 알아봐요
+        if n["type"] == "FRAME" and not in_block and n.get("name") in DETACHED_BLOCKS:
+            blocks.append({"name": n["name"], "id": n["id"], **box(n), "hug": n.get("layoutSizingHorizontal") == "HUG",
+                           "hug_v": n.get("layoutSizingVertical") == "HUG", **block_style(n, bg),
+                           "cands": block_candidates(n, box, bg)})
+            in_block = True
         if n["type"] == "INSTANCE":
             full = comp_name(entry, n)
             base = re.split(r"[/ ,]", full)[0]
