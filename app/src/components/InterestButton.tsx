@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { Link, useInRouterContext } from 'react-router-dom';
 import { interestId } from '../domain/interests';
 import { studentDb } from '../store/studentDb';
 import { Icon } from './Icon';
@@ -14,6 +15,7 @@ export function InterestButton({ university, program, department, compact = fals
   }, [id]);
   const [busy, setBusy] = useState(false), lock = useRef(false);
   const [error, setError] = useState(''), [message, setMessage] = useState('');
+  const routed = useInRouterContext(), saved = message.startsWith('관심 전형에 담았어요');
   const action = state?.saved ? '관심에서 빼기' : '관심에 담기';
   return <div className={`interest-control${compact ? ' interest-control--compact' : ''}`}>
     <button type="button" className="interest-heart" title={`${label} ${action}`} aria-label={`${label} ${action}`} aria-pressed={state?.saved ?? false}
@@ -27,6 +29,6 @@ export function InterestButton({ university, program, department, compact = fals
         finally { lock.current = false; setBusy(false); }
       }}><Icon name="heart" size={20} /><span className={compact ? 'sr-only' : undefined}>{busy ? '저장 중' : !state ? '관심 확인 중' : action}</span></button>
     {(state?.error || error) && <p className="error-note t-caption" role="alert" title={state?.error || error} aria-label={compact ? state?.error || error : undefined}>{compact ? '저장 오류' : state?.error || error}</p>}
-    {message && <p className={compact ? 'sr-only' : 't-caption text-muted'} role="status">{message}</p>}
+    {message && <p className={compact ? 'sr-only' : 't-caption text-muted'} role="status">{message}{!compact && saved && routed && <> <Link className="t-link" to="/doelgak">될각에서 보기 ›</Link></>}</p>}
   </div>;
 }

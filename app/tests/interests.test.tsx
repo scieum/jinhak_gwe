@@ -205,3 +205,16 @@ test('legacy entries are explicitly unspecified and department search and remova
   fireEvent.click(await screen.findByRole('button', { name: `${university} ${program} 의예과 관심에서 빼기` }));
   await waitFor(async () => expect((await studentDb.interests.toArray()).map(i => i.department)).toEqual(['약학과']));
 });
+
+test('saving from a full heart offers a link to 될각, removing does not', async () => {
+  render(<MemoryRouter><InterestButton university={university} program={program} /></MemoryRouter>);
+  const button = screen.getByRole('button');
+  await waitFor(() => expect((button as HTMLButtonElement).disabled).toBe(false));
+  fireEvent.click(button);
+  const link = await screen.findByRole('link', { name: '될각에서 보기 ›' });
+  expect(link.getAttribute('href')).toBe('/doelgak');
+  await waitFor(() => expect((button as HTMLButtonElement).disabled).toBe(false));
+  fireEvent.click(button);
+  expect(await screen.findByText('관심 전형에서 뺐어요.')).toBeTruthy();
+  expect(screen.queryByRole('link', { name: '될각에서 보기 ›' })).toBeNull();
+});
