@@ -1,4 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { loadCollectedIndex, loadCollectedRows } from '../data/collectedResults';
+import { collectedUniversityCandidates } from '../domain/universityIdentity';
+import { latestReferenceCut } from '../domain/interestComparison';
+import { collectedProgramPath } from '../domain/interests';
+import { fiveToNineFor } from '../domain/results';
+import type { ResultRow } from '../domain/resultReview';
+import type { StudentBackup } from '../domain/student';
 import { Link } from 'react-router-dom';
 import { Disclaimer, TraceAccordion } from '../components/CalculationDetails';
 import { ComparisonDetails } from '../components/ComparisonDetails';
@@ -78,6 +85,56 @@ function MiniBar({ min, max, cut }: { min: number; max: number; cut?: number }) 
   </div>;
 }
 
+type Loaded = Record<string, { rows: ResultRow[]; error: string }>;
+/** 검수된 판정 전형이 아직 없을 때(실제 모드): 관심 전형마다 내 참고 추정 범위와 최근 수집 입결 컷을 나란히 보여요. 판정 이름은 붙이지 않아요(NEVER-1). */
+function InterestReference({ data }: { data: StudentBackup }) {
+  const interests = useMemo(() => [...(data.interests ?? [])].sort((a, b) => a.created_at.localeCompare(b.created_at)), [data.interests]);
+  const mine = useMemo(() => { const r = data.grades.length ? fiveToNineFor(data.grades, '전 교과') : null; return r?.min != null && r.max != null ? { min: r.min, max: r.max } : null; }, [data.grades]);
+  const [loaded, setLoaded] = useState<Loaded>({}), [indexError, setIndexError] = useState('');
+  const names = JSON.stringify([...new Set(interests.map(i => i.university))].sort());
+  useEffect(() => {
+    let active = true; setLoaded({}); setIndexError('');
+    const wanted = JSON.parse(names) as string[];
+    if (wanted.length) loadCollectedIndex().then(index => {
+      for (const university of wanted) {
+        // 관심 목록은 '경희대학교'처럼 캠퍼스 없이 저장될 수 있어서 캠퍼스 후보('경희대(서울)' 등)를 모두 읽어요
+        const campuses = collectedUniversityCandidates(university, index.universities.map(e => e.university));
+        const entries = index.universities.filter(e => campuses.includes(e.university));
+        if (!entries.length) { if (active) setLoaded(p => ({ ...p, [university]: { rows: [], error: '수집 자료에서 이 대학을 찾지 못했어요.' } })); continue; }
+        Promise.all(entries.map(e => loadCollectedRows(e))).then(all => { if (active) setLoaded(p => ({ ...p, [university]: { rows: all.flat(), error: '' } })); })
+          .catch(() => { if (active) setLoaded(p => ({ ...p, [university]: { rows: [], error: '입결 자료를 불러오지 못했어요.' } })); });
+      }
+    }).catch(() => { if (active) setIndexError('입결 목록을 불러오지 못했어요. 잠시 뒤 다시 열어 주세요.'); });
+    return () => { active = false; };
+  }, [names]);
+
+  const head = <div className="dg-summary"><p className="t-body-sm num">관심 전형 {interests.length}개 · 참고 비교</p>
+    <p className="t-caption text-muted">판정 기준과 입결 검수가 끝나면 안정 · 적정 · 소신 · 위험으로 나눠 보여 드려요. 지금은 내 참고 추정 범위와 최근 입결 컷만 비교해요.</p></div>;
+  if (!interests.length) return <>{head}<div className="empty-state dg-empty"><Icon name="heart" size={40} /><h3 className="t-heading-4">관심 전형이 없어요</h3>
+    <p className="t-body-sm">수시 입결이나 전형계획에서 하트를 누르면 여기서 입결과 비교해요.</p><Link className="button-primary" to="/admission-results">수시 입결 보기</Link></div></>;
+  return <>{head}
+    {!mine && <p className="t-caption text-muted">{data.grades.length ? '석차등급이 있는 과목을 입력하면 내 참고 추정 범위와 비교해요. ' : '성적을 입력하면 내 참고 추정 범위와 비교해요. '}<Link className="t-link" to="/grade-input">성적 입력하기 ›</Link></p>}
+    {indexError && <p className="t-caption text-muted" role="alert">{indexError}</p>}
+    <div className="dg-pending__cards">{interests.map(i => {
+      const pack = loaded[i.university];
+      const ref = pack ? (pack.error ? { reason: pack.error } : latestReferenceCut(i, pack.rows)) : null;
+      const cut = ref && 'value' in ref ? ref : null;
+      return <article className="univ-card dg-card" key={i.id}>
+        <header><UniversityLogo university={i.university} /><InterestButton university={i.university} program={i.program} department={i.department || undefined} compact /></header>
+        <h3 className="t-heading-4">{i.university}</h3>
+        <p className="dg-card__program">{[i.department, i.program].filter(Boolean).join(' · ')}</p>
+        <div className="dg-card__numbers"><span className="t-caption text-muted">내 환산 (참고 추정)</span>
+          <div className="dg-card__range"><strong className="num">{mine ? rangeText(mine.min, mine.max) : '—'}</strong></div>
+          <span className="t-caption text-muted num">{!ref ? '입결 자료를 불러오는 중이에요' : cut
+            ? `${cut.year}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${mine ? ` · 차이 ${diffText(mine.max, cut.value)}` : ''}` : (ref as { reason: string }).reason}</span></div>
+        {mine && <MiniBar min={mine.min} max={mine.max} cut={cut?.value} />}
+        <div className="dg-card__chips"><span className="data-status-badge">판정 준비 중</span>{cut && <span className="data-status-badge">검수 전 참고자료</span>}</div>
+        {/* 짝지은 입결 행의 대학·전형 이름으로 걸어야 원문 화면에서 찾아져요(전형계획 이름과 수집 이름이 달라요) */}
+        {i.department && <Link className="t-link t-caption" to={cut ? collectedProgramPath(cut.row.university, cut.row.program, cut.row.recruit_unit) : collectedProgramPath(i.university, i.program, i.department)}>입결 원문 보기 ›</Link>}
+      </article>;
+    })}</div></>;
+}
+
 function FilterFields({ value, onChange, combo, onCombo }: { value: Filters; onChange: (f: Filters) => void; combo: string; onCombo: (c: string) => void }) {
   const chip = (label: string, on: boolean, click: () => void) => <button key={label} type="button" className="filter-chip" aria-pressed={on} onClick={click}>{label}</button>;
   return <>
@@ -100,6 +157,9 @@ export function Doelgak() {
   const apply = (f: Filters) => { setDraft(f); setApplied(f); };
   const actions = <span className="data-status-badge dg-asof">모집요강 반영 · {dataAsOf}</span>;
   return <StudentDataScreen slug="doelgak" title="될각" className="doelgak" actions={actions}>{data => {
+    // 검수된 판정 전형이 아직 없으면(실제 모드) 관심 전형 참고 비교로 대신해요. 샘플 모드는 판정 시안 그대로.
+    if (!programs.some(p => p.admission_year === admissionYear)) return <div className="dg-main dg-reference"><InterestReference data={data} />
+      <Disclaimer icon lead="대학 공식 자료가 최종 기준이에요" sample={isSampleMode()} /></div>;
     const conversion = conversionFor(data.grades, combo);
     const scope = combinations[combo] ?? [...new Set(data.grades.filter(g => !validateGrade(g).length).map(g => g.subject_group))];
     const inputBasis = currentComparisonBasis(data.grades, scope, conversion.status === 'ready');

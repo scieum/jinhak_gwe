@@ -310,6 +310,11 @@ def figma_frame(entry):
 
     metrics = {}
     walk(doc, (), False)
+    # 인스턴스 안에 칸을 더 넣을 수 없어 같은 블록 위에 겹쳐 그린 칸(예: 학과별 구간 층 위의 칸)은 그 블록의 일부로 본다.
+    # 앱에서도 칸은 층 요소 안에 들어 있어요(2026-11-26).
+    inside = lambda a, b: a is not b and a["name"] == b["name"] and b["x"] - 1 <= a["x"] and b["y"] - 1 <= a["y"] \
+        and a["x"] + a["w"] <= b["x"] + b["w"] + 1 and a["y"] + a["h"] <= b["y"] + b["h"] + 1 and a["w"] * a["h"] < b["w"] * b["h"]
+    blocks[:] = [a for a in blocks if not any(inside(a, b) for b in blocks)]
     # PC 사이드바 폭(248) 안 글자는 셸(인스턴스가 아닌 사이드바를 그린 시안도 있어서 위치로 뺀다)
     has_side = any(n.get("name", "").startswith("sidebar") for n in _iter(doc))
     side = 248 if has_side and doc["absoluteBoundingBox"]["width"] >= 1000 else 0
@@ -522,6 +527,10 @@ class App:
             self._settle()
         # 샘플 데이터 띠는 시안에 없는, 사용자가 요청한 앱 전용 요소라 재기 전에 빼고 본다(2026-11-24 사용자 결정)
         p.evaluate("document.querySelectorAll('.sample-band').forEach(e => e.remove()); window.scrollTo(0, 0)")
+        # 전체 페이지 캡처는 스크롤하지 않아서 첫 화면 밖 지연 로딩(loading=lazy) 이미지(대학 로고)가 빈칸으로 찍혀요 → 모두 불러온 뒤 찍어요
+        p.evaluate("""() => Promise.all([...document.images].map(i => { i.loading = 'eager';
+            const loaded = i.complete ? Promise.resolve() : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 5000); });
+            return loaded.then(() => i.decode().catch(() => null)); }))""")  # decoding=async 큰 이미지는 그려질 때까지
         p.wait_for_timeout(200)
         shot = p.screenshot(animations="disabled", caret="hide", full_page=size[1] > vh)
         return p.evaluate(MEASURE_JS, BLOCKS), shot
@@ -799,6 +808,9 @@ def pixel_compare(fig_png, app_png, size):
 
     def load(raw):
         im = Image.open(io.BytesIO(raw)).convert("RGB")
+        # Figma 내보내기는 한 변 16384px까지라 그보다 긴 프레임은 같은 비율로 줄어 와요 → 프레임 크기로 되돌려요
+        if im.width < size[0] and abs(im.width / size[0] - im.height / size[1]) < 0.01:
+            im = im.resize(size, Image.LANCZOS)
         if im.size != size:
             canvas = Image.new("RGB", size, "white")
             canvas.paste(im.crop((0, 0, min(im.width, size[0]), min(im.height, size[1]))))
