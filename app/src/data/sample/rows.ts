@@ -9,7 +9,9 @@ export const isSampleId = (id: string | null | undefined) => !!id?.startsWith(SA
 export const isSampleAttendance = (a: unknown) => sampleAttendance.some(s => canon(s) === canon(a));
 /** 모의고사는 시험 이름이 키라 샘플 값(원점수·저장 시각) 그대로일 때만 샘플이에요. */
 export const isSampleMock = (m: unknown) => sampleMockScores.some(s => canon(s) === canon(m));
-export const isSampleInterest = (i: { id: string; created_at: string }) => sampleInterests.some((s, k) => (s.id === i.id || legacySampleInterestIds[k] === i.id) && s.created_at === i.created_at);
+// 샘플 관심 전형의 저장 시각은 rel()로 '넣은 날' 기준이라 날짜가 바뀌면 달라져요 → 날짜는 빼고 시각(T00:00:0k.000Z)만 봐요.
+// 사용자가 직접 담은 전형은 실제 저장 시각이라 이 값과 겹치지 않아요.
+export const isSampleInterest = (i: { id: string; created_at: string }) => sampleInterests.some((s, k) => (s.id === i.id || legacySampleInterestIds[k] === i.id) && s.created_at.slice(10) === i.created_at.slice(10));
 
 /** 백업(.jnavi)에는 샘플 행을 넣지 않아요. 사용자 행이 샘플 전형을 가리키면 그 연결만 끊어요. */
 export function stripSample(b: StudentBackup): StudentBackup {

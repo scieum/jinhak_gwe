@@ -71,7 +71,8 @@ async function loadAdmin() {
 export async function initSample() {
   const flag = sampleFlag();
   if (flag === 'on') { showPublicSample(); return; }
-  if (flag === 'off') return;
+  // 2026-11-26 전 버전은 날짜가 바뀐 뒤 지우면 샘플 관심 전형이 남았어요 → 꺼진 기기에서 남은 것만 정리해요
+  if (flag === 'off') { await studentDb.interests.filter(isSampleInterest).delete(); return; }
   const s = studentDb, a = adminDb;
   const studentEmpty = await empty([s.grades, s.attendance, s.applications, s.tasks, s.boards, s.mocks, s.interests]);
   const teacherEmpty = !(await teacherDb.meta.get('class'));

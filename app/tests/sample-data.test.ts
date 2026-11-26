@@ -107,3 +107,16 @@ test('관리자 공개 내보내기는 샘플 초안을 절대 싣지 않아요'
   const done = { ...sampleFieldDraft, approvals: [...sampleFieldDraft.approvals, { reviewer: '관리자 B', at: '2026-11-20T01:30:00.000Z' }] };
   expect(() => buildWikiFile(null, done)).toThrow(/샘플 계열표/);
 });
+
+test('샘플을 넣은 날과 지우는 날이 달라도 샘플 관심 전형은 지워지고, 이미 꺼진 기기의 남은 것도 정리해요', async () => {
+  const { sampleInterests } = await import('../src/data/sample/student');
+  const shifted = sampleInterests.map(i => ({ ...i, created_at: `2026-11-03${i.created_at.slice(10)}` })); // 며칠 전에 넣은 샘플
+  const mine = { id: 'mine', university: '가온대', program: '일반전형', department: '간호학과', created_at: '2026-11-25T03:12:45.123Z' };
+  await studentDb.interests.bulkPut([...shifted, mine]);
+  localStorage.setItem('jinhak-navi-sample', 'on');
+  await clearSample();
+  expect((await studentDb.interests.toArray()).map(i => i.id)).toEqual(['mine']);
+  await studentDb.interests.bulkPut(shifted); // 예전 버전에서 지우고 남은 상태
+  await initSample();
+  expect((await studentDb.interests.toArray()).map(i => i.id)).toEqual(['mine']);
+});

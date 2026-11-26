@@ -48,7 +48,7 @@ test.each([true, false])('target picker confirms discarded edits, saves prioriti
   await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
   expect(save).toHaveBeenCalledWith([a.id]);
   expect(screen.getByRole('status').textContent).toBe('목표 대학을 저장했어요');
-  expect(document.activeElement).toBe(button);
+  await waitFor(() => expect(document.activeElement).toBe(button)); // 모달이 닫힌 뒤 포커스를 돌려줘요(부하가 걸리면 한 박자 늦어요)
 });
 
 test('mobile header opens saved targets again and removes its action on unmount', async () => {

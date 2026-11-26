@@ -32,6 +32,11 @@ export function comparisonStatistic(record: ComparisonRecord | null, cut: CutFie
   const value = statisticValue(indexed, cut);
   return gradeCoordinate(value) === null ? null : value;
 }
+/** 차이 = 불리한 쪽 값(범위 위 끝, 소수 첫째 자리 올림) − 컷, 소수 한 자리 부호 붙임. 될각 · 홈이 같은 숫자를 보여요. */
+export function referenceDiffText(max: number, cut: number): string {
+  const d = Math.ceil(max * 10 - 1e-9) / 10 - cut, t = (Math.round(Math.abs(d) * 10) / 10).toFixed(1);
+  return t === '0.0' ? '0.0' : `${d < 0 ? '−' : '+'}${t}`;
+}
 export type ReferenceCut = { year: string; cut: 'cut_70' | 'cut_50'; value: number; row: ResultRow } | { reason: string };
 const trackOf = (name: string) => name.includes('종합') ? '종합' : name.includes('교과') ? '교과' : '';
 // 전형계획(2028) 이름과 수집 입결 이름이 달라서('학생부교과(지역균형)' ↔ '학생부교과 [지역균형전형]' · '지역균형') 핵심 이름으로 맞춰요
@@ -46,7 +51,20 @@ export function latestReferenceCut(interest: Interest, rows: readonly ResultRow[
   if (!interest.department?.trim()) return { reason: '학과를 고르면 입결과 비교해요.' };
   const unit = rows.flatMap((row, sourceRow) => row.recruit_unit.trim() === interest.department!.trim() && row.round === '수시' && row.metric === '교과등급' ? [{ sourceRow, row }] : []);
   const exact = unit.filter(r => r.row.program.trim() === interest.program.trim());
-  const pool = exact.length ? exact : unit.filter(r => sameProgram(r.row.program, interest.program));
+  const named = exact.length ? exact : unit.filter(r => sameProgram(r.row.program, interest.program));
+  const found = latestIn(named);
+  if (found) return found;
+  // 전형 이름이 분명한데('지역균형' 등) 못 찾으면 다른 전형으로 대신하지 않아요
+  if (programCore(interest.program)) return { reason: '이 학과의 교과등급 컷이 수집 자료에 없어요.' };
+  // '학생부교과'처럼 일반 이름이면: 같은 학과 · 같은 계열 전형이 최근 학년도에 하나뿐일 때만 그 전형과 비교해요
+  const track = trackOf(interest.program) || '교과';
+  const family = unit.filter(r => (r.row.admission_type || trackOf(r.row.program)) === track);
+  const latest = family.map(r => r.row.result_year).sort().at(-1);
+  const kinds = new Set(family.filter(r => r.row.result_year === latest).map(r => r.row.program.trim()));
+  if (kinds.size > 1) return { reason: `같은 학과 ${track}전형이 ${kinds.size}개라 고르지 않았어요. 수시 입결에서 전형을 골라 담아 주세요.` };
+  return latestIn(family) ?? { reason: '이 학과의 교과등급 컷이 수집 자료에 없어요.' };
+}
+function latestIn(pool: readonly ComparisonRecord[]): ReferenceCut | null {
   const years = [...new Set(pool.map(r => r.row.result_year))].sort().reverse();
   for (const year of years) {
     const records = pool.filter(r => r.row.result_year === year);
@@ -58,7 +76,7 @@ export function latestReferenceCut(interest: Interest, rows: readonly ResultRow[
       return { year, cut, value: usable[0].v, row: usable[0].r.row };
     }
   }
-  return { reason: '이 학과의 교과등급 컷이 수집 자료에 없어요.' };
+  return null;
 }
 export interface ComparisonValue { text: string; known: boolean }
 export function differsOrUnknown(values: readonly ComparisonValue[]) {

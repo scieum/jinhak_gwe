@@ -1,10 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
-import { loadCollectedIndex, loadCollectedRows } from '../data/collectedResults';
-import { collectedUniversityCandidates } from '../domain/universityIdentity';
-import { latestReferenceCut } from '../domain/interestComparison';
+import { useMemo, useState } from 'react';
+import { useReferenceCuts } from '../data/referenceCuts';
+import { referenceDiffText } from '../domain/interestComparison';
 import { collectedProgramPath } from '../domain/interests';
 import { fiveToNineFor } from '../domain/results';
-import type { ResultRow } from '../domain/resultReview';
 import type { StudentBackup } from '../domain/student';
 import { Link } from 'react-router-dom';
 import { Disclaimer, TraceAccordion } from '../components/CalculationDetails';
@@ -67,11 +65,10 @@ const chipsOf = (f: Filters) => [
 const pendingName = (r: { status: string; reason?: string } | null) => r?.reason === '검수된 입결 자료가 필요해요.' ? '입결 없음' : '비교 자료 확인 필요';
 const toggle = (list: string[], v: string) => list.includes(v) ? list.filter(x => x !== v) : [...list, v];
 const fmt = (v: number) => (Math.round(v * 10) / 10).toFixed(1);
-const signed = (v: number) => { const t = fmt(Math.abs(v)); return t === '0.0' ? '0.0' : `${v < 0 ? '−' : '+'}${t}`; };
 const lower = (min: number) => Math.floor(min * 10 + 1e-9) / 10, upper = (max: number) => Math.ceil(max * 10 - 1e-9) / 10;
 const rangeText = (min: number, max: number) => `약 ${lower(min).toFixed(1)}~${upper(max).toFixed(1)}`;
 // 차이 = 불리한 쪽 값 − 70% 컷. 보이는 범위 끝값(올림)으로 적어서 화면 숫자끼리 맞아요(판정은 원래 값 그대로).
-const diffText = (max: number, cut: number) => signed(upper(max) - cut);
+const diffText = referenceDiffText;
 // cut-compare-bar 축소형: 모든 카드가 같은 눈금 1.0~4.0을 써요(왼쪽 = 1등급 쪽).
 const AXIS = [1, 4] as const;
 const pos = (v: number) => Math.min(100, Math.max(0, (v - AXIS[0]) / (AXIS[1] - AXIS[0]) * 100));
@@ -85,28 +82,11 @@ function MiniBar({ min, max, cut }: { min: number; max: number; cut?: number }) 
   </div>;
 }
 
-type Loaded = Record<string, { rows: ResultRow[]; error: string }>;
 /** 검수된 판정 전형이 아직 없을 때(실제 모드): 관심 전형마다 내 참고 추정 범위와 최근 수집 입결 컷을 나란히 보여요. 판정 이름은 붙이지 않아요(NEVER-1). */
 function InterestReference({ data }: { data: StudentBackup }) {
   const interests = useMemo(() => [...(data.interests ?? [])].sort((a, b) => a.created_at.localeCompare(b.created_at)), [data.interests]);
   const mine = useMemo(() => { const r = data.grades.length ? fiveToNineFor(data.grades, '전 교과') : null; return r?.min != null && r.max != null ? { min: r.min, max: r.max } : null; }, [data.grades]);
-  const [loaded, setLoaded] = useState<Loaded>({}), [indexError, setIndexError] = useState('');
-  const names = JSON.stringify([...new Set(interests.map(i => i.university))].sort());
-  useEffect(() => {
-    let active = true; setLoaded({}); setIndexError('');
-    const wanted = JSON.parse(names) as string[];
-    if (wanted.length) loadCollectedIndex().then(index => {
-      for (const university of wanted) {
-        // 관심 목록은 '경희대학교'처럼 캠퍼스 없이 저장될 수 있어서 캠퍼스 후보('경희대(서울)' 등)를 모두 읽어요
-        const campuses = collectedUniversityCandidates(university, index.universities.map(e => e.university));
-        const entries = index.universities.filter(e => campuses.includes(e.university));
-        if (!entries.length) { if (active) setLoaded(p => ({ ...p, [university]: { rows: [], error: '수집 자료에서 이 대학을 찾지 못했어요.' } })); continue; }
-        Promise.all(entries.map(e => loadCollectedRows(e))).then(all => { if (active) setLoaded(p => ({ ...p, [university]: { rows: all.flat(), error: '' } })); })
-          .catch(() => { if (active) setLoaded(p => ({ ...p, [university]: { rows: [], error: '입결 자료를 불러오지 못했어요.' } })); });
-      }
-    }).catch(() => { if (active) setIndexError('입결 목록을 불러오지 못했어요. 잠시 뒤 다시 열어 주세요.'); });
-    return () => { active = false; };
-  }, [names]);
+  const { cuts, error: indexError } = useReferenceCuts(interests);
 
   const head = <div className="dg-summary"><p className="t-body-sm num">관심 전형 {interests.length}개 · 참고 비교</p>
     <p className="t-caption text-muted">판정 기준과 입결 검수가 끝나면 안정 · 적정 · 소신 · 위험으로 나눠 보여 드려요. 지금은 내 참고 추정 범위와 최근 입결 컷만 비교해요.</p></div>;
@@ -116,8 +96,7 @@ function InterestReference({ data }: { data: StudentBackup }) {
     {!mine && <p className="t-caption text-muted">{data.grades.length ? '석차등급이 있는 과목을 입력하면 내 참고 추정 범위와 비교해요. ' : '성적을 입력하면 내 참고 추정 범위와 비교해요. '}<Link className="t-link" to="/grade-input">성적 입력하기 ›</Link></p>}
     {indexError && <p className="t-caption text-muted" role="alert">{indexError}</p>}
     <div className="dg-pending__cards">{interests.map(i => {
-      const pack = loaded[i.university];
-      const ref = pack ? (pack.error ? { reason: pack.error } : latestReferenceCut(i, pack.rows)) : null;
+      const ref = cuts[i.id];
       const cut = ref && 'value' in ref ? ref : null;
       return <article className="univ-card dg-card" key={i.id}>
         <header><UniversityLogo university={i.university} /><InterestButton university={i.university} program={i.program} department={i.department || undefined} compact /></header>
@@ -126,7 +105,7 @@ function InterestReference({ data }: { data: StudentBackup }) {
         <div className="dg-card__numbers"><span className="t-caption text-muted">내 환산 (참고 추정)</span>
           <div className="dg-card__range"><strong className="num">{mine ? rangeText(mine.min, mine.max) : '—'}</strong></div>
           <span className="t-caption text-muted num">{!ref ? '입결 자료를 불러오는 중이에요' : cut
-            ? `${cut.year}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${mine ? ` · 차이 ${diffText(mine.max, cut.value)}` : ''}` : (ref as { reason: string }).reason}</span></div>
+            ? `${cut.year}학년도 ${cut.row.program.trim() !== i.program.trim() ? `${cut.row.program} ` : ''}${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${mine ? ` · 차이 ${diffText(mine.max, cut.value)}` : ''}` : (ref as { reason: string }).reason}</span></div>
         {mine && <MiniBar min={mine.min} max={mine.max} cut={cut?.value} />}
         <div className="dg-card__chips"><span className="data-status-badge">판정 준비 중</span>{cut && <span className="data-status-badge">검수 전 참고자료</span>}</div>
         {/* 짝지은 입결 행의 대학·전형 이름으로 걸어야 원문 화면에서 찾아져요(전형계획 이름과 수집 이름이 달라요) */}

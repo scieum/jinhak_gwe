@@ -27,6 +27,11 @@ describe('될각 참고 비교 컷 고르기', () => {
     expect('reason' in latestReferenceCut(plan, [row({ program: '학생부종합(지역균형)' })])).toBe(true);
     expect('reason' in latestReferenceCut(plan, [row({ program: '학생부교과(학교장추천)' })])).toBe(true);
   });
+  test("'학생부교과'처럼 일반 이름이면 같은 학과 교과전형이 하나뿐일 때만 그 전형과 비교해요", () => {
+    const generic = { ...interest(), program: '학생부교과' };
+    expect(latestReferenceCut(generic, [row({ program: '학생부교과(KU지역균형)', cut_70: '2.13' }), row({ program: '학생부종합(KU자기추천)', admission_type: '종합', cut_70: '3.0' })])).toMatchObject({ value: 2.13 });
+    expect('reason' in latestReferenceCut(generic, [row({ program: '학생부교과(KU지역균형)' }), row({ program: '학생부교과(기회균형)', cut_70: '3.1' })])).toBe(true);
+  });
   test('같은 해 행이 둘이어도 컷 있는 행이 하나면 그 행, 값이 다른 행이 여럿이면 고르지 않아요', () => {
     expect(latestReferenceCut(interest(), [row({ cut_70: '', cut_50: '' }), row({ cut_70: '1.64' })])).toMatchObject({ value: 1.64 });
     expect('reason' in latestReferenceCut(interest(), [row(), row({ cut_70: '2.5' })])).toBe(true);

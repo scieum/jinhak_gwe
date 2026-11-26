@@ -6,9 +6,11 @@ import { useStudent } from '../store/studentDb';
 import { gradeSummary } from '../domain/student';
 import { fiveToNineFor, judgeUniversity } from '../domain/results';
 import { collectedProgramPath } from '../domain/interests';
+import { referenceDiffText } from '../domain/interestComparison';
+import { useReferenceCuts } from '../data/referenceCuts';
 import { useSampleMode } from '../data/sample/mode';
 import { SAMPLE_STUDENT_NAME } from '../data/sample/student';
-import { dataAsOf } from '../data/catalog';
+import { admissionYear, dataAsOf, programs } from '../data/catalog';
 import { UniversityLogo } from './UniversityLogo';
 import { GradeRange } from './GradeRange';
 import { PromoBanner } from './PromoBanner';
@@ -43,6 +45,11 @@ export function HomeDashboard() {
   const state = useStudent();
   const desktop = useDesktop();
   const sample = useSampleMode(); // 샘플을 켜고 끄면 샘플 전형·판정 규칙이 바뀌어서 다시 그려요
+  // 담은 순서(저장소는 id 순이라 created_at으로 다시 정렬) · 대학마다 첫 관심 하나
+  const universities = [...(state?.data?.interests ?? [])].sort((a, b) => a.created_at.localeCompare(b.created_at)).filter((i, k, all) => all.findIndex(x => x.university === i.university) === k);
+  // 검수된 판정 전형이 아직 없으면(실제 모드) 될각처럼 최근 수집 입결 컷과 참고 비교만 해요(판정 이름 없음, NEVER-1)
+  const reference = !programs.some(p => p.admission_year === admissionYear);
+  const { cuts } = useReferenceCuts(reference ? universities : []);
   if (!state?.data) return <section className="student-screen" data-slug="home">{state ? <p role="alert">{state.error}</p> : <p role="status">기기에 저장된 성적을 읽고 있어요.</p>}</section>;
   const data = state.data, has = data.grades.length > 0;
   const result = fiveToNineFor(data.grades, '전 교과'), average = gradeSummary(data.grades).average;
@@ -50,8 +57,6 @@ export function HomeDashboard() {
 
   // 관심 대학 될각: 될각 화면과 같은 조건(검수된 입결 · 같은 비교 기준)일 때만 판정해요. 그 밖은 판정 없음(NEVER-1).
   const judged = (university: string) => judgeUniversity(data.grades, university, COMBO);
-  // 담은 순서(저장소는 id 순이라 created_at으로 다시 정렬) · 대학마다 첫 관심 하나
-  const universities = [...(data.interests ?? [])].sort((a, b) => a.created_at.localeCompare(b.created_at)).filter((i, k, all) => all.findIndex(x => x.university === i.university) === k);
   const rows = universities.map(i => ({ i, j: judged(i.university) }));
   // 4곳만 보일 때는 판정이 다른 대학을 먼저 골라 담은 순서대로 보여요(demo-dataset: 6곳 중 1·3·5·6).
   const verdict = (j: typeof rows[number]['j']) => j ? (j.v.boundary ? '경계' : j.v.label) : '';
@@ -87,13 +92,18 @@ export function HomeDashboard() {
       <div className="home-right">
         <div className="home-dday">{DDAYS.map(([label, date]) => <div className="stat-tile home-tile" key={label}><span>{label}</span><strong className="num">{dday(date)}</strong><small className="num">{date} 예정</small></div>)}</div>
         <section className="home-card home-judge" aria-label="관심 대학 될각">
-          <div><h2>관심 대학 될각</h2><p>{rows.length ? (has ? `관심 대학 ${rows.length}곳 중 ${judgedCount}곳 · 교과전형 입결과 비교했어요` : `관심 대학 ${rows.length}곳 · 성적을 입력하면 될각 판정이 보여요`) : '관심 대학을 담으면 여기에서 될각 판정을 볼 수 있어요.'}</p></div>
+          <div><h2>관심 대학 될각</h2><p>{!rows.length ? (reference ? '관심 대학을 담으면 여기에서 최근 입결과 비교해요.' : '관심 대학을 담으면 여기에서 될각 판정을 볼 수 있어요.')
+            : reference ? (has && ready ? `관심 대학 ${rows.length}곳 · 최근 입결 컷과 참고 비교예요` : `관심 대학 ${rows.length}곳 · 성적을 입력하면 내 범위와 비교해요`)
+            : has ? `관심 대학 ${rows.length}곳 중 ${judgedCount}곳 · 교과전형 입결과 비교했어요` : `관심 대학 ${rows.length}곳 · 성적을 입력하면 될각 판정이 보여요`}</p></div>
           {rows.length > 0 && <ul>{shown.map(({ i, j }) => {
-            const badge = !j ? (has ? <span className="judge-badge judge-none">자료 준비 중</span> : null) // 성적 전이면 대학마다 같은 배지를 반복하지 않고 위 설명 한 줄로 알려요
+            const ref = reference ? cuts[i.id] : null, cut = ref && 'value' in ref ? ref : null;
+            const badge = reference ? (cut ? <span className="data-status-badge num">{`${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${has && ready ? ` · 차이 ${referenceDiffText(result.max!, cut.value)}` : ''}`}</span>
+                : ref ? <span className="data-status-badge">입결 확인 필요</span> : null)
+              : !j ? (has ? <span className="judge-badge judge-none">자료 준비 중</span> : null) // 성적 전이면 대학마다 같은 배지를 반복하지 않고 위 설명 한 줄로 알려요
               : j.v.boundary ? <span className="judge-badge judge-edge"><span aria-hidden="true">◇</span> 경계</span>
               : <span className={`judge-badge ${JUDGE[j.v.label][0]}`}><span aria-hidden="true">{JUDGE[j.v.label][1]}</span> {j.v.label}</span>;
             return <li className="univ-card" key={i.university}><UniversityLogo university={i.university} />
-              <Link to={collectedProgramPath(i.university, j?.p.program ?? i.program, j ? j.p.department || undefined : i.department)}
+              <Link to={cut ? collectedProgramPath(cut.row.university, cut.row.program, cut.row.recruit_unit) : collectedProgramPath(i.university, j?.p.program ?? i.program, j ? j.p.department || undefined : i.department)}
                 aria-label={[i.university, programLine(j ? j.p.program : i.program), j ? j.p.department : i.department].filter(Boolean).join(' · ')}><strong>{i.university}</strong><span>{programLine(j ? j.p.program : i.program)}</span></Link>{badge}</li>;
           })}</ul>}
           {rows.length ? <Link className="button-pill-soft" to="/doelgak">될각 전체 보기</Link> : <Link className="button-pill-soft" to="/admissions-list">전형계획 둘러보기</Link>}
