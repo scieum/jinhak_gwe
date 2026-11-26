@@ -45,9 +45,15 @@ afterEach(() => { cleanup(); vi.unstubAllGlobals(); resetUnivMap(); });
 describe('대학 지도', () => {
   it('휠로 커서 위치를 유지하며 확대·축소하고 배율 제한·초기화·지역 전환을 적용한다', async () => {
     serve('ok', false); open();
-    const svg = await screen.findByRole('group', { name: /대한민국 시·도 지도/ });
-    vi.spyOn(svg, 'getBoundingClientRect').mockReturnValue({ left: 100, top: 50, width: 636, height: 540 } as DOMRect);
-    const view = () => svg.getAttribute('viewBox')!.split(' ').map(Number);
+    await screen.findByRole('group', { name: /대한민국 시·도 지도/ });
+    // 지도는 크기·지역이 바뀌면 새로 만들어져요(key). 처음 찾은 요소만 붙잡으면 부하가 걸린 전체 실행에서 빠진 옛 요소를 보게 돼서,
+    // 크기 가짜값은 모든 svg에 걸고 매번 지금 화면의 지도를 다시 찾아요.
+    const rect = Element.prototype.getBoundingClientRect;
+    vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function (this: Element) {
+      return this instanceof SVGSVGElement ? { left: 100, top: 50, width: 636, height: 540 } as DOMRect : rect.call(this);
+    });
+    const map = () => screen.getByRole('group', { name: /대한민국 시·도 지도/ });
+    const view = () => map().getAttribute('viewBox')!.split(' ').map(Number);
     const original = view();
     const point = () => {
       const [x, y, w, h] = view(), scale = Math.min(636 / w, 540 / h);
@@ -55,14 +61,14 @@ describe('대학 지도', () => {
     };
     const anchor = point();
     const wheel = new WheelEvent('wheel', { deltaY: -120, clientX: 570, clientY: 230, bubbles: true, cancelable: true });
-    fireEvent(svg, wheel);
+    fireEvent(map(), wheel);
     expect(wheel.defaultPrevented).toBe(true);
     expect(view()[2]).toBeLessThan(original[2]);
     expect(point()[0]).toBeCloseTo(anchor[0], 8);
     expect(point()[1]).toBeCloseTo(anchor[1], 8);
-    fireEvent.wheel(svg, { deltaY: 60, clientX: 570, clientY: 230, deltaMode: 1 });
+    fireEvent.wheel(map(), { deltaY: 60, clientX: 570, clientY: 230, deltaMode: 1 });
     expect(view()).toEqual(original);
-    for (let i = 0; i < 12; i++) fireEvent.wheel(svg, { deltaY: -200, clientX: 570, clientY: 230 });
+    for (let i = 0; i < 12; i++) fireEvent.wheel(map(), { deltaY: -200, clientX: 570, clientY: 230 });
     expect(view()[2]).toBeCloseTo(original[2] / 12, 8);
     expect((screen.getByRole('button', { name: '지도 확대' }) as HTMLButtonElement).disabled).toBe(true);
     fireEvent.click(screen.getByRole('button', { name: '지도 배율 초기화' }));

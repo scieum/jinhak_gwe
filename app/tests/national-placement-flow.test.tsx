@@ -85,10 +85,11 @@ test('좌표가 없는 대학도 모두 보이며 추가 통계 선택과 해당
   vi.spyOn(loader, 'loadPlacementSource').mockResolvedValue({ ...(Object.fromEntries(RESULT_COLUMNS.map(c => [c, ''])) as ResultRow), ...halla, result_year: '2026', cut_other: '최종등록자 75%컷 5.43', source_page: '원문 1쪽' });
   renderBoard();
   fireEvent.click(await screen.findByRole('button', { name: '수집 대학 3' }));
-  expect(screen.getByRole('link', { name: '자료없는대학교 수집 원문' })).toBeTruthy();
-  expect(screen.getByText('선택 학년도 수집 자료 없음')).toBeTruthy();
-  fireEvent.click(screen.getByRole('button', { name: '한라대학교 75% 컷 1행 보기' }));
-  expect(within(screen.getByRole('group', { name: '컷·통계 기준' })).getByRole('button', { name: '75% 컷' }).getAttribute('aria-pressed')).toBe('true');
+  // 화면이 저장된 성적(내 환산 범위)도 읽어 한 번 더 그려지니, 클릭 뒤에는 나타날 때까지 기다려요
+  expect(await screen.findByRole('link', { name: '자료없는대학교 수집 원문' })).toBeTruthy();
+  expect(await screen.findByText('선택 학년도 수집 자료 없음')).toBeTruthy();
+  fireEvent.click(await screen.findByRole('button', { name: '한라대학교 75% 컷 1행 보기' }));
+  await waitFor(() => expect(within(screen.getByRole('group', { name: '컷·통계 기준' })).getByRole('button', { name: '75% 컷' }).getAttribute('aria-pressed')).toBe('true'));
   fireEvent.click(await screen.findByRole('button', { name: '한라대학교 75% 컷 5.43등급, 교과, 원문 1행 상세' }));
   await within(screen.getByRole('dialog')).findByText('원문 1쪽');
   expect(within(screen.getByRole('dialog')).getByText('75% 컷 · 5.43등급')).toBeTruthy();
