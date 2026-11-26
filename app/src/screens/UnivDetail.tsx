@@ -154,8 +154,8 @@ export function UnivDetail() {
 export function ProgramDetail() {
   const [query] = useSearchParams(), name = query.get('u') ?? '', program = query.get('p') ?? '';
   const sample = useSampleMode(), units = useReleasedResults();
-  // 데모(성균관대 시안)는 샘플 모드에서 그 대학을 열었을 때만. 다른 대학은 샘플 모드여도 실제 전형계획을 읽어요(대학 상세와 같은 규칙)
-  const demo = sample && (!name || name === sampleProgramDetail.university);
+  // 데모(성균관대 학생부교과(학교장추천) 시안)는 샘플 모드에서 그 대학 · 전형을 열었을 때만. 다른 대학은 샘플 모드여도 실제 전형계획을 읽어요(대학 상세와 같은 규칙)
+  const demo = sample && (!name || (name === sampleProgramDetail.university && (!program || program === sampleProgramDetail.program)));
   const [plan, setPlan] = useState<PdView | null | undefined>(undefined);
   useEffect(() => {
     if (demo) return;
@@ -166,7 +166,7 @@ export function ProgramDetail() {
   }, [demo, name, program]);
   const lines = units ? programLines(units, name, program) : [];
   // 샘플 입결에 있는 전형이면 입결 표, 아니면 데모(샘플 대학) 또는 실제 전형계획
-  const view = sample && lines.length ? null : demo ? (units ? sampleProgramDetail : null) : plan;
+  const view = demo ? (units ? sampleProgramDetail : null) : sample && lines.length ? null : plan;
   if (view) return <PlanDetail view={view} sample={sample} />;
   if (!units || (!demo && !(sample && lines.length) && plan === undefined)) return <section className="student-screen" data-slug="program-detail"><p role="status">전형 자료를 읽고 있어요.</p></section>;
   if (!lines.length) return <section className="student-screen" data-slug="program-detail"><Missing what="전형" /></section>;

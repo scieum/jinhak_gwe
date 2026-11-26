@@ -5,7 +5,7 @@
   "errors": [],
   "back_to": null,
   "same_fail_streak": 0,
-  "route": "/program-detail?u=경희대학교&p=학생부종합",
+  "route": "/program-detail?u=성균관대학교&p=학생부교과(학교장추천)",
   "allowed": [],
   "notes": [
     "390: F 글자 짝 67/67 (짝 없는 글자는 T만 본다)",

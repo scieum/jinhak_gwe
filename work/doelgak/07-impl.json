@@ -1,13 +1,10 @@
 {
   "slug": "doelgak",
   "gate": "G5",
-  "pass": false,
-  "errors": [
-    "F 390 #I775:803;65:269: '경계' 색 #141414 (시안 #5c4a9e)",
-    "F 1440 #I776:1996;339:12616;65:312: '경계' 색 #141414 (시안 #5c4a9e)"
-  ],
-  "back_to": "S5",
-  "same_fail_streak": 1,
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
   "route": "/doelgak",
   "allowed": [
     {
@@ -26,6 +23,6 @@
   },
   "ssim": {
     "390": 0.9605,
-    "1440": 0.9803
+    "1440": 0.9804
   }
 }

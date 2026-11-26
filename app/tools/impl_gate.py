@@ -360,7 +360,7 @@ def within(value, expected, tol):
 
 # ---------------------------------------------------------------- 앱(Playwright)
 
-ROUTE_QUERY = {"univ-detail": "?u=경희대학교", "univ-detail-wiki": "?u=경희대학교", "program-detail": "?u=경희대학교&p=학생부종합"}
+ROUTE_QUERY = {"univ-detail": "?u=경희대학교", "univ-detail-wiki": "?u=경희대학교", "program-detail": "?u=성균관대학교&p=학생부교과(학교장추천)"}  # 시안 program-detail = 샘플 데모(성균관대 · data/sample/programDetail.ts). 샘플 모드에서도 다른 대학은 실제 전형계획을 보여 줘요(2026-11-26)
 
 
 def route_of(slug):

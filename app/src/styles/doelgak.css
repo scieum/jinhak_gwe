@@ -61,7 +61,7 @@
 .dg-card__numbers { display: grid; }
 .dg-card__range { display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-xs); }
 .dg-card__range strong { font-size: 20px; line-height: 24px; color: var(--color-ink); }
-.dg-boundary { padding: 0 4px; border: 1px dashed var(--color-ink); font-size: 12px; line-height: 16px; }
+.dg-boundary { padding: 0 4px; border: 1px dashed var(--color-judge-edge); color: var(--color-judge-edge); font-size: 12px; line-height: 16px; }
 .dg-card__numbers .t-caption { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .dg-bar { margin-top: auto; padding-top: 24px; } /* 시안 cut-compare-bar: 위 24에 트랙 */
 .dg-bar__track { position: relative; height: 6px; background: var(--color-hairline-soft); }

@@ -50,7 +50,7 @@
 .tb-mark--safe { color: var(--color-judge-safe); }
 .tb-mark--safe > i { border-radius: 50%; }
 .tb-mark--none { color: var(--color-text-muted); }
-.tb-mark--edge { color: var(--color-ink); }
+.tb-mark--edge { color: var(--color-judge-edge); } /* 경계 = 보라(2026-11-25 사용자 결정), 아이콘 없이 이름만 */
 .tb-mark--soft { padding: 0 8px; }
 .tb-mark--soft.tb-mark--risk { background: var(--color-judge-risk-bg); }
 .tb-mark--soft.tb-mark--reach { background: var(--color-judge-reach-bg); }
