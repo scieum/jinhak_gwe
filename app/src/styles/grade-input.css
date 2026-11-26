@@ -147,5 +147,5 @@
   .grade-input__filter { justify-content: flex-start; }
   .grade-input__tablegroup > .table-scroll + * { margin-top: 4px; }
   .grade-input__tablegroup > .grade-input__summary { margin-top: 12px; }
-  .grade-input .grade-input-table thead th:nth-child(n+3) { text-align: right; } /* 숫자 열은 머리글도 값과 같은 오른쪽 정렬(표가 넓어져도 줄이 맞게) */
+  .grade-input .grade-input-table thead th:nth-child(n+4) { text-align: right; } /* 숫자 열(4열 학점부터)은 머리글도 값과 같은 오른쪽 정렬. 3열 '유형'은 태그와 같이 가운데 */
 }
