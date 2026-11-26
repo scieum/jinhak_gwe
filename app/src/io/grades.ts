@@ -123,6 +123,48 @@ export function parsePdfGradeLines(lines: string[], fallback: Semester): ImportP
   warnings.push('분포비율과 분할점수는 자동으로 추정하지 않아요. 성적표와 대조해 입력해 주세요.');
   return { grades, warnings };
 }
+// NEIS 학교생활기록부Ⅱ '7. 교과학습발달상황'(2026-11-26). PDF 글자를 문서에 쓰인 순서대로 이은 문자열을 읽어요.
+// 학기 칸은 여러 줄을 합친 칸이라 각 학기 첫 과목 앞에 한 번만 나와요. 교과 · 과목 이름은 두 줄로 꺾이기도 해요.
+const NEIS_GROUP = String.raw`국어|수학|영어|한국사|사회\s*\(\s*역사\s*/\s*도덕\s*포함\s*\)|사회|과학|기술\s*[·・]\s*가정|정보|제2외국어|한문`;
+const NEIS_MAIN = new RegExp(String.raw`(?:(?<![\d.])([12])\s+)?(${NEIS_GROUP})\s+([^<>[\]]{1,30}?)\s+(\d)\s+(\d{1,3}(?:\.\d+)?)\s*/\s*(\d{1,3}(?:\.\d+)?)\s+([A-E])\s+A\s*\(\s*([\d.]+)\s*\)\s*B\s*\(\s*([\d.]+)\s*\)\s*C\s*\(\s*([\d.]+)\s*\)\s*D\s*\(\s*([\d.]+)\s*\)\s*E\s*\(\s*([\d.]+)\s*\)\s+(?:([1-9])\s+)?(\d{1,4})(?![\d.])`, 'g'); // 석차등급이 없는 과목은 수강자수만, 그 뒤에 다음 학기 숫자가 올 수 있어요
+const NEIS_ART = /(?:(?<![\d.])([12])\s+)?(과학|체육|예술)\s+([^<>/[\]]{1,30}?)\s+(\d)\s+([ABC])(?=\s|$)/g; // 과목 이름에 표 머리글 기호(< > /)가 끼면 안 돼요
+const NEIS_LIBERAL = /(?:(?<![\d.])([12])\s+)?(교양)\s+([^<>/[\]]{1,30}?)\s+(\d)\s+([PF])(?=\s|$)/g;
+export function parseNeisRecordText(text: string): ImportPreview {
+  const grades: GradeRecord[] = [], warnings: string[] = [];
+  const flat = text.replace(/\s+/g, ' ');
+  const years = [...flat.matchAll(/\[\s*([123])\s*학년\s*\]/g)];
+  years.forEach((m, i) => {
+    const year = m[1], body = flat.slice(m.index! + m[0].length, years[i + 1]?.index ?? flat.length);
+    const sections = { main: body, art: '', liberal: '' };
+    const art = body.indexOf('<체육'), lib = body.indexOf('<교양');
+    if (art >= 0) { sections.main = body.slice(0, art); sections.art = body.slice(art, lib > art ? lib : undefined); }
+    if (lib >= 0) sections.liberal = body.slice(lib);
+    const scan = (part: string, re: RegExp, make: (m: RegExpMatchArray, semester: Semester) => GradeRecord | null) => {
+      let sem = '1';
+      for (const r of part.matchAll(re)) {
+        if (r[1]) sem = r[1];
+        const g = make(r, `${year}-${sem}` as Semester);
+        if (g) { warnings.push(...validateGrade(g).map(e => `${g.name}: ${e}`)); grades.push(g); }
+      }
+    };
+    const known = (name: string) => subjectCatalog.find(s => s.name.replace(/\s/g, '') === name.replace(/\s/g, ''));
+    scan(sections.main, NEIS_MAIN, (r, semester) => {
+      const name = r[3].trim(), k = known(name);
+      if (!k) { warnings.push(`${name}: 과목 유형을 확인할 수 없어 직접 입력이 필요해요.`); return null; }
+      return { ...newGrade(semester), name: k.name, subject_group: k.group, type: k.type, credits: Number(r[4]), raw_score: Number(r[5]), subject_mean: Number(r[6]),
+        achievement: r[7] as GradeRecord['achievement'], achievement_distribution: [8, 9, 10, 11, 12].map(i => Number(r[i])) as [number, number, number, number, number],
+        rank_grade: r[13] ? Number(r[13]) : null, enrolled_count: Number(r[14]) };
+    });
+    scan(sections.art, NEIS_ART, (r, semester) => {
+      const name = r[3].trim(), k = known(name);
+      if (!k) { warnings.push(`${name}: 과목 유형을 확인할 수 없어 직접 입력이 필요해요.`); return null; }
+      return { ...newGrade(semester), name: k.name, subject_group: k.group, type: k.type, credits: Number(r[4]), achievement: r[5] as GradeRecord['achievement'], rank_grade: null };
+    });
+    scan(sections.liberal, NEIS_LIBERAL, (r, semester) => ({ ...newGrade(semester), name: r[3].trim(), subject_group: '교양', type: '교양', credits: Number(r[4]),
+      achievement: r[5] as GradeRecord['achievement'], rank_grade: null }));
+  });
+  return { grades, warnings };
+}
 export async function readGradePdf(file: File, fallback: Semester): Promise<ImportPreview> {
   if (file.size > 20_000_000) throw new Error('20MB 이하 PDF를 선택해 주세요.');
   const pdf = await import('pdfjs-dist');
@@ -131,14 +173,18 @@ export async function readGradePdf(file: File, fallback: Semester): Promise<Impo
   try {
     const doc = await task.promise;
     if (doc.numPages > 60) throw new Error('60쪽 이하 PDF를 선택해 주세요.');
-    const lines: string[] = [];
+    const lines: string[] = [], stream: string[] = [];
     for (let n = 1; n <= doc.numPages; n++) {
       const page = await doc.getPage(n), content = await page.getTextContent();
-      lines.push(...pdfLines(content.items.flatMap(item => 'str' in item ? [{ text: item.str, x: item.transform[4], y: item.transform[5] }] : [])));
+      const items = content.items.flatMap(item => 'str' in item ? [item] : []);
+      stream.push(...items.map(i => i.str)); // 문서에 쓰인 순서(병합된 학기 칸이 학기 첫 과목 앞에 와요)
+      lines.push(...pdfLines(items.map(item => ({ text: item.str, x: item.transform[4], y: item.transform[5] }))));
       page.cleanup();
     }
     if (!lines.join('').trim()) throw new Error('글자 층이 없는 스캔 PDF예요. 직접 입력하거나 엑셀을 이용해 주세요.');
-    const result = parsePdfGradeLines(lines, fallback);
+    // 학교생활기록부Ⅱ 형식을 먼저 읽고, 없으면 예전 성적표 형식
+    const neis = parseNeisRecordText(stream.join(' '));
+    const result = neis.grades.length ? neis : parsePdfGradeLines(lines, fallback);
     if (!result.grades.length) throw new Error('지원하는 성적 표를 찾지 못했어요. CSV·엑셀 또는 직접 입력을 이용해 주세요.');
     return result;
   } finally { await task.destroy(); }

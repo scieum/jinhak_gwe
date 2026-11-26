@@ -1,13 +1,10 @@
 {
   "slug": "admissions-list",
   "gate": "G5",
-  "pass": false,
-  "errors": [
-    "T 390: 문구 없음 '대학 이름으로 찾기'",
-    "T 1440: 문구 없음 '대학 이름으로 찾기'"
-  ],
-  "back_to": "S5",
-  "same_fail_streak": 1,
+  "pass": true,
+  "errors": [],
+  "back_to": null,
+  "same_fail_streak": 0,
   "route": "/admissions-list",
   "allowed": [],
   "notes": [
@@ -19,7 +16,7 @@
     "1440": "work/_cache/impl/admissions-list-1440.png"
   },
   "ssim": {
-    "390": 0.9593,
-    "1440": 0.9814
+    "390": 0.9618,
+    "1440": 0.982
   }
 }
