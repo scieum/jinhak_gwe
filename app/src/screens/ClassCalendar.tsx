@@ -16,6 +16,7 @@ import { seoulDate } from '../domain/planner';
 import { admissionYear } from '../data/catalog';
 import { useSampleMode } from '../data/sample/mode';
 import { downloadFile, printTable } from '../io/backup';
+import { hwpxOf } from '../io/hwpx';
 import { xlsxOf } from '../io/grades';
 import { teacherDb, type ClassState } from '../store/teacherDb';
 import '../styles/application-calendar.css';
@@ -82,12 +83,17 @@ function Screen(c: Ready) {
       setToast({ title: value === '미입력' ? `${name(r.number)} · 미입력으로 되돌렸어요` : `${name(r.number)} · ${value}로 저장했어요`, body: '결과 집계에 반영했어요' });
     } catch { setToast({ title: '결과를 저장하지 못했어요. 다시 골라 주세요.' }); }
   };
-  const exportFile = async (fmt: 'xlsx' | 'pdf') => {
+  const exportFile = async (fmt: 'xlsx' | 'hwpx' | 'pdf') => {
     const list = view === 'week' ? weekRows : monthRows, period = view === 'week' ? `${week[0]}_주간` : month;
     const headers = ['날짜', '시각', '종류', '일정', '대학', '전형', '학생', '학과', '완료 · 결과'];
     const rows = [...list].sort((a, b) => a.date.localeCompare(b.date) || EVENT_KINDS.indexOf(a.kind) - EVENT_KINDS.indexOf(b.kind) || a.number.localeCompare(b.number))
       .map(r => [r.date, r.time, r.kind, r.label, r.university, r.program, name(r.number), r.department, r.result ? r.value : r.checkable ? (r.done ? '완료' : '') : '']);
     try {
+      if (fmt === 'hwpx') {
+        const file = `우리반일정_${info.name.replace(/\s/g, '')}_${period}.hwpx`;
+        downloadFile(await hwpxOf(`우리 반 입시 일정 · ${info.name} · ${view === 'week' ? `${week[0]} 주간` : month}`, ['학생 번호·별칭과 일정 · 결과가 들어 있어요. 학교 밖으로 보내지 마세요.'], headers, rows), file, 'application/hwp+zip');
+        setSaveMenu(false); setToast({ title: '한글(hwpx) 파일을 저장했어요', body: `${file} · 학생은 번호·별칭으로 들어가요` }); return;
+      }
       if (fmt === 'pdf') {
         printTable(`우리 반 입시 일정 · ${info.name} · ${view === 'week' ? `${week[0]} 주간` : month}`, ['학생 번호·별칭과 일정 · 결과가 들어 있어요. 학교 밖으로 보내지 마세요.'], headers, rows);
         setSaveMenu(false); setToast({ title: '인쇄 창을 열었어요', body: "'PDF로 저장'을 고르면 파일로 남아요 · 학생은 번호·별칭으로 들어가요" }); return;
@@ -182,10 +188,9 @@ function Screen(c: Ready) {
       <p className="t-caption text-muted">{view === 'week' ? `${shortDate(week[0])}~${shortDate(week[6])} 일정` : `${Number(month.slice(5))}월 일정`} · {info.name} · {filtered ? '필터 적용' : '필터 없음'}</p>
       <ul className="cc-save-list">
         <li><button type="button" onClick={() => exportFile('xlsx')}><strong>엑셀 (xlsx)</strong><span className="t-caption text-muted">표로 열어 고치거나 인쇄해요</span></button></li>
-        <li><button type="button" disabled aria-describedby="cc-soon"><strong>한글 (hwpx)</strong><span className="t-caption text-muted">준비 중</span></button></li>
+        <li><button type="button" onClick={() => exportFile('hwpx')}><strong>한글 (hwpx)</strong><span className="t-caption text-muted">한글에서 열어 고치거나 인쇄해요</span></button></li>
         <li><button type="button" onClick={() => exportFile('pdf')}><strong>PDF (pdf)</strong><span className="t-caption text-muted">인쇄 창에서 PDF로 저장해요</span></button></li>
       </ul>
-      <p id="cc-soon" className="sr-only">한글 파일은 준비 중이라 엑셀이나 PDF로 저장할 수 있어요.</p>
       <p className="t-caption">ⓘ 학생 번호·별칭과 일정 · 결과가 들어 있어요. 파일을 학교 밖으로 보내지 말고, 다 쓴 파일은 지워 주세요.</p>
       <div className="toolbar"><ButtonOutline onClick={() => setSaveMenu(false)}>취소</ButtonOutline></div></div></Modal>}
   </div>;

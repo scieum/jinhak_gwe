@@ -187,7 +187,7 @@ describe('우리 반 입시 일정 화면', () => {
     expect(await teacherDb.schedules.count()).toBe(2);
   });
 
-  it('필터가 맞지 않으면 끄는 링크, 저장은 xlsx · pdf가 되고 hwpx는 준비 중', async () => {
+  it('필터가 맞지 않으면 끄는 링크, 저장은 xlsx · hwpx · pdf 모두 돼요', async () => {
     await seed();
     open();
     fireEvent.change(await screen.findByRole('combobox', { name: '학생' }), { target: { value: '07' } });
@@ -197,7 +197,7 @@ describe('우리 반 입시 일정 화면', () => {
     expect(await screen.findByRole('heading', { name: `${longDate(today)} 일정 · 3건` })).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: '저장' }));
     const sheet = screen.getByRole('dialog', { name: '저장할 형식을 골라요' });
-    expect(within(sheet).getByRole('button', { name: /한글 \(hwpx\)/ }).hasAttribute('disabled')).toBe(true);
+    expect(within(sheet).getByRole('button', { name: /한글 \(hwpx\)/ }).hasAttribute('disabled')).toBe(false);
     expect(within(sheet).getByRole('button', { name: /PDF \(pdf\)/ }).hasAttribute('disabled')).toBe(false);
     expect(within(sheet).getByRole('button', { name: /엑셀 \(xlsx\)/ }).hasAttribute('disabled')).toBe(false);
   });
