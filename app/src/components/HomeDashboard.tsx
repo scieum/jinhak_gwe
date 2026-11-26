@@ -1,3 +1,4 @@
+import { formatScenarioRange } from '../engine/scenarioReference';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
@@ -23,7 +24,7 @@ const COMBO = '국수영사과'; // 될각 화면 기본 반영 교과와 같아
 // 시안: 관심 대학 행 둘째 줄은 전형만 "학생부교과 · 지역균형"(모집단위는 빼요)
 const programLine = (program: string) => program.replace(/\s*\((.+)\)$/, ' · $1');
 const one = (v: number) => (Math.round(v * 10) / 10).toFixed(1);
-const rangeText = (min: number | null, max: number | null) => min === null || max === null ? '환산 준비 중' : `약 ${min.toFixed(2)}~${max.toFixed(2)}`;
+const rangeText = (min: number | null, max: number | null) => min === null || max === null ? '환산 준비 중' : `약 ${formatScenarioRange([min, max])}`;
 const dday = (date: string) => { const now = new Date(); const d = Math.round((Date.parse(`${date}T00:00:00`) - new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()) / 864e5); return d > 0 ? `D-${d}` : d === 0 ? 'D-day' : `D+${-d}`; };
 
 /** PC(≥1024)면 셸 머리(page-header)에, 모바일이면 화면 안에 그려요. */

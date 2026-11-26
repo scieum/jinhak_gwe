@@ -25,7 +25,7 @@ test('과목 추가 → 저장 → 재진입 → 5 to 9 범위 표시, 네트워
   expect(screen.getByRole('spinbutton', { name: '대수 석차등급' }).getAttribute('value')).toBe('2');
   fireEvent.click(screen.getAllByRole('link', { name: '5 to 9' })[0]); // v2 시안: 계산 근거 줄의 '5 to 9 보기' 링크가 없어져 메뉴로 가요
   fireEvent.click(screen.getByRole('button', { name: '내 성적 분석' }));
-  await screen.findByText('약 2.81~3.40'); // 2026-11-26 참고 추정 모델(calibrated v0.4)로 바뀐 범위
+  await screen.findByText('약 2.84~3.25'); // 2026-11-26 참고 추정 모델(scenario v0.5)로 바뀐 범위
   expect(screen.getAllByText(/5등급 평균 2\.00/).length).toBeGreaterThan(0);
   expect(fetchSpy).not.toHaveBeenCalled(); fetchSpy.mockRestore();
 });

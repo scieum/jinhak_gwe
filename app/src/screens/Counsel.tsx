@@ -1,3 +1,4 @@
+import { formatScenarioRange } from '../engine/scenarioReference';
 import { useEffect, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -70,15 +71,15 @@ function CounselBody(c: ClassState & { info: NonNullable<ClassState['info']> }) 
   const minOf = (n: string) => latestMinimum(n, c);
   // 상담 필요 = 우리 반 홈과 같은 신호(최저 근접·미충족 · 카드 경고 · 성적 하락)
   const need = (n: string) => signals(rowOf(n), grade(n), minOf(n)?.judged.verdict).length > 0;
-  /** 학생 화면과 같은 v0.4 참고 모델. */
+  /** 학생 화면과 같은 v0.5 참고 모델. */
   const g9Of = (n: string) => {
     const records = grade(n)?.records;
     const r = records?.length ? fiveToNineFor(records, '전 교과') : null;
-    if (r && r.min !== null && r.max !== null && r.g5 !== null) return { g5: r.g5, range: `약 ${r.min.toFixed(2)}~${r.max.toFixed(2)}`, sub: `대표 ${r.representative?.toFixed(2) ?? '미산출'} · 참고 추정`, steps: r.trace.map(t => `${t.label} ${typeof t.value === 'number' ? t.value.toFixed(2) : t.value}`) };
+    if (r && r.min !== null && r.max !== null && r.g5 !== null) return { g5: r.g5, range: `약 ${formatScenarioRange([r.min, r.max])}`, sub: '낙관·보수 전체 범위 · 참고 추정', steps: r.trace.map(t => `${t.label} ${typeof t.value === 'number' ? t.value.toFixed(2) : t.value}`) };
     const g5 = schoolAverage(grade(n)); if (g5 === null) return null;
     const result = referenceConversion(g5), range = result?.grade9Range;
     if (!range) return null;
-    return { g5, range: `약 ${range[0].toFixed(2)}~${range[1].toFixed(2)}`, sub: `대표 ${result?.estimate9?.toFixed(2) ?? '미산출'} · 참고 추정`, steps: [`내신 5등급 평균 ${g5.toFixed(2)} (불러온 학기 평균의 단순 평균)`, '자체 수치 모델 v0.4 · 산식 미지정 참고 시나리오', '자료의 성적 정의와 모집단이 달라 참고 범위로 해석해요'] };
+    return { g5, range: `약 ${formatScenarioRange(range)}`, sub: '낙관·보수 전체 범위 · 참고 추정', steps: [`내신 5등급 평균 ${g5.toFixed(2)} (불러온 학기 평균의 단순 평균)`, '자체 수치 모델 v0.5 · 낙관·보수 시나리오 별도 계산', '자료의 성적 정의와 모집단이 달라 참고 범위로 해석해요'] };
   };
   const line2 = (s: Student) => {
     const g = g9Of(s.number), m = minOf(s.number), due = upcoming(s.number), k = mine(s.number).length;

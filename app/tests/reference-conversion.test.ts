@@ -5,16 +5,17 @@ import { referenceConversion, referenceModelRelease } from '../src/domain/refere
 import { fiveToNineFor } from '../src/domain/results';
 import { subject } from './fixtures';
 
-test('배포 계수는 확정한 v0.4 연구 산출물과 동일하고 실증 검증 상태를 바꾸지 않는다', () => {
-  expect(readFileSync(resolve('src/data/calibrated-model.v04.json'), 'utf8')).toBe(
-    readFileSync(resolve('../work/_research/five-to-nine-2026-11-26/trained-calibrated-model/model.json'), 'utf8'));
+test('배포 계수는 확정한 v0.5 연구 산출물과 동일하고 실증 검증 상태를 바꾸지 않는다', () => {
+  expect(readFileSync(resolve('src/data/scenario-model.v05.json'), 'utf8')).toBe(
+    readFileSync(resolve('../work/_research/five-to-nine-2026-11-26/trained-scenario-model/model.json'), 'utf8'));
   expect(referenceModelRelease).toMatchObject({ enabled: true, empiricallyValidated: false });
 });
 test('저장 성적의 학점 가중평균과 간편 계산기가 같은 모델을 사용한다', () => {
   const grades = [subject({ credits: 7, rank_grade: 1 }), subject({ id: 'eng', subject_group: '영어', credits: 3, rank_grade: 2 })];
   const r = fiveToNineFor(grades, '전 교과');
   expect(r.g5).toBe(1.3);
-  expect(r.representative).toBeCloseTo(1.90704046, 7);
+  expect(r.representative).toBeNull();
+  expect(r.numericModel?.scenarios.optimistic.range9?.[0]).toBeCloseTo(1.735, 9);
   expect(r.numericModel).toEqual(referenceConversion('1.3'));
   expect(r.basisNotes.join(' ')).toContain('입력은 1개 학기');
   expect(r.trace.map(t => t.label + t.value).join(' ')).not.toMatch(/부산|경기|유니브클래스/);

@@ -134,7 +134,7 @@ describe('성적 불러오기 (score-import)', () => {
     const table = await screen.findByRole('table', { name: '학생 한눈에' });
     const row = within(table).getByRole('link', { name: '7번 하늘' }).closest('[role="row"]') as HTMLElement;
     expect(within(row).getByText('2.4')).toBeTruthy();
-    expect(within(row).getByText('약 3.65~4.08')).toBeTruthy(); // v0.4, 학기 평균 2.4
+    expect(within(row).getByText('약 3.70~3.87')).toBeTruthy(); // v0.5, 학기 평균 2.4
     fireEvent.click(screen.getByRole('button', { name: /^상담 필요/ }));
     expect(within(table).getByRole('link', { name: '7번 하늘' })).toBeTruthy();
   });

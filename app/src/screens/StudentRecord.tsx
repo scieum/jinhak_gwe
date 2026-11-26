@@ -1,3 +1,4 @@
+import { formatScenarioRange } from '../engine/scenarioReference';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -48,7 +49,7 @@ function Record(c: ClassState & { info: NonNullable<ClassState['info']> }) {
   const grades = school.find(g => g.number === s.number), myMocks = mocks.filter(m => m.number === s.number);
   const sch = schoolTrend(grades), mk = mockTrend(myMocks), records = grades?.records ?? [];
   const average = records.length ? gradeSummary(records).average : schoolAverage(grades);
-  const nine = records.length ? fiveToNineFor(records, TOTAL) : null; // 사용자 승인 v0.4 참고 환산
+  const nine = records.length ? fiveToNineFor(records, TOTAL) : null; // 사용자 승인 v0.5 참고 환산
   const totalValues = sch.series[0].values.filter((v): v is number => v !== null);
   const myMemos = memos.filter(m => m.number === s.number).sort((a, b) => b.created_at.localeCompare(a.created_at));
   const card = cards.filter(x => x.number === s.number).sort((a, b) => b.created_at.localeCompare(a.created_at))[0];
@@ -57,7 +58,7 @@ function Record(c: ClassState & { info: NonNullable<ClassState['info']> }) {
   const name = `${Number(s.number)}번 ${s.alias}`;
   const meta = [info.name, s.track, s.major && `희망 전공 ${s.major}`].filter(Boolean).join(' · ');
   const count = records.length ? `입력 과목 ${records.length}개` : '';
-  const range = nine && nine.min !== null && nine.max !== null ? `약 ${nine.min.toFixed(2)}~${nine.max.toFixed(2)}` : '';
+  const range = nine && nine.min !== null && nine.max !== null ? `약 ${formatScenarioRange([nine.min, nine.max])}` : '';
   const subs = [
     range && ['9등급 환산', desktop && nine?.representative != null ? `${range} (대표 ${nine.representative.toFixed(2)})` : range],
     totalValues.length > 1 && ['학기 추이', totalValues.map(v => v.toFixed(1)).join(' → ')],

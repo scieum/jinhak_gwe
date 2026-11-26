@@ -1,3 +1,4 @@
+import { formatScenarioRange } from '../engine/scenarioReference';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ButtonOutline, ButtonPrimary } from '../components/Buttons';
@@ -25,11 +26,11 @@ export function WarningBadge({ count }: { count: number }) {
   return count ? <span className="judge-badge judge-reach">▲ 경고 {count}</span> : <span className="text-muted">–</span>;
 }
 
-/** 학생 계산기와 같은 v0.4 참고 환산. */
+/** 학생 계산기와 같은 v0.5 참고 환산. */
 export function g9Label(g5: number | null) {
   if (g5 === null) return '성적 없음';
   const range = referenceConversion(g5)?.grade9Range;
-  return range ? `약 ${range[0].toFixed(2)}~${range[1].toFixed(2)}` : '환산 불가';
+  return range ? `약 ${formatScenarioRange(range)}` : '환산 불가';
 }
 /** 학생의 가장 최근 모의고사로 본 1순위 수능 최저(교사가 넣은 목표 기준). 목표나 모의고사가 없으면 null. */
 export function latestMinimum(n: string, c: Pick<ClassState, 'mocks' | 'targets'>) {
@@ -50,7 +51,7 @@ export function signals(r: SubmissionRow, g?: SchoolGrades, min?: Verdict | null
 /** 과목 성적은 학점 가중평균, 학기 평균만 있으면 학기 단순평균을 같은 참고 모델에 입력. */
 function gradeOf(g?: SchoolGrades) {
   const r = g?.records?.length ? fiveToNineFor(g.records, '전 교과') : null;
-  if (r && r.min !== null && r.max !== null && r.g5 !== null) return { g5: r.g5, g9: `약 ${r.min.toFixed(2)}~${r.max.toFixed(2)}`, sortKey: r.min };
+  if (r && r.min !== null && r.max !== null && r.g5 !== null) return { g5: r.g5, g9: `약 ${formatScenarioRange([r.min, r.max])}`, sortKey: r.min };
   const g5 = schoolAverage(g);
   return { g5, g9: g9Label(g5), sortKey: g5 === null ? 99 : g5 };
 }

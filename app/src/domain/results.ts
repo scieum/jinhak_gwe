@@ -5,7 +5,7 @@ import { judgeRange } from '../engine/judgment';
 import { compareBasis, type ComparisonBasis } from './comparison';
 import { validateGrade, type GradeRecord } from './student';
 import { SUBJECT_COMBOS, floor1, ceil1, type SubjectCombo, type FiveToNineResult } from '../engine/fiveToNine';
-import type { CalibratedFusionResult } from '../engine/calibratedFusion';
+import { formatScenarioRange, type ScenarioResult } from '../engine/scenarioReference';
 import fiveToNineConfig from '../data/conversion-config.json';
 import { activeRules } from '../data/sample/rules';
 import { referenceConversion, referenceModelRelease } from './referenceConversion';
@@ -40,7 +40,7 @@ export function conversionFor(grades: readonly GradeRecord[], combination: strin
 }
 
 export interface AppReferenceConversion extends FiveToNineResult {
-  numericModel: CalibratedFusionResult | null;
+  numericModel: ScenarioResult | null;
   modelVersion: string;
   basisNotes: string[];
 }
@@ -62,9 +62,10 @@ export function fiveToNineFor(grades: readonly GradeRecord[], combination: strin
   const smallCount = eligible.filter(g => g.rank_grade == null || (g.enrolled_count != null
     && g.enrolled_count <= fiveToNineConfig.confidence.smallClassMax)).length;
   const basisNotes = ['선택한 교과의 학점 가중평균을 사용했어요. 자료별 평균 정의와 모집단 차이가 남아 있어요.',
-    ...(semesters !== 3 ? [`입력은 ${semesters}개 학기예요. 모델의 현재 성적 참고자료는 3개 학기 기준이에요.`] : []),
-    ...(numericModel && numericModel.estimate9 === null ? ['일부 곡선의 지원 구간 밖이라 대표값 없이 범위만 표시해요.'] : [])];
-  const legacy = { status: 'unavailable' as const, reason: '자체 수치 모델 v0.4 참고 환산으로 통합했어요' };
+    `입력은 ${semesters}개 학기예요. 예상 대응표와 반영 학기·교과 정의가 일치하는지는 별도 확인이 필요해요.`,
+    '낙관·보수는 서로 다른 가정이에요. 하나의 대표값으로 평균내지 않아요.',
+    ...(numericModel && numericModel.status !== 'source_scenarios' ? ['자료 지원 구간이 부족해 전체 참고 범위를 산출하지 않아요.'] : [])];
+  const legacy = { status: 'unavailable' as const, reason: '자체 수치 모델 v0.5 시나리오 환산으로 통합했어요' };
   return { combo, g5, semesters, numericModel, modelVersion: referenceModelRelease.version, basisNotes,
     a1: legacy, a2: legacy, a3: legacy, b: legacy, bTable: null,
     min: range?.[0] ?? null, max: range?.[1] ?? null, representative: numericModel?.estimate9 ?? null,
@@ -77,8 +78,9 @@ export function fiveToNineFor(grades: readonly GradeRecord[], combination: strin
       { id: 'g5', label: '학점 가중 5등급 평균', value: g5 ?? '미산출' },
       { id: 'scope', label: '반영 교과 · 학기', value: `${combo} · ${semesters}개 학기` },
       { id: 'excluded', label: '석차등급 미산출·수강자 5명 이하 제외', value: excludedCount },
-      { id: 'representative', label: '참고 대표값', value: numericModel?.estimate9 ?? '지원 구간 부족으로 미산출' },
-      { id: 'range', label: '자료 차이·검증잔차 반영 범위', value: range ? `${range[0].toFixed(2)}~${range[1].toFixed(2)}` : '미산출' },
+      { id: 'optimistic', label: '낙관 시나리오', value: formatScenarioRange(numericModel?.scenarios.optimistic.range9 ?? null) },
+      { id: 'conservative', label: '보수 시나리오', value: formatScenarioRange(numericModel?.scenarios.conservative.range9 ?? null) },
+      { id: 'range', label: '두 시나리오 전체 범위', value: formatScenarioRange(range) },
       ...basisNotes.map((note, i) => ({ id: `basis-${i}`, label: '해석 기준', value: note })),
     ] };
 }

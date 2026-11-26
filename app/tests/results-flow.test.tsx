@@ -6,6 +6,7 @@ import { subject, scoringRule } from './fixtures';
 import { studentDb } from '../src/store/studentDb';
 import { App } from '../src/App';
 import { programs } from '../src/data/catalog';
+import { formatScenarioRange } from '../src/engine/scenarioReference';
 import { currentComparisonBasis, fiveToNineFor } from '../src/domain/results';
 
 // Only this test module replaces release data with synthetic reviewed fixtures.
@@ -30,7 +31,7 @@ test('저장 성적의 5→9 화면은 v0.4 참고 범위를 표시', async () =
   at('/five-to-nine');
   fireEvent.click(screen.getByRole('button', { name: '내 성적 분석' }));
   const r = fiveToNineFor([subject()], '전 교과');
-  expect(await screen.findByText(`약 ${r.min!.toFixed(2)}~${r.max!.toFixed(2)}`)).toBeTruthy();
+  expect(await screen.findByText(`약 ${formatScenarioRange([r.min!, r.max!])}`)).toBeTruthy();
   expect(screen.getByRole('region', { name: '수치 모델 계산' })).toBeTruthy();
   expect(screen.queryByText(/A-2 과목 기반/)).toBeNull();
 });
