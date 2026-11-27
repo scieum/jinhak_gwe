@@ -1,10 +1,11 @@
 import 'fake-indexeddb/auto';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { SpecialTracks } from '../src/screens/SpecialTracks';
 import { resetReleasedResults } from '../src/data/releasedResults';
 import { resetSpecialTracks } from '../src/data/specialTracks';
+import { setSampleFlag } from '../src/data/sample/mode';
 
 // 테스트 전용 픽스처(spec 1장 시험용 숫자). public/data에는 넣지 않는다.
 const OK = [{ reviewer: 'A', at: '2026-11-20' }, { reviewer: 'B', at: '2026-11-20' }];
@@ -47,15 +48,38 @@ function serve(withTracks = true, compact = false) {
 const open = () => render(<MemoryRouter><SpecialTracks /></MemoryRouter>);
 const chip = (name: RegExp) => within(screen.getByRole('radiogroup', { name: '계열' })).getByRole('radio', { name });
 
-afterEach(() => { cleanup(); vi.unstubAllGlobals(); resetReleasedResults(); resetSpecialTracks(); });
+afterEach(() => { cleanup(); setSampleFlag('off'); vi.unstubAllGlobals(); resetReleasedResults(); resetSpecialTracks(); });
 
 describe('특수 계열 모아보기', () => {
-  it('공개 파일이 없으면 모든 묶음이 준비 중이다', async () => {
+  it('검수 자료에서도 사범대 세부 학과를 골라 같은 전공만 모아본다', async () => {
+    serve();
+    const names = ['국어교육과', '국어교육전공', '영어교육과'];
+    const education = { ...tracks, mapping: { ...tracks.mapping, rows: names.map(name => map('강원대학교', name, '교육', plan(['교과', 10]), { sub: '사범대' })) } };
+    const grades = { ...released, units: [unit('강원대학교', names.map(name => row('강원대학교', name, '교과', '2.5')))] };
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => new Response(JSON.stringify(String(url).includes('special-tracks') ? education : grades))));
+    open(); await screen.findByRole('radio', { name: /교육, 대학/ });
+    fireEvent.click(chip(/교육/));
+    await screen.findByRole('table');
+    fireEvent.click(screen.getByRole('button', { name: '사범대' }));
+    fireEvent.change(screen.getByRole('combobox', { name: '세부 학과' }), { target: { value: '국어교육' } });
+    const table = screen.getByRole('table');
+    expect(within(table).getByText('국어교육과')).toBeTruthy();
+    expect(within(table).getByText('국어교육전공')).toBeTruthy();
+    expect(within(table).queryByText('영어교육과')).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: '전체' }));
+    expect(within(screen.getByRole('table')).getByText('영어교육과')).toBeTruthy();
+  });
+  it('샘플을 끄면 샘플 매핑을 남기지 않고 실제 자료로 전환한다', async () => {
+    serve(false); setSampleFlag('on'); open();
+    await screen.findByRole('table');
+    act(() => setSampleFlag('off'));
+    await screen.findByRole('alert');
+    expect(screen.queryByRole('table')).toBeNull();
+  });
+  it('전용 매핑이 없으면 수집 자료를 시도하고 형식 오류에 재시도를 제공한다', async () => {
     serve(false); open();
-    expect(await screen.findByText('이 묶음의 자료는 아직 검수 중이에요 · 검수가 끝나면 채워져요')).toBeTruthy();
-    expect(chip(/메디컬/).getAttribute('aria-label')).toBe('메디컬, 준비 중');
-    fireEvent.click(chip(/특수목적대/));
-    expect(screen.getByText('사관학교 · 경찰대학 등의 자료는 아직 검수 중이에요')).toBeTruthy();
+    expect(await screen.findByRole('alert')).toBeTruthy();
+    expect(screen.getByRole('button', { name: '다시 불러오기' })).toBeTruthy();
     expect(screen.queryByRole('table')).toBeNull();
     expect(screen.getByText(/대학이나 학과의 순위 · 추천이 아니에요/)).toBeTruthy();
   });

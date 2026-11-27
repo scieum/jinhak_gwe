@@ -18,6 +18,9 @@ import { InterestButton } from '../components/InterestButton';
 import { Modal } from '../components/Modal';
 import { Icon } from '../components/Icon';
 import { useCompactResults } from '../components/ResultFilters';
+import { ReferenceTrackCollection } from './ReferenceTrackCollection';
+import { TrackDepartmentFilter } from '../components/TrackDepartmentFilter';
+import { departmentOf, departmentOptions } from '../domain/trackDepartments';
 import '../components/sortable-header.css';
 import '../styles/special-tracks.css';
 
@@ -29,23 +32,34 @@ const q = encodeURIComponent;
 const eun = (w: string) => { const c = w.charCodeAt(w.length - 1) - 0xac00; return `${w}${c >= 0 && c < 11172 && c % 28 ? '은' : '는'}`; };
 
 export function SpecialTracks() {
+  const sample = useSampleMode(), data = useSpecialTracks();
+  // 불러오는 동안에도 화면 자리(data-slug)를 먼저 그려요
+  if (!data) return <section data-slug="special-tracks" aria-label="특수 계열 모아보기" className="student-screen special-tracks"><p role="status">계열 자료를 불러오고 있어요.</p></section>;
+  return sample || data.rows.length ? <ReviewedSpecialTracks /> : <ReferenceTrackCollection />;
+}
+
+function ReviewedSpecialTracks() {
   const released = useReleasedResults(), data = useSpecialTracks(), compact = useCompactResults(), sample = useSampleMode();
   // 샘플 모드: 이 화면 샘플 입결을 더해요(다른 화면이 보는 공개 로더는 그대로)
   const units = useMemo(() => released && sample ? [...released, ...sampleTrackUnits] : released, [released, sample]);
   const [track, setTrack] = useState<TrackId>('메디컬'), [sub, setSub] = useState<string | null>(null);
+  const [department, setDepartment] = useState('');
+  const pickSub = (s: string | null) => { setSub(s); setDepartment(''); };
   const [type, setType] = useState<ResultType>('교과'), [sort, setSort] = useState<SortKey>('가나다');
   const [sheet, setSheet] = useState(false), [open, setOpen] = useState<ViewRow | null>(null), [announce, setAnnounce] = useState('');
   const chips = useRef<(HTMLButtonElement | null)[]>([]);
   const [head, setHead] = useState<Element | null>(null);
   useEffect(() => { setHead(compact ? null : document.querySelector('.topbar__heading')); }, [compact]);
 
-  const view = data && units ? trackView(data, units, track, sub, type, sort) : null;
+  const departments = departmentOptions((data?.rows ?? []).filter(r => r.track === track && (!sub || r.sub === sub)).map(r => r.unit), track);
+  const filteredData = data && department ? { ...data, rows: data.rows.filter(r => r.track !== track || departmentOf(r.unit, track) === department) } : data;
+  const view = filteredData && units ? trackView(filteredData, units, track, sub, type, sort) : null;
   const ready = view && view.status !== 'pending' ? view : null;
   const info = trackOf(track), typeName = `학생부${type}`;
   const chipCount = (t: TrackId) => data && universitiesIn(data, t) ? String(universitiesIn(data, t)) : '준비 중';
 
   const pickTrack = (t: TrackId, focus = false) => {
-    setTrack(t); setSub(null); setType(defaultType(t)); setSort('가나다');
+    setTrack(t); setSub(null); setDepartment(''); setType(defaultType(t)); setSort('가나다');
     const v = data && units ? trackView(data, units, t, null, defaultType(t), '가나다') : null;
     setAnnounce(v && v.status !== 'pending' ? `${t}, 대학 ${v.universities}곳, 모집단위 ${v.rows.length}개` : `${t}, 준비 중`);
     const i = TRACKS.findIndex(x => x.id === t);
@@ -77,10 +91,11 @@ export function SpecialTracks() {
       {!compact && ready && <div className="st-row st-row--sub">
         {info.subs.length > 0 && <><span className="t-label text-muted">세부</span>
           <div className="st-chips" role="group" aria-label="세부">
-            {[null, ...info.subs].map(s => <button key={s ?? '전체'} type="button" className="filter-chip" aria-pressed={s === sub} onClick={() => setSub(s)}>{s ?? '전체'}</button>)}
+            {[null, ...info.subs].map(s => <button key={s ?? '전체'} type="button" className="filter-chip" aria-pressed={s === sub} onClick={() => pickSub(s)}>{s ?? '전체'}</button>)}
           </div></>}
         {typeSeg}
       </div>}
+      {ready && (sub || track === '교육') && <TrackDepartmentFilter options={departments} value={department} onChange={setDepartment} />}
     </section>
     <p role="status" className="sr-only">{announce}</p>
 
@@ -106,8 +121,8 @@ export function SpecialTracks() {
           <h3 className="t-heading-4">{eun(track)} 공개된 {type} 전형 입결이 없어요</h3>
           <p>{ready.typeInPlan ? `검수가 끝난 ${RESULT_YEAR}학년도 ${type} 입결이 아직 없어요` : `${track} ${ready.universities}곳은 ${PLAN_YEAR}에 ${type} 전형으로 뽑지 않아요`}</p>
           <button type="button" className="button-primary" onClick={() => setType(other(type))}>{other(type)} 입결로 보기</button></div>
-          : compact ? <CardList key={`${track}|${sub}|${type}|${sort}`} rows={ready.rows} track={track} type={type} onOpen={setOpen} />
-          : <Table key={`${track}|${sub}|${type}|${sort}`} rows={ready.rows} track={track} type={type} sort={sort} onSort={setSort} onOpen={setOpen} />}
+          : compact ? <CardList key={`${track}|${sub}|${department}|${type}|${sort}`} rows={ready.rows} track={track} type={type} onOpen={setOpen} />
+          : <Table key={`${track}|${sub}|${department}|${type}|${sort}`} rows={ready.rows} track={track} type={type} sort={sort} onSort={setSort} onOpen={setOpen} />}
 
         <details className="trace-accordion"><summary><span>어떻게 묶었나요?</span><Icon name="chevron-down" size={20} /></summary>
           <ol>
@@ -124,7 +139,7 @@ export function SpecialTracks() {
         </details>
       </>}
     <p className="disclaimer-note st-note"><Icon name="info" size={16} /><span>공개된 {PLAN_YEAR} 전형계획과 {RESULT_YEAR}학년도 수시 입결을 계열별로 모은 표예요 · 대학이나 학과의 순위 · 추천이 아니에요 · 목록 순서는 가나다순일 뿐이에요 · 대학 공식 모집요강이 최종 기준이에요{sample ? ' · 샘플의 대학·숫자는 예시예요' : ''}{data?.base_date ? ` · 데이터 기준일 ${data.base_date}` : ''}</span></p>
-    {sheet && data && <SubSheet data={data} track={track} sub={sub} sort={sort} onSub={s => { setSub(s); setSheet(false); }} onSort={s => { setSort(s); setSheet(false); }} onClose={() => setSheet(false)} />}
+    {sheet && data && <SubSheet data={data} track={track} sub={sub} sort={sort} onSub={s => { pickSub(s); setSheet(false); }} onSort={s => { setSort(s); setSheet(false); }} onClose={() => setSheet(false)} />}
     {open && <Detail v={open} track={track} type={type} onClose={() => setOpen(null)} />}
   </section>;
 }

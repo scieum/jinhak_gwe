@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { EMPTY_TRACKS, parseTracks, type TracksData } from '../domain/specialTracks';
-import { isSampleMode } from './sample/mode';
+import { isSampleMode, useSampleMode } from './sample/mode';
 import { sampleTracks } from './sample/specialTracks';
 
-/** public/data/special-tracks.json: 관리자 2명이 검수한 묶음 매핑표 · 실기 채점 기준표. 파일이 없으면 모든 묶음이 "준비 중". */
+/** 관리자 2명이 검수한 매핑표. 없으면 화면에서 수집 자료 탐색으로 연결한다. */
 let cache: Promise<TracksData> | null = null;
 export function loadSpecialTracks(fetcher: typeof fetch = fetch): Promise<TracksData> {
   if (isSampleMode()) return Promise.resolve(sampleTracks); // 샘플 모드: 시안 데모(가상)
@@ -12,7 +12,8 @@ export function loadSpecialTracks(fetcher: typeof fetch = fetch): Promise<Tracks
 }
 export function resetSpecialTracks() { cache = null; }
 export function useSpecialTracks() {
-  const [data, setData] = useState<TracksData | null>(null);
-  useEffect(() => { let live = true; loadSpecialTracks().then(d => { if (live) setData(d); }); return () => { live = false; }; }, []);
-  return data;
+  const sample = useSampleMode();
+  const [state, setState] = useState<{ sample: boolean; data: TracksData } | null>(null);
+  useEffect(() => { let live = true; loadSpecialTracks().then(data => { if (live) setState({ sample, data }); }); return () => { live = false; }; }, [sample]);
+  return state?.sample === sample ? state.data : null;
 }

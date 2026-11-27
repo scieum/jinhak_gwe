@@ -1,0 +1,26 @@
+{
+  "pass": true,
+  "counts": [
+    "메디컬 66",
+    "보건 125",
+    "교육 123",
+    "과기원 0",
+    "체육 69",
+    "예체능 실기 84",
+    "계약학과 0",
+    "자유전공 86",
+    "특수목적대 0"
+  ],
+  "checks": [
+    "real data",
+    "detail",
+    "search",
+    "empty/reset",
+    "education departments",
+    "department reload",
+    "mobile department selection",
+    "mobile cards",
+    "no horizontal overflow",
+    "no page errors"
+  ]
+}

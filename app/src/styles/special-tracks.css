@@ -113,6 +113,21 @@
 }
 @media (prefers-reduced-motion: no-preference) { .st-cards, .st-table-card, .st-criteria { animation: st-fade 150ms ease-out; } }
 @keyframes st-fade { from { opacity: 0; } to { opacity: 1; } }
+/* 수집 자료도 기존 조건 줄·표·카드로 탐색한다. 긴 학과명은 줄바꿈한다. */
+.st-reference .st-chips { flex-wrap: wrap; margin-right: 0; }
+.st-reference-filters { flex-wrap: wrap; align-items: flex-end; gap: var(--spacing-sm); }
+.st-reference-filters label { display: grid; gap: var(--spacing-xxs); font-size: 12px; min-width: 0; }
+.st-reference-search { flex: 1; }
+.st-department-filter .text-input { width: min(100%, 360px); min-width: 0; }
+.st-reference .text-input { max-width: 100%; min-width: 0; }
+.st-reference-table { width: 100%; }
+.st-reference-table th, .st-reference-table td { white-space: normal; overflow-wrap: anywhere; }
+.st-reference-table th { position: sticky; top: 0; background: var(--color-canvas-soft); }
+.st-reference-table .st-univ { min-width: 140px; }
+.st-reference .st-card__open { min-height: 80px; }
+@media (max-width: 599px) {
+  .st-reference-search { flex-basis: 100%; }
+}
 /* 2026-11-25 사용자 요청 "조건 줄 규칙"(전국 배치표와 같음): 라벨 칸 108 + 12, 줄 사이 hairline-soft 실선 · 위아래 12 */
 @media (min-width: 1024px) {
   .st-controls { gap: 12px; }
