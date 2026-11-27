@@ -11,6 +11,7 @@ import { susiIssues } from '../domain/susiResults';
 import type { CollectedIndex } from '../domain/collectedResults';
 import { rowIssues, type ResultRow } from '../domain/resultReview';
 import { CollectedResultFields } from './CollectedResultFields';
+import { mergeResultRows, type MergedResultRow } from '../domain/mergeResultRows';
 import { InterestButton } from './InterestButton';
 import { interestId } from '../domain/interests';
 import { collectedUniversitySelection, matchesUniversityIdentity, currentUniversityName } from '../domain/universityIdentity';
@@ -24,8 +25,8 @@ export function CollectedResultBrowser({ tabs, initialUniversity = '', initialPr
   const [selectedInterest, setSelectedInterest] = useState(initialDepartment ? { program: initialProgram, department: initialDepartment } : null);
   const [draft, setDraft] = useState<ResultFilters | null>(null), [choosing, setChoosing] = useState(false);
   const compact = useCompactResults();
-  const [sort, setSort] = useState<TableSort<keyof ResultRow>>(null);
-  const [page, setPage] = useState(0), [opened, setOpened] = useState<ResultRow | null>(null);
+  const [sort, setSort] = useState<TableSort<keyof MergedResultRow>>(null);
+  const [page, setPage] = useState(0), [opened, setOpened] = useState<MergedResultRow | null>(null);
   const [indexError, setIndexError] = useState(''), [dataError, setDataError] = useState('');
   const [indexAttempt, setIndexAttempt] = useState(0), [dataAttempt, setDataAttempt] = useState(0);
   useEffect(() => {
@@ -45,10 +46,10 @@ export function CollectedResultBrowser({ tabs, initialUniversity = '', initialPr
     return () => { live = false; };
   }, [index, university, dataAttempt, susiOnly]);
   const scopedRows = useMemo(() => selectedInterest ? (rows ?? []).filter(r => r.program.trim() === selectedInterest.program.trim() && r.recruit_unit.trim() === selectedInterest.department.trim()) : rows ?? [], [rows, selectedInterest]);
-  const filtered = useMemo(() => filterCollectedRows(scopedRows, filters), [scopedRows, filters]);
-  const sorted = useMemo(() => sortTableRows(filtered, sort, (r, key) => r[key], key => ['result_year', 'quota', 'competition_rate', 'cut_50', 'cut_70'].includes(key)), [filtered, sort]);
-  const sortBy = (key: keyof ResultRow) => { setSort(current => nextTableSort(current, key)); setPage(0); };
-  const header = (key: keyof ResultRow, label: string) => <SortableHeader column={key} label={label} sort={sort} onSort={sortBy} />;
+  const filtered = useMemo(() => mergeResultRows(filterCollectedRows(scopedRows, filters)), [scopedRows, filters]);
+  const sorted = useMemo(() => sortTableRows(filtered, sort, (r, key) => key === 'sources' ? '' : r[key], key => ['result_year', 'quota', 'competition_rate', 'cut_50', 'cut_70', 'mean'].includes(key)), [filtered, sort]);
+  const sortBy = (key: keyof MergedResultRow) => { setSort(current => nextTableSort(current, key)); setPage(0); };
+  const header = (key: keyof MergedResultRow, label: string) => <SortableHeader column={key} label={label} sort={sort} onSort={sortBy} />;
   const names = index?.universities.filter(e => matchesUniversityIdentity(e.university, nameQuery)) ?? [];
   const updateFilters = (next: ResultFilters) => { setFilters(next); setPage(0); };
   const selectUniversity = (name: string) => { setUniversity(name); setSelectedInterest(null); setSort(null); updateFilters({ ...emptyResultFilters, round: '수시' }); setChoosing(false); };
@@ -86,19 +87,19 @@ export function CollectedResultBrowser({ tabs, initialUniversity = '', initialPr
           {!filtered.length ? <p className="collection-message">조건에 맞는 수집 자료가 없어요. 다른 학년도·모집시기·전형을 선택해 주세요.</p> : <>
             <p className="t-caption text-muted collection-sort-help">열 제목으로 정렬 · 하트는 대학·전형·학과별로 저장해요. 같은 학과의 다른 연도 자료만 함께 표시돼요.</p>
             <div className="table-scroll"><table className="data-table collection-table">
-              <caption className="sr-only">검수 전 입결 · 원문별 행을 그대로 표시</caption>
-              <thead><tr>{!compact && <>{header('result_year', '학년도')}{header('round', '시기')}{header('program', '전형')}</>}{header('recruit_unit', compact ? '모집단위 · 전형' : '모집단위')}{!compact && <>{header('quota', '모집')}{header('competition_rate', '경쟁률')}</>}{header('cut_50', '50% 컷')}{header('cut_70', '70% 컷')}{!compact && <>{header('metric', '지표')}<th scope="col">상세</th></>}</tr></thead>
+              <caption className="sr-only">검수 전 입결 · 같은 학년도·전형·모집단위·지표는 출처를 합쳐 한 줄로 표시</caption>
+              <thead><tr>{!compact && <>{header('result_year', '학년도')}{header('round', '시기')}{header('program', '전형')}</>}{header('recruit_unit', compact ? '모집단위 · 전형' : '모집단위')}{!compact && <>{header('quota', '모집')}{header('competition_rate', '경쟁률')}</>}{header('cut_50', '50% 컷')}{header('cut_70', '70% 컷')}{header('mean', '평균')}{!compact && <>{header('metric', '지표')}<th scope="col">상세</th></>}</tr></thead>
               <tbody>{sorted.slice(page * PAGE, (page + 1) * PAGE).map((r, i) => <tr key={`${page}-${i}`}>
                 {!compact && <><td>{r.result_year}</td><td>{r.round}</td><td>{r.program || '—'}</td></>}
                 <td>{compact ? <><div className="collection-unit-heading">{heart(r)}<button className="collection-unit" onClick={() => setOpened(r)} aria-label={`${r.result_year} ${r.program} ${r.recruit_unit} 원문·상세`}>{r.recruit_unit || '모집단위 미기재'}<Icon name="chevron-right" size={16} /></button></div><p className="t-caption text-muted">{r.result_year} · {r.round} · {r.program || '전형 미기재'}</p><p className="t-caption text-muted">{r.metric || '지표 미기재'}{(rowIssues(r).errors.length > 0 || susiIssues(r).length > 0) && ' · 확인 필요'}</p></> : <div className="collection-program">{heart(r)}<span>{r.recruit_unit || '—'}</span></div>}</td>
                 {!compact && <><td className="num">{r.quota || '—'}</td><td className="num">{r.competition_rate || '—'}</td></>}
-                <td className="num">{r.cut_50 || '—'}</td><td className="num">{r.cut_70 || '—'}</td>
+                <td className="num">{r.cut_50 || '—'}</td><td className="num">{r.cut_70 || '—'}</td><td className="num">{r.mean || '—'}</td>
                 {!compact && <><td>{r.metric || '미기재'}{(rowIssues(r).errors.length > 0 || susiIssues(r).length > 0) && <span className="data-status-badge">확인 필요</span>}</td><td><button className="text-button" onClick={() => setOpened(r)} aria-label={`${r.result_year} ${r.program} ${r.recruit_unit} 원문·상세`}>원문·상세</button></td></>}
               </tr>)}</tbody>
             </table></div>
             <nav className="toolbar collection-pagination" aria-label="입결 결과 페이지"><ButtonOutline disabled={!page} onClick={() => setPage(p => p - 1)}>이전</ButtonOutline><span>{page + 1} / {Math.ceil(filtered.length / PAGE)} 페이지</span><ButtonOutline disabled={(page + 1) * PAGE >= filtered.length} onClick={() => setPage(p => p + 1)}>다음</ButtonOutline>{sort && <button className="text-button" onClick={() => { setSort(null); setPage(0); }}>원문 순서로 보기</button>}</nav>
           </>}
-          <p className="t-caption text-muted collection-footnote">빈 값은 ‘—’로 표시해요. 평균·최저·그 밖의 지표와 원문 쪽수는 상세에서 확인할 수 있어요. 출처나 산출 기준이 다른 행은 합치지 않으며 행 수가 전형 수를 뜻하지는 않아요. 일부 연도·전형은 수집되지 않았어요.</p>
+          <p className="t-caption text-muted collection-footnote">빈 값은 ‘—’로 표시해요. 평균은 원문에 ‘평균’ 등급이 하나로 적힌 경우만 보여요(최종등록자 값 우선). 같은 학년도·전형·모집단위·지표는 출처를 합쳐 한 줄로 보여 주고, 값이 다르면 컷이 있는 출처를 따라요. 출처별 원래 값·최저·원문 쪽수는 상세에서 확인할 수 있어요. 일부 연도·전형은 수집되지 않았어요.</p>
         </>}
     </section>}
     {choosing && <Modal label="대학 검색·선택" onClose={() => setChoosing(false)}>
@@ -115,7 +116,8 @@ export function CollectedResultBrowser({ tabs, initialUniversity = '', initialPr
     </Modal>}
     {opened && <Modal wide label="수집 입결 원문 상세" onClose={() => setOpened(null)}>
       <div className="section-row"><h3 className="t-heading-3">{opened.university} · {opened.result_year}학년도</h3><ButtonOutline onClick={() => setOpened(null)}>닫기</ButtonOutline></div>
-      <CollectedResultFields row={opened} />
+      {opened.sources.length > 1 && <p className="t-caption text-muted">출처 {opened.sources.length}곳을 합친 줄이에요. 출처마다 원래 값을 따로 보여 드려요.</p>}
+      {opened.sources.map((source, i) => <div key={i}>{opened.sources.length > 1 && <h4 className="t-heading-4">출처 {i + 1}</h4>}<CollectedResultFields row={source} heart={i === 0} /></div>)}
     </Modal>}
   </section>;
 }

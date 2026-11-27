@@ -51,7 +51,7 @@
 .collection-table td { height: 64px; }
 .collection-table td:nth-child(3) { min-width: 180px; }
 .collection-table td:nth-child(4) { min-width: 140px; }
-.collection-table td:nth-child(9) { min-width: 96px; }
+.collection-table td:nth-child(10) { min-width: 96px; }
 .collection-table td:last-child { white-space: nowrap; }
 .collection-table td.num { white-space: nowrap; }
 .university-options { display: grid; gap: var(--spacing-xs); max-height: 45dvh; overflow-y: auto; }
