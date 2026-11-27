@@ -58,7 +58,7 @@ export function axisRange(values: readonly number[]) {
   return { min, max };
 }
 
-/** 휠 확대·축소(2026-11-25 사용자 요청): center를 고정점으로 폭을 factor배. 폭 0.4~8, 1~9 안. */
+/** 드래그 확대·축소(2026-11-25 사용자 요청, 11-27부터 휠은 안 씀): center를 고정점으로 폭을 factor배. 폭 0.4~8, 1~9 안. */
 export function zoomRange(r: { min: number; max: number }, center: number, factor: number) {
   const w = Math.min(8, Math.max(0.4, (r.max - r.min) * factor)), t = (center - r.min) / (r.max - r.min);
   let min = center - t * w, max = min + w;

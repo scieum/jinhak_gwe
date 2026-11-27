@@ -73,7 +73,7 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   const ticks = axisTicks(range), minorTicks = axisMinorTicks(range);
   const clamp = (v: number) => Math.min(range.max, Math.max(range.min, v)), inRange = (v: number) => v >= range.min - 1e-9 && v <= range.max + 1e-9;
   const x = (value: number) => `${(clamp(value) - range.min) / (range.max - range.min) * 100}%`;
-  // 2026-11-25 사용자 요청: 그래프 위에서 휠을 굴리거나 좌우로 끌면 범위를 확대·축소해요(커서 자리 고정). 더블클릭 · "범위 원래대로"로 되돌려요.
+  // 2026-11-25 사용자 요청: 그래프 위에서 좌우로 끌면 범위를 확대·축소해요(누른 자리 고정). 더블클릭 · "범위 원래대로"로 되돌려요.
   const plotBody = useRef<HTMLDivElement>(null), rangeRef = useRef(range);
   rangeRef.current = range;
   // 2026-11-27 사용자 요청: 그래프 아래 가로 스크롤 막대. 막대 전체 = 1~9등급, 손잡이 = 지금 보이는 범위. 움직이면 같은 폭으로 옮겨요.
@@ -94,13 +94,7 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   useEffect(() => {
     const el = plotBody.current;
     if (!el) return;
-    const onWheel = (e: WheelEvent) => {
-      const layer = el.querySelector('.ar-plot__layer')!.getBoundingClientRect();
-      if (e.clientX < layer.left || e.clientX > layer.right || !e.deltaY) return;
-      e.preventDefault();
-      const r = rangeRef.current, center = r.min + (e.clientX - layer.left) / layer.width * (r.max - r.min);
-      setZoom({ key: zoomKey, ...zoomRange(r, center, e.deltaY > 0 ? 1.2 : 1 / 1.2) });
-    };
+    // 2026-11-27 사용자 요청: 휠은 페이지 스크롤과 겹쳐 불편해서 그래프 확대·축소는 마우스 드래그로만 해요(휠은 페이지가 그대로 받아요).
     // 드래그(2026-11-25 사용자 선택): 누른 자리를 고정점으로 오른쪽으로 끌면 확대, 왼쪽은 축소. 4px 안 움직임은 점 누르기로 둬요.
     let drag: { x: number; center: number; from: { min: number; max: number }; moved: boolean } | null = null;
     const onDown = (e: MouseEvent) => {
@@ -118,11 +112,10 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
     };
     const onUp = () => { if (drag?.moved) { const stop = (ev: Event) => { ev.stopPropagation(); ev.preventDefault(); }; el.addEventListener('click', stop, { capture: true, once: true }); setTimeout(() => el.removeEventListener('click', stop, { capture: true }), 0); }
       drag = null; el.classList.remove('is-dragging'); };
-    el.addEventListener('wheel', onWheel, { passive: false });
     el.addEventListener('mousedown', onDown);
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseup', onUp);
-    return () => { el.removeEventListener('wheel', onWheel); el.removeEventListener('mousedown', onDown); window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+    return () => { el.removeEventListener('mousedown', onDown); window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
   }, [zoomKey, view, plotted.length]);
   const interests = useLiveQuery(() => studentDb.interests.toArray().then(list => list.sort((a, b) => a.created_at.localeCompare(b.created_at))).catch(() => []), []) ?? [];
   // 고른 학과: 누른 점 → 이 전형에서 하트로 담은 학과 → 목록 가운데 학과(시작점일 뿐 추천이 아니에요).
