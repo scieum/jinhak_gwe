@@ -11,7 +11,8 @@ export const MIN_TESTS = 3;
 export const SEMESTERS: Semester[] = ['1-1', '1-2', '2-1', '2-2', '3-1', '3-2'];
 export const GROUPS = ['국어', '수학', '영어', '사회', '과학', '한국사'];
 type Ach = 'A' | 'B' | 'C' | 'D' | 'E';
-export interface TestCase { id: string; name: string; years: Record<'1' | '2' | '3', { grade: number; achievement: Ach }>; absence: number; tardy: number; expected: number }
+export interface TestCase { id: string; name: string; years: Record<'1' | '2' | '3', { grade: number; achievement: Ach }>; absence: number; tardy: number; expected: number;
+  /** 계열별 규칙일 때 이 테스트의 계열(tracks[].name). 없으면 첫 계열 */ track?: string }
 export interface RuleDraft {
   id: string; source_page: string; rule: ScoringRule; tests: TestCase[]; status: RuleStatus;
   author: string; reviewer: string | null; reject_reason: string; history: { at: string; who: string; action: string }[]; updated_at: string;
@@ -50,13 +51,21 @@ export function testInputs(rule: ScoringRule, t: TestCase): { grades: GradeRecor
     if (year === 1) { a.absence.unexcused = t.absence; a.tardy.unexcused = t.tardy; } return a; });
   return { grades, attendance };
 }
-/** shortcut: 계열별 규칙은 첫 계열만 테스트해요 — 계열마다 테스트가 필요해지면 TestCase에 학과를 더해요. */
-export const testDepartment = (rule: ScoringRule) => rule.advanced?.tracks?.[0]?.units.find(u => u !== '*') ?? (rule.advanced?.tracks ? '*' : undefined);
+/** 계열 이름 → 엔진이 그 계열을 고르게 하는 학과 이름(units 첫 핵심어, '*'만 있으면 '*'). */
+const trackDepartment = (track: { units: string[] }) => track.units.find(u => u !== '*') ?? '*';
+/** 테스트가 계산할 학과: 테스트가 고른 계열(없거나 사라졌으면 첫 계열). 계열 규칙이 없으면 undefined. */
+export function testDepartment(rule: ScoringRule, t?: Pick<TestCase, 'track'>) {
+  const tracks = rule.advanced?.tracks;
+  if (!tracks?.length) return undefined;
+  return trackDepartment(tracks.find(x => x.name === t?.track) ?? tracks[0]);
+}
+/** 테스트의 계열 이름(계열 규칙이 없으면 undefined). */
+export const testTrack = (rule: ScoringRule, t: Pick<TestCase, 'track'>) => { const tracks = rule.advanced?.tracks; return tracks?.length ? (tracks.find(x => x.name === t.track) ?? tracks[0]).name : undefined; };
 export interface TestRun { ok: boolean; actual: number | null; reason: string; trace: { detail: string; value?: number }[] }
 /** 테스트는 검수 전 규칙을 일부러 계산해 봐요(학생 화면이 아니라 검수 도구라서). */
 export function runTest(rule: ScoringRule, t: TestCase): TestRun {
   const { grades, attendance } = testInputs(rule, t);
-  const r = scoreUniversity(grades, attendance, { ...rule, review_status: 'verified' }, testDepartment(rule));
+  const r = scoreUniversity(grades, attendance, { ...rule, review_status: 'verified' }, testDepartment(rule, t));
   if (r.status !== 'ready') return { ok: false, actual: null, reason: r.reason, trace: r.trace };
   return { ok: Math.abs(r.value.total - t.expected) < 1e-9, actual: r.value.total, reason: '', trace: r.trace };
 }
@@ -68,6 +77,9 @@ export function blockers(d: RuleDraft): string[] {
   if (d.tests.length < MIN_TESTS) out.push(`테스트 케이스가 ${MIN_TESTS - d.tests.length}개 더 필요해요.`);
   const failed = d.tests.filter(t => !runTest(d.rule, t).ok).length;
   if (failed) out.push(`불통과 테스트가 ${failed}개 있어요.`);
+  // 계열마다 계산이 달라서, 계열마다 통과 테스트가 하나 이상 있어야 검수를 요청할 수 있어요
+  const untested = (d.rule.advanced?.tracks ?? []).filter(x => !d.tests.some(t => testTrack(d.rule, t) === x.name && runTest(d.rule, t).ok)).map(x => x.name);
+  if (untested.length) out.push(`계열별 테스트가 필요해요: ${untested.join(' · ')}`);
   return out;
 }
 

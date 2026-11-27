@@ -13,7 +13,7 @@ import { downloadFile } from '../io/backup';
 import { dataAsOf } from '../data/catalog';
 import { validateScoringRule, type ScoringRule } from '../engine/scoring';
 import {
-  GROUPS, MIN_TESTS, advancedText, isSample, SEMESTERS, STATUS_ORDER, approve, blockers, diffRules, newRuleDraft, newTest, nextVersion, reject, releaseRules, requestReview, runTest,
+  GROUPS, MIN_TESTS, advancedText, isSample, SEMESTERS, STATUS_ORDER, approve, blockers, diffRules, newRuleDraft, newTest, nextVersion, reject, releaseRules, requestReview, runTest, testTrack,
   type RuleDraft, type RuleStatus, type TestCase,
 } from '../domain/ruleEditor';
 import { adminDb } from '../store/adminDb';
@@ -192,12 +192,13 @@ function RejectModal({ author, onClose, onReject }: { author: string; onClose: (
 }
 
 /** "전 과목 2등급 · 성취도 A · 결석 0일" / "1학년 1등급 A, 2·3학년 2등급 B · 결석 0일" */
-function describe(t: TestCase) {
+function describe(t: TestCase, rule: ScoringRule) {
   const y = (['1', '2', '3'] as const).map(k => t.years[k]), same = (a: typeof y[0], b: typeof y[0]) => a.grade === b.grade && a.achievement === b.achievement;
   const grades = same(y[0], y[1]) && same(y[1], y[2]) ? `전 과목 ${y[0].grade}등급 · 성취도 ${y[0].achievement}`
     : same(y[1], y[2]) ? `1학년 ${y[0].grade}등급 ${y[0].achievement}, 2·3학년 ${y[1].grade}등급 ${y[1].achievement}`
     : y.map((v, k) => `${k + 1}학년 ${v.grade}등급 ${v.achievement}`).join(', ');
-  return `${grades} · ${t.absence ? `미인정 결석 ${t.absence}일` : '결석 0일'}${t.tardy ? ` · 지각·조퇴·결과 ${t.tardy}회` : ''}`;
+  const track = testTrack(rule, t);
+  return `${track ? `${track} 계열 · ` : ''}${grades} · ${t.absence ? `미인정 결석 ${t.absence}일` : '결석 0일'}${t.tardy ? ` · 지각·조퇴·결과 ${t.tardy}회` : ''}`;
 }
 
 function TestRow({ t, i, run, rule, open, editing, onSelect, onChange, onDelete }: { t: TestCase; i: number; run: ReturnType<typeof runTest>; rule: ScoringRule; open: boolean; editing: boolean; onSelect: () => void; onChange: (t: TestCase) => void; onDelete: () => void }) {
@@ -207,12 +208,13 @@ function TestRow({ t, i, run, rule, open, editing, onSelect, onChange, onDelete 
   return <article className="adr-test">
     <button type="button" className="adr-test__line" aria-expanded={open} onClick={onSelect}><strong>테스트 {i + 1} · {t.name}</strong>
       {run.ok ? <span className="data-status-badge adr-badge">통과</span> : <span className="judge-badge judge-risk adr-badge">■ 불통과</span>}</button>
-    <p className="adr-test__desc">{describe(t)}</p>
+    <p className="adr-test__desc">{describe(t, rule)}</p>
     <p className="adr-test__nums num">기대 {fixed2(t.expected)} · 계산 {fixed2(run.actual)}{run.reason && ` · ${run.reason}`}</p>
     {editing && <div className="adr-test__edit">{(['1', '2', '3'] as const).map(y => <div key={y} className="adr-test__year"><span>{y}학년</span>
       <select aria-label={`테스트 ${i + 1} ${y}학년 등급`} value={t.years[y].grade} onChange={e => year(y, { grade: Number(e.target.value) })}>{[1, 2, 3, 4, 5].map(g => <option key={g} value={g}>{g}등급</option>)}</select>
       <select aria-label={`테스트 ${i + 1} ${y}학년 성취도`} value={t.years[y].achievement} onChange={e => year(y, { achievement: e.target.value as 'A' })}>{['A', 'B', 'C', 'D', 'E'].map(a => <option key={a}>{a}</option>)}</select></div>)}
-      <div className="adr-test__nums-edit"><label>미인정 결석<input type="number" min={0} value={t.absence} onChange={e => onChange({ ...t, absence: Math.max(0, Number(e.target.value)) })} /></label>
+      <div className="adr-test__nums-edit">{rule.advanced?.tracks?.length ? <label>계열<select aria-label={`테스트 ${i + 1} 계열`} value={testTrack(rule, t)} onChange={e => onChange({ ...t, track: e.target.value })}>{rule.advanced.tracks.map(x => <option key={x.name}>{x.name}</option>)}</select></label> : null}
+        <label>미인정 결석<input type="number" min={0} value={t.absence} onChange={e => onChange({ ...t, absence: Math.max(0, Number(e.target.value)) })} /></label>
         <label>지각·조퇴·결과<input type="number" min={0} value={t.tardy} onChange={e => onChange({ ...t, tardy: Math.max(0, Number(e.target.value)) })} /></label>
         <label>기대값<input type="number" step="0.01" aria-label={`테스트 ${i + 1} 기대값`} value={t.expected} onChange={e => onChange({ ...t, expected: Number(e.target.value) })} /></label></div>
       <button type="button" className="button-danger-text" onClick={onDelete}>이 테스트 빼기</button></div>}

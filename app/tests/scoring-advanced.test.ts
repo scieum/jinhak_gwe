@@ -98,3 +98,23 @@ describe('추가 규칙(엔진 확장)', () => {
     expect(total(scoreUniversity([subject()], [], scoringRule()))).toBe(96);
   });
 });
+
+describe('계열별 규칙 검수 테스트', async () => {
+  const { runTest, newTest, blockers, newRuleDraft, testTrack } = await import('../src/domain/ruleEditor');
+  // 인문은 국어만(가상 학생 전 과목 같은 등급이라) 등급표로 차이를 내요: 인문 2등급 = 50점, 자연 2등급 = 96점
+  const tracked = scoringRule({ attendance_rule: undefined, advanced: { tracks: [
+    { name: '인문', units: ['국문'], subject_groups: ['국어'], rank_grade_points: { 1: 100, 2: 50, 3: 40, 4: 30, 5: 0 } },
+    { name: '자연', units: ['*'], subject_groups: ['수학'] }] } });
+  test('테스트마다 계열을 골라 그 계열로 계산하고, 안 고르면 첫 계열이에요', () => {
+    expect(runTest(tracked, { ...newTest(0), expected: 50 }).ok).toBe(true);
+    expect(runTest(tracked, { ...newTest(0), track: '자연', expected: 96 }).ok).toBe(true);
+    expect(testTrack(tracked, { track: '없는 계열' })).toBe('인문');
+  });
+  test('계열마다 통과 테스트가 있어야 검수를 요청할 수 있어요', () => {
+    const base = newRuleDraft('작성자');
+    const d = { ...base, rule: { ...tracked, id: base.rule.id, source: 'https://example.test/plan.pdf' } };
+    const pass = (track: string, expected: number) => ({ ...newTest(0), id: track + expected, track, expected });
+    expect(blockers({ ...d, tests: [pass('인문', 50), pass('인문', 50), pass('인문', 50)] })).toContain('계열별 테스트가 필요해요: 자연');
+    expect(blockers({ ...d, tests: [pass('인문', 50), pass('인문', 50), pass('자연', 96)] })).toEqual([]);
+  });
+});
