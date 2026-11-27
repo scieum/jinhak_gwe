@@ -1,6 +1,7 @@
 // 수시 입결 · 내 비교 (Figma admission-results 1440-compare 762:282739 · 390-compare 767:296407 · 빈 상태 767:302831 · 추가 767:309525).
 // 하트로 담은 학과(최대 10개)의 같은 학년도 컷을 한 그래프에 놓고, 오른쪽에서 고른 학과의 3개년 값을 봐요. 판정 이름은 붙이지 않아요(NEVER-1).
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { yearUnitKey } from '../domain/yearNames';
 import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { loadSusiIndex, loadSusiRows } from '../data/susiResults';
@@ -161,10 +162,11 @@ function AddModal({ index, interests, onClose }: { index: CollectedIndex; intere
   }, [university]);
   const units = useMemo(() => {
     const map = new Map<string, ResultRow[]>();
-    for (const r of rows ?? []) if (r.round === '수시' && r.recruit_unit.trim()) map.set(r.recruit_unit.trim(), [...(map.get(r.recruit_unit.trim()) ?? []), r]);
-    return [...map].map(([name, list]) => {
+    // 해마다 표기가 다른 같은 학과는 한 줄로, 이름은 가장 최근 학년도 것(2026-11-27 3개년 점검)
+    for (const r of rows ?? []) if (r.round === '수시' && r.recruit_unit.trim()) map.set(yearUnitKey(r.recruit_unit), [...(map.get(yearUnitKey(r.recruit_unit)) ?? []), r]);
+    return [...map].map(([, list]) => {
       const best = [...list].sort((a, b) => Number(b.result_year) - Number(a.result_year) || Number(gradeCut(b) !== null) - Number(gradeCut(a) !== null))[0];
-      return { name, program: best.program, types: [...new Set(list.map(typeTab))].join(' · ') };
+      return { name: best.recruit_unit.trim(), program: best.program, types: [...new Set(list.map(typeTab))].join(' · ') };
     }).filter(u => !q.trim() || u.name.includes(q.trim()) || matchesUniversityIdentity(university, q)).sort((a, b) => a.name.localeCompare(b.name, 'ko'));
   }, [rows, q]);
   const saved = (unit: string) => interests.filter(i => i.university === university && i.department === unit);

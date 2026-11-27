@@ -1,4 +1,5 @@
 import type { ReleasedUnit, ResultRow } from './resultReview';
+import { yearProgramKey, yearUnitKey } from './yearNames';
 
 export const TYPE_TABS = ['교과', '종합', '논술', '기타', '전체'] as const;
 export type TypeTab = typeof TYPE_TABS[number];
@@ -17,16 +18,18 @@ export function universities(units: readonly ReleasedUnit[]) {
 }
 export const resultLines = (units: readonly ReleasedUnit[], university: string, tab: TypeTab) =>
   collectLines(units, university, r => r.round === '수시' && (tab === '전체' || typeTab(r) === tab));
-export const programLines = (units: readonly ReleasedUnit[], university: string, program: string) => collectLines(units, university, r => r.program === program);
+export const programLines = (units: readonly ReleasedUnit[], university: string, program: string) => collectLines(units, university, r => yearProgramKey(r.program) === yearProgramKey(program));
 function collectLines(units: readonly ReleasedUnit[], university: string, keep: (r: ResultRow) => boolean): ResultLine[] {
   const map = new Map<string, ResultLine>();
   for (const u of units) {
     if (u.university !== university) continue;
     for (const r of u.rows) {
       if (!keep(r)) continue;
-      const key = `${r.program}|${r.recruit_unit}`, year = Number(r.result_year);
+      // 해마다 이름이 조금씩 달라도 한 줄(3개년)로, 보여 주는 이름은 가장 최근 학년도 것(2026-11-27 3개년 점검)
+      const key = `${yearProgramKey(r.program)}|${yearUnitKey(r.recruit_unit)}`, year = Number(r.result_year);
       let line = map.get(key);
       if (!line) map.set(key, line = { key, program: r.program, unit: r.recruit_unit, type: typeTab(r), years: new Map(), plottable: false });
+      else if (year > Math.max(...line.years.keys())) { line.program = r.program; line.unit = r.recruit_unit; }
       const cell: YearCell = { cut70: n(r.cut_70), cut50: n(r.cut_50), competition: r.competition_rate, quota: r.quota, metric: r.metric, basis: r.basis, source: u.source_url };
       const old = line.years.get(year);
       // Two official sources for one year (입학처 + 대학 제공 어디가): keep the one that has a 70% cut.

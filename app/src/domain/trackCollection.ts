@@ -2,6 +2,7 @@ import type { AdmissionPlan, PlanCatalog, PlanProgram } from './admissionPlans';
 import type { ReleasedUnit, ResultRow } from './resultReview';
 import type { FieldRow } from './univWiki';
 import { currentUniversityName } from './universityIdentity';
+import { yearUnitKey } from './yearNames';
 import { TRACKS, type TrackId } from './specialTracks';
 import { unitPlanQuota } from './deptTierPlans';
 import { departmentOf, educationDepartment } from './trackDepartments';
@@ -15,7 +16,8 @@ export interface CollectedTrackUnit {
   ambiguousCampus: boolean;
 }
 const nameKey = (s: string) => currentUniversityName(s).normalize('NFKC').replace(/\s/g, '');
-const key = (u: string, d: string) => JSON.stringify([nameKey(u), d.trim()]);
+// 학과 이름 표기가 해마다·자료마다 달라도 같은 학과로(2026-11-27 3개년 점검)
+const key = (u: string, d: string) => JSON.stringify([nameKey(u), yearUnitKey(d)]);
 const institutes = new Set(['한국과학기술원', '광주과학기술원', '대구경북과학기술원', '울산과학기술원', '한국에너지공과대학교', '포항공과대학교']);
 
 /** Name/field-table suggestions only. Never infer medical or contract status from '바이오'/'반도체'. */

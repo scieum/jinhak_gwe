@@ -128,7 +128,7 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   // 고른 학과: 누른 점 → 이 전형에서 하트로 담은 학과 → 목록 가운데 학과(시작점일 뿐 추천이 아니에요).
   const saved = plotted.find(d => interests.some(i => i.university === university && i.program === model.selected && i.department === d.name));
   // ?gd=학과: 다른 화면(학과별 구간 칸)에서 넘어오면 그 학과를 먼저 골라 둬요.
-  const linked = departments.find(d => d.name === query.get('gd'));
+  const linked = departments.find(d => d.name === query.get('gd')) ?? departments.find(d => d.rows.some(r => r.recruit_unit === query.get('gd'))); // 해마다 이름이 달라 묶인 학과도 찾아요
   // 고른 탭(전형 유형)에 그 학과가 없거나 자료를 못 읽은 캠퍼스는 건너뛰어요
   useEffect(() => {
     if (gd && (rows || error) && !gdRow && alt + 1 < candidates.length) setAlt(alt + 1);

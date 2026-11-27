@@ -30,19 +30,29 @@ export function noPlotReason(rows: readonly ResultRow[]): string {
   return `이 전형은 ${top ? top[0] : '발표된 컷 값이 없어요.'}`;
 }
 
+
+export { canonicalNames, yearProgramKey, yearUnitKey } from './yearNames';
+import { canonicalNames, yearProgramKey, yearUnitKey } from './yearNames';
+
 export function universityPlot(rows: readonly ResultRow[], tab: TypeTab, program: string) {
   const latest = Math.max(0, ...rows.filter(r => r.round === '수시' && /^20\d{2}$/.test(r.result_year)).map(r => Number(r.result_year)));
-  const recent = rows.filter(r => r.round === '수시' && Number(r.result_year) >= latest - 2 && Number(r.result_year) <= latest && (tab === '전체' || typeTab(r) === tab));
-  const programs = [...new Set(recent.map(r => r.program))].sort((a, b) => a.localeCompare(b, 'ko'));
+  const raw = rows.filter(r => r.round === '수시' && Number(r.result_year) >= latest - 2 && Number(r.result_year) <= latest && (tab === '전체' || typeTab(r) === tab));
+  // 원문 행은 그대로 두고(원문·상세는 원래 이름), 묶을 때만 대표 이름을 써요
+  const programName = canonicalNames(raw, 'program', yearProgramKey, false); // 띄어쓰기·괄호·'전형'만 다른 이름이라 같은 해에 겹쳐도 같은 전형
+  const programOf = (r: ResultRow) => programName.get(r.program) ?? r.program;
+  const programs = [...new Set(raw.map(programOf))].sort((a, b) => a.localeCompare(b, 'ko'));
   // 고르지 않았으면 그래프를 그릴 수 있는(70%·50% 컷이 있는) 첫 전형을 열어요.
-  const plottable = (p: string) => recent.some(r => r.program === p && (gradeCut(r) !== null || gradeCut(r, 'cut_50') !== null));
-  const selected = programs.includes(program) ? program : programs.find(plottable) ?? programs[0] ?? '';
-  const selectedRows = recent.filter(r => r.program === selected);
+  const plottable = (p: string) => raw.some(r => programOf(r) === p && (gradeCut(r) !== null || gradeCut(r, 'cut_50') !== null));
+  const asked = programName.get(program) ?? program;
+  const selected = programs.includes(asked) ? asked : programs.find(plottable) ?? programs[0] ?? '';
+  const selectedRows = raw.filter(r => programOf(r) === selected);
+  const unitName = canonicalNames(selectedRows, 'recruit_unit', yearUnitKey);
+  const unitOf = (r: ResultRow) => unitName.get(r.recruit_unit) ?? r.recruit_unit;
   // 70% 컷이 기본. 이 전형이 50% 컷만 발표했으면(예: 강원대) 그 전형의 50% 컷을 그려요. 한 그래프에 두 컷을 섞거나 서로 바꾸지 않아요.
   const cut: CutField = !selectedRows.some(r => gradeCut(r) !== null) && selectedRows.some(r => gradeCut(r, 'cut_50') !== null) ? 'cut_50' : 'cut_70';
-  const departments = [...new Set(selectedRows.map(r => r.recruit_unit))].map(name => ({
-    name, rows: selectedRows.filter(r => r.recruit_unit === name),
-    points: selectedRows.filter(r => r.recruit_unit === name && gradeCut(r, cut) !== null),
+  const departments = [...new Set(selectedRows.map(unitOf))].map(name => ({
+    name, rows: selectedRows.filter(r => unitOf(r) === name),
+    points: selectedRows.filter(r => unitOf(r) === name && gradeCut(r, cut) !== null),
   })).sort((a, b) => {
     const latestCut = (points: ResultRow[]) => {
       const row = [...points].sort((x, y) => Number(y.result_year) - Number(x.result_year))[0];

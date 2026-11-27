@@ -1,3 +1,4 @@
+import { yearProgramKey, yearUnitKey } from './yearNames';
 import type { Interest } from './interests';
 import type { ResultRow } from './resultReview';
 import { gradeCoordinate, statisticValue, type CutField, type NationalPlacementRow } from './nationalPlacement';
@@ -18,7 +19,7 @@ export interface ComparisonRecord { sourceRow: number; row: ResultRow }
 export function comparisonRecords(interest: Interest, rows: readonly ResultRow[], year: string, round: string, metric: string): ComparisonRecord[] {
   if (!interest.department?.trim()) return [];
   return rows.flatMap((row, sourceRow) => currentUniversityName(row.university.trim()) === currentUniversityName(interest.university.trim())
-    && row.program.trim() === interest.program.trim() && row.recruit_unit.trim() === interest.department!.trim()
+    && yearProgramKey(row.program) === yearProgramKey(interest.program) && yearUnitKey(row.recruit_unit) === yearUnitKey(interest.department!)
     && row.result_year === year && row.round === round && row.metric === metric ? [{ sourceRow, row }] : []);
 }
 /** Multiple original rows must be chosen explicitly, even if their values happen to match. */
@@ -49,8 +50,8 @@ const sameProgram = (a: string, b: string) => {
  *  전형 이름이 정확히 같은 행을 먼저, 없으면 핵심 이름이 같은 행. 같은 해 후보가 여럿이면 고르지 않아요. */
 export function latestReferenceCut(interest: Interest, rows: readonly ResultRow[]): ReferenceCut {
   if (!interest.department?.trim()) return { reason: '학과를 고르면 입결과 비교해요.' };
-  const unit = rows.flatMap((row, sourceRow) => row.recruit_unit.trim() === interest.department!.trim() && row.round === '수시' && row.metric === '교과등급' ? [{ sourceRow, row }] : []);
-  const exact = unit.filter(r => r.row.program.trim() === interest.program.trim());
+  const unit = rows.flatMap((row, sourceRow) => yearUnitKey(row.recruit_unit) === yearUnitKey(interest.department!) && row.round === '수시' && row.metric === '교과등급' ? [{ sourceRow, row }] : []);
+  const exact = unit.filter(r => yearProgramKey(r.row.program) === yearProgramKey(interest.program));
   const named = exact.length ? exact : unit.filter(r => sameProgram(r.row.program, interest.program));
   const found = latestIn(named);
   if (found) return found;

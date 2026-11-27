@@ -1,3 +1,4 @@
+import { yearProgramKey, yearUnitKey } from './yearNames';
 import type { ResultRow } from './resultReview';
 import type { Interest } from './interests';
 import { gradeCut, type CutField } from './universityResultPlot';
@@ -16,8 +17,9 @@ export function interestRows(interest: Pick<Interest, 'program' | 'department'>,
   const unit = units.find(u => u === dept) ?? units.find(u => unitKey(u) === key)
     ?? (() => { const near = units.filter(u => key.startsWith(unitKey(u)) || unitKey(u).startsWith(key)); return near.length === 1 ? near[0] : undefined; })();
   if (!unit) return { rows: [], unit: '', programMatched: false };
-  const own = susi.filter(r => r.recruit_unit.trim() === unit);
-  const exact = own.filter(r => r.program.trim() === interest.program.trim());
+  // 해마다 학과·전형 이름이 조금씩 달라도(yearNames) 같은 학과 3개년을 모두 가져와요(2026-11-27 3개년 점검)
+  const own = susi.filter(r => yearUnitKey(r.recruit_unit) === yearUnitKey(unit));
+  const exact = own.filter(r => yearProgramKey(r.program) === yearProgramKey(interest.program));
   const core = exact.length ? exact : own.filter(r => programKey(r.program) === programKey(interest.program) || programKey(r.program).includes(programKey(interest.program)) || programKey(interest.program).includes(programKey(r.program)));
   return core.length ? { rows: core, unit, programMatched: true } : { rows: own, unit, programMatched: false };
 }
