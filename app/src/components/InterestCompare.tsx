@@ -1,6 +1,6 @@
 // 수시 입결 · 내 비교 (Figma admission-results 1440-compare 762:282739 · 390-compare 767:296407 · 빈 상태 767:302831 · 추가 767:309525).
 // 하트로 담은 학과(최대 10개)의 같은 학년도 컷을 한 그래프에 놓고, 오른쪽에서 고른 학과의 3개년 값을 봐요. 판정 이름은 붙이지 않아요(NEVER-1).
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { yearUnitKey } from '../domain/yearNames';
 import { FAMILIES, familyOf, regionOf } from '../domain/compareFilters';
 import { loadUnivMap } from '../data/univMap';
@@ -10,6 +10,8 @@ import type { FieldRow } from '../domain/univWiki';
 import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { loadSusiIndex, loadSusiRows } from '../data/susiResults';
+import { useSampleMode } from '../data/sample/mode';
+import { dataAsOf } from '../data/catalog';
 import type { CollectedIndex } from '../domain/collectedResults';
 import type { ResultRow } from '../domain/resultReview';
 import type { Interest } from '../domain/interests';
@@ -27,11 +29,14 @@ import { Modal } from './Modal';
 import { CollectedResultFields } from './CollectedResultFields';
 import { SelectedDetail } from './UniversityResultOverview';
 import { PrepareProgram } from './PrepareProgram';
+import { ScreenActions } from './ScreenActions';
 import '../styles/university-result-overview.css';
 
 export const COMPARE_MAX = 10;
 const short = (u: string) => currentUniversityName(u).replace(/대학교$/, '대');
 const SYNC_FLAG = 'jinhak-navi-app-interest-sync-v1';
+const narrow = () => typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 1023px)').matches;
+const PAN_MIN = 1, PAN_SPAN = 8; // 그래프 아래 이동 막대: 전체 1~9등급(대학별과 같음)
 type Loaded = Record<string, ResultRow[] | 'error'>;
 
 function Mark({ type }: { type: string }) {
@@ -45,7 +50,8 @@ export function InterestCompare({ tabs }: { tabs: ReactNode }) {
   const [index, setIndex] = useState<CollectedIndex | null>(null), [indexError, setIndexError] = useState('');
   const [loaded, setLoaded] = useState<Loaded>({});
   const [tab, setTab] = useState<TypeTab>('전체'), [view, setView] = useState<'plot' | 'table'>('plot'), [year, setYear] = useState('');
-  const [picked, setPicked] = useState(''), [adding, setAdding] = useState(false), [opened, setOpened] = useState<ResultRow | null>(null);
+  const [picked, setPicked] = useState(''), [adding, setAdding] = useState(false), [opened, setOpened] = useState<ResultRow | null>(null), [sheet, setSheet] = useState(false);
+  const sample = useSampleMode() && import.meta.env.VITE_SUSI_DESIGN_FIXTURE === 'true';
   // 지역 · 계열 칩(시안 1440-compare): 캠퍼스 위치(univ-map)와 계열표(dept-tier) — 못 읽으면 칩만 '전체'로 남아요
   const [region, setRegion] = useState(''), [family, setFamily] = useState('');
   const [campuses, setCampuses] = useState<readonly Campus[]>([]), [fields, setFields] = useState<readonly FieldRow[]>([]);
@@ -84,9 +90,31 @@ export function InterestCompare({ tabs }: { tabs: ReactNode }) {
   const points = visible.map(x => ({ x, cut: yearCut(x.rows, chosenYear) }));
   const conversion = useMemo(() => student?.data?.grades.length ? fiveToNineFor(student.data.grades, '전 교과') : null, [student]);
   const mine = conversion?.min != null && conversion.max != null ? { lo: Math.floor(conversion.min * 10) / 10, hi: Math.ceil(conversion.max * 10) / 10 } : null;
-  const range = axisRange([...points.flatMap(p => p.cut ? [p.cut.value] : []), ...(mine ? [mine.lo, mine.hi] : [])]);
+  const auto = axisRange([...points.flatMap(p => p.cut ? [p.cut.value] : []), ...(mine ? [mine.lo, mine.hi] : [])]);
+  const [zoom, setZoom] = useState<{ key: string; min: number; max: number } | null>(null), zoomKey = [chosenYear, tab, region, family, visible.length].join('|');
+  const range = zoom?.key === zoomKey ? zoom : auto;
+  const inRange = (v: number) => v >= range.min - 1e-9 && v <= range.max + 1e-9;
   const pos = (v: number) => `${(Math.min(range.max, Math.max(range.min, v)) - range.min) / (range.max - range.min) * 100}%`;
+  // 시안 pan-row: 대학별 그래프와 같은 가로 이동 막대(손잡이 = 보이는 범위)
+  const pan = useRef<HTMLDivElement>(null), panning = useRef(false);
+  useEffect(() => {
+    const el = pan.current;
+    if (!el) return;
+    const left = (range.min - PAN_MIN) / PAN_SPAN * el.scrollWidth;
+    if (Math.abs(el.scrollLeft - left) > 1) { panning.current = true; el.scrollLeft = left; }
+  }, [range.min, range.max, view]);
+  const onPan = () => {
+    const el = pan.current;
+    if (!el) return;
+    if (panning.current) { panning.current = false; return; }
+    const w = range.max - range.min, min = Math.min(PAN_MIN + PAN_SPAN - w, Math.max(PAN_MIN, PAN_MIN + el.scrollLeft / el.scrollWidth * PAN_SPAN));
+    setZoom({ key: zoomKey, min: Math.round(min * 1000) / 1000, max: Math.round((min + w) * 1000) / 1000 });
+  };
+  const generated = index?.generated_at ? new Date(index.generated_at) : null;
+  const dateLabel = sample ? `데이터 기준일 ${dataAsOf}` : `자료 정리일 ${generated && Number.isFinite(generated.getTime()) ? new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Seoul' }).format(generated) : '확인 중'}`;
+  const choose = (id: string) => { setPicked(id); if (narrow()) setSheet(true); }; // 모바일은 시안에 목록 패널이 없어 고른 학과를 시트로 열어요
   const selected = items.find(x => x.interest.id === picked) ?? items[0];
+  const pickedCut = points.find(p => p.x === selected)?.cut;
   const cutKinds = new Set(points.flatMap(p => p.cut ? [p.cut.cut] : []));
   const cutLabel = cutKinds.size === 1 && cutKinds.has('cut_50') ? '50% 컷' : cutKinds.size > 1 ? '70% 컷(없으면 50% 컷)' : '70% 컷';
   const label = (i: Interest) => `${short(i.university)} ${i.department || i.program}`;
@@ -95,7 +123,7 @@ export function InterestCompare({ tabs }: { tabs: ReactNode }) {
     {shown.length ? <><h4>내 비교 {interests!.length}개 · 최대 {COMPARE_MAX}개</h4>
       {interests!.length > COMPARE_MAX && <p className="ar-muted">먼저 담은 {COMPARE_MAX}개만 그래프에 놓아요. 하트를 빼면 다음 학과가 들어와요.</p>}
       <ul>{shown.map(i => <li key={i.id} aria-current={selected?.interest.id === i.id || undefined}>
-        <button type="button" onClick={() => setPicked(i.id)}><UniversityLogo university={i.university} /><span>{label(i)}</span></button>
+        <button type="button" onClick={() => choose(i.id)}><UniversityLogo university={i.university} /><span>{label(i)}</span></button>
         <InterestButton university={i.university} program={i.program} department={i.department || undefined} compact /></li>)}</ul></>
       : <p className="ar-muted">하트로 담은 학과가 여기 모여요</p>}
   </section>;
@@ -109,6 +137,7 @@ export function InterestCompare({ tabs }: { tabs: ReactNode }) {
       <PrepareProgram university={selected.interest.university} program={selected.interest.program} department={selected.interest.department ?? ''} /></section>);
 
   return <section className="ar ic" aria-label="내 비교">
+    <ScreenActions><span className="data-status-badge ar-asof">{dateLabel}</span></ScreenActions>
     <div className="ar-columns">
       <div className="ar-center">
         <div className="ar-top">{tabs}<button type="button" className="button-outline ic-add" onClick={() => setAdding(true)}><Icon name="plus" size={20} />학교·학과 추가</button></div>
@@ -128,12 +157,13 @@ export function InterestCompare({ tabs }: { tabs: ReactNode }) {
             </div>
             <section className="ar-card" aria-label="내 비교 그래프">
               <div className="ar-head"><p className="ar-lead">내 비교에 담은 {visible.length}개 학과의 {chosenYear ? `${chosenYear}학년도 ` : ''}{cutLabel}이에요. 점 모양은 전형 유형이에요.</p>
-                <Link className="t-link t-caption" to="/five-to-nine?view=mine">5 to 9에서 근거 보기 ›</Link></div>
-              <div className="ic-legend" aria-hidden="true">{['교과', '종합', '논술', '기타'].map(t => <span key={t}><Mark type={t} />{t}</span>)}{mine && <span><i className="ic-band-key" />내 환산 범위</span>}</div>
+                <div className="ar-legend" aria-hidden="true">{chosenYear && <span><svg viewBox="0 0 11 11" className="result-plot ar-dot"><circle cx="5.5" cy="5.5" r="5" /></svg>{chosenYear}학년도</span>}{mine && <span><i className="ar-swatch" />내 환산 범위</span>}</div></div>
+              <div className="ar-basis-link">{zoom?.key === zoomKey && <button type="button" className="ar-zoom-reset" onClick={() => setZoom(null)}>범위 원래대로</button>}<Link to="/five-to-nine?view=mine">5 to 9에서 근거 보기 ›</Link></div>
+              <div className="ic-legend" aria-hidden="true">{['교과', '종합', '논술', '기타'].map(t => <span key={t}><Mark type={t} />{t}</span>)}</div>
               {!visible.length ? <p className="ar-muted">이 유형으로 담은 학과가 없어요.</p> : view === 'table'
                 ? <div className="table-scroll"><table className="data-table ar-table"><thead><tr><th scope="col">학과</th><th scope="col">전형</th><th scope="col">{chosenYear}학년도 컷</th><th scope="col">기준</th></tr></thead>
-                  <tbody>{points.map(({ x, cut }) => <tr key={x.interest.id} aria-selected={selected?.interest.id === x.interest.id} onClick={() => setPicked(x.interest.id)}>
-                    <th scope="row"><button type="button" onClick={() => setPicked(x.interest.id)}>{label(x.interest)}</button></th><td>{x.interest.program}</td>
+                  <tbody>{points.map(({ x, cut }) => <tr key={x.interest.id} aria-selected={selected?.interest.id === x.interest.id} onClick={() => choose(x.interest.id)}>
+                    <th scope="row"><button type="button" onClick={() => choose(x.interest.id)}>{label(x.interest)}</button></th><td>{x.interest.program}</td>
                     <td className="num">{cut ? `${cut.cut === 'cut_70' ? '70%' : '50%'} ${cut.row[cut.cut]}` : '—'}</td><td>{cut?.row.basis || (x.loading ? '읽는 중' : '좌표 없음')}</td></tr>)}</tbody></table></div>
                 : <div className="result-plot ar-plot">
                   {mine && <div className="ar-plot__bubble-row" aria-hidden="true"><div><span className="ar-plot__bubble" style={{ left: pos((mine.lo + mine.hi) / 2) }}>내 환산 범위 약 {mine.lo.toFixed(1)}~{mine.hi.toFixed(1)}</span></div></div>}
@@ -141,23 +171,28 @@ export function InterestCompare({ tabs }: { tabs: ReactNode }) {
                     <div className="ar-plot__layer" aria-hidden="true">
                       {axisMinorTicks(range).map(t => <i className="ar-plot__grid ar-plot__grid--minor" key={`m${t}`} style={{ left: pos(t) }} />)}{axisTicks(range).map(t => <i className="ar-plot__grid" key={t} style={{ left: pos(t) }} />)}
                       {mine && <><i className="ar-plot__band" style={{ left: pos(mine.lo), width: `calc(${pos(mine.hi)} - ${pos(mine.lo)})` }} /><i className="ar-plot__mine" style={{ left: pos((mine.lo + mine.hi) / 2) }} /></>}
+                      {pickedCut && inRange(pickedCut.value) && <i className="ar-plot__guide" style={{ left: pos(pickedCut.value) }} />}
                     </div>
                     {points.map(({ x, cut }) => <div className="ar-plot__row ic-row" role="listitem" key={x.interest.id}>
-                      <button type="button" className="ar-plot__name ic-name" aria-label={label(x.interest)} onClick={() => setPicked(x.interest.id)}><UniversityLogo university={x.interest.university} /><span><span>{short(x.interest.university)}</span> <span>{x.interest.department || x.interest.program}</span></span></button>
-                      <div className="ar-plot__track">{cut ? <button type="button" className={`ic-point${selected?.interest.id === x.interest.id ? ' is-picked' : ''}`} style={{ left: pos(cut.value) }}
+                      <button type="button" className="ar-plot__name ic-name" aria-label={label(x.interest)} onClick={() => choose(x.interest.id)}><UniversityLogo university={x.interest.university} /><span><span>{short(x.interest.university)}</span> <span>{x.interest.department || x.interest.program}</span></span></button>
+                      <div className="ar-plot__track">{cut ? inRange(cut.value) && <button type="button" className={`ic-point${selected?.interest.id === x.interest.id ? ' is-picked' : ''}`} style={{ left: pos(cut.value) }}
                         aria-label={`${label(x.interest)} ${chosenYear}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}`} onClick={() => { setPicked(x.interest.id); setOpened(cut.row); }}>{selected?.interest.id === x.interest.id && <svg className="ic-ring" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" /></svg>}<Mark type={x.type || '교과'} /></button>
                         : <span className="ar-muted ic-none">{x.loading ? '읽는 중' : x.rows.length ? `${chosenYear}학년도 컷 없음` : '입결 없음'}</span>}</div>
                     </div>)}
                     <div className="ar-plot__axis" aria-hidden="true"><div>{axisTicks(range).map(t => <span key={t} style={{ left: pos(t) }}>{Math.round(t * 10) / 10}</span>)}</div></div>
+                    {range.max - range.min < PAN_SPAN - 1e-9 && <div className="ar-plot__pan-row"><div className="ar-plot__pan" ref={pan} onScroll={onPan} tabIndex={0} role="group"
+                      aria-label={`보이는 등급 범위 ${range.min.toFixed(1)}~${range.max.toFixed(1)}, 좌우로 옮겨 보기`}><i style={{ width: `${PAN_SPAN / (range.max - range.min) * 100}%` }} /></div></div>}
                   </div>
                 </div>}
-              <p className="ar-source">출처: 각 대학 공식 수시 입시결과 · 어디가 대학 제공 결과 · 대학마다 컷 산출 기준이 달라요 · 검수 전 참고자료</p>
+              <button type="button" className="button-outline ic-add ic-add--card" onClick={() => setAdding(true)}><Icon name="plus" size={20} />학교·학과 추가</button>
+              {years.length > 0 && <p className="ar-source">출처: 각 대학 공식 수시 입시결과 · {years[years.length - 1]}~{years[0]}학년도 · {cutLabel} · {dateLabel}</p>}
             </section>
           </>}
       </div>
-      <aside className="ar-side ic-side" aria-label="내 비교 목록과 고른 학과">{list}{shown.length > 0 && detail}</aside>
+      <aside className="ar-side ic-side" aria-label="내 비교 목록과 고른 학과">{list}{shown.length > 0 && detail}{shown.length > 0 && <button type="button" className="button-outline ic-add--side" onClick={() => setAdding(true)}>학교·학과 추가</button>}</aside>
     </div>
-    <p className="disclaimer-note ar-note"><Icon name="info" size={16} /><span>각 대학이 공식 발표한 수시 입결을 모은 참고 자료예요 · 대학마다 컷 산출 기준이 달라 대학끼리 같은 축에서 바로 비교하기 어려워요 · 내 환산 범위는 5 to 9 추정값이에요 · 대학 공식 자료가 최종 기준이에요</span></p>
+    <p className="disclaimer-note ar-note"><Icon name="info" size={16} /><span>각 대학이 공식 발표한 수시 입결을 모은 참고 자료예요 · 대학마다 컷 산출 기준이 달라 대학끼리 같은 축에서 바로 비교하기 어려워요 · 내 환산 범위는 5 to 9 추정값이에요 · 대학 공식 자료가 최종 기준이에요{sample ? ' · 샘플의 대학·숫자는 예시예요' : ' · 검수 전 자료는 성적 판정에 쓰지 않아요'} · {dateLabel}</span></p>
+    {sheet && detail && <Modal label="고른 학과 상세" onClose={() => setSheet(false)}><div className="section-row"><span /><button className="button-outline" onClick={() => setSheet(false)}>닫기</button></div>{detail}</Modal>}
     {adding && index && <AddModal index={index} interests={interests ?? []} onClose={() => setAdding(false)} />}
     {opened && <Modal wide label="입결 원문 상세" onClose={() => setOpened(null)}><div className="section-row"><h3 className="t-heading-3">{opened.recruit_unit} · {opened.result_year}학년도</h3><button className="button-outline" onClick={() => setOpened(null)}>닫기</button></div><CollectedResultFields row={opened} /></Modal>}
   </section>;

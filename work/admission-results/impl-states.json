@@ -4,5 +4,11 @@
  },
  "390-collected": {
   "route": "/admission-results?view=collected&scope=susi&cu=%ED%95%9C%EC%96%91%EB%8C%80&cp=%ED%95%99%EC%83%9D%EB%B6%80%EA%B5%90%EA%B3%BC%28%EC%B6%94%EC%B2%9C%ED%98%95%29&cd=%EC%9C%B5%ED%95%A9%EC%A0%84%EC%9E%90%EA%B3%B5%ED%95%99%EB%B6%80"
+ },
+ "1440-compare": {
+  "route": "/admission-results?view=interests"
+ },
+ "390-compare": {
+  "route": "/admission-results?view=interests"
  }
 }

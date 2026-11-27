@@ -38,24 +38,42 @@
     {
       "error": "Z 390-collected #1245:111071: data-table[1] w 348 (시안 160±2) · h 300 (시안 45±2)",
       "reason": "게이트 짝짓기 한계: 수집 자료 표 시안은 data-table/cell 인스턴스를 모아 만든 표라, 게이트가 시안의 첫 셀(머리글 '학년도' 셀)을 표 블록으로 잡고 앱의 표 전체(.data-table)와 비교해요. 표 프레임 자체(1440 w 1126 · y 612 / 390 w 348 · y 698)와 셀별 글자·간격은 따로 비교돼 맞아요. 머리 행 배경 canvas-soft는 셀 변형 그대로예요."
+    },
+    {
+      "error": "V 1440-compare: 차이 영역 x 552 y 776 112×16",
+      "reason": "헤드리스 캡처 한계: 그래프 아래 이동 막대(.ar-plot__pan, 시안 pan-row 456×8 · 손잡이 114)는 앱에 있고 위치·크기도 같아요(가로 스크롤 막대). G5가 쓰는 Playwright 헤드리스 Chromium이 스크롤바를 숨기고(--hide-scrollbars) 그려서 캡처에만 안 보여요. 대학별 그래프와 같은 코드예요."
+    },
+    {
+      "error": "V 1440-compare: 차이 영역 x 1168 y 872 40×16",
+      "reason": "시안 쪽 정렬 차이: 고른 학과 표 충원율 2026 칸 '181.8%'는 시안에서 칸 넘침을 피하려고 글자를 자동 폭(WIDTH_AND_HEIGHT)으로 바꿔 다른 칸보다 약 4px 왼쪽에 놓였어요. 앱은 다른 칸과 같은 오른쪽 맞춤(패딩 16)이고 글꼴·굵기·크기는 같아요."
+    },
+    {
+      "error": "P 390-compare: 본문 왼쪽 여백(시안) 29 (기준 20±2)",
+      "reason": "게이트 측정 범위 차이: 시안의 맨 왼쪽 글자는 화면 제목 '대학 찾기'(x 20)인데, 앱 모바일 제목은 .shell__content 밖(앱 머리)에 있어 앱 쪽 측정에서 빠져요. .shell__content 안 맨 왼쪽 글자는 '지역 전체' 칩 글자 x 29로 시안 칩 글자(29)와 같아요. 제목 위치 자체는 시안과 같아요(x 20)."
     }
   ],
   "notes": [
     "390: F 글자 짝 57/61 (짝 없는 글자는 T만 본다)",
     "1440: F 글자 짝 101/106 (짝 없는 글자는 T만 본다)",
     "1440-collected: F 글자 짝 69/87 (짝 없는 글자는 T만 본다)",
-    "390-collected: F 글자 짝 46/51 (짝 없는 글자는 T만 본다)"
+    "390-collected: F 글자 짝 46/51 (짝 없는 글자는 T만 본다)",
+    "1440-compare: F 글자 짝 91/98 (짝 없는 글자는 T만 본다)",
+    "390-compare: F 글자 짝 41/47 (짝 없는 글자는 T만 본다)"
   ],
   "images": {
     "390": "work/_cache/impl/admission-results-390.png",
     "1440": "work/_cache/impl/admission-results-1440.png",
     "1440-collected": "work/_cache/impl/admission-results-1440-collected.png",
-    "390-collected": "work/_cache/impl/admission-results-390-collected.png"
+    "390-collected": "work/_cache/impl/admission-results-390-collected.png",
+    "1440-compare": "work/_cache/impl/admission-results-1440-compare.png",
+    "390-compare": "work/_cache/impl/admission-results-390-compare.png"
   },
   "ssim": {
     "390": 0.9675,
     "1440": 0.9855,
     "1440-collected": 0.977,
-    "390-collected": 0.9019
+    "390-collected": 0.9019,
+    "1440-compare": 0.9812,
+    "390-compare": 0.9646
   }
 }
