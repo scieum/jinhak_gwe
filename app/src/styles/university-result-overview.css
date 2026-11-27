@@ -25,6 +25,7 @@
 /* 보이는 글자는 span, 고르기는 칩 전체를 덮는 투명 select(칩 폭이 가장 긴 선택지에 끌려가지 않게) */
 .ar .filter-chip select { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; margin: 0; padding: 0; border: 0; opacity: 0; font-size: 16px; cursor: pointer; }
 .ar .filter-chip .icon { pointer-events: none; }
+.ar .filter-chip.is-on { border-color: var(--color-accent); background: var(--color-accent-soft); } /* 칩을 골랐을 때(시안 390-filter-sheet) */
 .ar .filter-chip:focus-within { outline: 2px solid var(--color-ink); outline-offset: 1px; }
 
 /* 그래프 카드 */
@@ -126,6 +127,11 @@
   .ar-univ__meta { display: block; grid-column: 1 / -1; margin: 0; color: var(--color-text-muted); font-size: 12px; line-height: 16.8px; }
   .ar-controls { grid-template-columns: 120px minmax(0, 1fr); grid-template-areas: 'type type' 'view chips'; gap: 12px 0; }
   .ar-chips { justify-content: flex-end; }
+  /* 내 비교 모바일(시안 390-compare 767:296407): 칩 줄(왼쪽, 가로 스크롤) → 전형 유형. 좌표·표 전환은 시안에 없어 좌표만 */
+  .ic .ar-controls { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'chips' 'type'; }
+  .ic .ar-chips { justify-content: flex-start; overflow-x: auto; }
+  .ic .ar-chips .filter-chip { flex: none; }
+  .ic .ar-view { display: none; }
   .ar-card { padding: 16px; }
   .ar-head { display: grid; gap: 12px; }
   .ar-lead { font-size: 13px; line-height: 20px; }

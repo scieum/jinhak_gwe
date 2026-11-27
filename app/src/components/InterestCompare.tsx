@@ -2,6 +2,11 @@
 // 하트로 담은 학과(최대 10개)의 같은 학년도 컷을 한 그래프에 놓고, 오른쪽에서 고른 학과의 3개년 값을 봐요. 판정 이름은 붙이지 않아요(NEVER-1).
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { yearUnitKey } from '../domain/yearNames';
+import { FAMILIES, familyOf, regionOf } from '../domain/compareFilters';
+import { loadUnivMap } from '../data/univMap';
+import { loadTierDraft } from '../data/deptTier';
+import type { Campus } from '../domain/univMap';
+import type { FieldRow } from '../domain/univWiki';
 import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { loadSusiIndex, loadSusiRows } from '../data/susiResults';
@@ -41,6 +46,10 @@ export function InterestCompare({ tabs }: { tabs: ReactNode }) {
   const [loaded, setLoaded] = useState<Loaded>({});
   const [tab, setTab] = useState<TypeTab>('전체'), [view, setView] = useState<'plot' | 'table'>('plot'), [year, setYear] = useState('');
   const [picked, setPicked] = useState(''), [adding, setAdding] = useState(false), [opened, setOpened] = useState<ResultRow | null>(null);
+  // 지역 · 계열 칩(시안 1440-compare): 캠퍼스 위치(univ-map)와 계열표(dept-tier) — 못 읽으면 칩만 '전체'로 남아요
+  const [region, setRegion] = useState(''), [family, setFamily] = useState('');
+  const [campuses, setCampuses] = useState<readonly Campus[]>([]), [fields, setFields] = useState<readonly FieldRow[]>([]);
+  useEffect(() => { let live = true; loadUnivMap().then(m => { if (live) setCampuses(m.campuses); }).catch(() => {}); loadTierDraft().then(d => { if (live) setFields(d.fields); }); return () => { live = false; }; }, []);
   const student = useStudent();
   // 예전에 지원 준비에만 담긴 전형도 한 번은 내 비교로 모아요(2026-11-27 사용자 요청)
   useEffect(() => { if (localStorage.getItem(SYNC_FLAG)) return; localStorage.setItem(SYNC_FLAG, '1'); void studentDb.syncApplicationInterests(); }, []);
@@ -64,11 +73,14 @@ export function InterestCompare({ tabs }: { tabs: ReactNode }) {
     const all = loaded[i.university];
     const match = Array.isArray(all) ? interestRows(i, all) : { rows: [], unit: '', programMatched: false };
     const latest = [...match.rows].sort((a, b) => Number(b.result_year) - Number(a.result_year))[0];
-    return { interest: i, ...match, loading: all === undefined, failed: all === 'error', type: latest ? typeTab(latest) : '' };
-  }), [shown.map(i => i.id).join('|'), loaded]);
+    return { interest: i, ...match, loading: all === undefined, failed: all === 'error', type: latest ? typeTab(latest) : '',
+      region: regionOf(i.university, campuses), family: familyOf(i.university, match.unit || i.department || '', fields) };
+  }), [shown.map(i => i.id).join('|'), loaded, campuses, fields]);
   const years = [...new Set(items.flatMap(x => x.rows.filter(r => gradeCut(r) !== null || gradeCut(r, 'cut_50') !== null).map(r => r.result_year)))].sort().reverse();
   const chosenYear = years.includes(year) ? year : years[0] ?? '';
-  const visible = items.filter(x => tab === '전체' || x.type === tab);
+  const regions = [...new Set(items.map(x => x.region).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ko'));
+  const count = (key: 'region' | 'family', v: string) => items.filter(x => x[key] === v).length;
+  const visible = items.filter(x => (tab === '전체' || x.type === tab) && (!region || x.region === region) && (!family || x.family === family));
   const points = visible.map(x => ({ x, cut: yearCut(x.rows, chosenYear) }));
   const conversion = useMemo(() => student?.data?.grades.length ? fiveToNineFor(student.data.grades, '전 교과') : null, [student]);
   const mine = conversion?.min != null && conversion.max != null ? { lo: Math.floor(conversion.min * 10) / 10, hi: Math.ceil(conversion.max * 10) / 10 } : null;
@@ -109,6 +121,8 @@ export function InterestCompare({ tabs }: { tabs: ReactNode }) {
               <div className="ar-type"><SegmentedControl label="전형 유형" value={tab} onChange={setTab} options={TYPE_TABS.map(value => ({ value, label: value }))} /></div>
               <div className="ar-view"><SegmentedControl label="좌표와 표" value={view} onChange={setView} options={[{ value: 'plot', label: '좌표' }, { value: 'table', label: '표' }]} /></div>
               <div className="ar-chips">
+                <label className={`filter-chip${region ? ' is-on' : ''}`}><span aria-hidden="true">{region || '지역 전체'}</span><select aria-label="지역" value={region} onChange={e => setRegion(e.target.value)}><option value="">지역 전체</option>{regions.map(r => <option key={r} value={r}>{r} ({count('region', r)})</option>)}</select><Icon name="chevron-down" size={16} /></label>
+                <label className={`filter-chip${family ? ' is-on' : ''}`}><span aria-hidden="true">{family || '계열 전체'}</span><select aria-label="계열" value={family} onChange={e => setFamily(e.target.value)}><option value="">계열 전체</option>{FAMILIES.map(f => <option key={f} value={f}>{f} ({count('family', f)})</option>)}</select><Icon name="chevron-down" size={16} /></label>
                 {years.length > 0 && <label className="filter-chip"><span aria-hidden="true">{chosenYear}학년도</span><select aria-label="학년도" value={chosenYear} onChange={e => setYear(e.target.value)}>{years.map(y => <option key={y} value={y}>{y}학년도</option>)}</select><Icon name="chevron-down" size={16} /></label>}
               </div>
             </div>
