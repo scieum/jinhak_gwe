@@ -39,3 +39,9 @@ export function mergeResultRows(rows: ResultRow[]): MergedResultRow[] {
     return { ...merged, mean, sources };
   });
 }
+
+/** 그 행과 같은 학년도·시기·전형·모집단위·지표의 다른 출처까지 보고 평균을 찾아요(될각 카드). */
+export function meanFor(row: ResultRow, rows: readonly ResultRow[]): string {
+  return mergeResultRows(rows.filter(r => r.result_year === row.result_year && r.recruit_unit.trim() === row.recruit_unit.trim() && r.program.trim() === row.program.trim()))
+    .find(m => m.sources.includes(row))?.mean ?? '';
+}

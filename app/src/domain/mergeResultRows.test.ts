@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mergeResultRows, rowMean } from './mergeResultRows';
+import { meanFor, mergeResultRows, rowMean } from './mergeResultRows';
 import type { ResultRow } from './resultReview';
 
 const row = (extra: Partial<ResultRow>): ResultRow => ({
@@ -28,5 +28,12 @@ describe('rowMean', () => {
     expect(rowMean(row({ cut_other: '최초합격자 평균 2.1; 최초합격자 평균 2.4' }))).toBe('');
     expect(rowMean(row({ cut_other: '최초합격자 평균 2.10; 최종등록자 평균 2.35' }))).toBe('2.35');
     expect(rowMean(row({ cut_other: '평균 2.35 / 최저 3.10' }))).toBe('2.35');
+  });
+});
+
+describe('meanFor', () => {
+  it('컷 행과 같은 해·전형·학과의 다른 출처 평균을 찾아요', () => {
+    const adiga = row({ cut_70: '1.49' }), guide = row({ cut_other: '최종등록자 내신등급 평균 1.46' });
+    expect(meanFor(adiga, [adiga, guide, row({ result_year: '2026', cut_other: '평균 1.34' })])).toBe('1.46');
   });
 });
