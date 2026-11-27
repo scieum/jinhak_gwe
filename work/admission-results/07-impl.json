@@ -8,8 +8,8 @@
   "route": "/admission-results",
   "allowed": [],
   "notes": [
-    "390: F 글자 짝 58/61 (짝 없는 글자는 T만 본다)",
-    "1440: F 글자 짝 103/106 (짝 없는 글자는 T만 본다)"
+    "390: F 글자 짝 57/61 (짝 없는 글자는 T만 본다)",
+    "1440: F 글자 짝 101/106 (짝 없는 글자는 T만 본다)"
   ],
   "images": {
     "390": "work/_cache/impl/admission-results-390.png",
