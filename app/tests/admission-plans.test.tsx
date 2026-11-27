@@ -34,7 +34,7 @@ test('공식 포털 202개 캠퍼스의 다운로드 출처와 파일 해시를 
     expect(meta.sha256).toBe(document.sha256);
   }
   // 22 hand summaries + per-type rows from the structured packages (build_admission_plan_programs.py), PDF page evidence only.
-  expect(catalog.entries.flatMap(e => e.programs)).toHaveLength(3099);
+  expect(catalog.entries.flatMap(e => e.programs)).toHaveLength(3107); // 2026-11-27 한국교원대 2 → 10개 전형
   expect(catalog.entries.filter(e => e.programs.length)).toHaveLength(179);
   const checked = new Set<string>();
   for (const entry of catalog.entries) for (const program of entry.programs) {
@@ -103,7 +103,7 @@ test('설립을 공개 대학 목록으로 연결하고 분교와 번호 캠퍼�
 
 test('설립은 같은 그룹에서 합집합, 캠퍼스와는 교집합으로 적용하고 해제하면 복원한다', async () => {
   serve(); at();
-  await screen.findByText('전형 3099개');
+  await screen.findByText('전형 3107개');
   const countPrograms = (foundings: string[], campus?: string) => classified.entries
     .filter(p => foundings.includes(p.founding!) && (!campus || planCampusCategory(p.campus) === campus))
     .reduce((n, p) => n + p.programs.length, 0);
@@ -114,7 +114,7 @@ test('설립은 같은 그룹에서 합집합, 캠퍼스와는 교집합으로 �
   fireEvent.click(first('제2캠퍼스 이상'));
   expect(screen.getByText(`전형 ${countPrograms(['국립', '공립'], '제2캠퍼스 이상')}개`)).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '초기화' }));
-  expect(screen.getByText('전형 3099개')).toBeTruthy();
+  expect(screen.getByText('전형 3107개')).toBeTruthy();
   fireEvent.click(first('사립'));
   fireEvent.click(first('분교'));
   const branchCount = countPrograms(['사립'], '분교');
@@ -125,7 +125,7 @@ test('설립은 같은 그룹에서 합집합, 캠퍼스와는 교집합으로 �
 
 test('모바일 필터에서도 설립·캠퍼스를 함께 적용한다', async () => {
   serve(); at();
-  await screen.findByText('전형 3099개');
+  await screen.findByText('전형 3107개');
   fireEvent.click(screen.getByRole('button', { name: '필터' }));
   const sheet = screen.getByRole('dialog', { name: '필터' });
   fireEvent.click(within(sheet).getByRole('button', { name: '사립' }));
@@ -138,7 +138,7 @@ test('모바일 필터에서도 설립·캠퍼스를 함께 적용한다', async
 test('설립 보조 자료 실패 시 목록은 유지하고 설립 필터만 비활성화한다', async () => {
   vi.stubGlobal('fetch', vi.fn(async (url: string) => url.includes('univ-map') ? new Response('', { status: 503 }) : new Response(JSON.stringify(catalog))));
   at();
-  await screen.findByText('전형 3099개');
+  await screen.findByText('전형 3107개');
   expect((first('사립') as HTMLButtonElement).disabled).toBe(true);
   expect((first('분교') as HTMLButtonElement).disabled).toBe(false);
   expect(screen.getByText(/설립 정보를 확인하지 못한 캠퍼스 218곳/)).toBeTruthy();
@@ -152,14 +152,14 @@ test('학생 성적이 샘플 모드여도 실제 전체 전형계획을 표시�
   localStorage.setItem('jinhak-navi-sample', 'on');
   try {
     serve(); at();
-    expect(await screen.findByText('전형 3099개')).toBeTruthy();
+    expect(await screen.findByText('전형 3107개')).toBeTruthy();
     expect(screen.getByText('대학 194곳 · 캠퍼스 218곳')).toBeTruthy();
     expect(screen.queryByText('전형 12개')).toBeNull();
     expect(screen.queryByText(/샘플의 대학·숫자는 예시예요/)).toBeNull();
     expect(fetch).toHaveBeenCalledWith(expect.stringContaining('data/admission-plans.json'));
     expect(rowsShown()).toHaveLength(10);
     fireEvent.click(screen.getByRole('button', { name: '다음' }));
-    expect(screen.getByText('2 / 314')).toBeTruthy();
+    expect(screen.getByText('2 / 315')).toBeTruthy();
     expect(rowsShown()).toHaveLength(10);
     expect(localStorage.getItem('jinhak-navi-sample')).toBe('on');
   } finally {
@@ -180,11 +180,11 @@ test('전형 1행 목록: 검색·상세 원문·유형 칩·지역 칩·페이�
   expect(screen.getByText("'없는대학명'에 맞는 대학이 없어요")).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '검색어 지우기' }));
   expect(rowsShown()).toHaveLength(10);
-  expect(screen.getByText('1 / 314')).toBeTruthy();
+  expect(screen.getByText('1 / 315')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '다음' }));
-  expect(screen.getByText('2 / 314')).toBeTruthy();
-  fireEvent.click(first('종합 561'));
-  expect(screen.getByText('전형 561개')).toBeTruthy();
+  expect(screen.getByText('2 / 315')).toBeTruthy();
+  fireEvent.click(first('종합 565'));
+  expect(screen.getByText('전형 565개')).toBeTruthy();
   expect(screen.getByText('1 / 57')).toBeTruthy();
   fireEvent.click(first('강원'));
   expect(screen.getByText('전형 24개')).toBeTruthy();
@@ -195,7 +195,7 @@ test('전형 1행 목록: 검색·상세 원문·유형 칩·지역 칩·페이�
   const privateNames = classified.entries.filter(p => p.founding === '사립' && p.region === '강원').map(p => p.university);
   expect(rowsShown().every(row => privateNames.some(name => row.getAttribute('aria-label')?.startsWith(`${name} `)))).toBe(true);
   fireEvent.click(screen.getByRole('button', { name: '초기화' }));
-  expect(screen.getByText('전형 3099개')).toBeTruthy();
+  expect(screen.getByText('전형 3107개')).toBeTruthy();
 }, 30_000);
 
 test('하트로 담고 관심만 보기에서 뺄 때는 한 번 묻는다', async () => {
@@ -297,7 +297,7 @@ const statusLines = () => screen.queryAllByRole('status').flatMap(s => [...s.que
 const programs = classified.entries.flatMap(e => e.programs);
 test('실제 자료 필터 조합: 지역+유형, 계열, 수능최저+면접, 설립이 0이 아닌 개수를 내고 빠진 원문 확인·계열 미연결 개수를 알린다', async () => {
   serve(); at();
-  await screen.findByText('전형 3099개');
+  await screen.findByText('전형 3107개');
   fireEvent.click(first('강원')); fireEvent.click(screen.getAllByRole('button', { name: /^교과 \d+$/ })[0]);
   expect(screen.getByText('전형 22개')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '초기화' }));
@@ -308,25 +308,25 @@ test('실제 자료 필터 조합: 지역+유형, 계열, 수능최저+면접, �
   expect(statusLines()).toEqual([`계열은 검수 전 학과 계열표 기준이에요 · 계열 정보가 없는 전형 ${programs.filter(p => !p.fields).length}개는 빠졌어요`]);
   fireEvent.click(screen.getByRole('button', { name: '초기화' }));
   fireEvent.click(first('수능최저 있음')); fireEvent.click(first('면접 있음'));
-  expect(screen.getByText('전형 28개')).toBeTruthy();
-  expect(statusLines()).toEqual(['수능최저가 원문 확인인 전형 75개는 빠졌어요', '면접이 원문 확인인 전형 163개는 빠졌어요']);
+  expect(screen.getByText('전형 30개')).toBeTruthy();
+  expect(statusLines()).toEqual(['수능최저가 원문 확인인 전형 75개는 빠졌어요', '면접이 원문 확인인 전형 161개는 빠졌어요']);
   fireEvent.click(screen.getByRole('button', { name: '초기화' }));
   fireEvent.click(first('국립'));
-  expect(screen.getByText('전형 390개')).toBeTruthy();
+  expect(screen.getByText('전형 398개')).toBeTruthy();
   expect(statusLines()).toEqual([]);
   for (const field of ['인문', '사회', '자연', '공학', '의약', '예체능'] as const) expect(programs.filter(p => p.fields?.includes(field)).length).toBeGreaterThan(100);
 });
 
 test('재학생만은 자격 자료가 없어 막아 두고, 모바일 필터 시트도 계열·빠진 개수 안내를 같게 보여 준다', async () => {
   serve(); at();
-  await screen.findByText('전형 3099개');
+  await screen.findByText('전형 3107개');
   const only = screen.getAllByRole('button', { name: '재학생만, 자격 자료 준비 중' })[0] as HTMLButtonElement;
   expect([only.disabled, only.title]).toEqual([true, '자격 자료 준비 중']);
   fireEvent.click(screen.getByRole('button', { name: '필터' }));
   const sheet = screen.getByRole('dialog', { name: '필터' });
   expect((within(sheet).getByRole('button', { name: '재학생만, 자격 자료 준비 중' }) as HTMLButtonElement).disabled).toBe(true);
   fireEvent.click(within(sheet).getByRole('button', { name: '공학' }));
-  expect(within(sheet).getByText(/계열 정보가 없는 전형 2166개는 빠졌어요/)).toBeTruthy();
+  expect(within(sheet).getByText(/계열 정보가 없는 전형 2174개는 빠졌어요/)).toBeTruthy();
   fireEvent.click(within(sheet).getByRole('button', { name: '전형 507개 보기' }));
   expect(screen.getByText('전형 507개')).toBeTruthy();
 });
