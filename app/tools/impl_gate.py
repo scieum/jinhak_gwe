@@ -766,19 +766,28 @@ def _box_mean(a, k):
     return (c[k:, k:] - c[:-k, k:] - c[k:, :-k] + c[:-k, :-k]) / (k * k)
 
 
-def ssim(x, y, k=7):
-    """회색조 두 장(같은 크기 float 0~255)의 평균 SSIM."""
+def ssim(x, y, k=7, band=2048):
+    """회색조 두 장(같은 크기 float 0~255)의 평균 SSIM. 적분 영상은 float64로, 긴 프레임은 가로 띠로 나눠 계산해요
+    (float32 누적합은 2만 px 넘는 프레임에서 정밀도가 무너지고, 통째 float64는 메모리를 넘겨요 — 2026-11-27)."""
+    import numpy as np
     c1, c2 = (0.01 * 255) ** 2, (0.03 * 255) ** 2
-    mx, my = _box_mean(x, k), _box_mean(y, k)
-    vx, vy = _box_mean(x * x, k) - mx * mx, _box_mean(y * y, k) - my * my
-    cxy = _box_mean(x * y, k) - mx * my
-    return float((((2 * mx * my + c1) * (2 * cxy + c2)) / ((mx * mx + my * my + c1) * (vx + vy + c2))).mean())
+    total, count = 0.0, 0
+    for top in range(0, max(1, x.shape[0] - k + 1), band):
+        xs, ys = (np.asarray(v[top:top + band + k - 1], dtype=np.float64) for v in (x, y))
+        if xs.shape[0] < k:
+            break
+        mx, my = _box_mean(xs, k), _box_mean(ys, k)
+        vx, vy = _box_mean(xs * xs, k) - mx * mx, _box_mean(ys * ys, k) - my * my
+        cxy = _box_mean(xs * ys, k) - mx * my
+        m = ((2 * mx * my + c1) * (2 * cxy + c2)) / ((mx * mx + my * my + c1) * (vx + vy + c2))
+        total += float(m.sum()); count += m.size
+    return total / count
 
 
 def diff_regions(a, b, thr=V_DIFF, cell=V_CELL, frac=V_FRAC, min_cells=V_MIN_CELLS):
     """RGB 두 장(H×W×3 float) → 차이 영역 사각형 [(x, y, w, h)] 넓은 것부터. 칸(cell) 단위로 이어 붙인다."""
     import numpy as np
-    d = (np.abs(a - b).max(axis=2) > thr).astype(float)
+    d = (np.abs(a - b).max(axis=2) > thr).astype(np.float32)
     gh, gw = d.shape[0] // cell, d.shape[1] // cell
     grid = d[:gh * cell, :gw * cell].reshape(gh, cell, gw, cell).mean(axis=(1, 3)) > frac
     seen, out = np.zeros_like(grid), []
@@ -818,8 +827,9 @@ def pixel_compare(fig_png, app_png, size):
         return im
 
     fi, ai = load(fig_png), load(app_png)
-    fb, ab = (np.asarray(im.filter(ImageFilter.GaussianBlur(V_BLUR)), dtype=float) for im in (fi, ai))
-    gray = lambda x: x @ np.array([0.299, 0.587, 0.114])
+    # float32: 아주 긴 프레임(2만 px 넘는 학과별 구간 등)에서 float64 배열 여러 장이 메모리를 넘겨요(2026-11-27)
+    fb, ab = (np.asarray(im.filter(ImageFilter.GaussianBlur(V_BLUR)), dtype=np.float32) for im in (fi, ai))
+    gray = lambda x: x @ np.array([0.299, 0.587, 0.114], dtype=np.float32)
     return ssim(gray(fb), gray(ab)), diff_regions(fb, ab), fi, ai
 
 
@@ -828,7 +838,7 @@ def save_compare(fi, ai, rects, path):
     import numpy as np
     from PIL import Image, ImageDraw
     w, h, gap = fi.width, fi.height, 8
-    diff = np.abs(np.asarray(fi, dtype=int) - np.asarray(ai, dtype=int)).max(axis=2)
+    diff = np.abs(np.asarray(fi, dtype=np.int16) - np.asarray(ai, dtype=np.int16)).max(axis=2)
     heat = Image.fromarray((255 - np.clip(diff * 3, 0, 255)).astype("uint8")).convert("RGB")
     out = Image.new("RGB", (w * 3 + gap * 2, h), (255, 0, 255))
     for i, im in enumerate((fi, ai, heat)):
