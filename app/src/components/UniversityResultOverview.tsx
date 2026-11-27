@@ -76,6 +76,21 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   // 2026-11-25 사용자 요청: 그래프 위에서 휠을 굴리거나 좌우로 끌면 범위를 확대·축소해요(커서 자리 고정). 더블클릭 · "범위 원래대로"로 되돌려요.
   const plotBody = useRef<HTMLDivElement>(null), rangeRef = useRef(range);
   rangeRef.current = range;
+  // 2026-11-27 사용자 요청: 그래프 아래 가로 스크롤 막대. 막대 전체 = 1~9등급, 손잡이 = 지금 보이는 범위. 움직이면 같은 폭으로 옮겨요.
+  const pan = useRef<HTMLDivElement>(null), panning = useRef(false), PAN_MIN = 1, PAN_SPAN = 8;
+  useEffect(() => {
+    const el = pan.current;
+    if (!el) return;
+    const left = (range.min - PAN_MIN) / PAN_SPAN * el.scrollWidth;
+    if (Math.abs(el.scrollLeft - left) > 1) { panning.current = true; el.scrollLeft = left; }
+  }, [range.min, range.max]);
+  const onPan = () => {
+    const el = pan.current;
+    if (!el) return;
+    if (panning.current) { panning.current = false; return; } // 위 effect가 맞춘 스크롤은 다시 범위로 돌리지 않아요
+    const w = range.max - range.min, min = Math.min(PAN_MIN + PAN_SPAN - w, Math.max(PAN_MIN, PAN_MIN + el.scrollLeft / el.scrollWidth * PAN_SPAN));
+    setZoom({ key: zoomKey, min: Math.round(min * 1000) / 1000, max: Math.round((min + w) * 1000) / 1000 });
+  };
   useEffect(() => {
     const el = plotBody.current;
     if (!el) return;
@@ -213,6 +228,8 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
                     </div>;
                   })}
                   <div className="ar-plot__axis" aria-hidden="true"><div>{ticks.map(t => <span key={t} style={{ left: x(t) }}>{tick(t)}</span>)}</div></div>
+                  {range.max - range.min < PAN_SPAN - 1e-9 && <div className="ar-plot__pan-row"><div className="ar-plot__pan" ref={pan} onScroll={onPan} tabIndex={0} role="group"
+                    aria-label={`보이는 등급 범위 ${range.min.toFixed(1)}~${range.max.toFixed(1)}, 좌우로 옮겨 보기`}><i style={{ width: `${PAN_SPAN / (range.max - range.min) * 100}%` }} /></div></div>}
                 </div>
               </div>
               {plotted.length > 12 && <nav className="toolbar" aria-label="학과 그래프 페이지"><button className="button-outline" disabled={!page} onClick={() => setPage(p => p - 1)}>이전 학과</button><span>{page + 1} / {Math.ceil(plotted.length / 12)}</span><button className="button-outline" disabled={(page + 1) * 12 >= plotted.length} onClick={() => setPage(p => p + 1)}>다음 학과</button></nav>}

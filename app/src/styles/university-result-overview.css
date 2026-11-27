@@ -154,3 +154,8 @@
 .ar-search .text-input { width: 100%; height: 40px; min-height: 40px; padding: 0 var(--spacing-md) 0 40px; }
 .ar-table td.ar-table__heart { width: 44px; padding: 0; cursor: default; }
 @media (max-width: 767px) { .ar-search { max-width: none; } .ar-search .text-input { height: 44px; min-height: 44px; } }
+/* 그래프 아래 가로 스크롤 막대(2026-11-27 사용자 요청): 전체 1~9등급 중 보이는 범위를 좌우로 옮겨요. 눈금 칸과 같은 열에 둬요 */
+.ar-plot__pan-row { display: grid; grid-template-columns: var(--head) minmax(0, 1fr); }
+.ar-plot__pan { grid-column: 2; margin-right: 12px; overflow-x: auto; overflow-y: hidden; height: 12px; scrollbar-width: thin; scrollbar-color: var(--color-text-faint) var(--color-hairline-soft); }
+.ar-plot__pan > i { display: block; height: 1px; }
+.ar-plot__pan:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
