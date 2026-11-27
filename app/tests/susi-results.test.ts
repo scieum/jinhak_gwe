@@ -24,8 +24,8 @@ describe('실제 수시 앱 데이터', () => {
         expect(row.source_page).toBeTruthy();
       }
     }
-    expect(count).toBe(101479); // 2026-11-27 한국교원대 어디가 최종등록자 컷 73행 추가
-    expect(flagged).toBe(3027);
+    expect(count).toBe(110116); // 2026-11-27 한국교원대 73행 + 컷 없던 30개 대학 어디가 50·70% 컷 8,637행
+    expect(flagged).toBe(3268); // 2026-11-27 어디가 보충 뒤 원문 확인 행
   });
   it('잘못된 시기·확인 항목·해시·경로를 받아들이지 않는다', async () => {
     const index = parseSusiIndex(indexValue), entry = index.universities[0];
