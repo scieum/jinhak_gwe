@@ -63,7 +63,7 @@
 .dg-card__range strong { font-size: 20px; line-height: 24px; color: var(--color-ink); }
 .dg-boundary { padding: 0 4px; border: 1px dashed var(--color-judge-edge); color: var(--color-judge-edge); font-size: 12px; line-height: 16px; }
 .dg-card__numbers .t-caption { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.dg-bar { margin-top: auto; padding-top: 16px; display: grid; gap: 8px; }
+.dg-bar { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--color-hairline-soft); display: grid; gap: 8px; } /* 2026-11-27 사용자 요청: 숫자와 막대 사이 얇은 실선 */
 .dg-bar__gap { margin: 0; word-break: keep-all; font-size: 14px; line-height: 20px; font-weight: 700; color: var(--color-ink); }
 .dg-bar__track { position: relative; height: 8px; margin-top: 4px; background: var(--color-hairline-soft); }
 .dg-bar__tick { position: absolute; top: 0; width: 1px; height: 8px; background: var(--color-canvas); }
