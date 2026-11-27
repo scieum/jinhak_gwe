@@ -79,6 +79,10 @@ test('전형 유형·전형 변경, 빈 상태, 대학 변경 중 늦은 응답�
   fireEvent.click(await screen.findByRole('button', { name: '대학 바꾸기' }));
   fireEvent.change(screen.getByLabelText('대학 검색'), { target: { value: '누리' } });
   fireEvent.click(screen.getByRole('button', { name: '누리대' }));
+  // 교과에 컷이 없는 대학은 컷이 있는 첫 탭(종합)을 바로 열어요(2026-11-27 한국교원대)
+  await screen.findByRole('button', { name: '간호학과' });
+  expect(screen.queryByText('조건에 맞는 학과가 없어요')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: '교과' }));
   await screen.findByText('조건에 맞는 학과가 없어요');
   fireEvent.click(screen.getByRole('button', { name: '종합' }));
   await screen.findByRole('button', { name: '간호학과' });
@@ -109,4 +113,9 @@ test('표 보기: 학과 이름으로 찾고, 행 끝 하트로 그 학과를 �
   await waitFor(async () => expect((await studentDb.interests.toArray()).map(r => r.department)).toEqual(['간호 학과']));
   fireEvent.change(screen.getByRole('searchbox', { name: '학과 검색' }), { target: { value: '없는과' } });
   expect(await screen.findByText('‘없는과’ 학과가 없어요')).toBeTruthy();
+});
+test('출처마다 자릿수만 다른 같은 값은 자세한 쪽 하나만 보여요(한국교원대 경쟁률)', async () => {
+  const { cells } = await import('../src/components/UniversityResultOverview');
+  expect(cells([row({ competition_rate: '3.91' }), row({ competition_rate: '3.9' })], 'competition_rate')).toBe('3.91:1');
+  expect(cells([row({ competition_rate: '3.91' }), row({ competition_rate: '4.2' })], 'competition_rate')).toBe('3.91:1 / 4.2:1');
 });

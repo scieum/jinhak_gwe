@@ -24,3 +24,11 @@ describe('universityPlot 3개년 묶기', () => {
     expect(m.departments.map(d => d.name).sort()).toEqual(['전자공학과', '전자공학부']);
   });
 });
+
+describe('universityPlot 기본 전형', () => {
+  it('전형을 안 골랐으면 컷 있는 학과가 가장 많은 전형을 열어요(한국교원대: 농어촌 1개 < 학생부종합우수자 여럿)', () => {
+    const rows = [row('2026', '농어촌학생', '초등교육과', '2.04'), row('2026', '학생부종합우수자', '국어교육과', '2.1'), row('2026', '학생부종합우수자', '수학교육과', '1.9'), row('2026', '가나전형', '체육교육과', '')];
+    expect(universityPlot(rows, '종합', '').selected).toBe('학생부종합우수자');
+    expect(universityPlot(rows, '종합', '농어촌학생').selected).toBe('농어촌학생');
+  });
+});

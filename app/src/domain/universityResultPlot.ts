@@ -41,10 +41,12 @@ export function universityPlot(rows: readonly ResultRow[], tab: TypeTab, program
   const programName = canonicalNames(raw, 'program', yearProgramKey, false); // 띄어쓰기·괄호·'전형'만 다른 이름이라 같은 해에 겹쳐도 같은 전형
   const programOf = (r: ResultRow) => programName.get(r.program) ?? r.program;
   const programs = [...new Set(raw.map(programOf))].sort((a, b) => a.localeCompare(b, 'ko'));
-  // 고르지 않았으면 그래프를 그릴 수 있는(70%·50% 컷이 있는) 첫 전형을 열어요.
-  const plottable = (p: string) => raw.some(r => programOf(r) === p && (gradeCut(r) !== null || gradeCut(r, 'cut_50') !== null));
+  // 고르지 않았으면 그래프를 그릴 수 있는(70%·50% 컷이 있는) 학과가 가장 많은 전형을 열어요(같으면 가나다순 앞).
+  // 2026-11-27 한국교원대: 가나다순 첫 전형(농어촌학생 · 학과 1개)이 열려 대표 전형(학생부종합우수자 · 24개)이 묻혔어요.
+  const plottable = (p: string) => new Set(raw.filter(r => programOf(r) === p && (gradeCut(r) !== null || gradeCut(r, 'cut_50') !== null)).map(r => yearUnitKey(r.recruit_unit))).size;
   const asked = programName.get(program) ?? program;
-  const selected = programs.includes(asked) ? asked : programs.find(plottable) ?? programs[0] ?? '';
+  const best = programs.reduce((a, p) => plottable(p) > plottable(a) ? p : a, programs[0] ?? '');
+  const selected = programs.includes(asked) ? asked : best;
   const selectedRows = raw.filter(r => programOf(r) === selected);
   const unitName = canonicalNames(selectedRows, 'recruit_unit', yearUnitKey);
   const unitOf = (r: ResultRow) => unitName.get(r.recruit_unit) ?? r.recruit_unit;

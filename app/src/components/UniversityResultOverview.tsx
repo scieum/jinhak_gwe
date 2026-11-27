@@ -54,8 +54,10 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
   const [alt, setAlt] = useState(0);
   useEffect(() => { setAlt(0); }, [gu, namesKey]);
   const university = candidates[alt] ?? candidates[0] ?? (names.includes(DEFAULT_UNIVERSITY) ? DEFAULT_UNIVERSITY : names[0]) ?? '';
-  const tab = TYPE_TABS.includes(query.get('gt') as TypeTab) ? query.get('gt') as TypeTab : '교과';
   const rows = loaded?.university === university ? loaded.rows : null;
+  // 2026-11-27 사용자 요청(한국교원대): 탭을 안 골랐으면 그래프로 그릴 컷이 있는 첫 탭(교과 → 종합 → 논술 → 기타)을 열어요. 교과에 지원자 평균만 있는 대학이 빈 그래프로 보이지 않게
+  const tab = TYPE_TABS.includes(query.get('gt') as TypeTab) ? query.get('gt') as TypeTab
+    : TYPE_TABS.find(t => t !== '전체' && (rows ?? []).some(r => r.round === '수시' && typeTab(r) === t && (gradeCut(r) !== null || gradeCut(r, 'cut_50') !== null))) ?? '교과';
 
   // ?gd=학과로 왔고 전형(gp)을 안 정했으면 그 학과가 든 전형을 먼저 열어요
   const gd = query.get('gd'), gdRow = gd ? rows?.find(r => r.recruit_unit === gd && r.round === '수시' && (tab === '전체' || typeTab(r) === tab) && (gradeCut(r) !== null || gradeCut(r, 'cut_50') !== null)) : undefined; // 그래프에 찍을 컷이 있는 행만
@@ -257,8 +259,13 @@ const cell = (r: ResultRow | undefined, key: 'cut_70' | 'cut_50' | 'competition_
   return !v ? '—' : key === 'competition_rate' ? (v.includes(':') ? v : `${v}:1`) : key === 'fill_rate' ? (v.endsWith('%') ? v : `${v}%`) : v; // 원문에 단위가 이미 있으면 그대로
 };
 // 같은 학년에 출처가 여럿이면 값이 있는 것만 모아요(출처·기준 설명은 '출처별 값'에서).
-const cells = (rows: ResultRow[], key: Parameters<typeof cell>[1]) =>
-  [...new Set(rows.map(r => cell(r, key)).filter(v => v !== '—'))].join(' / ') || '—';
+// 출처마다 자릿수만 다른 같은 값(한국교원대 2025 경쟁률 3.91:1 · 3.9:1)은 자세한 쪽 하나만 보여요(칸이 넘치지 않게).
+const num = (v: string) => v.match(/\d+(?:\.(\d+))?/);
+const rounded = (v: string, w: string) => { const a = num(v), b = num(w); return !!a && !!b && (b[1]?.length ?? 0) > (a[1]?.length ?? 0) && Number(b[0]).toFixed(a[1]?.length ?? 0) === a[0]; };
+export const cells = (rows: ResultRow[], key: Parameters<typeof cell>[1]) => {
+  const values = [...new Set(rows.map(r => cell(r, key)).filter(v => v !== '—'))];
+  return values.filter(v => !values.some(w => rounded(v, w))).join(' / ') || '—';
+};
 
 export function SelectedDetail({ university, program, department, years, cut, preferred, onSource }: { university: string; program: string; department: Department; years: number[]; cut: 'cut_70' | 'cut_50'; preferred?: ResultRow; onSource: (row: ResultRow) => void }) {
   const desc = [...years].reverse(), byYear = (y: number) => department.rows.filter(r => Number(r.result_year) === y);
