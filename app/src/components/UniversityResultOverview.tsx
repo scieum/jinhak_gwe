@@ -18,6 +18,7 @@ import { UniversityLogo } from './UniversityLogo';
 import { Icon } from './Icon';
 import { SegmentedControl } from './SegmentedControl';
 import { InterestButton } from './InterestButton';
+import { interestId } from '../domain/interests';
 import { PrepareProgram } from './PrepareProgram';
 import { Modal } from './Modal';
 import { CollectedResultFields } from './CollectedResultFields';
@@ -175,7 +176,7 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
           : !rows ? <p role="status" className="ar-lead">{currentUniversityName(university)} 자료를 읽고 있어요.</p> : <>
             {model.programs.length > 1 && <label className="ar-program"><span className="sr-only">전형 선택</span><select className="text-input" aria-label="전형 선택" value={model.selected} onChange={e => update({ gp: e.target.value })}>{model.programs.map(p => <option key={p} value={p}>{p || '전형 미기재'}</option>)}</select><Icon name="chevron-down" size={20} /></label>}
             {!sample && model.rows.some(r => susiIssues(r).length) && <p className="notice">원문 대조가 필요한 {model.rows.filter(r => susiIssues(r).length).length}행은 표·원문 상세에서 확인할 수 있어요.</p>}
-            {!departments.length ? <div className="empty-state"><h4 className="t-heading-4">조건에 맞는 학과가 없어요</h4><p>다른 전형 유형을 골라 보세요.</p></div> : view === 'table' ? <ResultTable departments={departments} years={shownYears} cut={model.cut} selected={selected?.name} onPick={d => pick(d)} /> : !plotted.length ? <div className="empty-state"><h4 className="t-heading-4">그래프로 그릴 {model.cutLabel}이 없어요</h4><p>{noPlotReason(model.rows)} 발표한 값은 표에서 그대로 볼 수 있어요.</p><button className="button-primary" onClick={() => setView('table')}>표로 보기</button></div> : <>
+            {!departments.length ? <div className="empty-state"><h4 className="t-heading-4">조건에 맞는 학과가 없어요</h4><p>다른 전형 유형을 골라 보세요.</p></div> : view === 'table' ? <ResultTable key={`${university}|${model.selected}`} university={university} program={model.selected} departments={departments} years={shownYears} cut={model.cut} selected={selected?.name} onPick={d => pick(d)} /> : !plotted.length ? <div className="empty-state"><h4 className="t-heading-4">그래프로 그릴 {model.cutLabel}이 없어요</h4><p>{noPlotReason(model.rows)} 발표한 값은 표에서 그대로 볼 수 있어요.</p><button className="button-primary" onClick={() => setView('table')}>표로 보기</button></div> : <>
               <div className="ar-head">
                 <p className="ar-lead">{lead}<span className="ar-desktop"> 점에 올리면 값이, 누르면 오른쪽에 자세한 값이 보여요.</span><span className="ar-mobile"> 점 하나가 한 해의 컷이에요.</span></p>
                 <div className="ar-legend">{[...model.years].reverse().map(y => <span key={y}><svg aria-hidden="true" viewBox="0 0 11 11" className={`result-plot ar-dot ${yearTone(model.rows, y)}`}><circle cx="5.5" cy="5.5" r="5" /></svg>{y}학년도</span>)}{mine && <span><i className="ar-swatch" />내 환산 범위</span>}</div>
@@ -267,15 +268,22 @@ function SelectedDetail({ university, program, department, years, cut, preferred
   </div>;
 }
 
-function ResultTable({ departments, years, cut, selected, onPick }: { departments: Department[]; years: number[]; cut: 'cut_70' | 'cut_50'; selected?: string; onPick: (d: Department) => void }) {
+function ResultTable({ university, program, departments: all, years, cut, selected, onPick }: { university: string; program: string; departments: Department[]; years: number[]; cut: 'cut_70' | 'cut_50'; selected?: string; onPick: (d: Department) => void }) {
   const latest = years[years.length - 1];
-  return <div className="table-scroll"><table className="data-table ar-table"><thead><tr><th scope="col">학과</th>{years.map(y => <th scope="col" key={y}>{y}</th>)}<th scope="col">50% 컷</th><th scope="col">경쟁률</th><th scope="col">모집</th><th scope="col">충원율</th><th scope="col">기준</th></tr></thead>
+  const [q, setQ] = useState(''), key = q.replace(/\s+/g, '');
+  const departments = key ? all.filter(d => d.name.replace(/\s+/g, '').includes(key)) : all;
+  return <>
+    <label className="ar-search"><Icon name="search" size={20} /><input className="text-input" type="search" aria-label="학과 검색" placeholder="학과 이름으로 찾기" value={q} onChange={e => setQ(e.target.value)} /></label>
+    {!departments.length ? <div className="empty-state"><h4 className="t-heading-4">‘{q.trim()}’ 학과가 없어요</h4><p>이 전형에 공개된 학과 {all.length}개 중에서 찾았어요.</p><button type="button" className="button-pill-soft" onClick={() => setQ('')}>검색 지우기</button></div>
+    : <div className="table-scroll"><table className="data-table ar-table"><thead><tr><th scope="col">학과</th>{years.map(y => <th scope="col" key={y}>{y}</th>)}<th scope="col">50% 컷</th><th scope="col">경쟁률</th><th scope="col">모집</th><th scope="col">충원율</th><th scope="col">기준</th><th scope="col"><span className="sr-only">관심</span></th></tr></thead>
     <tbody>{departments.map(d => {
       const allAt = (y: number) => d.rows.filter(r => Number(r.result_year) === y), last = allAt(latest);
       const values = (key: Parameters<typeof cell>[1]) => cells(last, key);
       return <tr key={d.name} aria-selected={d.name === selected} onClick={() => onPick(d)}><th scope="row"><button type="button" onClick={() => onPick(d)}>{d.name || '모집단위 미기재'}</button></th>
         {years.map(y => { const items = allAt(y), mixed = new Set(items.map(r => `${r.metric}|${r.basis}`)).size > 1; return <td key={y}>{[...new Set(items.map(r => `${r[cut] || r.cut_other || '—'}${mixed ? ` (${r.metric || '지표 미기재'} · ${r.basis || '기준 미기재'})` : ''}`))].join(' / ') || '—'}{items.some(r => susiIssues(r).length) && <span className="data-status-badge">확인 필요</span>}</td>; })}
         <td>{values('cut_50')}</td><td>{values('competition_rate')}</td><td>{values('quota')}</td><td>{values('fill_rate')}</td>
-        <td>{d.rows.some(r => gradeCut(r, cut) !== null) ? `${cut === 'cut_50' ? '50%' : '70%'} 컷 · ${last[0]?.basis || '산출 기준 미기재'}` : `${last[0]?.basis || d.rows[0]?.basis || '다른 기준'} (좌표에 없음)`}</td></tr>;
-    })}</tbody></table></div>;
+        <td>{d.rows.some(r => gradeCut(r, cut) !== null) ? `${cut === 'cut_50' ? '50%' : '70%'} 컷 · ${last[0]?.basis || '산출 기준 미기재'}` : `${last[0]?.basis || d.rows[0]?.basis || '다른 기준'} (좌표에 없음)`}</td>
+        {/* 하트는 행 고르기와 따로예요(누르면 담기만) */}
+        <td className="ar-table__heart" onClick={e => e.stopPropagation()}>{program && d.name ? <InterestButton key={interestId(university, program, d.name)} university={university} program={program} department={d.name} compact /> : null}</td></tr>;
+    })}</tbody></table></div>}</>;
 }

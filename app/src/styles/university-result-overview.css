@@ -148,3 +148,9 @@
 @media (min-width: 1024px) { .ar-plot__track { cursor: ew-resize; } .ar-plot__body.is-dragging, .ar-plot__body.is-dragging * { cursor: ew-resize; user-select: none; } }
 
 .ar-year-choices { display: grid; gap: 8px; } /* 겹친 점 학년도 고르기(모달) */
+/* 표 보기: 학과 검색(text-input sm, 왼쪽 돋보기) · 행 끝 관심 하트(2026-11-27 사용자 요청) */
+.ar-search { position: relative; display: block; max-width: 360px; margin-bottom: var(--spacing-md); }
+.ar-search .icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-ink-soft); pointer-events: none; }
+.ar-search .text-input { width: 100%; height: 40px; min-height: 40px; padding: 0 var(--spacing-md) 0 40px; }
+.ar-table td.ar-table__heart { width: 44px; padding: 0; cursor: default; }
+@media (max-width: 767px) { .ar-search { max-width: none; } .ar-search .text-input { height: 44px; min-height: 44px; } }

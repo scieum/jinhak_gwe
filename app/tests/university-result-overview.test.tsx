@@ -94,3 +94,19 @@ test('실패한 데이터는 재시도하며 빈 자료로 오인하지 않는�
   fireEvent.click(screen.getByRole('button', { name: '대학 자료 다시 불러오기' }));
   await screen.findByRole('button', { name: '의예과 2026학년도 70% 컷 1.230' });
 });
+
+test('표 보기: 학과 이름으로 찾고, 행 끝 하트로 그 학과를 담아요', async () => {
+  setup([row(), row({ recruit_unit: '약학과', cut_70: '1.8' }), row({ recruit_unit: '간호 학과', cut_70: '2.6' })]);
+  render(<MemoryRouter initialEntries={['/admission-results']}><AdmissionResults /></MemoryRouter>);
+  await screen.findByRole('button', { name: '의예과 2026학년도 70% 컷 1.230' });
+  fireEvent.click(screen.getByRole('button', { name: '표' }));
+  const table = () => screen.getAllByRole('table').find(t => t.classList.contains('ar-table'))!;
+  await waitFor(() => expect(table().querySelectorAll('tbody tr')).toHaveLength(3));
+  fireEvent.change(screen.getByRole('searchbox', { name: '학과 검색' }), { target: { value: '간호학' } }); // 띄어쓰기 달라도 찾아요
+  expect([...table().querySelectorAll('tbody th')].map(th => th.textContent)).toEqual(['간호 학과']);
+  const heart = within(table()).getByRole('button', { name: '가온대 지역균형 간호 학과 관심에 담기' });
+  await waitFor(() => expect((heart as HTMLButtonElement).disabled).toBe(false)); fireEvent.click(heart);
+  await waitFor(async () => expect((await studentDb.interests.toArray()).map(r => r.department)).toEqual(['간호 학과']));
+  fireEvent.change(screen.getByRole('searchbox', { name: '학과 검색' }), { target: { value: '없는과' } });
+  expect(await screen.findByText('‘없는과’ 학과가 없어요')).toBeTruthy();
+});
