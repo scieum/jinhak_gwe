@@ -42,7 +42,9 @@ const two = (v: number) => v.toFixed(2);
 const signed = (v: number) => v > 0 ? `+${v}` : v < 0 ? `−${-v}` : '0';
 const isAttendance = (reason = '') => reason.includes('출결');
 const inputLine = (reason?: string) => isAttendance(reason) ? '반영 학년의 출결을 입력하면 계산해요' : reason ?? '성적을 더 입력하면 계산해요';
-const inputAction = (reason?: string) => isAttendance(reason) ? '출결 입력하기' : '성적 입력하기';
+const needsDepartment = (reason = '') => reason.startsWith('학과를 고르면'); // 계열별 규칙: 담은 전형에 학과가 없어요
+const inputAction = (reason?: string) => needsDepartment(reason) ? '될각에서 학과 고르기' : isAttendance(reason) ? '출결 입력하기' : '성적 입력하기';
+const inputPath = (reason?: string) => needsDepartment(reason) ? '/doelgak' : '/grade-input';
 const rankLine = (r: Row) => r.avgRank ? `단순 평균 기준 ${r.avgRank}위 → 이 대학 환산 기준 ${r.ratioRank}위` : `이 대학 환산 기준 ${r.ratioRank}위`;
 
 function useDesktop() {
@@ -58,14 +60,14 @@ function useDesktop() {
 }
 
 /** 관심 대학(대학마다 하나) → 그 대학의 이번 학년도 전형 하나. 관심 전형과 같은 이름 → 규칙 있는 전형 → 아무 전형 순. */
-function buildRows(interests: { university: string; program: string }[], all: ProgramData[], score: (p: ProgramData) => ReturnType<typeof scoreUniversity> | null): Row[] {
+function buildRows(interests: { university: string; program: string; department?: string }[], all: ProgramData[], score: (p: ProgramData, department?: string) => ReturnType<typeof scoreUniversity> | null): Row[] {
   const seen = new Set<string>(), rows: Row[] = [];
   for (const i of interests) {
     if (seen.has(i.university)) continue;
     seen.add(i.university);
     const mine = all.filter(p => p.university === i.university);
     const p = mine.find(x => x.rule && x.program === i.program) ?? mine.find(x => x.rule) ?? mine[0];
-    const r = p?.rule ? score(p) : null;
+    const r = p?.rule ? score(p, i.department) : null; // 계열별 규칙은 담은 학과로 계열을 골라요
     const base = { id: p?.id ?? `interest-${i.university}`, university: i.university, program: p?.program ?? i.program, p, trace: r?.trace ?? [] };
     if (r?.status === 'ready') rows.push({ ...base, kind: 'ready', value: r.value });
     else if (r && r.reason !== '환산 규칙 준비 중') rows.push({ ...base, kind: 'input', reason: r.reason });
@@ -179,7 +181,7 @@ function Detail({ row, single, desktop, onRemove, grades, attendance }: { row: R
       {!desktop && !single && <p className="t-caption text-muted">환산 기준 순위는 대학 만점 대비 내 합계 비율로 줄 세운 순서예요. 대학 선호도나 지원 결과를 뜻하지 않아요.</p>}
     </> : <div className="us-detail__total"><p>{isAttendance(row.reason) ? '합계는 출결을 입력하면 계산해요' : row.reason}</p>{isAttendance(row.reason) && <p className="t-body-sm text-muted">출결 입력 필요</p>}</div>}
     <StepRows key={row.id} row={row} grades={grades} attendance={attendance} open={desktop && row.kind === 'ready' || row.kind === 'input'} />
-    {row.kind === 'input' && <Link className="button-primary" to="/grade-input">{inputAction(row.reason)}</Link>}
+    {row.kind === 'input' && <Link className="button-primary" to={inputPath(row.reason)}>{inputAction(row.reason)}</Link>}
     {row.p?.source.startsWith('https://') && <a className="button-pill-soft us-source" href={row.p.source} target="_blank" rel="noreferrer"><Icon name="external-link" size={20} />원문 보기</a>}
   </div>;
 }
@@ -206,7 +208,7 @@ export function UniversityScores() {
   const interests = [...(data?.interests ?? [])].sort((a, b) => a.created_at.localeCompare(b.created_at));
   const all = withReleasedRules(programs, released.rules).filter(p => p.admission_year === admissionYear);
   const hasGrades = !!data?.grades.length;
-  const rows = data ? sortRows(buildRows(interests, all, p => hasGrades ? scoreUniversity(data.grades, data.attendance, p.rule!) : null), sort) : [];
+  const rows = data ? sortRows(buildRows(interests, all, (p, department) => hasGrades ? scoreUniversity(data.grades, data.attendance, p.rule!, department) : null), sort) : [];
   const ready = rows.filter(r => r.kind === 'ready'), inputs = rows.filter(r => r.kind === 'input'), pendings = rows.filter(r => r.kind === 'pending');
   const universities = rows.length, single = universities === 1 || ready.length < 2, grouped = pendings.length >= 3;
   const selectable = rows.filter(r => r.kind !== 'pending');
@@ -258,7 +260,7 @@ export function UniversityScores() {
       {r.kind === 'ready' && r.value ? <><td className="num">{two(r.value.grade)}</td><td className="num">{two(r.value.attendance)}</td>
         <td className="num"><span className="us-stack"><span>{r.value.total.toFixed(digits)}</span><small className="t-caption text-muted">/ {r.value.max.toLocaleString('ko-KR')}</small></span></td>
         <td className="num"><span className="us-stack">{single ? <span>—</span> : <><strong>{signed(diffOf(r) ?? 0)}</strong><small className="t-caption text-muted">{r.avgRank ?? '—'}위 → {r.ratioRank}위</small></>}</span></td></>
-      : r.kind === 'input' ? <><td colSpan={3} className="us-table__note">{isAttendance(r.reason) ? '출결을 입력하면 계산해요' : inputLine(r.reason)} <Link className="us-link" to="/grade-input">입력 ›</Link></td><td className="num">—</td></>
+      : r.kind === 'input' ? <><td colSpan={3} className="us-table__note">{isAttendance(r.reason) ? '출결을 입력하면 계산해요' : inputLine(r.reason)} <Link className="us-link" to={inputPath(r.reason)}>{needsDepartment(r.reason) ? '학과 고르기 ›' : '입력 ›'}</Link></td><td className="num">—</td></>
       : grouped ? <><td /><td /><td /><td /></>
       : <><td colSpan={3} className="us-table__note"><span className="text-muted">검수가 끝나면 계산해요</span><span className="data-status-badge">환산 규칙 준비 중</span></td><td className="num">—</td></>}
     </tr>;

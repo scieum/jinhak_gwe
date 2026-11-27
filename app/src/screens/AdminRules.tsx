@@ -13,7 +13,7 @@ import { downloadFile } from '../io/backup';
 import { dataAsOf } from '../data/catalog';
 import { validateScoringRule, type ScoringRule } from '../engine/scoring';
 import {
-  GROUPS, MIN_TESTS, isSample, SEMESTERS, STATUS_ORDER, approve, blockers, diffRules, newRuleDraft, newTest, nextVersion, reject, releaseRules, requestReview, runTest,
+  GROUPS, MIN_TESTS, advancedText, isSample, SEMESTERS, STATUS_ORDER, approve, blockers, diffRules, newRuleDraft, newTest, nextVersion, reject, releaseRules, requestReview, runTest,
   type RuleDraft, type RuleStatus, type TestCase,
 } from '../domain/ruleEditor';
 import { adminDb } from '../store/adminDb';
@@ -292,6 +292,7 @@ function RuleForm({ d, setD, set }: { d: RuleDraft; setD: (d: RuleDraft) => void
       <Row label="소수점"><input className="adr-n" inputMode="numeric" aria-label="소수점 자리" value={r.rounding.digits} onChange={e => set({ rounding: { ...r.rounding, digits: Number(e.target.value) } })} /><span className="adr-cap">자리</span>
         <Seg width={240} label="반올림 방식" value={r.rounding.mode} onChange={mode => set({ rounding: { ...r.rounding, mode } })} options={[{ value: 'round', label: '반올림' }, { value: 'floor', label: '버림' }, { value: 'ceil', label: '올림' }]} /></Row>
       <Row label="기본 점수"><input className="adr-n" inputMode="decimal" aria-label="기본 점수" value={Number.isNaN(r.base_score) ? '' : r.base_score} onChange={e => set({ base_score: num(e.target.value) })} /></Row>
+      {r.advanced && <Row label="추가 규칙" tall><span className="adr-text">{advancedText(r.advanced)} <span className="adr-cap">(화면에서는 읽기만 해요 · 고칠 때는 규칙 기록 파일을 고쳐 합쳐요)</span></span></Row>}
     </Group>
     {!fresh && basics}
     {errors.length > 0 && <div className="warning-callout" role="alert"><strong>확인할 곳이 {errors.length}개 있어요</strong>{errors.map(e => <p key={e} className="t-body-sm">{e}</p>)}</div>}

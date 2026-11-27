@@ -70,3 +70,37 @@
 - 원문에 없는 값 채우기, 다른 학년도(2027 이전) 표 쓰기, 9등급표를 5등급으로 바꾸기
 - 합격 가능성 표현
 - inputs.json·text·원문 파일 수정
+
+## 추가 규칙 `rule.advanced` (2026-11-27 엔진 확장)
+기본 모델로 안 되던 방식을 아래 필드로 표현한다. 다 표현되면 `fits_engine: true`. 아래로도 안 되는 부분이 남으면 여전히 false + note.
+모든 필드는 선택. 원문 근거가 있는 것만 쓴다.
+
+| 필드 | 뜻 | 예 |
+|---|---|---|
+| tracks | 계열(모집단위)마다 반영 교과·묶음·비율이 다를 때. 학과 이름에 units 중 하나가 들어 있으면 그 계열, `"*"`는 나머지 전부 | `[{"name":"인문사회","units":["국어국문","경영","*"],"subject_groups":["국어","수학","영어","사회"]},{"name":"자연공학","units":["공학","간호","물리"],"subject_groups":["국어","수학","영어","과학"]}]` |
+| buckets | 묶음별 상위 N과목(n 없으면 전부, years로 학년 제한). 앞 묶음에서 고른 과목은 뒤에서 다시 안 고름. 있으면 selection 대신 씀 | 국·수·영 각 4 + 사·과 합산 6 → `[{"name":"국어","groups":["국어"],"n":4},{"name":"수학","groups":["수학"],"n":4},{"name":"영어","groups":["영어"],"n":4},{"name":"사과","groups":["사회","과학"],"n":6}]` / 학년마다 상위 7 → `[{"name":"1학년","groups":[...],"years":[1],"n":7},...]` + year_weights |
+| top_groups | 반영 교과 중 평균이 높은 K개 교과의 전 과목 | `3` |
+| group_weights | 교과(또는 bucket name)별 평균에 곱할 비율, 합 1 | `{"국어":0.2,"영어":0.25,"수학":0.35,"사과":0.2}` |
+| type_rules | 과목 유형별 반영. types ⊂ 공통·일반선택·진로선택·융합선택·체육예술·과탐실험·교양, groups로 교과 제한, use = rank/achievement/max/exclude, limit = 그 유형 상위 N과목만. 위에서부터 첫 규칙 적용 | 진로선택 등급·성취도 중 높은 값, 융합선택 최대 2 → `[{"types":["진로선택"],"use":"max"},{"types":["융합선택"],"use":"max","limit":2}]` |
+| average_table | 고른 과목 평균 석차등급(성취도 A~E=1~5, credit_weighted면 학점 가중)을 digits·mode로 자른 뒤, 평균 ≤ upto인 첫 칸의 score를 교과 점수(절대값)로 | `{"digits":1,"mode":"floor","steps":[{"upto":1.0,"score":280},{"upto":1.5,"score":275},...]}` |
+| credits | 반영 교과 이수학점 합(반영 학기·교과 안 모든 과목)으로 교과 점수 조정. tiers 배율(가장 큰 min ≤ 합), shortfall(합 ≤ below면 × (base − (below − 합) × per_credit)), per_credit_bonus(합 × 값 가산), bonus_at(합 ≥ min이면 +points), cap(교과 점수 상한, 없으면 grade_max_score) | 한밭 B: `{"tiers":[{"min":100,"factor":1.1}],"cap":495}` / 명지: `{"per_credit_bonus":0.05,"cap":...}` |
+| attendance | per_day = 환산 결석 1일당 감점(이때 deduction_table은 `[]` 가능), perfect_bonus = 미인정 결석·지각·조퇴·결과 0인 학년마다 +points(cap 최대, 총점은 max_score까지) | `{"per_day":1}` / `{"perfect_bonus":{"years":[1,2],"points":10,"cap":20}}` |
+
+주의
+- tracks를 쓰면 학과가 없는 관심 전형은 계산하지 않는다(학생이 학과를 고르게 함). units는 원문 모집단위 이름의 핵심어(예 "간호", "의예").
+- average_table 점수는 grade_max_score를 넘을 수 있으면 credits.cap으로 상한을 준다.
+- 그래도 표현 못 하는 것(예: 과목 점수 = 등급점수 + 성취도점수 합 × 이수단위 구간 배율, 출결 유형별 개별 감점, 전문교과)은 fits_engine false 유지.
+
+### 추가 규칙 2차 (2026-11-27)
+| 필드 | 뜻 |
+|---|---|
+| buckets[].fill | `{"grade":5,"credits":1}` — 묶음 과목이 n보다 모자라면 그 등급·학점의 빈 과목으로 채움(원문 '부족 과목은 5등급 1단위') |
+| tracks[].rank_grade_points / achievement_points | 계열(학과)마다 등급 점수표가 다를 때(예: 간호학과 100/85/70/60/30) |
+| group_alias | `{"한국사":"사회"}` — 원문 '한국사는 사회 교과로 반영'. subject_groups에는 바뀐 이름(사회)만 둠 |
+| subject_weights | `{"수학":1.1,"영어":1.1,"과학":1.1}` — 과목 가중(학점 × 배율)으로 평균. 금오공대식 Σ(점수×학점×가중)/Σ(학점×가중) |
+| mean_rounding | `{"digits":3,"mode":"round"}` — 과목 점수 평균(점수표 단위)을 중간에 자름 |
+| type_rules[].beyond | `"rank"` — limit 밖 과목을 빼지 않고 석차등급으로 반영(예: 사회·과학 선택 3과목만 등급·성취도 중 높은 값) |
+| credits.bonus_tiers | `[{"min":50,"points":10},{"min":70,"points":20},{"min":90,"points":40}]` 가장 큰 min ≤ 합의 points |
+| credits.count | `"ranked"`(석차등급 있는 과목 학점만) · `"chosen"`(고른 과목만) · 기본 `"scope"` |
+| credits.apply_to | `"total"` — 배율·가산을 교과+출결 합에 적용(원문 '학생부 성적에 ×0.9') |
+| attendance.from_total | true — 출결 만점 없이 총점에서 감점(attendance_rule.max_score 0, 감점표 points가 만점을 넘어도 됨) |

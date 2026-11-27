@@ -63,7 +63,11 @@ describe('검수된 판정 전형이 없을 때 될각 = 관심 전형 참고 �
     await studentDb.interests.put(interest());
     at('/doelgak');
     const card = (await screen.findByRole('heading', { name: '가온대' })).closest('article') as HTMLElement;
-    expect(await within(card).findByText(/^2026학년도 70% 컷 2\.400 · 차이 [+−]?\d\.\d$/)).toBeTruthy();
+    expect(await within(card).findByText('2026학년도 70% 컷 2.400')).toBeTruthy();
+    // 막대 위 한 줄이 컷과의 거리를 말로 적고, 범례가 두 표시를 이름으로 알려줘요
+    expect(within(card).getByText(/^(컷이 내 범위 안에 있어요|내 범위가 컷보다 \d\.\d등급 (앞서요|뒤예요))$/)).toBeTruthy();
+    expect(within(card).getByText(/^내 범위 \d\.\d~\d\.\d$/)).toBeTruthy();
+    expect(within(card).getByText('70% 컷 2.4')).toBeTruthy();
     expect(within(card).getByText(/^약 \d\.\d~\d\.\d$/)).toBeTruthy();
     expect(screen.queryByText(/^(안정|적정|소신|위험)$/)).toBeNull();
   });
@@ -79,5 +83,14 @@ describe('검수된 판정 전형이 없을 때 될각 = 관심 전형 참고 �
   test('관심 전형이 없으면 담는 곳을 안내해요', async () => {
     at('/doelgak');
     expect(await screen.findByText('관심 전형이 없어요')).toBeTruthy();
+  });
+});
+
+describe('막대 위 거리 문장', () => {
+  test('등급은 작을수록 앞: 컷이 뒤면 앞서요, 앞이면 뒤예요, 범위 안이면 그렇게 말해요', async () => {
+    const { gapText } = await import('../src/screens/Doelgak');
+    expect(gapText(1.3, 1.9, 4.73)).toBe('내 범위가 컷보다 2.8등급 앞서요');
+    expect(gapText(2.5, 3.0, 2.1)).toBe('내 범위가 컷보다 0.4등급 뒤예요');
+    expect(gapText(2.0, 2.6, 2.4)).toBe('컷이 내 범위 안에 있어요');
   });
 });

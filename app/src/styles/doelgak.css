@@ -63,13 +63,20 @@
 .dg-card__range strong { font-size: 20px; line-height: 24px; color: var(--color-ink); }
 .dg-boundary { padding: 0 4px; border: 1px dashed var(--color-judge-edge); color: var(--color-judge-edge); font-size: 12px; line-height: 16px; }
 .dg-card__numbers .t-caption { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.dg-bar { margin-top: auto; padding-top: 24px; } /* 시안 cut-compare-bar: 위 24에 트랙 */
-.dg-bar__track { position: relative; height: 6px; background: var(--color-hairline-soft); }
-.dg-bar__range { position: absolute; top: 0; height: 6px; background: var(--color-accent); }
-.dg-bar__cut { position: absolute; top: -3px; width: 1px; height: 12px; background: var(--color-text-faint); }
-.dg-bar__axis { position: relative; display: flex; justify-content: space-between; margin-top: 7px; color: var(--color-text-muted); font-size: 13px; line-height: 20px; }
-.dg-bar__axis { margin-bottom: -3px; } /* 시안 막대 묶음 높이 54(축 글자가 3 넘쳐요) — 카드 아래 칩 줄 위치는 그대로 */
-.dg-bar__cut-label { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+.dg-bar { margin-top: auto; padding-top: 16px; display: grid; gap: 8px; }
+.dg-bar__gap { margin: 0; word-break: keep-all; font-size: 14px; line-height: 20px; font-weight: 700; color: var(--color-ink); }
+.dg-bar__track { position: relative; height: 8px; margin-top: 4px; background: var(--color-hairline-soft); }
+.dg-bar__tick { position: absolute; top: 0; width: 1px; height: 8px; background: var(--color-canvas); }
+.dg-bar__range { position: absolute; top: 0; height: 8px; background: var(--color-accent); }
+.dg-bar__cut { position: absolute; top: -6px; width: 2px; height: 20px; margin-left: -1px; background: var(--color-ink); }
+.dg-bar__axis { position: relative; height: 20px; color: var(--color-text-muted); font-size: 13px; line-height: 20px; }
+.dg-bar__axis > span { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+.dg-bar__axis > span:first-child { transform: none; }
+.dg-bar__axis > span:last-child { transform: translateX(-100%); }
+.dg-bar__legend { display: flex; flex-wrap: wrap; gap: 4px 16px; color: var(--color-text-muted); font-size: 13px; line-height: 20px; }
+.dg-bar__legend > span { display: inline-flex; align-items: center; gap: 6px; }
+.dg-bar__key { display: inline-block; width: 12px; height: 8px; background: var(--color-accent); }
+.dg-bar__key--cut { width: 2px; height: 14px; background: var(--color-ink); }
 .dg-card__chips { display: flex; gap: 4px; min-height: 24px; overflow: hidden; }
 
 .dg-empty { display: grid; justify-items: center; gap: var(--spacing-xs); padding: 96px var(--spacing-md); background: none; text-align: center; }
@@ -119,8 +126,7 @@
   .dg-card .interest-control { grid-column: 3; grid-row: 1; }
   .dg-card h3 { grid-column: 2; grid-row: 1; align-self: center; font-size: 17px; line-height: 23px; }
   .dg-card > :not(header):not(h3) { grid-column: 1 / -1; }
-  .dg-bar { margin-top: 0; padding-top: 38px; align-self: end; }
-  .dg-bar__axis { margin-bottom: 0; } /* 시안: 숫자 줄 아래 막대 트랙 위까지 41 */
+  .dg-bar { margin-top: 0; align-self: end; }
   .dg-card .university-logo, .dg-card h3 { align-self: start; } /* 시안 head: 로고·이름 위 맞춤 */
   .shell:has(.doelgak) .appbar-title { padding-left: var(--spacing-md); } /* 될각 시안 제목 x16 */
   .dg-toolbar { margin-top: -4px; } /* 시안: sub-nav 아래 16 */

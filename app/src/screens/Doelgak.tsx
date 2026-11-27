@@ -71,16 +71,26 @@ const lower = (min: number) => Math.floor(min * 10 + 1e-9) / 10, upper = (max: n
 const rangeText = (min: number, max: number) => `약 ${lower(min).toFixed(1)}~${upper(max).toFixed(1)}`;
 // 차이 = 불리한 쪽 값 − 70% 컷. 보이는 범위 끝값(올림)으로 적어서 화면 숫자끼리 맞아요(판정은 원래 값 그대로).
 const diffText = referenceDiffText;
-// cut-compare-bar 축소형: 모든 카드가 같은 눈금 1.0~4.0을 써요(왼쪽 = 1등급 쪽).
-const AXIS = [1, 4] as const;
-const pos = (v: number) => Math.min(100, Math.max(0, (v - AXIS[0]) / (AXIS[1] - AXIS[0]) * 100));
+// cut-compare-bar 축소형: 왼쪽 = 1등급 쪽. 눈금은 1~4를 기본으로, 컷·내 범위가 더 뒤면 그 등급까지 늘려요(최대 9).
+const axisEnd = (...v: (number | undefined)[]) => Math.min(9, Math.max(4, ...v.filter((x): x is number => x !== undefined).map(x => Math.ceil(x))));
+/** 내 범위와 컷을 말로: 등급은 숫자가 작을수록 앞이라 '앞서요/뒤예요'로 적어요(등급 거리만 적고 결과 예측은 하지 않아요, NEVER-2). */
+export function gapText(min: number, max: number, cut: number) {
+  min = lower(min); max = upper(max);
+  if (cut >= min && cut <= max) return '컷이 내 범위 안에 있어요';
+  return max < cut ? `내 범위가 컷보다 ${fmt(cut - max)}등급 앞서요` : `내 범위가 컷보다 ${fmt(min - cut)}등급 뒤예요`;
+}
 
 function MiniBar({ min, max, cut, cutLabel = '70% 컷' }: { min: number; max: number; cut?: number; cutLabel?: string }) {
   min = lower(min); max = upper(max); // 글자 범위(약 2.3~2.6)와 같은 구간을 그려요
-  const label = `내 환산 9등급 약 ${fmt(min)}에서 ${fmt(max)} 사이${cut === undefined ? '' : `, ${cutLabel} ${fmt(cut)}, 차이 ${diffText(max, cut)}`}`;
+  const end = axisEnd(max, cut), pos = (v: number) => Math.min(100, Math.max(0, (v - 1) / (end - 1) * 100));
+  const ticks = Array.from({ length: end }, (_, i) => i + 1);
+  const label = `내 환산 9등급 약 ${fmt(min)}에서 ${fmt(max)} 사이${cut === undefined ? '' : `, ${cutLabel} ${cut}, ${gapText(min, max, cut)}`}`;
   return <div className="dg-bar" role="img" aria-label={label}>
-    <div className="dg-bar__track"><span className="dg-bar__range" style={{ left: `${pos(min)}%`, width: `${Math.max(pos(max) - pos(min), 2)}%` }} />{cut !== undefined && <span className="dg-bar__cut" style={{ left: `${pos(cut)}%` }} />}</div>
-    <div className="dg-bar__axis"><span>{AXIS[0]}</span>{cut !== undefined && <span className="dg-bar__cut-label" style={{ left: `${pos(cut)}%` }}>{cutLabel}</span>}<span>{AXIS[1]}</span></div>
+    {cut !== undefined && <p className="dg-bar__gap">{gapText(min, max, cut)}</p>}
+    <div className="dg-bar__track">{ticks.map(n => <span key={n} className="dg-bar__tick" style={{ left: `${pos(n)}%` }} />)}
+      <span className="dg-bar__range" style={{ left: `${pos(min)}%`, width: `${Math.max(pos(max) - pos(min), 2)}%` }} />{cut !== undefined && <span className="dg-bar__cut" style={{ left: `${pos(cut)}%` }} />}</div>
+    <div className="dg-bar__axis">{ticks.map(n => <span key={n} style={{ left: `${pos(n)}%` }}>{n === 1 ? '1등급' : n}</span>)}</div>
+    <div className="dg-bar__legend"><span><i className="dg-bar__key dg-bar__key--range" />내 범위 {fmt(min)}~{fmt(max)}</span>{cut !== undefined && <span><i className="dg-bar__key dg-bar__key--cut" />{cutLabel} {cut}</span>}</div>
   </div>;
 }
 
@@ -111,7 +121,7 @@ function InterestReference({ data }: { data: StudentBackup }) {
         <div className="dg-card__numbers"><span className="t-caption text-muted">내 환산 (참고 추정)</span>
           <div className="dg-card__range"><strong className="num">{mine ? rangeText(mine.min, mine.max) : '—'}</strong></div>
           <span className="t-caption text-muted num">{!ref ? '입결 자료를 불러오는 중이에요' : cut
-            ? `${cut.year}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${mine ? ` · 차이 ${diffText(mine.max, cut.value)}` : ''}` : (ref as { reason: string }).reason}</span>
+            ? `${cut.year}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}` : (ref as { reason: string }).reason}</span>
           {/* 수집 전형 이름이 담은 이름과 다르면 무엇과 비교했는지 따로 한 줄(컷 숫자가 말줄임에 가리지 않게) */}
           {cut && cut.row.program.trim() !== i.program.trim() && <span className="t-caption text-muted">비교한 전형: {cut.row.program}</span>}</div>
         {!i.department && (() => { const units = departmentsFor(i, rowsOf(i.university)); return units.length > 0 && <label className="dg-field"><span className="t-caption text-muted">학과 고르기</span>

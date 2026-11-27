@@ -1,4 +1,4 @@
-import { scoreUniversity, validateScoringRule, type ScoringRule } from '../engine/scoring';
+import { scoreUniversity, validateScoringRule, type AdvancedRule, type RuleBucket, type ScoringRule } from '../engine/scoring';
 import { isSampleId } from '../data/sample/rows';
 import { emptyAttendance, type AttendanceRecord, type GradeRecord, type Semester } from './student';
 
@@ -40,7 +40,9 @@ export const newTest = (n: number): TestCase => ({ id: crypto.randomUUID(), name
  * shortcut: 과목별로 다른 성적·미산출 과목은 아직 못 넣어요 — 모집요강 예시가 그런 학생이면 과목 단위 입력을 더해요.
  */
 export function testInputs(rule: ScoringRule, t: TestCase): { grades: GradeRecord[]; attendance: AttendanceRecord[] } {
-  const grades = rule.semesters.flatMap(sem => rule.subject_groups.map((group): GradeRecord => {
+  // 계열별 규칙이면 모든 계열의 교과를 넣어 두고, 테스트는 첫 계열(testDepartment)로 계산해요
+  const groups = [...new Set([...rule.subject_groups, ...(rule.advanced?.tracks ?? []).flatMap(x => x.subject_groups ?? [])])];
+  const grades = rule.semesters.flatMap(sem => groups.map((group): GradeRecord => {
     const y = t.years[sem[0] as '1' | '2' | '3'];
     return { id: `${sem}-${group}`, semester: sem, name: `${group} 과목`, subject_group: group, type: '일반선택', credits: 4, rank_grade: y.grade, achievement: y.achievement, is_joint: false, division: 'unknown' };
   }));
@@ -48,11 +50,13 @@ export function testInputs(rule: ScoringRule, t: TestCase): { grades: GradeRecor
     if (year === 1) { a.absence.unexcused = t.absence; a.tardy.unexcused = t.tardy; } return a; });
   return { grades, attendance };
 }
+/** shortcut: 계열별 규칙은 첫 계열만 테스트해요 — 계열마다 테스트가 필요해지면 TestCase에 학과를 더해요. */
+export const testDepartment = (rule: ScoringRule) => rule.advanced?.tracks?.[0]?.units.find(u => u !== '*') ?? (rule.advanced?.tracks ? '*' : undefined);
 export interface TestRun { ok: boolean; actual: number | null; reason: string; trace: { detail: string; value?: number }[] }
 /** 테스트는 검수 전 규칙을 일부러 계산해 봐요(학생 화면이 아니라 검수 도구라서). */
 export function runTest(rule: ScoringRule, t: TestCase): TestRun {
   const { grades, attendance } = testInputs(rule, t);
-  const r = scoreUniversity(grades, attendance, { ...rule, review_status: 'verified' });
+  const r = scoreUniversity(grades, attendance, { ...rule, review_status: 'verified' }, testDepartment(rule));
   if (r.status !== 'ready') return { ok: false, actual: null, reason: r.reason, trace: r.trace };
   return { ok: Math.abs(r.value.total - t.expected) < 1e-9, actual: r.value.total, reason: '', trace: r.trace };
 }
@@ -94,7 +98,7 @@ export function nextVersion(d: RuleDraft, author: string, now = new Date()): Rul
 }
 
 const pts = (p?: Record<string, number>) => p ? Object.entries(p).map(([k, v]) => `${k} ${v}`).join(' · ') : '–';
-/** 변경 전·후 비교 표(14개 항목). */
+/** 변경 전·후 비교 표(15개 항목). */
 export function ruleItems(r: ScoringRule): [string, string][] {
   const a = r.attendance_rule;
   return [
@@ -112,7 +116,27 @@ export function ruleItems(r: ScoringRule): [string, string][] {
     ['출결 감점', a ? a.deduction_table.map(d => `${d.absence_max}일 이하 −${d.points}`).join(' · ') : '–'],
     ['만점', `교과 ${r.grade_max_score}${a ? ` + 출결 ${a.max_score}` : ''} = ${r.max_score}`],
     ['소수점', `${r.rounding.digits}자리 ${{ round: '반올림', floor: '버림', ceil: '올림' }[r.rounding.mode]}`],
+    ['추가 규칙', r.advanced ? advancedText(r.advanced) : '없음'],
   ];
+}
+const bucketText = (b: RuleBucket) => `${b.name ? `${b.name}: ` : ''}${b.years ? `${b.years.join('·')}학년 ` : ''}${b.groups.join('·')} ${b.n === undefined ? '전 과목' : `상위 ${b.n}`}${b.fill ? `(모자라면 ${b.fill.grade}등급 ${b.fill.credits}학점으로 채움)` : ''}`;
+const weightText = (w: Record<string, number>) => Object.entries(w).map(([k, v]) => `${k} ${Math.round(v * 1000) / 10}%`).join(' · ');
+/** 추가 규칙을 검수자가 읽을 문장으로(편집기에서는 읽기만 해요 — 고칠 때는 초안 파일을 고쳐 '규칙 기록 합치기'). */
+export function advancedText(v: AdvancedRule): string {
+  const use = { rank: '석차등급', achievement: '성취도', max: '석차등급·성취도 중 높은 값', exclude: '빼요' };
+  return [
+    v.tracks && `계열별: ${v.tracks.map(x => `${x.name}(${x.units.join('·')}) ${[x.subject_groups?.join('·'), x.buckets?.map(bucketText).join(' + '), x.group_weights && weightText(x.group_weights), x.top_groups && `상위 ${x.top_groups}개 교과`, x.rank_grade_points && `등급 점수 ${pts(x.rank_grade_points)}`, x.achievement_points && `성취도 점수 ${pts(x.achievement_points)}`].filter(Boolean).join(' / ')}`).join(' ; ')}`,
+    v.group_alias && `교과 바꿔 읽기: ${Object.entries(v.group_alias).map(([a, b]) => `${a} → ${b}`).join(' · ')}`,
+    v.subject_weights && `교과별 배율(학점에 곱함): ${Object.entries(v.subject_weights).map(([k, w]) => `${k} ×${w}`).join(' · ')}`,
+    v.mean_rounding && `평균 점수 ${v.mean_rounding.digits}자리 ${{ round: '반올림', floor: '버림', ceil: '올림' }[v.mean_rounding.mode]}`,
+    v.buckets && `과목 묶음: ${v.buckets.map(bucketText).join(' + ')}`,
+    v.top_groups && `상위 ${v.top_groups}개 교과의 전 과목`,
+    v.group_weights && `교과별 비율: ${weightText(v.group_weights)}`,
+    v.type_rules && `과목 유형: ${v.type_rules.map(x => `${x.types.join('·')}${x.groups ? `(${x.groups.join('·')})` : ''} ${use[x.use]}${x.limit ? ` 상위 ${x.limit}과목${x.beyond === 'rank' ? '(나머지는 석차등급)' : ''}` : ''}`).join(' · ')}`,
+    v.average_table && `평균등급(${v.average_table.digits}자리 ${{ round: '반올림', floor: '버림', ceil: '올림' }[v.average_table.mode]}) → ${v.average_table.steps.map(s => `${s.upto} 이하 ${s.score}`).join(' · ')}`,
+    v.credits && `이수학점: ${[v.credits.tiers?.map(x => `${x.min} 이상 ×${x.factor}`).join(' · '), v.credits.shortfall && `${v.credits.shortfall.below} 이하 ×(${v.credits.shortfall.base} − 부족학점×${v.credits.shortfall.per_credit})`, v.credits.per_credit_bonus && `학점당 +${v.credits.per_credit_bonus}`, v.credits.bonus_at && `${v.credits.bonus_at.min} 이상 +${v.credits.bonus_at.points}`, v.credits.bonus_tiers?.map(x => `${x.min} 이상 +${x.points}`).join(' · '), v.credits.cap && `상한 ${v.credits.cap}`, v.credits.count && { scope: '반영 교과 전 과목', ranked: '석차등급 과목', chosen: '고른 과목' }[v.credits.count] + ' 학점', v.credits.apply_to === 'total' && '교과+출결에 적용'].filter(Boolean).join(' · ')}`,
+    v.attendance && `출결: ${[v.attendance.per_day !== undefined && `결석 1일당 −${v.attendance.per_day}`, v.attendance.perfect_bonus && `${v.attendance.perfect_bonus.years.join('·')}학년 개근 +${v.attendance.perfect_bonus.points}${v.attendance.perfect_bonus.cap !== undefined ? `(최대 ${v.attendance.perfect_bonus.cap})` : ''}`, v.attendance.from_total && '총점에서 감점'].filter(Boolean).join(' · ')}`,
+  ].filter(Boolean).join(' / ');
 }
 export function diffRules(before: ScoringRule | null, after: ScoringRule) {
   const b = before ? ruleItems(before) : null;

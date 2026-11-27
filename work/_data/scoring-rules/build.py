@@ -55,8 +55,78 @@ def validate(r):
         t = a.get('deduction_table') or []
         if (not a.get('years') or len(set(a['years'])) != len(a['years']) or any(y not in (1, 2, 3) for y in a['years'])
                 or not (isinstance(a.get('tardy_to_absence'), int) and a['tardy_to_absence'] >= 1) or not nonneg(a.get('max_score'))
-                or not t or any(not (isinstance(d.get('absence_max'), int) and d['absence_max'] >= 0) or not nonneg(d.get('points')) or d['points'] > a['max_score']
+                or (not t and (r.get('advanced') or {}).get('attendance', {}).get('per_day') is None) or any(not (isinstance(d.get('absence_max'), int) and d['absence_max'] >= 0) or not nonneg(d.get('points')) or (d['points'] > a['max_score'] and not ((r.get('advanced') or {}).get('attendance') or {}).get('from_total'))
                                 or (i and (d['absence_max'] <= t[i - 1]['absence_max'] or d['points'] < t[i - 1]['points'])) for i, d in enumerate(t))): e.append('출결 구간')
+    if r.get('advanced'):
+        e += validate_advanced(r)
+    return e
+
+
+TYPES = {'공통', '일반선택', '진로선택', '융합선택', '체육예술', '과탐실험', '교양'}
+
+
+def is_int(n, low=0):
+    return isinstance(n, int) and not isinstance(n, bool) and n >= low
+
+
+def weights_ok(w):
+    return isinstance(w, dict) and w and all(nonneg(v) for v in w.values()) and abs(sum(w.values()) - 1) <= 1e-8
+
+
+def buckets_ok(b):
+    return isinstance(b, list) and b and all(x.get('groups') and all(g in GROUPS for g in x['groups']) and (x.get('n') is None or is_int(x['n'], 1))
+                                            and all(y in (1, 2, 3) for y in x.get('years') or [])
+                                            and (not x.get('fill') or (x.get('n') is not None and is_int(x['fill'].get('grade'), 1) and x['fill']['grade'] <= 5 and isinstance(x['fill'].get('credits'), (int, float)) and x['fill']['credits'] > 0)) for x in b)
+
+
+def validate_advanced(r):
+    """scoring.ts validateAdvanced 이식(앱 검사가 최종: tests/scoring-rule-drafts.test.ts)."""
+    v, e = r['advanced'], []
+    def keys_ok(w, groups, buckets):
+        return all(k in groups or any(b.get('name') == k for b in buckets or []) for k in w)
+    for t in v.get('tracks') or []:
+        groups = t.get('subject_groups') or r.get('subject_groups') or []
+        if not t.get('name') or not t.get('units') or any(g not in GROUPS for g in groups) or (t.get('buckets') is not None and not buckets_ok(t['buckets'])) \
+                or (t.get('group_weights') and (not weights_ok(t['group_weights']) or not keys_ok(t['group_weights'], groups, t.get('buckets') or v.get('buckets')))) \
+                or (t.get('top_groups') is not None and not is_int(t['top_groups'], 1)) \
+                or (t.get('rank_grade_points') is not None and (not valid_points(t['rank_grade_points']) or any(k not in t['rank_grade_points'] for k in '12345'))) \
+                or (t.get('achievement_points') is not None and not valid_points(t['achievement_points'])):
+            e.append('계열'); break
+    if 'tracks' in v and not v['tracks']: e.append('계열')
+    if v.get('buckets') is not None and not buckets_ok(v['buckets']): e.append('묶음')
+    if v.get('group_alias') is not None and any(not a or not b or a == b for a, b in v['group_alias'].items()): e.append('교과 바꿔 읽기')
+    if v.get('subject_weights') is not None and (not v['subject_weights'] or any(not (isinstance(x, (int, float)) and x > 0) for x in v['subject_weights'].values())): e.append('교과 배율')
+    mr = v.get('mean_rounding')
+    if mr is not None and (not is_int(mr.get('digits')) or mr['digits'] > 6 or mr.get('mode') not in ('round', 'floor', 'ceil')): e.append('평균 자르기')
+    if v.get('top_groups') is not None and not is_int(v['top_groups'], 1): e.append('상위 교과')
+    if v.get('group_weights') is not None and (not weights_ok(v['group_weights']) or not keys_ok(v['group_weights'], r.get('subject_groups') or [], v.get('buckets'))): e.append('교과 비율')
+    for x in v.get('type_rules') or []:
+        if not x.get('types') or any(s not in TYPES for s in x['types']) or x.get('use') not in ('rank', 'achievement', 'max', 'exclude') or (x.get('limit') is not None and not is_int(x['limit'], 1)) \
+                or (x.get('beyond') is not None and (x['beyond'] not in ('drop', 'rank') or x.get('limit') is None)):
+            e.append('유형 규칙'); break
+    if any(x.get('use') in ('achievement', 'max') for x in v.get('type_rules') or []) and not valid_points(r.get('achievement_points')): e.append('성취도 점수표')
+    at = v.get('average_table')
+    if at is not None:
+        st = at.get('steps') or []
+        if not is_int(at.get('digits')) or at['digits'] > 6 or at.get('mode') not in ('round', 'floor', 'ceil') or not st \
+                or any(not isinstance(s.get('upto'), (int, float)) or not nonneg(s.get('score')) or (i and s['upto'] <= st[i - 1]['upto']) for i, s in enumerate(st)):
+            e.append('평균등급 표')
+    c = v.get('credits')
+    if c is not None:
+        if any(not nonneg(x.get('min')) or not (isinstance(x.get('factor'), (int, float)) and x['factor'] > 0) for x in c.get('tiers') or []) \
+                or (c.get('shortfall') and not (nonneg(c['shortfall'].get('below')) and isinstance(c['shortfall'].get('base'), (int, float)) and c['shortfall']['base'] > 0 and nonneg(c['shortfall'].get('per_credit')))) \
+                or (c.get('per_credit_bonus') is not None and not nonneg(c['per_credit_bonus'])) \
+                or (c.get('bonus_at') and not (nonneg(c['bonus_at'].get('min')) and nonneg(c['bonus_at'].get('points')))) \
+                or (c.get('cap') is not None and not (isinstance(c['cap'], (int, float)) and c['cap'] > 0)) \
+                or any(not nonneg(x.get('min')) or not nonneg(x.get('points')) for x in c.get('bonus_tiers') or []) \
+                or c.get('count', 'scope') not in ('scope', 'ranked', 'chosen') or c.get('apply_to', 'grade') not in ('grade', 'total'):
+            e.append('이수학점')
+    a = v.get('attendance')
+    if a is not None:
+        pb = a.get('perfect_bonus')
+        if not r.get('attendance_rule') or (a.get('per_day') is not None and not nonneg(a['per_day'])) \
+                or (pb and (not pb.get('years') or any(y not in (1, 2, 3) for y in pb['years']) or not nonneg(pb.get('points')) or (pb.get('cap') is not None and not nonneg(pb['cap'])))):
+            e.append('출결 추가')
     return e
 
 
@@ -85,6 +155,7 @@ def main():
             if st == 'complete' and p.get('fits_engine'):
                 rule.setdefault('achievement_blend', {'mode': 'none'}); rule.setdefault('joint_curriculum_policy', 'include')
                 rule.setdefault('base_score', 0); rule.setdefault('rounding', {'digits': 2, 'mode': 'round'})
+                if rule.get('attendance_rule'): rule['attendance_rule'].setdefault('deduction_table', [])  # 1일당 감점(per_day)이면 표를 비워 둬요
                 issues += validate(rule)
             pages = sorted({ev.get('page') for ev in p.get('evidence', []) if isinstance(ev.get('page'), int)})
             ev_file = next((ev.get('file') for ev in p.get('evidence', []) if ev.get('file') in files), None) or (inp['files'][0]['path'] if inp['files'] else None)

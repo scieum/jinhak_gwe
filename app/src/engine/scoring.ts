@@ -1,4 +1,4 @@
-import { hasRank, validateGrade, validateAttendance, type GradeRecord, type AttendanceRecord, type Semester } from '../domain/student';
+import { hasRank, validateGrade, validateAttendance, subjectTypes, type GradeRecord, type AttendanceRecord, type Semester, type SubjectType } from '../domain/student';
 import { invalid, pending, ready, reviewed, type Calculation, type Provenance, type Trace } from './types';
 
 export interface ScoringRule extends Provenance {
@@ -22,6 +22,35 @@ export interface ScoringRule extends Provenance {
   attendance_rule?: { years: number[]; tardy_to_absence: number; max_score: number; deduction_table: { absence_max: number; points: number }[] };
   max_score: number;
   rounding: { digits: number; mode: 'round' | 'floor' | 'ceil' };
+  /** 추가 규칙(2026-11-27): 기본 모델로 표현되지 않는 대학 방식. 없으면 예전 계산과 똑같아요. */
+  advanced?: AdvancedRule;
+}
+type Rounding = 'round' | 'floor' | 'ceil';
+/** 과목 고르기 묶음: 이 교과(·학년)에서 상위 n과목(n 없으면 전부). 앞 묶음에서 고른 과목은 뒤 묶음에서 다시 고르지 않아요. */
+export interface RuleBucket { name?: string; groups: string[]; n?: number; years?: number[]; /** 과목이 n보다 모자라면 이 등급·학점의 빈 과목으로 채워요(원문 '부족 과목은 5등급') */ fill?: { grade: number; credits: number } }
+export interface AdvancedRule {
+  /** 계열(모집단위)마다 반영 교과·묶음·비율이 다를 때. 학과 이름이 units 중 하나를 포함하면 그 계열('*'은 나머지 전부). 학과를 모르면 계산하지 않아요. */
+  tracks?: { name: string; units: string[]; subject_groups?: string[]; buckets?: RuleBucket[]; group_weights?: Record<string, number>; top_groups?: number; rank_grade_points?: Record<string, number>; achievement_points?: Record<string, number> }[];
+  /** 교과 이름 바꿔 읽기(예: 한국사 → 사회, 원문 '한국사는 사회 교과로 반영') */
+  group_alias?: Record<string, string>;
+  /** 과목 가중에 곱하는 교과별 배율(학점 × 배율로 평균, 예: 수학·영어·과학 1.1) */
+  subject_weights?: Record<string, number>;
+  /** 과목 점수 평균(점수표 단위)을 중간에 자르기(예: 소수 셋째자리 반올림 후 ×50) */
+  mean_rounding?: { digits: number; mode: Rounding };
+  buckets?: RuleBucket[];
+  /** 반영 교과 중 (학점 가중) 평균이 높은 K개 교과의 모든 과목 */
+  top_groups?: number;
+  /** 교과(또는 묶음 이름)별 평균에 곱하는 비율, 합 1 */
+  group_weights?: Record<string, number>;
+  /** 과목 유형별 반영: rank 석차등급 · achievement 성취도 · max 둘 중 높은 값 · exclude 빼기. limit = 이 규칙에 걸린 과목 중 상위 N개만 */
+  type_rules?: { types: SubjectType[]; groups?: string[]; use: 'rank' | 'achievement' | 'max' | 'exclude'; limit?: number; /** limit 밖 과목: drop 빼기(기본) · rank 석차등급으로 반영 */ beyond?: 'drop' | 'rank' }[];
+  /** 고른 과목의 평균 석차등급(성취도 A~E = 1~5)을 먼저 내고(digits·mode로 자름) 평균 ≤ upto인 첫 칸의 점수를 교과 점수로 써요 */
+  average_table?: { digits: number; mode: Rounding; steps: { upto: number; score: number }[] };
+  /** 반영 교과 이수학점 합으로 교과 점수 조정: tiers 배율(가장 큰 min ≤ 합) · shortfall 합 ≤ below면 × (base − 부족학점 × per_credit) · 학점당 가산 · min 이상 가산. cap = 교과 점수 상한(없으면 교과 만점) */
+  credits?: { tiers?: { min: number; factor: number }[]; shortfall?: { below: number; base: number; per_credit: number }; per_credit_bonus?: number; bonus_at?: { min: number; points: number }; bonus_tiers?: { min: number; points: number }[]; cap?: number;
+    /** 학점을 세는 과목: scope 반영 학기·교과 전 과목(기본) · ranked 석차등급 있는 과목 · chosen 고른 과목 */ count?: 'scope' | 'ranked' | 'chosen'; /** 조정 대상: grade 교과(기본) · total 교과+출결 */ apply_to?: 'grade' | 'total' };
+  /** 출결: per_day = 환산 결석 1일당 감점(감점표 대신) · perfect_bonus = 미인정 결석·지각·조퇴·결과 없는 학년마다 가산(총점은 만점까지) */
+  attendance?: { per_day?: number; perfect_bonus?: { years: number[]; points: number; cap?: number }; /** 출결 만점 없이 총점에서 감점(감점이 출결 만점을 넘어도 돼요) */ from_total?: boolean };
 }
 export interface ScoreResult {
   grade: number; attendance: number; bonus: number; total: number; max: number;
@@ -48,30 +77,86 @@ export function validateScoringRule(r: ScoringRule): string[] {
   const a = r.attendance_rule;
   if (a && (!a.years.length || new Set(a.years).size !== a.years.length || a.years.some(y => ![1, 2, 3].includes(y))
     || !Number.isSafeInteger(a.tardy_to_absence) || a.tardy_to_absence < 1 || !nonnegative(a.max_score)
-    || !a.deduction_table.length || a.deduction_table.some((d, i) => !Number.isSafeInteger(d.absence_max) || d.absence_max < 0 || !nonnegative(d.points) || d.points > a.max_score
+    || (!a.deduction_table.length && r.advanced?.attendance?.per_day === undefined) || a.deduction_table.some((d, i) => !Number.isSafeInteger(d.absence_max) || d.absence_max < 0 || !nonnegative(d.points) || (d.points > a.max_score && !r.advanced?.attendance?.from_total)
       || (i > 0 && (d.absence_max <= a.deduction_table[i - 1].absence_max || d.points < a.deduction_table[i - 1].points))))) errors.push('출결 감점 구간을 확인해 주세요.');
+  if (r.advanced) errors.push(...validateAdvanced(r));
   return errors;
 }
-export function scoreUniversity(grades: readonly GradeRecord[], attendance: readonly AttendanceRecord[], rule: ScoringRule): Calculation<ScoreResult> {
+const isInt = (n: unknown, min = 0): n is number => Number.isSafeInteger(n) && (n as number) >= min;
+const weightsOk = (w: Record<string, number>) => Object.keys(w).length > 0 && Object.values(w).every(nonnegative) && Math.abs(Object.values(w).reduce((a, b) => a + b, 0) - 1) <= 1e-8;
+const bucketsOk = (b: RuleBucket[]) => b.length > 0 && b.every(x => x.groups?.length && (x.n === undefined || isInt(x.n, 1)) && (!x.years || x.years.every(y => [1, 2, 3].includes(y)))
+  && (!x.fill || (x.n !== undefined && isInt(x.fill.grade, 1) && x.fill.grade <= 5 && finitePositive(x.fill.credits))));
+function validateAdvanced(r: ScoringRule): string[] {
+  const v = r.advanced!, e: string[] = [];
+  const keysOk = (w: Record<string, number>, groups: string[], buckets?: RuleBucket[]) => Object.keys(w).every(k => groups.includes(k) || !!buckets?.some(b => b.name === k));
+  if (v.tracks && (!v.tracks.length || v.tracks.some(t => !t.name || !t.units?.length || (t.subject_groups && !t.subject_groups.length) || (t.buckets && !bucketsOk(t.buckets))
+    || (t.group_weights && (!weightsOk(t.group_weights) || !keysOk(t.group_weights, t.subject_groups ?? r.subject_groups, t.buckets ?? v.buckets))) || (t.top_groups !== undefined && !isInt(t.top_groups, 1))
+    || (t.rank_grade_points && (!validPoints(t.rank_grade_points) || ['1', '2', '3', '4', '5'].some(k => t.rank_grade_points![k] === undefined))) || (t.achievement_points && !validPoints(t.achievement_points))))) e.push('계열별 규칙을 확인해 주세요.');
+  if (v.group_alias && Object.entries(v.group_alias).some(([a, b]) => !a || !b || a === b)) e.push('교과 바꿔 읽기를 확인해 주세요.');
+  if (v.subject_weights && (!Object.keys(v.subject_weights).length || !Object.values(v.subject_weights).every(finitePositive))) e.push('교과별 배율을 확인해 주세요.');
+  if (v.mean_rounding && (!isInt(v.mean_rounding.digits) || v.mean_rounding.digits > 6 || !['round', 'floor', 'ceil'].includes(v.mean_rounding.mode))) e.push('평균 자르기를 확인해 주세요.');
+  if (v.buckets && !bucketsOk(v.buckets)) e.push('과목 묶음을 확인해 주세요.');
+  if (v.top_groups !== undefined && !isInt(v.top_groups, 1)) e.push('상위 교과 수를 확인해 주세요.');
+  if (v.group_weights && (!weightsOk(v.group_weights) || !keysOk(v.group_weights, r.subject_groups, v.buckets))) e.push('교과별 비율은 반영 교과(또는 묶음 이름)에 합계 1로 지정해 주세요.');
+  if (v.type_rules && v.type_rules.some(x => !x.types?.length || x.types.some(s => !subjectTypes.includes(s)) || !['rank', 'achievement', 'max', 'exclude'].includes(x.use) || (x.limit !== undefined && !isInt(x.limit, 1)) || (x.beyond !== undefined && (!['drop', 'rank'].includes(x.beyond) || x.limit === undefined)))) e.push('과목 유형 규칙을 확인해 주세요.');
+  if (v.type_rules?.some(x => x.use === 'achievement' || x.use === 'max') && !(r.achievement_points && validPoints(r.achievement_points))) e.push('성취도 점수표가 필요해요.');
+  const t = v.average_table;
+  if (t && (!isInt(t.digits) || t.digits > 6 || !['round', 'floor', 'ceil'].includes(t.mode) || !t.steps?.length
+    || t.steps.some((s, i) => !Number.isFinite(s.upto) || !nonnegative(s.score) || (i > 0 && s.upto <= t.steps[i - 1].upto)))) e.push('평균등급 점수표를 확인해 주세요.');
+  const c = v.credits;
+  if (c && ((c.tiers && c.tiers.some(x => !nonnegative(x.min) || !finitePositive(x.factor))) || (c.shortfall && (!nonnegative(c.shortfall.below) || !finitePositive(c.shortfall.base) || !nonnegative(c.shortfall.per_credit)))
+    || (c.per_credit_bonus !== undefined && !nonnegative(c.per_credit_bonus)) || (c.bonus_at && (!nonnegative(c.bonus_at.min) || !nonnegative(c.bonus_at.points))) || (c.cap !== undefined && !finitePositive(c.cap))
+    || (c.bonus_tiers && c.bonus_tiers.some(x => !nonnegative(x.min) || !nonnegative(x.points))) || (c.count !== undefined && !['scope', 'ranked', 'chosen'].includes(c.count)) || (c.apply_to !== undefined && !['grade', 'total'].includes(c.apply_to)))) e.push('이수학점 조정을 확인해 주세요.');
+  const at = v.attendance;
+  if (at && (!r.attendance_rule || (at.per_day !== undefined && !nonnegative(at.per_day))
+    || (at.perfect_bonus && (!at.perfect_bonus.years.length || at.perfect_bonus.years.some(y => ![1, 2, 3].includes(y)) || !nonnegative(at.perfect_bonus.points) || (at.perfect_bonus.cap !== undefined && !nonnegative(at.perfect_bonus.cap)))))) e.push('출결 추가 규칙을 확인해 주세요.');
+  return e;
+}
+const roundTo = (v: number, digits: number, mode: Rounding) => Math[mode](Number((v * 10 ** digits).toPrecision(15))) / 10 ** digits;
+const LEVEL: Record<string, number> = { A: 1, B: 2, C: 3, D: 4, E: 5 };
+/** department: 학생이 고른 학과(계열별 규칙이 있을 때 계열을 고르는 데만 써요). */
+export function scoreUniversity(grades: readonly GradeRecord[], attendance: readonly AttendanceRecord[], rule: ScoringRule, department?: string): Calculation<ScoreResult> {
   if (!reviewed(rule)) return pending('환산 규칙 준비 중');
   const errors = validateScoringRule(rule);
   if (errors.length) return invalid(errors.join(' '));
   const trace: Trace[] = [{ rule: rule.id, detail: `${rule.university} ${rule.admission_year} ${rule.program} v${rule.version} · ${rule.source}` }];
   if (new Set(grades.map(g => g.id)).size !== grades.length) return invalid('중복 과목 식별자가 있어요.');
-  const selectedScope = grades.filter(g => rule.semesters.includes(g.semester) && rule.subject_groups.includes(g.subject_group));
+  const adv = rule.advanced ?? {};
+  if (adv.group_alias) grades = grades.map(g => adv.group_alias![g.subject_group] ? { ...g, subject_group: adv.group_alias![g.subject_group] } : g);
+  let rankPoints = rule.rank_grade_points, achPoints = rule.achievement_points;
+  let groups = rule.subject_groups, buckets = adv.buckets, groupWeights = adv.group_weights, topGroups = adv.top_groups;
+  if (adv.tracks) {
+    const d = department?.trim();
+    const track = d ? adv.tracks.find(t => t.units.some(u => u !== '*' && d.includes(u))) ?? adv.tracks.find(t => t.units.includes('*')) : undefined;
+    if (!track) return pending('학과를 고르면 계열에 맞춰 계산해요.', trace);
+    groups = track.subject_groups ?? groups; buckets = track.buckets ?? buckets; groupWeights = track.group_weights ?? groupWeights; topGroups = track.top_groups ?? topGroups;
+    rankPoints = track.rank_grade_points ?? rankPoints; achPoints = track.achievement_points ?? achPoints;
+    trace.push({ rule: rule.id, detail: `계열 ${track.name}: ${groups.join('·')}` });
+  }
+  const selectedScope = grades.filter(g => rule.semesters.includes(g.semester) && groups.includes(g.subject_group));
   const valid = selectedScope.filter(g => {
     const error = validateGrade(g);
     const exclude = error.length || (g.is_joint && rule.joint_curriculum_policy === 'exclude');
     if (exclude) trace.push({ rule: rule.id, detail: `${g.name || '미입력 과목'} 제외: ${error.join(' ') || '공동교육과정 제외 규칙'}`, subject_id: g.id });
     return !exclude;
   });
-  const rankMax = Math.max(...Object.values(rule.rank_grade_points));
-  const achievementMax = Math.max(...Object.values(rule.achievement_points ?? { A: 1 }));
+  const rankMax = Math.max(...Object.values(rankPoints));
+  const achievementMax = Math.max(...Object.values(achPoints ?? { A: 1 }));
   let bonus = 0;
-  const rows: { g: GradeRecord; ratio: number }[] = [];
+  type Row = { g: GradeRecord; ratio: number; level: number | null; typeRule?: number; rankRatio?: number | null };
+  const rows: Row[] = [];
   for (const g of valid) {
-    const rank = hasRank(g) && g.rank_grade !== null ? rule.rank_grade_points[g.rank_grade] / rankMax : null;
-    const ach = g.achievement && rule.achievement_points?.[g.achievement];
+    const rank = hasRank(g) && g.rank_grade !== null ? rankPoints[g.rank_grade] / rankMax : null;
+    const ach = g.achievement && achPoints?.[g.achievement];
+    const level = hasRank(g) && g.rank_grade !== null ? g.rank_grade : g.achievement ? LEVEL[g.achievement] ?? null : null;
+    const ti = adv.type_rules?.findIndex(x => x.types.includes(g.type) && (!x.groups || x.groups.includes(g.subject_group))) ?? -1;
+    const tr = ti >= 0 ? adv.type_rules![ti] : undefined;
+    if (tr?.use === 'exclude') { trace.push({ rule: rule.id, detail: `${g.name}: ${g.type} 과목 제외`, subject_id: g.id }); continue; }
+    if (tr && tr.use !== 'rank') {
+      const a = typeof ach === 'number' ? ach / achievementMax : null;
+      if (a === null && (tr.use === 'achievement' || rank === null)) return pending(`${g.name}의 성취도 또는 점수표가 필요해요.`, trace);
+      rows.push({ g, ratio: tr.use === 'achievement' ? a! : Math.max(rank ?? 0, a ?? 0), level, typeRule: ti, rankRatio: rank }); continue;
+    }
     if (rank === null && rule.no_rank_subject_policy === 'exclude') {
       trace.push({ rule: rule.id, detail: `${g.name}: 석차등급 미산출 제외`, subject_id: g.id }); continue;
     }
@@ -85,35 +170,101 @@ export function scoreUniversity(grades: readonly GradeRecord[], attendance: read
     const a = typeof ach === 'number' ? ach / achievementMax : 0;
     const ratio = rank === null ? a : rule.achievement_blend.mode === 'max' ? Math.max(rank, a)
       : rule.achievement_blend.mode === 'weighted' ? rank * rule.achievement_blend.rank_ratio! + a * (1 - rule.achievement_blend.rank_ratio!) : rank;
-    rows.push({ g, ratio });
+    rows.push({ g, ratio, level, typeRule: ti >= 0 ? ti : undefined });
   }
-  const sorted = rows.sort((a, b) => b.ratio - a.ratio || b.g.credits - a.g.credits || a.g.id.localeCompare(b.g.id));
-  const counts = new Map<string, number>();
-  const chosen = sorted.filter((r, i) => {
-    if (rule.selection.mode === 'top_n_total') return i < rule.selection.n!;
-    if (rule.selection.mode === 'top_n_per_group') {
-      const n = counts.get(r.g.subject_group) ?? 0; counts.set(r.g.subject_group, n + 1); return n < rule.selection.n!;
-    }
-    return true;
+  let sorted = rows.sort((a, b) => b.ratio - a.ratio || b.g.credits - a.g.credits || a.g.id.localeCompare(b.g.id));
+  // 유형 규칙의 과목 수 제한(예: 융합선택 최대 2과목): 점수 높은 순으로 남겨요
+  adv.type_rules?.forEach((x, i) => {
+    if (x.limit === undefined) return;
+    const keep = new Set(sorted.filter(r => r.typeRule === i).slice(0, x.limit));
+    // beyond 'rank': 상위 N과목만 유형 규칙(예: 성취도와 높은 값)을 쓰고 나머지는 석차등급 그대로
+    sorted = sorted.flatMap(r => r.typeRule !== i || keep.has(r) ? [r] : x.beyond === 'rank' && r.rankRatio != null ? [{ ...r, ratio: r.rankRatio, typeRule: undefined }] : [])
+      .sort((a, b) => b.ratio - a.ratio || b.g.credits - a.g.credits || a.g.id.localeCompare(b.g.id));
   });
-  if (!chosen.length) return pending('반영할 과목이 없어요.', trace);
-  const weight = (g: GradeRecord) => rule.credit_weighted ? g.credits : 1;
-  const mean = (items: typeof chosen) => items.reduce((n, r) => n + r.ratio * weight(r.g), 0) / items.reduce((n, r) => n + weight(r.g), 0);
-  let ratio = mean(chosen);
-  if (rule.year_weights) {
-    ratio = 0;
-    for (const [year, w] of Object.entries(rule.year_weights)) {
-      if (!w) continue;
-      const items = chosen.filter(r => r.g.semester[0] === year);
-      if (!items.length) return pending(`${year}학년 반영 과목이 필요해요.`, trace);
-      ratio += mean(items) * w;
-      trace.push({ rule: rule.id, detail: `${year}학년 점수 비율 × 가중치 ${w}`, value: mean(items) * w });
+  const weight = (g: GradeRecord) => (rule.credit_weighted ? g.credits : 1) * (adv.subject_weights?.[g.subject_group] ?? 1);
+  const mean = (items: readonly Row[]) => items.reduce((n, r) => n + r.ratio * weight(r.g), 0) / items.reduce((n, r) => n + weight(r.g), 0);
+  const bucketOf = new Map<Row, string>();
+  let chosen: Row[];
+  if (buckets) {
+    chosen = [];
+    for (const b of buckets) {
+      const pick = sorted.filter(r => !bucketOf.has(r) && b.groups.includes(r.g.subject_group) && (!b.years || b.years.includes(Number(r.g.semester[0]))));
+      const take = b.n === undefined ? pick : pick.slice(0, b.n);
+      // 모자란 과목은 지정 등급의 빈 과목으로 채워요(원문 '부족 과목은 N등급')
+      if (b.fill && b.n !== undefined) for (let k = take.length; k < b.n; k++) {
+        const g: GradeRecord = { id: `fill-${b.name ?? b.groups.join('·')}-${k}`, semester: rule.semesters[0], name: '부족 과목 채움', subject_group: b.groups[0], type: '일반선택', credits: b.fill.credits, rank_grade: b.fill.grade, is_joint: false };
+        take.push({ g, ratio: rankPoints[b.fill.grade] / rankMax, level: b.fill.grade });
+        trace.push({ rule: rule.id, detail: `${b.name ?? b.groups.join('·')} 과목 부족 → ${b.fill.grade}등급으로 채움` });
+      }
+      for (const r of take) { bucketOf.set(r, b.name ?? b.groups.join('·')); chosen.push(r); }
     }
+  } else if (topGroups) {
+    const means = [...new Set(sorted.map(r => r.g.subject_group))].map(gr => ({ gr, m: mean(sorted.filter(r => r.g.subject_group === gr)) })).sort((a, b) => b.m - a.m);
+    const top = new Set(means.slice(0, topGroups).map(x => x.gr));
+    trace.push({ rule: rule.id, detail: `상위 ${topGroups}개 교과: ${[...top].join('·')}` });
+    chosen = sorted.filter(r => top.has(r.g.subject_group));
+  } else {
+    const counts = new Map<string, number>();
+    chosen = sorted.filter((r, i) => {
+      if (rule.selection.mode === 'top_n_total') return i < rule.selection.n!;
+      if (rule.selection.mode === 'top_n_per_group') {
+        const n = counts.get(r.g.subject_group) ?? 0; counts.set(r.g.subject_group, n + 1); return n < rule.selection.n!;
+      }
+      return true;
+    });
   }
+  if (!chosen.length) return pending('반영할 과목이 없어요.', trace);
   for (const { g, ratio: subjectRatio } of chosen) trace.push({ rule: rule.id, detail: `${g.semester} ${g.name} · 점수 비율 × 가중 ${weight(g)}`, value: subjectRatio, subject_id: g.id });
   bonus = Math.min(bonus, rule.bonus?.max ?? 0);
-  const grade = Math.min(rule.grade_max_score, rule.base_score + ratio * (rule.grade_max_score - rule.base_score) + bonus);
-  let attendanceScore = 0, deduction = 0;
+  let grade: number;
+  if (adv.average_table) {
+    const t = adv.average_table, leveled = chosen.filter(r => r.level !== null);
+    if (!leveled.length) return pending('평균등급을 낼 과목이 없어요.', trace);
+    const avg = roundTo(leveled.reduce((n, r) => n + r.level! * weight(r.g), 0) / leveled.reduce((n, r) => n + weight(r.g), 0), t.digits, t.mode);
+    const step = t.steps.find(s => avg <= s.upto + 1e-9);
+    if (!step) return pending(`평균등급 ${avg}에 맞는 점수 구간이 없어요.`, trace);
+    grade = step.score + bonus;
+    trace.push({ rule: rule.id, detail: `평균등급 ${avg} → 표 ${step.upto} 이하 칸`, value: step.score });
+  } else {
+    let ratio = mean(chosen);
+    const cut = (v: number) => adv.mean_rounding ? roundTo(v * rankMax, adv.mean_rounding.digits, adv.mean_rounding.mode) / rankMax : v;
+    ratio = cut(ratio);
+    if (groupWeights) {
+      ratio = 0;
+      for (const [key, w] of Object.entries(groupWeights)) {
+        if (!w) continue;
+        const isBucket = !!buckets?.some(b => b.name === key);
+        const items = chosen.filter(r => isBucket ? bucketOf.get(r) === key : r.g.subject_group === key);
+        if (!items.length) return pending(`${key} 반영 과목이 필요해요.`, trace);
+        ratio += mean(items) * w;
+        trace.push({ rule: rule.id, detail: `${key} 점수 비율 × 비율 ${w}`, value: mean(items) * w });
+      }
+    } else if (rule.year_weights) {
+      ratio = 0;
+      for (const [year, w] of Object.entries(rule.year_weights)) {
+        if (!w) continue;
+        const items = chosen.filter(r => r.g.semester[0] === year);
+        if (!items.length) return pending(`${year}학년 반영 과목이 필요해요.`, trace);
+        ratio += mean(items) * w;
+        trace.push({ rule: rule.id, detail: `${year}학년 점수 비율 × 가중치 ${w}`, value: mean(items) * w });
+      }
+    }
+    grade = rule.base_score + ratio * (rule.grade_max_score - rule.base_score) + bonus;
+  }
+  let gradeCap = rule.grade_max_score, creditFactor = 1, creditAdd = 0;
+  if (adv.credits) {
+    const c = adv.credits;
+    const counted = c.count === 'chosen' ? chosen.map(r => r.g).filter(g => !g.id.startsWith('fill-')) : c.count === 'ranked' ? valid.filter(g => hasRank(g) && g.rank_grade !== null) : valid;
+    const credits = counted.reduce((n, g) => n + g.credits, 0);
+    creditFactor = [...(c.tiers ?? [])].sort((a, b) => b.min - a.min).find(x => credits >= x.min)?.factor ?? 1;
+    if (c.shortfall && credits <= c.shortfall.below) creditFactor *= c.shortfall.base - (c.shortfall.below - credits) * c.shortfall.per_credit;
+    creditAdd = (c.per_credit_bonus ?? 0) * credits + (c.bonus_at && credits >= c.bonus_at.min ? c.bonus_at.points : 0)
+      + ([...(c.bonus_tiers ?? [])].sort((a, b) => b.min - a.min).find(x => credits >= x.min)?.points ?? 0);
+    trace.push({ rule: rule.id, detail: `이수학점 ${credits} → × ${creditFactor} + ${creditAdd}${c.apply_to === 'total' ? ' (교과+출결에)' : ''}` });
+    if (c.apply_to !== 'total') { grade = grade * creditFactor + creditAdd; gradeCap = c.cap ?? gradeCap; }
+  }
+  grade = Math.min(gradeCap, grade);
+  let attendanceScore = 0, deduction = 0, perfect = 0;
   if (rule.attendance_rule) {
     const a = rule.attendance_rule;
     const records = attendance.filter(r => a.years.includes(r.year));
@@ -123,19 +274,32 @@ export function scoreUniversity(grades: readonly GradeRecord[], attendance: read
     const absence = records.reduce((n, r) => n + r.absence.unexcused, 0);
     const tardy = records.reduce((n, r) => n + r.tardy.unexcused + r.early_leave.unexcused + r.class_absence.unexcused, 0);
     const equivalent = absence + Math.floor(tardy / a.tardy_to_absence);
-    const band = a.deduction_table.find(d => equivalent <= d.absence_max);
-    if (!band) return pending('해당 결석일수의 출결 감점 구간이 필요해요.', trace);
-    deduction = band.points; attendanceScore = a.max_score - deduction;
+    if (adv.attendance?.per_day !== undefined) deduction = Math.min(a.max_score, equivalent * adv.attendance.per_day);
+    else {
+      const band = a.deduction_table.find(d => equivalent <= d.absence_max);
+      if (!band) return pending('해당 결석일수의 출결 감점 구간이 필요해요.', trace);
+      deduction = band.points;
+    }
+    attendanceScore = adv.attendance?.from_total ? -deduction : a.max_score - deduction;
     trace.push({ rule: rule.id, detail: `미인정 결석 ${absence} + 지각·조퇴·결과 ${tardy} ÷ ${a.tardy_to_absence}의 정수 부분`, value: equivalent },
       { rule: rule.id, detail: `출결 만점 ${a.max_score} − 감점 ${deduction}`, value: attendanceScore });
+    const pb = adv.attendance?.perfect_bonus;
+    if (pb) {
+      const clean = records.filter(r => pb.years.includes(r.year) && r.absence.unexcused + r.tardy.unexcused + r.early_leave.unexcused + r.class_absence.unexcused === 0).length;
+      perfect = Math.min(pb.cap ?? Infinity, clean * pb.points);
+      trace.push({ rule: rule.id, detail: `개근 ${clean}개 학년 가산`, value: perfect });
+    }
   }
   const scale = 10 ** rule.rounding.digits;
-  const unrounded = grade + attendanceScore;
+  // 개근 가산은 총점 만점을 넘지 않아요(원문 '1000 상한')
+  let unrounded = perfect ? Math.min(rule.max_score, grade + attendanceScore + perfect) : grade + attendanceScore;
+  if (adv.credits?.apply_to === 'total') unrounded = Math.min(adv.credits.cap ?? rule.max_score, unrounded * creditFactor + creditAdd);
+  if (adv.attendance?.from_total) unrounded = Math.max(0, unrounded);
   const total = Math[rule.rounding.mode](Number((unrounded * scale).toPrecision(15))) / scale;
   trace.push({ rule: rule.id, detail: '교과 환산(중간 반올림 없음)', value: grade },
     { rule: rule.id, detail: `교과 + 출결 · 최종 ${rule.rounding.digits}자리 ${rule.rounding.mode}`, value: total });
   const ranked = chosen.filter(r => r.g.rank_grade !== null);
-  return ready({ grade, attendance: attendanceScore, bonus, total, max: rule.max_score, selected_ids: chosen.map(r => r.g.id),
+  return ready({ grade, attendance: attendanceScore, bonus: bonus + perfect, total, max: rule.max_score, selected_ids: chosen.map(r => r.g.id),
     average_rank: ranked.length ? ranked.reduce((n, r) => n + r.g.rank_grade! * weight(r.g), 0) / ranked.reduce((n, r) => n + weight(r.g), 0) : null,
     attendance_deduction: deduction }, trace);
 }
