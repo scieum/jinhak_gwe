@@ -118,3 +118,26 @@ describe('계열별 규칙 검수 테스트', async () => {
     expect(blockers({ ...d, tests: [pass('인문', 50), pass('인문', 50), pass('자연', 96)] })).toEqual([]);
   });
 });
+
+describe('추가 규칙 3차', () => {
+  test('광역계처럼 두 계열 중 높은 총점으로 계산해요', () => {
+    const grades = [subject({ id: 'k1', subject_group: '국어', rank_grade: 1 }), subject({ id: 'm3', rank_grade: 3 })];
+    const r = rule({ tracks: [{ name: 'A', units: ['인문'], subject_groups: ['국어'] }, { name: 'B', units: ['공학'], subject_groups: ['수학'] }, { name: '광역', units: ['광역'], best_of: ['A', 'B'] }] });
+    expect(total(scoreUniversity(grades, [], r, '광역융합학부'))).toBe(100);
+    expect(total(scoreUniversity(grades, [], r, '기계공학과'))).toBe(90);
+    expect(validateScoringRule(rule({ tracks: [{ name: '광역', units: ['*'], best_of: ['없음'] }] }))).toContain('계열별 규칙을 확인해 주세요.');
+  });
+  test('성취도 가산은 성취도 점수 평균을 더하고 상한에서 멈춰요', () => {
+    const grades = [subject({ id: 'a', achievement: 'A' }), subject({ id: 'b', achievement: 'C' })]; // 2등급 = 96
+    expect(total(scoreUniversity(grades, [], rule({ achievement_bonus: { points: { A: 6, B: 4, C: 2, D: 1, E: 0 }, max: 3 }, credits: { cap: 200 } }, { grade_max_score: 100 })))).toBe(99);
+  });
+  test('반영 학점이 최소보다 적으면 계산하지 않고 이유를 알려요', () => {
+    expect(scoreUniversity([subject()], [], rule({ credits: { minimum: 60 } }))).toMatchObject({ status: 'not_ready', reason: expect.stringContaining('60학점') });
+  });
+  test('출결 종류별 1회당 감점, 결석은 2회까지 감점 없음', () => {
+    const a = emptyAttendance(1); a.school_days = 190; a.absence.unexcused = 3; a.tardy.unexcused = 2; a.early_leave.unexcused = 1;
+    const att = { grade_max_score: 90, max_score: 100, attendance_rule: { years: [1], tardy_to_absence: 3, max_score: 10, deduction_table: [] } };
+    // 결석 (3−2)×0.5 + 지각 2×0.1 + 조퇴 1×0.3 = 1.0 → 출결 9, 교과 86.4
+    expect(total(scoreUniversity([subject()], [a], rule({ attendance: { per_kind: { absence: 0.5, tardy: 0.1, early_leave: 0.3, class_absence: 0.2, free_absences: 2 } } }, att)))).toBe(95.4);
+  });
+});

@@ -104,3 +104,11 @@
 | credits.count | `"ranked"`(석차등급 있는 과목 학점만) · `"chosen"`(고른 과목만) · 기본 `"scope"` |
 | credits.apply_to | `"total"` — 배율·가산을 교과+출결 합에 적용(원문 '학생부 성적에 ×0.9') |
 | attendance.from_total | true — 출결 만점 없이 총점에서 감점(attendance_rule.max_score 0, 감점표 points가 만점을 넘어도 됨) |
+
+### 추가 규칙 3차 (2026-11-27)
+| 필드 | 뜻 |
+|---|---|
+| tracks[].best_of | `["A계열","B계열"]` — 이 계열(예: 광역계 자유전공)은 나열한 계열로 각각 계산해 총점이 높은 쪽. 나열한 계열은 best_of가 없는 다른 tracks 이름. units 핵심어가 다른 계열 학과 이름에 들어가지 않게 고를 것(예: '자유전공학부'는 '공학'을 포함함) |
+| achievement_bonus | `{"points":{"A":60,"B":45,"C":30,"D":15,"E":0},"max":60}` — 반영 과목 성취도 점수의 (credit_weighted면 학점 가중) 평균을 교과 점수에 더함 |
+| credits.minimum | `60` — 반영 과목 학점이 이보다 적으면 계산하지 않고 이유 표시(원문 '60학점 미만 불합격') |
+| attendance.per_kind | `{"absence":0.5,"tardy":0.1,"early_leave":0.3,"class_absence":0.2,"free_absences":2}` — 미인정 출결 종류별 1회당 감점(결석은 free_absences 넘는 횟수만), 출결 만점에서 뺌(deduction_table은 `[]`) |

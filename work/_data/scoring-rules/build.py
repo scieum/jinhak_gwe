@@ -55,7 +55,7 @@ def validate(r):
         t = a.get('deduction_table') or []
         if (not a.get('years') or len(set(a['years'])) != len(a['years']) or any(y not in (1, 2, 3) for y in a['years'])
                 or not (isinstance(a.get('tardy_to_absence'), int) and a['tardy_to_absence'] >= 1) or not nonneg(a.get('max_score'))
-                or (not t and (r.get('advanced') or {}).get('attendance', {}).get('per_day') is None) or any(not (isinstance(d.get('absence_max'), int) and d['absence_max'] >= 0) or not nonneg(d.get('points')) or (d['points'] > a['max_score'] and not ((r.get('advanced') or {}).get('attendance') or {}).get('from_total'))
+                or (not t and ((r.get('advanced') or {}).get('attendance') or {}).get('per_day') is None and not ((r.get('advanced') or {}).get('attendance') or {}).get('per_kind')) or any(not (isinstance(d.get('absence_max'), int) and d['absence_max'] >= 0) or not nonneg(d.get('points')) or (d['points'] > a['max_score'] and not ((r.get('advanced') or {}).get('attendance') or {}).get('from_total'))
                                 or (i and (d['absence_max'] <= t[i - 1]['absence_max'] or d['points'] < t[i - 1]['points'])) for i, d in enumerate(t))): e.append('출결 구간')
     if r.get('advanced'):
         e += validate_advanced(r)
@@ -90,10 +90,13 @@ def validate_advanced(r):
                 or (t.get('group_weights') and (not weights_ok(t['group_weights']) or not keys_ok(t['group_weights'], groups, t.get('buckets') or v.get('buckets')))) \
                 or (t.get('top_groups') is not None and not is_int(t['top_groups'], 1)) \
                 or (t.get('rank_grade_points') is not None and (not valid_points(t['rank_grade_points']) or any(k not in t['rank_grade_points'] for k in '12345'))) \
-                or (t.get('achievement_points') is not None and not valid_points(t['achievement_points'])):
+                or (t.get('achievement_points') is not None and not valid_points(t['achievement_points'])) \
+                or (t.get('best_of') is not None and (not t['best_of'] or any(n == t.get('name') or not any(o.get('name') == n and not o.get('best_of') for o in v['tracks']) for n in t['best_of']))):
             e.append('계열'); break
     if 'tracks' in v and not v['tracks']: e.append('계열')
     if v.get('buckets') is not None and not buckets_ok(v['buckets']): e.append('묶음')
+    ab = v.get('achievement_bonus')
+    if ab is not None and (not valid_points(ab.get('points')) or not nonneg(ab.get('max'))): e.append('성취도 가산')
     if v.get('group_alias') is not None and any(not a or not b or a == b for a, b in v['group_alias'].items()): e.append('교과 바꿔 읽기')
     if v.get('subject_weights') is not None and (not v['subject_weights'] or any(not (isinstance(x, (int, float)) and x > 0) for x in v['subject_weights'].values())): e.append('교과 배율')
     mr = v.get('mean_rounding')
@@ -119,11 +122,13 @@ def validate_advanced(r):
                 or (c.get('bonus_at') and not (nonneg(c['bonus_at'].get('min')) and nonneg(c['bonus_at'].get('points')))) \
                 or (c.get('cap') is not None and not (isinstance(c['cap'], (int, float)) and c['cap'] > 0)) \
                 or any(not nonneg(x.get('min')) or not nonneg(x.get('points')) for x in c.get('bonus_tiers') or []) \
-                or c.get('count', 'scope') not in ('scope', 'ranked', 'chosen') or c.get('apply_to', 'grade') not in ('grade', 'total'):
+                or c.get('count', 'scope') not in ('scope', 'ranked', 'chosen') or c.get('apply_to', 'grade') not in ('grade', 'total') \
+                or (c.get('minimum') is not None and not nonneg(c['minimum'])):
             e.append('이수학점')
     a = v.get('attendance')
     if a is not None:
-        pb = a.get('perfect_bonus')
+        pb, pk = a.get('perfect_bonus'), a.get('per_kind')
+        if pk is not None and (not all(nonneg(pk.get(k)) for k in ('absence', 'tardy', 'early_leave', 'class_absence')) or (pk.get('free_absences') is not None and not is_int(pk['free_absences']))): e.append('출결 종류별')
         if not r.get('attendance_rule') or (a.get('per_day') is not None and not nonneg(a['per_day'])) \
                 or (pb and (not pb.get('years') or any(y not in (1, 2, 3) for y in pb['years']) or not nonneg(pb.get('points')) or (pb.get('cap') is not None and not nonneg(pb['cap'])))):
             e.append('출결 추가')

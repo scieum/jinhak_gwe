@@ -30,7 +30,10 @@ type Rounding = 'round' | 'floor' | 'ceil';
 export interface RuleBucket { name?: string; groups: string[]; n?: number; years?: number[]; /** 과목이 n보다 모자라면 이 등급·학점의 빈 과목으로 채워요(원문 '부족 과목은 5등급') */ fill?: { grade: number; credits: number } }
 export interface AdvancedRule {
   /** 계열(모집단위)마다 반영 교과·묶음·비율이 다를 때. 학과 이름이 units 중 하나를 포함하면 그 계열('*'은 나머지 전부). 학과를 모르면 계산하지 않아요. */
-  tracks?: { name: string; units: string[]; subject_groups?: string[]; buckets?: RuleBucket[]; group_weights?: Record<string, number>; top_groups?: number; rank_grade_points?: Record<string, number>; achievement_points?: Record<string, number> }[];
+  tracks?: { name: string; units: string[]; subject_groups?: string[]; buckets?: RuleBucket[]; group_weights?: Record<string, number>; top_groups?: number; rank_grade_points?: Record<string, number>; achievement_points?: Record<string, number>;
+    /** 이 계열은 나열한 계열들로 각각 계산해 가장 높은 총점을 써요(예: 광역계 = A·B 중 우수) */ best_of?: string[] }[];
+  /** 성취도 가산: 반영 과목 성취도 점수의 (학점 가중) 평균을 교과 점수에 더해요(max 상한) */
+  achievement_bonus?: { points: Record<string, number>; max: number };
   /** 교과 이름 바꿔 읽기(예: 한국사 → 사회, 원문 '한국사는 사회 교과로 반영') */
   group_alias?: Record<string, string>;
   /** 과목 가중에 곱하는 교과별 배율(학점 × 배율로 평균, 예: 수학·영어·과학 1.1) */
@@ -48,9 +51,11 @@ export interface AdvancedRule {
   average_table?: { digits: number; mode: Rounding; steps: { upto: number; score: number }[] };
   /** 반영 교과 이수학점 합으로 교과 점수 조정: tiers 배율(가장 큰 min ≤ 합) · shortfall 합 ≤ below면 × (base − 부족학점 × per_credit) · 학점당 가산 · min 이상 가산. cap = 교과 점수 상한(없으면 교과 만점) */
   credits?: { tiers?: { min: number; factor: number }[]; shortfall?: { below: number; base: number; per_credit: number }; per_credit_bonus?: number; bonus_at?: { min: number; points: number }; bonus_tiers?: { min: number; points: number }[]; cap?: number;
-    /** 학점을 세는 과목: scope 반영 학기·교과 전 과목(기본) · ranked 석차등급 있는 과목 · chosen 고른 과목 */ count?: 'scope' | 'ranked' | 'chosen'; /** 조정 대상: grade 교과(기본) · total 교과+출결 */ apply_to?: 'grade' | 'total' };
+    /** 학점을 세는 과목: scope 반영 학기·교과 전 과목(기본) · ranked 석차등급 있는 과목 · chosen 고른 과목 */ count?: 'scope' | 'ranked' | 'chosen'; /** 조정 대상: grade 교과(기본) · total 교과+출결 */ apply_to?: 'grade' | 'total';
+    /** 이 학점보다 적으면 계산하지 않고 이유를 알려요(원문 '반영 과목 N학점 미만 지원 불가') */ minimum?: number };
   /** 출결: per_day = 환산 결석 1일당 감점(감점표 대신) · perfect_bonus = 미인정 결석·지각·조퇴·결과 없는 학년마다 가산(총점은 만점까지) */
-  attendance?: { per_day?: number; perfect_bonus?: { years: number[]; points: number; cap?: number }; /** 출결 만점 없이 총점에서 감점(감점이 출결 만점을 넘어도 돼요) */ from_total?: boolean };
+  attendance?: { per_day?: number; perfect_bonus?: { years: number[]; points: number; cap?: number }; /** 출결 만점 없이 총점에서 감점(감점이 출결 만점을 넘어도 돼요) */ from_total?: boolean;
+    /** 출결 종류별 1회당 감점(미인정만): 결석·지각·조퇴·결과. free_absences = 감점 없이 넘기는 결석 횟수(원문 '2회 초과 시 1회당') */ per_kind?: { absence: number; tardy: number; early_leave: number; class_absence: number; free_absences?: number } };
 }
 export interface ScoreResult {
   grade: number; attendance: number; bonus: number; total: number; max: number;
@@ -77,7 +82,7 @@ export function validateScoringRule(r: ScoringRule): string[] {
   const a = r.attendance_rule;
   if (a && (!a.years.length || new Set(a.years).size !== a.years.length || a.years.some(y => ![1, 2, 3].includes(y))
     || !Number.isSafeInteger(a.tardy_to_absence) || a.tardy_to_absence < 1 || !nonnegative(a.max_score)
-    || (!a.deduction_table.length && r.advanced?.attendance?.per_day === undefined) || a.deduction_table.some((d, i) => !Number.isSafeInteger(d.absence_max) || d.absence_max < 0 || !nonnegative(d.points) || (d.points > a.max_score && !r.advanced?.attendance?.from_total)
+    || (!a.deduction_table.length && r.advanced?.attendance?.per_day === undefined && !r.advanced?.attendance?.per_kind) || a.deduction_table.some((d, i) => !Number.isSafeInteger(d.absence_max) || d.absence_max < 0 || !nonnegative(d.points) || (d.points > a.max_score && !r.advanced?.attendance?.from_total)
       || (i > 0 && (d.absence_max <= a.deduction_table[i - 1].absence_max || d.points < a.deduction_table[i - 1].points))))) errors.push('출결 감점 구간을 확인해 주세요.');
   if (r.advanced) errors.push(...validateAdvanced(r));
   return errors;
@@ -91,7 +96,9 @@ function validateAdvanced(r: ScoringRule): string[] {
   const keysOk = (w: Record<string, number>, groups: string[], buckets?: RuleBucket[]) => Object.keys(w).every(k => groups.includes(k) || !!buckets?.some(b => b.name === k));
   if (v.tracks && (!v.tracks.length || v.tracks.some(t => !t.name || !t.units?.length || (t.subject_groups && !t.subject_groups.length) || (t.buckets && !bucketsOk(t.buckets))
     || (t.group_weights && (!weightsOk(t.group_weights) || !keysOk(t.group_weights, t.subject_groups ?? r.subject_groups, t.buckets ?? v.buckets))) || (t.top_groups !== undefined && !isInt(t.top_groups, 1))
-    || (t.rank_grade_points && (!validPoints(t.rank_grade_points) || ['1', '2', '3', '4', '5'].some(k => t.rank_grade_points![k] === undefined))) || (t.achievement_points && !validPoints(t.achievement_points))))) e.push('계열별 규칙을 확인해 주세요.');
+    || (t.rank_grade_points && (!validPoints(t.rank_grade_points) || ['1', '2', '3', '4', '5'].some(k => t.rank_grade_points![k] === undefined))) || (t.achievement_points && !validPoints(t.achievement_points))
+    || (t.best_of && (!t.best_of.length || t.best_of.some(n => n === t.name || !v.tracks!.some(o => o.name === n && !o.best_of))))))) e.push('계열별 규칙을 확인해 주세요.');
+  if (v.achievement_bonus && (!validPoints(v.achievement_bonus.points) || !nonnegative(v.achievement_bonus.max))) e.push('성취도 가산을 확인해 주세요.');
   if (v.group_alias && Object.entries(v.group_alias).some(([a, b]) => !a || !b || a === b)) e.push('교과 바꿔 읽기를 확인해 주세요.');
   if (v.subject_weights && (!Object.keys(v.subject_weights).length || !Object.values(v.subject_weights).every(finitePositive))) e.push('교과별 배율을 확인해 주세요.');
   if (v.mean_rounding && (!isInt(v.mean_rounding.digits) || v.mean_rounding.digits > 6 || !['round', 'floor', 'ceil'].includes(v.mean_rounding.mode))) e.push('평균 자르기를 확인해 주세요.');
@@ -106,9 +113,11 @@ function validateAdvanced(r: ScoringRule): string[] {
   const c = v.credits;
   if (c && ((c.tiers && c.tiers.some(x => !nonnegative(x.min) || !finitePositive(x.factor))) || (c.shortfall && (!nonnegative(c.shortfall.below) || !finitePositive(c.shortfall.base) || !nonnegative(c.shortfall.per_credit)))
     || (c.per_credit_bonus !== undefined && !nonnegative(c.per_credit_bonus)) || (c.bonus_at && (!nonnegative(c.bonus_at.min) || !nonnegative(c.bonus_at.points))) || (c.cap !== undefined && !finitePositive(c.cap))
-    || (c.bonus_tiers && c.bonus_tiers.some(x => !nonnegative(x.min) || !nonnegative(x.points))) || (c.count !== undefined && !['scope', 'ranked', 'chosen'].includes(c.count)) || (c.apply_to !== undefined && !['grade', 'total'].includes(c.apply_to)))) e.push('이수학점 조정을 확인해 주세요.');
+    || (c.bonus_tiers && c.bonus_tiers.some(x => !nonnegative(x.min) || !nonnegative(x.points))) || (c.count !== undefined && !['scope', 'ranked', 'chosen'].includes(c.count)) || (c.apply_to !== undefined && !['grade', 'total'].includes(c.apply_to))
+    || (c.minimum !== undefined && !nonnegative(c.minimum)))) e.push('이수학점 조정을 확인해 주세요.');
   const at = v.attendance;
-  if (at && (!r.attendance_rule || (at.per_day !== undefined && !nonnegative(at.per_day))
+  const pk = at?.per_kind;
+  if (at && (!r.attendance_rule || (at.per_day !== undefined && !nonnegative(at.per_day)) || (pk && ![pk.absence, pk.tardy, pk.early_leave, pk.class_absence].every(nonnegative)) || (pk?.free_absences !== undefined && !isInt(pk.free_absences))
     || (at.perfect_bonus && (!at.perfect_bonus.years.length || at.perfect_bonus.years.some(y => ![1, 2, 3].includes(y)) || !nonnegative(at.perfect_bonus.points) || (at.perfect_bonus.cap !== undefined && !nonnegative(at.perfect_bonus.cap)))))) e.push('출결 추가 규칙을 확인해 주세요.');
   return e;
 }
@@ -129,6 +138,17 @@ export function scoreUniversity(grades: readonly GradeRecord[], attendance: read
     const d = department?.trim();
     const track = d ? adv.tracks.find(t => t.units.some(u => u !== '*' && d.includes(u))) ?? adv.tracks.find(t => t.units.includes('*')) : undefined;
     if (!track) return pending('학과를 고르면 계열에 맞춰 계산해요.', trace);
+    if (track.best_of) {
+      // 나열한 계열로 각각 계산해 총점이 가장 높은 결과(같으면 앞 계열)를 써요
+      const runs = track.best_of.map(name => {
+        const other = adv.tracks!.find(x => x.name === name)!;
+        return { name, r: scoreUniversity(grades, attendance, { ...rule, advanced: { ...adv, tracks: [other] } }, '*' + other.units.find(u => u !== '*')) };
+      });
+      const ok = runs.filter(x => x.r.status === 'ready') as { name: string; r: Extract<Calculation<ScoreResult>, { status: 'ready' }> }[];
+      if (!ok.length) return runs[0].r;
+      const best = ok.reduce((a, b) => b.r.value.total > a.r.value.total ? b : a);
+      return ready(best.r.value, [...trace, { rule: rule.id, detail: `${track.name}: ${track.best_of.join('·')} 중 높은 ${best.name} 계열로 계산` }, ...best.r.trace]);
+    }
     groups = track.subject_groups ?? groups; buckets = track.buckets ?? buckets; groupWeights = track.group_weights ?? groupWeights; topGroups = track.top_groups ?? topGroups;
     rankPoints = track.rank_grade_points ?? rankPoints; achPoints = track.achievement_points ?? achPoints;
     trace.push({ rule: rule.id, detail: `계열 ${track.name}: ${groups.join('·')}` });
@@ -251,11 +271,19 @@ export function scoreUniversity(grades: readonly GradeRecord[], attendance: read
     }
     grade = rule.base_score + ratio * (rule.grade_max_score - rule.base_score) + bonus;
   }
+  if (adv.achievement_bonus) {
+    const b = adv.achievement_bonus, scored = valid.filter(g => g.achievement && b.points[g.achievement] !== undefined);
+    const w = scored.reduce((n, g) => n + weight(g), 0);
+    const add = w ? Math.min(b.max, scored.reduce((n, g) => n + b.points[g.achievement!] * weight(g), 0) / w) : 0;
+    grade += add;
+    trace.push({ rule: rule.id, detail: `성취도 가산(${scored.length}과목 평균)`, value: add });
+  }
   let gradeCap = rule.grade_max_score, creditFactor = 1, creditAdd = 0;
   if (adv.credits) {
     const c = adv.credits;
     const counted = c.count === 'chosen' ? chosen.map(r => r.g).filter(g => !g.id.startsWith('fill-')) : c.count === 'ranked' ? valid.filter(g => hasRank(g) && g.rank_grade !== null) : valid;
     const credits = counted.reduce((n, g) => n + g.credits, 0);
+    if (c.minimum !== undefined && credits < c.minimum) return pending(`반영 과목 이수학점이 ${c.minimum}학점보다 적어요(지금 ${credits}학점) — 원문 지원 기준을 확인해 주세요.`, trace);
     creditFactor = [...(c.tiers ?? [])].sort((a, b) => b.min - a.min).find(x => credits >= x.min)?.factor ?? 1;
     if (c.shortfall && credits <= c.shortfall.below) creditFactor *= c.shortfall.base - (c.shortfall.below - credits) * c.shortfall.per_credit;
     creditAdd = (c.per_credit_bonus ?? 0) * credits + (c.bonus_at && credits >= c.bonus_at.min ? c.bonus_at.points : 0)
@@ -274,7 +302,11 @@ export function scoreUniversity(grades: readonly GradeRecord[], attendance: read
     const absence = records.reduce((n, r) => n + r.absence.unexcused, 0);
     const tardy = records.reduce((n, r) => n + r.tardy.unexcused + r.early_leave.unexcused + r.class_absence.unexcused, 0);
     const equivalent = absence + Math.floor(tardy / a.tardy_to_absence);
-    if (adv.attendance?.per_day !== undefined) deduction = Math.min(a.max_score, equivalent * adv.attendance.per_day);
+    const pk = adv.attendance?.per_kind;
+    if (pk) {
+      const sum = (k: 'absence' | 'tardy' | 'early_leave' | 'class_absence') => records.reduce((n, r) => n + r[k].unexcused, 0);
+      deduction = Math.min(a.max_score, Math.max(0, sum('absence') - (pk.free_absences ?? 0)) * pk.absence + sum('tardy') * pk.tardy + sum('early_leave') * pk.early_leave + sum('class_absence') * pk.class_absence);
+    } else if (adv.attendance?.per_day !== undefined) deduction = Math.min(a.max_score, equivalent * adv.attendance.per_day);
     else {
       const band = a.deduction_table.find(d => equivalent <= d.absence_max);
       if (!band) return pending('해당 결석일수의 출결 감점 구간이 필요해요.', trace);
