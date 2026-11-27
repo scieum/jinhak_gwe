@@ -154,7 +154,7 @@ test('모바일 조건은 적용 전까지 결과를 유지하고 닫으면 초�
   expect(screen.getByText('수학과')).toBeTruthy();
   expect(screen.getByText('환산점수')).toBeTruthy();
   expect(screen.getByText('910.00')).toBeTruthy();
-  expect(screen.getAllByRole('columnheader')).toHaveLength(4);
+  expect(screen.getAllByRole('columnheader')).toHaveLength(5);
   fireEvent.click(screen.getByRole('button', { name: /수학과 원문·상세/ }));
   expect(within(screen.getByRole('dialog')).getByText('12쪽 표3')).toBeTruthy();
 });

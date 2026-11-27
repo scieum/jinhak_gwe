@@ -38,8 +38,8 @@
 .ar-legend { flex: none; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 12px; font-size: 12px; line-height: 16.8px; }
 .ar-legend > span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 .ar .ar-dot { display: inline-block; flex: none; width: 11px; height: 11px; overflow: visible; fill: var(--color-ink); }
-.ar .ar-dot.prev { fill: var(--color-year-prev); } .ar .ar-dot.old { fill: var(--color-year-old); }
-.ar .ar-dot.empty { fill: var(--color-canvas); stroke: var(--color-year-old); stroke-width: 1.5px; }
+.ar .ar-dot.prev { fill: var(--color-year-prev); } .ar .ar-dot.old { fill: var(--color-year-old); stroke: var(--color-ink); stroke-width: 1.5px; }
+.ar .ar-dot.empty { fill: var(--color-canvas); stroke: var(--color-year-prev); stroke-width: 1.5px; stroke-dasharray: 2 2; } /* 자료 없는 해는 점선이라 2년 전 흰 점과 구분돼요 */
 .ar-swatch { display: inline-block; width: 8px; height: 12px; background: var(--color-accent-soft); box-shadow: inset 0 0 0 1px var(--color-accent); }
 .ar-basis-link { justify-self: end; display: flex; align-items: center; gap: 12px; color: var(--color-accent); font-size: 12px; line-height: 16.8px; text-decoration: none; }
 .ar-basis-link > a { color: inherit; text-decoration: none; }
@@ -66,7 +66,7 @@
 .ar-plot__link { position: absolute; top: 50%; height: 1px; background: var(--color-text-muted); }
 .ar-plot__point { position: absolute; top: 50%; display: grid; place-items: center; width: 17px; height: 17px; min-height: 0; padding: 0; border: 0; border-radius: 50%; background: transparent; transform: translate(-50%, -50%); cursor: pointer; }
 .ar-plot__point svg { width: 17px; height: 17px; overflow: visible; fill: var(--color-ink); }
-.ar-plot__point.prev svg { fill: var(--color-year-prev); } .ar-plot__point.old svg { fill: var(--color-year-old); }
+.ar-plot__point.prev svg { fill: var(--color-year-prev); } .ar-plot__point.old svg { fill: var(--color-year-old); stroke: var(--color-ink); stroke-width: 1.5px; }
 .ar-plot__point .ring { fill: none; stroke: none; }
 .ar-plot__point.is-selected .ring { fill: var(--color-canvas); stroke: var(--color-ink); stroke-width: 2px; }
 .ar-plot__point:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 1px; }

@@ -23,7 +23,7 @@ export function AdmissionResults() {
   const view = explicit === 'interests' ? 'interests' : explicit === 'results' ? 'results' : explicit === 'collected' ? 'collected' : explicit === 'university' ? 'university' : query.has('u') ? 'results' : query.has('cu') ? 'collected' : 'university';
   const interestCount = useLiveQuery(() => studentDb.interests.count(), []);
   // Figma admission-results: 탭은 대학별 · 내 비교 두 개. 수집 자료·검수 완료 표는 '표로 보기' 링크와 기존 주소(cu/u/view)로 열려요.
-  const tabs = <SegmentedControl label="대학별과 내 비교" value={view} onChange={value => { const next = new URLSearchParams(query); next.set('view', value); for (const key of ['u', 'cu', 'cp', 'cd']) next.delete(key); setQuery(next); }} options={[{ value: 'university', label: '대학별' }, { value: 'interests', label: `내 비교${interestCount ? ` ${interestCount}` : ''}` }]} />;
+  const tabs = <SegmentedControl label="대학별과 내 비교" value={view === 'collected' ? 'university' : view} onChange={value => { const next = new URLSearchParams(query); next.set('view', value); for (const key of ['u', 'cu', 'cp', 'cd']) next.delete(key); setQuery(next); }} options={[{ value: 'university', label: '대학별' }, { value: 'interests', label: `내 비교${interestCount ? ` ${interestCount}` : ''}` }]} />;
   return <section data-slug="admission-results" aria-label="수시 입결" className="student-screen">
     {view !== 'university' && view !== 'interests' && <div className="screen-heading admission-results-intro"><h2 className="t-heading-1">수시 입결</h2><p className="text-muted">대학이 발표한 지난 입결을 찾아보세요.</p></div>}
 

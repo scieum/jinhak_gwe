@@ -1,23 +1,33 @@
 import type { ResultRow } from './resultReview';
 
-export type MergedResultRow = ResultRow & { mean: string; sources: ResultRow[] };
+export type Means = { meanFirst: string; meanFinal: string };
+export type MergedResultRow = ResultRow & Means & { sources: ResultRow[] };
 
 const hasCut = (r: ResultRow) => Boolean(r.cut_50.trim() || r.cut_70.trim());
+type Population = 'first' | 'final' | '';
+// 최종합격자는 등록자와 다른 집단이라 어느 쪽에도 넣지 않아요
+const populationOf = (text: string): Population => /최초\s*합격|최초/.test(text) ? 'first' : /최종\s*등록|등록자|등록생/.test(text) ? 'final' : '';
 
-/** 원문에 '평균'으로 적힌 등급 값 하나. 점수·백분위 구간이거나 값이 여럿으로 갈리면 비워요(추정하지 않음).
- * shortcut: tools/placement_statistics.py의 대상(최초·최종) 구분은 옮기지 않았어요. 최종등록 값이 있으면 그것만 써요. */
-export function rowMean(row: ResultRow): string {
-  if (row.metric !== '교과등급' && row.metric !== '수능등급') return '';
-  const found: { value: string; registered: boolean }[] = [];
+/** 원문에 '평균'으로 적힌 등급 값을 최초합격자 · 최종등록자로 나눠요(2026-11-27 사용자 요청). 대상이 안 적힌 값은
+ * 산출 기준(basis)이 한 집단만 말할 때 그 집단으로, 아니면 버려요. 점수·백분위 평균이거나 한 집단 값이 여럿으로 갈리면 비워요(추정하지 않음). */
+export function rowMeans(row: ResultRow): Means {
+  const out: Means = { meanFirst: '', meanFinal: '' };
+  if (row.metric !== '교과등급' && row.metric !== '수능등급') return out;
+  const basisPops = new Set([...row.basis.matchAll(/최초\s*합격자?|최종\s*등록자?|등록자/g)].map(m => populationOf(m[0])));
+  const fallback: Population = basisPops.size === 1 ? [...basisPops][0] : '';
+  const found: Record<'first' | 'final', Set<number>> = { first: new Set(), final: new Set() };
+  const text: Record<'first' | 'final', string> = { first: '', final: '' };
   for (const segment of row.cut_other.split(/[;\n]/)) {
-    if (/점수|총점|백분위|표준|서류|면접/.test(segment)) continue;
+    if (/점수|총점|백분위|표준점수|서류|면접/.test(segment)) continue;
     for (const m of segment.matchAll(/평균\s*(?:등급)?\s*[:：=]?\s*([0-9](?:\.[0-9]+)?)(?![0-9.%~～])/g)) {
-      if (Number(m[1]) >= 1 && Number(m[1]) <= 9) found.push({ value: m[1], registered: /최종\s*등록|등록자/.test(segment) });
+      const pop = populationOf(segment.slice(0, m.index)) || fallback;
+      if (!pop || Number(m[1]) < 1 || Number(m[1]) > 9) continue;
+      found[pop].add(Number(m[1])); text[pop] = m[1];
     }
   }
-  const pool = found.some(f => f.registered) ? found.filter(f => f.registered) : found;
-  const values = new Set(pool.map(f => Number(f.value)));
-  return values.size === 1 ? pool[0].value : '';
+  if (found.first.size === 1) out.meanFirst = text.first;
+  if (found.final.size === 1) out.meanFinal = text.final;
+  return out;
 }
 
 /** 같은 학년도·시기·전형·모집단위·지표의 행을 한 줄로 합쳐요(2026-11-27 사용자 요청).
@@ -35,13 +45,16 @@ export function mergeResultRows(rows: ResultRow[]): MergedResultRow[] {
       const value = sources.map(s => s[key]).find(v => typeof v === 'string' && v.trim());
       if (value !== undefined) (merged as Record<string, unknown>)[key] = value;
     }
-    const mean = sources.map(rowMean).find(Boolean) ?? '';
-    return { ...merged, mean, sources };
+    const means = sources.map(rowMeans);
+    return { ...merged, meanFirst: means.map(m => m.meanFirst).find(Boolean) ?? '', meanFinal: means.map(m => m.meanFinal).find(Boolean) ?? '', sources };
   });
 }
 
 /** 그 행과 같은 학년도·시기·전형·모집단위·지표의 다른 출처까지 보고 평균을 찾아요(될각 카드). */
-export function meanFor(row: ResultRow, rows: readonly ResultRow[]): string {
-  return mergeResultRows(rows.filter(r => r.result_year === row.result_year && r.recruit_unit.trim() === row.recruit_unit.trim() && r.program.trim() === row.program.trim()))
-    .find(m => m.sources.includes(row))?.mean ?? '';
+export function meansFor(row: ResultRow, rows: readonly ResultRow[]): Means {
+  const m = mergeResultRows(rows.filter(r => r.result_year === row.result_year && r.recruit_unit.trim() === row.recruit_unit.trim() && r.program.trim() === row.program.trim()))
+    .find(x => x.sources.includes(row));
+  return { meanFirst: m?.meanFirst ?? '', meanFinal: m?.meanFinal ?? '' };
 }
+/** 카드 한 줄 글: '최초 평균 2.04 · 최종 평균 2.59'(있는 것만). */
+export const meansText = ({ meanFirst, meanFinal }: Means) => [meanFirst && `최초 평균 ${meanFirst}`, meanFinal && `최종 평균 ${meanFinal}`].filter(Boolean).join(' · ');

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useReferenceCuts } from '../data/referenceCuts';
-import { meanFor } from '../domain/mergeResultRows';
+import { meansFor, meansText } from '../domain/mergeResultRows';
 import { departmentsFor, referenceDiffText } from '../domain/interestComparison';
 import { interestId, type Interest } from '../domain/interests';
 import { studentDb } from '../store/studentDb';
@@ -122,7 +122,7 @@ function InterestReference({ data }: { data: StudentBackup }) {
         <div className="dg-card__numbers"><span className="t-caption text-muted">내 환산 (참고 추정)</span>
           <div className="dg-card__range"><strong className="num">{mine ? rangeText(mine.min, mine.max) : '—'}</strong></div>
           <span className="t-caption text-muted num">{!ref ? '입결 자료를 불러오는 중이에요' : cut
-            ? `${cut.year}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${(m => m ? ` · 평균 ${m}` : '')(meanFor(cut.row, rowsOf(i.university)))}` : (ref as { reason: string }).reason}</span>
+            ? `${cut.year}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${(t => t ? ` · ${t}` : '')(meansText(meansFor(cut.row, rowsOf(i.university))))}` : (ref as { reason: string }).reason}</span>
           {/* 수집 전형 이름이 담은 이름과 다르면 무엇과 비교했는지 따로 한 줄(컷 숫자가 말줄임에 가리지 않게) */}
           {cut && cut.row.program.trim() !== i.program.trim() && <span className="t-caption text-muted">비교한 전형: {cut.row.program}</span>}</div>
         {!i.department && (() => { const units = departmentsFor(i, rowsOf(i.university)); return units.length > 0 && <label className="dg-field"><span className="t-caption text-muted">학과 고르기</span>

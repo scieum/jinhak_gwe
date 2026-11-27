@@ -34,8 +34,12 @@
 .collection-scope { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-md); }
 .collection-scope > p { margin-left: auto; }
 .collection-filters { display: grid; grid-template-columns: minmax(180px, 2fr) minmax(100px, 1fr) minmax(100px, 1fr) minmax(140px, 1.4fr) auto; gap: var(--spacing-md); align-items: end; }
-.collection-filters label, .collection-result-heading label { font-size: var(--font-label-size); color: var(--color-text-muted); font-weight: var(--font-label-weight); }
-.collection-filters select, .collection-result-heading input { width: 100%; min-height: 48px; font-size: var(--font-body-size); font-weight: var(--font-body-weight); }
+.collection-filters label, .collection-result-heading label { font-size: var(--font-label-size); color: var(--color-text-muted); font-weight: var(--font-label-weight); line-height: var(--font-label-line); }
+.collection-filters select, .collection-result-heading input { width: 100%; min-height: 48px; font-size: var(--font-body-size); font-weight: var(--font-body-weight); border: 0; } /* design.md text-input: 회색 채움, 선 없음 */
+/* 수집 자료 표·안내 글은 design.md table · caption 줄 높이(1.4)를 따라요(본문 1.5를 물려받던 것) */
+.collection-table td { font-size: var(--font-table-size); line-height: var(--font-table-line); word-break: keep-all; } /* 학과 이름이 글자 중간에서 끊기지 않게 */
+.collection-table th { font-size: var(--font-table-head-size); font-weight: var(--font-table-head-weight); line-height: var(--font-table-head-line); color: var(--color-ink-soft); }
+.collection-output .t-caption, .collection-output .data-status-badge { line-height: var(--font-caption-line); }
 .collection-filters > button { min-height: 48px; }
 .collection-fields-shell { display: grid; gap: var(--spacing-md); }
 .university-field { display: grid; gap: var(--spacing-xxs); min-width: 0; }
@@ -51,7 +55,7 @@
 .collection-table td { height: 64px; }
 .collection-table td:nth-child(3) { min-width: 180px; }
 .collection-table td:nth-child(4) { min-width: 140px; }
-.collection-table td:nth-child(10) { min-width: 96px; }
+.collection-table td:nth-child(11) { min-width: 96px; }
 .collection-table td:last-child { white-space: nowrap; }
 .collection-table td.num { white-space: nowrap; }
 .university-options { display: grid; gap: var(--spacing-xs); max-height: 45dvh; overflow-y: auto; }
@@ -84,8 +88,9 @@
   .collection-result-heading .data-status-badge { padding: var(--spacing-xxs) var(--spacing-xs); }
   .collection-result-heading h3 { font-size: var(--font-heading-3-size); }
   .collection-table { min-width: 0; table-layout: fixed; }
-  .collection-table th:first-child { width: 58%; }
+  .collection-table th:first-child { width: 46%; } /* 최초·최종 평균 두 열이 생겨 숫자 칸 폭을 넓혀요 */
   .collection-table th, .collection-table td { padding: var(--spacing-sm) var(--spacing-xs); }
+  .collection-table td.num, .collection-table th:not(:first-child) { padding-inline: var(--spacing-xxs); white-space: nowrap; }
   .collection-table th:not(:first-child), .collection-table td.num { text-align: right; }
   .collection-table td:nth-child(n) { min-width: 0; white-space: normal; }
   .collection-table td.num { overflow-wrap: anywhere; }
