@@ -217,12 +217,10 @@ test.each([false, true])('목록 하트는 선택한 학과만 저장하고 기�
   expect(await studentDb.interests.count()).toBe(1);
   expect(screen.queryByRole('dialog')).toBeNull();
   fireEvent.click(await screen.findByRole('button', { name: '내 비교 1' }));
-  await screen.findByRole('heading', { name: '관심 전형 1개' });
-  expect(screen.getByRole('link', { name: '국어교육과' })).toBeTruthy();
-  expect(screen.queryByText('수학교육과')).toBeNull();
-  fireEvent.click(screen.getByRole('link', { name: '수집 입결에서 찾기' }));
-  await waitFor(() => expect(screen.getAllByRole('button', { name: '가온대 일반전형 국어교육과 관심에서 빼기' })).toHaveLength(2));
-  expect(screen.getByRole('table').querySelectorAll('tbody tr')).toHaveLength(2);
+  // 내 비교(2026-11-27 시안): 담은 학과만 목록에 나와요
+  expect((await screen.findAllByRole('heading', { name: '내 비교 1개 · 최대 10개' })).length).toBeGreaterThan(0);
+  expect(screen.getAllByText('가온대 국어교육과').length).toBeGreaterThan(0);
+  expect(screen.queryByText('가온대 수학교육과')).toBeNull();
   cleanup(); mount(collectedProgramPath('가온대', '일반전형', '국어교육과'));
   hearts = await screen.findAllByRole('button', { name: '가온대 일반전형 국어교육과 관심에서 빼기' });
   fireEvent.click(hearts[0]);

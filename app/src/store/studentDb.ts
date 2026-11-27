@@ -4,6 +4,7 @@ import { parseStudentBackup, parseTargetPriorities, type GradeRecord, type Atten
 import { addToBoard, moveSlot, newBoard, nextBoardName, parseBoards, removeFromBoard, reorderSlots, updateSlot, type Board, type BoardChange } from '../domain/board';
 import { parseMocks, type MockScore, type Area } from '../domain/mock';
 import { interestId, parseInterests, type Interest } from '../domain/interests';
+import { isSampleId } from '../data/sample/rows';
 import { parsePlannerData, emptyPlanner, sameApplication, type ApplicationPlan, type CounselTask, type PlannerData } from '../domain/planner';
 
 export class StudentDatabase extends Dexie {
@@ -69,7 +70,18 @@ export class StudentDatabase extends Dexie {
       const clean = parsePlannerData({ ...all, applications: [...all.applications, candidate] });
       await this.applications.add(clean.applications.find(a => a.id === candidate.id)!);
       return { id: candidate.id, created: true };
+    }).then(async result => {
+      // 지원 준비에 담은 전형은 관심 전형(하트)에도 담아 내 비교 · 될각에 바로 보여요(2026-11-27 사용자 요청). 관심 저장이 실패해도 지원 준비는 그대로예요
+      if (result.created && !isSampleId(candidate.id)) await this.setInterest(candidate.university, candidate.program, true, candidate.department || undefined).catch(() => undefined);
+      return result;
     });
+  }
+  /** 예전에 지원 준비에만 담긴 전형을 관심 전형에도 넣어요(한 번만, 이미 있으면 그대로). */
+  async syncApplicationInterests() {
+    for (const a of await this.applications.toArray()) {
+      if (isSampleId(a.id) || !a.university.trim() || !a.program.trim()) continue;
+      if (!await this.interests.get(interestId(a.university, a.program, a.department || undefined))) await this.setInterest(a.university, a.program, true, a.department || undefined).catch(() => undefined);
+    }
   }
   async saveApplication(value: ApplicationPlan) {
     await this.transaction('rw', [this.applications, this.tasks], async () => {

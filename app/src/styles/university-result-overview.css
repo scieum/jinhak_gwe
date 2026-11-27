@@ -159,3 +159,51 @@
 .ar-plot__pan { grid-column: 2; margin-right: 12px; overflow-x: auto; overflow-y: hidden; height: 12px; scrollbar-width: thin; scrollbar-color: var(--color-text-faint) var(--color-hairline-soft); }
 .ar-plot__pan > i { display: block; height: 1px; }
 .ar-plot__pan:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+/* 내 비교(2026-11-27, 시안 1440-compare 762:282739 · 390-compare 767:296407 · 빈 상태 · 추가 모달) */
+.ic .ar-plot { --head: 220px; }
+.ic-add { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; }
+.ic .ar-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.ic-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 12px 0 16px; color: var(--color-ink); font-size: 12px; line-height: 16.8px; }
+.ic-legend span { display: inline-flex; align-items: center; gap: 4px; }
+.ic-band-key { display: inline-block; width: 10px; height: 12px; border: 1px solid var(--color-accent); background: var(--color-accent-soft); }
+.ic-mark { width: 12px; height: 12px; overflow: visible; fill: var(--color-ink); stroke: var(--color-ink); stroke-width: 0; }
+.ic-mark .is-open { fill: var(--color-canvas); stroke-width: 1.6px; }
+.ic-name { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ic-name .university-logo { flex: 0 0 20px; width: 20px; height: 20px; }
+.ic-name > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ic-point { position: absolute; top: 50%; display: grid; place-items: center; width: 24px; height: 24px; min-height: 0; padding: 0; border: 0; border-radius: 50%; background: transparent; transform: translate(-50%, -50%); cursor: pointer; }
+.ic-point .ic-mark { width: 13px; height: 13px; }
+.ic-ring { position: absolute; inset: 0; width: 24px; height: 24px; fill: var(--color-canvas); stroke: var(--color-ink); stroke-width: 2px; } /* 고른 점: 둥근 고리(시안). 모서리 0 전역 규칙이 있어 테두리 대신 svg */
+.ic-point .ic-mark { position: relative; }
+.ic-point:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+.ic-none { position: absolute; top: 50%; left: 0; transform: translateY(-50%); font-size: 12px; }
+.ic-list { gap: 8px; }
+.ic-list h4 { margin: 0 0 4px; font-size: 16px; font-weight: 600; line-height: 22.4px; }
+.ic-list ul { display: grid; margin: 0; padding: 0; list-style: none; }
+.ic-list li { display: flex; align-items: center; gap: 8px; min-height: 44px; padding-left: 4px; }
+.ic-list li[aria-current] { background: var(--color-accent-soft); box-shadow: inset 3px 0 0 var(--color-accent); }
+.ic-list li > button:first-child { flex: 1; display: flex; align-items: center; gap: 8px; min-width: 0; min-height: 44px; padding: 0 0 0 8px; border: 0; background: none; color: var(--color-ink); font: inherit; font-size: 14px; text-align: left; cursor: pointer; }
+.ic-list li > button:first-child span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ic-list .university-logo, .ic-detail-title .university-logo { flex: 0 0 20px; width: 20px; height: 20px; }
+.ic-detail-title { display: flex; align-items: center; gap: 8px; margin: 4px 0 8px; font-size: 18px; }
+.ic-empty .empty-state { padding: 48px 24px; }
+.ic-mobile { display: none; }
+.ic-search { max-width: none; margin: 8px 0 12px; }
+.ic-add { }
+.ic-add__univs, .ic-add__units { margin: 0; padding: 0; list-style: none; max-height: 360px; overflow-y: auto; }
+.ic-add:has(.ic-add__univs) { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 12px; height: auto; padding: 0; }
+.ic-add__univs button { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 36px; padding: 0 8px; border: 0; background: none; color: var(--color-ink); font: inherit; font-size: 14px; text-align: left; cursor: pointer; }
+.ic-add__univs button[aria-current] { background: var(--color-accent-soft); box-shadow: inset 3px 0 0 var(--color-accent); }
+.ic-add__univs .university-logo { flex: 0 0 20px; width: 20px; height: 20px; }
+.ic-add__units li { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; }
+.ic-add__units li > span { display: grid; }
+.ic-heart { width: 44px; min-width: 44px; padding: 0; border-color: transparent; background: transparent; }
+@media (max-width: 1023px) {
+  .ic .ar-plot { --head: 120px; }
+  .ic-name > span { display: grid; white-space: normal; line-height: 18px; } /* 시안 390: 대학 / 학과 두 줄 */
+  .ic-name > span > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ic .ic-side { display: grid; gap: 12px; } /* 모바일: 목록·고른 학과를 그래프 아래로(한 번만 그려요) */
+  .ic .ar-top { grid-template-columns: minmax(0, 1fr); }
+  .ic-add:has(.ic-add__univs) { grid-template-columns: minmax(0, 1fr); }
+  .ic-add__univs { max-height: 180px; }
+}

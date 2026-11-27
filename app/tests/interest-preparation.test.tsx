@@ -82,7 +82,8 @@ test('interest → review year and department → checklist → select in Susiro
   expect(saved).toMatchObject({ year: 2029, department: '화학교육과', source_url: '' });
   expect(saved.steps.every(s => s.status === 'pending' && s.due_at === null)).toBe(true);
   expect(saved.eligibility.every(e => e.status === 'unknown')).toBe(true);
-  expect(await studentDb.interests.get(interestId(university, program))).toBeTruthy();
+  // 관심은 그대로 남아요. 학과를 정해 지원 준비에 담으면 그 학과로 바꿔 담겨요(2026-11-27: 지원 준비 = 관심 전형에도 담기)
+  expect((await studentDb.interests.toArray()).filter(i => i.university === university && i.program === program).map(i => i.department)).toEqual(['화학교육과']);
   expect(await studentDb.boards.count()).toBe(0);
   fireEvent.click(screen.getByRole('link', { name: '수시로에서 카드 담기' }));
   fireEvent.click((await screen.findAllByRole('button', { name: '+ 대학 담기' }))[0]);

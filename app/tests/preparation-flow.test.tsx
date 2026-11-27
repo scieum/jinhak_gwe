@@ -18,8 +18,10 @@ test('전형 추가 → 독립 체크 단계 완료 → 화면 재진입 후 기
   fireEvent.change(within(dialog).getByLabelText('대학명'), { target: { value: '흐름 테스트 대학' } });
   fireEvent.change(within(dialog).getByLabelText('전형명'), { target: { value: '교과 가상 전형' } });
   fireEvent.click(within(dialog).getByRole('button', { name: '저장' }));
-  fireEvent.click(await screen.findByRole('button', { name: '원서 작성 수정' }));
-  fireEvent.change(screen.getByLabelText('진행 상태'), { target: { value: 'done' } });
+  const edit = await screen.findByRole('button', { name: '원서 작성 수정' });
+  await waitFor(() => expect((edit as HTMLButtonElement).disabled).toBe(false)); // 저장(관심 전형 담기 포함)이 끝날 때까지
+  fireEvent.click(edit);
+  fireEvent.change(await screen.findByLabelText('진행 상태'), { target: { value: 'done' } });
   fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: '저장' }));
   await waitFor(async () => expect((await studentDb.applications.toArray())[0].steps[0].status).toBe('done'));
   expect((await studentDb.applications.toArray())[0].steps[1].status).toBe('pending');

@@ -29,7 +29,7 @@ const short = (university: string) => currentUniversityName(university).replace(
 const tick = (t: number) => String(Math.round(t * 10) / 10);
 const byYear = (rows: readonly ResultRow[]) => [...rows].sort((a, b) => Number(a.result_year) - Number(b.result_year));
 const narrow = () => typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 1023px)').matches;
-type Department = ReturnType<typeof universityPlot>['departments'][number];
+export type Department = ReturnType<typeof universityPlot>['departments'][number];
 
 const DEFAULT_UNIVERSITY = '강원대학교(춘천)', DEFAULT_PROGRAM = '지역교과전형'; // 기본 전형(자료에 없으면 원래 규칙대로)
 export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
@@ -261,13 +261,13 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
 
 const cell = (r: ResultRow | undefined, key: 'cut_70' | 'cut_50' | 'competition_rate' | 'quota' | 'fill_rate') => {
   const v = r?.[key]?.trim();
-  return !v ? '—' : key === 'competition_rate' ? `${v}:1` : key === 'fill_rate' ? `${v}%` : v;
+  return !v ? '—' : key === 'competition_rate' ? (v.includes(':') ? v : `${v}:1`) : key === 'fill_rate' ? (v.endsWith('%') ? v : `${v}%`) : v; // 원문에 단위가 이미 있으면 그대로
 };
 // 같은 학년에 출처가 여럿이면 값이 있는 것만 모아요(출처·기준 설명은 '출처별 값'에서).
 const cells = (rows: ResultRow[], key: Parameters<typeof cell>[1]) =>
   [...new Set(rows.map(r => cell(r, key)).filter(v => v !== '—'))].join(' / ') || '—';
 
-function SelectedDetail({ university, program, department, years, cut, preferred, onSource }: { university: string; program: string; department: Department; years: number[]; cut: 'cut_70' | 'cut_50'; preferred?: ResultRow; onSource: (row: ResultRow) => void }) {
+export function SelectedDetail({ university, program, department, years, cut, preferred, onSource }: { university: string; program: string; department: Department; years: number[]; cut: 'cut_70' | 'cut_50'; preferred?: ResultRow; onSource: (row: ResultRow) => void }) {
   const desc = [...years].reverse(), byYear = (y: number) => department.rows.filter(r => Number(r.result_year) === y);
   const latest = preferred ?? byYear(desc[0])[0] ?? department.rows[0];
   const multiple = years.some(y => byYear(y).length > 1);

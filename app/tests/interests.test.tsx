@@ -105,26 +105,25 @@ test('save from program detail, view from admission results after remount, open 
   await screen.findByRole('button', { name: `${university} ${program} 검증학과 관심에서 빼기` });
   expect(screen.getByRole('heading', { name: program })).toBeTruthy();
   cleanup(); at('/admission-results?view=interests');
-  expect(await screen.findByRole('heading', { name: '관심 전형 1개' })).toBeTruthy();
-  fireEvent.click(screen.getByRole('link', { name: program }));
-  expect(await screen.findByRole('heading', { name: program })).toBeTruthy();
-  const remove = await screen.findByRole('button', { name: `${university} ${program} 검증학과 관심에서 빼기` });
+  // 내 비교(2026-11-27 시안): 오른쪽 목록 · 모바일 목록에 같은 학과가 나와요
+  expect((await screen.findAllByRole('heading', { name: '내 비교 1개 · 최대 10개' })).length).toBeGreaterThan(0);
+  const remove = (await screen.findAllByRole('button', { name: `${university} ${program} 검증학과 관심에서 빼기` }))[0];
+  await waitFor(() => expect((remove as HTMLButtonElement).disabled).toBe(false));
   fireEvent.click(remove);
   await waitFor(async () => expect(await studentDb.interests.count()).toBe(0));
-  fireEvent.click(screen.getByRole('link', { name: '관심 전형 모아보기' }));
-  expect(await screen.findByText('아직 관심 전형이 없어요')).toBeTruthy();
+  expect(await screen.findByText('비교할 학교·학과를 담아 주세요')).toBeTruthy();
 });
 
 test('interests remain searchable and removable when released results disappear', async () => {
   await studentDb.setInterest(university, program, true);
   release.units = [];
   at('/admission-results?view=interests');
-  expect(await screen.findByText('현재 공개 자료에서 찾지 못했어요. 저장한 관심 기록은 유지돼요.')).toBeTruthy();
-  fireEvent.change(screen.getByLabelText('관심 전형 검색'), { target: { value: '없는 이름' } });
-  expect(screen.getByText('검색한 관심 전형이 없어요')).toBeTruthy();
-  fireEvent.click(screen.getByRole('button', { name: '검색어 지우기' }));
-  fireEvent.click(await screen.findByRole('button', { name: `${university} ${program} 관심에서 빼기` }));
-  expect(await screen.findByText('아직 관심 전형이 없어요')).toBeTruthy();
+  // 입결 자료가 없어도 담은 기록은 남고, 학과 없이 담은 전형은 그렇다고 알려요
+  expect((await screen.findAllByText('학과 없이 담은 전형이라 비교할 학과가 없어요. 될각에서 학과를 골라 주세요.')).length).toBeGreaterThan(0);
+  const remove = (await screen.findAllByRole('button', { name: `${university} ${program} 관심에서 빼기` }))[0];
+  await waitFor(() => expect((remove as HTMLButtonElement).disabled).toBe(false));
+  fireEvent.click(remove);
+  expect(await screen.findByText('비교할 학교·학과를 담아 주세요')).toBeTruthy();
 });
 
 test('a failed save is reported and does not claim success or mark the heart', async () => {

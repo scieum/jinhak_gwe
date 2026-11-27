@@ -64,7 +64,8 @@ test('지우기: 샘플만 지우고 내가 넣은 기록은 남기며, 다시 �
   await clearSample();
   expect(isSampleMode()).toBe(false);
   expect((await studentDb.grades.toArray()).map(g => g.id)).toEqual(['mine']);
-  expect((await studentDb.interests.toArray()).map(i => i.university)).toEqual(['서울대학교']);
+  // 내가 넣은 관심 + 내가 넣은 지원 준비 전형(지원 준비에 담으면 관심에도 담겨요)
+  expect((await studentDb.interests.toArray()).map(i => i.university)).toEqual(['서울대학교', '서울대학교']);
   expect((await studentDb.applications.toArray()).map(a => a.id)).toEqual([mineApp.id]);
   expect(await studentDb.tasks.toArray()).toMatchObject([{ id: 'my-task', application_id: null }]);
   expect(await studentDb.attendance.count()).toBe(0);
