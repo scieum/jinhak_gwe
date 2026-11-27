@@ -6,9 +6,15 @@ const normalize = (s: string) => s.normalize('NFKC').toLowerCase().replace(/대�
 const effective = registry.identities.filter(i => !i.effective_date || i.effective_date <= registry.as_of);
 const displayAliases = Object.entries(displayNames);
 
+// 별칭 목록을 매번 훑으면 입결 10만 행에서 수 초가 걸려요(특수 계열 모아보기 렉). 이름마다 한 번만 찾아요.
+const currentNames = new Map<string, string>();
 export function currentUniversityName(name: string): string {
+  const cached = currentNames.get(name);
+  if (cached !== undefined) return cached;
   const item = effective.find(i => i.aliases.some(a => normalize(a) === normalize(name)));
-  return item?.current_name ?? displayAliases.find(([alias]) => normalize(alias) === normalize(name))?.[1] ?? name;
+  const current = item?.current_name ?? displayAliases.find(([alias]) => normalize(alias) === normalize(name))?.[1] ?? name;
+  currentNames.set(name, current);
+  return current;
 }
 
 export function universitySearchLabels(name: string): string[] {
