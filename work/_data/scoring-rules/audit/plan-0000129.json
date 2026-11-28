@@ -1,0 +1,5232 @@
+{
+  "entry": "plan-0000129",
+  "university": "선문대학교",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000129/document-0000129.pdf",
+  "note": "app/public/data/susi-results/index.json·admission-plans.json 모두 '선문대학교'(단일 캠퍼스). 근거는 2028 시행계획 v2 p.8 '(내신 5등급제) 학교생활기록부 반영방법'. 10개 교과전형 모두 같은 반영방법이고 만점만 1,000(교과 100%) / 600(교과 60%: 면접·조기취업형계약학과·장애인등대상자).",
+  "programs": [
+    {
+      "index": 0,
+      "program": "면접",
+      "decision": "publish",
+      "reason": "p.4 총괄표(학생부 60%·면접 40%)와 p.8 내신 5등급제 반영방법을 한 필드씩 대조: 1-1~3-1(5개 학기), 국·영·수·사·과·한국사·제2외/한문 중 석차등급 표기 과목의 우수 15과목, 1~5등급 10/8/6/4/2점, 이수단위 무관 단순평균(credit_weighted false), 환산점수 × 60(600점 만점), 총점 소수 셋째 자리 반올림 — 초안과 일치. 수정: 초안은 selection top_n_total 15만 있어, 반영 과목이 15개 미만이면 원문 '부족 과목 수만큼 5등급(2점) 처리'(p.8)가 빠진 채 있는 과목만으로 평균했음 → advanced.buckets(n 15, fill 5등급)로 고침. 교과전형은 출결 미반영(출결은 체육특기자만, p.4·p.12), 학년·학기 가중 없음, 모집단위별 예외 없음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.13)은 계산 밖. p.9 9등급제 표는 미사용.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "선문대학교",
+        "program": "면접",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "과학",
+          "한국사",
+          "제2외국어",
+          "한문"
+        ],
+        "selection": {
+          "mode": "top_n_total",
+          "n": 15
+        },
+        "credit_weighted": false,
+        "rank_grade_points": {
+          "1": 10,
+          "2": 8,
+          "3": 6,
+          "4": 4,
+          "5": 2
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 600,
+        "base_score": 0,
+        "max_score": 600,
+        "rounding": {
+          "digits": 2,
+          "mode": "round"
+        },
+        "advanced": {
+          "buckets": [
+            {
+              "name": "우수 15과목",
+              "groups": [
+                "국어",
+                "영어",
+                "수학",
+                "사회",
+                "과학",
+                "한국사",
+                "제2외국어",
+                "한문"
+              ],
+              "n": 15,
+              "fill": {
+                "grade": 5,
+                "credits": 1
+              }
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          4,
+          8,
+          11,
+          13
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "석차등급이 있는 국어·영어·수학·사회·과학·한국사·제2외국어/한문 과목 중 등급이 좋은 15과목의 점수(10·8·6·4·2점)를 학점과 관계없이 단순 평균해요.",
+          "평균 × 60 = 600점 만점으로 계산하고, 소수 셋째 자리에서 반올림해요. 면접 40%(400점)는 포함하지 않아요.",
+          "반영 과목이 15개보다 적으면 모자란 만큼 5등급(2점)으로 채워요. 사회·과학 융합선택처럼 등급이 없는 과목은 빼요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급 섞인 19과목: 상위 15과목만, 범위 밖 과목 제외",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "사회",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "과학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "제2외국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "한문",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s17",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s18",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 432.0,
+          "expected_max": 600,
+          "working": "반영 대상(1-1~3-1, 국·영·수·사·과·한국사·제2외/한문, 석차등급 있는 과목) 16과목: 1등급 3(10점)·2등급 5(8점)·3등급 5(6점)·4등급 2(4점)·5등급 1(2점). 사회 융합선택(등급 없음)·정보·3-2 과목은 제외. 상위 15과목 합 = 30+40+30+8 = 108 → 108÷15 = 7.2 → ×60 = 432.00 (p.8 예시 7.2와 같은 구성)"
+        },
+        {
+          "label": "반영 과목 4개뿐: 부족 11과목은 5등급(2점)으로 채움 + 반올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 224.0,
+          "expected_max": 600,
+          "working": "10+10+8+6 = 34, 부족 11과목 × 2점 = 22 → 56÷15 = 3.7333… → ×60 = 224 → 소수 셋째 자리 반올림 224.00"
+        },
+        {
+          "label": "학점과 무관하게 등급 높은 과목 선택(17과목 중 15) + 반올림 올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 376.0,
+          "expected_max": 600,
+          "working": "1등급 2과목(각 1학점) 10×2 = 20, 3등급 12과목(각 4학점) 6×12 = 72, 5등급 3과목 중 1과목 2 → 94(단순평균, 학점 가중 없음) → 94÷15 = 6.2666… → ×60 = 376 → 376.00"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "program": "일반 (수시 · 학생부교과)",
+      "decision": "publish",
+      "reason": "p.4 총괄표(학생부 100%)와 p.8 내신 5등급제 반영방법을 한 필드씩 대조: 1-1~3-1(5개 학기), 국·영·수·사·과·한국사·제2외/한문 중 석차등급 표기 과목의 우수 15과목, 1~5등급 10/8/6/4/2점, 이수단위 무관 단순평균(credit_weighted false), 환산점수 × 100(1000점 만점), 총점 소수 셋째 자리 반올림 — 초안과 일치. 수정: 초안은 selection top_n_total 15만 있어, 반영 과목이 15개 미만이면 원문 '부족 과목 수만큼 5등급(2점) 처리'(p.8)가 빠진 채 있는 과목만으로 평균했음 → advanced.buckets(n 15, fill 5등급)로 고침. 교과전형은 출결 미반영(출결은 체육특기자만, p.4·p.12), 학년·학기 가중 없음, 모집단위별 예외 없음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.13)은 계산 밖. p.9 9등급제 표는 미사용.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "선문대학교",
+        "program": "일반 (수시 · 학생부교과)",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "과학",
+          "한국사",
+          "제2외국어",
+          "한문"
+        ],
+        "selection": {
+          "mode": "top_n_total",
+          "n": 15
+        },
+        "credit_weighted": false,
+        "rank_grade_points": {
+          "1": 10,
+          "2": 8,
+          "3": 6,
+          "4": 4,
+          "5": 2
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": {
+          "digits": 2,
+          "mode": "round"
+        },
+        "advanced": {
+          "buckets": [
+            {
+              "name": "우수 15과목",
+              "groups": [
+                "국어",
+                "영어",
+                "수학",
+                "사회",
+                "과학",
+                "한국사",
+                "제2외국어",
+                "한문"
+              ],
+              "n": 15,
+              "fill": {
+                "grade": 5,
+                "credits": 1
+              }
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          4,
+          8,
+          13
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "석차등급이 있는 국어·영어·수학·사회·과학·한국사·제2외국어/한문 과목 중 등급이 좋은 15과목의 점수(10·8·6·4·2점)를 학점과 관계없이 단순 평균해요.",
+          "평균 × 100 = 1,000점 만점으로 계산하고, 소수 셋째 자리에서 반올림해요.",
+          "반영 과목이 15개보다 적으면 모자란 만큼 5등급(2점)으로 채워요. 사회·과학 융합선택처럼 등급이 없는 과목은 빼요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급 섞인 19과목: 상위 15과목만, 범위 밖 과목 제외",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "사회",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "과학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "제2외국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "한문",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s17",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s18",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 720.0,
+          "expected_max": 1000,
+          "working": "반영 대상(1-1~3-1, 국·영·수·사·과·한국사·제2외/한문, 석차등급 있는 과목) 16과목: 1등급 3(10점)·2등급 5(8점)·3등급 5(6점)·4등급 2(4점)·5등급 1(2점). 사회 융합선택(등급 없음)·정보·3-2 과목은 제외. 상위 15과목 합 = 30+40+30+8 = 108 → 108÷15 = 7.2 → ×100 = 720.00 (p.8 예시 7.2와 같은 구성)"
+        },
+        {
+          "label": "반영 과목 4개뿐: 부족 11과목은 5등급(2점)으로 채움 + 반올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 373.33,
+          "expected_max": 1000,
+          "working": "10+10+8+6 = 34, 부족 11과목 × 2점 = 22 → 56÷15 = 3.7333… → ×100 = 373.333… → 소수 셋째 자리 반올림 373.33"
+        },
+        {
+          "label": "학점과 무관하게 등급 높은 과목 선택(17과목 중 15) + 반올림 올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 626.67,
+          "expected_max": 1000,
+          "working": "1등급 2과목(각 1학점) 10×2 = 20, 3등급 12과목(각 4학점) 6×12 = 72, 5등급 3과목 중 1과목 2 → 94(단순평균, 학점 가중 없음) → 94÷15 = 6.2666… → ×100 = 626.666… → 626.67"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "program": "지역학생",
+      "decision": "publish",
+      "reason": "p.4 총괄표(학생부 100%)와 p.8 내신 5등급제 반영방법을 한 필드씩 대조: 1-1~3-1(5개 학기), 국·영·수·사·과·한국사·제2외/한문 중 석차등급 표기 과목의 우수 15과목, 1~5등급 10/8/6/4/2점, 이수단위 무관 단순평균(credit_weighted false), 환산점수 × 100(1000점 만점), 총점 소수 셋째 자리 반올림 — 초안과 일치. 수정: 초안은 selection top_n_total 15만 있어, 반영 과목이 15개 미만이면 원문 '부족 과목 수만큼 5등급(2점) 처리'(p.8)가 빠진 채 있는 과목만으로 평균했음 → advanced.buckets(n 15, fill 5등급)로 고침. 교과전형은 출결 미반영(출결은 체육특기자만, p.4·p.12), 학년·학기 가중 없음, 모집단위별 예외 없음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.13)은 계산 밖. p.9 9등급제 표는 미사용.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "선문대학교",
+        "program": "지역학생",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "과학",
+          "한국사",
+          "제2외국어",
+          "한문"
+        ],
+        "selection": {
+          "mode": "top_n_total",
+          "n": 15
+        },
+        "credit_weighted": false,
+        "rank_grade_points": {
+          "1": 10,
+          "2": 8,
+          "3": 6,
+          "4": 4,
+          "5": 2
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": {
+          "digits": 2,
+          "mode": "round"
+        },
+        "advanced": {
+          "buckets": [
+            {
+              "name": "우수 15과목",
+              "groups": [
+                "국어",
+                "영어",
+                "수학",
+                "사회",
+                "과학",
+                "한국사",
+                "제2외국어",
+                "한문"
+              ],
+              "n": 15,
+              "fill": {
+                "grade": 5,
+                "credits": 1
+              }
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          4,
+          8,
+          13
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "석차등급이 있는 국어·영어·수학·사회·과학·한국사·제2외국어/한문 과목 중 등급이 좋은 15과목의 점수(10·8·6·4·2점)를 학점과 관계없이 단순 평균해요.",
+          "평균 × 100 = 1,000점 만점으로 계산하고, 소수 셋째 자리에서 반올림해요.",
+          "반영 과목이 15개보다 적으면 모자란 만큼 5등급(2점)으로 채워요. 사회·과학 융합선택처럼 등급이 없는 과목은 빼요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급 섞인 19과목: 상위 15과목만, 범위 밖 과목 제외",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "사회",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "과학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "제2외국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "한문",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s17",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s18",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 720.0,
+          "expected_max": 1000,
+          "working": "반영 대상(1-1~3-1, 국·영·수·사·과·한국사·제2외/한문, 석차등급 있는 과목) 16과목: 1등급 3(10점)·2등급 5(8점)·3등급 5(6점)·4등급 2(4점)·5등급 1(2점). 사회 융합선택(등급 없음)·정보·3-2 과목은 제외. 상위 15과목 합 = 30+40+30+8 = 108 → 108÷15 = 7.2 → ×100 = 720.00 (p.8 예시 7.2와 같은 구성)"
+        },
+        {
+          "label": "반영 과목 4개뿐: 부족 11과목은 5등급(2점)으로 채움 + 반올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 373.33,
+          "expected_max": 1000,
+          "working": "10+10+8+6 = 34, 부족 11과목 × 2점 = 22 → 56÷15 = 3.7333… → ×100 = 373.333… → 소수 셋째 자리 반올림 373.33"
+        },
+        {
+          "label": "학점과 무관하게 등급 높은 과목 선택(17과목 중 15) + 반올림 올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 626.67,
+          "expected_max": 1000,
+          "working": "1등급 2과목(각 1학점) 10×2 = 20, 3등급 12과목(각 4학점) 6×12 = 72, 5등급 3과목 중 1과목 2 → 94(단순평균, 학점 가중 없음) → 94÷15 = 6.2666… → ×100 = 626.666… → 626.67"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "program": "사회통합",
+      "decision": "publish",
+      "reason": "p.4 총괄표(학생부 100%)와 p.8 내신 5등급제 반영방법을 한 필드씩 대조: 1-1~3-1(5개 학기), 국·영·수·사·과·한국사·제2외/한문 중 석차등급 표기 과목의 우수 15과목, 1~5등급 10/8/6/4/2점, 이수단위 무관 단순평균(credit_weighted false), 환산점수 × 100(1000점 만점), 총점 소수 셋째 자리 반올림 — 초안과 일치. 수정: 초안은 selection top_n_total 15만 있어, 반영 과목이 15개 미만이면 원문 '부족 과목 수만큼 5등급(2점) 처리'(p.8)가 빠진 채 있는 과목만으로 평균했음 → advanced.buckets(n 15, fill 5등급)로 고침. 교과전형은 출결 미반영(출결은 체육특기자만, p.4·p.12), 학년·학기 가중 없음, 모집단위별 예외 없음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.13)은 계산 밖. p.9 9등급제 표는 미사용.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "선문대학교",
+        "program": "사회통합",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "과학",
+          "한국사",
+          "제2외국어",
+          "한문"
+        ],
+        "selection": {
+          "mode": "top_n_total",
+          "n": 15
+        },
+        "credit_weighted": false,
+        "rank_grade_points": {
+          "1": 10,
+          "2": 8,
+          "3": 6,
+          "4": 4,
+          "5": 2
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": {
+          "digits": 2,
+          "mode": "round"
+        },
+        "advanced": {
+          "buckets": [
+            {
+              "name": "우수 15과목",
+              "groups": [
+                "국어",
+                "영어",
+                "수학",
+                "사회",
+                "과학",
+                "한국사",
+                "제2외국어",
+                "한문"
+              ],
+              "n": 15,
+              "fill": {
+                "grade": 5,
+                "credits": 1
+              }
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          4,
+          8,
+          13
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "석차등급이 있는 국어·영어·수학·사회·과학·한국사·제2외국어/한문 과목 중 등급이 좋은 15과목의 점수(10·8·6·4·2점)를 학점과 관계없이 단순 평균해요.",
+          "평균 × 100 = 1,000점 만점으로 계산하고, 소수 셋째 자리에서 반올림해요.",
+          "반영 과목이 15개보다 적으면 모자란 만큼 5등급(2점)으로 채워요. 사회·과학 융합선택처럼 등급이 없는 과목은 빼요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급 섞인 19과목: 상위 15과목만, 범위 밖 과목 제외",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "사회",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "과학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "제2외국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "한문",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s17",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s18",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 720.0,
+          "expected_max": 1000,
+          "working": "반영 대상(1-1~3-1, 국·영·수·사·과·한국사·제2외/한문, 석차등급 있는 과목) 16과목: 1등급 3(10점)·2등급 5(8점)·3등급 5(6점)·4등급 2(4점)·5등급 1(2점). 사회 융합선택(등급 없음)·정보·3-2 과목은 제외. 상위 15과목 합 = 30+40+30+8 = 108 → 108÷15 = 7.2 → ×100 = 720.00 (p.8 예시 7.2와 같은 구성)"
+        },
+        {
+          "label": "반영 과목 4개뿐: 부족 11과목은 5등급(2점)으로 채움 + 반올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 373.33,
+          "expected_max": 1000,
+          "working": "10+10+8+6 = 34, 부족 11과목 × 2점 = 22 → 56÷15 = 3.7333… → ×100 = 373.333… → 소수 셋째 자리 반올림 373.33"
+        },
+        {
+          "label": "학점과 무관하게 등급 높은 과목 선택(17과목 중 15) + 반올림 올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 626.67,
+          "expected_max": 1000,
+          "working": "1등급 2과목(각 1학점) 10×2 = 20, 3등급 12과목(각 4학점) 6×12 = 72, 5등급 3과목 중 1과목 2 → 94(단순평균, 학점 가중 없음) → 94÷15 = 6.2666… → ×100 = 626.666… → 626.67"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "program": "지역저소득층",
+      "decision": "publish",
+      "reason": "p.4 총괄표(학생부 100%)와 p.8 내신 5등급제 반영방법을 한 필드씩 대조: 1-1~3-1(5개 학기), 국·영·수·사·과·한국사·제2외/한문 중 석차등급 표기 과목의 우수 15과목, 1~5등급 10/8/6/4/2점, 이수단위 무관 단순평균(credit_weighted false), 환산점수 × 100(1000점 만점), 총점 소수 셋째 자리 반올림 — 초안과 일치. 수정: 초안은 selection top_n_total 15만 있어, 반영 과목이 15개 미만이면 원문 '부족 과목 수만큼 5등급(2점) 처리'(p.8)가 빠진 채 있는 과목만으로 평균했음 → advanced.buckets(n 15, fill 5등급)로 고침. 교과전형은 출결 미반영(출결은 체육특기자만, p.4·p.12), 학년·학기 가중 없음, 모집단위별 예외 없음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.13)은 계산 밖. p.9 9등급제 표는 미사용. 간호학과만 모집(p.4)이지만 계산 방법이 같아 학과 선택은 요구하지 않음.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "선문대학교",
+        "program": "지역저소득층",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "과학",
+          "한국사",
+          "제2외국어",
+          "한문"
+        ],
+        "selection": {
+          "mode": "top_n_total",
+          "n": 15
+        },
+        "credit_weighted": false,
+        "rank_grade_points": {
+          "1": 10,
+          "2": 8,
+          "3": 6,
+          "4": 4,
+          "5": 2
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": {
+          "digits": 2,
+          "mode": "round"
+        },
+        "advanced": {
+          "buckets": [
+            {
+              "name": "우수 15과목",
+              "groups": [
+                "국어",
+                "영어",
+                "수학",
+                "사회",
+                "과학",
+                "한국사",
+                "제2외국어",
+                "한문"
+              ],
+              "n": 15,
+              "fill": {
+                "grade": 5,
+                "credits": 1
+              }
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          4,
+          8,
+          13
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "석차등급이 있는 국어·영어·수학·사회·과학·한국사·제2외국어/한문 과목 중 등급이 좋은 15과목의 점수(10·8·6·4·2점)를 학점과 관계없이 단순 평균해요.",
+          "평균 × 100 = 1,000점 만점으로 계산하고, 소수 셋째 자리에서 반올림해요.",
+          "반영 과목이 15개보다 적으면 모자란 만큼 5등급(2점)으로 채워요. 사회·과학 융합선택처럼 등급이 없는 과목은 빼요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급 섞인 19과목: 상위 15과목만, 범위 밖 과목 제외",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "사회",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "과학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "제2외국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "한문",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s17",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s18",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 720.0,
+          "expected_max": 1000,
+          "working": "반영 대상(1-1~3-1, 국·영·수·사·과·한국사·제2외/한문, 석차등급 있는 과목) 16과목: 1등급 3(10점)·2등급 5(8점)·3등급 5(6점)·4등급 2(4점)·5등급 1(2점). 사회 융합선택(등급 없음)·정보·3-2 과목은 제외. 상위 15과목 합 = 30+40+30+8 = 108 → 108÷15 = 7.2 → ×100 = 720.00 (p.8 예시 7.2와 같은 구성)"
+        },
+        {
+          "label": "반영 과목 4개뿐: 부족 11과목은 5등급(2점)으로 채움 + 반올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 373.33,
+          "expected_max": 1000,
+          "working": "10+10+8+6 = 34, 부족 11과목 × 2점 = 22 → 56÷15 = 3.7333… → ×100 = 373.333… → 소수 셋째 자리 반올림 373.33"
+        },
+        {
+          "label": "학점과 무관하게 등급 높은 과목 선택(17과목 중 15) + 반올림 올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 626.67,
+          "expected_max": 1000,
+          "working": "1등급 2과목(각 1학점) 10×2 = 20, 3등급 12과목(각 4학점) 6×12 = 72, 5등급 3과목 중 1과목 2 → 94(단순평균, 학점 가중 없음) → 94÷15 = 6.2666… → ×100 = 626.666… → 626.67"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "program": "조기취업형계약학과",
+      "decision": "publish",
+      "reason": "p.4 총괄표(학생부 60%·면접 40%)와 p.8 내신 5등급제 반영방법을 한 필드씩 대조: 1-1~3-1(5개 학기), 국·영·수·사·과·한국사·제2외/한문 중 석차등급 표기 과목의 우수 15과목, 1~5등급 10/8/6/4/2점, 이수단위 무관 단순평균(credit_weighted false), 환산점수 × 60(600점 만점), 총점 소수 셋째 자리 반올림 — 초안과 일치. 수정: 초안은 selection top_n_total 15만 있어, 반영 과목이 15개 미만이면 원문 '부족 과목 수만큼 5등급(2점) 처리'(p.8)가 빠진 채 있는 과목만으로 평균했음 → advanced.buckets(n 15, fill 5등급)로 고침. 교과전형은 출결 미반영(출결은 체육특기자만, p.4·p.12), 학년·학기 가중 없음, 모집단위별 예외 없음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.13)은 계산 밖. p.9 9등급제 표는 미사용. 이 전형은 p.4 '학생부교과(면접전형, 계약학과)[정원외]'(학생부 60 + 면접 40)로 대응.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "선문대학교",
+        "program": "조기취업형계약학과",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "과학",
+          "한국사",
+          "제2외국어",
+          "한문"
+        ],
+        "selection": {
+          "mode": "top_n_total",
+          "n": 15
+        },
+        "credit_weighted": false,
+        "rank_grade_points": {
+          "1": 10,
+          "2": 8,
+          "3": 6,
+          "4": 4,
+          "5": 2
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 600,
+        "base_score": 0,
+        "max_score": 600,
+        "rounding": {
+          "digits": 2,
+          "mode": "round"
+        },
+        "advanced": {
+          "buckets": [
+            {
+              "name": "우수 15과목",
+              "groups": [
+                "국어",
+                "영어",
+                "수학",
+                "사회",
+                "과학",
+                "한국사",
+                "제2외국어",
+                "한문"
+              ],
+              "n": 15,
+              "fill": {
+                "grade": 5,
+                "credits": 1
+              }
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          4,
+          8,
+          11,
+          13
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "석차등급이 있는 국어·영어·수학·사회·과학·한국사·제2외국어/한문 과목 중 등급이 좋은 15과목의 점수(10·8·6·4·2점)를 학점과 관계없이 단순 평균해요.",
+          "평균 × 60 = 600점 만점으로 계산하고, 소수 셋째 자리에서 반올림해요. 면접 40%(400점)는 포함하지 않아요.",
+          "반영 과목이 15개보다 적으면 모자란 만큼 5등급(2점)으로 채워요. 사회·과학 융합선택처럼 등급이 없는 과목은 빼요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급 섞인 19과목: 상위 15과목만, 범위 밖 과목 제외",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "사회",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "과학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "제2외국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "한문",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s17",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s18",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 432.0,
+          "expected_max": 600,
+          "working": "반영 대상(1-1~3-1, 국·영·수·사·과·한국사·제2외/한문, 석차등급 있는 과목) 16과목: 1등급 3(10점)·2등급 5(8점)·3등급 5(6점)·4등급 2(4점)·5등급 1(2점). 사회 융합선택(등급 없음)·정보·3-2 과목은 제외. 상위 15과목 합 = 30+40+30+8 = 108 → 108÷15 = 7.2 → ×60 = 432.00 (p.8 예시 7.2와 같은 구성)"
+        },
+        {
+          "label": "반영 과목 4개뿐: 부족 11과목은 5등급(2점)으로 채움 + 반올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 224.0,
+          "expected_max": 600,
+          "working": "10+10+8+6 = 34, 부족 11과목 × 2점 = 22 → 56÷15 = 3.7333… → ×60 = 224 → 소수 셋째 자리 반올림 224.00"
+        },
+        {
+          "label": "학점과 무관하게 등급 높은 과목 선택(17과목 중 15) + 반올림 올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 376.0,
+          "expected_max": 600,
+          "working": "1등급 2과목(각 1학점) 10×2 = 20, 3등급 12과목(각 4학점) 6×12 = 72, 5등급 3과목 중 1과목 2 → 94(단순평균, 학점 가중 없음) → 94÷15 = 6.2666… → ×60 = 376 → 376.00"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "program": "농어촌학생",
+      "decision": "publish",
+      "reason": "p.4 총괄표(학생부 100%)와 p.8 내신 5등급제 반영방법을 한 필드씩 대조: 1-1~3-1(5개 학기), 국·영·수·사·과·한국사·제2외/한문 중 석차등급 표기 과목의 우수 15과목, 1~5등급 10/8/6/4/2점, 이수단위 무관 단순평균(credit_weighted false), 환산점수 × 100(1000점 만점), 총점 소수 셋째 자리 반올림 — 초안과 일치. 수정: 초안은 selection top_n_total 15만 있어, 반영 과목이 15개 미만이면 원문 '부족 과목 수만큼 5등급(2점) 처리'(p.8)가 빠진 채 있는 과목만으로 평균했음 → advanced.buckets(n 15, fill 5등급)로 고침. 교과전형은 출결 미반영(출결은 체육특기자만, p.4·p.12), 학년·학기 가중 없음, 모집단위별 예외 없음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.13)은 계산 밖. p.9 9등급제 표는 미사용.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "선문대학교",
+        "program": "농어촌학생",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "과학",
+          "한국사",
+          "제2외국어",
+          "한문"
+        ],
+        "selection": {
+          "mode": "top_n_total",
+          "n": 15
+        },
+        "credit_weighted": false,
+        "rank_grade_points": {
+          "1": 10,
+          "2": 8,
+          "3": 6,
+          "4": 4,
+          "5": 2
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": {
+          "digits": 2,
+          "mode": "round"
+        },
+        "advanced": {
+          "buckets": [
+            {
+              "name": "우수 15과목",
+              "groups": [
+                "국어",
+                "영어",
+                "수학",
+                "사회",
+                "과학",
+                "한국사",
+                "제2외국어",
+                "한문"
+              ],
+              "n": 15,
+              "fill": {
+                "grade": 5,
+                "credits": 1
+              }
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          4,
+          8,
+          13
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "석차등급이 있는 국어·영어·수학·사회·과학·한국사·제2외국어/한문 과목 중 등급이 좋은 15과목의 점수(10·8·6·4·2점)를 학점과 관계없이 단순 평균해요.",
+          "평균 × 100 = 1,000점 만점으로 계산하고, 소수 셋째 자리에서 반올림해요.",
+          "반영 과목이 15개보다 적으면 모자란 만큼 5등급(2점)으로 채워요. 사회·과학 융합선택처럼 등급이 없는 과목은 빼요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급 섞인 19과목: 상위 15과목만, 범위 밖 과목 제외",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "사회",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "과학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "제2외국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "한문",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s17",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s18",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 720.0,
+          "expected_max": 1000,
+          "working": "반영 대상(1-1~3-1, 국·영·수·사·과·한국사·제2외/한문, 석차등급 있는 과목) 16과목: 1등급 3(10점)·2등급 5(8점)·3등급 5(6점)·4등급 2(4점)·5등급 1(2점). 사회 융합선택(등급 없음)·정보·3-2 과목은 제외. 상위 15과목 합 = 30+40+30+8 = 108 → 108÷15 = 7.2 → ×100 = 720.00 (p.8 예시 7.2와 같은 구성)"
+        },
+        {
+          "label": "반영 과목 4개뿐: 부족 11과목은 5등급(2점)으로 채움 + 반올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 373.33,
+          "expected_max": 1000,
+          "working": "10+10+8+6 = 34, 부족 11과목 × 2점 = 22 → 56÷15 = 3.7333… → ×100 = 373.333… → 소수 셋째 자리 반올림 373.33"
+        },
+        {
+          "label": "학점과 무관하게 등급 높은 과목 선택(17과목 중 15) + 반올림 올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 626.67,
+          "expected_max": 1000,
+          "working": "1등급 2과목(각 1학점) 10×2 = 20, 3등급 12과목(각 4학점) 6×12 = 72, 5등급 3과목 중 1과목 2 → 94(단순평균, 학점 가중 없음) → 94÷15 = 6.2666… → ×100 = 626.666… → 626.67"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "program": "특성화고교졸업자",
+      "decision": "publish",
+      "reason": "p.4 총괄표(학생부 100%)와 p.8 내신 5등급제 반영방법을 한 필드씩 대조: 1-1~3-1(5개 학기), 국·영·수·사·과·한국사·제2외/한문 중 석차등급 표기 과목의 우수 15과목, 1~5등급 10/8/6/4/2점, 이수단위 무관 단순평균(credit_weighted false), 환산점수 × 100(1000점 만점), 총점 소수 셋째 자리 반올림 — 초안과 일치. 수정: 초안은 selection top_n_total 15만 있어, 반영 과목이 15개 미만이면 원문 '부족 과목 수만큼 5등급(2점) 처리'(p.8)가 빠진 채 있는 과목만으로 평균했음 → advanced.buckets(n 15, fill 5등급)로 고침. 교과전형은 출결 미반영(출결은 체육특기자만, p.4·p.12), 학년·학기 가중 없음, 모집단위별 예외 없음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.13)은 계산 밖. p.9 9등급제 표는 미사용. 검증: p.8 '보통교과 총론 과목 중심, 그 외 과목은 대학입학전형관리위원회에서 정함' → 특성화고 전문교과 미반영 안내를 notes에 추가.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "선문대학교",
+        "program": "특성화고교졸업자",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "과학",
+          "한국사",
+          "제2외국어",
+          "한문"
+        ],
+        "selection": {
+          "mode": "top_n_total",
+          "n": 15
+        },
+        "credit_weighted": false,
+        "rank_grade_points": {
+          "1": 10,
+          "2": 8,
+          "3": 6,
+          "4": 4,
+          "5": 2
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": {
+          "digits": 2,
+          "mode": "round"
+        },
+        "advanced": {
+          "buckets": [
+            {
+              "name": "우수 15과목",
+              "groups": [
+                "국어",
+                "영어",
+                "수학",
+                "사회",
+                "과학",
+                "한국사",
+                "제2외국어",
+                "한문"
+              ],
+              "n": 15,
+              "fill": {
+                "grade": 5,
+                "credits": 1
+              }
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          4,
+          8,
+          13
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "석차등급이 있는 국어·영어·수학·사회·과학·한국사·제2외국어/한문 과목 중 등급이 좋은 15과목의 점수(10·8·6·4·2점)를 학점과 관계없이 단순 평균해요.",
+          "평균 × 100 = 1,000점 만점으로 계산하고, 소수 셋째 자리에서 반올림해요.",
+          "반영 과목이 15개보다 적으면 모자란 만큼 5등급(2점)으로 채워요. 사회·과학 융합선택처럼 등급이 없는 과목은 빼요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요.",
+          "보통교과 과목만 계산해요. 전문교과 과목의 반영 여부는 대학입학전형관리위원회가 정해서(p.8) 넣지 않았어요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급 섞인 19과목: 상위 15과목만, 범위 밖 과목 제외",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "사회",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "과학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "제2외국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "한문",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s17",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s18",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 720.0,
+          "expected_max": 1000,
+          "working": "반영 대상(1-1~3-1, 국·영·수·사·과·한국사·제2외/한문, 석차등급 있는 과목) 16과목: 1등급 3(10점)·2등급 5(8점)·3등급 5(6점)·4등급 2(4점)·5등급 1(2점). 사회 융합선택(등급 없음)·정보·3-2 과목은 제외. 상위 15과목 합 = 30+40+30+8 = 108 → 108÷15 = 7.2 → ×100 = 720.00 (p.8 예시 7.2와 같은 구성)"
+        },
+        {
+          "label": "반영 과목 4개뿐: 부족 11과목은 5등급(2점)으로 채움 + 반올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 373.33,
+          "expected_max": 1000,
+          "working": "10+10+8+6 = 34, 부족 11과목 × 2점 = 22 → 56÷15 = 3.7333… → ×100 = 373.333… → 소수 셋째 자리 반올림 373.33"
+        },
+        {
+          "label": "학점과 무관하게 등급 높은 과목 선택(17과목 중 15) + 반올림 올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 626.67,
+          "expected_max": 1000,
+          "working": "1등급 2과목(각 1학점) 10×2 = 20, 3등급 12과목(각 4학점) 6×12 = 72, 5등급 3과목 중 1과목 2 → 94(단순평균, 학점 가중 없음) → 94÷15 = 6.2666… → ×100 = 626.666… → 626.67"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "program": "기초생활수급자및차상위계층",
+      "decision": "publish",
+      "reason": "p.4 총괄표(학생부 100%)와 p.8 내신 5등급제 반영방법을 한 필드씩 대조: 1-1~3-1(5개 학기), 국·영·수·사·과·한국사·제2외/한문 중 석차등급 표기 과목의 우수 15과목, 1~5등급 10/8/6/4/2점, 이수단위 무관 단순평균(credit_weighted false), 환산점수 × 100(1000점 만점), 총점 소수 셋째 자리 반올림 — 초안과 일치. 수정: 초안은 selection top_n_total 15만 있어, 반영 과목이 15개 미만이면 원문 '부족 과목 수만큼 5등급(2점) 처리'(p.8)가 빠진 채 있는 과목만으로 평균했음 → advanced.buckets(n 15, fill 5등급)로 고침. 교과전형은 출결 미반영(출결은 체육특기자만, p.4·p.12), 학년·학기 가중 없음, 모집단위별 예외 없음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.13)은 계산 밖. p.9 9등급제 표는 미사용.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "선문대학교",
+        "program": "기초생활수급자및차상위계층",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "과학",
+          "한국사",
+          "제2외국어",
+          "한문"
+        ],
+        "selection": {
+          "mode": "top_n_total",
+          "n": 15
+        },
+        "credit_weighted": false,
+        "rank_grade_points": {
+          "1": 10,
+          "2": 8,
+          "3": 6,
+          "4": 4,
+          "5": 2
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": {
+          "digits": 2,
+          "mode": "round"
+        },
+        "advanced": {
+          "buckets": [
+            {
+              "name": "우수 15과목",
+              "groups": [
+                "국어",
+                "영어",
+                "수학",
+                "사회",
+                "과학",
+                "한국사",
+                "제2외국어",
+                "한문"
+              ],
+              "n": 15,
+              "fill": {
+                "grade": 5,
+                "credits": 1
+              }
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          4,
+          8,
+          13
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "석차등급이 있는 국어·영어·수학·사회·과학·한국사·제2외국어/한문 과목 중 등급이 좋은 15과목의 점수(10·8·6·4·2점)를 학점과 관계없이 단순 평균해요.",
+          "평균 × 100 = 1,000점 만점으로 계산하고, 소수 셋째 자리에서 반올림해요.",
+          "반영 과목이 15개보다 적으면 모자란 만큼 5등급(2점)으로 채워요. 사회·과학 융합선택처럼 등급이 없는 과목은 빼요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급 섞인 19과목: 상위 15과목만, 범위 밖 과목 제외",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "사회",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "과학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "제2외국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "한문",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s17",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s18",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 720.0,
+          "expected_max": 1000,
+          "working": "반영 대상(1-1~3-1, 국·영·수·사·과·한국사·제2외/한문, 석차등급 있는 과목) 16과목: 1등급 3(10점)·2등급 5(8점)·3등급 5(6점)·4등급 2(4점)·5등급 1(2점). 사회 융합선택(등급 없음)·정보·3-2 과목은 제외. 상위 15과목 합 = 30+40+30+8 = 108 → 108÷15 = 7.2 → ×100 = 720.00 (p.8 예시 7.2와 같은 구성)"
+        },
+        {
+          "label": "반영 과목 4개뿐: 부족 11과목은 5등급(2점)으로 채움 + 반올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 373.33,
+          "expected_max": 1000,
+          "working": "10+10+8+6 = 34, 부족 11과목 × 2점 = 22 → 56÷15 = 3.7333… → ×100 = 373.333… → 소수 셋째 자리 반올림 373.33"
+        },
+        {
+          "label": "학점과 무관하게 등급 높은 과목 선택(17과목 중 15) + 반올림 올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 626.67,
+          "expected_max": 1000,
+          "working": "1등급 2과목(각 1학점) 10×2 = 20, 3등급 12과목(각 4학점) 6×12 = 72, 5등급 3과목 중 1과목 2 → 94(단순평균, 학점 가중 없음) → 94÷15 = 6.2666… → ×100 = 626.666… → 626.67"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "program": "장애인등대상자",
+      "decision": "publish",
+      "reason": "p.4 총괄표(학생부 60%·면접 40%)와 p.8 내신 5등급제 반영방법을 한 필드씩 대조: 1-1~3-1(5개 학기), 국·영·수·사·과·한국사·제2외/한문 중 석차등급 표기 과목의 우수 15과목, 1~5등급 10/8/6/4/2점, 이수단위 무관 단순평균(credit_weighted false), 환산점수 × 60(600점 만점), 총점 소수 셋째 자리 반올림 — 초안과 일치. 수정: 초안은 selection top_n_total 15만 있어, 반영 과목이 15개 미만이면 원문 '부족 과목 수만큼 5등급(2점) 처리'(p.8)가 빠진 채 있는 과목만으로 평균했음 → advanced.buckets(n 15, fill 5등급)로 고침. 교과전형은 출결 미반영(출결은 체육특기자만, p.4·p.12), 학년·학기 가중 없음, 모집단위별 예외 없음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.13)은 계산 밖. p.9 9등급제 표는 미사용.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "선문대학교",
+        "program": "장애인등대상자",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "과학",
+          "한국사",
+          "제2외국어",
+          "한문"
+        ],
+        "selection": {
+          "mode": "top_n_total",
+          "n": 15
+        },
+        "credit_weighted": false,
+        "rank_grade_points": {
+          "1": 10,
+          "2": 8,
+          "3": 6,
+          "4": 4,
+          "5": 2
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 600,
+        "base_score": 0,
+        "max_score": 600,
+        "rounding": {
+          "digits": 2,
+          "mode": "round"
+        },
+        "advanced": {
+          "buckets": [
+            {
+              "name": "우수 15과목",
+              "groups": [
+                "국어",
+                "영어",
+                "수학",
+                "사회",
+                "과학",
+                "한국사",
+                "제2외국어",
+                "한문"
+              ],
+              "n": 15,
+              "fill": {
+                "grade": 5,
+                "credits": 1
+              }
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          4,
+          8,
+          11,
+          13
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "석차등급이 있는 국어·영어·수학·사회·과학·한국사·제2외국어/한문 과목 중 등급이 좋은 15과목의 점수(10·8·6·4·2점)를 학점과 관계없이 단순 평균해요.",
+          "평균 × 60 = 600점 만점으로 계산하고, 소수 셋째 자리에서 반올림해요. 면접 40%(400점)는 포함하지 않아요.",
+          "반영 과목이 15개보다 적으면 모자란 만큼 5등급(2점)으로 채워요. 사회·과학 융합선택처럼 등급이 없는 과목은 빼요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급 섞인 19과목: 상위 15과목만, 범위 밖 과목 제외",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "사회",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "과학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "제2외국어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "한문",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s17",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s18",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 432.0,
+          "expected_max": 600,
+          "working": "반영 대상(1-1~3-1, 국·영·수·사·과·한국사·제2외/한문, 석차등급 있는 과목) 16과목: 1등급 3(10점)·2등급 5(8점)·3등급 5(6점)·4등급 2(4점)·5등급 1(2점). 사회 융합선택(등급 없음)·정보·3-2 과목은 제외. 상위 15과목 합 = 30+40+30+8 = 108 → 108÷15 = 7.2 → ×60 = 432.00 (p.8 예시 7.2와 같은 구성)"
+        },
+        {
+          "label": "반영 과목 4개뿐: 부족 11과목은 5등급(2점)으로 채움 + 반올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 224.0,
+          "expected_max": 600,
+          "working": "10+10+8+6 = 34, 부족 11과목 × 2점 = 22 → 56÷15 = 3.7333… → ×60 = 224 → 소수 셋째 자리 반올림 224.00"
+        },
+        {
+          "label": "학점과 무관하게 등급 높은 과목 선택(17과목 중 15) + 반올림 올림",
+          "grades": [
+            {
+              "id": "s0",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s1",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 1,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s2",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s3",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s4",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s5",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s6",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s7",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s8",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s9",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s10",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s11",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s12",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s13",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s14",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s15",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "s16",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 376.0,
+          "expected_max": 600,
+          "working": "1등급 2과목(각 1학점) 10×2 = 20, 3등급 12과목(각 4학점) 6×12 = 72, 5등급 3과목 중 1과목 2 → 94(단순평균, 학점 가중 없음) → 94÷15 = 6.2666… → ×60 = 376 → 376.00"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,944 @@
+{
+  "entry": "plan-0000228",
+  "university": "예수대학교",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000228/document-0000228.pdf",
+  "note": "app/public/data/susi-results/index.json·admission-plans.json 모두 '예수대학교'(단일 캠퍼스). 모집단위는 간호학부 하나.",
+  "programs": [
+    {
+      "index": 0,
+      "program": "일반전형 (수시 · 학생부교과)",
+      "decision": "publish",
+      "reason": "p.6~7 원문(표 이미지 확인)과 한 필드씩 대조: 반영기간 1-1~3-1(졸업예정자), 국·영·수·사(역사·도덕 포함 → 사회+한국사)·과, 석차등급 표기 전 과목 학점 가중, 등급점수 9.8/8.5/7.1/5.6/4.0, 교과 830 + 70×평균/9.8(엔진 base 830 + 비율×70과 같음), 출결 96 + 득점(0~2일 4, 3~6일 3, 7~15일 2, 16~30일 1, 31일 이상 0; 무단만, 지각·조퇴·결과 3회=1일), 학생부 1,000점이 전형총점 100%(간호학부 단일 모집단위, 수시 전 전형 공통 'Ⅳ.수시모집 2·3'). 수정: 원문 '융합선택과목 제외'를 type_rules exclude로 추가(초안대로면 석차등급이 있는 국어·영어·수학 융합선택이 반영됨). 소수점: 원문 예시 '소수점 넷째자리에서 반올림'은 교과 점수 기준이나 출결 점수가 정수라 최종 3자리 반올림과 같음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.11)은 계산 밖.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "예수대학교",
+        "program": "일반전형 (수시 · 학생부교과)",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "한국사",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 9.8,
+          "2": 8.5,
+          "3": 7.1,
+          "4": 5.6,
+          "5": 4.0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 900,
+        "base_score": 830,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 100,
+          "deduction_table": [
+            {
+              "absence_max": 2,
+              "points": 0
+            },
+            {
+              "absence_max": 6,
+              "points": 1
+            },
+            {
+              "absence_max": 15,
+              "points": 2
+            },
+            {
+              "absence_max": 30,
+              "points": 3
+            },
+            {
+              "absence_max": 9999,
+              "points": 4
+            }
+          ]
+        },
+        "max_score": 1000,
+        "rounding": {
+          "digits": 3,
+          "mode": "round"
+        },
+        "advanced": {
+          "type_rules": [
+            {
+              "types": [
+                "융합선택"
+              ],
+              "use": "exclude"
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          6,
+          7
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 1,000점(교과 900점 + 출결 100점)을 계산해요. 교과 = 830 + 70 × 평균등급점수/9.8이에요.",
+          "국어·영어·수학·사회(역사·도덕 포함)·과학 중 석차등급 있는 공통·일반·진로선택 과목을 학점 가중 평균해요. 융합선택은 빼요.",
+          "출결은 무단 결석일수(지각·조퇴·결과 3회 = 결석 1일)에 따라 96 + 0~4점이에요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "전 과목 1등급 · 출결 무결",
+          "grades": [
+            {
+              "rank_grade": 1
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 1000,
+          "expected_max": 1000,
+          "working": "평균등급점수 9.8 → 교과 830 + 70×9.8/9.8 = 900. 출결 무단결석 0일(0~2일) → 96 + 4.0 = 100. 합 1000."
+        },
+        {
+          "label": "등급 섞임 · 넷째 자리 반올림(올림)",
+          "grades": [
+            {
+              "subject_group": "수학",
+              "rank_grade": 2,
+              "credits": 4
+            },
+            {
+              "subject_group": "국어",
+              "name": "공통국어1",
+              "rank_grade": 5,
+              "credits": 1
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 984.286,
+          "expected_max": 1000,
+          "working": "평균등급점수 = (8.5×4 + 4.0×1) ÷ 5 = 38/5 = 7.6. 교과 = 830 + 70×7.6/9.8 = 830 + 54.2857142… = 884.2857142… → 소수점 넷째 자리에서 반올림 884.286(버림이면 884.285). 출결 100. 합 984.286."
+        },
+        {
+          "label": "융합선택 제외 · 진로선택·한국사 반영 · 정보 제외",
+          "grades": [
+            {
+              "subject_group": "영어",
+              "name": "영어 진로",
+              "type": "진로선택",
+              "rank_grade": 3,
+              "credits": 3
+            },
+            {
+              "subject_group": "한국사",
+              "name": "한국사1",
+              "type": "공통",
+              "rank_grade": 1,
+              "credits": 3
+            },
+            {
+              "subject_group": "영어",
+              "name": "영어 융합",
+              "type": "융합선택",
+              "rank_grade": 1,
+              "credits": 2
+            },
+            {
+              "subject_group": "과학",
+              "name": "과학 융합",
+              "type": "융합선택",
+              "rank_grade": null,
+              "achievement": "A",
+              "credits": 2
+            },
+            {
+              "subject_group": "정보",
+              "name": "정보",
+              "rank_grade": 1,
+              "credits": 2
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 990.357,
+          "expected_max": 1000,
+          "working": "반영: 영어 진로선택 3등급 3학점(7.1×3=21.3), 한국사(역사 포함) 1등급 3학점(9.8×3=29.4). 융합선택 2과목은 원문 '융합선택과목 제외', 정보는 반영 교과 아님. 평균 = 50.7/6 = 8.45. 교과 = 830 + 70×8.45/9.8 = 830 + 60.357142… = 890.357142… → 890.357. 출결 100. 합 990.357."
+        },
+        {
+          "label": "3학년 2학기 제외 · 2·3학년 섞임",
+          "grades": [
+            {
+              "subject_group": "과학",
+              "name": "물리학",
+              "semester": "2-1",
+              "rank_grade": 4,
+              "credits": 2
+            },
+            {
+              "subject_group": "사회",
+              "name": "사회와 문화",
+              "semester": "3-1",
+              "rank_grade": 3,
+              "credits": 2
+            },
+            {
+              "subject_group": "국어",
+              "name": "문학",
+              "semester": "3-2",
+              "rank_grade": 1,
+              "credits": 4
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 975.357,
+          "expected_max": 1000,
+          "working": "졸업예정자는 3학년 1학기까지라 3-2 문학 제외. 평균 = (5.6×2 + 7.1×2) ÷ 4 = 25.4/4 = 6.35. 교과 = 830 + 70×6.35/9.8 = 830 + 45.357142… = 875.357142… → 875.357. 출결 100. 합 975.357."
+        },
+        {
+          "label": "전 과목 5등급",
+          "grades": [
+            {
+              "rank_grade": 5
+            },
+            {
+              "subject_group": "영어",
+              "name": "공통영어1",
+              "rank_grade": 5,
+              "credits": 3
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 958.571,
+          "expected_max": 1000,
+          "working": "평균등급점수 4.0 → 교과 = 830 + 70×4.0/9.8 = 830 + 28.571428… = 858.571428… → 858.571. 출결 100. 합 958.571."
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "program": "지역인재전형",
+      "decision": "publish",
+      "reason": "p.6~7 원문(표 이미지 확인)과 한 필드씩 대조: 반영기간 1-1~3-1(졸업예정자), 국·영·수·사(역사·도덕 포함 → 사회+한국사)·과, 석차등급 표기 전 과목 학점 가중, 등급점수 9.8/8.5/7.1/5.6/4.0, 교과 830 + 70×평균/9.8(엔진 base 830 + 비율×70과 같음), 출결 96 + 득점(0~2일 4, 3~6일 3, 7~15일 2, 16~30일 1, 31일 이상 0; 무단만, 지각·조퇴·결과 3회=1일), 학생부 1,000점이 전형총점 100%(간호학부 단일 모집단위, 수시 전 전형 공통 'Ⅳ.수시모집 2·3'). 수정: 원문 '융합선택과목 제외'를 type_rules exclude로 추가(초안대로면 석차등급이 있는 국어·영어·수학 융합선택이 반영됨). 소수점: 원문 예시 '소수점 넷째자리에서 반올림'은 교과 점수 기준이나 출결 점수가 정수라 최종 3자리 반올림과 같음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.11)은 계산 밖.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "예수대학교",
+        "program": "지역인재전형",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "한국사",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 9.8,
+          "2": 8.5,
+          "3": 7.1,
+          "4": 5.6,
+          "5": 4.0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 900,
+        "base_score": 830,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 100,
+          "deduction_table": [
+            {
+              "absence_max": 2,
+              "points": 0
+            },
+            {
+              "absence_max": 6,
+              "points": 1
+            },
+            {
+              "absence_max": 15,
+              "points": 2
+            },
+            {
+              "absence_max": 30,
+              "points": 3
+            },
+            {
+              "absence_max": 9999,
+              "points": 4
+            }
+          ]
+        },
+        "max_score": 1000,
+        "rounding": {
+          "digits": 3,
+          "mode": "round"
+        },
+        "advanced": {
+          "type_rules": [
+            {
+              "types": [
+                "융합선택"
+              ],
+              "use": "exclude"
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          6,
+          7
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 1,000점(교과 900점 + 출결 100점)을 계산해요. 교과 = 830 + 70 × 평균등급점수/9.8이에요.",
+          "국어·영어·수학·사회(역사·도덕 포함)·과학 중 석차등급 있는 공통·일반·진로선택 과목을 학점 가중 평균해요. 융합선택은 빼요.",
+          "출결은 무단 결석일수(지각·조퇴·결과 3회 = 결석 1일)에 따라 96 + 0~4점이에요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "전 과목 1등급 · 출결 무결",
+          "grades": [
+            {
+              "rank_grade": 1
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 1000,
+          "expected_max": 1000,
+          "working": "평균등급점수 9.8 → 교과 830 + 70×9.8/9.8 = 900. 출결 무단결석 0일(0~2일) → 96 + 4.0 = 100. 합 1000."
+        },
+        {
+          "label": "등급 섞임 · 넷째 자리 반올림(올림)",
+          "grades": [
+            {
+              "subject_group": "수학",
+              "rank_grade": 2,
+              "credits": 4
+            },
+            {
+              "subject_group": "국어",
+              "name": "공통국어1",
+              "rank_grade": 5,
+              "credits": 1
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 984.286,
+          "expected_max": 1000,
+          "working": "평균등급점수 = (8.5×4 + 4.0×1) ÷ 5 = 38/5 = 7.6. 교과 = 830 + 70×7.6/9.8 = 830 + 54.2857142… = 884.2857142… → 소수점 넷째 자리에서 반올림 884.286(버림이면 884.285). 출결 100. 합 984.286."
+        },
+        {
+          "label": "융합선택 제외 · 진로선택·한국사 반영 · 정보 제외",
+          "grades": [
+            {
+              "subject_group": "영어",
+              "name": "영어 진로",
+              "type": "진로선택",
+              "rank_grade": 3,
+              "credits": 3
+            },
+            {
+              "subject_group": "한국사",
+              "name": "한국사1",
+              "type": "공통",
+              "rank_grade": 1,
+              "credits": 3
+            },
+            {
+              "subject_group": "영어",
+              "name": "영어 융합",
+              "type": "융합선택",
+              "rank_grade": 1,
+              "credits": 2
+            },
+            {
+              "subject_group": "과학",
+              "name": "과학 융합",
+              "type": "융합선택",
+              "rank_grade": null,
+              "achievement": "A",
+              "credits": 2
+            },
+            {
+              "subject_group": "정보",
+              "name": "정보",
+              "rank_grade": 1,
+              "credits": 2
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 990.357,
+          "expected_max": 1000,
+          "working": "반영: 영어 진로선택 3등급 3학점(7.1×3=21.3), 한국사(역사 포함) 1등급 3학점(9.8×3=29.4). 융합선택 2과목은 원문 '융합선택과목 제외', 정보는 반영 교과 아님. 평균 = 50.7/6 = 8.45. 교과 = 830 + 70×8.45/9.8 = 830 + 60.357142… = 890.357142… → 890.357. 출결 100. 합 990.357."
+        },
+        {
+          "label": "3학년 2학기 제외 · 2·3학년 섞임",
+          "grades": [
+            {
+              "subject_group": "과학",
+              "name": "물리학",
+              "semester": "2-1",
+              "rank_grade": 4,
+              "credits": 2
+            },
+            {
+              "subject_group": "사회",
+              "name": "사회와 문화",
+              "semester": "3-1",
+              "rank_grade": 3,
+              "credits": 2
+            },
+            {
+              "subject_group": "국어",
+              "name": "문학",
+              "semester": "3-2",
+              "rank_grade": 1,
+              "credits": 4
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 975.357,
+          "expected_max": 1000,
+          "working": "졸업예정자는 3학년 1학기까지라 3-2 문학 제외. 평균 = (5.6×2 + 7.1×2) ÷ 4 = 25.4/4 = 6.35. 교과 = 830 + 70×6.35/9.8 = 830 + 45.357142… = 875.357142… → 875.357. 출결 100. 합 975.357."
+        },
+        {
+          "label": "전 과목 5등급",
+          "grades": [
+            {
+              "rank_grade": 5
+            },
+            {
+              "subject_group": "영어",
+              "name": "공통영어1",
+              "rank_grade": 5,
+              "credits": 3
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 958.571,
+          "expected_max": 1000,
+          "working": "평균등급점수 4.0 → 교과 = 830 + 70×4.0/9.8 = 830 + 28.571428… = 858.571428… → 858.571. 출결 100. 합 958.571."
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "program": "기회균형 (수시 · 학생부교과 · 정원내)",
+      "decision": "publish",
+      "reason": "p.6~7 원문(표 이미지 확인)과 한 필드씩 대조: 반영기간 1-1~3-1(졸업예정자), 국·영·수·사(역사·도덕 포함 → 사회+한국사)·과, 석차등급 표기 전 과목 학점 가중, 등급점수 9.8/8.5/7.1/5.6/4.0, 교과 830 + 70×평균/9.8(엔진 base 830 + 비율×70과 같음), 출결 96 + 득점(0~2일 4, 3~6일 3, 7~15일 2, 16~30일 1, 31일 이상 0; 무단만, 지각·조퇴·결과 3회=1일), 학생부 1,000점이 전형총점 100%(간호학부 단일 모집단위, 수시 전 전형 공통 'Ⅳ.수시모집 2·3'). 수정: 원문 '융합선택과목 제외'를 type_rules exclude로 추가(초안대로면 석차등급이 있는 국어·영어·수학 융합선택이 반영됨). 소수점: 원문 예시 '소수점 넷째자리에서 반올림'은 교과 점수 기준이나 출결 점수가 정수라 최종 3자리 반올림과 같음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.11)은 계산 밖.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "예수대학교",
+        "program": "기회균형 (수시 · 학생부교과 · 정원내)",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "한국사",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 9.8,
+          "2": 8.5,
+          "3": 7.1,
+          "4": 5.6,
+          "5": 4.0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 900,
+        "base_score": 830,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 100,
+          "deduction_table": [
+            {
+              "absence_max": 2,
+              "points": 0
+            },
+            {
+              "absence_max": 6,
+              "points": 1
+            },
+            {
+              "absence_max": 15,
+              "points": 2
+            },
+            {
+              "absence_max": 30,
+              "points": 3
+            },
+            {
+              "absence_max": 9999,
+              "points": 4
+            }
+          ]
+        },
+        "max_score": 1000,
+        "rounding": {
+          "digits": 3,
+          "mode": "round"
+        },
+        "advanced": {
+          "type_rules": [
+            {
+              "types": [
+                "융합선택"
+              ],
+              "use": "exclude"
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          6,
+          7
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 1,000점(교과 900점 + 출결 100점)을 계산해요. 교과 = 830 + 70 × 평균등급점수/9.8이에요.",
+          "국어·영어·수학·사회(역사·도덕 포함)·과학 중 석차등급 있는 공통·일반·진로선택 과목을 학점 가중 평균해요. 융합선택은 빼요.",
+          "출결은 무단 결석일수(지각·조퇴·결과 3회 = 결석 1일)에 따라 96 + 0~4점이에요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "전 과목 1등급 · 출결 무결",
+          "grades": [
+            {
+              "rank_grade": 1
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 1000,
+          "expected_max": 1000,
+          "working": "평균등급점수 9.8 → 교과 830 + 70×9.8/9.8 = 900. 출결 무단결석 0일(0~2일) → 96 + 4.0 = 100. 합 1000."
+        },
+        {
+          "label": "등급 섞임 · 넷째 자리 반올림(올림)",
+          "grades": [
+            {
+              "subject_group": "수학",
+              "rank_grade": 2,
+              "credits": 4
+            },
+            {
+              "subject_group": "국어",
+              "name": "공통국어1",
+              "rank_grade": 5,
+              "credits": 1
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 984.286,
+          "expected_max": 1000,
+          "working": "평균등급점수 = (8.5×4 + 4.0×1) ÷ 5 = 38/5 = 7.6. 교과 = 830 + 70×7.6/9.8 = 830 + 54.2857142… = 884.2857142… → 소수점 넷째 자리에서 반올림 884.286(버림이면 884.285). 출결 100. 합 984.286."
+        },
+        {
+          "label": "융합선택 제외 · 진로선택·한국사 반영 · 정보 제외",
+          "grades": [
+            {
+              "subject_group": "영어",
+              "name": "영어 진로",
+              "type": "진로선택",
+              "rank_grade": 3,
+              "credits": 3
+            },
+            {
+              "subject_group": "한국사",
+              "name": "한국사1",
+              "type": "공통",
+              "rank_grade": 1,
+              "credits": 3
+            },
+            {
+              "subject_group": "영어",
+              "name": "영어 융합",
+              "type": "융합선택",
+              "rank_grade": 1,
+              "credits": 2
+            },
+            {
+              "subject_group": "과학",
+              "name": "과학 융합",
+              "type": "융합선택",
+              "rank_grade": null,
+              "achievement": "A",
+              "credits": 2
+            },
+            {
+              "subject_group": "정보",
+              "name": "정보",
+              "rank_grade": 1,
+              "credits": 2
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 990.357,
+          "expected_max": 1000,
+          "working": "반영: 영어 진로선택 3등급 3학점(7.1×3=21.3), 한국사(역사 포함) 1등급 3학점(9.8×3=29.4). 융합선택 2과목은 원문 '융합선택과목 제외', 정보는 반영 교과 아님. 평균 = 50.7/6 = 8.45. 교과 = 830 + 70×8.45/9.8 = 830 + 60.357142… = 890.357142… → 890.357. 출결 100. 합 990.357."
+        },
+        {
+          "label": "3학년 2학기 제외 · 2·3학년 섞임",
+          "grades": [
+            {
+              "subject_group": "과학",
+              "name": "물리학",
+              "semester": "2-1",
+              "rank_grade": 4,
+              "credits": 2
+            },
+            {
+              "subject_group": "사회",
+              "name": "사회와 문화",
+              "semester": "3-1",
+              "rank_grade": 3,
+              "credits": 2
+            },
+            {
+              "subject_group": "국어",
+              "name": "문학",
+              "semester": "3-2",
+              "rank_grade": 1,
+              "credits": 4
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 975.357,
+          "expected_max": 1000,
+          "working": "졸업예정자는 3학년 1학기까지라 3-2 문학 제외. 평균 = (5.6×2 + 7.1×2) ÷ 4 = 25.4/4 = 6.35. 교과 = 830 + 70×6.35/9.8 = 830 + 45.357142… = 875.357142… → 875.357. 출결 100. 합 975.357."
+        },
+        {
+          "label": "전 과목 5등급",
+          "grades": [
+            {
+              "rank_grade": 5
+            },
+            {
+              "subject_group": "영어",
+              "name": "공통영어1",
+              "rank_grade": 5,
+              "credits": 3
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 958.571,
+          "expected_max": 1000,
+          "working": "평균등급점수 4.0 → 교과 = 830 + 70×4.0/9.8 = 830 + 28.571428… = 858.571428… → 858.571. 출결 100. 합 958.571."
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "program": "기회균형 (수시 · 학생부교과 · 정원외)",
+      "decision": "publish",
+      "reason": "p.6~7 원문(표 이미지 확인)과 한 필드씩 대조: 반영기간 1-1~3-1(졸업예정자), 국·영·수·사(역사·도덕 포함 → 사회+한국사)·과, 석차등급 표기 전 과목 학점 가중, 등급점수 9.8/8.5/7.1/5.6/4.0, 교과 830 + 70×평균/9.8(엔진 base 830 + 비율×70과 같음), 출결 96 + 득점(0~2일 4, 3~6일 3, 7~15일 2, 16~30일 1, 31일 이상 0; 무단만, 지각·조퇴·결과 3회=1일), 학생부 1,000점이 전형총점 100%(간호학부 단일 모집단위, 수시 전 전형 공통 'Ⅳ.수시모집 2·3'). 수정: 원문 '융합선택과목 제외'를 type_rules exclude로 추가(초안대로면 석차등급이 있는 국어·영어·수학 융합선택이 반영됨). 소수점: 원문 예시 '소수점 넷째자리에서 반올림'은 교과 점수 기준이나 출결 점수가 정수라 최종 3자리 반올림과 같음. 공동교육과정 언급 없음 → block_joint. 학교폭력 감점(p.11)은 계산 밖.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "예수대학교",
+        "program": "기회균형 (수시 · 학생부교과 · 정원외)",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "한국사",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 9.8,
+          "2": 8.5,
+          "3": 7.1,
+          "4": 5.6,
+          "5": 4.0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 900,
+        "base_score": 830,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 100,
+          "deduction_table": [
+            {
+              "absence_max": 2,
+              "points": 0
+            },
+            {
+              "absence_max": 6,
+              "points": 1
+            },
+            {
+              "absence_max": 15,
+              "points": 2
+            },
+            {
+              "absence_max": 30,
+              "points": 3
+            },
+            {
+              "absence_max": 9999,
+              "points": 4
+            }
+          ]
+        },
+        "max_score": 1000,
+        "rounding": {
+          "digits": 3,
+          "mode": "round"
+        },
+        "advanced": {
+          "type_rules": [
+            {
+              "types": [
+                "융합선택"
+              ],
+              "use": "exclude"
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          6,
+          7
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 1,000점(교과 900점 + 출결 100점)을 계산해요. 교과 = 830 + 70 × 평균등급점수/9.8이에요.",
+          "국어·영어·수학·사회(역사·도덕 포함)·과학 중 석차등급 있는 공통·일반·진로선택 과목을 학점 가중 평균해요. 융합선택은 빼요.",
+          "출결은 무단 결석일수(지각·조퇴·결과 3회 = 결석 1일)에 따라 96 + 0~4점이에요.",
+          "학교폭력 조치사항 감점은 포함하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "전 과목 1등급 · 출결 무결",
+          "grades": [
+            {
+              "rank_grade": 1
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 1000,
+          "expected_max": 1000,
+          "working": "평균등급점수 9.8 → 교과 830 + 70×9.8/9.8 = 900. 출결 무단결석 0일(0~2일) → 96 + 4.0 = 100. 합 1000."
+        },
+        {
+          "label": "등급 섞임 · 넷째 자리 반올림(올림)",
+          "grades": [
+            {
+              "subject_group": "수학",
+              "rank_grade": 2,
+              "credits": 4
+            },
+            {
+              "subject_group": "국어",
+              "name": "공통국어1",
+              "rank_grade": 5,
+              "credits": 1
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 984.286,
+          "expected_max": 1000,
+          "working": "평균등급점수 = (8.5×4 + 4.0×1) ÷ 5 = 38/5 = 7.6. 교과 = 830 + 70×7.6/9.8 = 830 + 54.2857142… = 884.2857142… → 소수점 넷째 자리에서 반올림 884.286(버림이면 884.285). 출결 100. 합 984.286."
+        },
+        {
+          "label": "융합선택 제외 · 진로선택·한국사 반영 · 정보 제외",
+          "grades": [
+            {
+              "subject_group": "영어",
+              "name": "영어 진로",
+              "type": "진로선택",
+              "rank_grade": 3,
+              "credits": 3
+            },
+            {
+              "subject_group": "한국사",
+              "name": "한국사1",
+              "type": "공통",
+              "rank_grade": 1,
+              "credits": 3
+            },
+            {
+              "subject_group": "영어",
+              "name": "영어 융합",
+              "type": "융합선택",
+              "rank_grade": 1,
+              "credits": 2
+            },
+            {
+              "subject_group": "과학",
+              "name": "과학 융합",
+              "type": "융합선택",
+              "rank_grade": null,
+              "achievement": "A",
+              "credits": 2
+            },
+            {
+              "subject_group": "정보",
+              "name": "정보",
+              "rank_grade": 1,
+              "credits": 2
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 990.357,
+          "expected_max": 1000,
+          "working": "반영: 영어 진로선택 3등급 3학점(7.1×3=21.3), 한국사(역사 포함) 1등급 3학점(9.8×3=29.4). 융합선택 2과목은 원문 '융합선택과목 제외', 정보는 반영 교과 아님. 평균 = 50.7/6 = 8.45. 교과 = 830 + 70×8.45/9.8 = 830 + 60.357142… = 890.357142… → 890.357. 출결 100. 합 990.357."
+        },
+        {
+          "label": "3학년 2학기 제외 · 2·3학년 섞임",
+          "grades": [
+            {
+              "subject_group": "과학",
+              "name": "물리학",
+              "semester": "2-1",
+              "rank_grade": 4,
+              "credits": 2
+            },
+            {
+              "subject_group": "사회",
+              "name": "사회와 문화",
+              "semester": "3-1",
+              "rank_grade": 3,
+              "credits": 2
+            },
+            {
+              "subject_group": "국어",
+              "name": "문학",
+              "semester": "3-2",
+              "rank_grade": 1,
+              "credits": 4
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 975.357,
+          "expected_max": 1000,
+          "working": "졸업예정자는 3학년 1학기까지라 3-2 문학 제외. 평균 = (5.6×2 + 7.1×2) ÷ 4 = 25.4/4 = 6.35. 교과 = 830 + 70×6.35/9.8 = 830 + 45.357142… = 875.357142… → 875.357. 출결 100. 합 975.357."
+        },
+        {
+          "label": "전 과목 5등급",
+          "grades": [
+            {
+              "rank_grade": 5
+            },
+            {
+              "subject_group": "영어",
+              "name": "공통영어1",
+              "rank_grade": 5,
+              "credits": 3
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 958.571,
+          "expected_max": 1000,
+          "working": "평균등급점수 4.0 → 교과 = 830 + 70×4.0/9.8 = 830 + 28.571428… = 858.571428… → 858.571. 출결 100. 합 958.571."
+        }
+      ]
+    }
+  ]
+}

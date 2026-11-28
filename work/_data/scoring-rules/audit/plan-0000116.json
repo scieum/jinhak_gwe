@@ -1,0 +1,903 @@
+{
+  "entry": "plan-0000116",
+  "university": "삼육대학교",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000116/document-0000116.pdf",
+  "note": "삼육대학교는 캠퍼스가 하나(admission-plans.json 이름 '삼육대학교'). sahmyook-official.pdf는 같은 내용의 대학 배포본(p.4 자유전공 전공선택 제한 문구만 다름), 판단은 document-0000116.pdf로 함.",
+  "programs": [
+    {
+      "index": 0,
+      "program": "학교장추천전형 (교과)",
+      "decision": "publish",
+      "reason": "원문 p.5~6·p.3: 4개 교과 전 과목, 5등급 100/99/98/90/70, 2022 탐구 융합선택 A~E 같은 점수, 이수학점 가중평균(100점 기준) → 명목 1,000점(최저 700). 초안과 값 일치. 아트앤디자인·체육학과는 2개 교과 선택+실기라 제외(학과 필수). 소수점 규정 없음 → 표시용. 검증 수정: 초안·1차 결과는 석차등급 없는 과목을 모두 성취도로 넣어(achievement_convert) 과학탐구실험 A·B·C를 100·99·98점으로 계산했으나, 원문 2022 성취도 배점표는 '융합선택 과목'(p.3 '탐구 융합선택', 2028.2 졸업자)뿐이고 A·B·C 표(p.3·p.6 다)는 '2015 교육과정 진로선택, 2027.2 이전 졸업자'용이라 2028 졸업자의 과학탐구실험 배점 근거가 없음 → no_rank_subject_policy exclude + type_rules(사회·과학 융합선택 = 성취도)로 바꿔 표에 없는 석차등급 미산출 과목은 뺌(다른 대학 audit와 같은 처리).",
+      "rule": {
+        "admission_year": 2028,
+        "university": "삼육대학교",
+        "program": "학교장추천전형 (교과)",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "한국사",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 99,
+          "3": 98,
+          "4": 90,
+          "5": 70
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 99,
+          "C": 98,
+          "D": 90,
+          "E": 70
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": {
+          "digits": 6,
+          "mode": "round"
+        },
+        "advanced": {
+          "type_rules": [
+            {
+              "types": [
+                "융합선택"
+              ],
+              "groups": [
+                "사회",
+                "과학"
+              ],
+              "use": "achievement"
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          3,
+          5,
+          6,
+          12
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "국어·영어·수학·사회(한국사·도덕 포함)·과학 교과의 1학년 1학기~3학년 1학기 전 과목을 이수학점 가중평균해요.",
+          "석차등급 1~5등급은 100·99·98·90·70점, 사회·과학 융합선택은 성취도 A~E를 같은 점수로 바꿔요. 과학탐구실험처럼 배점표가 없는 석차등급 미산출 과목은 빼요.",
+          "100점 기준 평균을 1,000점 척도(최고 1,000·최저 700)로 보여요. 원문에 소수점 처리 규정이 없어 소수는 표시용이에요.",
+          "학교폭력 조치사항 감점과 수능 최저학력기준은 계산에 넣지 않아요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": [
+          "아트앤디자인학과",
+          "체육학과"
+        ]
+      },
+      "cases": [
+        {
+          "label": "등급 섞임 · 반올림(소수 여섯째 자리)",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 4,
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 964.444444,
+          "expected_max": 1000,
+          "working": "국어 1등급 100×4=400, 수학 4등급 90×3=270, 영어 2등급 99×2=198; 합 868 / 9학점 = 96.4444…(100점 기준) × 10 = 964.4444… → 964.444444",
+          "department": "경영학과"
+        },
+        {
+          "label": "사회 융합선택 성취도 C · 한국사 포함 · 과학 5등급",
+          "grades": [
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "1-1",
+              "credits": 2,
+              "rank_grade": null,
+              "is_joint": false,
+              "achievement": "C"
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 5,
+              "is_joint": false
+            },
+            {
+              "id": "his",
+              "subject_group": "한국사",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 3,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 875,
+          "expected_max": 1000,
+          "working": "사회 융합선택 C 98×2=196(2022 탐구 융합선택 표), 과학 5등급 70×3=210, 한국사 3등급 98×3=294; 합 700 / 8 = 87.5 × 10 = 875",
+          "department": "경영학과"
+        },
+        {
+          "label": "5등급 최저 경계 · 3-2학기·정보 교과 제외",
+          "grades": [
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "is_joint": false
+            },
+            {
+              "id": "late",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "is_joint": false
+            },
+            {
+              "id": "info",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 2,
+              "rank_grade": 1,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 700,
+          "expected_max": 1000,
+          "working": "3학년 2학기·정보 교과는 반영 안 함. 영어 5등급 70 → 70 × 10 = 700(원문 최저점 700과 일치)",
+          "department": "경영학과"
+        },
+        {
+          "label": "진로선택은 석차등급 · 과학탐구실험 제외",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "is_joint": false,
+              "achievement": "A"
+            },
+            {
+              "id": "lab",
+              "subject_group": "과학",
+              "type": "과탐실험",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": null,
+              "is_joint": false,
+              "achievement": "C"
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 990,
+          "expected_max": 1000,
+          "working": "2028.2 졸업자는 진로선택도 5등급 석차 반영: 2등급 99×4=396(성취도 A 무시). 과학탐구실험(성취도 C)은 2022 배점표가 없어 제외(넣으면 (396+98)/5=98.8 → 988). 396/4 = 99 × 10 = 990",
+          "department": "경영학과"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "program": "농어촌전형 (수시 · 교과)",
+      "decision": "publish",
+      "reason": "원문 p.5~6·p.3: 4개 교과 전 과목, 5등급 100/99/98/90/70, 2022 탐구 융합선택 A~E 같은 점수, 이수학점 가중평균(100점 기준) → 명목 1,000점(최저 700). 초안과 값 일치. 아트앤디자인·체육학과는 2개 교과 선택+실기라 제외(학과 필수). 소수점 규정 없음 → 표시용. 검증 수정: 초안·1차 결과는 석차등급 없는 과목을 모두 성취도로 넣어(achievement_convert) 과학탐구실험 A·B·C를 100·99·98점으로 계산했으나, 원문 2022 성취도 배점표는 '융합선택 과목'(p.3 '탐구 융합선택', 2028.2 졸업자)뿐이고 A·B·C 표(p.3·p.6 다)는 '2015 교육과정 진로선택, 2027.2 이전 졸업자'용이라 2028 졸업자의 과학탐구실험 배점 근거가 없음 → no_rank_subject_policy exclude + type_rules(사회·과학 융합선택 = 성취도)로 바꿔 표에 없는 석차등급 미산출 과목은 뺌(다른 대학 audit와 같은 처리).",
+      "rule": {
+        "admission_year": 2028,
+        "university": "삼육대학교",
+        "program": "농어촌전형 (수시 · 교과)",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "한국사",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 99,
+          "3": 98,
+          "4": 90,
+          "5": 70
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 99,
+          "C": 98,
+          "D": 90,
+          "E": 70
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": {
+          "digits": 6,
+          "mode": "round"
+        },
+        "advanced": {
+          "type_rules": [
+            {
+              "types": [
+                "융합선택"
+              ],
+              "groups": [
+                "사회",
+                "과학"
+              ],
+              "use": "achievement"
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          3,
+          5,
+          6,
+          17
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "국어·영어·수학·사회(한국사·도덕 포함)·과학 교과의 1학년 1학기~3학년 1학기 전 과목을 이수학점 가중평균해요.",
+          "석차등급 1~5등급은 100·99·98·90·70점, 사회·과학 융합선택은 성취도 A~E를 같은 점수로 바꿔요. 과학탐구실험처럼 배점표가 없는 석차등급 미산출 과목은 빼요.",
+          "100점 기준 평균을 1,000점 척도(최고 1,000·최저 700)로 보여요. 원문에 소수점 처리 규정이 없어 소수는 표시용이에요.",
+          "학교폭력 조치사항 감점과 수능 최저학력기준은 계산에 넣지 않아요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": [
+          "아트앤디자인학과",
+          "체육학과"
+        ]
+      },
+      "cases": [
+        {
+          "label": "등급 섞임 · 반올림(소수 여섯째 자리)",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 4,
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 964.444444,
+          "expected_max": 1000,
+          "working": "국어 1등급 100×4=400, 수학 4등급 90×3=270, 영어 2등급 99×2=198; 합 868 / 9학점 = 96.4444…(100점 기준) × 10 = 964.4444… → 964.444444",
+          "department": "간호학과"
+        },
+        {
+          "label": "사회 융합선택 성취도 C · 한국사 포함 · 과학 5등급",
+          "grades": [
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "1-1",
+              "credits": 2,
+              "rank_grade": null,
+              "is_joint": false,
+              "achievement": "C"
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 5,
+              "is_joint": false
+            },
+            {
+              "id": "his",
+              "subject_group": "한국사",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 3,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 875,
+          "expected_max": 1000,
+          "working": "사회 융합선택 C 98×2=196(2022 탐구 융합선택 표), 과학 5등급 70×3=210, 한국사 3등급 98×3=294; 합 700 / 8 = 87.5 × 10 = 875",
+          "department": "간호학과"
+        },
+        {
+          "label": "5등급 최저 경계 · 3-2학기·정보 교과 제외",
+          "grades": [
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "is_joint": false
+            },
+            {
+              "id": "late",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "is_joint": false
+            },
+            {
+              "id": "info",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 2,
+              "rank_grade": 1,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 700,
+          "expected_max": 1000,
+          "working": "3학년 2학기·정보 교과는 반영 안 함. 영어 5등급 70 → 70 × 10 = 700(원문 최저점 700과 일치)",
+          "department": "간호학과"
+        },
+        {
+          "label": "진로선택은 석차등급 · 과학탐구실험 제외",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "is_joint": false,
+              "achievement": "A"
+            },
+            {
+              "id": "lab",
+              "subject_group": "과학",
+              "type": "과탐실험",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": null,
+              "is_joint": false,
+              "achievement": "C"
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 990,
+          "expected_max": 1000,
+          "working": "2028.2 졸업자는 진로선택도 5등급 석차 반영: 2등급 99×4=396(성취도 A 무시). 과학탐구실험(성취도 C)은 2022 배점표가 없어 제외(넣으면 (396+98)/5=98.8 → 988). 396/4 = 99 × 10 = 990",
+          "department": "간호학과"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "program": "서해5도전형",
+      "decision": "publish",
+      "reason": "원문 p.5~6·p.18: 학교장추천과 같은 교과·배점·산식, 일반학과만 학생부 교과 100%(1,000/700). 초안 값 일치. 소수점 규정 없음 → 표시용. 검증 수정: 초안·1차 결과는 석차등급 없는 과목을 모두 성취도로 넣어(achievement_convert) 과학탐구실험 A·B·C를 100·99·98점으로 계산했으나, 원문 2022 성취도 배점표는 '융합선택 과목'(p.3 '탐구 융합선택', 2028.2 졸업자)뿐이고 A·B·C 표(p.3·p.6 다)는 '2015 교육과정 진로선택, 2027.2 이전 졸업자'용이라 2028 졸업자의 과학탐구실험 배점 근거가 없음 → no_rank_subject_policy exclude + type_rules(사회·과학 융합선택 = 성취도)로 바꿔 표에 없는 석차등급 미산출 과목은 뺌(다른 대학 audit와 같은 처리).",
+      "rule": {
+        "admission_year": 2028,
+        "university": "삼육대학교",
+        "program": "서해5도전형",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학",
+          "사회",
+          "한국사",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 99,
+          "3": 98,
+          "4": 90,
+          "5": 70
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 99,
+          "C": 98,
+          "D": 90,
+          "E": 70
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": {
+          "digits": 6,
+          "mode": "round"
+        },
+        "advanced": {
+          "type_rules": [
+            {
+              "types": [
+                "융합선택"
+              ],
+              "groups": [
+                "사회",
+                "과학"
+              ],
+              "use": "achievement"
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          3,
+          5,
+          6,
+          18
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "국어·영어·수학·사회(한국사·도덕 포함)·과학 교과의 1학년 1학기~3학년 1학기 전 과목을 이수학점 가중평균해요.",
+          "석차등급 1~5등급은 100·99·98·90·70점, 사회·과학 융합선택은 성취도 A~E를 같은 점수로 바꿔요. 과학탐구실험처럼 배점표가 없는 석차등급 미산출 과목은 빼요.",
+          "100점 기준 평균을 1,000점 척도(최고 1,000·최저 700)로 보여요. 원문에 소수점 처리 규정이 없어 소수는 표시용이에요.",
+          "학교폭력 조치사항 감점은 계산에 넣지 않아요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": [
+          "아트앤디자인학과",
+          "체육학과"
+        ]
+      },
+      "cases": [
+        {
+          "label": "등급 섞임 · 반올림(소수 여섯째 자리)",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 4,
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 964.444444,
+          "expected_max": 1000,
+          "working": "국어 1등급 100×4=400, 수학 4등급 90×3=270, 영어 2등급 99×2=198; 합 868 / 9학점 = 96.4444…(100점 기준) × 10 = 964.4444… → 964.444444"
+        },
+        {
+          "label": "사회 융합선택 성취도 C · 한국사 포함 · 과학 5등급",
+          "grades": [
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "1-1",
+              "credits": 2,
+              "rank_grade": null,
+              "is_joint": false,
+              "achievement": "C"
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 5,
+              "is_joint": false
+            },
+            {
+              "id": "his",
+              "subject_group": "한국사",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 3,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 875,
+          "expected_max": 1000,
+          "working": "사회 융합선택 C 98×2=196(2022 탐구 융합선택 표), 과학 5등급 70×3=210, 한국사 3등급 98×3=294; 합 700 / 8 = 87.5 × 10 = 875"
+        },
+        {
+          "label": "5등급 최저 경계 · 3-2학기·정보 교과 제외",
+          "grades": [
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "is_joint": false
+            },
+            {
+              "id": "late",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "is_joint": false
+            },
+            {
+              "id": "info",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 2,
+              "rank_grade": 1,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 700,
+          "expected_max": 1000,
+          "working": "3학년 2학기·정보 교과는 반영 안 함. 영어 5등급 70 → 70 × 10 = 700(원문 최저점 700과 일치)"
+        },
+        {
+          "label": "진로선택은 석차등급 · 과학탐구실험 제외",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "is_joint": false,
+              "achievement": "A"
+            },
+            {
+              "id": "lab",
+              "subject_group": "과학",
+              "type": "과탐실험",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": null,
+              "is_joint": false,
+              "achievement": "C"
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 990,
+          "expected_max": 1000,
+          "working": "2028.2 졸업자는 진로선택도 5등급 석차 반영: 2등급 99×4=396(성취도 A 무시). 과학탐구실험(성취도 C)은 2022 배점표가 없어 제외(넣으면 (396+98)/5=98.8 → 988). 396/4 = 99 × 10 = 990"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "program": "특성화고교전형 (수시 · 교과)",
+      "decision": "publish",
+      "reason": "원문 p.5: 특성화고교 모든 학과 국어·영어·수학 3개 교과, 배점·산식은 다른 교과전형과 같음, 학생부 교과 100%(1,000/700). 초안 값 일치. 소수점 규정 없음 → 표시용. 검증 수정: 초안·1차 결과는 석차등급 없는 과목을 모두 성취도로 넣어(achievement_convert) 과학탐구실험 A·B·C를 100·99·98점으로 계산했으나, 원문 2022 성취도 배점표는 '융합선택 과목'(p.3 '탐구 융합선택', 2028.2 졸업자)뿐이고 A·B·C 표(p.3·p.6 다)는 '2015 교육과정 진로선택, 2027.2 이전 졸업자'용이라 2028 졸업자의 과학탐구실험 배점 근거가 없음 → no_rank_subject_policy exclude + type_rules(사회·과학 융합선택 = 성취도)로 바꿔 표에 없는 석차등급 미산출 과목은 뺌(다른 대학 audit와 같은 처리).",
+      "rule": {
+        "admission_year": 2028,
+        "university": "삼육대학교",
+        "program": "특성화고교전형 (수시 · 교과)",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "영어",
+          "수학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 99,
+          "3": 98,
+          "4": 90,
+          "5": 70
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 99,
+          "C": 98,
+          "D": 90,
+          "E": 70
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": {
+          "digits": 6,
+          "mode": "round"
+        },
+        "advanced": {
+          "type_rules": [
+            {
+              "types": [
+                "융합선택"
+              ],
+              "groups": [
+                "사회",
+                "과학"
+              ],
+              "use": "achievement"
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          3,
+          5,
+          6,
+          17
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "국어·영어·수학 교과의 1학년 1학기~3학년 1학기 전 과목을 이수학점 가중평균해요.",
+          "석차등급 1~5등급은 100·99·98·90·70점이에요. 석차등급이 없는 과목은 원문 배점표가 없어 빼요.",
+          "100점 기준 평균을 1,000점 척도(최고 1,000·최저 700)로 보여요. 원문에 소수점 처리 규정이 없어 소수는 표시용이에요.",
+          "학교폭력 조치사항 감점은 계산에 넣지 않아요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": [
+          "아트앤디자인학과",
+          "체육학과"
+        ]
+      },
+      "cases": [
+        {
+          "label": "등급 섞임 · 반올림(소수 여섯째 자리) · 사회 제외",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 2,
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 4,
+              "is_joint": false
+            },
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 938.571429,
+          "expected_max": 1000,
+          "working": "사회는 반영 교과 아님. 국어 2등급 99×3=297, 수학 4등급 90×4=360; 합 657 / 7 = 93.857142857… × 10 = 938.57142857… → 938.571429"
+        },
+        {
+          "label": "영어 융합선택(석차 있음) · 수학 5등급",
+          "grades": [
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "융합선택",
+              "semester": "1-1",
+              "credits": 2,
+              "rank_grade": 3,
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 793.333333,
+          "expected_max": 1000,
+          "working": "영어 3등급 98×2=196, 수학 5등급 70×4=280; 합 476 / 6 = 79.3333… × 10 = 793.3333… → 793.333333"
+        },
+        {
+          "label": "1등급 최고 경계 · 과학 제외",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "is_joint": false
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 1000,
+          "expected_max": 1000,
+          "working": "과학은 반영 교과 아님. 국어 1등급 100 × 10 = 1000"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "program": "특성화고졸재직자전형 (수시)",
+      "decision": "reject",
+      "reason": "원문 p.19: 지원 자격이 특성화고 등을 졸업하고 산업체 근무경력 3년 이상인 재직자라 2028학년도 5등급제 졸업예정자는 지원할 수 없어요. 대상자는 대부분 9등급제 학생부(표준점수로 5등급 변환, p.6)여서 엔진으로 정확히 계산할 수 없어요."
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "entry": "plan-0000069",
+  "university": "고려대학교",
+  "note": "app/public/data/admission-plans.json에서 document-0000069(본교·서울)를 가리키는 이름이 '고려대학교'이고, 세종캠퍼스는 '고려대학교(세종)'로 따로 있어요. 원문 표지: '2028학년도 고려대학교(서울) 입학전형시행계획'.",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000069/document-0000069.pdf",
+  "programs": [
+    {
+      "index": 0,
+      "program": "학교추천전형",
+      "decision": "publish",
+      "reason": "원문 p.11~12(인쇄 쪽 10~11)와 대조: 5개 학기(1-1~3-1), 전 교과 중 '원점수·평균·석차등급' 또는 '원점수·평균·성취도'가 기재된 모든 과목, 학년별 비율 없음, 석차등급 과목은 등급·없는 과목은 성취도로 1/A=100, 2/B=95, 3/C=83, 4/D=67, 5/E=55, 이수학점 가중평균 × 0.8. 초안의 점수표·학기·가중·만점은 맞음. 수정: (1) 원점수가 없는 과학탐구실험(과탐실험)·체육예술·교양 유형은 '원점수·평균' 기재 조건에 맞지 않는데 초안대로면 과탐실험 성취도 A~C가 100/95/83으로 섞여 들어가므로 type_rules로 제외. (2) 체육·예술·교양 교과는 반영 교과에서 빠진 그대로 유지(3단계 성취도·P만 기재, 원점수 없음). (3) 소수점 규정이 원문에 없어 rounding은 display_only(6자리). (4) 서류 20%는 계산하지 않으므로 scope = grade_component. 공동교육과정은 원문상 포함이지만 앱이 공동교육과정 과목의 석차등급 기재 여부를 구분하지 못해 block_joint 유지. 모집단위별로 다른 교과 산식 없음(의학과는 수능최저만 다름, 체육교육과·디자인조형학부는 이 전형 미선발).",
+      "rule": {
+        "admission_year": 2028,
+        "university": "고려대학교",
+        "program": "학교추천전형",
+        "semesters": ["1-1", "1-2", "2-1", "2-2", "3-1"],
+        "subject_groups": ["국어", "수학", "영어", "사회", "과학", "한국사", "기술·가정", "제2외국어", "한문", "정보"],
+        "selection": { "mode": "all" },
+        "credit_weighted": true,
+        "rank_grade_points": { "1": 100, "2": 95, "3": 83, "4": 67, "5": 55 },
+        "achievement_points": { "A": 100, "B": 95, "C": 83, "D": 67, "E": 55 },
+        "achievement_blend": { "mode": "none" },
+        "no_rank_subject_policy": "achievement_convert",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 80,
+        "base_score": 0,
+        "max_score": 80,
+        "rounding": { "digits": 6, "mode": "round" },
+        "advanced": {
+          "type_rules": [
+            { "types": ["과탐실험", "체육예술", "교양"], "use": "exclude" }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [11, 12],
+        "scope": "grade_component",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부(교과) 80점만 계산해요. 서류(학생부 종합평가) 20%는 포함하지 않아요.",
+          "1학년 1학기~3학년 1학기 원점수·평균과 석차등급(없으면 성취도)이 기재된 모든 과목을 이수학점으로 가중평균한 뒤 × 0.8을 해요.",
+          "과학탐구실험·체육·예술·교양처럼 원점수가 기재되지 않는 과목은 빼요.",
+          "소수점 처리 규정이 원문에 없어 화면 소수점은 표시용이에요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급·성취도 섞인 5과목(융합선택 사회는 성취도)",
+          "grades": [
+            { "id": "kor", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "math", "subject_group": "수학", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 2, "achievement": "A", "is_joint": false },
+            { "id": "eng", "subject_group": "영어", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false },
+            { "id": "soc", "subject_group": "사회", "type": "융합선택", "semester": "2-2", "credits": 3, "rank_grade": null, "achievement": "B", "is_joint": false },
+            { "id": "info", "subject_group": "정보", "type": "일반선택", "semester": "3-1", "credits": 2, "rank_grade": 4, "achievement": "C", "is_joint": false }
+          ],
+          "attendance": "none",
+          "expected_total": 72.047059,
+          "expected_max": 80,
+          "working": "p.12 점수표: 1등급 100×4=400, 2등급 95×4=380, 3등급 83×4=332, 성취도 B 95×3=285, 4등급 67×2=134 → 합 1531, 이수학점 17 → 교과 평균 점수 1531/17=90.0588235… → ×0.8 = 72.0470588… → 6자리 반올림 72.047059"
+        },
+        {
+          "label": "원점수 없는 과탐실험·체육, 3학년 2학기는 빠짐",
+          "grades": [
+            { "id": "kor", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false },
+            { "id": "lab", "subject_group": "과학", "type": "과탐실험", "semester": "1-2", "credits": 1, "rank_grade": null, "achievement": "A", "is_joint": false },
+            { "id": "pe", "subject_group": "체육", "type": "체육예술", "semester": "2-1", "credits": 2, "rank_grade": null, "achievement": "A", "is_joint": false },
+            { "id": "sci", "subject_group": "과학", "type": "진로선택", "semester": "3-1", "credits": 3, "rank_grade": 3, "achievement": "B", "is_joint": false },
+            { "id": "eng", "subject_group": "영어", "type": "진로선택", "semester": "3-2", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false }
+          ],
+          "attendance": "none",
+          "expected_total": 53.6,
+          "expected_max": 80,
+          "working": "반영: 국어 5등급 55×4=220, 과학 3등급 83×3=249 → 합 469, 이수학점 7 → 평균 67 → ×0.8 = 53.6. 과학탐구실험(원점수 없음)·체육(반영 교과 아님·원점수 없음)·3-2(5개 학기 밖)는 제외"
+        },
+        {
+          "label": "반올림 경계: 1·2·3등급 각 1학점",
+          "grades": [
+            { "id": "kor", "subject_group": "국어", "type": "일반선택", "semester": "1-2", "credits": 1, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "his", "subject_group": "한국사", "type": "공통", "semester": "1-2", "credits": 1, "rank_grade": 2, "achievement": "B", "is_joint": false },
+            { "id": "han", "subject_group": "한문", "type": "일반선택", "semester": "2-2", "credits": 1, "rank_grade": 3, "achievement": "C", "is_joint": false }
+          ],
+          "attendance": "none",
+          "expected_total": 74.133333,
+          "expected_max": 80,
+          "working": "(100+95+83)/3 = 278/3 = 92.6666… → ×0.8 = 74.1333… → 6자리 반올림 74.133333"
+        },
+        {
+          "label": "전 과목 1등급·성취도 A(만점), 최저 경계는 5등급·E",
+          "grades": [
+            { "id": "math", "subject_group": "수학", "type": "일반선택", "semester": "1-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "sci", "subject_group": "과학", "type": "융합선택", "semester": "2-1", "credits": 2, "rank_grade": null, "achievement": "A", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "expected_total": 80,
+          "expected_max": 80,
+          "working": "(100×4 + 100×2)/6 = 100 → ×0.8 = 80 (출결은 교과 점수에 반영하지 않음). 참고: 모두 5등급·E면 55×0.8 = 44"
+        }
+      ]
+    }
+  ]
+}

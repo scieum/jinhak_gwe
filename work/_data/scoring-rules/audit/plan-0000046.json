@@ -1,0 +1,450 @@
+{
+  "entry": "plan-0000046",
+  "university": "가톨릭대학교(성심)",
+  "university_note": "susi-results/index.json이 이 캠퍼스(본교, 성심교정 학과 입결)를 '가톨릭대학교(성심)'으로 씀. admission-plans.json은 '가톨릭대학교'(본교)와 제2·제3캠퍼스를 따로 둠.",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000046/document-0000046.pdf",
+  "programs": [
+    {
+      "index": 0,
+      "program": "지역균형전형",
+      "decision": "publish",
+      "reason": "원문 p.23~24 산식(Σ배점×학점/Σ학점 × 90%)·석차등급 배점(100/98/96/85/70)·성취도 환산등급·출결 기준(10/9/8/5, 횟수 그대로 합산)·소수 넷째 자리 반올림을 대조. 초안은 진로선택을 석차등급으로 계산해 원문 '진로선택·융합선택은 성취도 반영'과 달라 type_rules로 고침. 교양(P/F)은 산출 불가 교과 제외 규정으로 제외. 공동교육과정은 원문상 성취도 반영이지만 앱 입력과 대조 검증 전이라 막아 둠.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "가톨릭대학교(성심)",
+        "program": "지역균형전형",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "사회",
+          "한국사",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 98,
+          "3": 96,
+          "4": 85,
+          "5": 70
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 98,
+          "C": 96,
+          "D": 85,
+          "E": 70
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "achievement_convert",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 90,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 1,
+          "max_score": 10,
+          "deduction_table": [
+            {
+              "absence_max": 3,
+              "points": 0
+            },
+            {
+              "absence_max": 6,
+              "points": 1
+            },
+            {
+              "absence_max": 9,
+              "points": 2
+            },
+            {
+              "absence_max": 9999,
+              "points": 5
+            }
+          ]
+        },
+        "max_score": 100,
+        "rounding": {
+          "digits": 3,
+          "mode": "round"
+        },
+        "advanced": {
+          "type_rules": [
+            {
+              "types": [
+                "진로선택",
+                "융합선택"
+              ],
+              "use": "achievement"
+            },
+            {
+              "types": [
+                "교양"
+              ],
+              "use": "exclude"
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          3,
+          23,
+          24
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "국어·수학·영어·사회(한국사 포함)·과학 교과 90점과 미인정 출결 10점을 계산해요(학년별 가중치 없음, 3학년 1학기까지).",
+          "진로선택·융합선택 과목은 석차등급이 있어도 성취도(A~E → 1~5등급 배점)로 반영해요.",
+          "미인정 결석·지각·조퇴·결과 횟수를 그대로 합산해 출결 점수(10/9/8/5)를 정해요.",
+          "교과 성적은 소수점 넷째 자리에서 반올림해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "일반선택 1등급 한 과목 · 출결 깨끗",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 100,
+          "expected_max": 100,
+          "working": "교과 = 100(1등급 배점) × 4 / 4 × 0.9 = 90; 미인정 출결 0회(3회 이하) → 10; 합 100"
+        },
+        {
+          "label": "등급 섞임 · 진로선택은 등급 대신 성취도 · 과탐실험 성취도",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "car",
+              "subject_group": "과학",
+              "type": "진로선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "C",
+              "is_joint": false
+            },
+            {
+              "id": "exp",
+              "subject_group": "과학",
+              "type": "과탐실험",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": null,
+              "achievement": "B",
+              "is_joint": false
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 97.15,
+          "expected_max": 100,
+          "working": "수학 2등급 98×4=392, 국어 3등급 96×4=384, 진로선택 성취도 C→환산 3등급 96×3=288(석차 1등급 무시), 과탐실험 B→2등급 98×1=98; 합 1162 / 12학점 = 96.8333… × 0.9 = 87.15; 출결 10; 합 97.15"
+        },
+        {
+          "label": "반올림 경계(넷째 자리 올림)",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 5,
+              "achievement": "E",
+              "is_joint": false
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 88.429,
+          "expected_max": 100,
+          "working": "100×4 + 70×3 = 610 / 7 = 87.142857… × 0.9 = 78.4285714… → 소수 넷째 자리 반올림 78.429; 출결 10; 합 88.429"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "program": "농어촌학생전형 (수시 · 교과)",
+      "decision": "publish",
+      "reason": "지역균형전형과 같은 반영 방법(p.23 표가 지역균형·농어촌·특성화를 한 칸으로 묶음; p.3 '지역균형/농어촌학생 전 모집단위 국·수·영·사(역사/도덕 포함)·과'). 지역균형과 같은 수정(진로·융합선택 성취도, 교양 제외) 적용.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "가톨릭대학교(성심)",
+        "program": "농어촌학생전형 (수시 · 교과)",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "사회",
+          "한국사",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 98,
+          "3": 96,
+          "4": 85,
+          "5": 70
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 98,
+          "C": 96,
+          "D": 85,
+          "E": 70
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "achievement_convert",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 90,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 1,
+          "max_score": 10,
+          "deduction_table": [
+            {
+              "absence_max": 3,
+              "points": 0
+            },
+            {
+              "absence_max": 6,
+              "points": 1
+            },
+            {
+              "absence_max": 9,
+              "points": 2
+            },
+            {
+              "absence_max": 9999,
+              "points": 5
+            }
+          ]
+        },
+        "max_score": 100,
+        "rounding": {
+          "digits": 3,
+          "mode": "round"
+        },
+        "advanced": {
+          "type_rules": [
+            {
+              "types": [
+                "진로선택",
+                "융합선택"
+              ],
+              "use": "achievement"
+            },
+            {
+              "types": [
+                "교양"
+              ],
+              "use": "exclude"
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          3,
+          23,
+          24
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "국어·수학·영어·사회(한국사 포함)·과학 교과 90점과 미인정 출결 10점을 계산해요(학년별 가중치 없음, 3학년 1학기까지).",
+          "진로선택·융합선택 과목은 석차등급이 있어도 성취도(A~E → 1~5등급 배점)로 반영해요.",
+          "미인정 결석·지각·조퇴·결과 횟수를 그대로 합산해 출결 점수(10/9/8/5)를 정해요.",
+          "교과 성적은 소수점 넷째 자리에서 반올림해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "일반선택 1등급 한 과목 · 출결 깨끗",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 100,
+          "expected_max": 100,
+          "working": "교과 = 100(1등급 배점) × 4 / 4 × 0.9 = 90; 미인정 출결 0회(3회 이하) → 10; 합 100"
+        },
+        {
+          "label": "등급 섞임 · 진로선택은 등급 대신 성취도 · 과탐실험 성취도",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "car",
+              "subject_group": "과학",
+              "type": "진로선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "C",
+              "is_joint": false
+            },
+            {
+              "id": "exp",
+              "subject_group": "과학",
+              "type": "과탐실험",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": null,
+              "achievement": "B",
+              "is_joint": false
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 97.15,
+          "expected_max": 100,
+          "working": "수학 2등급 98×4=392, 국어 3등급 96×4=384, 진로선택 성취도 C→환산 3등급 96×3=288(석차 1등급 무시), 과탐실험 B→2등급 98×1=98; 합 1162 / 12학점 = 96.8333… × 0.9 = 87.15; 출결 10; 합 97.15"
+        },
+        {
+          "label": "반올림 경계(넷째 자리 올림)",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 5,
+              "achievement": "E",
+              "is_joint": false
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 88.429,
+          "expected_max": 100,
+          "working": "100×4 + 70×3 = 610 / 7 = 87.142857… × 0.9 = 78.4285714… → 소수 넷째 자리 반올림 78.429; 출결 10; 합 88.429"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "program": "특성화고교졸업자전형 (수시 · 교과)",
+      "decision": "reject",
+      "reason": "원문 반영 교과가 '전 과목'이고 전문교과 과목도 석차등급으로 반영(p.23~24). 특성화고 지원자 성적의 큰 몫인 전문교과(교과군)를 앱 교과 목록·엔진으로 담을 수 없어, 보통교과만 계산하면 원문과 다른 점수가 나옴."
+    }
+  ]
+}

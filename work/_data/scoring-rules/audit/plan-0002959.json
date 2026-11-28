@@ -1,0 +1,618 @@
+{
+  "entry": "plan-0002959",
+  "university": "상명대학교(천안)",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0002959/document-0002959.pdf",
+  "note": "원문은 상명대 제2캠퍼스(충남, 원문 p.21 '천안캠퍼스') 시행계획. app/public/data/susi-results/index.json의 '상명대학교(천안)'를 공개 이름으로 씀(서울 본교는 '상명대(서울)', plan-0000117).",
+  "programs": [
+    {
+      "index": 0,
+      "program": "학생부교과전형",
+      "decision": "publish",
+      "reason": "p.19(PDF 21)·p.20(PDF 22) 원문과 대조: 1-1~3-1(졸업예정자), 석차등급으로 평가된 전 교과목, 이수학점 가중 평균, 5등급표 100/95/93/70/0, 성취도 과목 미반영, 학년 가중 없음, 모집단위 계열 구분 없이 동일. 학생부교과 95% + 출결 5% = 1,000점(일괄합산 100%)이라 교과 950·출결 50으로 학생부 전체(scope student_record). 출결: 미인정 결석·지각·조퇴·결과, 3회=결석 1일(소수점 절사), 0~1/2~4/5~7/8~10/11~13/14일 이상 → 5/4/3/2/1/0 → 반영비율로 ×10(50/40/…/0)이 감점표 0/10/20/30/40/50과 같음. '모든 성적사정 점수는 소수점 넷째 자리에서 반올림'은 출결이 10점 단위 정수라 최종 3자리 반올림과 결과가 같음(rounding official). 초안 수정: university를 수집 자료 이름 '상명대학교(천안)'로. 나머지 필드는 원문과 일치. 공동교육과정 언급 없음 → block_joint. 주의: 출결 5~0점의 50점 환산은 교과 산식의 '× 반영비율'과 같은 방식으로 읽은 것(원문에 출결 산식이 따로 없음). 전형방법 p.9(PDF 11).",
+      "rule": {
+        "admission_year": 2028,
+        "university": "상명대학교(천안)",
+        "program": "학생부교과전형",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "사회",
+          "과학",
+          "한국사",
+          "기술·가정",
+          "제2외국어",
+          "한문",
+          "정보",
+          "교양",
+          "체육",
+          "예술"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 95,
+          "3": 93,
+          "4": 70,
+          "5": 0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 950,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 50,
+          "deduction_table": [
+            {
+              "absence_max": 1,
+              "points": 0
+            },
+            {
+              "absence_max": 4,
+              "points": 10
+            },
+            {
+              "absence_max": 7,
+              "points": 20
+            },
+            {
+              "absence_max": 10,
+              "points": 30
+            },
+            {
+              "absence_max": 13,
+              "points": 40
+            },
+            {
+              "absence_max": 365,
+              "points": 50
+            }
+          ]
+        },
+        "max_score": 1000,
+        "rounding": {
+          "digits": 3,
+          "mode": "round"
+        }
+      },
+      "publication": {
+        "pages": [
+          11,
+          21,
+          22
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부교과 950점(석차등급이 있는 전 교과목, 이수학점 가중 평균 × 9.5)과 출결 50점을 더한 1,000점을 계산해요.",
+          "성취도만 있는 과목(체육·예술, 교양, 사회·과학 융합선택 등)과 3학년 2학기는 빼요.",
+          "출결은 미인정 결석일수(지각·조퇴·결과 3회 = 결석 1일, 소수점 버림) 구간 환산점수 5~0을 50점 만점으로 바꿔 더해요.",
+          "출결은 1·2학년과 3학년 1학기까지 반영해요(원문 p.20). 3학년 출결은 1학기 기록으로 입력해요.",
+          "최종 점수는 소수 넷째 자리에서 반올림해 셋째 자리까지 표시해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "전 과목 1등급(국어·수학 각 4학점) → 만점",
+          "grades": [
+            {
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1
+            },
+            {
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 1000,
+          "expected_max": 1000,
+          "working": "p.19 5등급표 1등급 100. 평균 (100×4+100×4)/8 = 100 → 100 × 9.5 = 950. 출결 결석 0일 → 1구간 환산 5 → 50. 합 1000."
+        },
+        {
+          "label": "등급 섞임 + 체육예술·사회 융합선택·3-2 과목 제외",
+          "grades": [
+            {
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1
+            },
+            {
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 2
+            },
+            {
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": 3
+            },
+            {
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 1,
+              "rank_grade": 4
+            },
+            {
+              "subject_group": "체육",
+              "type": "체육예술",
+              "semester": "1-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A"
+            },
+            {
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": null,
+              "achievement": "A"
+            },
+            {
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 3,
+              "rank_grade": 5
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 943.95,
+          "expected_max": 1000,
+          "working": "반영: 국어 1(100)×4 + 수학 2(95)×3 + 영어 3(93)×2 + 사회 4(70)×1 = 400+285+186+70 = 941, 학점 10 → 94.1. 체육예술·사회 융합선택(성취도만)·3-2(졸업예정자 3-1까지) 제외. 94.1 × 9.5 = 893.95. 출결 50. 합 943.95."
+        },
+        {
+          "label": "반올림 경계: 1등급 1학점 + 3등급 2학점",
+          "grades": [
+            {
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1
+            },
+            {
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 2,
+              "rank_grade": 3
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 955.667,
+          "expected_max": 1000,
+          "working": "(100×1 + 93×2)/3 = 286/3 = 95.33333… × 9.5 = 905.666666… + 출결 50 = 955.666666… → 소수 넷째 자리 반올림 955.667."
+        },
+        {
+          "label": "5등급(0점) 섞임",
+          "grades": [
+            {
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 5
+            },
+            {
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": 4
+            },
+            {
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 2
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 497.857,
+          "expected_max": 1000,
+          "working": "(0×3 + 70×2 + 95×2)/7 = 330/7 = 47.142857… × 9.5 = 447.857142… + 50 = 497.857142… → 497.857."
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "program": "농어촌학생전형 (수시 · 학생부교과)",
+      "decision": "publish",
+      "reason": "p.19(PDF 21)·p.20(PDF 22) 원문과 대조: 1-1~3-1(졸업예정자), 석차등급으로 평가된 전 교과목, 이수학점 가중 평균, 5등급표 100/95/93/70/0, 성취도 과목 미반영, 학년 가중 없음, 모집단위 계열 구분 없이 동일. 학생부교과 95% + 출결 5% = 1,000점(일괄합산 100%)이라 교과 950·출결 50으로 학생부 전체(scope student_record). 출결: 미인정 결석·지각·조퇴·결과, 3회=결석 1일(소수점 절사), 0~1/2~4/5~7/8~10/11~13/14일 이상 → 5/4/3/2/1/0 → 반영비율로 ×10(50/40/…/0)이 감점표 0/10/20/30/40/50과 같음. '모든 성적사정 점수는 소수점 넷째 자리에서 반올림'은 출결이 10점 단위 정수라 최종 3자리 반올림과 결과가 같음(rounding official). 초안 수정: university를 수집 자료 이름 '상명대학교(천안)'로. 나머지 필드는 원문과 일치. 공동교육과정 언급 없음 → block_joint. 주의: 출결 5~0점의 50점 환산은 교과 산식의 '× 반영비율'과 같은 방식으로 읽은 것(원문에 출결 산식이 따로 없음). 전형방법 p.17(PDF 19) 학생부교과 95·출결 5·1,000점, '교과성적 반영방법: 본문 p.19 참고'로 학생부교과전형과 같은 방법.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "상명대학교(천안)",
+        "program": "농어촌학생전형 (수시 · 학생부교과)",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "사회",
+          "과학",
+          "한국사",
+          "기술·가정",
+          "제2외국어",
+          "한문",
+          "정보",
+          "교양",
+          "체육",
+          "예술"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 95,
+          "3": 93,
+          "4": 70,
+          "5": 0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 950,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 50,
+          "deduction_table": [
+            {
+              "absence_max": 1,
+              "points": 0
+            },
+            {
+              "absence_max": 4,
+              "points": 10
+            },
+            {
+              "absence_max": 7,
+              "points": 20
+            },
+            {
+              "absence_max": 10,
+              "points": 30
+            },
+            {
+              "absence_max": 13,
+              "points": 40
+            },
+            {
+              "absence_max": 365,
+              "points": 50
+            }
+          ]
+        },
+        "max_score": 1000,
+        "rounding": {
+          "digits": 3,
+          "mode": "round"
+        }
+      },
+      "publication": {
+        "pages": [
+          18,
+          19,
+          21,
+          22
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부교과 950점(석차등급이 있는 전 교과목, 이수학점 가중 평균 × 9.5)과 출결 50점을 더한 1,000점을 계산해요.",
+          "성취도만 있는 과목(체육·예술, 교양, 사회·과학 융합선택 등)과 3학년 2학기는 빼요.",
+          "출결은 미인정 결석일수(지각·조퇴·결과 3회 = 결석 1일, 소수점 버림) 구간 환산점수 5~0을 50점 만점으로 바꿔 더해요.",
+          "출결은 1·2학년과 3학년 1학기까지 반영해요(원문 p.20). 3학년 출결은 1학기 기록으로 입력해요.",
+          "최종 점수는 소수 넷째 자리에서 반올림해 셋째 자리까지 표시해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "전 과목 1등급(국어·수학 각 4학점) → 만점",
+          "grades": [
+            {
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1
+            },
+            {
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 1000,
+          "expected_max": 1000,
+          "working": "p.19 5등급표 1등급 100. 평균 (100×4+100×4)/8 = 100 → 100 × 9.5 = 950. 출결 결석 0일 → 1구간 환산 5 → 50. 합 1000."
+        },
+        {
+          "label": "등급 섞임 + 체육예술·사회 융합선택·3-2 과목 제외",
+          "grades": [
+            {
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1
+            },
+            {
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 2
+            },
+            {
+              "subject_group": "영어",
+              "type": "진로선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": 3
+            },
+            {
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 1,
+              "rank_grade": 4
+            },
+            {
+              "subject_group": "체육",
+              "type": "체육예술",
+              "semester": "1-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A"
+            },
+            {
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": null,
+              "achievement": "A"
+            },
+            {
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 3,
+              "rank_grade": 5
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 943.95,
+          "expected_max": 1000,
+          "working": "반영: 국어 1(100)×4 + 수학 2(95)×3 + 영어 3(93)×2 + 사회 4(70)×1 = 400+285+186+70 = 941, 학점 10 → 94.1. 체육예술·사회 융합선택(성취도만)·3-2(졸업예정자 3-1까지) 제외. 94.1 × 9.5 = 893.95. 출결 50. 합 943.95."
+        },
+        {
+          "label": "반올림 경계: 1등급 1학점 + 3등급 2학점",
+          "grades": [
+            {
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 1
+            },
+            {
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 2,
+              "rank_grade": 3
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 955.667,
+          "expected_max": 1000,
+          "working": "(100×1 + 93×2)/3 = 286/3 = 95.33333… × 9.5 = 905.666666… + 출결 50 = 955.666666… → 소수 넷째 자리 반올림 955.667."
+        },
+        {
+          "label": "5등급(0점) 섞임",
+          "grades": [
+            {
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 5
+            },
+            {
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": 4
+            },
+            {
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": 2
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 497.857,
+          "expected_max": 1000,
+          "working": "(0×3 + 70×2 + 95×2)/7 = 330/7 = 47.142857… × 9.5 = 447.857142… + 50 = 497.857142… → 497.857."
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "program": "특성화고교졸업자전형 (수시 · 학생부교과)",
+      "decision": "reject",
+      "reason": "반영 방법 자체는 학생부교과전형과 같지만(p.18 PDF 20 '본문 p.19 참고'), 원문이 '석차등급으로 평가된 전 교과목'을 반영해 특성화고 지원자의 전문교과(지원자격도 전문교과 24학점 이상 이수 기준) 과목이 들어가요. 앱 교과 목록·엔진은 전문교과를 담을 수 없어 보통교과만 계산하면 실제와 다른 점수가 나와요(plan-0000046 특성화고 reject와 같은 판단).",
+      "rule": {
+        "admission_year": 2028,
+        "university": "상명대학교(천안)",
+        "program": "특성화고교졸업자전형 (수시 · 학생부교과)",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "사회",
+          "과학",
+          "한국사",
+          "기술·가정",
+          "제2외국어",
+          "한문",
+          "정보",
+          "교양",
+          "체육",
+          "예술"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 95,
+          "3": 93,
+          "4": 70,
+          "5": 0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 950,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 50,
+          "deduction_table": [
+            {
+              "absence_max": 1,
+              "points": 0
+            },
+            {
+              "absence_max": 4,
+              "points": 10
+            },
+            {
+              "absence_max": 7,
+              "points": 20
+            },
+            {
+              "absence_max": 10,
+              "points": 30
+            },
+            {
+              "absence_max": 13,
+              "points": 40
+            },
+            {
+              "absence_max": 365,
+              "points": 50
+            }
+          ]
+        },
+        "max_score": 1000,
+        "rounding": {
+          "digits": 3,
+          "mode": "round"
+        }
+      },
+      "publication": {
+        "pages": [
+          20,
+          21,
+          22
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부교과 950점(석차등급이 있는 전 교과목, 이수학점 가중 평균 × 9.5)과 출결 50점을 더한 1,000점을 계산해요.",
+          "성취도만 있는 과목(체육·예술, 교양, 사회·과학 융합선택 등)과 3학년 2학기는 빼요.",
+          "출결은 미인정 결석일수(지각·조퇴·결과 3회 = 결석 1일, 소수점 버림) 구간 환산점수 5~0을 50점 만점으로 바꿔 더해요.",
+          "최종 점수는 소수 넷째 자리에서 반올림해 셋째 자리까지 표시해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": []
+    }
+  ]
+}

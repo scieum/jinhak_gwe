@@ -1,0 +1,1411 @@
+{
+  "entry": "plan-0000111",
+  "university": "명지대학교(자연)",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000111/myongji-official.pdf",
+  "note": "제2캠퍼스 = 자연캠퍼스(p.7·p.9). app/public/data/susi-results/index.json의 '명지대(자연)'과 같은 키가 되도록 '명지대학교(자연)'으로 공개(scoringUniversityKey가 대학교→대). 주 원문 document-0000111.hwp는 표가 텍스트로 추출되지 않아(<표>) 같은 시행계획 PDF(myongji-official.pdf, 입학처 공식) 쪽 이미지로 판단. 인문캠퍼스는 plan-0000109.",
+  "programs": [
+    {
+      "index": 0,
+      "program": "학교장추천전형",
+      "decision": "publish",
+      "reason": "p.37~39 원문(쪽 이미지)과 대조: 1-1~3-1, 계열별 반영교과 전 과목 학점 가중, 환산점수 1:100 2:96 3:89 4:68 5:0(성취도 A~E 동일), 석차등급 없으면 성취도 반영, 산출식 = Σ(점수×학점)/Σ학점 + 이수학점 합×0.05(소수 넷째 자리 버림) → ×9(p.38 마), 출결 100 − 미인정 결석일수(지각·조퇴·결과 3회=결석 1, p.39), 교과 900+출결 100(p.12·13·15·20 최고점). 수정: (1) 제2캠퍼스(자연캠퍼스, p.7·p.9) 모집단위만 남기고 인문캠퍼스 학과 units 제거, '*' 없이 학과 선택 필수. (2) 소수점 버림이 산출식 단계 규정이라 mean_rounding floor 3자리 추가(가산점은 0.05 배수라 평균만 버려도 같은 값). (3) attendance_rule에 deduction_table [] 누락 → 추가(per_day 1). (4) subject_groups를 계열 합집합으로. 해석: 과학탐구실험 등 3단계 성취도는 같은 문자 칸(A 100·B 96·C 89)으로 읽음, 지각·조퇴·결과는 합산 3회=결석 1. 성취도도 없는 과목(학점만 가산점) 입력 시 엔진은 계산을 멈춤(안전). 공동교육과정 언급 없음 → block_joint. 이 전형은 자연캠퍼스 예체능 모집단위가 없어(p.9) 예체능 track 없음.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "명지대학교(자연)",
+        "program": "학교장추천전형",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "사회",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 96,
+          "3": 89,
+          "4": 68,
+          "5": 0
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 96,
+          "C": 89,
+          "D": 68,
+          "E": 0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "achievement_convert",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 900,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 100,
+          "deduction_table": []
+        },
+        "max_score": 1000,
+        "rounding": {
+          "digits": 3,
+          "mode": "floor"
+        },
+        "advanced": {
+          "tracks": [
+            {
+              "name": "인문사회",
+              "units": [
+                "공간디자인"
+              ],
+              "subject_groups": [
+                "국어",
+                "수학",
+                "영어",
+                "사회"
+              ]
+            },
+            {
+              "name": "자연공학",
+              "units": [
+                "화학나노",
+                "융합에너지",
+                "식품영양",
+                "시스템생명과학",
+                "기계",
+                "로봇",
+                "건설환경",
+                "환경시스템",
+                "스마트모빌리티",
+                "화학공학",
+                "신소재",
+                "반도체",
+                "전기정보",
+                "전자공학",
+                "AI컴퓨터",
+                "AI응용시스템",
+                "산업경영공학",
+                "건축학",
+                "전통건축",
+                "자율전공학부(자연)"
+              ],
+              "subject_groups": [
+                "국어",
+                "수학",
+                "영어",
+                "과학"
+              ]
+            }
+          ],
+          "mean_rounding": {
+            "digits": 3,
+            "mode": "floor"
+          },
+          "credits": {
+            "per_credit_bonus": 0.45,
+            "cap": 9999
+          },
+          "attendance": {
+            "per_day": 1
+          }
+        }
+      },
+      "publication": {
+        "pages": [
+          3,
+          9,
+          12,
+          37,
+          38,
+          39
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부(교과) 900점과 출결 100점, 합 1,000점을 계산해요. 교과면접·특수교육대상자 2단계 면접은 포함하지 않아요.",
+          "환산점수(100·96·89·68·0)의 학점 가중평균을 소수 넷째 자리에서 버리고, 반영교과 이수학점 합 × 0.05를 더한 뒤 ×9 해요(900점을 넘을 수 있어요).",
+          "출결은 100 − 미인정 결석일수예요(미인정 지각·조퇴·결과 합 3회 = 결석 1일).",
+          "학과 계열에 따라 국·수·영·과(자연공학) 또는 국·수·영·사(공간디자인학과)를 반영해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "자연공학 등급 섞임 + 사회·과학 융합선택 성취도(사회 과목은 반영 밖)",
+          "department": "기계공학전공",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "융합선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 958.312,
+          "expected_max": 1000,
+          "working": "자연공학 국·수·영·과. 환산 합 = 96×4 + 89×3 + 100×2 + 96(융합선택 과학 성취도 B)×2 = 384+267+200+192 = 1043, 학점 11 → 1043/11 = 94.8181… → 넷째 자리 버림 94.818. 가산점 = 반영교과 이수학점 11 × 0.05 = 0.55 → 95.368. ×9 = 858.312. 출결 100 − 0 = 100. 합 958.312 (사회 3학점은 반영교과 밖이라 평균·가산점 모두 제외)"
+        },
+        {
+          "label": "인문사회 계열(공간디자인학과): 국·수·영·사, 과학 제외, 5등급 0점",
+          "department": "공간디자인학과",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 692.047,
+          "expected_max": 1000,
+          "working": "p.37 건축대학(공간디자인학과)은 인문사회계열 → 국·수·영·사. 96×4 + 68×3 + 0×2 = 588, 학점 9 → 65.3333… → 버림 65.333. 가산점 9 × 0.05 = 0.45 → 65.783. ×9 = 592.047. 출결 100. 합 692.047 (과학 3학점 제외)"
+        },
+        {
+          "label": "넷째 자리 버림 경계(반올림이면 다름)",
+          "department": "자율전공학부(자연)",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "진로선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 990.694,
+          "expected_max": 1000,
+          "working": "100×4 + 96×2 = 592, 학점 6 → 98.6666… → 넷째 자리 버림 98.666(반올림이면 98.667). 가산점 6 × 0.05 = 0.30 → 98.966. ×9 = 890.694. 출결 100. 합 990.694"
+        },
+        {
+          "label": "가산점으로 교과 900점 초과(과학탐구실험 성취도 A 포함)",
+          "department": "반도체공학부",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "lab",
+              "subject_group": "과학",
+              "type": "과탐실험",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 1007.65,
+          "expected_max": 1000,
+          "working": "모두 100점(과학탐구실험은 석차등급이 없어 성취도 A = 100) → 평균 100. 가산점 = 이수학점 17 × 0.05 = 0.85 → 100.85. ×9 = 907.65(원문 '최고점을 초과할 수 있음'). 출결 100. 합 1007.65"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "program": "교과면접전형",
+      "decision": "publish",
+      "reason": "p.37~39 원문(쪽 이미지)과 대조: 1-1~3-1, 계열별 반영교과 전 과목 학점 가중, 환산점수 1:100 2:96 3:89 4:68 5:0(성취도 A~E 동일), 석차등급 없으면 성취도 반영, 산출식 = Σ(점수×학점)/Σ학점 + 이수학점 합×0.05(소수 넷째 자리 버림) → ×9(p.38 마), 출결 100 − 미인정 결석일수(지각·조퇴·결과 3회=결석 1, p.39), 교과 900+출결 100(p.12·13·15·20 최고점). 수정: (1) 제2캠퍼스(자연캠퍼스, p.7·p.9) 모집단위만 남기고 인문캠퍼스 학과 units 제거, '*' 없이 학과 선택 필수. (2) 소수점 버림이 산출식 단계 규정이라 mean_rounding floor 3자리 추가(가산점은 0.05 배수라 평균만 버려도 같은 값). (3) attendance_rule에 deduction_table [] 누락 → 추가(per_day 1). (4) subject_groups를 계열 합집합으로. 해석: 과학탐구실험 등 3단계 성취도는 같은 문자 칸(A 100·B 96·C 89)으로 읽음, 지각·조퇴·결과는 합산 3회=결석 1. 성취도도 없는 과목(학점만 가산점) 입력 시 엔진은 계산을 멈춤(안전). 공동교육과정 언급 없음 → block_joint. 교과면접은 자연캠퍼스 연극·영화전공(영화) 12명(p.9 주1)을 모집 → 예체능 국어·영어 track 포함.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "명지대학교(자연)",
+        "program": "교과면접전형",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "사회",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 96,
+          "3": 89,
+          "4": 68,
+          "5": 0
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 96,
+          "C": 89,
+          "D": 68,
+          "E": 0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "achievement_convert",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 900,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 100,
+          "deduction_table": []
+        },
+        "max_score": 1000,
+        "rounding": {
+          "digits": 3,
+          "mode": "floor"
+        },
+        "advanced": {
+          "tracks": [
+            {
+              "name": "인문사회",
+              "units": [
+                "공간디자인"
+              ],
+              "subject_groups": [
+                "국어",
+                "수학",
+                "영어",
+                "사회"
+              ]
+            },
+            {
+              "name": "자연공학",
+              "units": [
+                "화학나노",
+                "융합에너지",
+                "식품영양",
+                "시스템생명과학",
+                "기계",
+                "로봇",
+                "건설환경",
+                "환경시스템",
+                "스마트모빌리티",
+                "화학공학",
+                "신소재",
+                "반도체",
+                "전기정보",
+                "전자공학",
+                "AI컴퓨터",
+                "AI응용시스템",
+                "산업경영공학",
+                "건축학",
+                "전통건축",
+                "자율전공학부(자연)"
+              ],
+              "subject_groups": [
+                "국어",
+                "수학",
+                "영어",
+                "과학"
+              ]
+            },
+            {
+              "name": "예체능",
+              "units": [
+                "영화"
+              ],
+              "subject_groups": [
+                "국어",
+                "영어"
+              ]
+            }
+          ],
+          "mean_rounding": {
+            "digits": 3,
+            "mode": "floor"
+          },
+          "credits": {
+            "per_credit_bonus": 0.45,
+            "cap": 9999
+          },
+          "attendance": {
+            "per_day": 1
+          }
+        }
+      },
+      "publication": {
+        "pages": [
+          3,
+          9,
+          13,
+          37,
+          38,
+          39
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부(교과) 900점과 출결 100점, 합 1,000점을 계산해요. 교과면접·특수교육대상자 2단계 면접은 포함하지 않아요.",
+          "환산점수(100·96·89·68·0)의 학점 가중평균을 소수 넷째 자리에서 버리고, 반영교과 이수학점 합 × 0.05를 더한 뒤 ×9 해요(900점을 넘을 수 있어요).",
+          "출결은 100 − 미인정 결석일수예요(미인정 지각·조퇴·결과 합 3회 = 결석 1일).",
+          "학과 계열에 따라 국·수·영·과(자연공학) · 국·수·영·사(공간디자인학과) · 국·영(연극·영화전공)를 반영해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "자연공학 등급 섞임 + 사회·과학 융합선택 성취도(사회 과목은 반영 밖)",
+          "department": "기계공학전공",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "융합선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 958.312,
+          "expected_max": 1000,
+          "working": "자연공학 국·수·영·과. 환산 합 = 96×4 + 89×3 + 100×2 + 96(융합선택 과학 성취도 B)×2 = 384+267+200+192 = 1043, 학점 11 → 1043/11 = 94.8181… → 넷째 자리 버림 94.818. 가산점 = 반영교과 이수학점 11 × 0.05 = 0.55 → 95.368. ×9 = 858.312. 출결 100 − 0 = 100. 합 958.312 (사회 3학점은 반영교과 밖이라 평균·가산점 모두 제외)"
+        },
+        {
+          "label": "인문사회 계열(공간디자인학과): 국·수·영·사, 과학 제외, 5등급 0점",
+          "department": "공간디자인학과",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 692.047,
+          "expected_max": 1000,
+          "working": "p.37 건축대학(공간디자인학과)은 인문사회계열 → 국·수·영·사. 96×4 + 68×3 + 0×2 = 588, 학점 9 → 65.3333… → 버림 65.333. 가산점 9 × 0.05 = 0.45 → 65.783. ×9 = 592.047. 출결 100. 합 692.047 (과학 3학점 제외)"
+        },
+        {
+          "label": "넷째 자리 버림 경계(반올림이면 다름)",
+          "department": "자율전공학부(자연)",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "진로선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 990.694,
+          "expected_max": 1000,
+          "working": "100×4 + 96×2 = 592, 학점 6 → 98.6666… → 넷째 자리 버림 98.666(반올림이면 98.667). 가산점 6 × 0.05 = 0.30 → 98.966. ×9 = 890.694. 출결 100. 합 990.694"
+        },
+        {
+          "label": "가산점으로 교과 900점 초과(과학탐구실험 성취도 A 포함)",
+          "department": "반도체공학부",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "lab",
+              "subject_group": "과학",
+              "type": "과탐실험",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 1007.65,
+          "expected_max": 1000,
+          "working": "모두 100점(과학탐구실험은 석차등급이 없어 성취도 A = 100) → 평균 100. 가산점 = 이수학점 17 × 0.05 = 0.85 → 100.85. ×9 = 907.65(원문 '최고점을 초과할 수 있음'). 출결 100. 합 1007.65"
+        },
+        {
+          "label": "교과면접 연극·영화전공(예체능): 국어·영어만",
+          "department": "연극·영화전공",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 936.1,
+          "expected_max": 1000,
+          "working": "p.37 스포츠·예술대학 = 예체능계열 국어·영어. 89×4 + 96×4 = 740, 학점 8 → 92.5. 가산점 8 × 0.05 = 0.40 → 92.9. ×9 = 836.1. 출결 100. 합 936.1 (수학 5등급 제외)"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "program": "특수교육대상자전형",
+      "decision": "publish",
+      "reason": "p.37~39 원문(쪽 이미지)과 대조: 1-1~3-1, 계열별 반영교과 전 과목 학점 가중, 환산점수 1:100 2:96 3:89 4:68 5:0(성취도 A~E 동일), 석차등급 없으면 성취도 반영, 산출식 = Σ(점수×학점)/Σ학점 + 이수학점 합×0.05(소수 넷째 자리 버림) → ×9(p.38 마), 출결 100 − 미인정 결석일수(지각·조퇴·결과 3회=결석 1, p.39), 교과 900+출결 100(p.12·13·15·20 최고점). 수정: (1) 제2캠퍼스(자연캠퍼스, p.7·p.9) 모집단위만 남기고 인문캠퍼스 학과 units 제거, '*' 없이 학과 선택 필수. (2) 소수점 버림이 산출식 단계 규정이라 mean_rounding floor 3자리 추가(가산점은 0.05 배수라 평균만 버려도 같은 값). (3) attendance_rule에 deduction_table [] 누락 → 추가(per_day 1). (4) subject_groups를 계열 합집합으로. 해석: 과학탐구실험 등 3단계 성취도는 같은 문자 칸(A 100·B 96·C 89)으로 읽음, 지각·조퇴·결과는 합산 3회=결석 1. 성취도도 없는 과목(학점만 가산점) 입력 시 엔진은 계산을 멈춤(안전). 공동교육과정 언급 없음 → block_joint. 이 전형은 자연캠퍼스 예체능 모집단위가 없어(p.9) 예체능 track 없음. 검증자 수정: p.9 특수교육대상자 칸에 모집인원이 있는 모집단위만 units에 남김(기계·건설환경·환경시스템·화학공학·신소재·반도체·공간디자인·자율전공(자연)은 '-'), 인문사회 track 제거, 케이스 학과를 모집 단위로 교체.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "명지대학교(자연)",
+        "program": "특수교육대상자전형",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 96,
+          "3": 89,
+          "4": 68,
+          "5": 0
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 96,
+          "C": 89,
+          "D": 68,
+          "E": 0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "achievement_convert",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 900,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 100,
+          "deduction_table": []
+        },
+        "max_score": 1000,
+        "rounding": {
+          "digits": 3,
+          "mode": "floor"
+        },
+        "advanced": {
+          "tracks": [
+            {
+              "name": "자연공학",
+              "units": [
+                "화학나노",
+                "융합에너지",
+                "식품영양",
+                "시스템생명과학",
+                "스마트모빌리티",
+                "전기정보",
+                "전자공학",
+                "AI컴퓨터",
+                "AI응용시스템",
+                "산업경영공학",
+                "건축학",
+                "전통건축"
+              ],
+              "subject_groups": [
+                "국어",
+                "수학",
+                "영어",
+                "과학"
+              ]
+            }
+          ],
+          "mean_rounding": {
+            "digits": 3,
+            "mode": "floor"
+          },
+          "credits": {
+            "per_credit_bonus": 0.45,
+            "cap": 9999
+          },
+          "attendance": {
+            "per_day": 1
+          }
+        }
+      },
+      "publication": {
+        "pages": [
+          3,
+          9,
+          20,
+          37,
+          38,
+          39
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부(교과) 900점과 출결 100점, 합 1,000점을 계산해요. 교과면접·특수교육대상자 2단계 면접은 포함하지 않아요.",
+          "환산점수(100·96·89·68·0)의 학점 가중평균을 소수 넷째 자리에서 버리고, 반영교과 이수학점 합 × 0.05를 더한 뒤 ×9 해요(900점을 넘을 수 있어요).",
+          "출결은 100 − 미인정 결석일수예요(미인정 지각·조퇴·결과 합 3회 = 결석 1일).",
+          "국어·수학·영어·과학(자연공학계열)을 반영해요. 이 전형을 모집하는 자연캠퍼스 모집단위(p.9)만 계산해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "자연공학 등급 섞임 + 사회·과학 융합선택 성취도(사회 과목은 반영 밖)",
+          "department": "AI컴퓨터공학전공",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "융합선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 958.312,
+          "expected_max": 1000,
+          "working": "자연공학 국·수·영·과. 환산 합 = 96×4 + 89×3 + 100×2 + 96(융합선택 과학 성취도 B)×2 = 384+267+200+192 = 1043, 학점 11 → 1043/11 = 94.8181… → 넷째 자리 버림 94.818. 가산점 = 반영교과 이수학점 11 × 0.05 = 0.55 → 95.368. ×9 = 858.312. 출결 100 − 0 = 100. 합 958.312 (사회 3학점은 반영교과 밖이라 평균·가산점 모두 제외)"
+        },
+        {
+          "label": "자연공학: 국·수·영·과, 사회 제외, 5등급 0점",
+          "department": "건축학전공",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 788.05,
+          "expected_max": 1000,
+          "working": "자연공학 국·수·영·과. 96×4(국어 2등급) + 100×3(과학 1등급) + 0×2(영어 5등급) = 684, 학점 9 → 76.000. 가산점 9 × 0.05 = 0.45 → 76.45. ×9 = 688.05. 출결 100. 합 788.05 (사회 3학점은 반영교과 밖)"
+        },
+        {
+          "label": "넷째 자리 버림 경계(반올림이면 다름)",
+          "department": "산업경영공학과",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "진로선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 990.694,
+          "expected_max": 1000,
+          "working": "100×4 + 96×2 = 592, 학점 6 → 98.6666… → 넷째 자리 버림 98.666(반올림이면 98.667). 가산점 6 × 0.05 = 0.30 → 98.966. ×9 = 890.694. 출결 100. 합 990.694"
+        },
+        {
+          "label": "가산점으로 교과 900점 초과(과학탐구실험 성취도 A 포함)",
+          "department": "전자공학전공",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "lab",
+              "subject_group": "과학",
+              "type": "과탐실험",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 1007.65,
+          "expected_max": 1000,
+          "working": "모두 100점(과학탐구실험은 석차등급이 없어 성취도 A = 100) → 평균 100. 가산점 = 이수학점 17 × 0.05 = 0.85 → 100.85. ×9 = 907.65(원문 '최고점을 초과할 수 있음'). 출결 100. 합 1007.65"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "program": "기회균형전형",
+      "decision": "publish",
+      "reason": "p.37~39 원문(쪽 이미지)과 대조: 1-1~3-1, 계열별 반영교과 전 과목 학점 가중, 환산점수 1:100 2:96 3:89 4:68 5:0(성취도 A~E 동일), 석차등급 없으면 성취도 반영, 산출식 = Σ(점수×학점)/Σ학점 + 이수학점 합×0.05(소수 넷째 자리 버림) → ×9(p.38 마), 출결 100 − 미인정 결석일수(지각·조퇴·결과 3회=결석 1, p.39), 교과 900+출결 100(p.12·13·15·20 최고점). 수정: (1) 제2캠퍼스(자연캠퍼스, p.7·p.9) 모집단위만 남기고 인문캠퍼스 학과 units 제거, '*' 없이 학과 선택 필수. (2) 소수점 버림이 산출식 단계 규정이라 mean_rounding floor 3자리 추가(가산점은 0.05 배수라 평균만 버려도 같은 값). (3) attendance_rule에 deduction_table [] 누락 → 추가(per_day 1). (4) subject_groups를 계열 합집합으로. 해석: 과학탐구실험 등 3단계 성취도는 같은 문자 칸(A 100·B 96·C 89)으로 읽음, 지각·조퇴·결과는 합산 3회=결석 1. 성취도도 없는 과목(학점만 가산점) 입력 시 엔진은 계산을 멈춤(안전). 공동교육과정 언급 없음 → block_joint. 이 전형은 자연캠퍼스 예체능 모집단위가 없어(p.9) 예체능 track 없음. 검증자 수정: p.9 기회균형 칸에 모집인원이 있는 모집단위만 units에 남김(자율전공학부(자연) 30명만 모집), 인문사회 track 제거, 케이스 학과를 모집 단위로 교체.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "명지대학교(자연)",
+        "program": "기회균형전형",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 96,
+          "3": 89,
+          "4": 68,
+          "5": 0
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 96,
+          "C": 89,
+          "D": 68,
+          "E": 0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "achievement_convert",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 900,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 100,
+          "deduction_table": []
+        },
+        "max_score": 1000,
+        "rounding": {
+          "digits": 3,
+          "mode": "floor"
+        },
+        "advanced": {
+          "tracks": [
+            {
+              "name": "자연공학",
+              "units": [
+                "자율전공학부(자연)"
+              ],
+              "subject_groups": [
+                "국어",
+                "수학",
+                "영어",
+                "과학"
+              ]
+            }
+          ],
+          "mean_rounding": {
+            "digits": 3,
+            "mode": "floor"
+          },
+          "credits": {
+            "per_credit_bonus": 0.45,
+            "cap": 9999
+          },
+          "attendance": {
+            "per_day": 1
+          }
+        }
+      },
+      "publication": {
+        "pages": [
+          3,
+          9,
+          15,
+          37,
+          38,
+          39
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부(교과) 900점과 출결 100점, 합 1,000점을 계산해요. 교과면접·특수교육대상자 2단계 면접은 포함하지 않아요.",
+          "환산점수(100·96·89·68·0)의 학점 가중평균을 소수 넷째 자리에서 버리고, 반영교과 이수학점 합 × 0.05를 더한 뒤 ×9 해요(900점을 넘을 수 있어요).",
+          "출결은 100 − 미인정 결석일수예요(미인정 지각·조퇴·결과 합 3회 = 결석 1일).",
+          "국어·수학·영어·과학(자연공학계열)을 반영해요. 이 전형을 모집하는 자연캠퍼스 모집단위(p.9)만 계산해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "자연공학 등급 섞임 + 사회·과학 융합선택 성취도(사회 과목은 반영 밖)",
+          "department": "자율전공학부(자연)",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "융합선택",
+              "semester": "3-1",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 958.312,
+          "expected_max": 1000,
+          "working": "자연공학 국·수·영·과. 환산 합 = 96×4 + 89×3 + 100×2 + 96(융합선택 과학 성취도 B)×2 = 384+267+200+192 = 1043, 학점 11 → 1043/11 = 94.8181… → 넷째 자리 버림 94.818. 가산점 = 반영교과 이수학점 11 × 0.05 = 0.55 → 95.368. ×9 = 858.312. 출결 100 − 0 = 100. 합 958.312 (사회 3학점은 반영교과 밖이라 평균·가산점 모두 제외)"
+        },
+        {
+          "label": "자연공학: 국·수·영·과, 사회 제외, 5등급 0점",
+          "department": "자율전공학부(자연)",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": 5,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 788.05,
+          "expected_max": 1000,
+          "working": "자연공학 국·수·영·과. 96×4(국어 2등급) + 100×3(과학 1등급) + 0×2(영어 5등급) = 684, 학점 9 → 76.000. 가산점 9 × 0.05 = 0.45 → 76.45. ×9 = 688.05. 출결 100. 합 788.05 (사회 3학점은 반영교과 밖)"
+        },
+        {
+          "label": "넷째 자리 버림 경계(반올림이면 다름)",
+          "department": "자율전공학부(자연)",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "진로선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 990.694,
+          "expected_max": 1000,
+          "working": "100×4 + 96×2 = 592, 학점 6 → 98.6666… → 넷째 자리 버림 98.666(반올림이면 98.667). 가산점 6 × 0.05 = 0.30 → 98.966. ×9 = 890.694. 출결 100. 합 990.694"
+        },
+        {
+          "label": "가산점으로 교과 900점 초과(과학탐구실험 성취도 A 포함)",
+          "department": "자율전공학부(자연)",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "일반선택",
+              "semester": "2-2",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "lab",
+              "subject_group": "과학",
+              "type": "과탐실험",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 1007.65,
+          "expected_max": 1000,
+          "working": "모두 100점(과학탐구실험은 석차등급이 없어 성취도 A = 100) → 평균 100. 가산점 = 이수학점 17 × 0.05 = 0.85 → 100.85. ×9 = 907.65(원문 '최고점을 초과할 수 있음'). 출결 100. 합 1007.65"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "program": "만학도전형(3월) (수시) #1",
+      "decision": "reject",
+      "reason": "만학도(3월)은 p.3 기준 미래전략학부·융합인재학부(미래융합대학)만 모집하고, 미래융합대학은 인문캠퍼스(p.7)예요. p.9 자연캠퍼스 모집인원표의 만학도(3월) 칸은 모두 '-'라 제2캠퍼스(명지대(자연))에는 이 전형 모집단위가 없어요. 인문캠퍼스 항목(plan-0000109)에서 다룰 일이라 여기서는 공개하지 않아요.",
+      "rule": null,
+      "publication": null,
+      "cases": []
+    },
+    {
+      "index": 7,
+      "program": "만학도전형(3월) (수시) #2",
+      "decision": "reject",
+      "reason": "만학도(3월)은 p.3 기준 미래전략학부·융합인재학부(미래융합대학)만 모집하고, 미래융합대학은 인문캠퍼스(p.7)예요. p.9 자연캠퍼스 모집인원표의 만학도(3월) 칸은 모두 '-'라 제2캠퍼스(명지대(자연))에는 이 전형 모집단위가 없어요. 인문캠퍼스 항목(plan-0000109)에서 다룰 일이라 여기서는 공개하지 않아요.",
+      "rule": null,
+      "publication": null,
+      "cases": []
+    }
+  ]
+}

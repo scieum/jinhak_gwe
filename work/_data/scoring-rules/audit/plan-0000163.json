@@ -1,0 +1,283 @@
+{
+  "entry": "plan-0000163",
+  "university": "이화여자대학교",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000163/document-0000163.pdf",
+  "note": "app/public/data/admission-plans.json이 '이화여자대학교'(캠퍼스 하나)로 씀. 원문은 스캔 PDF라 텍스트 추출이 비어 쪽 이미지로 대조. p.5(인쇄 5쪽) 고교추천 모집단위, p.10(인쇄 10쪽) 전형방법·반영방법·점수표. ewha-official.pdf는 같은 시행계획의 다른 사본(초안 evidence가 가리킴).",
+  "programs": [
+    {
+      "index": 0,
+      "program": "고교추천전형",
+      "decision": "publish",
+      "reason": "p.10 쪽 이미지와 대조: 교과(정량) 80% 최고 800/최저 0, 비교과(출결) 5% 50점, 서류 15% 150점. 반영 교과 국어·수학·영어·사회(역사/도덕 포함)·과학 = 앱의 국어·수학·영어·사회·한국사·과학, 3학년 1학기까지(학년별·학기별 가중치 없음), 전 학점, 석차등급, '석차등급 점수에 이수학점을 반영'(학점 가중 평균), 석차등급이 숫자로 표시되지 않는 과목 미반영(exclude), 석차등급 점수 10/9.2/7.8/5.5/0 — 초안과 일치. 800점 환산은 원문 산식 문장은 없지만 최고점 800(1등급 10점)·최저점 0(5등급 0점)이 고정돼 평균 점수 × 80 비례로 계산. 수정: ① 출결 50점 제외 → 교과 정량 800점만(scope grade_component, max 800): 원문 출결표는 '미인정 결석 일수'만 있고 지각·조퇴·결과 환산과 반영 학년이 없어, 엔진이 지각 등을 결석으로 환산하는 방식을 확정할 수 없음(추측 금지). ② rounding 규정 없음 → 소수 둘째 자리 표시용(display_only). ③ 공동교육과정 반영 방법 원문 없음 → block_joint. p.10 반영 방법은 모집단위 구분 없이 한 가지라 학과 선택 불필요(고교추천 모집단위 p.5~6에 예체능 실기 없음).",
+      "rule": {
+        "admission_year": 2028,
+        "university": "이화여자대학교",
+        "program": "고교추천전형",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "사회",
+          "한국사",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 10,
+          "2": 9.2,
+          "3": 7.8,
+          "4": 5.5,
+          "5": 0
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 800,
+        "base_score": 0,
+        "max_score": 800,
+        "rounding": {
+          "digits": 2,
+          "mode": "round"
+        }
+      },
+      "publication": {
+        "pages": [
+          5,
+          10
+        ],
+        "scope": "grade_component",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 교과(정량) 800점만 계산해요. 출결 50점과 서류 150점은 포함하지 않아요.",
+          "국어·수학·영어·사회(한국사 포함)·과학, 3학년 1학기까지 석차등급 점수(10/9.2/7.8/5.5/0)를 이수학점으로 가중 평균해 800점에 비례 환산해요(원문에 환산식 문장은 없어 최고 800점·최저 0점 기준 비례로 계산).",
+          "석차등급이 숫자로 없는 과목(사회·과학 융합선택, 과학탐구실험 등)은 빼요.",
+          "원문에 소수점 처리 규정이 없어 화면 소수점은 표시용이에요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "모두 1등급 → 800점, 사회·과학 융합선택(등급 없음)·3-2·정보 교과 제외",
+          "grades": [
+            {
+              "is_joint": false,
+              "type": "일반선택",
+              "id": "k",
+              "semester": "1-1",
+              "subject_group": "국어",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A"
+            },
+            {
+              "is_joint": false,
+              "type": "공통",
+              "id": "h",
+              "semester": "1-1",
+              "subject_group": "한국사",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A"
+            },
+            {
+              "is_joint": false,
+              "type": "일반선택",
+              "id": "m",
+              "semester": "2-2",
+              "subject_group": "수학",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A"
+            },
+            {
+              "is_joint": false,
+              "type": "융합선택",
+              "id": "sci",
+              "semester": "2-1",
+              "subject_group": "과학",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "C"
+            },
+            {
+              "is_joint": false,
+              "type": "일반선택",
+              "id": "m32",
+              "semester": "3-2",
+              "subject_group": "수학",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "E"
+            },
+            {
+              "is_joint": false,
+              "type": "일반선택",
+              "id": "inf",
+              "semester": "2-1",
+              "subject_group": "정보",
+              "credits": 2,
+              "rank_grade": 5,
+              "achievement": "E"
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 800,
+          "expected_max": 800,
+          "working": "반영: 국어 1등급 4학점·한국사 1등급 3학점·수학(2-2) 1등급 3학점 → 석차등급 점수 모두 10, 평균 10. 과학 융합선택은 석차등급이 숫자로 없어 제외, 3-2는 반영 학기 밖, 정보는 반영 교과 밖. 10/10 × 800 = 800"
+        },
+        {
+          "label": "등급 섞임 1·2·3·4·5 + 학점 가중, 과탐실험 제외, 출결 입력 있어도 교과만",
+          "grades": [
+            {
+              "is_joint": false,
+              "type": "일반선택",
+              "id": "k",
+              "semester": "1-1",
+              "subject_group": "국어",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A"
+            },
+            {
+              "is_joint": false,
+              "type": "일반선택",
+              "id": "m",
+              "semester": "1-2",
+              "subject_group": "수학",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A"
+            },
+            {
+              "is_joint": false,
+              "type": "일반선택",
+              "id": "e",
+              "semester": "2-1",
+              "subject_group": "영어",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "B"
+            },
+            {
+              "is_joint": false,
+              "type": "공통",
+              "id": "h",
+              "semester": "1-1",
+              "subject_group": "한국사",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "C"
+            },
+            {
+              "is_joint": false,
+              "type": "일반선택",
+              "id": "c",
+              "semester": "3-1",
+              "subject_group": "과학",
+              "credits": 2,
+              "rank_grade": 5,
+              "achievement": "E"
+            },
+            {
+              "is_joint": false,
+              "type": "과탐실험",
+              "id": "lab",
+              "semester": "1-2",
+              "subject_group": "과학",
+              "credits": 1,
+              "rank_grade": null,
+              "achievement": "A"
+            }
+          ],
+          "attendance": "clean",
+          "expected_total": 583.5,
+          "expected_max": 800,
+          "working": "석차등급 점수 × 학점: 10×4=40, 9.2×4=36.8, 7.8×3=23.4, 5.5×3=16.5, 0×2=0 → 합 116.7, 학점 합 16. 평균 116.7/16 = 7.29375. 800점 환산(최고 10→800, 최저 0→0): 7.29375 × 80 = 583.5. 과탐실험은 등급 없어 제외. 출결 50점은 계산하지 않음"
+        },
+        {
+          "label": "반올림 드러남: 4등급 1학점 + 3등급 2학점 → 562.666… → 562.67",
+          "grades": [
+            {
+              "is_joint": false,
+              "type": "일반선택",
+              "id": "s",
+              "semester": "2-2",
+              "subject_group": "사회",
+              "credits": 1,
+              "rank_grade": 4,
+              "achievement": "C"
+            },
+            {
+              "is_joint": false,
+              "type": "일반선택",
+              "id": "e",
+              "semester": "3-1",
+              "subject_group": "영어",
+              "credits": 2,
+              "rank_grade": 3,
+              "achievement": "B"
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 562.67,
+          "expected_max": 800,
+          "working": "5.5×1 + 7.8×2 = 21.1, 학점 합 3 → 평균 7.0333… × 80 = 562.6666… → 표시용 소수 둘째 자리 반올림 562.67"
+        },
+        {
+          "label": "진로선택(석차등급 있음) 반영 + 사회 융합선택 제외",
+          "grades": [
+            {
+              "is_joint": false,
+              "type": "일반선택",
+              "id": "k",
+              "semester": "2-1",
+              "subject_group": "국어",
+              "credits": 2,
+              "rank_grade": 1,
+              "achievement": "A"
+            },
+            {
+              "is_joint": false,
+              "type": "진로선택",
+              "id": "m",
+              "semester": "3-1",
+              "subject_group": "수학",
+              "credits": 2,
+              "rank_grade": 2,
+              "achievement": "A"
+            },
+            {
+              "is_joint": false,
+              "type": "융합선택",
+              "id": "soc",
+              "semester": "3-1",
+              "subject_group": "사회",
+              "credits": 3,
+              "rank_grade": null,
+              "achievement": "E"
+            }
+          ],
+          "attendance": "none",
+          "expected_total": 768,
+          "expected_max": 800,
+          "working": "10×2 + 9.2×2 = 38.4, 학점 합 4 → 평균 9.6 × 80 = 768. 사회 융합선택은 석차등급 없음 → 제외"
+        }
+      ]
+    }
+  ]
+}

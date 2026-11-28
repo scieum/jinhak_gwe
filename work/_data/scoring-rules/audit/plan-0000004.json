@@ -1,0 +1,134 @@
+{
+  "entry": "plan-0000004",
+  "university": "강원대학교(삼척)",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000004/kangwon-samcheok-20260611.pdf",
+  "note": "원문은 강원대 제2캠퍼스(삼척·도계) 시행계획 하나. app/public/data/susi-results/index.json에 '강원대학교(삼척)'·'강원대학교(도계)'가 따로 있어 대표 캠퍼스 이름 '강원대학교(삼척)'로 공개. 도계 모집단위도 같은 반영 방법(p.22 '모든 전형')이라 필요하면 같은 rule을 '강원대학교(도계)'로 복사 가능. 춘천(plan-0000003) 공개 사례와 같은 방식(교과 정량 1,000점만, 계열 tracks, 출결 가감점 제외)으로 맞춤.",
+  "programs": [
+    {
+      "index": 0,
+      "program": "학생부교과(일반전형)",
+      "decision": "publish",
+      "reason": "p.22~23 원문과 대조: 1-1~3-1, 국·영·수·사·과(예체능 3개 학과는 국·영·사), 등급 있는 과목 전체 학점 가중, 등급점수 평균(500~100) + 성취도점수 평균(500~400) = 1,000점은 엔진의 rank_ratio 0.5 가중과 수식이 같음. 수정: (1) 초안 출결 규칙은 감점 18이 출결 만점 3을 넘어 validateScoringRule을 통과하지 못하고, '교과 총점에서 +3~−15 가감점'은 출결 만점 구조로 정확히 표현되지 않아 춘천 공개본처럼 빼고 교과 정량 1,000점만 계산(scope grade_component, max 1000). (2) 초안이 note로만 남긴 예체능계(멀티디자인·생활조형디자인·휴먼스포츠학과) 국·영·사 반영을 tracks로 넣고 학과 선택 필수. (3) 원문 '사회·과학 융합선택과목 제외'를 type_rules exclude로 명시(석차등급을 입력해도 제외). (4) 소수점 처리 규정이 없어 rounding display_only. 공동교육과정 언급 없음 → block_joint. 검증자 수정: (5) tracks units를 학과 핵심어(멀티디자인·생활조형디자인·휴먼스포츠)로 바꿔 2024 입결의 옛 이름 「휴먼스포츠학부」도 예체능 계열로 잡히게 함(전체 이름이면 나머지 계열로 떨어져 수학·과학까지 반영됨). (6) p.5 「전형 명칭 변경: 일반교과전형 → 일반전형」을 근거로 previous_programs 추가(입결 데이터 전형명이 일반교과전형).",
+      "rule": {
+        "admission_year": 2028,
+        "university": "강원대학교(삼척)",
+        "program": "학생부교과(일반전형)",
+        "semesters": ["1-1", "1-2", "2-1", "2-2", "3-1"],
+        "subject_groups": ["국어", "영어", "수학", "사회", "과학"],
+        "selection": { "mode": "all" },
+        "credit_weighted": true,
+        "rank_grade_points": { "1": 500, "2": 470, "3": 430, "4": 380, "5": 100 },
+        "achievement_points": { "A": 500, "B": 481, "C": 461, "D": 441, "E": 400 },
+        "achievement_blend": { "mode": "weighted", "rank_ratio": 0.5 },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 1000,
+        "base_score": 0,
+        "max_score": 1000,
+        "rounding": { "digits": 6, "mode": "round" },
+        "advanced": {
+          "tracks": [
+            { "name": "예체능", "units": ["멀티디자인", "생활조형디자인", "휴먼스포츠"], "subject_groups": ["국어", "영어", "사회"] },
+            { "name": "인문사회·자연과학·공학", "units": ["*"] }
+          ],
+          "type_rules": [
+            { "types": ["융합선택"], "groups": ["사회", "과학"], "use": "exclude" }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [5, 11, 22, 23, 24],
+        "scope": "grade_component",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "시행계획의 교과 정량 부분 1,000점만 계산해요. 출결 가감점(+3~−15)과 최종 총점은 포함하지 않아요.",
+          "석차등급 점수와 성취도 점수의 학점 가중평균을 각각 내서 더해요. 석차등급이 있는 과목만 반영해요.",
+          "사회·과학 융합선택 과목은 빼요. 멀티디자인·생활조형디자인·휴먼스포츠학과는 국어·영어·사회만 반영해요.",
+          "최종 소수점 처리 규정은 미확인으로, 화면 소수점은 표시용이에요.",
+          "이전 전형명(일반교과전형)으로 담은 경우 2028학년도 변경 전형명(일반전형)을 함께 확인해 주세요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": [],
+        "previous_programs": ["학생부교과(일반교과전형)"]
+      },
+      "cases": [
+        {
+          "label": "등급 섞인 일반 학과(학점 다름)",
+          "grades": [
+            { "id": "math", "subject_group": "수학", "type": "일반선택", "semester": "1-1", "credits": 4, "rank_grade": 2, "achievement": "A", "is_joint": false },
+            { "id": "eng", "subject_group": "영어", "type": "공통", "semester": "1-2", "credits": 3, "rank_grade": 3, "achievement": "B", "is_joint": false },
+            { "id": "kor", "subject_group": "국어", "type": "진로선택", "semester": "2-1", "credits": 2, "rank_grade": 1, "achievement": "C", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "department": "기계공학과",
+          "expected_total": 948.333333,
+          "expected_max": 1000,
+          "working": "등급 평균 = (470×4 + 430×3 + 500×2)/9 = 4170/9 = 463.333…; 성취도 평균 = (500×4 + 481×3 + 461×2)/9 = 4365/9 = 485; 합 = 8535/9 = 948.3333… → 6자리 948.333333"
+        },
+        {
+          "label": "예체능 학과: 수학 빼고 국·영·사만",
+          "grades": [
+            { "id": "math", "subject_group": "수학", "type": "일반선택", "semester": "1-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "eng", "subject_group": "영어", "type": "일반선택", "semester": "2-1", "credits": 2, "rank_grade": 4, "achievement": "D", "is_joint": false },
+            { "id": "soc", "subject_group": "사회", "type": "일반선택", "semester": "2-2", "credits": 3, "rank_grade": 2, "achievement": "B", "is_joint": false }
+          ],
+          "attendance": "none",
+          "department": "휴먼스포츠학과",
+          "expected_total": 899,
+          "expected_max": 1000,
+          "working": "수학 제외(p.22 예체능계 국어·영어·사회). 등급 평균 = (380×2 + 470×3)/5 = 2170/5 = 434; 성취도 평균 = (441×2 + 481×3)/5 = 2325/5 = 465; 합 899"
+        },
+        {
+          "label": "옛 이름 '휴먼스포츠학부'(2024 입결)도 예체능 계열로: 과학 제외",
+          "grades": [
+            { "id": "sci", "subject_group": "과학", "type": "일반선택", "semester": "1-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "kor", "subject_group": "국어", "type": "일반선택", "semester": "1-2", "credits": 2, "rank_grade": 3, "achievement": "C", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "department": "휴먼스포츠학부",
+          "expected_total": 891,
+          "expected_max": 1000,
+          "working": "과학 제외(p.22 예체능계 국어·영어·사회). 국어만: 430 + 461 = 891"
+        },
+        {
+          "label": "과학 융합선택(등급 없음) 제외 + 5등급 섞임, 나눗셈이 안 떨어지는 경우",
+          "grades": [
+            { "id": "sci-fusion", "subject_group": "과학", "type": "융합선택", "semester": "2-1", "credits": 3, "rank_grade": null, "achievement": "A", "is_joint": false },
+            { "id": "sci", "subject_group": "과학", "type": "진로선택", "semester": "2-2", "credits": 3, "rank_grade": 3, "achievement": "C", "is_joint": false },
+            { "id": "kor", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "department": "화학과",
+          "expected_total": 667.571429,
+          "expected_max": 1000,
+          "working": "융합선택 과학 제외. 등급 평균 = (430×3 + 100×4)/7 = 1690/7 = 241.428571…; 성취도 평균 = (461×3 + 400×4)/7 = 2983/7 = 426.142857…; 합 = 4673/7 = 667.5714285… → 6자리 667.571429"
+        },
+        {
+          "label": "사회 융합선택은 등급을 입력해도 제외, 국어 융합선택은 반영",
+          "grades": [
+            { "id": "kor-fusion", "subject_group": "국어", "type": "융합선택", "semester": "3-1", "credits": 2, "rank_grade": 2, "achievement": "B", "is_joint": false },
+            { "id": "soc-fusion", "subject_group": "사회", "type": "융합선택", "semester": "3-1", "credits": 2, "rank_grade": 1, "achievement": "A", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "department": "경영학과",
+          "expected_total": 951,
+          "expected_max": 1000,
+          "working": "사회 융합선택 제외(p.22). 국어만: 470 + 481 = 951"
+        },
+        {
+          "label": "경계: 최저 5등급·E",
+          "grades": [
+            { "id": "math", "subject_group": "수학", "type": "일반선택", "semester": "1-1", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "department": "기계공학과",
+          "expected_total": 500,
+          "expected_max": 1000,
+          "working": "100 + 400 = 500 (p.11 '최저 500'과 일치)"
+        }
+      ]
+    }
+  ]
+}

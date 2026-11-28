@@ -1,0 +1,317 @@
+{
+  "entry": "plan-0000146",
+  "university": "아주대학교",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000146/document-0000146.pdf",
+  "note": "app/public/data/admission-plans.json의 이름 '아주대학교'(susi-results/index.json은 '아주대'로 표기, 단일 캠퍼스). PDF 쪽 이미지 렌더링 도구(pdftoppm)가 없어 text 파일 p.3·p.6로 판단했는데, p.6 등급·성취도 점수표와 출결표는 텍스트로 깨지지 않고 읽힘.",
+  "programs": [
+    {
+      "index": 0,
+      "program": "고교추천전형",
+      "decision": "publish",
+      "reason": "p.3 '[일괄] 학생부교과 90 + 출결 10', p.6 산식·점수표와 한 필드씩 대조. 맞음: 1-1~3-1, 국·수·영·사·과 전 과목(학년·교과 가중 없음), 과목점수=학점×(등급점수×0.8+성취도점수×0.2), 교과점수=Σ과목점수/Σ학점, 점수표 1~5등급 100/96/90/80/0·A~E 100/96/90/80/0, 기본점수 없음, 출결 1-1~3-1 합산·지각·조퇴·결과 3회=결석 1일(버림)·0~3일 10/4~9일 8/10~14일 6/15~19일 4/20일+ 0. 수정: (1) 초안 no_rank_subject_policy achievement_convert는 '등급이 없는 과목은 반영하지 않음'과 달리 과탐실험 등 모든 미산출 과목을 성취도로 넣고 융합선택 5과목 제한도 없음 → exclude로 바꾸고 type_rules(사회·과학 융합선택, 성취도 점수만, 상위 5과목, 엔진 정렬=성취도 높은 순·같으면 학점 큰 순으로 원문 기준과 같음) 추가. (2) 소수점 처리 규정이 없어 rounding display_only. (3) 공동교육과정 언급 없음 → block_joint. 교과점수(100점 척도)를 학생부교과 90점으로 비례 환산하는 것은 p.3 비율과 출결표가 10점 그대로인 점(체육우수자 출결 1점=비율 1)에서 총점 100점 척도로 읽은 것. 모집단위별 다른 방식 없음(계열 구분 없이) → 학과 선택 불필요. 검증(2차): p.6 점수표를 PDF 글자 좌표로 다시 확인(등급 1~5·성취도 A~E가 각각 다른 열, 100/96/90/80/0). 4개 케이스 손계산과 엔진 계산 순서(유형 규칙 상위 5 → 학점 가중 평균 × 90 + 출결) 일치. 보완: notes에 3학년 출결은 1학기까지 넣는다는 점과 학교폭력 조치 감점(p.8, 전형총점 1~7%) 미포함을 적음.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "아주대학교",
+        "program": "고교추천전형",
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "사회",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
+        "credit_weighted": true,
+        "rank_grade_points": {
+          "1": 100,
+          "2": 96,
+          "3": 90,
+          "4": 80,
+          "5": 0
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 96,
+          "C": 90,
+          "D": 80,
+          "E": 0
+        },
+        "achievement_blend": {
+          "mode": "weighted",
+          "rank_ratio": 0.8
+        },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 90,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [
+            1,
+            2,
+            3
+          ],
+          "tardy_to_absence": 3,
+          "max_score": 10,
+          "deduction_table": [
+            {
+              "absence_max": 3,
+              "points": 0
+            },
+            {
+              "absence_max": 9,
+              "points": 2
+            },
+            {
+              "absence_max": 14,
+              "points": 4
+            },
+            {
+              "absence_max": 19,
+              "points": 6
+            },
+            {
+              "absence_max": 9999,
+              "points": 10
+            }
+          ]
+        },
+        "max_score": 100,
+        "rounding": {
+          "digits": 6,
+          "mode": "round"
+        },
+        "advanced": {
+          "type_rules": [
+            {
+              "types": [
+                "융합선택"
+              ],
+              "groups": [
+                "사회",
+                "과학"
+              ],
+              "use": "achievement",
+              "limit": 5
+            }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [
+          3,
+          6
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부교과 90점과 출결 10점, 100점 만점으로 계산해요.",
+          "과목마다 학점×(등급점수×0.8 + 성취도점수×0.2)를 더해 학점 합으로 나눠요.",
+          "등급이 없는 과목은 빼요. 사회·과학 융합선택만 성취도 점수로 상위 5과목까지 넣어요.",
+          "소수점 처리 규정은 원문에 없어, 화면 소수점은 표시용이에요.",
+          "출결은 1학년 1학기~3학년 1학기를 합산하니 3학년 출결은 1학기까지의 기록으로 넣어요. 학교폭력 조치사항 감점(전형총점 1~7%)은 포함하지 않아요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급·성취도 섞인 과목(학점 다름), 출결 무결",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 3,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "진로선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 1,
+              "achievement": "C",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 95.68,
+          "expected_max": 100,
+          "working": "p.6 과목점수 = 학점×(등급점수×0.8 + 성취도점수×0.2). 수학 4×(96×0.8+100×0.2)=4×96.8=387.2, 영어 3×(90×0.8+96×0.2)=3×91.2=273.6, 국어 2×(100×0.8+90×0.2)=2×98=196. 교과점수=856.8/9=95.2(100점 척도) → 학생부교과 90 반영: 95.2×0.9=85.68. 출결 결석 0일 → 10점. 합 95.68"
+        },
+        {
+          "label": "사회·과학 융합선택 6과목 중 상위 5과목(성취도→학점 순), 과탐실험 미반영",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 4,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "f1",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "f2",
+              "subject_group": "과학",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "f3",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "f4",
+              "subject_group": "과학",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": null,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "f5",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "C",
+              "is_joint": false
+            },
+            {
+              "id": "f6",
+              "subject_group": "과학",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": null,
+              "achievement": "C",
+              "is_joint": false
+            },
+            {
+              "id": "lab",
+              "subject_group": "과학",
+              "type": "과탐실험",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": null,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 93.795294,
+          "expected_max": 100,
+          "working": "p.6 다: 등급 없는 과목 미반영(과탐실험 제외). 사회/과학 융합선택은 성취도 상위·같으면 학점 큰 순 5과목: 과학A3, 사회A2, 과학B3, 사회B2, 과학C3 (사회C2 제외). 융합 과목점수=학점×성취도점수: 300+200+288+192+270=1250. 수학 4×(80×0.8+96×0.2)=4×83.2=332.8. 합 1582.8 / 학점 17 = 93.1058824 → ×0.9 = 83.7952941. 출결 10. 합 93.7952941 ≈ 93.795294"
+        },
+        {
+          "label": "경계: 5등급·E = 0점 과목과 1등급·A",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": 5,
+              "achievement": "E",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 77.5,
+          "expected_max": 100,
+          "working": "점수표 5등급 0, E 0 → 국어 1×(0×0.8+0×0.2)=0. 영어 3×(100×0.8+100×0.2)=300. 교과점수 300/4=75 → ×0.9=67.5. 출결 10. 합 77.5"
+        },
+        {
+          "label": "반영 교과 밖(한국사) 과목은 빼고 만점",
+          "attendance": "clean",
+          "grades": [
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "3-1",
+              "credits": 4,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "hist",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 5,
+              "achievement": "E",
+              "is_joint": false
+            }
+          ],
+          "expected_total": 100,
+          "expected_max": 100,
+          "working": "반영 교과는 국어·수학·영어·과학·사회(p.6). 한국사 제외. 수학 4×100=400/4=100 → ×0.9=90. 출결 10. 합 100"
+        }
+      ]
+    }
+  ]
+}

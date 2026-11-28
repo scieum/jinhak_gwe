@@ -1,0 +1,118 @@
+{
+  "entry": "plan-0000049",
+  "university": "가톨릭대학교(제3캠퍼스)",
+  "note": "admission-plans.json entry plan-0000049 = 가톨릭대학교 · 제3캠퍼스(univ-map: 서울 종로구 창경궁로 296-12, 성신교정 신학대학). 수시 결과 자료(susi-results)에는 이 캠퍼스 이름이 없어 수집 자료의 캠퍼스 이름 '제3캠퍼스'를 붙였어요. 원문 p.8 정원 외 표: 농어촌학생전형 신학과 2명.",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000049/document-0000049.pdf",
+  "programs": [
+    {
+      "index": 0,
+      "program": "농어촌학생전형 (수시 · 교과)",
+      "decision": "publish",
+      "reason": "원문 p.23~24(인쇄 21~22쪽) 표·산식과 대조. 교과성적 = Σ(배점×이수학점)/Σ이수학점 × 90%, 배점 1~5등급 100/98/96/85/70, 성취도 A~E(3단계 A~C)는 환산등급 1~5로 같은 배점, 소수점 넷째 자리 반올림, 출결 10점(미인정 결석·조퇴·지각·결과 횟수 그대로 합산, 3회 이하 10·6회 이하 9·9회 이하 8·10회 이상 5). 수정: ① attendance_rule.years 누락(검증 실패) → [1,2,3] (학년별 반영 '3학년 1학기까지'), ② 엔진은 진로선택에 석차등급이 있으면 석차등급을 쓰므로 원문 '진로선택 및 융합선택 과목은 성취도를 반영'에 맞춰 advanced.type_rules로 진로선택·융합선택을 성취도로 고정, ③ 공동교육과정은 원문상 석차등급 미제공 시 성취도 반영이지만 석차 제공 여부를 앱 입력으로 구분할 수 없어 block_joint로 계산을 멈춤. 신학과 교리문답은 합격/불합격 자료라 점수에 없음.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "가톨릭대학교(제3캠퍼스)",
+        "program": "농어촌학생전형 (수시 · 교과)",
+        "semesters": ["1-1", "1-2", "2-1", "2-2", "3-1"],
+        "subject_groups": ["국어", "수학", "영어", "사회", "한국사", "과학"],
+        "selection": { "mode": "all" },
+        "credit_weighted": true,
+        "rank_grade_points": { "1": 100, "2": 98, "3": 96, "4": 85, "5": 70 },
+        "achievement_points": { "A": 100, "B": 98, "C": 96, "D": 85, "E": 70 },
+        "achievement_blend": { "mode": "none" },
+        "no_rank_subject_policy": "achievement_convert",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 90,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [1, 2, 3],
+          "tardy_to_absence": 1,
+          "max_score": 10,
+          "deduction_table": [
+            { "absence_max": 3, "points": 0 },
+            { "absence_max": 6, "points": 1 },
+            { "absence_max": 9, "points": 2 },
+            { "absence_max": 9999, "points": 5 }
+          ]
+        },
+        "max_score": 100,
+        "rounding": { "digits": 3, "mode": "round" },
+        "advanced": {
+          "type_rules": [ { "types": ["진로선택", "융합선택"], "use": "achievement" } ]
+        }
+      },
+      "publication": {
+        "pages": [6, 8, 10, 23, 24],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부(교과) 90점과 출결 10점을 더한 100점을 계산해요. 신학과 교리문답은 합격·불합격 자료라 점수에 넣지 않아요.",
+          "국어·수학·영어·사회(한국사 포함)·과학 교과를 3학년 1학기까지 학년 가중치 없이 이수학점으로 평균해요.",
+          "진로선택·융합선택과 과학탐구실험은 성취도(A~E → 1~5등급 배점)로 반영하고, 교과성적은 소수점 넷째 자리에서 반올림해요.",
+          "출결은 미인정 결석·조퇴·지각·결과 횟수를 그대로 더해요(지각 3회를 결석 1일로 바꾸지 않아요). 원문은 3학년 1학기까지 반영하니 3학년 출결은 1학기까지의 기록으로 넣어요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "1등급 한 과목, 출결 만점",
+          "grades": [ { "rank_grade": 1 } ],
+          "attendance": "clean",
+          "expected_total": 100,
+          "expected_max": 100,
+          "working": "수학 일반선택 1등급 배점 100 × 4학점 / 4학점 = 100 → × 90% = 90.000. 미인정 출결 0회(3회 이하) = 10. 합계 100."
+        },
+        {
+          "label": "5등급 한 과목(최저 배점), 출결 만점",
+          "grades": [ { "rank_grade": 5, "achievement": "E" } ],
+          "attendance": "clean",
+          "expected_total": 73,
+          "expected_max": 100,
+          "working": "5등급 배점 70 → 70 × 0.9 = 63.000. 출결 10. 합계 73."
+        },
+        {
+          "label": "등급·성취도 섞임: 진로선택은 석차등급 1이어도 성취도 B로, 3-2 학기 제외, 넷째 자리 반올림(내림 쪽)",
+          "grades": [
+            { "id": "kor", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 2, "achievement": "B", "is_joint": false },
+            { "id": "math", "subject_group": "수학", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false },
+            { "id": "sci", "subject_group": "과학", "type": "진로선택", "semester": "3-1", "credits": 3, "rank_grade": 1, "achievement": "B", "is_joint": false },
+            { "id": "soc", "subject_group": "사회", "type": "융합선택", "semester": "2-2", "credits": 2, "rank_grade": null, "achievement": "C", "is_joint": false },
+            { "id": "hist", "subject_group": "한국사", "type": "공통", "semester": "1-1", "credits": 3, "rank_grade": 4, "achievement": "D", "is_joint": false },
+            { "id": "eng32", "subject_group": "영어", "type": "일반선택", "semester": "3-2", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "expected_total": 95.331,
+          "expected_max": 100,
+          "working": "3-2 영어는 반영 학기(3학년 1학기까지) 밖이라 제외. 국어 2등급 98×4=392, 수학 3등급 96×4=384, 과학 진로선택 성취도 B→환산 2등급 98×3=294, 사회 융합선택 성취도 C→3등급 96×2=192, 한국사 4등급 85×3=255. 합 1517 / 16학점 = 94.8125 × 0.9 = 85.33125 → 넷째 자리 반올림 85.331. 출결 10 → 95.331."
+        },
+        {
+          "label": "넷째 자리 반올림(올림 쪽)",
+          "grades": [
+            { "id": "a", "subject_group": "국어", "type": "일반선택", "semester": "1-2", "credits": 3, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "b", "subject_group": "영어", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 3, "achievement": "C", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "expected_total": 97.943,
+          "expected_max": 100,
+          "working": "100×3 + 96×4 = 684, / 7학점 = 97.714285… × 0.9 = 87.942857… → 넷째 자리(8) 반올림 87.943. 출결 10 → 97.943."
+        },
+        {
+          "label": "과학탐구실험 3단계 성취도, 진로선택 E, 반영 교과 밖(정보) 제외",
+          "grades": [
+            { "id": "lab", "subject_group": "과학", "type": "과탐실험", "semester": "1-1", "credits": 1, "rank_grade": null, "achievement": "C", "is_joint": false },
+            { "id": "eng", "subject_group": "영어", "type": "공통", "semester": "1-2", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false },
+            { "id": "math", "subject_group": "수학", "type": "진로선택", "semester": "2-2", "credits": 3, "rank_grade": 2, "achievement": "E", "is_joint": false },
+            { "id": "info", "subject_group": "정보", "type": "일반선택", "semester": "2-1", "credits": 2, "rank_grade": 1, "achievement": "A", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "expected_total": 75.925,
+          "expected_max": 100,
+          "working": "정보는 반영 교과가 아니라 제외. 과탐실험 성취도 C(3단계)→환산 3등급 96×1=96, 영어 5등급 70×4=280, 수학 진로선택 성취도 E→5등급 70×3=210. 합 586 / 8 = 73.25 × 0.9 = 65.925. 출결 10 → 75.925."
+        }
+      ]
+    }
+  ]
+}

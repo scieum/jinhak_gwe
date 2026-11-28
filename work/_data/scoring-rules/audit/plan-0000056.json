@@ -1,0 +1,120 @@
+{
+  "entry": "plan-0000056",
+  "university": "경기대학교",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000056/document-0000056.pdf",
+  "note": "app/public/data/admission-plans.json의 plan-0000056(university '경기대학교', campus '본교')을 그대로 씀. susi-results/index.json은 '경기대'로 적혀 있음. 원문 p.12 학교장추천전형 모집인원이 수원 287·서울 30으로 한 표에 있고 p.28~29 반영 방법은 캠퍼스 구분 없이 같음. 별도 문서인 plan-0000058(제2캠퍼스)는 이 audit 대상이 아님.",
+  "programs": [
+    {
+      "index": 3,
+      "program": "학교장추천전형",
+      "decision": "publish",
+      "reason": "p.12~13, p.28~29 원문(PDF 화면)과 대조. 맞은 것: 1-1~3-1, 학년·교과 가중 없음, 이수학점 가중, 전 교과 중 체육·예술·교양 제외, [표1] 1/A=100·2/B=98·3/C=90·4/D=60·5/E=0, 진로선택 = 석차등급/성취도 중 상위, 융합선택 = 상위 성적 최대 2과목(사회·과학 융합은 성취도), 교과 90+출결 10, 출결 감점표(4일 이하 10 / 5~6일 9 / 7~8일 7 / 9~10일 5 / 11~12일 2 / 13일 이상 0)와 총 결석일수 = 미인정 결석 + (지각+조퇴+결과)/3 소수 첫째 자리 버림. 수정: (1) [표4] '평균점수 소수점 넷째 자리에서 버림'은 100점 척도 평균의 중간 처리인데 초안은 최종 총점을 3자리 버림으로 넣었음 → advanced.mean_rounding {3, floor}로 옮기고 최종은 4자리 반올림(평균 3자리 × 0.9는 넷째 자리에서 정확히 끝나 값이 바뀌지 않음). 교과 90점 환산(평균 × 0.9)의 소수 처리는 원문에 없어 rounding display_only. (2) no_rank_subject_policy achievement_convert → exclude: 2028 표는 공통·일반·진로·융합만 다루고, 석차등급 없는 사회·과학 융합은 type_rules(max)로 성취도가 반영됨. achievement_convert면 과학탐구실험 등 표에 없는 과목까지 성취도로 넣거나 P 입력 때 계산이 막힘. (3) 공동교육과정은 원문 언급이 없어 block_joint. 해석: '최대 2과목 반영'은 융합선택 중 환산점수 높은 2과목만 반영하고 나머지는 빼는 것으로 읽음(같은 표 2027 졸업자 특성화고 진로 '성취도(최대 2과목 반영)'과 같은 표현). 학교폭력 감점(p.33, 총점 감점)과 출결 없는 경우의 대체 환산(모집요강 참조)은 계산하지 않음 — 출결이 없으면 엔진이 계산을 멈춤.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "경기대학교",
+        "program": "학교장추천전형",
+        "semesters": ["1-1", "1-2", "2-1", "2-2", "3-1"],
+        "subject_groups": ["국어", "수학", "영어", "사회", "과학", "한국사", "기술·가정", "제2외국어", "한문", "정보"],
+        "selection": { "mode": "all" },
+        "credit_weighted": true,
+        "rank_grade_points": { "1": 100, "2": 98, "3": 90, "4": 60, "5": 0 },
+        "achievement_points": { "A": 100, "B": 98, "C": 90, "D": 60, "E": 0 },
+        "achievement_blend": { "mode": "none" },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 90,
+        "base_score": 0,
+        "attendance_rule": {
+          "years": [1, 2, 3],
+          "tardy_to_absence": 3,
+          "max_score": 10,
+          "deduction_table": [
+            { "absence_max": 4, "points": 0 },
+            { "absence_max": 6, "points": 1 },
+            { "absence_max": 8, "points": 3 },
+            { "absence_max": 10, "points": 5 },
+            { "absence_max": 12, "points": 8 },
+            { "absence_max": 9999, "points": 10 }
+          ]
+        },
+        "max_score": 100,
+        "rounding": { "digits": 4, "mode": "round" },
+        "advanced": {
+          "mean_rounding": { "digits": 3, "mode": "floor" },
+          "type_rules": [
+            { "types": ["진로선택"], "use": "max" },
+            { "types": ["융합선택"], "use": "max", "limit": 2 }
+          ]
+        }
+      },
+      "publication": {
+        "pages": [12, 13, 28, 29],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 교과 90점과 출결 10점을 계산해요. 체육·예술·교양 교과는 빼요.",
+          "과목 환산점수의 이수학점 가중평균을 소수 넷째 자리에서 버린 뒤 90점 만점으로 바꿔요.",
+          "진로선택은 석차등급과 성취도 중 높은 점수, 융합선택은 점수 높은 2과목만 반영해요(사회·과학 융합은 성취도). 원문은 '최대 2과목 반영'이라고만 적혀 있어 어떤 2과목인지는 점수 높은 순으로 골랐어요.",
+          "학교폭력 조치 감점과 출결 기록이 없을 때의 대체 환산은 포함하지 않아요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "모두 1등급·결석 없음 → 만점",
+          "grades": [
+            { "id": "k1", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "m1", "subject_group": "수학", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "h1", "subject_group": "한국사", "type": "공통", "semester": "1-2", "credits": 3, "rank_grade": 1, "achievement": "A", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "expected_total": 100,
+          "expected_max": 100,
+          "working": "[표1] 1등급 100 → 평균 (100×4+100×4+100×3)/11 = 100.000 → 교과 100 × 0.9 = 90. 총 결석 0일(4일 이하) → 출결 10. 합 100."
+        },
+        {
+          "label": "등급 섞임 · 평균 넷째 자리 버림이 드러나는 경우",
+          "grades": [
+            { "id": "k1", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 2, "rank_grade": 2, "achievement": "A", "is_joint": false },
+            { "id": "m1", "subject_group": "수학", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false },
+            { "id": "e1", "subject_group": "영어", "type": "일반선택", "semester": "2-2", "credits": 3, "rank_grade": 3, "achievement": "B", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "expected_total": 92.5993,
+          "expected_max": 100,
+          "working": "[표1] 2등급 98, 3등급 90. [표4] 평균 = (98×2 + 90×4 + 90×3)/(2+4+3) = 826/9 = 91.7777… → 소수 넷째 자리 버림 91.777 (반올림이면 91.778). 교과 = 91.777 × 90/100 = 82.5993. 결석 0일 → 출결 10. 합 92.5993."
+        },
+        {
+          "label": "진로선택 상위 성적·융합선택 2과목·제외 교과와 3학년 2학기",
+          "grades": [
+            { "id": "k1", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "m2", "subject_group": "수학", "type": "진로선택", "semester": "2-2", "credits": 3, "rank_grade": 3, "achievement": "A", "is_joint": false },
+            { "id": "so", "subject_group": "사회", "type": "융합선택", "semester": "3-1", "credits": 2, "rank_grade": null, "achievement": "B", "is_joint": false },
+            { "id": "sc", "subject_group": "과학", "type": "융합선택", "semester": "3-1", "credits": 2, "rank_grade": null, "achievement": "C", "is_joint": false },
+            { "id": "en", "subject_group": "영어", "type": "융합선택", "semester": "3-1", "credits": 2, "rank_grade": 2, "achievement": "A", "is_joint": false },
+            { "id": "pe", "subject_group": "체육", "type": "체육예술", "semester": "1-1", "credits": 2, "rank_grade": null, "achievement": "A", "is_joint": false },
+            { "id": "m3", "subject_group": "수학", "type": "일반선택", "semester": "3-2", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "expected_total": 99.6724,
+          "expected_max": 100,
+          "working": "국어 공통 1등급 100(4학점). 수학 진로선택: 3등급 90 vs 성취도 A 100 → 상위 100(3학점). 융합선택 3과목: 영어 2등급 98 vs A 100 → 100, 사회 성취도 B 98, 과학 성취도 C 90 → 최대 2과목이라 영어 100·사회 98만, 과학 제외. 체육(체육·예술 제외)과 3-2 과목(3학년 1학기까지)은 반영 안 함. 평균 = (100×4 + 100×3 + 98×2 + 100×2)/(4+3+2+2) = 1096/11 = 99.636363… → 버림 99.636. 교과 = 99.636 × 0.9 = 89.6724. 출결 10. 합 99.6724."
+        },
+        {
+          "label": "5등급·E 0점과 진로선택 성취도 A가 섞인 경계",
+          "grades": [
+            { "id": "k1", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false },
+            { "id": "m2", "subject_group": "수학", "type": "진로선택", "semester": "2-1", "credits": 2, "rank_grade": 5, "achievement": "A", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "expected_total": 39.9997,
+          "expected_max": 100,
+          "working": "국어 5등급 0점(4학점). 수학 진로선택 5등급 0 vs 성취도 A 100 → 100(2학점). 평균 = (0×4 + 100×2)/6 = 33.3333… → 버림 33.333. 교과 = 33.333 × 0.9 = 29.9997. 출결 10. 합 39.9997."
+        }
+      ]
+    }
+  ]
+}

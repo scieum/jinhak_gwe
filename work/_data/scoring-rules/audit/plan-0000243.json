@@ -1,0 +1,131 @@
+{
+  "entry": "plan-0000243",
+  "university": "송원대학교",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000243/document-0000243.pdf",
+  "note": "admission-plans.json·susi-results/index.json 모두 '송원대학교' 한 캠퍼스로 표기.",
+  "programs": [
+    {
+      "index": 2,
+      "program": "면접",
+      "decision": "publish",
+      "reason": "면접우수자(면접전형)는 p.4 표상 스포츠데이터분석학과(예·체능 계열)만 모집(p.3 면접 8명). p.6 반영교과 표 이미지 확인 결과 예·체능계열은 국어·영어 교과군별 상위 2과목의 등급을 과목수로 나눈 평균등급(소수점 첫째자리 절사)이며, 그 등급을 p.6 면접우수자 교과 점수표(1~5등급 700/690/680/670/660)로 환산. 초안 수정: (1) 초안은 인문사회·자연·공학·간호를 한 계열로 묶어 '전 과목 평균'으로 뒀으나, 원문 표는 인문사회·자연·공학도 '상위 2개 과목' 병합 셀이고 '전 과목 평균'은 간호학과만임. 이 전형엔 해당 모집단위가 없으므로 계열 구분(tracks)을 없애고 스포츠데이터분석학과 방식(국어·영어 각 상위 2)만 남김. (2) '진로선택과목은 성적 반영하지 않음'을 type_rules exclude로 명시(석차등급이 입력된 진로선택도 빼도록). 면접 30%는 계산하지 않으므로 교과 700점만(grade_component). 공동교육과정 언급 없어 차단.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "송원대학교",
+        "program": "면접",
+        "semesters": ["1-1", "1-2", "2-1", "2-2", "3-1"],
+        "subject_groups": ["국어", "영어"],
+        "selection": { "mode": "top_n_per_group", "n": 2 },
+        "credit_weighted": false,
+        "rank_grade_points": { "1": 700, "2": 690, "3": 680, "4": 670, "5": 660 },
+        "achievement_blend": { "mode": "none" },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "grade_max_score": 700,
+        "base_score": 0,
+        "max_score": 700,
+        "rounding": { "digits": 0, "mode": "round" },
+        "advanced": {
+          "type_rules": [ { "types": ["진로선택"], "use": "exclude" } ],
+          "average_table": {
+            "digits": 0,
+            "mode": "floor",
+            "steps": [
+              { "upto": 1, "score": 700 },
+              { "upto": 2, "score": 690 },
+              { "upto": 3, "score": 680 },
+              { "upto": 4, "score": 670 },
+              { "upto": 5, "score": 660 }
+            ]
+          }
+        }
+      },
+      "publication": {
+        "pages": [3, 4, 6],
+        "scope": "grade_component",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "면접전형(스포츠데이터분석학과)의 학생부 교과 700점만 계산해요. 면접 300점은 포함하지 않아요.",
+          "국어·영어 교과에서 각각 등급이 좋은 2과목씩 골라 평균등급을 내요(학점 가중 없음, 1학년~3학년 1학기).",
+          "평균등급의 소수점 아래는 버리고, 1~5등급을 700·690·680·670·660점으로 바꿔요.",
+          "진로선택 과목과 석차등급이 없는 과목은 반영하지 않아요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "1등급 위주 + 영어 3번째 과목은 빠짐",
+          "grades": [
+            { "id": "k1", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "k2", "subject_group": "국어", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "e1", "subject_group": "영어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 2, "achievement": "A", "is_joint": false },
+            { "id": "e2", "subject_group": "영어", "type": "일반선택", "semester": "2-2", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "e3", "subject_group": "영어", "type": "일반선택", "semester": "3-1", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false }
+          ],
+          "attendance": "none",
+          "expected_total": 700,
+          "expected_max": 700,
+          "working": "국어 상위2: 1,1 / 영어 상위2: 1,2 (3등급 제외) → (1+1+1+2)/4 = 1.25 → 소수점 절사 1 → p.6 면접우수자 교과 1등급 700"
+        },
+        {
+          "label": "등급 섞임 · 절사 경계(2.75 → 2) · 수학과 진로선택 제외",
+          "grades": [
+            { "id": "k1", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false },
+            { "id": "k2", "subject_group": "국어", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false },
+            { "id": "k3", "subject_group": "국어", "type": "일반선택", "semester": "2-2", "credits": 4, "rank_grade": 4, "achievement": "C", "is_joint": false },
+            { "id": "e1", "subject_group": "영어", "type": "공통", "semester": "1-2", "credits": 4, "rank_grade": 2, "achievement": "A", "is_joint": false },
+            { "id": "e2", "subject_group": "영어", "type": "일반선택", "semester": "3-1", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false },
+            { "id": "e3", "subject_group": "영어", "type": "진로선택", "semester": "3-1", "credits": 4, "rank_grade": null, "achievement": "A", "is_joint": false },
+            { "id": "m1", "subject_group": "수학", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false }
+          ],
+          "attendance": "none",
+          "expected_total": 690,
+          "expected_max": 700,
+          "working": "수학은 반영 교과 아님, 영어 진로선택 제외. 국어 상위2: 3,3 / 영어 상위2: 2,3 → (3+3+2+3)/4 = 2.75 → 절사 2 (반올림이면 3) → 2등급 690"
+        },
+        {
+          "label": "석차등급이 입력된 진로선택도 제외 · 3등급",
+          "grades": [
+            { "id": "k1", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false },
+            { "id": "k2", "subject_group": "국어", "type": "일반선택", "semester": "1-2", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false },
+            { "id": "k3", "subject_group": "국어", "type": "진로선택", "semester": "2-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "e1", "subject_group": "영어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false },
+            { "id": "e2", "subject_group": "영어", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false }
+          ],
+          "attendance": "none",
+          "expected_total": 680,
+          "expected_max": 700,
+          "working": "진로선택(1등급)은 원문 '진로선택과목은 성적 반영하지 않음'으로 제외. 국어 3,3 / 영어 3,3 → 3.0 → 3등급 680"
+        },
+        {
+          "label": "하위 등급 · 국어 1과목뿐(과목수로 나눔)",
+          "grades": [
+            { "id": "k1", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 4, "achievement": "C", "is_joint": false },
+            { "id": "e1", "subject_group": "영어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false },
+            { "id": "e2", "subject_group": "영어", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 4, "achievement": "D", "is_joint": false }
+          ],
+          "attendance": "none",
+          "expected_total": 670,
+          "expected_max": 700,
+          "working": "국어 4 / 영어 상위2: 4,5 → (4+4+5)/3 = 4.333 → 절사 4 → 4등급 670"
+        },
+        {
+          "label": "모두 5등급",
+          "grades": [
+            { "id": "k1", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false },
+            { "id": "k2", "subject_group": "국어", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false },
+            { "id": "e1", "subject_group": "영어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false },
+            { "id": "e2", "subject_group": "영어", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false }
+          ],
+          "attendance": "none",
+          "expected_total": 660,
+          "expected_max": 700,
+          "working": "평균 5.0 → 5등급 660"
+        }
+      ]
+    }
+  ]
+}

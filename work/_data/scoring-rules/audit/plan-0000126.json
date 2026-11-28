@@ -1,0 +1,95 @@
+{
+  "entry": "plan-0000126",
+  "university": "서울여자대학교",
+  "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000126/document-0000126.pdf",
+  "note": "app/public/data/admission-plans.json이 '서울여자대학교'(캠퍼스 하나)로 씀. 쪽 번호는 document-0000126.pdf의 PDF 쪽(인쇄 쪽 = PDF 쪽 − 1): p.4 전형방법(교과 60% + 실기 40%, 모집단위 스포츠운동과학과), p.22 반영기간·반영교과·등급 변환표·산출식(쪽 이미지로 표 확인), p.23 출결은 교과우수자전형만. 초안 evidence의 swu-official.pdf는 같은 문서(텍스트 동일). 이 파일은 초안 programs[1](교과우수자전형_체육)만 대조함.",
+  "programs": [
+    {
+      "index": 1,
+      "program": "교과우수자전형_체육",
+      "decision": "publish",
+      "reason": "p.4 전형방법 학생부교과 60% + 실기 40%(스포츠운동과학과 10명). p.22: 졸업예정자 1-1~3-1(5개 학기), 국어·수학·영어·사회·과학·한국사 교과별 과목 전체, 졸업예정자 등급 변환표 1~5등급 100·96·88·50·0(쪽 이미지로 확인), 산출식 {Σ(등급점수×이수학점)/Σ이수학점}×0.6, 석차등급이 표기되는 과목만 반영, 소수점 셋째 자리에서 반올림. p.23 출결 반영 대상은 교과우수자전형만이라 출결 없음. 60학점 미만 불합격 조건도 교과우수자전형에만 붙어 있어 넣지 않음. 초안 rule 값은 원문과 모두 일치해 그대로 둠. 고친 것은 공개 정보만: 실기 40%를 뺀 교과 60점만 계산(scope grade_component), 공동교육과정은 원문에 규정이 없어 계산 차단(block_joint), 반올림 단계(중간 평균을 먼저 자르는지)가 원문에 없어 최종 점수 2자리 반올림을 표시용으로 표기. 졸업자 6개 학기·9등급 묶음표는 대상(5등급제 졸업예정자)에 해당 없음.",
+      "rule": {
+        "admission_year": 2028,
+        "university": "서울여자대학교",
+        "program": "교과우수자전형_체육",
+        "semesters": ["1-1", "1-2", "2-1", "2-2", "3-1"],
+        "subject_groups": ["국어", "수학", "영어", "사회", "과학", "한국사"],
+        "selection": { "mode": "all" },
+        "credit_weighted": true,
+        "rank_grade_points": { "1": 100, "2": 96, "3": 88, "4": 50, "5": 0 },
+        "achievement_blend": { "mode": "none" },
+        "no_rank_subject_policy": "exclude",
+        "joint_curriculum_policy": "include",
+        "base_score": 0,
+        "grade_max_score": 60,
+        "max_score": 60,
+        "rounding": { "digits": 2, "mode": "round" }
+      },
+      "publication": {
+        "pages": [4, 22, 23],
+        "scope": "grade_component",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부교과 60점만 계산해요. 실기 40%는 포함하지 않아요.",
+          "국어·수학·영어·사회·과학·한국사 전 과목의 등급점수(100·96·88·50·0)를 이수학점으로 평균해 × 0.6 해요.",
+          "석차등급이 없는 과목은 빼고, 출결은 반영하지 않아요.",
+          "원문은 소수 셋째 자리 반올림만 밝혀 중간 단계 처리는 확인이 필요해요. 화면 점수는 최종 2자리 반올림이에요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": false,
+        "excluded_departments": []
+      },
+      "cases": [
+        {
+          "label": "등급 섞임: 국어 1등급 4학점·수학 2등급 4학점·영어 3등급 3학점",
+          "grades": [
+            { "id": "kor", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "math", "subject_group": "수학", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 2, "achievement": "A", "is_joint": false },
+            { "id": "eng", "subject_group": "영어", "type": "일반선택", "semester": "3-1", "credits": 3, "rank_grade": 3, "achievement": "B", "is_joint": false }
+          ],
+          "attendance": "none",
+          "expected_total": 57.16,
+          "expected_max": 60,
+          "working": "p.22 표: 1등급 100, 2등급 96, 3등급 88. Σ(점수×학점) = 100×4 + 96×4 + 88×3 = 400 + 384 + 264 = 1048, Σ학점 = 11. 1048/11 = 95.2727… × 0.6 = 57.1636… → 셋째 자리 반올림 57.16"
+        },
+        {
+          "label": "석차등급 없는 과목·반영 외 교과 제외: 사회 4등급 2학점·한국사 1등급 3학점 + 과학 융합선택(등급 없음)·체육",
+          "grades": [
+            { "id": "soc", "subject_group": "사회", "type": "일반선택", "semester": "2-2", "credits": 2, "rank_grade": 4, "achievement": "D", "is_joint": false },
+            { "id": "his", "subject_group": "한국사", "type": "공통", "semester": "1-2", "credits": 3, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "sci", "subject_group": "과학", "type": "융합선택", "semester": "3-1", "credits": 2, "rank_grade": null, "achievement": "A", "is_joint": false },
+            { "id": "pe", "subject_group": "체육", "type": "체육예술", "semester": "2-1", "credits": 2, "rank_grade": null, "achievement": "A", "is_joint": false }
+          ],
+          "attendance": "clean",
+          "expected_total": 48,
+          "expected_max": 60,
+          "working": "p.22 '석차등급이 표기되는 과목만 반영' → 과학 융합선택(등급 없음) 제외, 체육은 반영교과(국·수·영·사·과·한국사) 밖이라 제외. 출결은 p.23상 교과우수자전형만이라 없음. Σ = 50×2 + 100×3 = 400, Σ학점 = 5. 400/5 = 80 × 0.6 = 48.00"
+        },
+        {
+          "label": "반올림 경계(올림): 국어 1등급 3학점·영어 3등급 4학점",
+          "grades": [
+            { "id": "kor", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 3, "rank_grade": 1, "achievement": "A", "is_joint": false },
+            { "id": "eng", "subject_group": "영어", "type": "공통", "semester": "1-2", "credits": 4, "rank_grade": 3, "achievement": "C", "is_joint": false }
+          ],
+          "attendance": "none",
+          "expected_total": 55.89,
+          "expected_max": 60,
+          "working": "Σ = 100×3 + 88×4 = 300 + 352 = 652, Σ학점 = 7. 652/7 = 93.142857… × 0.6 = 55.885714… → 셋째 자리(5) 반올림 55.89 (버림이면 55.88)"
+        },
+        {
+          "label": "5등급 0점 포함: 수학 5등급 3학점·과학 1등급 4학점",
+          "grades": [
+            { "id": "math", "subject_group": "수학", "type": "일반선택", "semester": "2-1", "credits": 3, "rank_grade": 5, "achievement": "E", "is_joint": false },
+            { "id": "sci", "subject_group": "과학", "type": "일반선택", "semester": "2-2", "credits": 4, "rank_grade": 1, "achievement": "A", "is_joint": false }
+          ],
+          "attendance": "none",
+          "expected_total": 34.29,
+          "expected_max": 60,
+          "working": "p.22 표 5등급 0점. Σ = 0×3 + 100×4 = 400, Σ학점 = 7. 400/7 = 57.142857… × 0.6 = 34.285714… → 34.29"
+        }
+      ]
+    }
+  ]
+}
