@@ -212,10 +212,16 @@ def field_units(rows: list[dict]) -> list[tuple[str, str]]:
     return sorted(k for k in keys if not junk.match(k[1]))
 
 
+# 모집단위 이름이 과목명뿐인 교원 양성 대학('초등'·'물리' = 초등교육·물리교육과). 2026-11-28 한국교원대가 학과별 구간 교육 계열에서 빠졌어요.
+SUBJECT_ONLY_EDU = {'한국교원대학교'}
+
+
 def build_fields(rows: list[dict]) -> tuple[list[dict], dict]:
     out = []
     for univ, unit in field_units(rows):
-        small, mid, major, why = suggest_field(unit)
+        edu = univ in SUBJECT_ONLY_EDU and not unit.endswith(('교육', '교육과'))
+        small, mid, major, why = suggest_field(unit + '교육' if edu else unit)
+        why = f'교원 양성 대학 모집단위 → "{unit}교육" · {why}' if edu and small else why
         out.append({'university': univ, 'unit': unit, 'small': small, 'mid': mid, 'major': major, 'basis': why})
     write_csv(OUT / 'fields-draft.csv', ['대학', '모집단위', '소계열', '중계열', '대계열', '추천근거'],
               [[r['university'], r['unit'], r['small'], r['mid'], r['major'], r['basis']] for r in out])
@@ -470,6 +476,7 @@ def build_minimum() -> dict:
 def self_test() -> None:
     assert suggest_field('간호학과')[:3] == ('간호', '보건', '자연')
     assert suggest_field('의예과')[1] == '의약' and suggest_field('한의예과')[0] == '한의학' and suggest_field('수의예과')[0] == '수의학'
+    assert suggest_field('초등교육')[:2] == ('초등교육', '교육') and suggest_field('일반사회교육')[0] == '인문계 교과교육'
     assert suggest_field('수학교육과')[2] == '자연' and suggest_field('국어교육과')[2] == '인문'
     assert suggest_field('경영학과')[:2] == ('경영', '경상')
     assert suggest_field('시각디자인학과')[2] == ''  # 예체능은 인문·자연으로 나누지 않음

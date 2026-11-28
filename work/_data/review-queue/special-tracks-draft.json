@@ -6752,6 +6752,26 @@
     ]
    },
    {
+    "university": "경동대학교(양주)",
+    "unit": "체육학과 ( 보디빌딩 )",
+    "track": "체육",
+    "sub": "그 밖의 체육",
+    "evidence": "모집단위 이름 기준(\"체육\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "경동대학교(양주)",
+    "unit": "체육학과 ( 태권도 )",
+    "track": "체육",
+    "sub": "그 밖의 체육",
+    "evidence": "모집단위 이름 기준(\"체육\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
     "university": "경동대학교(원주문막)",
     "unit": "간호학과",
     "track": "보건",
@@ -20869,10 +20889,31 @@
    },
    {
     "university": "대전대학교",
+    "unit": "간호학과",
+    "track": "보건",
+    "sub": "간호",
+    "evidence": "모집단위 이름 기준(\"간호\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "대전대학교",
     "unit": "간호학과 [교직]",
     "track": "보건",
     "sub": "간호",
     "evidence": "모집단위 이름 기준(\"간호\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "대전대학교",
+    "unit": "군사학과",
+    "track": "계약학과",
+    "sub": "군",
+    "tag": "의무 복무 조건",
+    "evidence": "모집단위 이름 기준(\"군사\") · 전형계획 원문에서 채용·복무 조건 확인 필요",
     "approvals": [],
     "reviewed_at": "",
     "plan": []
@@ -20921,10 +20962,30 @@
    },
    {
     "university": "대전대학교",
+    "unit": "뷰티디자인학과",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "대전대학교",
     "unit": "뷰티디자인학과 [교직]",
     "track": "예체능 실기",
     "sub": "디자인",
     "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "대전대학교",
+    "unit": "스포츠건강재활학과",
+    "track": "체육",
+    "sub": "그 밖의 체육",
+    "evidence": "모집단위 이름 기준(\"스포츠\")",
     "approvals": [],
     "reviewed_at": "",
     "plan": []
@@ -20971,6 +21032,26 @@
    {
     "university": "대전대학교",
     "unit": "패션디자인·비즈니스학과 [교직]",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "대전대학교",
+    "unit": "패션디자인・비즈니스학과",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "대전대학교",
+    "unit": "패션디자인ㆍ비즈니스학과",
     "track": "예체능 실기",
     "sub": "디자인",
     "evidence": "모집단위 이름 기준(\"디자인\")",
@@ -21079,6 +21160,16 @@
     "track": "예체능 실기",
     "sub": "디자인",
     "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "대진대학교",
+    "unit": "아동심리교육전공",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육전공\")",
     "approvals": [],
     "reviewed_at": "",
     "plan": []
@@ -23975,6 +24066,16 @@
    },
    {
     "university": "목원대학교",
+    "unit": "미술학부",
+    "track": "예체능 실기",
+    "sub": "미술",
+    "evidence": "모집단위 이름 기준(\"미술\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "목원대학교",
     "unit": "미술학부♣ / 한국화전공 | 미술학부♣ / 서양화전공 | 미술학부♣ / 아트미디어전공",
     "track": "예체능 실기",
     "sub": "미술",
@@ -24058,6 +24159,16 @@
    },
    {
     "university": "목원대학교",
+    "unit": "섬유 ‧ 패션디자인학과",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "목원대학교",
     "unit": "섬유·패션디자인학과",
     "track": "예체능 실기",
     "sub": "디자인",
@@ -24078,6 +24189,16 @@
       "minimum": null
      }
     ]
+   },
+   {
+    "university": "목원대학교",
+    "unit": "성악·뮤지컬학부",
+    "track": "예체능 실기",
+    "sub": "음악",
+    "evidence": "모집단위 이름 기준(\"성악\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
    },
    {
     "university": "목원대학교",
@@ -24169,6 +24290,29 @@
    },
    {
     "university": "목원대학교",
+    "unit": "식품제약학부",
+    "track": "메디컬",
+    "sub": "약학",
+    "evidence": "모집단위 이름 기준(\"약학부\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "교과Ⅰ",
+      "type": "교과",
+      "quota": 30,
+      "minimum": null
+     },
+     {
+      "name": "지역인재",
+      "type": "교과",
+      "quota": 5,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "목원대학교",
     "unit": "식품제약학부 / 식품전공 | 식품제약학부 / 제약전공",
     "track": "메디컬",
     "sub": "약학",
@@ -24199,6 +24343,26 @@
    {
     "university": "목원대학교",
     "unit": "연극영화 영상학부♣ / 연기전공 (교직) | 연극영화 영상학부♣ / 영화영상전공 (교직)",
+    "track": "예체능 실기",
+    "sub": "연극영화",
+    "evidence": "모집단위 이름 기준(\"연극\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "목원대학교",
+    "unit": "연극영화영상학부",
+    "track": "예체능 실기",
+    "sub": "연극영화",
+    "evidence": "모집단위 이름 기준(\"연극\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "목원대학교",
+    "unit": "연극영화영상학부 [ 교직 ]",
     "track": "예체능 실기",
     "sub": "연극영화",
     "evidence": "모집단위 이름 기준(\"연극\")",
@@ -24401,10 +24565,29 @@
    },
    {
     "university": "목원대학교",
+    "unit": "입체조형학부",
+    "track": "예체능 실기",
+    "sub": "미술",
+    "evidence": "모집단위 이름 기준(\"조형\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "목원대학교",
     "unit": "입체조형학부♣ / 조소전공 | 입체조형학부♣ / 입체캐릭터전공",
     "track": "예체능 실기",
     "sub": "미술",
     "evidence": "모집단위 이름 기준(\"조형\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "목원대학교",
+    "unit": "자율전공학부",
+    "track": "자유전공",
+    "evidence": "모집단위 이름 기준(\"자율전공\")",
     "approvals": [],
     "reviewed_at": "",
     "plan": []
@@ -24430,6 +24613,25 @@
       "minimum": null
      }
     ]
+   },
+   {
+    "university": "목원대학교",
+    "unit": "창의예술자율전공학부",
+    "track": "메디컬",
+    "sub": "의예",
+    "evidence": "모집단위 이름 기준(\"의예\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "목원대학교",
+    "unit": "창의예술자율전공학부",
+    "track": "자유전공",
+    "evidence": "모집단위 이름 기준(\"자율전공\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
    },
    {
     "university": "목원대학교",
@@ -24583,6 +24785,16 @@
    },
    {
     "university": "배재대학교",
+    "unit": "공연예술학과 ( 실용음악 )",
+    "track": "예체능 실기",
+    "sub": "음악",
+    "evidence": "모집단위 이름 기준(\"음악\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "배재대학교",
     "unit": "공연예술학과 (연기)",
     "track": "예체능 실기",
     "sub": "연극영화",
@@ -24623,6 +24835,16 @@
    },
    {
     "university": "배재대학교",
+    "unit": "디자인학부 ( 산업디자인 )",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "배재대학교",
     "unit": "디자인학부 (산업디자인)",
     "track": "예체능 실기",
     "sub": "디자인",
@@ -24657,6 +24879,36 @@
     "track": "예체능 실기",
     "sub": "디자인",
     "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "배재대학교",
+    "unit": "레저스포츠학부 ( 스포츠마케팅 )",
+    "track": "체육",
+    "sub": "그 밖의 체육",
+    "evidence": "모집단위 이름 기준(\"레저\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "배재대학교",
+    "unit": "레저스포츠학부 ( 스포츠지도 · 건강재활 )",
+    "track": "체육",
+    "sub": "그 밖의 체육",
+    "evidence": "모집단위 이름 기준(\"레저\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "배재대학교",
+    "unit": "레저스포츠학부 ( 스포츠지도 ・ 건강재활 )",
+    "track": "체육",
+    "sub": "그 밖의 체육",
+    "evidence": "모집단위 이름 기준(\"레저\")",
     "approvals": [],
     "reviewed_at": "",
     "plan": []
@@ -24742,6 +24994,36 @@
    },
    {
     "university": "배재대학교",
+    "unit": "산업디자인전공",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "배재대학교",
+    "unit": "스포츠마케팅전공",
+    "track": "체육",
+    "sub": "그 밖의 체육",
+    "evidence": "모집단위 이름 기준(\"스포츠\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "배재대학교",
+    "unit": "스포츠지도・건강재활전공",
+    "track": "체육",
+    "sub": "그 밖의 체육",
+    "evidence": "모집단위 이름 기준(\"스포츠\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "배재대학교",
     "unit": "유아교육과",
     "track": "교육",
     "sub": "사범대",
@@ -24778,6 +25060,16 @@
     "track": "보건",
     "sub": "간호",
     "evidence": "모집단위 이름 기준(\"간호\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "배재대학교",
+    "unit": "커뮤니케이션디자인전공",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
     "approvals": [],
     "reviewed_at": "",
     "plan": []
@@ -24835,6 +25127,16 @@
     "track": "예체능 실기",
     "sub": "디자인",
     "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "백석대학교",
+    "unit": "문화예술학부 ( 실용음악 )",
+    "track": "예체능 실기",
+    "sub": "음악",
+    "evidence": "모집단위 이름 기준(\"음악\")",
     "approvals": [],
     "reviewed_at": "",
     "plan": []
@@ -25031,6 +25333,16 @@
    },
    {
     "university": "백석대학교",
+    "unit": "뷰티디자인학과",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "백석대학교",
     "unit": "사범학부(특수체육교육과)",
     "track": "체육",
     "sub": "체육교육",
@@ -25042,6 +25354,16 @@
    {
     "university": "백석대학교",
     "unit": "스포츠과학부",
+    "track": "체육",
+    "sub": "스포츠과학",
+    "evidence": "모집단위 이름 기준(\"스포츠과학\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "백석대학교",
+    "unit": "스포츠과학부 ( 태권도 )",
     "track": "체육",
     "sub": "스포츠과학",
     "evidence": "모집단위 이름 기준(\"스포츠과학\")",
@@ -25091,6 +25413,47 @@
    },
    {
     "university": "백석대학교",
+    "unit": "안경광학과",
+    "track": "보건",
+    "sub": "그 밖의 보건",
+    "evidence": "모집단위 이름 기준(\"안경광학\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "일반전형",
+      "type": "교과",
+      "quota": 43,
+      "minimum": null
+     },
+     {
+      "name": "사회기여자및배려대상자",
+      "type": "교과",
+      "quota": 3,
+      "minimum": null
+     },
+     {
+      "name": "지역인재(일반)",
+      "type": "교과",
+      "quota": 2,
+      "minimum": null
+     },
+     {
+      "name": "백석인재",
+      "type": "교과",
+      "quota": 7,
+      "minimum": null
+     },
+     {
+      "name": "창의인재",
+      "type": "종합",
+      "quota": 3,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "백석대학교",
     "unit": "자유전공학부",
     "track": "자유전공",
     "evidence": "모집단위 이름 기준(\"자유전공\")",
@@ -25116,6 +25479,15 @@
       "minimum": null
      }
     ]
+   },
+   {
+    "university": "백석대학교",
+    "unit": "자유전공학부 ( 인문사회 · 자연계열 )",
+    "track": "자유전공",
+    "evidence": "모집단위 이름 기준(\"자유전공\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
    },
    {
     "university": "백석대학교",
@@ -33281,6 +33653,16 @@
    },
    {
     "university": "수원대학교",
+    "unit": "연기예술전공",
+    "track": "예체능 실기",
+    "sub": "연극영화",
+    "evidence": "모집단위 이름 기준(\"연기\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "수원대학교",
     "unit": "자유전공학부",
     "track": "자유전공",
     "evidence": "모집단위 이름 기준(\"자유전공\")",
@@ -35328,6 +35710,16 @@
       "minimum": null
      }
     ]
+   },
+   {
+    "university": "안양대학교(안양)",
+    "unit": "디지털미디어디자인학과(공학)",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
    },
    {
     "university": "안양대학교(안양)",
@@ -49301,7 +49693,87 @@
    },
    {
     "university": "한국기술교육대학교",
+    "unit": "디자인 · 건축 공학부 건축",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한국기술교육대학교",
+    "unit": "디자인 · 건축 공학부 디자인",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한국기술교육대학교",
+    "unit": "디자인 ‧ 건축공학부 건축",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한국기술교육대학교",
+    "unit": "디자인 ‧ 건축공학부 디자인",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한국기술교육대학교",
+    "unit": "디자인·건축 공학부 건축",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한국기술교육대학교",
+    "unit": "디자인·건축 공학부 디자인",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한국기술교육대학교",
     "unit": "디자인·디자인",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한국기술교육대학교",
+    "unit": "디자인‧ 건축공학부 건축",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한국기술교육대학교",
+    "unit": "디자인‧ 건축공학부 디자인",
     "track": "예체능 실기",
     "sub": "디자인",
     "evidence": "모집단위 이름 기준(\"디자인\")",
@@ -49375,6 +49847,38 @@
     "approvals": [],
     "reviewed_at": "",
     "plan": []
+   },
+   {
+    "university": "한국기술교육대학교",
+    "unit": "자율전공(인문)",
+    "track": "자유전공",
+    "evidence": "모집단위 이름 기준(\"자율전공\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "일반전형",
+      "type": "교과",
+      "quota": 6,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국기술교육대학교",
+    "unit": "자율전공(자연)",
+    "track": "자유전공",
+    "evidence": "모집단위 이름 기준(\"자율전공\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "일반전형",
+      "type": "교과",
+      "quota": 34,
+      "minimum": null
+     }
+    ]
    },
    {
     "university": "한국성서대",
@@ -50864,6 +51368,16 @@
    },
    {
     "university": "한서대학교",
+    "unit": "모빌리티융합디자인학과",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한서대학교",
     "unit": "물리치료학과",
     "track": "보건",
     "sub": "물리치료",
@@ -51096,6 +51610,42 @@
       "minimum": null
      }
     ]
+   },
+   {
+    "university": "한서대학교",
+    "unit": "전공자율선택 ( 공학 )",
+    "track": "자유전공",
+    "evidence": "모집단위 이름 기준(\"전공자율\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한서대학교",
+    "unit": "전공자율선택 ( 예체능 )",
+    "track": "자유전공",
+    "evidence": "모집단위 이름 기준(\"전공자율\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한서대학교",
+    "unit": "전공자율선택 ( 인문사회 )",
+    "track": "자유전공",
+    "evidence": "모집단위 이름 기준(\"전공자율\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한서대학교",
+    "unit": "전공자율선택 ( 자연과학 )",
+    "track": "자유전공",
+    "evidence": "모집단위 이름 기준(\"전공자율\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
    },
    {
     "university": "한서대학교",
@@ -51714,6 +52264,16 @@
    },
    {
     "university": "한신대학교",
+    "unit": "신학 · 인문융합계열 미디어융합기독교교육",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
+   },
+   {
+    "university": "한신대학교",
     "unit": "신학·인문융합계열(신학, 미디어융합기독교교육(신설), 한국어문학, 철학, 한국사학, 문예창작학)",
     "track": "교육",
     "sub": "사범대",
@@ -52192,6 +52752,130 @@
       "minimum": null
      }
     ]
+   },
+   {
+    "university": "협성대학교",
+    "unit": "가구디자인학과",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "실기우수자",
+      "type": "실기",
+      "quota": 17,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "협성대학교",
+    "unit": "보건관리학과",
+    "track": "보건",
+    "sub": "그 밖의 보건",
+    "evidence": "모집단위 이름 기준(\"보건\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "교과성적우수자",
+      "type": "교과",
+      "quota": 11,
+      "minimum": null
+     },
+     {
+      "name": "미래창의인재",
+      "type": "교과",
+      "quota": 5,
+      "minimum": null
+     },
+     {
+      "name": "기회균형",
+      "type": "교과",
+      "quota": 2,
+      "minimum": null
+     },
+     {
+      "name": "사회배려자",
+      "type": "교과",
+      "quota": 2,
+      "minimum": null
+     },
+     {
+      "name": "융합인재Ⅰ",
+      "type": "종합",
+      "quota": 3,
+      "minimum": null
+     },
+     {
+      "name": "융합인재Ⅱ",
+      "type": "종합",
+      "quota": 5,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "협성대학교",
+    "unit": "산업디자인학과",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "실기우수자",
+      "type": "실기",
+      "quota": 20,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "협성대학교",
+    "unit": "시각디자인학과",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "실기우수자",
+      "type": "실기",
+      "quota": 25,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "협성대학교",
+    "unit": "실내디자인학과",
+    "track": "예체능 실기",
+    "sub": "디자인",
+    "evidence": "모집단위 이름 기준(\"디자인\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "실기우수자",
+      "type": "실기",
+      "quota": 19,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "협성대학교",
+    "unit": "자율전공학부",
+    "track": "자유전공",
+    "evidence": "모집단위 이름 기준(\"자율전공\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": []
    },
    {
     "university": "호남대학교",
