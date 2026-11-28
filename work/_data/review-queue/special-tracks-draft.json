@@ -49644,43 +49644,954 @@
    },
    {
     "university": "한국교원대학교",
-    "unit": "교육학",
+    "unit": "가정교육과",
     "track": "교육",
     "sub": "사범대",
-    "evidence": "모집단위 이름 기준(\"교육학\")",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
     "approvals": [],
     "reviewed_at": "",
-    "plan": []
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 12,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
    },
    {
     "university": "한국교원대학교",
-    "unit": "미술",
+    "unit": "교육학과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육학과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 8,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "국어교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 22,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "농어촌학생 특별전형",
+      "type": "종합",
+      "quota": 2,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "기술교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 13,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "독어교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 7,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "물리교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 11,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "미술교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "미술교육과",
     "track": "예체능 실기",
     "sub": "미술",
     "evidence": "모집단위 이름 기준(\"미술\")",
     "approvals": [],
     "reviewed_at": "",
-    "plan": []
+    "plan": [
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
    },
    {
     "university": "한국교원대학교",
-    "unit": "음악",
+    "unit": "불어교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 7,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "생물교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 11,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "수학교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 16,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "농어촌학생 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "역사교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 11,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "영어교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 16,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "농어촌학생 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "유아교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 12,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "윤리교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 12,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "음악교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 5,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "음악교육과",
     "track": "예체능 실기",
     "sub": "음악",
     "evidence": "모집단위 이름 기준(\"음악\")",
     "approvals": [],
     "reviewed_at": "",
-    "plan": []
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 5,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
    },
    {
     "university": "한국교원대학교",
-    "unit": "체육",
-    "track": "체육",
-    "sub": "그 밖의 체육",
-    "evidence": "모집단위 이름 기준(\"체육\")",
+    "unit": "일반사회교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
     "approvals": [],
     "reviewed_at": "",
-    "plan": []
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 11,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "중국어교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 9,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "지구과학교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 12,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "지리교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 12,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "체육교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 7,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "체육교육과",
+    "track": "체육",
+    "sub": "체육교육",
+    "evidence": "모집단위 이름 기준(\"체육교육\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 7,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "초등교육과",
+    "track": "교육",
+    "sub": "교대(초등교육)",
+    "tag": "초등교원 양성",
+    "evidence": "모집단위 이름 기준(\"초등교육\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 62,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 2,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "농어촌학생 특별전형",
+      "type": "종합",
+      "quota": 7,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 3,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 2,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "컴퓨터교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 13,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "특수교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 7,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "화학교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 12,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
+   },
+   {
+    "university": "한국교원대학교",
+    "unit": "환경교육과",
+    "track": "교육",
+    "sub": "사범대",
+    "evidence": "모집단위 이름 기준(\"교육과\")",
+    "approvals": [],
+    "reviewed_at": "",
+    "plan": [
+     {
+      "name": "학생부종합우수자 일반전형",
+      "type": "종합",
+      "quota": 12,
+      "minimum": null
+     },
+     {
+      "name": "지역인재 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "사회통합 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "기초수급 및 차상위계층 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     },
+     {
+      "name": "장애인 등 대상자 특별전형",
+      "type": "종합",
+      "quota": 1,
+      "minimum": null
+     }
+    ]
    },
    {
     "university": "한국기술교육대학교",

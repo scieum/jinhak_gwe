@@ -38,19 +38,19 @@
   "with_univ_id": 224
  },
  "special_tracks": {
-  "rows": 2556,
-  "units": 2474,
+  "rows": 2580,
+  "units": 2495,
   "by_track": {
    "보건": 476,
    "체육": 265,
    "자유전공": 305,
-   "교육": 564,
+   "교육": 588,
    "메디컬": 189,
    "예체능 실기": 578,
    "계약학과": 170,
    "과기원": 9
   },
-  "with_plan_lines": 1371
+  "with_plan_lines": 1399
  },
  "minimum": {
   "sentences": 3448,

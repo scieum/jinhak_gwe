@@ -212,16 +212,10 @@ def field_units(rows: list[dict]) -> list[tuple[str, str]]:
     return sorted(k for k in keys if not junk.match(k[1]))
 
 
-# 모집단위 이름이 과목명뿐인 교원 양성 대학('초등'·'물리' = 초등교육·물리교육과). 2026-11-28 한국교원대가 학과별 구간 교육 계열에서 빠졌어요.
-SUBJECT_ONLY_EDU = {'한국교원대학교'}
-
-
 def build_fields(rows: list[dict]) -> tuple[list[dict], dict]:
     out = []
     for univ, unit in field_units(rows):
-        edu = univ in SUBJECT_ONLY_EDU and not unit.endswith(('교육', '교육과'))
-        small, mid, major, why = suggest_field(unit + '교육' if edu else unit)
-        why = f'교원 양성 대학 모집단위 → "{unit}교육" · {why}' if edu and small else why
+        small, mid, major, why = suggest_field(unit)
         out.append({'university': univ, 'unit': unit, 'small': small, 'mid': mid, 'major': major, 'basis': why})
     write_csv(OUT / 'fields-draft.csv', ['대학', '모집단위', '소계열', '중계열', '대계열', '추천근거'],
               [[r['university'], r['unit'], r['small'], r['mid'], r['major'], r['basis']] for r in out])
