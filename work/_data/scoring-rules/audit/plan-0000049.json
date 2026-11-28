@@ -1,6 +1,6 @@
 {
   "entry": "plan-0000049",
-  "university": "가톨릭대학교(제3캠퍼스)",
+  "university": "가톨릭대학교(성신)",
   "note": "admission-plans.json entry plan-0000049 = 가톨릭대학교 · 제3캠퍼스(univ-map: 서울 종로구 창경궁로 296-12, 성신교정 신학대학). 수시 결과 자료(susi-results)에는 이 캠퍼스 이름이 없어 수집 자료의 캠퍼스 이름 '제3캠퍼스'를 붙였어요. 원문 p.8 정원 외 표: 농어촌학생전형 신학과 2명.",
   "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000049/document-0000049.pdf",
   "programs": [
@@ -11,38 +11,100 @@
       "reason": "원문 p.23~24(인쇄 21~22쪽) 표·산식과 대조. 교과성적 = Σ(배점×이수학점)/Σ이수학점 × 90%, 배점 1~5등급 100/98/96/85/70, 성취도 A~E(3단계 A~C)는 환산등급 1~5로 같은 배점, 소수점 넷째 자리 반올림, 출결 10점(미인정 결석·조퇴·지각·결과 횟수 그대로 합산, 3회 이하 10·6회 이하 9·9회 이하 8·10회 이상 5). 수정: ① attendance_rule.years 누락(검증 실패) → [1,2,3] (학년별 반영 '3학년 1학기까지'), ② 엔진은 진로선택에 석차등급이 있으면 석차등급을 쓰므로 원문 '진로선택 및 융합선택 과목은 성취도를 반영'에 맞춰 advanced.type_rules로 진로선택·융합선택을 성취도로 고정, ③ 공동교육과정은 원문상 석차등급 미제공 시 성취도 반영이지만 석차 제공 여부를 앱 입력으로 구분할 수 없어 block_joint로 계산을 멈춤. 신학과 교리문답은 합격/불합격 자료라 점수에 없음.",
       "rule": {
         "admission_year": 2028,
-        "university": "가톨릭대학교(제3캠퍼스)",
+        "university": "가톨릭대학교(성신)",
         "program": "농어촌학생전형 (수시 · 교과)",
-        "semesters": ["1-1", "1-2", "2-1", "2-2", "3-1"],
-        "subject_groups": ["국어", "수학", "영어", "사회", "한국사", "과학"],
-        "selection": { "mode": "all" },
+        "semesters": [
+          "1-1",
+          "1-2",
+          "2-1",
+          "2-2",
+          "3-1"
+        ],
+        "subject_groups": [
+          "국어",
+          "수학",
+          "영어",
+          "사회",
+          "한국사",
+          "과학"
+        ],
+        "selection": {
+          "mode": "all"
+        },
         "credit_weighted": true,
-        "rank_grade_points": { "1": 100, "2": 98, "3": 96, "4": 85, "5": 70 },
-        "achievement_points": { "A": 100, "B": 98, "C": 96, "D": 85, "E": 70 },
-        "achievement_blend": { "mode": "none" },
+        "rank_grade_points": {
+          "1": 100,
+          "2": 98,
+          "3": 96,
+          "4": 85,
+          "5": 70
+        },
+        "achievement_points": {
+          "A": 100,
+          "B": 98,
+          "C": 96,
+          "D": 85,
+          "E": 70
+        },
+        "achievement_blend": {
+          "mode": "none"
+        },
         "no_rank_subject_policy": "achievement_convert",
         "joint_curriculum_policy": "include",
         "grade_max_score": 90,
         "base_score": 0,
         "attendance_rule": {
-          "years": [1, 2, 3],
+          "years": [
+            1,
+            2,
+            3
+          ],
           "tardy_to_absence": 1,
           "max_score": 10,
           "deduction_table": [
-            { "absence_max": 3, "points": 0 },
-            { "absence_max": 6, "points": 1 },
-            { "absence_max": 9, "points": 2 },
-            { "absence_max": 9999, "points": 5 }
+            {
+              "absence_max": 3,
+              "points": 0
+            },
+            {
+              "absence_max": 6,
+              "points": 1
+            },
+            {
+              "absence_max": 9,
+              "points": 2
+            },
+            {
+              "absence_max": 9999,
+              "points": 5
+            }
           ]
         },
         "max_score": 100,
-        "rounding": { "digits": 3, "mode": "round" },
+        "rounding": {
+          "digits": 3,
+          "mode": "round"
+        },
         "advanced": {
-          "type_rules": [ { "types": ["진로선택", "융합선택"], "use": "achievement" } ]
+          "type_rules": [
+            {
+              "types": [
+                "진로선택",
+                "융합선택"
+              ],
+              "use": "achievement"
+            }
+          ]
         }
       },
       "publication": {
-        "pages": [6, 8, 10, 23, 24],
+        "pages": [
+          6,
+          8,
+          10,
+          23,
+          24
+        ],
         "scope": "student_record",
         "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
         "notes": [
@@ -59,7 +121,11 @@
       "cases": [
         {
           "label": "1등급 한 과목, 출결 만점",
-          "grades": [ { "rank_grade": 1 } ],
+          "grades": [
+            {
+              "rank_grade": 1
+            }
+          ],
           "attendance": "clean",
           "expected_total": 100,
           "expected_max": 100,
@@ -67,7 +133,12 @@
         },
         {
           "label": "5등급 한 과목(최저 배점), 출결 만점",
-          "grades": [ { "rank_grade": 5, "achievement": "E" } ],
+          "grades": [
+            {
+              "rank_grade": 5,
+              "achievement": "E"
+            }
+          ],
           "attendance": "clean",
           "expected_total": 73,
           "expected_max": 100,
@@ -76,12 +147,66 @@
         {
           "label": "등급·성취도 섞임: 진로선택은 석차등급 1이어도 성취도 B로, 3-2 학기 제외, 넷째 자리 반올림(내림 쪽)",
           "grades": [
-            { "id": "kor", "subject_group": "국어", "type": "공통", "semester": "1-1", "credits": 4, "rank_grade": 2, "achievement": "B", "is_joint": false },
-            { "id": "math", "subject_group": "수학", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 3, "achievement": "B", "is_joint": false },
-            { "id": "sci", "subject_group": "과학", "type": "진로선택", "semester": "3-1", "credits": 3, "rank_grade": 1, "achievement": "B", "is_joint": false },
-            { "id": "soc", "subject_group": "사회", "type": "융합선택", "semester": "2-2", "credits": 2, "rank_grade": null, "achievement": "C", "is_joint": false },
-            { "id": "hist", "subject_group": "한국사", "type": "공통", "semester": "1-1", "credits": 3, "rank_grade": 4, "achievement": "D", "is_joint": false },
-            { "id": "eng32", "subject_group": "영어", "type": "일반선택", "semester": "3-2", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false }
+            {
+              "id": "kor",
+              "subject_group": "국어",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 4,
+              "rank_grade": 2,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "sci",
+              "subject_group": "과학",
+              "type": "진로선택",
+              "semester": "3-1",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "B",
+              "is_joint": false
+            },
+            {
+              "id": "soc",
+              "subject_group": "사회",
+              "type": "융합선택",
+              "semester": "2-2",
+              "credits": 2,
+              "rank_grade": null,
+              "achievement": "C",
+              "is_joint": false
+            },
+            {
+              "id": "hist",
+              "subject_group": "한국사",
+              "type": "공통",
+              "semester": "1-1",
+              "credits": 3,
+              "rank_grade": 4,
+              "achievement": "D",
+              "is_joint": false
+            },
+            {
+              "id": "eng32",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "3-2",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "E",
+              "is_joint": false
+            }
           ],
           "attendance": "clean",
           "expected_total": 95.331,
@@ -91,8 +216,26 @@
         {
           "label": "넷째 자리 반올림(올림 쪽)",
           "grades": [
-            { "id": "a", "subject_group": "국어", "type": "일반선택", "semester": "1-2", "credits": 3, "rank_grade": 1, "achievement": "A", "is_joint": false },
-            { "id": "b", "subject_group": "영어", "type": "일반선택", "semester": "2-1", "credits": 4, "rank_grade": 3, "achievement": "C", "is_joint": false }
+            {
+              "id": "a",
+              "subject_group": "국어",
+              "type": "일반선택",
+              "semester": "1-2",
+              "credits": 3,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            },
+            {
+              "id": "b",
+              "subject_group": "영어",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 4,
+              "rank_grade": 3,
+              "achievement": "C",
+              "is_joint": false
+            }
           ],
           "attendance": "clean",
           "expected_total": 97.943,
@@ -102,10 +245,46 @@
         {
           "label": "과학탐구실험 3단계 성취도, 진로선택 E, 반영 교과 밖(정보) 제외",
           "grades": [
-            { "id": "lab", "subject_group": "과학", "type": "과탐실험", "semester": "1-1", "credits": 1, "rank_grade": null, "achievement": "C", "is_joint": false },
-            { "id": "eng", "subject_group": "영어", "type": "공통", "semester": "1-2", "credits": 4, "rank_grade": 5, "achievement": "E", "is_joint": false },
-            { "id": "math", "subject_group": "수학", "type": "진로선택", "semester": "2-2", "credits": 3, "rank_grade": 2, "achievement": "E", "is_joint": false },
-            { "id": "info", "subject_group": "정보", "type": "일반선택", "semester": "2-1", "credits": 2, "rank_grade": 1, "achievement": "A", "is_joint": false }
+            {
+              "id": "lab",
+              "subject_group": "과학",
+              "type": "과탐실험",
+              "semester": "1-1",
+              "credits": 1,
+              "rank_grade": null,
+              "achievement": "C",
+              "is_joint": false
+            },
+            {
+              "id": "eng",
+              "subject_group": "영어",
+              "type": "공통",
+              "semester": "1-2",
+              "credits": 4,
+              "rank_grade": 5,
+              "achievement": "E",
+              "is_joint": false
+            },
+            {
+              "id": "math",
+              "subject_group": "수학",
+              "type": "진로선택",
+              "semester": "2-2",
+              "credits": 3,
+              "rank_grade": 2,
+              "achievement": "E",
+              "is_joint": false
+            },
+            {
+              "id": "info",
+              "subject_group": "정보",
+              "type": "일반선택",
+              "semester": "2-1",
+              "credits": 2,
+              "rank_grade": 1,
+              "achievement": "A",
+              "is_joint": false
+            }
           ],
           "attendance": "clean",
           "expected_total": 75.925,

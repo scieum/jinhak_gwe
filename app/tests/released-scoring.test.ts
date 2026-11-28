@@ -78,3 +78,19 @@ test('강원 전형 변경은 원문에 명시된 이전 이름만 연결하고 
   expect(scoringProgramFor(target, all, 2028).program?.rule?.program).toBe('학생부교과(강원인재전형)');
   expect(scoringProgramFor({ ...target, university: '강원대학교(삼척)' }, all, 2028).program).toBeNull();
 });
+test('캠퍼스 없이 담은 가톨릭대·경기대는 학과로 캠퍼스 규칙을 골라요', () => {
+  const all = withReleasedRules([], rules);
+  const pick = (university: string, program: string, department?: string) => scoringProgramFor({ university, program, department }, all, 2028);
+  expect(pick('가톨릭대학교', '지역균형전형', '간호학과').program?.rule?.university).toBe('가톨릭대학교(성의)');
+  expect(pick('가톨릭대학교', '지역균형전형', '국어국문학과').program?.rule?.university).toBe('가톨릭대학교(성심)');
+  expect(pick('가톨릭대학교', '농어촌학생전형 (수시 · 교과)', '신학과').program?.rule?.university).toBe('가톨릭대학교(성신)');
+  expect(pick('경기대학교', '학교장추천전형', '미디어영상학과').program?.rule?.university).toBe('경기대학교(서울)');
+  expect(pick('경기대학교', '학교장추천전형', '국어국문학과').program?.rule?.university).toBe('경기대학교');
+  expect(pick('경기대', '교과성적우수자전형', '관광개발경영학과').program?.rule?.university).toBe('경기대학교(서울)');
+  // 학과 없이 담으면 캠퍼스를 정하지 않고 학과를 고르게 해요. 다른 캠퍼스 학과면 연결하지 않아요.
+  expect(pick('가톨릭대학교', '지역균형전형')).toMatchObject({ program: null, reason: '학과를 고르면 해당 모집단위의 환산 규칙을 확인해요.' });
+  expect(pick('경기대학교', '교과성적우수자전형', '국어국문학과').program).toBeNull();
+  // 캠퍼스 이름이 붙은 수집 자료 이름은 그대로 연결돼요.
+  expect(pick('가톨릭대학교(성심)', '지역균형전형').program?.rule?.university).toBe('가톨릭대학교(성심)');
+  expect(pick('강원대학교(삼척)', '학생부교과(일반전형)').program?.rule?.university).toBe('강원대학교(삼척)');
+});

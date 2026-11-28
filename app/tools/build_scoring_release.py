@@ -26,6 +26,11 @@ PUB_OPTIONAL = ('require_department', 'excluded_departments', 'previous_programs
 def audited_release(entries, audits):
     """2026-11-28 사용자 승인('AI 원문 대조 후 공개, 관리자 승인 전 표시'): 원문 대조·독립 검증을 거친 audit/<entry>.json 중 publish만 공개."""
     source_of = {e['entry']: e['files'][0]['source'] for e in entries}
+    plans = json.loads((OUT / 'admission-plans.json').read_text(encoding='utf-8'))['entries']
+    plan_of = {p['id']: p for p in plans}
+    campuses = {}
+    for p in plans:
+        campuses[p['university']] = campuses.get(p['university'], 0) + 1
     out = []
     for path in sorted(AUDIT_DIR.glob('*.json')):
         a = json.loads(path.read_text(encoding='utf-8'))
@@ -42,6 +47,17 @@ def audited_release(entries, audits):
                                    'pages': pub['pages'], 'scope': pub['scope'], 'applicant': pub['applicant'], 'notes': pub['notes'],
                                    'rounding': pub['rounding'], 'block_joint': pub.get('block_joint', True),
                                    **{k: pub[k] for k in PUB_OPTIONAL if pub.get(k)}}
+            # 2026-11-28 사용자 요청: 전형계획 하트는 캠퍼스 없이 저장돼요 → 그 이름을 별칭으로, 캠퍼스가 여럿이면 이 캠퍼스 모집단위로 가려요
+            plan = plan_of.get(a['entry'])
+            # 캠퍼스가 하나면 이름만 이어 주고, 여럿이면 모집단위 목록이 있을 때만(없으면 다른 캠퍼스 하트에 붙을 수 있어 별칭을 안 붙여요)
+            if plan and plan['university'] != a['university'] and campuses.get(plan['university'], 0) == 1:
+                rule['publication']['university_aliases'] = [plan['university']]
+            if plan and campuses.get(plan['university'], 0) > 1:
+                units = sorted({u[0] for g in plan['programs'] if g.get('round') == '수시' for u in g.get('units') or []}
+                               | {u for g in plan['programs'] if g.get('round') == '수시' for pl in g.get('pooled') or [] for u in pl['units']})
+                if units:
+                    rule['publication']['units'] = units
+                    rule['publication'].setdefault('university_aliases', [plan['university']])
             out.append(rule)
             audits.append({'id': rule['id'], 'university': rule['university'], 'program': rule['program'], 'source_file': a['source_file'],
                            'source_sha256': digest, 'pages': pub['pages'], 'scope': pub['scope'], 'notes': pub['notes']})

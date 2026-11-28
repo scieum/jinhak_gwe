@@ -8,6 +8,8 @@ export interface ScoringRule extends Provenance {
     scope: 'student_record' | 'grade_component'; applicant: string; notes: string[];
     rounding: 'official' | 'display_only'; block_joint: boolean;
     require_department?: boolean; excluded_departments?: string[]; previous_programs?: string[];
+    /** 같은 대학으로 볼 다른 이름(전형계획의 캠퍼스 없는 이름 등) · 이름만으로 캠퍼스를 모를 때 학과로 가릴 이 캠퍼스 모집단위 */
+    university_aliases?: string[]; units?: string[];
   };
   admission_year: number;
   university: string;
@@ -78,7 +80,7 @@ export function validateScoringRule(r: ScoringRule): string[] {
     || !Array.isArray(pub.pages) || !pub.pages.length || pub.pages.some(p => !Number.isInteger(p) || p < 1)
     || !['student_record', 'grade_component'].includes(pub.scope) || !['official', 'display_only'].includes(pub.rounding)
     || typeof pub.block_joint !== 'boolean' || !pub.applicant?.trim() || !Array.isArray(pub.notes) || pub.notes.some(n => typeof n !== 'string')
-    || [pub.excluded_departments, pub.previous_programs].some(xs => xs !== undefined && (!Array.isArray(xs) || xs.some(x => typeof x !== 'string' || !x.trim()))))) errors.push('규칙 원문 검증 정보를 확인해 주세요.');
+    || [pub.excluded_departments, pub.previous_programs, pub.university_aliases, pub.units].some(xs => xs !== undefined && (!Array.isArray(xs) || xs.some(x => typeof x !== 'string' || !x.trim()))))) errors.push('규칙 원문 검증 정보를 확인해 주세요.');
   if (!r.semesters.length || new Set(r.semesters).size !== r.semesters.length || r.semesters.some(s => !/^[123]-[12]$/.test(s)) || !r.subject_groups.length) errors.push('반영 학기·교과를 확인해 주세요.');
   if (!validPoints(r.rank_grade_points) || ['1', '2', '3', '4', '5'].some(k => r.rank_grade_points[k] === undefined)) errors.push('1~5등급 점수표가 필요해요.');
   if (!['all', 'top_n_per_group', 'top_n_total'].includes(r.selection.mode) || (r.selection.mode !== 'all' && (!Number.isSafeInteger(r.selection.n) || r.selection.n! < 1))) errors.push('과목 선택 규칙을 확인해 주세요.');
