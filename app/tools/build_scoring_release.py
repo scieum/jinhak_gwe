@@ -19,6 +19,35 @@ def write(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
+AUDIT_DIR = ROOT / 'work/_data/scoring-rules/audit'
+PUB_OPTIONAL = ('require_department', 'excluded_departments', 'previous_programs')
+
+
+def audited_release(entries, audits):
+    """2026-11-28 사용자 승인('AI 원문 대조 후 공개, 관리자 승인 전 표시'): 원문 대조·독립 검증을 거친 audit/<entry>.json 중 publish만 공개."""
+    source_of = {e['entry']: e['files'][0]['source'] for e in entries}
+    out = []
+    for path in sorted(AUDIT_DIR.glob('*.json')):
+        a = json.loads(path.read_text(encoding='utf-8'))
+        digest = hashlib.sha256((ROOT / a['source_file']).read_bytes()).hexdigest()
+        for p in a['programs']:
+            if p.get('decision') != 'publish':
+                continue
+            rule, pub = copy.deepcopy(p['rule']), p['publication']
+            rule.update(id=f"source-audit-2028-{a['entry']}-{p['index']}", version=1, source=source_of[a['entry']],
+                        review_status='verified', admission_year=2028, university=a['university'], program=p['program'])
+            rule.setdefault('rounding', {'digits': 6, 'mode': 'round'})
+            rule.setdefault('joint_curriculum_policy', 'include')
+            rule['publication'] = {'checked_by': 'Claude · 원문 표·산식 대조(AI, 관리자 승인 전)', 'checked_at': DATE, 'source_sha256': digest,
+                                   'pages': pub['pages'], 'scope': pub['scope'], 'applicant': pub['applicant'], 'notes': pub['notes'],
+                                   'rounding': pub['rounding'], 'block_joint': pub.get('block_joint', True),
+                                   **{k: pub[k] for k in PUB_OPTIONAL if pub.get(k)}}
+            out.append(rule)
+            audits.append({'id': rule['id'], 'university': rule['university'], 'program': rule['program'], 'source_file': a['source_file'],
+                           'source_sha256': digest, 'pages': pub['pages'], 'scope': pub['scope'], 'notes': pub['notes']})
+    return out
+
+
 def build():
     entries = json.loads((WORK / 'inputs.json').read_text(encoding='utf-8'))
     published, coverage, audits = [], [], []
@@ -76,13 +105,14 @@ def build():
             audits.append({'id': rule['id'], 'university': rule['university'], 'program': rule['program'],
                            'source_file': file['path'], 'source_sha256': digest, 'pages': pub['pages'],
                            'scope': pub['scope'], 'notes': pub['notes']})
+    published += audited_release(entries, audits)
     target = OUT / 'scoring-rules.json'
     existing = json.loads(target.read_text(encoding='utf-8'))['rules'] if target.exists() else []
     keep = [r for r in existing if not r['id'].startswith('source-audit-2028-')]
     write(target, {'format': 'jinhak-navi-scoring-rules', 'version': 1, 'generated_at': DATE + 'T00:00:00+09:00', 'rules': keep + published})
     write(OUT / 'scoring-coverage.json', {'format': 'jinhak-navi-scoring-coverage', 'version': 1, 'as_of': DATE, 'entries': coverage})
     write(ROOT / 'work/_data/scoring-rules/source-audit-2026-11-28.json', {
-        'review_kind': 'source_formula_audit', 'reviewer': 'Codex', 'human_approval_claimed': False, 'date': DATE,
+        'review_kind': 'source_formula_audit', 'reviewer': 'Codex(3개 대학) · Claude(audit/ 대학별 대조+독립 검증)', 'human_approval_claimed': False, 'date': DATE,
         'rules': audits, 'unreviewed_drafts_promoted': False,
         'validation': 'app/tests/released-scoring.test.ts: independently specified expected scores and boundary cases'})
     print(f'Published {len(published)} source-audited rules; coverage records: {len(coverage)}')

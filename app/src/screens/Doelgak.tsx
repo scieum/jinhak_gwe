@@ -137,7 +137,7 @@ function InterestReference({ data }: { data: StudentBackup }) {
           <div className="dg-card__range"><strong className="num">{value ? `${value.total.toFixed(rule!.publication?.rounding === 'display_only' ? 2 : rule!.rounding.digits)} / ${value.max}점` : '계산 대기'}</strong></div>
           {value ? <span className="t-caption text-muted num">{rule?.publication?.scope === 'grade_component' ? '출결·서류·면접을 포함한 최종 총점이 아니에요.' : `교과 ${value.grade.toFixed(2)} · 출결 ${value.attendance.toFixed(2)}`}</span>
             : <p className="t-caption text-muted">{reason}</p>}
-          {rule?.publication && <span className="t-caption text-muted">원문 산식 확인 · {rule.publication.checked_at}{rule.publication.rounding === 'display_only' ? ' · 소수점은 표시용' : ''}</span>}
+          {rule?.publication && <span className="t-caption text-muted">AI 원문 대조 · 관리자 승인 전 · {rule.publication.checked_at}{rule.publication.rounding === 'display_only' ? ' · 소수점은 표시용' : ''}</span>}
           {rule && rule.program !== i.program && <span className="t-caption text-muted">적용 전형: {rule.program}</span>}
         </div>
         <div className="dg-card__numbers dg-card__history"><span className="t-caption text-muted">과거 입결 · 9등급 기준</span>
@@ -151,7 +151,9 @@ function InterestReference({ data }: { data: StudentBackup }) {
           <h4 className="t-body-sm">과거 입결 기반 참고 판정</h4>
           {assessment.status === 'ready' ? <>
             {assessment.label ? <span className={`judge-badge judge-${SUBJECT_LANES.find(l => l.key === assessment.label)!.tone}`}>
-              참고 {assessment.label}{assessment.boundary ? ` · ${assessment.favorableLabel}~${assessment.label} 경계` : ''}</span> : <strong className="t-body-sm">교과 위치 참고</strong>}
+              참고 {assessment.label}{assessment.boundary ? ` · ${assessment.favorableLabel}~${assessment.label} 경계` : ''}</span> : <><strong className="t-body-sm">교과 위치 참고</strong>
+              {/* 2026-11-28 사용자 질문: 왜 안정·적정이 안 나오는지 접힌 '기준과 한계'를 열지 않아도 보이게 */}
+              <p className="t-caption text-muted">{cut?.cut === 'cut_50' ? '70% 컷이 없어 안정·적정·소신·위험 구분 없이 50% 컷과 위치만 비교해요.' : '학생부종합은 안정·적정·소신·위험 구분 없이 교과 위치만 비교해요.'}</p></>}
             <p className="t-caption text-muted">{assessment.scope} · {assessment.subjects}과목</p>
             <p className="t-caption num">5등급 평균 {assessment.average5.toFixed(2)} → 9등급 참고 {rangeText(assessment.min, assessment.max)}</p>
             <MiniBar min={assessment.min} max={assessment.max} cut={cut?.value} cutLabel={cut?.cut === 'cut_50' ? '50% 컷' : '70% 컷'} />

@@ -36,7 +36,9 @@
 .trace-accordion summary { cursor: pointer; font-weight: 600; min-height: 44px; display: list-item; }
 .trace-accordion summary > .icon { flex: none; margin-left: auto; } /* TraceAccordion v2 chevron: flex 요약 줄에서 오른쪽 끝 */
 .trace-accordion[open] summary > .icon { transform: rotate(180deg); }
-.trace-accordion ol { padding-left: var(--spacing-lg); display: grid; gap: var(--spacing-sm); }
+.trace-accordion ol { padding-left: var(--spacing-lg); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--spacing-sm); }
+/* 2026-11-28 사용자 요청: 긴 원문 주소가 카드 밖으로 밀려 화면이 옆으로 밀리던 것 — 칸 안에서 줄바꿈 */
+.trace-accordion li { min-width: 0; overflow-wrap: anywhere; }
 .disclaimer-note { margin-top: var(--spacing-sm); }
 .univ-card { display: grid; gap: var(--spacing-sm); padding: var(--spacing-lg); border: 1px solid var(--color-hairline); }
 .position-summary { display: grid; gap: var(--spacing-xs); padding: var(--spacing-lg); background: var(--color-accent-soft); }
