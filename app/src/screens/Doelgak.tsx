@@ -5,7 +5,11 @@ import { departmentsFor, referenceDiffText } from '../domain/interestComparison'
 import { interestId, type Interest } from '../domain/interests';
 import { studentDb } from '../store/studentDb';
 import { collectedProgramPath } from '../domain/interests';
-import { fiveToNineFor } from '../domain/results';
+import { scoringProgramFor } from '../domain/interestScoring';
+import { scoreUniversity } from '../engine/scoring';
+import { useReleasedRulesState } from '../data/releasedRules';
+import { coverageReason, useScoringCoverage } from '../data/scoringCoverage';
+import { referenceAssessment, REFERENCE_POLICY } from '../domain/doelgakAssessment';
 import type { StudentBackup } from '../domain/student';
 import { Link } from 'react-router-dom';
 import { Disclaimer, TraceAccordion } from '../components/CalculationDetails';
@@ -23,7 +27,7 @@ import { judgeRange } from '../engine/judgment';
 import { activeRules } from '../data/sample/rules';
 import { isSampleMode, useSampleMode } from '../data/sample/mode';
 import { admissionYear, dataAsOf, programs, type ProgramData } from '../data/catalog';
-import { StudentDataScreen } from './Results';
+import { StudentDataScreen, withReleasedRules } from './Results';
 import '../styles/doelgak.css';
 
 type Lane = { key: string; label: string; tone: 'safe' | 'fit' | 'reach' | 'risk'; icon: string };
@@ -95,40 +99,73 @@ function MiniBar({ min, max, cut, cutLabel = '70% 컷' }: { min: number; max: nu
   </div>;
 }
 
-/** 검수된 판정 전형이 아직 없을 때(실제 모드): 관심 전형마다 내 참고 추정 범위와 최근 수집 입결 컷을 나란히 보여요. 판정 이름은 붙이지 않아요(NEVER-1). */
+/** 실제 관심 전형의 배포 규칙으로 환산해요. 과거 9등급 입결은 다른 척도이므로 차이·판정을 내지 않아요. */
 function InterestReference({ data }: { data: StudentBackup }) {
   const interests = useMemo(() => [...(data.interests ?? [])].sort((a, b) => a.created_at.localeCompare(b.created_at)), [data.interests]);
-  const mine = useMemo(() => { const r = data.grades.length ? fiveToNineFor(data.grades, '전 교과') : null; return r?.min != null && r.max != null ? { min: r.min, max: r.max } : null; }, [data.grades]);
+  const released = useReleasedRulesState();
+  const coverage = useScoringCoverage();
+  const all = withReleasedRules(programs, released.rules);
   const { cuts, rowsOf, error: indexError } = useReferenceCuts(interests);
   const [pickError, setPickError] = useState('');
   // 학과 없이 담은 관심 전형: 학과를 고르면 그 학과로 바꿔 담아요(setInterest가 학과 없는 옛 항목을 같이 정리해요)
   const pickDepartment = (i: Interest, unit: string) => { setPickError(''); studentDb.setInterest(i.university, i.program, true, unit).catch(e => setPickError(e instanceof Error ? e.message : '학과를 저장하지 못했어요.')); };
 
-  const head = <div className="dg-summary"><p className="t-body-sm num">관심 전형 {interests.length}개 · 참고 비교</p>
-    <p className="t-caption text-muted">판정 기준과 입결 검수가 끝나면 안정 · 적정 · 소신 · 위험으로 나눠 보여 드려요. 지금은 내 참고 추정 범위와 최근 입결 컷만 비교해요.</p></div>;
+  const head = <div className="dg-summary"><p className="t-body-sm num">관심 전형 {interests.length}개 · 대학별 환산</p>
+    <p className="t-caption text-muted">대학별 환산점수와 과거 입결 기반 참고 판정을 나눠 보여요. 참고 판정은 합격 여부를 예측하지 않고, 대학의 공식 판정도 아니에요.</p></div>;
   if (!interests.length) return <>{head}<div className="empty-state dg-empty"><Icon name="heart" size={40} /><h3 className="t-heading-4">관심 전형이 없어요</h3>
     <p className="t-body-sm">수시 입결이나 전형계획에서 하트를 누르면 여기서 입결과 비교해요.</p><Link className="button-primary" to="/admission-results">수시 입결 보기</Link></div></>;
   return <>{head}
-    {!mine && <p className="t-caption text-muted">{data.grades.length ? '석차등급이 있는 과목을 입력하면 내 참고 추정 범위와 비교해요. ' : '성적을 입력하면 내 참고 추정 범위와 비교해요. '}<Link className="t-link" to="/grade-input">성적 입력하기 ›</Link></p>}
+    {!data.grades.length && <p className="t-caption text-muted">성적을 입력하면 대학별 환산 규칙에 따라 계산해요. <Link className="t-link" to="/grade-input">성적 입력하기 ›</Link></p>}
+    {released.failed && <p className="t-caption text-muted" role="alert">환산 규칙을 불러오지 못했어요. <button type="button" className="t-link" onClick={released.retry}>다시 불러오기</button></p>}
     {indexError && <p className="t-caption text-muted" role="alert">{indexError}</p>}
     {pickError && <p className="t-caption text-muted" role="alert">{pickError}</p>}
     <div className="dg-pending__cards">{interests.map(i => {
       const ref = cuts[i.id];
       const cut = ref && 'value' in ref ? ref : null;
+      const matched = scoringProgramFor(i, all, admissionYear);
+      const rule = matched.program?.rule;
+      const score = rule && data.grades.length ? scoreUniversity(data.grades, data.attendance, rule, i.department) : null;
+      const value = score?.status === 'ready' ? score.value : null;
+      const assessment = referenceAssessment(data.grades, i, ref, rule, score);
+      const reason = released.loading ? '대학별 환산 규칙을 불러오는 중이에요.' : !rule && released.failed ? '환산 규칙을 불러오지 못해 계산할 수 없어요.' : !rule ? coverageReason(coverage, i, admissionYear) ?? matched.reason
+        : !data.grades.length ? '성적을 입력하면 계산해요.' : score?.status !== 'ready' ? score?.reason : '';
       return <article className="univ-card dg-card" key={i.id}>
         <header><UniversityLogo university={i.university} /><InterestButton university={i.university} program={i.program} department={i.department || undefined} compact /></header>
         <h3 className="t-heading-4">{i.university}</h3>
         <p className="dg-card__program">{[i.department, i.program].filter(Boolean).join(' · ')}</p>
-        <div className="dg-card__numbers"><span className="t-caption text-muted">내 환산 (참고 추정)</span>
-          <div className="dg-card__range"><strong className="num">{mine ? rangeText(mine.min, mine.max) : '—'}</strong></div>
+        <div className="dg-card__numbers"><span className="t-caption text-muted">{admissionYear}학년도 {rule?.publication?.scope === 'grade_component' ? '교과 정량 부분' : '대학별 환산점수'}</span>
+          <div className="dg-card__range"><strong className="num">{value ? `${value.total.toFixed(rule!.publication?.rounding === 'display_only' ? 2 : rule!.rounding.digits)} / ${value.max}점` : '계산 대기'}</strong></div>
+          {value ? <span className="t-caption text-muted num">{rule?.publication?.scope === 'grade_component' ? '출결·서류·면접을 포함한 최종 총점이 아니에요.' : `교과 ${value.grade.toFixed(2)} · 출결 ${value.attendance.toFixed(2)}`}</span>
+            : <p className="t-caption text-muted">{reason}</p>}
+          {rule?.publication && <span className="t-caption text-muted">원문 산식 확인 · {rule.publication.checked_at}{rule.publication.rounding === 'display_only' ? ' · 소수점은 표시용' : ''}</span>}
+          {rule && rule.program !== i.program && <span className="t-caption text-muted">적용 전형: {rule.program}</span>}
+        </div>
+        <div className="dg-card__numbers dg-card__history"><span className="t-caption text-muted">과거 입결 · 9등급 기준</span>
           <span className="t-caption text-muted num">{!ref ? '입결 자료를 불러오는 중이에요' : cut
             ? `${cut.year}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${(t => t ? ` · ${t}` : '')(meansText(meansFor(cut.row, rowsOf(i.university))))}` : (ref as { reason: string }).reason}</span>
           {/* 수집 전형 이름이 담은 이름과 다르면 무엇과 비교했는지 따로 한 줄(컷 숫자가 말줄임에 가리지 않게) */}
           {cut && cut.row.program.trim() !== i.program.trim() && <span className="t-caption text-muted">비교한 전형: {cut.row.program}</span>}</div>
         {!i.department && (() => { const units = departmentsFor(i, rowsOf(i.university)); return units.length > 0 && <label className="dg-field"><span className="t-caption text-muted">학과 고르기</span>
           <span className="dg-select"><select className="text-input" value="" onChange={e => e.target.value && pickDepartment(i, e.target.value)}><option value="">학과를 골라 주세요</option>{units.map(u => <option key={u}>{u}</option>)}</select><Icon name="chevron-down" size={20} /></span></label>; })()}
-        {mine && <MiniBar min={mine.min} max={mine.max} cut={cut?.value} cutLabel={cut?.cut === 'cut_50' ? '50% 컷' : '70% 컷'} />}
-        <div className="dg-card__chips"><span className="data-status-badge">판정 준비 중</span>{cut && <span className="data-status-badge">검수 전 참고자료</span>}</div>
+        <section className="dg-reference-assessment" aria-label={`${i.university} 참고 판정`}>
+          <h4 className="t-body-sm">과거 입결 기반 참고 판정</h4>
+          {assessment.status === 'ready' ? <>
+            {assessment.label ? <span className={`judge-badge judge-${SUBJECT_LANES.find(l => l.key === assessment.label)!.tone}`}>
+              참고 {assessment.label}{assessment.boundary ? ` · ${assessment.favorableLabel}~${assessment.label} 경계` : ''}</span> : <strong className="t-body-sm">교과 위치 참고</strong>}
+            <p className="t-caption text-muted">{assessment.scope} · {assessment.subjects}과목</p>
+            <p className="t-caption num">5등급 평균 {assessment.average5.toFixed(2)} → 9등급 참고 {rangeText(assessment.min, assessment.max)}</p>
+            <MiniBar min={assessment.min} max={assessment.max} cut={cut?.value} cutLabel={cut?.cut === 'cut_50' ? '50% 컷' : '70% 컷'} />
+            <details className="dg-reference-basis"><summary>참고 판정 기준과 한계</summary>
+              <p className="t-caption text-muted">{REFERENCE_POLICY.description}</p>
+              {assessment.limitations.map(note => <p className="t-caption text-muted" key={note}>{note}</p>)}
+              <p className="t-caption text-muted">5→9 참고 모델 v{assessment.modelVersion} · 판정은 반올림 전 보수 쪽 값 기준</p>
+            </details>
+          </> : <p className="t-caption text-muted">{assessment.reason}</p>}
+        </section>
+        {score && <TraceAccordion trace={score.trace} note={`${admissionYear}학년도 ${rule!.university} · ${rule!.program} · 규칙 v${rule!.version}`} />}
+        {rule?.source.startsWith('https://') && <a className="t-link t-caption" href={rule.source} target="_blank" rel="noreferrer">환산 규칙 원문 보기 ›</a>}
+        {score && score.status !== 'ready' && <Link className="t-link t-caption" to="/grade-input">성적·출결 입력 확인 ›</Link>}
+        <div className="dg-card__chips"><span className="data-status-badge">{assessment.status === 'ready' ? '참고 비교 · 합격 예측 아님' : '판정 준비 중'}</span>{cut && <span className="data-status-badge">과거 입결 참고자료</span>}</div>
         {/* 짝지은 입결 행의 대학·전형 이름으로 걸어야 원문 화면에서 찾아져요(전형계획 이름과 수집 이름이 달라요) */}
         {i.department && <Link className="t-link t-caption" to={cut ? collectedProgramPath(cut.row.university, cut.row.program, cut.row.recruit_unit) : collectedProgramPath(i.university, i.program, i.department)}>입결 원문 보기 ›</Link>}
       </article>;

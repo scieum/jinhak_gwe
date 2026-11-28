@@ -6,7 +6,6 @@ import { useStudent } from '../store/studentDb';
 import { gradeSummary } from '../domain/student';
 import { fiveToNineFor, judgeUniversity } from '../domain/results';
 import { collectedProgramPath } from '../domain/interests';
-import { referenceDiffText } from '../domain/interestComparison';
 import { useReferenceCuts } from '../data/referenceCuts';
 import { useSampleMode } from '../data/sample/mode';
 import { SAMPLE_STUDENT_NAME } from '../data/sample/student';
@@ -93,12 +92,12 @@ export function HomeDashboard() {
         <div className="home-dday">{DDAYS.map(([label, date]) => <div className="stat-tile home-tile" key={label}><span>{label}</span><strong className="num">{dday(date)}</strong><small className="num">{date} 예정</small></div>)}</div>
         <section className="home-card home-judge" aria-label="관심 대학 될각">
           <div><h2>관심 대학 될각</h2><p>{!rows.length ? (reference ? '관심 대학을 담으면 여기에서 최근 입결과 비교해요.' : '관심 대학을 담으면 여기에서 될각 판정을 볼 수 있어요.')
-            : reference ? (has && ready ? `관심 대학 ${rows.length}곳 · 최근 입결 컷과 참고 비교예요` : `관심 대학 ${rows.length}곳 · 성적을 입력하면 내 범위와 비교해요`)
+            : reference ? `관심 대학 ${rows.length}곳 · 과거 입결 참고자료예요`
             : has ? `관심 대학 ${rows.length}곳 중 ${judgedCount}곳 · 교과전형 입결과 비교했어요` : `관심 대학 ${rows.length}곳 · 성적을 입력하면 될각 판정이 보여요`}</p></div>
           {rows.length > 0 && <ul>{shown.map(({ i, j }) => {
             const ref = reference ? cuts[i.id] : null, cut = ref && 'value' in ref ? ref : null;
             // 참고 비교는 배지 대신 전형 줄 아래 한 줄(배지가 넓으면 대학 이름이 꺾여요)
-            const refLine = !reference || !ref ? null : cut ? `${cut.year}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}${has && ready ? ` · 차이 ${referenceDiffText(result.max!, cut.value)}` : ''}` : '입결 확인 필요';
+            const refLine = !reference || !ref ? null : cut ? `${cut.year}학년도 ${cut.cut === 'cut_70' ? '70%' : '50%'} 컷 ${cut.row[cut.cut]}` : '입결 확인 필요';
             const badge = reference ? null
               : !j ? (has ? <span className="judge-badge judge-none">자료 준비 중</span> : null) // 성적 전이면 대학마다 같은 배지를 반복하지 않고 위 설명 한 줄로 알려요
               : j.v.boundary ? <span className="judge-badge judge-edge"><span aria-hidden="true">◇</span> 경계</span>

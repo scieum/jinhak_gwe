@@ -1,6 +1,1309 @@
 {
   "format": "jinhak-navi-scoring-rules",
   "version": 1,
-  "generated_at": "2026-11-20T00:00:00.000Z",
-  "rules": []
+  "generated_at": "2026-11-28T00:00:00+09:00",
+  "rules": [
+    {
+      "admission_year": 2028,
+      "university": "강원대학교(춘천)",
+      "program": "학생부교과(일반전형)",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "영어",
+        "수학",
+        "사회",
+        "과학"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 500,
+        "2": 470,
+        "3": 430,
+        "4": 380,
+        "5": 100
+      },
+      "achievement_points": {
+        "A": 500,
+        "B": 481,
+        "C": 461,
+        "D": 441,
+        "E": 400
+      },
+      "achievement_blend": {
+        "mode": "weighted",
+        "rank_ratio": 0.5
+      },
+      "no_rank_subject_policy": "exclude",
+      "joint_curriculum_policy": "include",
+      "grade_max_score": 1000,
+      "base_score": 0,
+      "max_score": 1000,
+      "id": "source-audit-2028-plan-0000003-0",
+      "version": 1,
+      "source": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=20260611034926546.pdf&path=%2Fbbs%2F20260611135835",
+      "review_status": "verified",
+      "rounding": {
+        "digits": 6,
+        "mode": "round"
+      },
+      "advanced": {
+        "tracks": [
+          {
+            "name": "예체능",
+            "units": [
+              "무용학과",
+              "스포츠과학과",
+              "디자인학과",
+              "미술학과",
+              "음악학과",
+              "체육교육과"
+            ],
+            "subject_groups": [
+              "국어",
+              "영어",
+              "사회"
+            ]
+          },
+          {
+            "name": "인문사회·자연과학·공학",
+            "units": [
+              "*"
+            ]
+          }
+        ]
+      },
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "61c542430f68670397b52474fd08dc9413a044d5c2f5d7eead72cdfb56106d9b",
+        "pages": [
+          4,
+          15,
+          32,
+          33,
+          34
+        ],
+        "scope": "grade_component",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "시행계획의 교과 정량 부분 1,000점만 계산해요. 출결 가감점과 최종 총점은 포함하지 않아요.",
+          "교과등급 점수와 성취도 점수의 학점 가중평균을 각각 더해요.",
+          "최종 소수점 처리 규정은 미확인으로, 화면 소수점은 표시용이에요.",
+          "이전 전형명으로 담은 경우 2028학년도 변경 전형명을 함께 확인해 주세요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": true,
+        "previous_programs": [
+          "학생부교과(일반교과전형)"
+        ]
+      }
+    },
+    {
+      "admission_year": 2028,
+      "university": "강원대학교(춘천)",
+      "program": "학생부교과(강원인재전형)",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "영어",
+        "수학",
+        "사회",
+        "과학"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 500,
+        "2": 470,
+        "3": 430,
+        "4": 380,
+        "5": 100
+      },
+      "achievement_points": {
+        "A": 500,
+        "B": 481,
+        "C": 461,
+        "D": 441,
+        "E": 400
+      },
+      "achievement_blend": {
+        "mode": "weighted",
+        "rank_ratio": 0.5
+      },
+      "no_rank_subject_policy": "exclude",
+      "joint_curriculum_policy": "include",
+      "grade_max_score": 1000,
+      "base_score": 0,
+      "max_score": 1000,
+      "id": "source-audit-2028-plan-0000003-1",
+      "version": 1,
+      "source": "https://admission.kangwon.ac.kr/admission/cmmn/download.do?dn=20260611034926546.pdf&path=%2Fbbs%2F20260611135835",
+      "review_status": "verified",
+      "rounding": {
+        "digits": 6,
+        "mode": "round"
+      },
+      "advanced": {
+        "tracks": [
+          {
+            "name": "예체능",
+            "units": [
+              "무용학과",
+              "스포츠과학과",
+              "디자인학과",
+              "미술학과",
+              "음악학과",
+              "체육교육과"
+            ],
+            "subject_groups": [
+              "국어",
+              "영어",
+              "사회"
+            ]
+          },
+          {
+            "name": "인문사회·자연과학·공학",
+            "units": [
+              "*"
+            ]
+          }
+        ]
+      },
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "61c542430f68670397b52474fd08dc9413a044d5c2f5d7eead72cdfb56106d9b",
+        "pages": [
+          4,
+          15,
+          32,
+          33,
+          34
+        ],
+        "scope": "grade_component",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "시행계획의 교과 정량 부분 1,000점만 계산해요. 출결 가감점과 최종 총점은 포함하지 않아요.",
+          "교과등급 점수와 성취도 점수의 학점 가중평균을 각각 더해요.",
+          "최종 소수점 처리 규정은 미확인으로, 화면 소수점은 표시용이에요.",
+          "이전 전형명으로 담은 경우 2028학년도 변경 전형명을 함께 확인해 주세요."
+        ],
+        "rounding": "display_only",
+        "block_joint": true,
+        "require_department": true,
+        "previous_programs": [
+          "학생부교과(지역교과전형)"
+        ]
+      }
+    },
+    {
+      "admission_year": 2028,
+      "university": "국립공주대학교",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "수학",
+        "영어",
+        "사회",
+        "한국사",
+        "과학",
+        "기술·가정",
+        "정보",
+        "제2외국어",
+        "한문"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 8,
+        "2": 6,
+        "3": 4,
+        "4": 2,
+        "5": 0
+      },
+      "achievement_points": {
+        "A": 8,
+        "B": 6,
+        "C": 4,
+        "D": 2,
+        "E": 0
+      },
+      "achievement_blend": {
+        "mode": "none"
+      },
+      "no_rank_subject_policy": "exclude",
+      "grade_max_score": 900,
+      "base_score": 500,
+      "attendance_rule": {
+        "years": [
+          1,
+          2,
+          3
+        ],
+        "tardy_to_absence": 3,
+        "max_score": 100,
+        "deduction_table": [
+          {
+            "absence_max": 3,
+            "points": 0
+          },
+          {
+            "absence_max": 6,
+            "points": 3
+          },
+          {
+            "absence_max": 15,
+            "points": 6
+          },
+          {
+            "absence_max": 30,
+            "points": 9
+          },
+          {
+            "absence_max": 9999,
+            "points": 12
+          }
+        ]
+      },
+      "max_score": 1000,
+      "rounding": {
+        "digits": 2,
+        "mode": "round"
+      },
+      "program": "일반전형 (수시 · 학생부교과)",
+      "advanced": {
+        "type_rules": [
+          {
+            "types": [
+              "융합선택"
+            ],
+            "groups": [
+              "사회",
+              "한국사",
+              "과학"
+            ],
+            "use": "achievement"
+          }
+        ],
+        "mean_rounding": {
+          "digits": 2,
+          "mode": "round"
+        }
+      },
+      "joint_curriculum_policy": "include",
+      "id": "source-audit-2028-plan-0000008-0",
+      "version": 1,
+      "source": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253296&fileSn=1",
+      "review_status": "verified",
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+        "pages": [
+          13,
+          17,
+          18
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+          "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+          "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+          "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": [
+          "체육교육과",
+          "음악교육과",
+          "미술교육과",
+          "스포츠과학과"
+        ]
+      }
+    },
+    {
+      "admission_year": 2028,
+      "university": "국립공주대학교",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "수학",
+        "영어",
+        "사회",
+        "한국사",
+        "과학",
+        "기술·가정",
+        "정보",
+        "제2외국어",
+        "한문"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 8,
+        "2": 6,
+        "3": 4,
+        "4": 2,
+        "5": 0
+      },
+      "achievement_points": {
+        "A": 8,
+        "B": 6,
+        "C": 4,
+        "D": 2,
+        "E": 0
+      },
+      "achievement_blend": {
+        "mode": "none"
+      },
+      "no_rank_subject_policy": "exclude",
+      "grade_max_score": 900,
+      "base_score": 500,
+      "attendance_rule": {
+        "years": [
+          1,
+          2,
+          3
+        ],
+        "tardy_to_absence": 3,
+        "max_score": 100,
+        "deduction_table": [
+          {
+            "absence_max": 3,
+            "points": 0
+          },
+          {
+            "absence_max": 6,
+            "points": 3
+          },
+          {
+            "absence_max": 15,
+            "points": 6
+          },
+          {
+            "absence_max": 30,
+            "points": 9
+          },
+          {
+            "absence_max": 9999,
+            "points": 12
+          }
+        ]
+      },
+      "max_score": 1000,
+      "rounding": {
+        "digits": 2,
+        "mode": "round"
+      },
+      "program": "지역인재전형",
+      "advanced": {
+        "type_rules": [
+          {
+            "types": [
+              "융합선택"
+            ],
+            "groups": [
+              "사회",
+              "한국사",
+              "과학"
+            ],
+            "use": "achievement"
+          }
+        ],
+        "mean_rounding": {
+          "digits": 2,
+          "mode": "round"
+        }
+      },
+      "joint_curriculum_policy": "include",
+      "id": "source-audit-2028-plan-0000008-1",
+      "version": 1,
+      "source": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253296&fileSn=1",
+      "review_status": "verified",
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+        "pages": [
+          13,
+          17,
+          18
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+          "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+          "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+          "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": [
+          "체육교육과",
+          "음악교육과",
+          "미술교육과",
+          "스포츠과학과"
+        ]
+      }
+    },
+    {
+      "admission_year": 2028,
+      "university": "국립공주대학교",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "수학",
+        "영어",
+        "사회",
+        "한국사",
+        "과학",
+        "기술·가정",
+        "정보",
+        "제2외국어",
+        "한문"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 8,
+        "2": 6,
+        "3": 4,
+        "4": 2,
+        "5": 0
+      },
+      "achievement_points": {
+        "A": 8,
+        "B": 6,
+        "C": 4,
+        "D": 2,
+        "E": 0
+      },
+      "achievement_blend": {
+        "mode": "none"
+      },
+      "no_rank_subject_policy": "exclude",
+      "grade_max_score": 900,
+      "base_score": 500,
+      "attendance_rule": {
+        "years": [
+          1,
+          2,
+          3
+        ],
+        "tardy_to_absence": 3,
+        "max_score": 100,
+        "deduction_table": [
+          {
+            "absence_max": 3,
+            "points": 0
+          },
+          {
+            "absence_max": 6,
+            "points": 3
+          },
+          {
+            "absence_max": 15,
+            "points": 6
+          },
+          {
+            "absence_max": 30,
+            "points": 9
+          },
+          {
+            "absence_max": 9999,
+            "points": 12
+          }
+        ]
+      },
+      "max_score": 1000,
+      "rounding": {
+        "digits": 2,
+        "mode": "round"
+      },
+      "program": "농어촌학생전형 (수시 · 학생부교과)",
+      "advanced": {
+        "type_rules": [
+          {
+            "types": [
+              "융합선택"
+            ],
+            "groups": [
+              "사회",
+              "한국사",
+              "과학"
+            ],
+            "use": "achievement"
+          }
+        ],
+        "mean_rounding": {
+          "digits": 2,
+          "mode": "round"
+        }
+      },
+      "joint_curriculum_policy": "include",
+      "id": "source-audit-2028-plan-0000008-2",
+      "version": 1,
+      "source": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253296&fileSn=1",
+      "review_status": "verified",
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+        "pages": [
+          13,
+          17,
+          18
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+          "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+          "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+          "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": [
+          "체육교육과",
+          "음악교육과",
+          "미술교육과",
+          "스포츠과학과"
+        ]
+      }
+    },
+    {
+      "admission_year": 2028,
+      "university": "국립공주대학교",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "수학",
+        "영어",
+        "사회",
+        "한국사",
+        "과학",
+        "기술·가정",
+        "정보",
+        "제2외국어",
+        "한문"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 8,
+        "2": 6,
+        "3": 4,
+        "4": 2,
+        "5": 0
+      },
+      "achievement_points": {
+        "A": 8,
+        "B": 6,
+        "C": 4,
+        "D": 2,
+        "E": 0
+      },
+      "achievement_blend": {
+        "mode": "none"
+      },
+      "no_rank_subject_policy": "exclude",
+      "grade_max_score": 900,
+      "base_score": 500,
+      "attendance_rule": {
+        "years": [
+          1,
+          2,
+          3
+        ],
+        "tardy_to_absence": 3,
+        "max_score": 100,
+        "deduction_table": [
+          {
+            "absence_max": 3,
+            "points": 0
+          },
+          {
+            "absence_max": 6,
+            "points": 3
+          },
+          {
+            "absence_max": 15,
+            "points": 6
+          },
+          {
+            "absence_max": 30,
+            "points": 9
+          },
+          {
+            "absence_max": 9999,
+            "points": 12
+          }
+        ]
+      },
+      "max_score": 1000,
+      "rounding": {
+        "digits": 2,
+        "mode": "round"
+      },
+      "program": "자율전공전형",
+      "advanced": {
+        "type_rules": [
+          {
+            "types": [
+              "융합선택"
+            ],
+            "groups": [
+              "사회",
+              "한국사",
+              "과학"
+            ],
+            "use": "achievement"
+          }
+        ],
+        "mean_rounding": {
+          "digits": 2,
+          "mode": "round"
+        }
+      },
+      "joint_curriculum_policy": "include",
+      "id": "source-audit-2028-plan-0000008-3",
+      "version": 1,
+      "source": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253296&fileSn=1",
+      "review_status": "verified",
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+        "pages": [
+          13,
+          17,
+          18
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+          "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+          "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+          "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": [
+          "체육교육과",
+          "음악교육과",
+          "미술교육과",
+          "스포츠과학과"
+        ]
+      }
+    },
+    {
+      "admission_year": 2028,
+      "university": "국립공주대학교",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "수학",
+        "영어",
+        "사회",
+        "한국사",
+        "과학",
+        "기술·가정",
+        "정보",
+        "제2외국어",
+        "한문"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 8,
+        "2": 6,
+        "3": 4,
+        "4": 2,
+        "5": 0
+      },
+      "achievement_points": {
+        "A": 8,
+        "B": 6,
+        "C": 4,
+        "D": 2,
+        "E": 0
+      },
+      "achievement_blend": {
+        "mode": "none"
+      },
+      "no_rank_subject_policy": "exclude",
+      "grade_max_score": 900,
+      "base_score": 500,
+      "attendance_rule": {
+        "years": [
+          1,
+          2,
+          3
+        ],
+        "tardy_to_absence": 3,
+        "max_score": 100,
+        "deduction_table": [
+          {
+            "absence_max": 3,
+            "points": 0
+          },
+          {
+            "absence_max": 6,
+            "points": 3
+          },
+          {
+            "absence_max": 15,
+            "points": 6
+          },
+          {
+            "absence_max": 30,
+            "points": 9
+          },
+          {
+            "absence_max": 9999,
+            "points": 12
+          }
+        ]
+      },
+      "max_score": 1000,
+      "rounding": {
+        "digits": 2,
+        "mode": "round"
+      },
+      "program": "기회균형일반전형",
+      "advanced": {
+        "type_rules": [
+          {
+            "types": [
+              "융합선택"
+            ],
+            "groups": [
+              "사회",
+              "한국사",
+              "과학"
+            ],
+            "use": "achievement"
+          }
+        ],
+        "mean_rounding": {
+          "digits": 2,
+          "mode": "round"
+        }
+      },
+      "joint_curriculum_policy": "include",
+      "id": "source-audit-2028-plan-0000008-4",
+      "version": 1,
+      "source": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253296&fileSn=1",
+      "review_status": "verified",
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+        "pages": [
+          13,
+          17,
+          18
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+          "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+          "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+          "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": [
+          "체육교육과",
+          "음악교육과",
+          "미술교육과",
+          "스포츠과학과"
+        ]
+      }
+    },
+    {
+      "admission_year": 2028,
+      "university": "국립공주대학교",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "수학",
+        "영어",
+        "사회",
+        "한국사",
+        "과학",
+        "기술·가정",
+        "정보",
+        "제2외국어",
+        "한문"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 8,
+        "2": 6,
+        "3": 4,
+        "4": 2,
+        "5": 0
+      },
+      "achievement_points": {
+        "A": 8,
+        "B": 6,
+        "C": 4,
+        "D": 2,
+        "E": 0
+      },
+      "achievement_blend": {
+        "mode": "none"
+      },
+      "no_rank_subject_policy": "exclude",
+      "grade_max_score": 900,
+      "base_score": 500,
+      "attendance_rule": {
+        "years": [
+          1,
+          2,
+          3
+        ],
+        "tardy_to_absence": 3,
+        "max_score": 100,
+        "deduction_table": [
+          {
+            "absence_max": 3,
+            "points": 0
+          },
+          {
+            "absence_max": 6,
+            "points": 3
+          },
+          {
+            "absence_max": 15,
+            "points": 6
+          },
+          {
+            "absence_max": 30,
+            "points": 9
+          },
+          {
+            "absence_max": 9999,
+            "points": 12
+          }
+        ]
+      },
+      "max_score": 1000,
+      "rounding": {
+        "digits": 2,
+        "mode": "round"
+      },
+      "program": "기회균형지역전형 (수시 · 학생부교과)",
+      "advanced": {
+        "type_rules": [
+          {
+            "types": [
+              "융합선택"
+            ],
+            "groups": [
+              "사회",
+              "한국사",
+              "과학"
+            ],
+            "use": "achievement"
+          }
+        ],
+        "mean_rounding": {
+          "digits": 2,
+          "mode": "round"
+        }
+      },
+      "joint_curriculum_policy": "include",
+      "id": "source-audit-2028-plan-0000008-5",
+      "version": 1,
+      "source": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000253296&fileSn=1",
+      "review_status": "verified",
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+        "pages": [
+          13,
+          17,
+          18
+        ],
+        "scope": "student_record",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+          "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+          "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+          "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+        ],
+        "rounding": "official",
+        "block_joint": true,
+        "require_department": true,
+        "excluded_departments": [
+          "체육교육과",
+          "음악교육과",
+          "미술교육과",
+          "스포츠과학과"
+        ]
+      }
+    },
+    {
+      "admission_year": 2028,
+      "university": "부산대학교",
+      "program": "교과우수",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "수학",
+        "영어",
+        "사회",
+        "과학"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 100,
+        "2": 98,
+        "3": 95,
+        "4": 90,
+        "5": 0
+      },
+      "achievement_blend": {
+        "mode": "none"
+      },
+      "no_rank_subject_policy": "exclude",
+      "joint_curriculum_policy": "include",
+      "grade_max_score": 80,
+      "base_score": 0,
+      "max_score": 80,
+      "rounding": {
+        "digits": 4,
+        "mode": "floor"
+      },
+      "id": "source-audit-2028-plan-0000014-0",
+      "version": 1,
+      "source": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252727&fileSn=1",
+      "review_status": "verified",
+      "advanced": {
+        "mean_rounding": {
+          "digits": 4,
+          "mode": "floor"
+        }
+      },
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "e97db0a997a844d69b842225968d27bf88355cfbdb17f6a87cdf5e3ba81c5a89",
+        "pages": [
+          12,
+          28
+        ],
+        "scope": "grade_component",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "교과 정량 부분 80점만 계산해요. 학업역량평가 20점은 포함하지 않아요.",
+          "중간 평균과 최종 점수 모두 소수 다섯째 자리에서 버림해요.",
+          "반영 교과는 학생부 교과군 기준 국어·수학·영어·사회·과학이에요."
+        ],
+        "rounding": "official",
+        "block_joint": true
+      }
+    },
+    {
+      "admission_year": 2028,
+      "university": "부산대학교",
+      "program": "교과지역",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "수학",
+        "영어",
+        "사회",
+        "과학"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 100,
+        "2": 98,
+        "3": 95,
+        "4": 90,
+        "5": 0
+      },
+      "achievement_blend": {
+        "mode": "none"
+      },
+      "no_rank_subject_policy": "exclude",
+      "joint_curriculum_policy": "include",
+      "grade_max_score": 80,
+      "base_score": 0,
+      "max_score": 80,
+      "rounding": {
+        "digits": 4,
+        "mode": "floor"
+      },
+      "id": "source-audit-2028-plan-0000014-1",
+      "version": 1,
+      "source": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252727&fileSn=1",
+      "review_status": "verified",
+      "advanced": {
+        "mean_rounding": {
+          "digits": 4,
+          "mode": "floor"
+        }
+      },
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "e97db0a997a844d69b842225968d27bf88355cfbdb17f6a87cdf5e3ba81c5a89",
+        "pages": [
+          12,
+          28
+        ],
+        "scope": "grade_component",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "교과 정량 부분 80점만 계산해요. 학업역량평가 20점은 포함하지 않아요.",
+          "중간 평균과 최종 점수 모두 소수 다섯째 자리에서 버림해요.",
+          "반영 교과는 학생부 교과군 기준 국어·수학·영어·사회·과학이에요."
+        ],
+        "rounding": "official",
+        "block_joint": true
+      }
+    },
+    {
+      "admission_year": 2028,
+      "university": "부산대학교",
+      "program": "농어촌학생 (학생부교과)",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "수학",
+        "영어",
+        "사회",
+        "과학"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 100,
+        "2": 98,
+        "3": 95,
+        "4": 90,
+        "5": 0
+      },
+      "achievement_blend": {
+        "mode": "none"
+      },
+      "no_rank_subject_policy": "exclude",
+      "joint_curriculum_policy": "include",
+      "grade_max_score": 80,
+      "base_score": 0,
+      "max_score": 80,
+      "rounding": {
+        "digits": 4,
+        "mode": "floor"
+      },
+      "id": "source-audit-2028-plan-0000014-2",
+      "version": 1,
+      "source": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252727&fileSn=1",
+      "review_status": "verified",
+      "advanced": {
+        "mean_rounding": {
+          "digits": 4,
+          "mode": "floor"
+        }
+      },
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "e97db0a997a844d69b842225968d27bf88355cfbdb17f6a87cdf5e3ba81c5a89",
+        "pages": [
+          12,
+          28
+        ],
+        "scope": "grade_component",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "교과 정량 부분 80점만 계산해요. 학업역량평가 20점은 포함하지 않아요.",
+          "중간 평균과 최종 점수 모두 소수 다섯째 자리에서 버림해요.",
+          "반영 교과는 학생부 교과군 기준 국어·수학·영어·사회·과학이에요."
+        ],
+        "rounding": "official",
+        "block_joint": true
+      }
+    },
+    {
+      "admission_year": 2028,
+      "university": "부산대학교",
+      "program": "지역저소득층학생",
+      "semesters": [
+        "1-1",
+        "1-2",
+        "2-1",
+        "2-2",
+        "3-1"
+      ],
+      "subject_groups": [
+        "국어",
+        "수학",
+        "영어",
+        "사회",
+        "과학"
+      ],
+      "selection": {
+        "mode": "all"
+      },
+      "credit_weighted": true,
+      "rank_grade_points": {
+        "1": 100,
+        "2": 98,
+        "3": 95,
+        "4": 90,
+        "5": 0
+      },
+      "achievement_blend": {
+        "mode": "none"
+      },
+      "no_rank_subject_policy": "exclude",
+      "joint_curriculum_policy": "include",
+      "grade_max_score": 80,
+      "base_score": 0,
+      "max_score": 80,
+      "rounding": {
+        "digits": 4,
+        "mode": "floor"
+      },
+      "id": "source-audit-2028-plan-0000014-3",
+      "version": 1,
+      "source": "https://www.adiga.kr/cmm/com/file/fileDown.do?fileId=00000000000000252727&fileSn=1",
+      "review_status": "verified",
+      "advanced": {
+        "mean_rounding": {
+          "digits": 4,
+          "mode": "floor"
+        }
+      },
+      "publication": {
+        "checked_by": "Codex · 원문 표·산식 대조",
+        "checked_at": "2026-11-28",
+        "source_sha256": "e97db0a997a844d69b842225968d27bf88355cfbdb17f6a87cdf5e3ba81c5a89",
+        "pages": [
+          12,
+          28
+        ],
+        "scope": "grade_component",
+        "applicant": "2028학년도 국내 고교 5등급제 졸업예정자",
+        "notes": [
+          "교과 정량 부분 80점만 계산해요. 학업역량평가 20점은 포함하지 않아요.",
+          "중간 평균과 최종 점수 모두 소수 다섯째 자리에서 버림해요.",
+          "반영 교과는 학생부 교과군 기준 국어·수학·영어·사회·과학이에요."
+        ],
+        "rounding": "official",
+        "block_joint": true
+      }
+    }
+  ]
 }

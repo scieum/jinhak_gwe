@@ -1,0 +1,234 @@
+{
+  "review_kind": "source_formula_audit",
+  "reviewer": "Codex",
+  "human_approval_claimed": false,
+  "date": "2026-11-28",
+  "rules": [
+    {
+      "id": "source-audit-2028-plan-0000003-0",
+      "university": "강원대학교(춘천)",
+      "program": "학생부교과(일반전형)",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000003/kangwon-chuncheon-20260611.pdf",
+      "source_sha256": "61c542430f68670397b52474fd08dc9413a044d5c2f5d7eead72cdfb56106d9b",
+      "pages": [
+        4,
+        15,
+        32,
+        33,
+        34
+      ],
+      "scope": "grade_component",
+      "notes": [
+        "시행계획의 교과 정량 부분 1,000점만 계산해요. 출결 가감점과 최종 총점은 포함하지 않아요.",
+        "교과등급 점수와 성취도 점수의 학점 가중평균을 각각 더해요.",
+        "최종 소수점 처리 규정은 미확인으로, 화면 소수점은 표시용이에요.",
+        "이전 전형명으로 담은 경우 2028학년도 변경 전형명을 함께 확인해 주세요."
+      ]
+    },
+    {
+      "id": "source-audit-2028-plan-0000003-1",
+      "university": "강원대학교(춘천)",
+      "program": "학생부교과(강원인재전형)",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000003/kangwon-chuncheon-20260611.pdf",
+      "source_sha256": "61c542430f68670397b52474fd08dc9413a044d5c2f5d7eead72cdfb56106d9b",
+      "pages": [
+        4,
+        15,
+        32,
+        33,
+        34
+      ],
+      "scope": "grade_component",
+      "notes": [
+        "시행계획의 교과 정량 부분 1,000점만 계산해요. 출결 가감점과 최종 총점은 포함하지 않아요.",
+        "교과등급 점수와 성취도 점수의 학점 가중평균을 각각 더해요.",
+        "최종 소수점 처리 규정은 미확인으로, 화면 소수점은 표시용이에요.",
+        "이전 전형명으로 담은 경우 2028학년도 변경 전형명을 함께 확인해 주세요."
+      ]
+    },
+    {
+      "id": "source-audit-2028-plan-0000008-0",
+      "university": "국립공주대학교",
+      "program": "일반전형 (수시 · 학생부교과)",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000008/document-0000008.pdf",
+      "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+      "pages": [
+        13,
+        17,
+        18
+      ],
+      "scope": "student_record",
+      "notes": [
+        "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+        "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+        "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+        "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+      ]
+    },
+    {
+      "id": "source-audit-2028-plan-0000008-1",
+      "university": "국립공주대학교",
+      "program": "지역인재전형",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000008/document-0000008.pdf",
+      "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+      "pages": [
+        13,
+        17,
+        18
+      ],
+      "scope": "student_record",
+      "notes": [
+        "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+        "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+        "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+        "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+      ]
+    },
+    {
+      "id": "source-audit-2028-plan-0000008-2",
+      "university": "국립공주대학교",
+      "program": "농어촌학생전형 (수시 · 학생부교과)",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000008/document-0000008.pdf",
+      "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+      "pages": [
+        13,
+        17,
+        18
+      ],
+      "scope": "student_record",
+      "notes": [
+        "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+        "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+        "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+        "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+      ]
+    },
+    {
+      "id": "source-audit-2028-plan-0000008-3",
+      "university": "국립공주대학교",
+      "program": "자율전공전형",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000008/document-0000008.pdf",
+      "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+      "pages": [
+        13,
+        17,
+        18
+      ],
+      "scope": "student_record",
+      "notes": [
+        "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+        "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+        "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+        "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+      ]
+    },
+    {
+      "id": "source-audit-2028-plan-0000008-4",
+      "university": "국립공주대학교",
+      "program": "기회균형일반전형",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000008/document-0000008.pdf",
+      "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+      "pages": [
+        13,
+        17,
+        18
+      ],
+      "scope": "student_record",
+      "notes": [
+        "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+        "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+        "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+        "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+      ]
+    },
+    {
+      "id": "source-audit-2028-plan-0000008-5",
+      "university": "국립공주대학교",
+      "program": "기회균형지역전형 (수시 · 학생부교과)",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000008/document-0000008.pdf",
+      "source_sha256": "c44894492dab3e9cea4a96478a3acfba316a51a29d536cbd2072ba53c6a404fd",
+      "pages": [
+        13,
+        17,
+        18
+      ],
+      "scope": "student_record",
+      "notes": [
+        "학생부 100% 모집단위의 교과 900점과 출결 100점을 계산해요.",
+        "변환점수 평균을 소수 둘째 자리까지 반올림한 뒤 ×50 + 500을 적용해요.",
+        "국내 5등급제 학생에게 90학점 미만 감산을 적용하지 않아요.",
+        "학생부 70%와 실기를 반영하는 모집단위는 별도 규칙이 필요해요."
+      ]
+    },
+    {
+      "id": "source-audit-2028-plan-0000014-0",
+      "university": "부산대학교",
+      "program": "교과우수",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000014/document-0000014.pdf",
+      "source_sha256": "e97db0a997a844d69b842225968d27bf88355cfbdb17f6a87cdf5e3ba81c5a89",
+      "pages": [
+        12,
+        28
+      ],
+      "scope": "grade_component",
+      "notes": [
+        "교과 정량 부분 80점만 계산해요. 학업역량평가 20점은 포함하지 않아요.",
+        "중간 평균과 최종 점수 모두 소수 다섯째 자리에서 버림해요.",
+        "반영 교과는 학생부 교과군 기준 국어·수학·영어·사회·과학이에요."
+      ]
+    },
+    {
+      "id": "source-audit-2028-plan-0000014-1",
+      "university": "부산대학교",
+      "program": "교과지역",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000014/document-0000014.pdf",
+      "source_sha256": "e97db0a997a844d69b842225968d27bf88355cfbdb17f6a87cdf5e3ba81c5a89",
+      "pages": [
+        12,
+        28
+      ],
+      "scope": "grade_component",
+      "notes": [
+        "교과 정량 부분 80점만 계산해요. 학업역량평가 20점은 포함하지 않아요.",
+        "중간 평균과 최종 점수 모두 소수 다섯째 자리에서 버림해요.",
+        "반영 교과는 학생부 교과군 기준 국어·수학·영어·사회·과학이에요."
+      ]
+    },
+    {
+      "id": "source-audit-2028-plan-0000014-2",
+      "university": "부산대학교",
+      "program": "농어촌학생 (학생부교과)",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000014/document-0000014.pdf",
+      "source_sha256": "e97db0a997a844d69b842225968d27bf88355cfbdb17f6a87cdf5e3ba81c5a89",
+      "pages": [
+        12,
+        28
+      ],
+      "scope": "grade_component",
+      "notes": [
+        "교과 정량 부분 80점만 계산해요. 학업역량평가 20점은 포함하지 않아요.",
+        "중간 평균과 최종 점수 모두 소수 다섯째 자리에서 버림해요.",
+        "반영 교과는 학생부 교과군 기준 국어·수학·영어·사회·과학이에요."
+      ]
+    },
+    {
+      "id": "source-audit-2028-plan-0000014-3",
+      "university": "부산대학교",
+      "program": "지역저소득층학생",
+      "source_file": "work/_data/admission-plans/scoring-rules-work/files/plan-0000014/document-0000014.pdf",
+      "source_sha256": "e97db0a997a844d69b842225968d27bf88355cfbdb17f6a87cdf5e3ba81c5a89",
+      "pages": [
+        12,
+        28
+      ],
+      "scope": "grade_component",
+      "notes": [
+        "교과 정량 부분 80점만 계산해요. 학업역량평가 20점은 포함하지 않아요.",
+        "중간 평균과 최종 점수 모두 소수 다섯째 자리에서 버림해요.",
+        "반영 교과는 학생부 교과군 기준 국어·수학·영어·사회·과학이에요."
+      ]
+    }
+  ],
+  "unreviewed_drafts_promoted": false,
+  "validation": "app/tests/released-scoring.test.ts: independently specified expected scores and boundary cases"
+}

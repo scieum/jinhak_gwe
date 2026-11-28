@@ -35,6 +35,16 @@
 .dg-toolbar .segmented-control { width: 200px; }
 .dg-summary { display: flex; justify-content: space-between; align-items: baseline; gap: var(--spacing-md); margin: 0; }
 .dg-summary p { margin: 0; }
+.dg-reference .dg-summary { flex-wrap: wrap; }
+.dg-reference .dg-summary > p { min-width: 0; white-space: normal; }
+.dg-reference .dg-card__numbers .t-caption { white-space: normal; overflow-wrap: anywhere; }
+.dg-card__history { border-top: 1px solid var(--color-hairline-soft); padding-top: var(--spacing-sm); margin-top: var(--spacing-xs); }
+.dg-reference-assessment { display: grid; gap: var(--spacing-xs); border-top: 1px solid var(--color-hairline-soft); padding-top: var(--spacing-sm); }
+.dg-reference-assessment > h4, .dg-reference-assessment p { margin: 0; }
+.dg-reference-assessment .judge-badge { justify-self: start; }
+.dg-reference-assessment .dg-bar { margin-top: 0; padding-top: var(--spacing-xs); border-top: 0; }
+.dg-reference-basis summary { cursor: pointer; font-size: 13px; }
+.dg-reference-basis p { margin-top: var(--spacing-xs); }
 .dg-filter-row { display: none; }
 .dg-count { color: var(--color-text-muted); font-size: 15px; font-variant-numeric: tabular-nums; }
 

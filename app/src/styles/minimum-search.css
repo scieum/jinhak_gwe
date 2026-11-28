@@ -2,6 +2,7 @@
    stat-tile · data-table · text-input · button-pill-soft · judge-badge · trace-accordion · disclaimer-note · data-status-badge */
 .student-screen.minimum-search { display: block; }
 .minimum-search p { margin: 0; }
+.minimum-search .empty-state > .button-primary { margin-top: var(--spacing-md); }
 .minimum-search .mns-error, .minimum-search .mns-nocut { display: grid; gap: var(--spacing-sm); justify-items: start; padding: var(--spacing-md); background: var(--color-canvas); }
 .topbar__heading .mns-lead { margin: 4px 0 0; color: var(--color-ink); }
 .mns-asof { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; background: var(--color-canvas); color: var(--color-text-muted); font-size: 12px; font-weight: 600; line-height: 16.8px; white-space: nowrap; }

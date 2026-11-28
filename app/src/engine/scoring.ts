@@ -2,6 +2,13 @@ import { hasRank, validateGrade, validateAttendance, subjectTypes, type GradeRec
 import { invalid, pending, ready, reviewed, type Calculation, type Provenance, type Trace } from './types';
 
 export interface ScoringRule extends Provenance {
+  /** Source audit is recorded separately from human approval history. */
+  publication?: {
+    checked_by: string; checked_at: string; source_sha256: string; pages: number[];
+    scope: 'student_record' | 'grade_component'; applicant: string; notes: string[];
+    rounding: 'official' | 'display_only'; block_joint: boolean;
+    require_department?: boolean; excluded_departments?: string[]; previous_programs?: string[];
+  };
   admission_year: number;
   university: string;
   program: string;
@@ -66,6 +73,12 @@ const nonnegative = (n: number) => Number.isFinite(n) && n >= 0;
 const validPoints = (p: Record<string, number>) => Object.keys(p).length > 0 && Object.values(p).every(nonnegative) && Math.max(...Object.values(p)) > 0;
 export function validateScoringRule(r: ScoringRule): string[] {
   const errors: string[] = [];
+  const pub = r.publication;
+  if (pub && (!pub.checked_by?.trim() || !/^\d{4}-\d{2}-\d{2}$/.test(pub.checked_at) || !/^[a-f0-9]{64}$/.test(pub.source_sha256)
+    || !Array.isArray(pub.pages) || !pub.pages.length || pub.pages.some(p => !Number.isInteger(p) || p < 1)
+    || !['student_record', 'grade_component'].includes(pub.scope) || !['official', 'display_only'].includes(pub.rounding)
+    || typeof pub.block_joint !== 'boolean' || !pub.applicant?.trim() || !Array.isArray(pub.notes) || pub.notes.some(n => typeof n !== 'string')
+    || [pub.excluded_departments, pub.previous_programs].some(xs => xs !== undefined && (!Array.isArray(xs) || xs.some(x => typeof x !== 'string' || !x.trim()))))) errors.push('규칙 원문 검증 정보를 확인해 주세요.');
   if (!r.semesters.length || new Set(r.semesters).size !== r.semesters.length || r.semesters.some(s => !/^[123]-[12]$/.test(s)) || !r.subject_groups.length) errors.push('반영 학기·교과를 확인해 주세요.');
   if (!validPoints(r.rank_grade_points) || ['1', '2', '3', '4', '5'].some(k => r.rank_grade_points[k] === undefined)) errors.push('1~5등급 점수표가 필요해요.');
   if (!['all', 'top_n_per_group', 'top_n_total'].includes(r.selection.mode) || (r.selection.mode !== 'all' && (!Number.isSafeInteger(r.selection.n) || r.selection.n! < 1))) errors.push('과목 선택 규칙을 확인해 주세요.');
@@ -129,6 +142,11 @@ export function scoreUniversity(grades: readonly GradeRecord[], attendance: read
   const errors = validateScoringRule(rule);
   if (errors.length) return invalid(errors.join(' '));
   const trace: Trace[] = [{ rule: rule.id, detail: `${rule.university} ${rule.admission_year} ${rule.program} v${rule.version} · ${rule.source}` }];
+  const pub = rule.publication;
+  if (pub?.require_department && !department?.trim()) return pending('학과를 고르면 적용 가능한 모집단위인지 확인해요.', trace);
+  if (department && pub?.excluded_departments?.some(d => department.replace(/\s/g, '').includes(d))) return pending('이 모집단위는 반영 비율이 달라 별도 환산 규칙이 필요해요.', trace);
+  if (pub?.block_joint && grades.some(g => g.is_joint && rule.semesters.includes(g.semester) && rule.subject_groups.includes(g.subject_group))) return pending('공동교육과정 과목의 반영 규정 확인이 필요해요.', trace);
+  if (pub) trace.push({ rule: rule.id, detail: `${pub.applicant} · ${pub.scope === 'grade_component' ? '교과 정량 부분만 계산' : '학생부 성적 계산'}` }, ...pub.notes.map(detail => ({ rule: rule.id, detail })));
   if (new Set(grades.map(g => g.id)).size !== grades.length) return invalid('중복 과목 식별자가 있어요.');
   const adv = rule.advanced ?? {};
   if (adv.group_alias) grades = grades.map(g => adv.group_alias![g.subject_group] ? { ...g, subject_group: adv.group_alias![g.subject_group] } : g);

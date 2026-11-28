@@ -14,6 +14,7 @@ import type { Trace } from '../engine/types';
 import type { AttendanceRecord, GradeRecord } from '../domain/student';
 import { studentDb, useStudent } from '../store/studentDb';
 import { withReleasedRules } from './Results';
+import { scoringProgramFor } from '../domain/interestScoring';
 import '../styles/univ-score.css';
 
 /* 대학별 환산 (work/univ-score/02-spec.md · Figma univ-score/390 346:131150 · univ-score/1440 346:131176 · 상태 31장).
@@ -59,19 +60,19 @@ function useDesktop() {
   return desktop;
 }
 
-/** 관심 대학(대학마다 하나) → 그 대학의 이번 학년도 전형 하나. 관심 전형과 같은 이름 → 규칙 있는 전형 → 아무 전형 순. */
+/** 관심 대학마다 첫 관심 전형을 표시하고, 그 전형·모집단위에 맞는 규칙으로만 계산해요. */
 function buildRows(interests: { university: string; program: string; department?: string }[], all: ProgramData[], score: (p: ProgramData, department?: string) => ReturnType<typeof scoreUniversity> | null): Row[] {
   const seen = new Set<string>(), rows: Row[] = [];
   for (const i of interests) {
     if (seen.has(i.university)) continue;
     seen.add(i.university);
-    const mine = all.filter(p => p.university === i.university);
-    const p = mine.find(x => x.rule && x.program === i.program) ?? mine.find(x => x.rule) ?? mine[0];
+    const matched = scoringProgramFor(i, all, admissionYear);
+    const p = matched.program ?? undefined;
     const r = p?.rule ? score(p, i.department) : null; // 계열별 규칙은 담은 학과로 계열을 골라요
-    const base = { id: p?.id ?? `interest-${i.university}`, university: i.university, program: p?.program ?? i.program, p, trace: r?.trace ?? [] };
+    const base = { id: p?.id ?? `interest-${i.university}`, university: i.university, program: i.program, p, trace: r?.trace ?? [] };
     if (r?.status === 'ready') rows.push({ ...base, kind: 'ready', value: r.value });
     else if (r && r.reason !== '환산 규칙 준비 중') rows.push({ ...base, kind: 'input', reason: r.reason });
-    else rows.push({ ...base, kind: 'pending' });
+    else rows.push({ ...base, kind: 'pending', reason: matched.reason });
   }
   // 순위는 계산된 대학끼리만 다시 세요.
   const ready = rows.filter(r => r.kind === 'ready');
@@ -168,12 +169,14 @@ function Heart({ row, onRemove }: { row: Row; onRemove: (r: Row) => void }) {
 
 /** 오른쪽 패널(PC)과 전체 화면 상세(모바일)가 같이 써요. */
 function Detail({ row, single, desktop, onRemove, grades, attendance }: { row: Row; single: boolean; desktop: boolean; onRemove: (r: Row) => void; grades: readonly GradeRecord[]; attendance: readonly AttendanceRecord[] }) {
-  const v = row.value, digits = row.p?.rule?.rounding.digits ?? 2;
+  const pub = row.p?.rule?.publication;
+  const v = row.value, digits = pub?.rounding === 'display_only' ? 2 : row.p?.rule?.rounding.digits ?? 2;
   return <div className="us-detail">
     {desktop && <header className="us-detail__head"><UniversityLogo university={row.university} /><div><h3 className="t-heading-3">{row.university}</h3><p className="t-body-sm text-muted">{row.program}</p></div><Heart row={row} onRemove={onRemove} /></header>}
     {!desktop && <header className="us-detail__head"><UniversityLogo university={row.university} /><div><h3 className="t-heading-3">{row.university}</h3><p className="t-body-sm text-muted">{row.program}</p></div><span className="data-status-badge">시행계획 기준</span></header>}
     {row.kind === 'ready' && v ? <>
-      <div className="us-detail__total"><span className="t-caption text-muted">합계</span><p className="us-detail__value"><strong className="num">{v.total.toFixed(digits)}</strong> <span className="text-muted">/ {v.max.toLocaleString('ko-KR')}</span></p>
+      <div className="us-detail__total"><span className="t-caption text-muted">{pub?.scope === 'grade_component' ? '교과 정량 부분' : '합계'}</span><p className="us-detail__value"><strong className="num">{v.total.toFixed(digits)}</strong> <span className="text-muted">/ {v.max.toLocaleString('ko-KR')}</span></p>
+        {pub && <p className="t-caption text-muted">{pub.scope === 'grade_component' ? '전형 전체 총점이 아니에요. ' : ''}{pub.notes[0]}{pub.rounding === 'display_only' ? ' 소수점은 표시용이에요.' : ''}</p>}
         {desktop ? <p className="t-body-sm num">교과 {two(v.grade)} · 출결 {two(v.attendance)}</p>
           : <dl className="us-detail__facts"><div><dt>교과</dt><dd className="num">{two(v.grade)}</dd></div><div><dt>출결</dt><dd className="num">{two(v.attendance)}</dd></div></dl>}
         {v.attendance_deduction > 0 && <p className="t-body-sm">출결 감점 {v.attendance_deduction}점이 있어요.</p>}</div>
@@ -239,7 +242,7 @@ export function UniversityScores() {
       <span className="us-card__head">{head}<Icon name="chevron-right" size={24} /></span>
       {r.kind === 'ready' && r.value ? <>
         <span className="us-card__cells"><span><span className="t-caption text-muted">교과</span><strong className="num">{two(r.value.grade)}</strong></span><span><span className="t-caption text-muted">출결</span><strong className="num">{two(r.value.attendance)}</strong></span>
-          <span><span className="t-caption text-muted">합계</span><span><strong className="num">{r.value.total.toFixed(r.p?.rule?.rounding.digits ?? 2)}</strong> <span className="t-caption text-muted num">/ {r.value.max.toLocaleString('ko-KR')}</span></span></span></span>
+          <span><span className="t-caption text-muted">{r.p?.rule?.publication?.scope === 'grade_component' ? '교과 부분' : '합계'}</span><span><strong className="num">{r.value.total.toFixed(r.p?.rule?.publication?.rounding === 'display_only' ? 2 : r.p?.rule?.rounding.digits ?? 2)}</strong> <span className="t-caption text-muted num">/ {r.value.max.toLocaleString('ko-KR')}</span></span></span></span>
         <span className="t-body-sm">{single ? ONE_NOTE : rankLine(r)}</span></>
         : <span className="t-body-sm">{inputLine(r.reason)} <span className="us-link">{inputAction(r.reason)} ›</span></span>}
     </button></li>;
@@ -252,11 +255,11 @@ export function UniversityScores() {
       <span>{on ? `${label} ${ascending ? '▲' : '▼'}` : label}</span>{!on && <Icon name="arrow-up-down" size={16} />}</button>;
   };
   const tableRow = (r: Row) => {
-    const digits = r.p?.rule?.rounding.digits ?? 2, on = r.kind !== 'pending' && r.id === active?.id;
+    const digits = r.p?.rule?.publication?.rounding === 'display_only' ? 2 : r.p?.rule?.rounding.digits ?? 2, on = r.kind !== 'pending' && r.id === active?.id;
     const name = <span className="us-table__univ"><UniversityLogo university={r.university} />{r.kind === 'pending' ? <span>{r.university}</span>
       : <button type="button" className="us-table__pick" aria-pressed={on} aria-label={`${r.university} ${r.program} 환산 근거 보기`} onClick={() => setSelected(r.id)}>{r.university}</button>}</span>;
     return <tr key={r.id} className={on ? 'is-selected' : undefined} onClick={r.kind === 'pending' ? undefined : () => setSelected(r.id)}>
-      <td>{name}</td><td className="t-body-sm">{r.program}</td>
+      <td>{name}</td><td className="t-body-sm">{r.program}{r.p?.rule?.publication?.scope === 'grade_component' && <small className="text-muted"> · 교과 정량 부분만</small>}</td>
       {r.kind === 'ready' && r.value ? <><td className="num">{two(r.value.grade)}</td><td className="num">{two(r.value.attendance)}</td>
         <td className="num"><span className="us-stack"><span>{r.value.total.toFixed(digits)}</span><small className="t-caption text-muted">/ {r.value.max.toLocaleString('ko-KR')}</small></span></td>
         <td className="num"><span className="us-stack">{single ? <span>—</span> : <><strong>{signed(diffOf(r) ?? 0)}</strong><small className="t-caption text-muted">{r.avgRank ?? '—'}위 → {r.ratioRank}위</small></>}</span></td></>

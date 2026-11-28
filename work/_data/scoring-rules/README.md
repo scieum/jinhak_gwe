@@ -9,3 +9,16 @@
 **계산에 쓰려면(NEVER-1)**: 규칙 관리에서 원문과 대조 → 테스트 케이스 3개 → 작성자가 아닌 관리자가 승인 → '배포 파일 내보내기'로 `app/public/data/scoring-rules.json` 교체.
 
 다시 만들기: `python work/_data/scoring-rules/prepare.py`(원문 텍스트 추출, 로컬 전용) → 에이전트가 `AGENT_SPEC.md`대로 drafts 작성 → `python work/_data/scoring-rules/build.py`. 검사: `app/tests/scoring-rule-drafts.test.ts`.
+
+## 2026-11-28 실제 계산 연결
+
+사용자의 실제 환산 구현 요청과 ‘과거 입결 기반 참고 판정도 제공’ 선택에 따라, 원문 PDF를 다시 대조하고 수작업 기대값 테스트를 통과한 3개 대학의 12개 전형을 별도 공개 규칙 파일에 반영했어요. 이는 Codex의 원문 대조이며 사람 관리자의 승인을 받았다는 의미는 아니에요. 초안 전체를 승인 처리하지 않았어요.
+
+- 강원대(춘천) 2개: 교과 정량 영역. 출결 가감점·정성 평가 제외.
+- 국립공주대 6개: 일반 모집단위 학생부 교과·출결. 예체능 별도 산식 제외.
+- 부산대 4개: 교과 정량 80점 영역. 정성 평가 제외.
+- 공통 범위: 국내 5등급제 재학생. 원문에서 지원 범위를 확정하지 못한 공동교육과정은 계산을 보류해요.
+
+재생성: `python app/tools/build_scoring_release.py`. 원문 해시·쪽수·적용 범위는 `source-audit-2026-11-28.json`, 계산과 제외 조건 검증은 `app/tests/released-scoring.test.ts`에 있어요. 배포 산출물은 `app/public/data/scoring-rules.json`과 `scoring-coverage.json`이며, 이 기록은 운영 사이트 배포 완료를 뜻하지 않아요.
+
+될각 참고 판정은 별도 자체 기준 `reference-cut-v1`을 사용해요. 5→9 시나리오 범위의 보수 쪽과 과거 70% 컷을 비교하며, 대학 공식 산식·합격 확률로 표시하지 않아요. 50% 컷만 있거나 학생부종합이면 교과 위치만 보여 줘요. 공식 산식이 없는 대학은 미제공 이유와 전 교과 기반 참고 범위를 구분해 표시해요.

@@ -6,6 +6,7 @@ import { useStudent } from '../store/studentDb';
 import { type StudentBackup } from '../domain/student';
 import type { ProgramData } from '../data/catalog';
 import type { ScoringRule } from '../engine/scoring';
+import { sameScoringProgram, scoringUniversityKey } from '../domain/interestScoring';
 import { ScoreTrendScreen } from '../components/ScoreTrendContent';
 import { ReferenceGradeAnalysis } from '../components/ReferenceGradeAnalysis';
 import { QuickGradeCalculator } from '../components/QuickGradeCalculator';
@@ -47,8 +48,13 @@ export function FiveToNine() {
 }
 /** 관리자가 배포한 검수 완료 규칙(public/data/scoring-rules.json)을 대학별 환산에 더해요. 같은 대학·전형·연도는 카탈로그가 먼저예요. */
 export function withReleasedRules(catalog: readonly ProgramData[], rules: readonly ScoringRule[]): ProgramData[] {
-  const key = (u: string, p: string, y: number) => `${u}|${p}|${y}`, have = new Set(catalog.map(p => key(p.university, p.program, p.admission_year)));
-  return [...catalog, ...rules.filter(r => !have.has(key(r.university, r.program, r.admission_year))).map((r): ProgramData => ({ id: `rule-${r.id}`, admission_year: r.admission_year, university: r.university, program: r.program, department: '',
+  const matches = (p: ProgramData, r: ScoringRule) => p.admission_year === r.admission_year
+    && scoringUniversityKey(p.university) === scoringUniversityKey(r.university) && sameScoringProgram(p.program, r.program);
+  const merged = catalog.map(p => {
+    const found = rules.filter(r => matches(p, r));
+    return !p.rule && found.length === 1 ? { ...p, rule: found[0] } : p;
+  });
+  return [...merged, ...rules.filter(r => !catalog.some(p => matches(p, r) && !p.department)).map((r): ProgramData => ({ id: `rule-${r.id}`, admission_year: r.admission_year, university: r.university, program: r.program, department: '',
     source: r.source, license_status: 'unknown', rule: r, cut: null, cut_subject_scope: [], cut_grade_system: 9, minimum_required: false }))];
 }
 

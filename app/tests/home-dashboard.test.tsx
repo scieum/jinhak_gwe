@@ -36,10 +36,11 @@ test('성적이 있으면 범위 막대와 관심 대학 참고 비교(검수 �
   expect(within(range).getByRole('img', { name: /환산 9등급 약/ })).toBeTruthy();
   expect(screen.getByRole('link', { name: '5 to 9 자세히 보기' }).getAttribute('href')).toBe('/five-to-nine?view=mine');
   const judge = screen.getByRole('region', { name: '관심 대학 될각' });
-  expect(within(judge).getByText('관심 대학 1곳 · 최근 입결 컷과 참고 비교예요')).toBeTruthy(); // 같은 대학은 한 줄
+  expect(within(judge).getByText('관심 대학 1곳 · 과거 입결 참고자료예요')).toBeTruthy(); // 같은 대학은 한 줄
   const link = within(judge).getByRole('link', { name: /가천대학교.*약학과/ });
   expect(new URLSearchParams(link.getAttribute('href')!.split('?')[1]).get('cd')).toBe('약학과');
-  expect(await within(judge).findByText(/^2026학년도 70% 컷 1\.20 · 차이 [+−]?\d\.\d$/)).toBeTruthy();
+  expect(await within(judge).findByText('2026학년도 70% 컷 1.20')).toBeTruthy();
+  expect(within(judge).queryByText(/차이/)).toBeNull();
   expect(within(judge).queryByText(/안정|적정|소신|위험/)).toBeNull(); // NEVER-1: 검수 입결 없이 판정하지 않아요
 });
 

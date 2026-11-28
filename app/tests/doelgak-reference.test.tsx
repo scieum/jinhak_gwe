@@ -2,7 +2,8 @@ import 'fake-indexeddb/auto';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { subject } from './fixtures';
+import { scoringRule, subject } from './fixtures';
+import * as released from '../src/data/releasedRules';
 import { App } from '../src/App';
 import { studentDb } from '../src/store/studentDb';
 import * as loader from '../src/data/collectedResults';
@@ -15,6 +16,11 @@ const interest = (department: string | undefined = '간호학과'): Interest => 
 const row = (change: Partial<ResultRow> = {}): ResultRow => ({ ...Object.fromEntries(RESULT_COLUMNS.map(f => [f, ''])), university: '가온대', program: '일반전형', recruit_unit: '간호학과', result_year: '2026', round: '수시', metric: '교과등급', grade_system: '9', cut_70: '2.400', cut_50: '2.100', ...change }) as ResultRow;
 
 describe('될각 참고 비교 컷 고르기', () => {
+  test('다른 대학·캠퍼스 또는 이름 일부만 겹치는 전형의 컷을 섞지 않아요', () => {
+    expect('reason' in latestReferenceCut(interest(), [row({ university: '다른대' })])).toBe(true);
+    expect('reason' in latestReferenceCut({ ...interest(), university: '가온대(서울)' }, [row({ university: '가온대(부산)' })])).toBe(true);
+    expect('reason' in latestReferenceCut({ ...interest(), program: '지역균형' }, [row({ program: '지역균형특별' })])).toBe(true);
+  });
   test('가장 최근 학년도 70% 컷, 없으면 50% 컷', () => {
     expect(latestReferenceCut(interest(), [row({ result_year: '2025', cut_70: '2.9' }), row()])).toMatchObject({ year: '2026', cut: 'cut_70', value: 2.4 });
     expect(latestReferenceCut(interest(), [row({ cut_70: '' })])).toMatchObject({ year: '2026', cut: 'cut_50', value: 2.1 });
@@ -45,7 +51,8 @@ describe('될각 참고 비교 컷 고르기', () => {
 
 const index: CollectedIndex = { format: 'jinhak-navi-collected-index', version: 1, status: 'draft', generated_at: '', source_file: '', source_sha256: 'a'.repeat(64), rows: 1, sources: 1,
   universities: [{ university: '가온대', file: 'a'.repeat(64) + '.json', sha256: 'a'.repeat(64), bytes: 1, rows: 1, sources: 1, years: ['2026'], rounds: { 수시: 1 } }] };
-beforeEach(async () => { await studentDb.clearStudentData(); vi.spyOn(loader, 'loadCollectedIndex').mockResolvedValue(index); vi.spyOn(loader, 'loadCollectedRows').mockResolvedValue([row()]); });
+beforeEach(async () => { await studentDb.clearStudentData(); vi.spyOn(loader, 'loadCollectedIndex').mockResolvedValue(index); vi.spyOn(loader, 'loadCollectedRows').mockResolvedValue([row()]);
+  vi.spyOn(released, 'useReleasedRulesState').mockReturnValue({ rules: [], failed: false, loading: false, retry: vi.fn() }); });
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 const at = (path: string) => render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>);
 
@@ -58,18 +65,46 @@ describe('검수된 판정 전형이 없을 때 될각 = 관심 전형 참고 �
     expect(within(card as HTMLElement).getByText('판정 준비 중')).toBeTruthy();
     expect(screen.getByRole('link', { name: '성적 입력하기 ›' })).toBeTruthy();
   });
-  test('성적을 넣으면 내 참고 추정 범위와 차이가 붙고, 판정 이름(안정·적정·소신·위험)은 붙이지 않아요', async () => {
+  test('규칙 없는 공식 환산은 대기, 사용자 허용 참고 판정은 전 교과 기준을 명시해 별도로 표시해요', async () => {
     await studentDb.restore({ grades: [subject()], attendance: [] });
     await studentDb.interests.put(interest());
     at('/doelgak');
     const card = (await screen.findByRole('heading', { name: '가온대' })).closest('article') as HTMLElement;
     expect(await within(card).findByText('2026학년도 70% 컷 2.400')).toBeTruthy();
-    // 막대 위 한 줄이 컷과의 거리를 말로 적고, 범례가 두 표시를 이름으로 알려줘요
-    expect(within(card).getByText(/^(컷이 내 범위 안에 있어요|내 범위가 컷보다 \d\.\d등급 (앞서요|뒤예요))$/)).toBeTruthy();
-    expect(within(card).getByText(/^내 범위 \d\.\d~\d\.\d$/)).toBeTruthy();
-    expect(within(card).getByText('70% 컷 2.4')).toBeTruthy();
-    expect(within(card).getByText(/^약 \d\.\d~\d\.\d$/)).toBeTruthy();
+    expect(within(card).getByText('2028학년도 이 대학·전형의 검수된 환산 규칙이 아직 없어요.')).toBeTruthy();
+    expect(within(card).getByText('계산 대기')).toBeTruthy();
+    expect(within(card.querySelector('.dg-card__numbers') as HTMLElement).queryByText(/컷보다|컷이 내 범위|^약 \d/)).toBeNull();
+    expect(within(card).getByText(/입력한 전 교과 · 학점 가중평균/)).toBeTruthy();
+    expect(within(card).getByText('과거 입결 기반 참고 판정')).toBeTruthy();
     expect(screen.queryByText(/^(안정|적정|소신|위험)$/)).toBeNull();
+  });
+  test('대학·전형별 반영 교과로 실제 점수를 계산하고 과거 등급 컷과 차이는 내지 않아요', async () => {
+    vi.mocked(released.useReleasedRulesState).mockReturnValue({ rules: [
+      scoringRule({ id: 'math-rule', university: '가온대', program: '일반전형', subject_groups: ['수학'] }),
+      scoringRule({ id: 'english-rule', university: '나래대', program: '일반전형', subject_groups: ['영어'] }),
+    ], failed: false, loading: false, retry: vi.fn() });
+    await studentDb.restore({ grades: [subject({ rank_grade: 1 }), subject({ id: 'eng', subject_group: '영어', rank_grade: 4 })], attendance: [] });
+    await studentDb.interests.put(interest());
+    await studentDb.setInterest('나래대', '일반전형', true, '간호학과');
+    at('/doelgak');
+    const first = (await screen.findByRole('heading', { name: '가온대' })).closest('article') as HTMLElement;
+    const second = screen.getByRole('heading', { name: '나래대' }).closest('article') as HTMLElement;
+    expect(within(first).getByText('100.00 / 100점')).toBeTruthy();
+    expect(within(second).getByText('80.00 / 100점')).toBeTruthy();
+    expect(within(first).getByText('어떻게 계산했나요?')).toBeTruthy();
+    expect(within(first.querySelector('.dg-card__numbers') as HTMLElement).queryByText(/컷보다|^약 \d/)).toBeNull();
+    expect(await within(first).findByText(/대학 규칙에서 선택된 과목 · 학점 가중평균/)).toBeTruthy();
+    expect(within(first).getByText('참고 비교 · 합격 예측 아님')).toBeTruthy();
+  });
+  test('출결이 필요한 대학은 출결 없이 점수를 내지 않아요', async () => {
+    vi.mocked(released.useReleasedRulesState).mockReturnValue({ rules: [scoringRule({ university: '가온대', program: '일반전형', grade_max_score: 90,
+      attendance_rule: { years: [1], max_score: 10, tardy_to_absence: 3, deduction_table: [{ absence_max: 366, points: 0 }] } })], failed: false, loading: false, retry: vi.fn() });
+    await studentDb.restore({ grades: [subject()], attendance: [] });
+    await studentDb.interests.put(interest());
+    at('/doelgak');
+    expect(await screen.findByText('반영 학년의 출결을 입력해 주세요.')).toBeTruthy();
+    expect(screen.getByRole('link', { name: '성적·출결 입력 확인 ›' }).getAttribute('href')).toBe('/grade-input');
+    expect(screen.queryByText(/\/ 100점/)).toBeNull();
   });
   test('학과 없이 담은 전형은 카드에서 학과를 고르면 그 학과로 바뀌고 입결과 비교해요', async () => {
     await studentDb.setInterest('가온대', '일반전형', true);

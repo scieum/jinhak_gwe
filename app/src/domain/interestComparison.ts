@@ -4,6 +4,7 @@ import type { ResultRow } from './resultReview';
 import { gradeCoordinate, statisticValue, type CutField, type NationalPlacementRow } from './nationalPlacement';
 import { sortNumber } from './tableSort';
 import { currentUniversityName } from './universityIdentity';
+import { scoringUniversityKey } from './interestScoring';
 
 export const MAX_COMPARISON = 4;
 export const comparisonPath = (ids: string[] = []) => {
@@ -44,13 +45,14 @@ const trackOf = (name: string) => name.includes('종합') ? '종합' : name.incl
 const programCore = (name: string) => name.replace(/\s+/g, '').replace(/학생부(교과|종합)/g, '').replace(/전형/g, '').replace(/[()[\]{}<>·,]/g, '');
 const sameProgram = (a: string, b: string) => {
   const x = programCore(a), y = programCore(b);
-  return trackOf(a) && trackOf(b) && trackOf(a) !== trackOf(b) ? false : x === y || (!!x && !!y && (x.includes(y) || y.includes(x)));
+  return trackOf(a) && trackOf(b) && trackOf(a) !== trackOf(b) ? false : x === y;
 };
 /** 될각 참고 비교: 그 대학(캠퍼스 후보 포함) 행에서 같은 학과의 가장 최근 학년도 수시 교과등급 70% 컷(없으면 50% 컷).
  *  전형 이름이 정확히 같은 행을 먼저, 없으면 핵심 이름이 같은 행. 같은 해 후보가 여럿이면 고르지 않아요. */
 export function latestReferenceCut(interest: Interest, rows: readonly ResultRow[]): ReferenceCut {
   if (!interest.department?.trim()) return { reason: '학과를 고르면 입결과 비교해요.' };
-  const unit = rows.flatMap((row, sourceRow) => yearUnitKey(row.recruit_unit) === yearUnitKey(interest.department!) && row.round === '수시' && row.metric === '교과등급' ? [{ sourceRow, row }] : []);
+  const unit = rows.flatMap((row, sourceRow) => scoringUniversityKey(row.university) === scoringUniversityKey(interest.university)
+    && yearUnitKey(row.recruit_unit) === yearUnitKey(interest.department!) && row.round === '수시' && row.metric === '교과등급' ? [{ sourceRow, row }] : []);
   const exact = unit.filter(r => yearProgramKey(r.row.program) === yearProgramKey(interest.program));
   const named = exact.length ? exact : unit.filter(r => sameProgram(r.row.program, interest.program));
   const found = latestIn(named);
@@ -67,7 +69,8 @@ export function latestReferenceCut(interest: Interest, rows: readonly ResultRow[
 }
 /** 학과 없이 담은 관심 전형에서 고를 학과 후보: 같은 전형(정확히 → 핵심 이름) 수시 교과등급 행의 모집단위, 없으면 같은 계열 전형의 모집단위. */
 export function departmentsFor(interest: Interest, rows: readonly ResultRow[]): string[] {
-  const usable = rows.filter(r => r.round === '수시' && r.metric === '교과등급' && r.recruit_unit.trim());
+  const usable = rows.filter(r => scoringUniversityKey(r.university) === scoringUniversityKey(interest.university)
+    && r.round === '수시' && r.metric === '교과등급' && r.recruit_unit.trim());
   const exact = usable.filter(r => r.program.trim() === interest.program.trim());
   const named = exact.length ? exact : usable.filter(r => sameProgram(r.program, interest.program));
   const track = trackOf(interest.program) || '교과';
