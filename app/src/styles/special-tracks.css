@@ -120,9 +120,11 @@
 .st-reference-search { flex: 1; }
 .st-department-filter .text-input { width: min(100%, 360px); min-width: 0; }
 .st-reference .text-input { max-width: 100%; min-width: 0; }
+/* 2026-11-28 사용자 요청: '모집단위 더 보기'를 누르면 위 행과 새 행이 모두 펼쳐져 보이게(안쪽 스크롤 상자 없음) */
+.st-reference .st-table-card { max-height: none; overflow: visible; }
 .st-reference-table { width: 100%; }
 .st-reference-table th, .st-reference-table td { white-space: normal; overflow-wrap: anywhere; }
-.st-reference-table th { position: sticky; top: 0; background: var(--color-canvas-soft); }
+.st-reference-table th { position: sticky; top: 0; z-index: 2; background: var(--color-canvas-soft); } /* 행의 대학 로고가 머리줄 위로 비치지 않게 */
 .st-reference-table .st-univ { min-width: 140px; }
 .st-reference .st-card__open { min-height: 80px; }
 @media (max-width: 599px) {

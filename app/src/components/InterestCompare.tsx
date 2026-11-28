@@ -20,6 +20,7 @@ import { gradeCut } from '../domain/universityResultPlot';
 import { interestRows, yearCut } from '../domain/interestRows';
 import { collectedUniversityCandidates, currentUniversityName, matchesUniversityIdentity } from '../domain/universityIdentity';
 import { fiveToNineFor } from '../domain/results';
+import { usePinchZoom } from './usePinchZoom';
 import { studentDb, useStudent } from '../store/studentDb';
 import { UniversityLogo } from './UniversityLogo';
 import { Icon } from './Icon';
@@ -110,6 +111,8 @@ export function InterestCompare({ tabs }: { tabs: ReactNode }) {
     const w = range.max - range.min, min = Math.min(PAN_MIN + PAN_SPAN - w, Math.max(PAN_MIN, PAN_MIN + el.scrollLeft / el.scrollWidth * PAN_SPAN));
     setZoom({ key: zoomKey, min: Math.round(min * 1000) / 1000, max: Math.round((min + w) * 1000) / 1000 });
   };
+  const plotBody = useRef<HTMLDivElement>(null);
+  usePinchZoom(plotBody, range, r => setZoom({ key: zoomKey, ...r }), [zoomKey, view, visible.length > 0]);
   const generated = index?.generated_at ? new Date(index.generated_at) : null;
   const dateLabel = sample ? `데이터 기준일 ${dataAsOf}` : `자료 정리일 ${generated && Number.isFinite(generated.getTime()) ? new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Seoul' }).format(generated) : '확인 중'}`;
   const choose = (id: string) => { setPicked(id); if (narrow()) setSheet(true); }; // 모바일은 시안에 목록 패널이 없어 고른 학과를 시트로 열어요
@@ -167,7 +170,7 @@ export function InterestCompare({ tabs }: { tabs: ReactNode }) {
                     <td className="num">{cut ? `${cut.cut === 'cut_70' ? '70%' : '50%'} ${cut.row[cut.cut]}` : '—'}</td><td>{cut?.row.basis || (x.loading ? '읽는 중' : '좌표 없음')}</td></tr>)}</tbody></table></div>
                 : <div className="result-plot ar-plot">
                   {mine && <div className="ar-plot__bubble-row" aria-hidden="true"><div><span className="ar-plot__bubble" style={{ left: pos((mine.lo + mine.hi) / 2) }}>내 환산 범위 약 {mine.lo.toFixed(1)}~{mine.hi.toFixed(1)}</span></div></div>}
-                  <div className="ar-plot__body">
+                  <div className="ar-plot__body" ref={plotBody} onDoubleClick={() => setZoom(null)}>
                     <div className="ar-plot__layer" aria-hidden="true">
                       {axisMinorTicks(range).map(t => <i className="ar-plot__grid ar-plot__grid--minor" key={`m${t}`} style={{ left: pos(t) }} />)}{axisTicks(range).map(t => <i className="ar-plot__grid" key={t} style={{ left: pos(t) }} />)}
                       {mine && <><i className="ar-plot__band" style={{ left: pos(mine.lo), width: `calc(${pos(mine.hi)} - ${pos(mine.lo)})` }} /><i className="ar-plot__mine" style={{ left: pos((mine.lo + mine.hi) / 2) }} /></>}

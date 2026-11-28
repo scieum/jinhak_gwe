@@ -74,6 +74,13 @@ test('동일 학과가 두 캠퍼스에 있으면 입결을 임의 연결하지 
   expect(incomplete.find(r => r.plan && r.unit === '의예과')?.results).toHaveLength(0);
   expect(incomplete.find(r => !r.plan && r.unit === '의예과')?.ambiguousCampus).toBe(true);
 });
+test('입결 대학 이름 괄호가 전형계획 지역 한 곳과 맞으면 같은 줄로 합치고, 안 맞으면 따로 둔다', () => {
+  const units = (name: string) => parseTierDraft({ ...raw, rows: [[name, '의예과', '교과', '지역인재', '2026', '1.3']] }).units;
+  const merged = collectTracks(catalog, units('가나다대학교(서울)'), []).filter(r => r.unit === '의예과');
+  expect(merged).toHaveLength(1);
+  expect(merged[0].plan && merged[0].results.map(r => r.cut_70)).toEqual(['1.3']);
+  expect(collectTracks(catalog, units('가나다대학교(강원)'), []).filter(r => r.unit === '의예과')).toHaveLength(2);
+});
 test('중복 입결과 빈값·0·다른 등급제 자료를 제외한다', () => {
   const r = draft.units[0].rows[0];
   const units = [{ ...draft.units[0], rows: [r, r, { ...r, cut_70: '0' }, { ...r, cut_70: '' }, { ...r, grade_system: '5' }] }];

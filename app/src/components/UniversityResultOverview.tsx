@@ -23,6 +23,7 @@ import { PrepareProgram } from './PrepareProgram';
 import { Modal } from './Modal';
 import { CollectedResultFields } from './CollectedResultFields';
 import { ScreenActions } from './ScreenActions';
+import { usePinchZoom } from './usePinchZoom';
 import '../styles/university-result-overview.css';
 
 const short = (university: string) => currentUniversityName(university).replace(/대학교$/, '대');
@@ -119,6 +120,7 @@ export function UniversityResultOverview({ tabs }: { tabs: ReactNode }) {
     window.addEventListener('mouseup', onUp);
     return () => { el.removeEventListener('mousedown', onDown); window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
   }, [zoomKey, view, plotted.length]);
+  usePinchZoom(plotBody, range, r => setZoom({ key: zoomKey, ...r }), [zoomKey, view, plotted.length]);
   const interests = useLiveQuery(() => studentDb.interests.toArray().then(list => list.sort((a, b) => a.created_at.localeCompare(b.created_at))).catch(() => []), []) ?? [];
   // 고른 학과: 누른 점 → 이 전형에서 하트로 담은 학과 → 목록 가운데 학과(시작점일 뿐 추천이 아니에요).
   const saved = plotted.find(d => interests.some(i => i.university === university && i.program === model.selected && i.department === d.name));

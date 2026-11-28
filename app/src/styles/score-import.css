@@ -85,7 +85,7 @@
 .si--m .si-summary { display: grid; gap: 12px; }
 .si--m .si-stat strong { font-size: 32px; line-height: 41.6px; }
 .si-rows { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
-.si-rows > .segmented-control { width: 354px; max-width: none; } /* 시안 354(카드 폭 350보다 4 넓게 그려짐) */
+.si-rows > .segmented-control { width: 354px; max-width: calc(100% + 4px); } /* 시안 354(카드 폭 350보다 4 넓게 그려짐). 360 폭 폰에선 화면 밖으로 안 나가게 칸 폭+4까지만 */
 .si-list { display: grid; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-hairline); }
 .si-rowcard { background: var(--color-canvas); }
 .si-pcnote { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 19.5px; color: var(--color-text-muted); }

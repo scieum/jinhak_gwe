@@ -46,11 +46,18 @@ export function classifyTrack(university: string, unit: string, field?: FieldRow
 export function collectTracks(catalog: PlanCatalog | null, released: readonly ReleasedUnit[], fields: readonly FieldRow[]): CollectedTrackUnit[] {
   const fieldMap = new Map(fields.map(f => [key(f.university, f.unit), f]));
   const grouped = new Map<string, CollectedTrackUnit>();
-  const campuses = new Map<string, Set<string>>();
+  const campuses = new Map<string, Set<string>>(), places = new Map<string, { campus: string; region: string }[]>();
   for (const plan of catalog?.entries ?? []) {
     const k = nameKey(plan.university), found = campuses.get(k) ?? new Set<string>();
     found.add(plan.campus); campuses.set(k, found);
+    places.set(k, [...places.get(k) ?? [], { campus: plan.campus, region: plan.region }]);
   }
+  // 2026-11-28 사용자 요청(중복 줄): 입결 '경북대학교(대구)'는 캠퍼스가 하나뿐인 '경북대학교'(대구)와 같은 대학으로 봐요.
+  const suffixOf = (u: string) => /^(.+?)\(([^()]+)\)$/.exec(currentUniversityName(u));
+  const canonical = (u: string) => {
+    const m = suffixOf(u), only = m && places.get(nameKey(m[1]));
+    return m && only?.length === 1 && (only[0].region === m[2] || only[0].campus.includes(m[2])) ? m[1] : u;
+  };
   for (const plan of catalog?.entries ?? []) {
     for (const program of plan.programs.filter(p => p.round === '수시')) {
       const units = new Set([...(program.units ?? []).map(u => u[0]), ...(program.pooled ?? []).flatMap(p => p.units)]);
@@ -71,18 +78,26 @@ export function collectTracks(catalog: PlanCatalog | null, released: readonly Re
   const seen = new Set<string>();
   for (const r of released.flatMap(u => u.rows)) {
     if (r.round !== '수시' || r.metric !== '교과등급' || r.grade_system !== '9' || !r.cut_70.trim() || !Number.isFinite(Number(r.cut_70)) || Number(r.cut_70) < 1 || Number(r.cut_70) > 9) continue;
-    const signature = JSON.stringify([nameKey(r.university), r.recruit_unit, r.result_year, r.admission_type, r.program, r.cut_70]);
+    const univ = canonical(r.university);
+    const signature = JSON.stringify([nameKey(univ), r.recruit_unit, r.result_year, r.admission_type, r.program, r.cut_70]);
     if (seen.has(signature)) continue;
     seen.add(signature);
-    const k = key(r.university, r.recruit_unit), targets = byUnit.get(k) ?? [];
+    const k = key(univ, r.recruit_unit);
+    let targets = byUnit.get(k) ?? [];
     // Another campus may have no extracted units yet; a single unit match is not proof of campus identity.
-    const ambiguous = targets.length > 1 || (campuses.get(nameKey(r.university))?.size ?? 0) > 1;
+    let ambiguous = targets.length > 1 || (campuses.get(nameKey(univ))?.size ?? 0) > 1;
+    // 입결 '중앙대학교(서울)'처럼 캠퍼스가 여럿이면, 괄호가 그 학과가 있는 캠퍼스 한 곳과만 맞을 때만 그 줄에 붙여요.
+    const suffix = !targets.length && suffixOf(univ);
+    if (suffix) {
+      const hit = (byUnit.get(key(suffix[1], r.recruit_unit)) ?? []).filter(t => t.region === suffix[2] || t.campus.includes(suffix[2]));
+      if (hit.length === 1) { targets = hit; ambiguous = false; }
+    }
     if (targets.length === 1 && !ambiguous) { targets[0].results.push(r); continue; }
     if (ambiguous) targets.forEach(t => { t.ambiguousCampus = true; });
     const memberships = classifyTrack(r.university, r.recruit_unit, fieldMap.get(k));
     if (!memberships.length) continue;
     const id = `result:${k}`;
-    const row: CollectedTrackUnit = grouped.get(id) ?? { key: id, university: currentUniversityName(r.university), unit: r.recruit_unit,
+    const row: CollectedTrackUnit = grouped.get(id) ?? { key: id, university: currentUniversityName(univ), unit: r.recruit_unit,
       campus: '', region: '', memberships, programs: [], results: [], ambiguousCampus: ambiguous };
     row.results.push(r); grouped.set(id, row);
   }

@@ -8,15 +8,15 @@
   "route": "/admissions-list",
   "allowed": [],
   "notes": [
-    "390: F 글자 짝 65/70 (짝 없는 글자는 T만 본다)",
-    "1440: F 글자 짝 153/159 (짝 없는 글자는 T만 본다)"
+    "390: F 글자 짝 61/70 (짝 없는 글자는 T만 본다)",
+    "1440: F 글자 짝 149/159 (짝 없는 글자는 T만 본다)"
   ],
   "images": {
     "390": "work/_cache/impl/admissions-list-390.png",
     "1440": "work/_cache/impl/admissions-list-1440.png"
   },
   "ssim": {
-    "390": 0.9618,
-    "1440": 0.982
+    "390": 0.9612,
+    "1440": 0.9819
   }
 }

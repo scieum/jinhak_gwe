@@ -72,6 +72,8 @@
 /* 한 줄 고지: 시안처럼 줄바꿈 없이(모바일은 칸 폭에서 잘려요) */
 .tb .tb-disclaimer { display: flex; align-items: center; gap: 4px; min-width: 0; height: 17px; margin: 0; overflow: hidden; font-size: 12px; line-height: 16.8px; color: var(--color-text-muted); white-space: nowrap; }
 .tb-disclaimer > span { overflow: hidden; }
+/* 2026-11-28 사용자 요청(모바일 글자 잘림 수정): 좁은 화면에선 고지가 문장 중간에 잘리지 않게 줄바꿈해요 */
+@media (max-width: 1023px) { .tb .tb-disclaimer { align-items: flex-start; height: auto; white-space: normal; } .tb .tb-disclaimer .icon { flex: none; margin-top: 0.5px; } }
 
 /* 표(data-table): 머리 32 · 행 36 + 1px 선 */
 .tb-panel { display: grid; background: var(--color-canvas); min-width: 0; }
